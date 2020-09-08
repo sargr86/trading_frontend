@@ -1,81 +1,73 @@
-<app-navbar></app-navbar>
-<section class="body-content">
-  <app-left-sidebar></app-left-sidebar>
-
-  <div class="body-content-right">
-    <ul class="categories">
-      <li><a class="active">Recommendations</a></li>
-      <li><a>Today's picks</a></li>
-      <li><a>AAPL</a></li>
-      <li><a>Phil Ramirez</a></li>
-      <li><a>True Money</a></li>
-      <li><a>PICK 4</a></li>
-      <li><a>Synergy fusion</a></li>
-      <li><a>Sunshine trading stream</a></li>
-      <li><a>Shot stocks</a></li>
-      <li><a>SMP</a></li>
-      <li><a>Strategy for U</a></li>
-      <li><a>Automotive</a></li>
-    </ul>
-    <owl-carousel-o [options]="owlOptions">
-      <ng-container *ngFor="let item of [0,1,2,3]">
-        <ng-template carouselSlide>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
+<ul class="categories">
+  <li><a class="active">Recommendations</a></li>
+  <li><a>Today's picks</a></li>
+  <li><a>AAPL</a></li>
+  <li><a>Phil Ramirez</a></li>
+  <li><a>True Money</a></li>
+  <li><a>PICK 4</a></li>
+  <li><a>Synergy fusion</a></li>
+  <li><a>Sunshine trading stream</a></li>
+  <li><a>Shot stocks</a></li>
+  <li><a>SMP</a></li>
+  <li><a>Strategy for U</a></li>
+  <li><a>Automotive</a></li>
+</ul>
+<owl-carousel-o [options]="owlOptions">
+  <ng-container *ngFor="let item of [0,1,2,3]">
+    <ng-template carouselSlide>
+      <div class="item main-carousel-item">
+        <img class="main-item-img" src="assets/img/item-1.png">
+        <span class="live-now">Live now</span>
+        <div class="main-item-block">
+          <img class="main-item-block-img" src="assets/img/item-4.png">
+          <div>
+            <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+            <p class="main-text-2">Fox News</p>
+            <p class="main-text-3">17k watching</p>
           </div>
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
-    <p class="trending-text">Trending Streams</p>
-    <owl-carousel-o [options]="owlOptions">
-      <ng-container *ngFor="let item of [0,1,2,3]">
-        <ng-template carouselSlide>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>
+<p class="trending-text">Trending Streams</p>
+<owl-carousel-o [options]="owlOptions">
+  <ng-container *ngFor="let item of [0,1,2,3]">
+    <ng-template carouselSlide>
+      <div class="item main-carousel-item">
+        <img class="main-item-img" src="assets/img/item-1.png">
+        <span class="live-now">Live now</span>
+        <div class="main-item-block">
+          <img class="main-item-block-img" src="assets/img/item-4.png">
+          <div>
+            <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+            <p class="main-text-2">Fox News</p>
+            <p class="main-text-3">17k watching</p>
           </div>
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>
 
-    <p class="trending-text">Trending CLIPZ</p>
+<p class="trending-text">Trending CLIPZ</p>
 
-    <owl-carousel-o [options]="owlOptions">
-      <ng-container *ngFor="let item of [0,1,2,3,4]">
-        <ng-template carouselSlide>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
+<owl-carousel-o [options]="owlOptions">
+  <ng-container *ngFor="let item of [0,1,2,3,4]">
+    <ng-template carouselSlide>
+      <div class="item main-carousel-item">
+        <img class="main-item-img" src="assets/img/item-1.png">
+        <span class="live-now">Live now</span>
+        <div class="main-item-block">
+          <img class="main-item-block-img" src="assets/img/item-4.png">
+          <div>
+            <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+            <p class="main-text-2">Fox News</p>
+            <p class="main-text-3">17k watching</p>
           </div>
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>
 
-
-  </div>
-</section>

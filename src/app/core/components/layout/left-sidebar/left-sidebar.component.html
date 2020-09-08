@@ -30,62 +30,13 @@
       <p>CLIPZ</p>
     </div>
   </div>
-  <div class="left-list">
+  <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
     <p class="subscriptions-text">Subscriptions</p>
-    <div cdkDrag class="main-item-block">
+    <div class="main-item-block" *ngFor="let item of sampleList;" cdkDrag>
       <img class="list-img" src="assets/img/item-4.png">
       <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-      </div>
-    </div>
-    <div cdkDrag class="main-item-block">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">Chillhop Music</p>
-        <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
+        <p class="main-text-1">{{item.name}}</p>
+        <p class="main-text-4">{{item.description}}</p>
       </div>
     </div>
   </div>

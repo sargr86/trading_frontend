@@ -1,9 +1,13 @@
-<app-navbar></app-navbar>
-<section class="body-content">
-  <div class="body-content-left">
-    <app-left-sidebar></app-left-sidebar>
-  </div>
-  <div class="body-content-right">
-    <router-outlet></router-outlet>
-  </div>
-</section>
+<ng-container *ngIf="!router.url.includes('auth')">
+  <app-navbar></app-navbar>
+  <section class="body-content">
+    <div class="body-content-left">
+      <app-left-sidebar></app-left-sidebar>
+    </div>
+    <div class="body-content-right">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+</ng-container>
+
+<router-outlet *ngIf="router.url.includes('auth')"></router-outlet>

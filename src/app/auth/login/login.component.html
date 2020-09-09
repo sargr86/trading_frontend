@@ -9,10 +9,12 @@
   <div class="login-content-right">
     <div class="login-block">
       <p class="login-title">Login</p>
-      <input class="login-input" placeholder="Email">
-      <input class="login-input" placeholder="Password" type="password">
-      <p class="forgot-password">Forgot password?</p>
-      <a class="login-submit">Login</a>
+      <form [formGroup]="loginForm">
+        <input class="login-input" placeholder="Email" formControlName="email">
+        <input class="login-input" placeholder="Password" type="password" formControlName="password">
+        <p class="forgot-password">Forgot password?</p>
+        <a class="login-submit" (click)="login()">Login</a>
+      </form>
     </div>
   </div>
 </section>

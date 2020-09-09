@@ -9,11 +9,13 @@
   <div class="login-content-right">
     <div class="login-block">
       <p class="login-title">Sign Up</p>
-      <input class="login-input" placeholder="Full Name">
-      <input class="login-input" placeholder="Email">
-      <input class="login-input" placeholder="Password" type="password">
-      <input class="login-input" placeholder="Reenter Password" type="password">
-      <a class="login-submit">Sign Up</a>
+      <form [formGroup]="registerForm">
+        <input class="login-input" placeholder="Full Name" formControlName="full_name">
+        <input class="login-input" placeholder="Email" formControlName="email">
+        <input class="login-input" placeholder="Password" type="password" formControlName="password">
+        <input class="login-input" placeholder="Reenter Password" type="password">
+        <a class="login-submit" (click)="register()">Sign Up</a>
+      </form>
     </div>
   </div>
 </section>

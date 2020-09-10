@@ -1,7 +1,5 @@
 <nav class="home-header navbar navbar-expand-lg navbar-light">
-  <a class="header-left-logo navbar-brand" href="index.html">
-    <img src="assets/img/logo.png">
-  </a>
+  <img class="header-left-logo navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -49,7 +47,8 @@
         <img src="assets/img/user.svg" data-toggle="dropdown"
              class="user-icon nav-link dropdown-toggle">
         <div class="dropdown-menu">
-          <span class="dropdown-item" *ngIf="!router.url.includes('profile')" (click)="router.navigate(['user/profile'])">Profile</span>
+          <span class="dropdown-item" *ngIf="!router.url.includes('profile')"
+                (click)="router.navigate(['user/profile'])">Profile</span>
           <span class="dropdown-item" (click)="auth.logout()">Logout</span>
         </div>
       </div>

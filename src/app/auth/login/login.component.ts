@@ -29,10 +29,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.auth.login(this.loginForm.value).subscribe((dt: any) => {
+    this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe((dt: any) => {
       localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
       this.router.navigate(['/']);
-    });
+    }));
   }
 
   ngOnDestroy() {

@@ -42,6 +42,7 @@
         <span>+99</span>
       </div>
       <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
+      <img src="assets/img/user.svg" *ngIf="auth.loggedIn()" class="user-icon" (click)="auth.logout()">
       <div class="dotes">
         <i class="fas fa-ellipsis-v"></i>
       </div>

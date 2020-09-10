@@ -32,24 +32,37 @@
   </div>
   <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
     <p class="subscriptions-text">Subscriptions</p>
-    <div class="main-item-block" *ngFor="let item of sampleList;" cdkDrag>
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">{{item.name}}</p>
-        <p class="main-text-4">{{item.description}}</p>
-      </div>
+    <div class="main-item-block" *ngFor="let item of sampleList;let i = index" cdkDrag>
+      <ng-container *ngIf="i < 5 && router.url!=='/'">
+        <img class="list-img" src="assets/img/item-4.png">
+        <div>
+          <p class="main-text-1">{{item.name}}</p>
+          <p class="main-text-4">{{item.description}}</p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="router.url==='/'">
+        <img class="list-img" src="assets/img/item-4.png">
+        <div>
+          <p class="main-text-1">{{item.name}}</p>
+          <p class="main-text-4">{{item.description}}</p>
+        </div>
+      </ng-container>
     </div>
   </div>
-  <div class="watchlist">
+  <div class="watchlist" *ngIf="router.url!=='/'">
     <ul class="nav nav-tabs" id="watchlist" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab" aria-controls="watch" aria-selected="true">Watchlist</a>
+        <a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab" aria-controls="watch"
+           aria-selected="true">Watchlist</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="room" aria-selected="false">My Room</a>
+        <a class="nav-link" id="room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="room"
+           aria-selected="false">My Room</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="today-tab" data-toggle="tab" href="#today" role="tab" aria-controls="today" aria-selected="false">Today</a>
+        <a class="nav-link" id="today-tab" data-toggle="tab" href="#today" role="tab" aria-controls="today"
+           aria-selected="false">Today</a>
       </li>
     </ul>
     <div class="tab-content" id="watchlistContent">
@@ -59,7 +72,8 @@
           <i class="fas fa-search"></i>
         </div>
         <div class="dropdown">
-          <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">
             Sort by my sort
           </div>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

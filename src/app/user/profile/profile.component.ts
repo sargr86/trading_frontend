@@ -10,6 +10,12 @@ import {OWL_OPTIONS} from '../../core/constants/global';
 export class ProfileComponent implements OnInit {
 
   owlOptions: OwlOptions = OWL_OPTIONS;
+  owlTextsArray = [
+    {name: 'David Blaine Ascension'},
+    {name: 'All Videos'},
+    {name: 'Lorem ipsum'},
+    {name: 'Lorem ipsum'}
+  ];
 
   constructor() {
   }

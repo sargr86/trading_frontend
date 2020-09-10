@@ -60,47 +60,28 @@
   <div class="tab-content" id="profileListContent">
     <div class="tab-pane fade show active" id="pWatch" role="tabpanel" aria-labelledby="pWatch-tab">
       <div class="watchlist-analytics">
-        <p class="trending-text">David Blaine Ascension</p>
-        <owl-carousel-o [options]="owlOptions">
-          <ng-container *ngFor="let item of [0,1,2,3]">
-            <ng-template carouselSlide>
-              <div class="item main-carousel-item">
-                <img class="main-item-img" src="assets/img/item-1.png">
-                <span class="live-now">Live now</span>
-                <div class="main-item-block">
-                  <img class="main-item-block-img" src="assets/img/item-4.png">
-                  <div>
-                    <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                    <p class="main-text-2">Fox News</p>
-                    <p class="main-text-3">17k watching</p>
+
+        <ng-container *ngFor="let owlItem of owlTextsArray">
+          <p class="trending-text">{{owlItem.name}}</p>
+          <owl-carousel-o [options]="owlOptions">
+            <ng-container *ngFor="let item of [0,1,2,3]">
+              <ng-template carouselSlide>
+                <div class="item main-carousel-item">
+                  <img class="main-item-img" src="assets/img/item-1.png">
+                  <span class="live-now">Live now</span>
+                  <div class="main-item-block">
+                    <img class="main-item-block-img" src="assets/img/item-4.png">
+                    <div>
+                      <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                      <p class="main-text-2">Fox News</p>
+                      <p class="main-text-3">17k watching</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ng-template>
-          </ng-container>
-        </owl-carousel-o>
-
-        <p class="trending-text">All videos</p>
-
-        <owl-carousel-o [options]="owlOptions">
-          <ng-container *ngFor="let item of [0,1,2,3,4]">
-            <ng-template carouselSlide>
-              <div class="item main-carousel-item">
-                <img class="main-item-img" src="assets/img/item-1.png">
-                <span class="live-now">Live now</span>
-                <div class="main-item-block">
-                  <img class="main-item-block-img" src="assets/img/item-4.png">
-                  <div>
-                    <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                    <p class="main-text-2">Fox News</p>
-                    <p class="main-text-3">17k watching</p>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </ng-container>
-        </owl-carousel-o>
-
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+        </ng-container>
       </div>
     </div>
     <div class="tab-pane fade" id="pVideos" role="tabpanel" aria-labelledby="pVideos-tab">

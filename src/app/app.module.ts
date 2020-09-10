@@ -4,11 +4,13 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-import {CoreModule} from './core/core.module';
+import {CoreModule} from '@core/core.module';
 import { ChannelsComponent } from './channels/channels.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {JwtModule} from '@auth0/angular-jwt';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {RequestInterceptor} from '@core/helpers/http.interceptor';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -35,7 +37,13 @@ export function tokenGetter() {
       }
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

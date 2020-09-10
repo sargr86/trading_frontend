@@ -4,6 +4,8 @@ import {NavbarComponent} from './components/layout/navbar/navbar.component';
 import {LeftSidebarComponent} from './components/layout/left-sidebar/left-sidebar.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {HttpClientModule} from '@angular/common/http';
+import {ToastrModule} from 'ngx-toastr';
+
 
 
 
@@ -15,7 +17,8 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     CommonModule,
     DragDropModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   exports: [
     NavbarComponent,

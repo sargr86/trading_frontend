@@ -43,7 +43,18 @@
         <span>+99</span>
       </div>
       <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
-      <img src="assets/img/user.svg" *ngIf="auth.loggedIn()" class="user-icon" (click)="auth.logout()">
+
+
+      <div class="nav-item dropdown" *ngIf="auth.loggedIn()">
+        <img src="assets/img/user.svg" data-toggle="dropdown"
+             class="user-icon nav-link dropdown-toggle">
+        <div class="dropdown-menu">
+          <span class="dropdown-item" *ngIf="!router.url.includes('profile')" (click)="router.navigate(['user/profile'])">Profile</span>
+          <span class="dropdown-item" (click)="auth.logout()">Logout</span>
+        </div>
+      </div>
+
+
       <div class="dotes">
         <i class="fas fa-ellipsis-v"></i>
       </div>

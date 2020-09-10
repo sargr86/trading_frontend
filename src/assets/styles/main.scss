@@ -54,6 +54,21 @@ li {
   cursor: pointer;
 }
 
+.header-bit-btn {
+  width: 88px;
+  height: 36px;
+  background: #F53C6F;
+  font-family: "Muli-Light";
+  font-size: 16px;
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
 .notification-block {
   display: flex;
   align-items: center;
@@ -68,7 +83,7 @@ li {
 .home-search {
   display: flex;
   position: relative;
-  width: 434px;
+  width: 300px;
   height: 36px;
   background: #EFEFEF;
   padding-left: 15px;
@@ -101,7 +116,6 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 40px;
 }
 
 .black-text {
@@ -739,7 +753,7 @@ li {
     padding: 0 100px;
   }
   .home-search {
-    width: 340px;
+    width: 250px;
   }
   .header-left-logo {
     margin-bottom: 20px;
@@ -772,6 +786,12 @@ li {
 }
 
 @media (max-width: 1200px) {
+  .home-black-block {
+    width: 470px;
+  }
+  .black-text {
+    font-size: 8px;
+  }
   .ads-block-right {
     width: 230px;
   }

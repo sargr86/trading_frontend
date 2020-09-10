@@ -29,10 +29,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   register() {
-    this.auth.register(this.registerForm.value).subscribe((dt: any) => {
+    this.subscriptions.push(this.auth.register(this.registerForm.value).subscribe((dt: any) => {
       localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
       this.router.navigate(['/']);
-    });
+    }));
   }
 
   ngOnDestroy() {

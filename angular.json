@@ -33,6 +33,11 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
@@ -133,6 +138,6 @@
   },
   "defaultProject": "frontend",
   "cli": {
-    "analytics": "c0e86ee7-19fd-4e74-8c11-3ee01f1787b8"
+    "analytics": "0b7d53e9-24ed-44e5-ae9a-5b7f8672961c"
   }
 }

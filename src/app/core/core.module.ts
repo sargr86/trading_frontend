@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {NavbarComponent} from './components/layout/navbar/navbar.component';
 import {LeftSidebarComponent} from './components/layout/left-sidebar/left-sidebar.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {HttpClientModule} from '@angular/common/http';
+
 
 
 @NgModule({
@@ -12,7 +14,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
   ],
   imports: [
     CommonModule,
-    DragDropModule
+    DragDropModule,
+    HttpClientModule
   ],
   exports: [
     NavbarComponent,

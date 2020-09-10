@@ -37,11 +37,12 @@
       </div>
     </div>
     <div class="notification-block">
+      <a class="header-bits-btn">Buy Bits</a>
       <div class="notification">
         <i class="fas fa-bell"></i>
         <span>+99</span>
       </div>
-      <a class="header-login-btn" (click)="router.navigate(['auth/login'])">Login</a>
+      <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
       <div class="dotes">
         <i class="fas fa-ellipsis-v"></i>
       </div>

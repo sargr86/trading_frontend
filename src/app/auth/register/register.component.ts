@@ -1,16 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../core/services/auth.service';
 import {Subscription} from 'rxjs';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  loginForm: FormGroup;
+export class RegisterComponent implements OnInit, OnDestroy {
+  registerForm: FormGroup;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -18,18 +18,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private auth: AuthService
   ) {
-    this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-    });
-
   }
 
   ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      full_name: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
 
-  login() {
-    this.auth.login(this.loginForm.value).subscribe((dt: any) => {
+  register() {
+    this.auth.register(this.registerForm.value).subscribe((dt: any) => {
       localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
       this.router.navigate(['/']);
     });

@@ -32,15 +32,10 @@ export class LeftSidebarComponent implements OnInit {
     this.sampleList = this.moveItemInArray(this.sampleList, event.previousIndex, event.currentIndex);
   }
 
-  moveItemInArray(arr, newIndex, oldIndex) {
-    if (newIndex >= arr.length) {
-      let k = newIndex - arr.length + 1;
-      while (k--) {
-        arr.push(undefined);
-      }
-    }
-    arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
-    return arr; // for testing
+  moveItemInArray(arr, from, to) {
+    const f = arr.splice(from, 1)[0];
+    arr.splice(to, 0, f);
+    return arr;
   }
 
 }

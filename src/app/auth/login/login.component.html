@@ -10,8 +10,21 @@
     <div class="login-block">
       <p class="login-title">Login</p>
       <form [formGroup]="loginForm">
+
+        <!-- E-mail field -->
         <input class="login-input" placeholder="Email" formControlName="email">
+        <span class="error" *ngIf="email.hasError('required') && isSubmitted">
+          E-mail is <strong>required</strong>
+        </span>
+        <span class="error" *ngIf="email.hasError('patternInvalid')">
+          E-mail is <strong>invalid</strong>
+        </span>
+
+        <!-- Password field -->
         <input class="login-input" placeholder="Password" type="password" formControlName="password">
+        <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
+          Password is <strong>required</strong>
+        </span>
         <p class="forgot-password">Forgot password?</p>
         <a class="login-submit" (click)="login()">Login</a>
       </form>

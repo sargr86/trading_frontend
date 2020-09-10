@@ -1,4 +1,5 @@
 @import "./fonts";
+@import "variables";
 @import '~ngx-toastr/toastr';
 
 html, body, p, h1, h2, h3, h4, ul {
@@ -743,6 +744,10 @@ li {
   height: 400px !important;
   margin-bottom: 40px;
   float: left;
+}
+
+.error{
+  color: $red;
 }
 
 

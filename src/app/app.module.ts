@@ -6,8 +6,14 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {CoreModule} from './core/core.module';
 import { ChannelsComponent } from './channels/channels.component';
-import {CarouselModule} from 'ngx-owl-carousel-o';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CarouselModule} from 'ngx-owl-carousel-o';
+import {JwtModule} from '@auth0/angular-jwt';
+
+// Token getter for JWT module
+export function tokenGetter() {
+  return localStorage.getItem('token') || '';
+}
 
 @NgModule({
   declarations: [
@@ -20,7 +26,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
-    CarouselModule
+    CarouselModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        whitelistedDomains: ['localhost:3001', ],
+        blacklistedRoutes: ['localhost:3001/auth/']
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

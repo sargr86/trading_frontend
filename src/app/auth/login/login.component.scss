@@ -22,7 +22,7 @@
   right: 0;
 }
 .login-btn {
-  border-radius: 28px 0px 0px 28px;
+  border-radius: 28px 0 0 28px;
   width: 128px;
   height: 57px;
   background: white;
@@ -35,7 +35,7 @@
   transition: 0.3s ease-in-out;
 }
 .register-btn {
-  border-radius: 28px 0px 0px 28px;
+  border-radius: 28px 0 0 28px;
   width: 128px;
   height: 57px;
   display: flex;
@@ -66,7 +66,7 @@
 .login-input {
   width: 100%;
   height: 51px;
-  box-shadow: 0px 0px 6px #006DCC2E;
+  box-shadow: 0 0 6px #006DCC2E;
   padding: 15px 32px;
   margin-bottom: 32px;
   color: #CECECE;
@@ -74,7 +74,7 @@
   font-family: "Muli-Regular";
 }
 .login-input:focus {
-  box-shadow: 0px 0px 6px #F53C6F24;
+  box-shadow: 0 0 6px #F53C6F24;
   border: 0.5px solid #F53C6F;
 }
 .forgot-password {

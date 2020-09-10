@@ -1,4 +1,8 @@
 import {OwlOptions} from 'ngx-owl-carousel-o';
+import {environment} from '../../../environments/environment';
+
+
+export const API_URL = environment.apiUrl;
 
 export const OWL_OPTIONS: OwlOptions = {
   loop: true,

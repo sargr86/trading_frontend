@@ -671,6 +671,54 @@ li {
   margin-left: 15px;
 }
 
+.sub-block {
+  display: flex;
+  justify-content: space-between;
+}
+.user-profile-block .watchlist-input {
+  background: #00000000;
+}
+.user-profile-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pWatchlist .nav-tabs .nav-item {
+  width: 156px;
+}
+
+.pWatchlist .nav-link {
+  width: 156px;
+}
+
+.profile-list .watchlist-search {
+  width: 290px;
+  background: #00000029 0% 0% no-repeat padding-box;
+}
+
+.sub-bell {
+  color: #F53C6F;
+  margin-right: 16px;
+}
+
+.subscribe-btn {
+  width: 119px;
+  height: 36px;
+  background: #18B587;
+  font-family: "Muli-Light";
+  font-size: 16px;
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.profile-block img {
+  width: 100%;
+  margin-bottom: 28px;
+}
 .smile-block {
   display: flex;
   justify-content: space-between;
@@ -765,8 +813,21 @@ li {
     margin-bottom: 20px;
   }
 }
+@media (max-width: 1600px) {
+  .user-profile-block {
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
+}
 
 @media (max-width: 1400px) {
+  .user-profile-block .watchlist-search {
+    margin: 0 auto 20px;
+  }
+  .user-profile-block .nav-tabs {
+    display: flex;
+    justify-content: space-around;
+  }
   .home-header {
     padding: 20px 50px;
     flex-direction: column;

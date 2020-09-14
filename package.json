@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/router": "~9.1.12",
     "@auth0/angular-jwt": "^4.0.0",
+    "@videojs/themes": "^1.0.0",
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.3",
     "jquery": "^3.5.1",
@@ -30,6 +31,7 @@
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "video.js": "^7.8.4",
+    "videojs-record": "^4.1.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

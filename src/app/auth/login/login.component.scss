@@ -1,13 +1,17 @@
+@import "variables";
+
 .login-content {
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 100vh;
 }
+
 .login-content-right {
   background: white;
   width: 57%;
 }
+
 .login-content-left {
   width: 43%;
   display: flex;
@@ -17,10 +21,12 @@
   position: relative;
   background: url('assets/img/back-login.png');
 }
+
 .login-abs {
   position: absolute;
   right: 0;
 }
+
 .login-btn {
   border-radius: 28px 0 0 28px;
   width: 128px;
@@ -34,6 +40,7 @@
   color: #18B587 !important;
   transition: 0.3s ease-in-out;
 }
+
 .register-btn {
   border-radius: 28px 0 0 28px;
   width: 128px;
@@ -46,23 +53,27 @@
   color: #fff !important;
   transition: 0.3s ease-in-out;
 }
+
 .register-btn:hover {
   background: white;
   cursor: pointer;
   color: #18B587 !important;
 }
+
 .login-content-right {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-left: 150px;
 }
+
 .login-title {
   color: #545454;
   font-size: 32px;
   font-family: "Muli-Bold";
   margin-bottom: 32px;
 }
+
 .login-input {
   width: 100%;
   height: 51px;
@@ -73,19 +84,25 @@
   font-size: 16px;
   font-family: "Muli-Regular";
 }
+
 .login-input:focus {
   box-shadow: 0 0 6px #F53C6F24;
   border: 0.5px solid #F53C6F;
+  //box-shadow: 0 0 6px #F53C6F24;
+  //border: 0.5px solid $green;
 }
+
 .forgot-password {
   text-align: right;
   color: #545454;
   font-size: 16px;
   font-family: "Muli-Regular";
 }
+
 .login-block {
   width: 430px;
 }
+
 .login-submit {
   width: 100%;
   height: 51px;
@@ -101,6 +118,7 @@
   margin-top: 47px;
   transition: 0.3s ease-in-out;
 }
+
 .login-submit:hover {
   cursor: pointer;
   background: #c52551;
@@ -116,6 +134,7 @@
     align-items: start;
   }
 }
+
 @media (max-width: 1200px) {
   .login-logo {
     margin-left: 40px;
@@ -124,6 +143,7 @@
     padding-left: 80px;
   }
 }
+
 @media (max-width: 991px) {
   .login-content-left {
     align-items: start;
@@ -141,6 +161,7 @@
     flex-direction: column;
   }
 }
+
 @media (max-width: 480px) {
   .login-block {
     width: 90%;

@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AuthService} from '@core/services/auth.service';
+import {passwordConfirmation} from '@core/helpers/password-confirmation';
 
 @Component({
   selector: 'app-register',
@@ -22,17 +23,38 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      full_name: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-    });
+        full_name: ['', Validators.required],
+        email: ['', Validators.required],
+        password: ['', Validators.required],
+        confirm_password: ['', Validators.required],
+      },
+      {validator: passwordConfirmation('password', 'confirm_password')}
+    );
   }
 
   register() {
-    this.subscriptions.push(this.auth.register(this.registerForm.value).subscribe((dt: any) => {
-      localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-      this.router.navigate(['/']);
-    }));
+    if (this.registerForm.valid) {
+      this.subscriptions.push(this.auth.register(this.registerForm.value).subscribe(async (dt: any) => {
+        localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+        await this.router.navigate(['/']);
+      }));
+    }
+  }
+
+  get fullName(): AbstractControl {
+    return this.registerForm.get('full_name');
+  }
+
+  get email(): AbstractControl {
+    return this.registerForm.get('email');
+  }
+
+  get pass(): AbstractControl {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPass(): AbstractControl {
+    return this.registerForm.get('confirm_password');
   }
 
   ngOnDestroy() {

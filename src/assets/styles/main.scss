@@ -126,7 +126,7 @@ li {
 }
 
 .home-black-block {
-  width: 585px;
+  width: 625px;
   height: 36px;
   background: #393939;
   padding: 11px 12px;
@@ -812,6 +812,12 @@ li {
 .error{
   color: $red;
 }
+.down-white {
+  color: white;
+  font-size: 12px;
+}
+
+
 
 
 @media (max-width: 1700px) {
@@ -869,7 +875,7 @@ li {
 
 @media (max-width: 1200px) {
   .home-black-block {
-    width: 470px;
+    width: 485px;
   }
   .black-text {
     font-size: 8px;
@@ -957,9 +963,6 @@ li {
     justify-content: space-around;
     height: auto;
   }
-  .home-black-item {
-    margin-bottom: 10px;
-  }
   .header-left {
     width: 100%;
     justify-content: space-between;
@@ -970,6 +973,10 @@ li {
 }
 
 @media (max-width: 767px) {
+  .home-black-item {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
   .home-search {
     width: 100%;
   }

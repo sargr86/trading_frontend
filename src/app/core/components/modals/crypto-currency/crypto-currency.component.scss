@@ -1,7 +1,10 @@
-.crypto-content {
+.crypto-section {
   background: #0E1D43 0% 0% no-repeat padding-box;
   width: 100%;
-  padding: 130px 200px;
+  padding: 60px 200px;
+}
+.crypto-content {
+  padding: 60px 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -49,17 +52,24 @@
 .crypto-map {
   width: 100%;
 }
-
+.crypto-section i {
+  color: white;
+  float: right;
+  margin-right: 10px;
+}
 
 
 @media (max-width: 1400px) {
-  .crypto-content {
-    padding: 120px 150px;
+  .crypto-section {
+    padding: 60px 150px;
   }
 }
 @media (max-width: 991px) {
+  .crypto-section {
+    padding: 60px 50px;
+    justify-content: space-around;
+  }
   .crypto-content {
-    padding: 120px 50px;
     justify-content: space-around;
   }
 }

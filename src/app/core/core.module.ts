@@ -5,6 +5,8 @@ import {LeftSidebarComponent} from './components/layout/left-sidebar/left-sideba
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
+import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/crypto-currency.component';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 
 
@@ -12,17 +14,22 @@ import {ToastrModule} from 'ngx-toastr';
 @NgModule({
   declarations: [
     NavbarComponent,
-    LeftSidebarComponent
+    LeftSidebarComponent,
+    CryptoCurrencyComponent
   ],
   imports: [
     CommonModule,
     DragDropModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     NavbarComponent,
     LeftSidebarComponent
+  ],
+  entryComponents: [
+    // CryptoCurrencyComponent
   ]
 })
 export class CoreModule {

@@ -8,7 +8,7 @@
       <input class="home-search-input" placeholder="Search">
       <i class="fas fa-search"></i>
     </div>
-    <div class="home-black-block">
+    <div class="home-black-block" (click)="openModal(cryptoModal)">
       <div class="home-black-item">
         <p class="black-text">EDF.PA</p>
         <p class="black-percent-red">3.36%</p>
@@ -52,6 +52,11 @@
           <span class="dropdown-item" (click)="auth.logout()">Logout</span>
         </div>
       </div>
+
+      <!-- Crypto currency page will be opened in modal -->
+      <ng-template #cryptoModal>
+        <app-crypto-currency></app-crypto-currency>
+      </ng-template>
 
 
       <div class="dotes">

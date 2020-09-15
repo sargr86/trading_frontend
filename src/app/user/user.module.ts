@@ -13,7 +13,8 @@ import {VideoComponent} from '@app/user/video/video.component';
     CommonModule,
     UserRoutingModule,
     SharedModule
-  ]
+  ],
+  exports: []
 })
 export class UserModule {
 }

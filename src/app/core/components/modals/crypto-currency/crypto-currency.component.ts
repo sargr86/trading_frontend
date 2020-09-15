@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BsModalService} from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-crypto-currency',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CryptoCurrencyComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private modalService: BsModalService,
+  ) {
+  }
 
   ngOnInit(): void {
+  }
+
+  closeModal() {
+    this.modalService.hide();
   }
 
 }

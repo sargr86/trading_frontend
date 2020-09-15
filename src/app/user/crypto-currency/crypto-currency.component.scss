@@ -1,0 +1,65 @@
+.crypto-content {
+  background: #0E1D43 0% 0% no-repeat padding-box;
+  width: 100%;
+  padding: 130px 200px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.crypto-item {
+  width: 200px;
+  height: 179px;
+  margin-bottom: 32px;
+  background: #F53C6F 0% 0% no-repeat padding-box;
+  padding: 24px;
+}
+.crypto-item-red {
+  background: #F53C6F;
+}
+.crypto-item-green {
+  background: #18B587;
+}
+.crypto-text-1 {
+  color: #FFFFFF;
+  font-size: 14px;
+  font-family: "Muli-Light";
+  margin-bottom: 11px;
+}
+.crypto-text-2 {
+  color: #FFFFFF;
+  font-size: 26px;
+  font-family: "Muli-Bold";
+  margin-bottom: 8px;
+  position: relative;
+  margin-left: 6px;
+}
+.crypto-text-abs {
+  position: absolute;
+  left: -5px;
+  top: -6px;
+  font-size: 16px;
+  font-family: "Muli-Bold";
+}
+.crypto-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 130px;
+}
+.crypto-map {
+  width: 100%;
+}
+
+
+
+@media (max-width: 1400px) {
+  .crypto-content {
+    padding: 120px 150px;
+  }
+}
+@media (max-width: 991px) {
+  .crypto-content {
+    padding: 120px 50px;
+    justify-content: space-around;
+  }
+}

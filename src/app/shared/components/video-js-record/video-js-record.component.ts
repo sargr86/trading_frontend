@@ -72,8 +72,10 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         */
         // configure videojs-record plugin
         record: {
-          audio: true,
-          video: true,
+          // audio: true,
+          // video: true,
+          screen: true,
+          displayMilliseconds: false,
           maxLength: 10,
           debug: true
         }

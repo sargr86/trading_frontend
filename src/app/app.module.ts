@@ -21,7 +21,7 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     HomeComponent,
-    ChannelsComponent
+    ChannelsComponent,
   ],
   imports: [
     BrowserModule,

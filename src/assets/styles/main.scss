@@ -42,6 +42,10 @@ li {
   list-style-type: none;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .home-header {
   min-height: 80px;
   display: flex;
@@ -825,6 +829,34 @@ li {
   margin: 0;
 }
 
+.OT_publisher {
+  //width: 100% !important;
+  //height: 570px !important;
+}
+
+#screen {
+  height: 370px;
+}
+
+.session-container {
+  position: relative;
+
+  .screen-share {
+    position: absolute;
+    bottom: 5px;
+    left: 163px;
+    padding: 5px;
+    color: white;
+  }
+
+  #startScreenShare {
+    background: #18B587;
+  }
+
+  #stopScreenShare {
+
+  }
+}
 
 @media (max-width: 1700px) {
   .home-header {

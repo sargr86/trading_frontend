@@ -1,0 +1,6 @@
+<div [ngClass]="{'publishing': publishing}" #publisherDiv></div>
+<button id="startScreenShare" class="screen-share" [hidden]="screenSharing" (click)="shareScreen()">Share Screen
+</button>
+<button id="stopScreenShare" class="screen-share" [hidden]="!screenSharing" (click)="stopScreenSharing()">Stop Sharing
+  Screen
+</button>

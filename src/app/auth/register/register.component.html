@@ -12,6 +12,7 @@
       <form [formGroup]="registerForm">
         <input class="login-input" placeholder="Full Name" formControlName="full_name">
         <span class="error" *ngIf="fullName.hasError('required')">Full name is required</span>
+        <input class="login-input" placeholder="Username">
         <input class="login-input" placeholder="Email" formControlName="email">
         <span class="error" *ngIf="email.hasError('required')">E-mail is required</span>
         <input class="login-input" placeholder="Password" type="password" formControlName="password">
@@ -19,6 +20,15 @@
         <input class="login-input" placeholder="Reenter Password" type="password" formControlName="confirm_password">
         <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords not match</span>
         <span class="error" *ngIf="confirmPass.hasError('required')">Please confirm the password</span>
+        <div class="register-block">
+          <select class="register-select">
+            <option>Month</option>
+            <option>Year</option>
+            <option>Week</option>
+          </select>
+          <input class="register-day" placeholder="Day">
+          <input class="register-day" placeholder="Year">
+        </div>
         <a class="login-submit" (click)="register()">Sign Up</a>
       </form>
     </div>

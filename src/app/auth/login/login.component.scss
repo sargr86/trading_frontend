@@ -79,7 +79,8 @@
   height: 51px;
   box-shadow: 0 0 6px #006DCC2E;
   padding: 15px 32px;
-  margin-bottom: 32px;
+  margin-bottom: 8px;
+  margin-top: 20px;
   color: #CECECE;
   font-size: 16px;
   font-family: "Muli-Regular";
@@ -88,8 +89,6 @@
 .login-input:focus {
   box-shadow: 0 0 6px #F53C6F24;
   border: 0.5px solid #F53C6F;
-  //box-shadow: 0 0 6px #F53C6F24;
-  //border: 0.5px solid $green;
 }
 
 .forgot-password {
@@ -123,6 +122,46 @@
   cursor: pointer;
   background: #c52551;
 }
+
+.register-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.register-select {
+  width: 200px;
+  height: 51px;
+  box-shadow: 0 0 6px #006DCC2E;
+  padding: 15px 32px;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  color: #CECECE;
+  font-size: 16px;
+  font-family: "Muli-Regular";
+  outline: none;
+  border: 0;
+}
+.register-select:focus {
+  box-shadow: 0 0 6px #F53C6F24;
+  border: 0.5px solid #F53C6F;
+}
+.register-day {
+  width: 100px;
+  height: 51px;
+  box-shadow: 0 0 6px #006DCC2E;
+  padding: 15px 32px;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  color: #CECECE;
+  font-size: 16px;
+  font-family: "Muli-Regular";
+  outline: none;
+  border: 0;
+}
+.register-day:focus {
+   box-shadow: 0 0 6px #F53C6F24;
+   border: 0.5px solid #F53C6F;
+ }
 
 
 @media (max-width: 1400px) {
@@ -163,6 +202,13 @@
 }
 
 @media (max-width: 480px) {
+  .register-block {
+    flex-direction: column;
+  }
+  .register-select,
+  .register-day {
+    width: 100%;
+  }
   .login-block {
     width: 90%;
   }

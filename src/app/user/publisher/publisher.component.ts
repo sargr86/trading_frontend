@@ -13,8 +13,6 @@ export class PublisherComponent implements OnInit, AfterViewInit {
   @Input() session: OT.Session;
   publisher: OT.Publisher;
   publishing: boolean;
-  screenSharing = false;
-  screenSharePublisher;
 
   constructor(private opentokService: OpentokService) {
     this.publishing = false;
@@ -43,41 +41,8 @@ export class PublisherComponent implements OnInit, AfterViewInit {
     });
   }
 
-  shareScreen() {
 
 
-    OT.checkScreenSharingCapability(response => {
-      if (!response.supported || response.extensionRegistered === false) {
-        alert('Screen sharing not supported');
-      } else if (response.extensionInstalled === false) {
-        alert('Browser requires extension');
-      } else {
-        this.screenSharePublisher = OT.initPublisher(
-          'screen',
-          {
-            insertMode: 'append',
-            width: '100%',
-            height: '100%',
-            videoSource: 'screen',
-            publishAudio: true
-          },
-          this.handleCallback
-        );
-        this.screenSharing = true;
-        this.session.publish(this.screenSharePublisher, this.handleCallback);
-      }
-    });
-  }
 
-  stopScreenSharing() {
-    this.screenSharePublisher.destroy();
-    this.screenSharing = false;
-  }
-
-  handleCallback(error) {
-    if (error) {
-      console.log('error: ' + error.message);
-    }
-  }
 
 }

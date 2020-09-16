@@ -29,6 +29,10 @@ export class VideoComponent implements OnInit {
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
 
+  screenSharing = false;
+  screenSharePublisher;
+
+
   constructor(
     private ref: ChangeDetectorRef,
     private opentokService: OpentokService,
@@ -38,7 +42,7 @@ export class VideoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.opentokService.initSession().subscribe(({apiKey, sessionId, token}: any) => {
+    this.opentokService.initSession('ok').subscribe(({apiKey, sessionId, token}: any) => {
       this.session = OT.initSession(apiKey, sessionId);
 
       this.session.on('streamCreated', (event) => {
@@ -47,8 +51,7 @@ export class VideoComponent implements OnInit {
         console.log(event.stream.videoType)
 
 
-        const streamContainer =
-          event.stream.videoType === 'screen' ? 'screen' : 'subscriber';
+        const streamContainer = event.stream.videoType === 'screen' ? 'screen' : 'subscriber';
         this.session.subscribe(
           event.stream,
           streamContainer,
@@ -61,7 +64,9 @@ export class VideoComponent implements OnInit {
             if (error) {
               console.log('error: ' + error.message);
             } else {
+              console.log('callback')
               this.handleScreenShare(event.stream.videoType);
+
             }
           }
         );
@@ -93,6 +98,50 @@ export class VideoComponent implements OnInit {
     if (streamType === 'screen') {
       const screenShare = document.getElementById('screen');
       screenShare.classList.add('sub-active');
+      const sessionContainer = document.getElementById('session-container');
+      sessionContainer.classList.add('sub-active');
+    }
+  }
+
+  shareScreen() {
+
+
+    OT.checkScreenSharingCapability(response => {
+      if (!response.supported || response.extensionRegistered === false) {
+        alert('Screen sharing not supported');
+      } else if (response.extensionInstalled === false) {
+        alert('Browser requires extension');
+      } else {
+        this.screenSharePublisher = OT.initPublisher(
+          'screen',
+          {
+            insertMode: 'append',
+            width: '100%',
+            height: '100%',
+            videoSource: 'screen',
+            publishAudio: true
+          },
+          this.handleCallback
+        );
+        this.screenSharing = true;
+        const screenShare = document.getElementById('screen');
+        screenShare.classList.add('pub-active');
+        const sessionContainer = document.getElementById('session-container');
+        sessionContainer.classList.add('pub-active');
+        console.log('share')
+        this.session.publish(this.screenSharePublisher, this.handleCallback);
+      }
+    });
+  }
+
+  stopScreenSharing() {
+    this.screenSharePublisher.destroy();
+    this.screenSharing = false;
+  }
+
+  handleCallback(error) {
+    if (error) {
+      console.log('error: ' + error.message);
     }
   }
 }

@@ -12,8 +12,9 @@ export class OpentokService {
   ) {
   }
 
-  initSession() {
-    return this.httpClient.get(`${API_URL}users/get-opentok-params`); //opentok
+  initSession(room) {
+    console.log(room)
+    return this.httpClient.get(`${API_URL}users/session/${room}`); //opentok
   }
 
   connect() {

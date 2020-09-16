@@ -1,7 +1,12 @@
 <!--<app-vjs-player [options]="{ autoplay: true, controls: true, fluid: false, sources: [{ src: 'https://vjs.zencdn.net/v/oceans.mp4', type: 'video/mp4' }]}"></app-vjs-player>-->
 <!--<app-video-js-record></app-video-js-record>-->
-<div *ngIf="session" class="session-container">
+<div *ngIf="session" id="session-container">
   <div id="screen" class="screen"></div>
-  <app-publisher [session]="session"></app-publisher>
   <app-subscriber *ngFor="let stream of streams" [stream]="stream" [session]="session"></app-subscriber>
+  <app-publisher [session]="session"></app-publisher>
+  <button id="startScreenShare" class="screen-share" [hidden]="screenSharing" (click)="shareScreen()">Share Screen
+  </button>
+  <button id="stopScreenShare" class="screen-share" [hidden]="!screenSharing" (click)="stopScreenSharing()">Stop Sharing
+    Screen
+  </button>
 </div>

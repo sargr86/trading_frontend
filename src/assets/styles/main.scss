@@ -818,8 +818,23 @@ li {
 .down-white {
   color: white;
   font-size: 12px;
+  font-family: "Muli-Bold";
 }
 
+.chat-by-bits {
+  width: 68px;
+  height: 19px;
+  background: #F53C6F 0% 0% no-repeat padding-box;
+  font-size: 12px;
+  font-family: "Muli-SemiBold";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+}
+.chat-by-bits {
+  color: white !important;
+}
 .modal-dialog {
   width: 100vw !important;
   max-width: 100vw !important;

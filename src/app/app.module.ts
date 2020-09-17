@@ -11,6 +11,7 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import {JwtModule} from '@auth0/angular-jwt';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RequestInterceptor} from '@core/helpers/http.interceptor';
+import {StockProfileComponent} from '@app/user/stock-profile/stock-profile.component';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -22,6 +23,7 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     ChannelsComponent,
+    StockProfileComponent
   ],
   imports: [
     BrowserModule,

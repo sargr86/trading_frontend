@@ -5,13 +5,17 @@ import {UserRoutingModule} from './user-routing.module';
 import {ProfileComponent} from './profile/profile.component';
 import {SharedModule} from '@shared/shared.module';
 import {VideoComponent} from '@app/user/video/video.component';
-import { PublisherComponent } from './publisher/publisher.component';
-import { SubscriberComponent } from './subscriber/subscriber.component';
-import { PurchaseBitsComponent } from './purchase-bits/purchase-bits.component';
+import {PublisherComponent} from './publisher/publisher.component';
+import {SubscriberComponent} from './subscriber/subscriber.component';
 
 
 @NgModule({
-  declarations: [ProfileComponent, VideoComponent, PublisherComponent, SubscriberComponent, PurchaseBitsComponent],
+  declarations: [
+    ProfileComponent,
+    VideoComponent,
+    PublisherComponent,
+    SubscriberComponent
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,

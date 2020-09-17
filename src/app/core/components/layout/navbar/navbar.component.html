@@ -36,7 +36,12 @@
       <i class="down-white fas fa-chevron-down"></i>
     </div>
     <div class="notification-block">
-      <a class="header-bit-btn">Buy Bits</a>
+      <div class="nav-item dropdown">
+        <a class="header-bit-btn nav-link dropdown-toggle" data-toggle="dropdown">Buy Bits</a>
+        <div class="dropdown-menu">
+          <app-purchase-bits></app-purchase-bits>
+        </div>
+      </div>
       <div class="notification">
         <i class="fas fa-bell"></i>
         <span>+99</span>

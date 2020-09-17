@@ -7,15 +7,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/crypto-currency.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
-
-
+import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purchase-bits.component';
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
     LeftSidebarComponent,
-    CryptoCurrencyComponent
+    CryptoCurrencyComponent,
+    PurchaseBitsComponent
   ],
   imports: [
     CommonModule,

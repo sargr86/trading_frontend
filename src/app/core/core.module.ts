@@ -26,7 +26,8 @@ import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purch
   ],
   exports: [
     NavbarComponent,
-    LeftSidebarComponent
+    LeftSidebarComponent,
+    PurchaseBitsComponent
   ],
   entryComponents: [
     // CryptoCurrencyComponent

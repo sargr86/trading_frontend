@@ -7,10 +7,11 @@ import {SharedModule} from '@shared/shared.module';
 import {VideoComponent} from '@app/user/video/video.component';
 import { PublisherComponent } from './publisher/publisher.component';
 import { SubscriberComponent } from './subscriber/subscriber.component';
+import { PurchaseBitsComponent } from './purchase-bits/purchase-bits.component';
 
 
 @NgModule({
-  declarations: [ProfileComponent, VideoComponent, PublisherComponent, SubscriberComponent],
+  declarations: [ProfileComponent, VideoComponent, PublisherComponent, SubscriberComponent, PurchaseBitsComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

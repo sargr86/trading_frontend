@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import * as OT from '@opentok/client';
 import {OpentokService} from '@core/services/opentok.service';
 import {ToastrService} from 'ngx-toastr';
@@ -8,7 +8,7 @@ import {ToastrService} from 'ngx-toastr';
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit {
+export class VideoComponent implements OnInit, AfterViewInit {
 
   videoRecordOptions = {
     controls: true,
@@ -25,6 +25,14 @@ export class VideoComponent implements OnInit {
       }
     }
   };
+
+  videoJSPlayerOptions = {
+    autoplay: true,
+    controls: true,
+    fluid: false,
+    sources: []
+  }
+
   session: OT.Session;
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
@@ -32,16 +40,20 @@ export class VideoComponent implements OnInit {
   screenSharing = false;
   screenSharePublisher;
 
+  @ViewChild('video') videoEl;
 
   constructor(
     private ref: ChangeDetectorRef,
     private opentokService: OpentokService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private elRef: ElementRef
   ) {
     this.changeDetectorRef = ref;
   }
 
   ngOnInit(): void {
+
+
     this.opentokService.initSession('ok').subscribe(({apiKey, sessionId, token}: any) => {
       this.session = OT.initSession(apiKey, sessionId);
 
@@ -66,6 +78,7 @@ export class VideoComponent implements OnInit {
             } else {
               console.log('callback')
               this.handleScreenShare(event.stream.videoType);
+              this.getVideo(event.stream);
 
             }
           }
@@ -142,6 +155,36 @@ export class VideoComponent implements OnInit {
   handleCallback(error) {
     if (error) {
       console.log('error: ' + error.message);
+    }
+  }
+
+
+  ngAfterViewInit() {
+    // this.getVideo();
+  }
+
+  getVideo(eventStream) {
+    const video = this.elRef.nativeElement.querySelector('video');
+    console.log(video)
+
+    if (video) {
+
+      navigator.getUserMedia({
+          video: true,
+          audio: true
+        },
+        (stream) => {
+          console.log(stream);
+          console.log(eventStream);
+          video.srcObject = stream;
+          video.play();
+
+          this.videoJSPlayerOptions.sources[0] = stream;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }

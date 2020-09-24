@@ -14,7 +14,8 @@ export class OpentokService {
 
   initSession(room) {
     console.log(room)
-    return this.httpClient.get(`${API_URL}users/session/${room}`); //opentok
+    // return this.httpClient.get(`${API_URL}users/session/${room}`); //opentok
+    return this.httpClient.get(`https://tokboxtesting123.herokuapp.com/room/session`); //opentok
   }
 
   connect() {

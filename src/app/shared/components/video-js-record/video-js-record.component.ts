@@ -2,7 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ElementRef, AfterViewInit
+  ElementRef, AfterViewInit, EventEmitter, Output
 } from '@angular/core';
 
 import videojs from 'video.js';
@@ -25,6 +25,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
   readonly config: any;
   private player: any;
   private plugin: any;
+
+  @Output() shareScreen = new EventEmitter();
 
   // constructor initializes our declared vars
   constructor(elementRef: ElementRef) {
@@ -104,7 +106,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     });
 
     // device is ready
-    this.player.on('deviceReady', () => {
+    this.player.on('deviceReady', (a) => {
+      console.log(a)
+      this.shareScreen.emit();
       console.log('device is ready!');
     });
 

@@ -11,6 +11,7 @@ export class VideoJsComponent implements OnInit, OnDestroy {
   @ViewChild('target', {static: true}) target: ElementRef;
   @Input() options: {
     fluid: boolean,
+    liveui: boolean,
     aspectRatio: string,
     autoplay: boolean,
     sources: {
@@ -24,7 +25,14 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         maxLength: number,
         debug: boolean
       }
+    },
+
+    html5: {
+      vhs: {
+        withCredentials: boolean
+      }
     }
+
   };
   player: videojs.Player;
 
@@ -34,6 +42,8 @@ export class VideoJsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+
     // instantiate Video.js
     this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
       console.log('onPlayerReady', this);

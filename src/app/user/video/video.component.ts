@@ -1,14 +1,24 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import * as OT from '@opentok/client';
-import {OpentokService} from '@core/services/opentok.service';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
+import {OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {OpenviduService} from '@core/services/openvidu.service';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit, AfterViewInit {
+export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   videoRecordOptions = {
     controls: true,
@@ -33,129 +43,193 @@ export class VideoComponent implements OnInit, AfterViewInit {
     sources: []
   }
 
-  session: OT.Session;
-  streams: Array<OT.Stream> = [];
-  changeDetectorRef: ChangeDetectorRef;
+  OPENVIDU_SERVER_URL = 'https://localhost:4443';
+  OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
-  screenSharing = false;
-  screenSharePublisher;
+  // OpenVidu objects
+  OV: OpenVidu;
+  session: Session;
+  publisher: StreamManager; // Local
+  subscribers: StreamManager[] = []; // Remotes
 
   @ViewChild('video') videoEl;
 
+  // Join form
+  joinSessionForm: FormGroup;
+  mySessionId: string;
+  myUserName: string;
+
+  // Main video of the page, will be 'publisher' or one of the 'subscribers',
+  // updated by click event in UserVideoComponent children
+  mainStreamManager: StreamManager;
+
   constructor(
     private ref: ChangeDetectorRef,
-    private opentokService: OpentokService,
     private toastr: ToastrService,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private fb: FormBuilder,
+    private openViduService: OpenviduService
   ) {
-    this.changeDetectorRef = ref;
+    this.initForm();
   }
 
   ngOnInit(): void {
 
 
-    this.opentokService.initSession('ok').subscribe(({apiKey, sessionId, token}: any) => {
-      this.session = OT.initSession(apiKey, sessionId);
+    // this.opentokService.initSession('ok').subscribe(({apiKey, sessionId, token}: any) => {
+    //   this.session = OT.initSession(apiKey, sessionId);
+    //
+    //   this.session.on('streamCreated', (event) => {
+    //     this.streams.push(event.stream);
+    //     console.log(this.streams)
+    //     console.log(event.stream.videoType)
+    //
+    //
+    //     const streamContainer = event.stream.videoType === 'screen' ? 'screen' : 'subscriber';
+    //     this.session.subscribe(
+    //       event.stream,
+    //       streamContainer,
+    //       {
+    //         insertMode: 'append',
+    //         width: '100%',
+    //         height: '100%'
+    //       },
+    //       (error) => {
+    //         if (error) {
+    //           console.log('error: ' + error.message);
+    //         } else {
+    //           console.log('callback')
+    //           this.handleScreenShare(event.stream.videoType);
+    //           this.getVideo(event.stream);
+    //
+    //         }
+    //       }
+    //     );
+    //
+    //
+    //     this.changeDetectorRef.detectChanges();
+    //   });
+    //   this.session.on('streamDestroyed', (event) => {
+    //     const idx = this.streams.indexOf(event.stream);
+    //     if (idx > -1) {
+    //       this.streams.splice(idx, 1);
+    //       this.changeDetectorRef.detectChanges();
+    //     }
+    //   });
+    //
+    //   this.session.connect(token, (error) => {
+    //     if (error) {
+    //       console.log(error);
+    //     }
+    //     // this.toastr.error(error);
+    //   });
+    //   // this.opentokService.connect();
+    // });
 
-      this.session.on('streamCreated', (event) => {
-        this.streams.push(event.stream);
-        console.log(this.streams)
-        console.log(event.stream.videoType)
+  }
 
 
-        const streamContainer = event.stream.videoType === 'screen' ? 'screen' : 'subscriber';
-        this.session.subscribe(
-          event.stream,
-          streamContainer,
-          {
-            insertMode: 'append',
-            width: '100%',
-            height: '100%'
-          },
-          (error) => {
-            if (error) {
-              console.log('error: ' + error.message);
-            } else {
-              console.log('callback')
-              this.handleScreenShare(event.stream.videoType);
-              this.getVideo(event.stream);
+  @HostListener('window:beforeunload')
+  beforeunloadHandler() {
+    // On window closed leave session
+    this.leaveSession();
+  }
 
-            }
+
+  initForm() {
+    this.joinSessionForm = this.fb.group({
+      mySessionId: ['SessionA'],
+      myUserName: ['Participant' + Math.floor(Math.random() * 100)]
+    });
+  }
+
+  joinSession() {
+    this.OV = new OpenVidu();
+
+    this.session = this.OV.initSession();
+    this.getStreamEvents();
+
+    // const authUser = localStorage.getItem()
+
+    this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionA'}).subscribe((token: any) => {
+      // const {token} = data;
+      console.log(token)
+      this.session.connect(token.href, {clientData: this.joinSessionForm.value.myUserName})
+        .then(() => {
+          const video = this.elRef.nativeElement.querySelector('video');
+          const publisher: Publisher = this.OV.initPublisher(video, {
+            audioSource: undefined, // The source of audio. If undefined default microphone
+            videoSource: undefined, // The source of video. If undefined default webcam
+            publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
+            publishVideo: true,     // Whether you want to start publishing with your video enabled or not
+            resolution: '640x480',  // The resolution of your video
+            frameRate: 30,          // The frame rate of your video
+            insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
+            mirror: false           // Whether to mirror your local video or not
+          });
+
+          this.session.publish(publisher);
+
+          // Set the main video in the page to display our webcam and store our Publisher
+          this.mainStreamManager = publisher;
+          this.publisher = publisher;
+          console.log(publisher.stream.connection)
+        });
+
+
+    });
+
+  }
+
+  getStreamEvents() {
+    this.session.on('streamCreated', (event: StreamEvent) => {
+
+      const video = this.elRef.nativeElement.querySelector('video');
+      console.log('stream created', video)
+
+      const subscriber: Subscriber = this.session.subscribe(event.stream, video,
+        {
+          insertMode: 'append'
+        },
+        (error) => {
+          console.log(error)
+          if (error) {
+            console.log('error: ' + error.message);
+          } else {
+            console.log('callback')
+            // this.handleScreenShare(event.stream.videoType);
+            this.getVideo(event.stream);
+
           }
-        );
-
-
-        this.changeDetectorRef.detectChanges();
-      });
-      this.session.on('streamDestroyed', (event) => {
-        const idx = this.streams.indexOf(event.stream);
-        if (idx > -1) {
-          this.streams.splice(idx, 1);
-          this.changeDetectorRef.detectChanges();
         }
-      });
-
-      this.session.connect(token, (error) => {
-        if (error) {
-          console.log(error);
-        }
-        // this.toastr.error(error);
-      });
-      // this.opentokService.connect();
+      );
+      this.subscribers.push(subscriber);
     });
 
-  }
+    // On every Stream destroyed...
+    this.session.on('streamDestroyed', (event: StreamEvent) => {
 
-  handleScreenShare(streamType) {
-
-    if (streamType === 'screen') {
-      const screenShare = document.getElementById('screen');
-      screenShare.classList.add('sub-active');
-      const sessionContainer = document.getElementById('session-container');
-      sessionContainer.classList.add('sub-active');
-    }
-  }
-
-  shareScreen() {
-
-
-    OT.checkScreenSharingCapability(response => {
-      if (!response.supported || response.extensionRegistered === false) {
-        alert('Screen sharing not supported');
-      } else if (response.extensionInstalled === false) {
-        alert('Browser requires extension');
-      } else {
-        this.screenSharePublisher = OT.initPublisher(
-          'screen',
-          {
-            insertMode: 'append',
-            width: '100%',
-            height: '100%',
-            videoSource: 'screen',
-            publishAudio: true
-          },
-          this.handleCallback
-        );
-        this.screenSharing = true;
-        const screenShare = document.getElementById('screen');
-        screenShare.classList.add('pub-active');
-        const sessionContainer = document.getElementById('session-container');
-        sessionContainer.classList.add('pub-active');
-        console.log('share')
-        this.session.publish(this.screenSharePublisher, this.handleCallback);
-      }
+      // Remove the stream from 'subscribers' array
+      this.deleteSubscriber(event.stream.streamManager);
     });
   }
 
-  stopScreenSharing() {
-    this.screenSharePublisher.destroy();
-    this.screenSharing = false;
+  updateMainStreamManager(streamManager: StreamManager) {
+    this.mainStreamManager = streamManager;
   }
 
-  handleCallback(error) {
-    if (error) {
-      console.log('error: ' + error.message);
-    }
+
+  deleteSubscriber(streamManager: StreamManager) {
+
+  }
+
+  leaveSession() {
+
+  }
+
+  ngOnDestroy() {
+    // On component destroyed leave session
+    this.leaveSession();
   }
 
 

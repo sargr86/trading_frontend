@@ -1,14 +1,23 @@
-<app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>
+<app-vjs-player [options]="videoJSPlayerOptions" *ngIf="session"></app-vjs-player>
 <!--  <video width="400" height="300" autoplay id="video" controls #video></video>-->
-<div *ngIf="session" id="session-container">
-  <div id="screen" class="screen"></div>
-
-
-  <app-subscriber *ngFor="let stream of streams" [stream]="stream" [session]="session"></app-subscriber>
-  <app-publisher [session]="session" (shareScreen)="shareScreen()"></app-publisher>
-  <button id="startScreenShare" class="screen-share" [hidden]="screenSharing" (click)="shareScreen()">Share Screen
-  </button>
-  <button id="stopScreenShare" class="screen-share" [hidden]="!screenSharing" (click)="stopScreenSharing()">Stop Sharing
-    Screen
-  </button>
+<div id="main-container" class="container">
+  <div *ngIf="!session" id="join">
+    <div id="img-div"><img src="assets/img/openvidu_grey_bg_transp_cropped.png"/></div>
+    <div id="join-dialog" class="jumbotron vertical-center">
+      <h1>Join a video session</h1>
+      <form class="form-group" [formGroup]="joinSessionForm">
+        <p>
+          <label>Participant</label>
+          <input class="form-control" id="userName" formControlName="mySessionId" required>
+        </p>
+        <p>
+          <label>Session</label>
+          <input class="form-control" id="sessionId" formControlName="myUserName" required>
+        </p>
+        <p class="text-center">
+          <input class="btn btn-lg btn-success" (click)="joinSession()" value="Join!">
+        </p>
+      </form>
+    </div>
+  </div>
 </div>

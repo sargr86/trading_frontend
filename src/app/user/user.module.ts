@@ -7,6 +7,8 @@ import {SharedModule} from '@shared/shared.module';
 import {VideoComponent} from '@app/user/video/video.component';
 import {PublisherComponent} from './publisher/publisher.component';
 import {SubscriberComponent} from './subscriber/subscriber.component';
+import { UserVideoComponent } from './user-video/user-video.component';
+import { OvVideoComponent } from './ov-video/ov-video.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import {SubscriberComponent} from './subscriber/subscriber.component';
     ProfileComponent,
     VideoComponent,
     PublisherComponent,
-    SubscriberComponent
+    SubscriberComponent,
+    UserVideoComponent,
+    OvVideoComponent
   ],
   imports: [
     CommonModule,

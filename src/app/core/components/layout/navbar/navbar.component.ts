@@ -23,7 +23,14 @@ export class NavbarComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+  }
+
+  logout() {
+    this.auth.logout().subscribe(async () => {
+      localStorage.removeItem('token');
+      await this.router.navigate(['/']);
+    });
   }
 
 }

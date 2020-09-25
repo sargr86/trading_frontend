@@ -29,6 +29,7 @@
     "ngx-bootstrap": "^6.1.0",
     "ngx-owl-carousel-o": "^3.0.0",
     "ngx-toastr": "^12.1.0",
+    "openvidu-angular": "^2.15.0",
     "openvidu-browser": "^2.15.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",

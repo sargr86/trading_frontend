@@ -43,6 +43,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     sources: []
   }
 
+  streamCreated = false;
+
   OPENVIDU_SERVER_URL = 'https://localhost:4443';
   OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
@@ -154,7 +156,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionA'}).subscribe((token: any) => {
       // const {token} = data;
       console.log(token)
-      this.session.connect(token.href, {clientData: this.joinSessionForm.value.myUserName})
+      console.log({clientData: this.joinSessionForm.value.myUserName})
+      this.session.connect(token.href, {clientData: {myUserName: this.joinSessionForm.value.myUserName}})
         .then(() => {
           const video = this.elRef.nativeElement.querySelector('video');
           const publisher: Publisher = this.OV.initPublisher(video, {
@@ -185,7 +188,12 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.session.on('streamCreated', (event: StreamEvent) => {
 
       const video = this.elRef.nativeElement.querySelector('video');
+      this.streamCreated = true;
       console.log('stream created', video)
+      console.log(event.stream)
+
+      // const subscriber: Subscriber = this.session.subscribe(event.stream, undefined);
+      // this.subscribers.push(subscriber);
 
       const subscriber: Subscriber = this.session.subscribe(event.stream, video,
         {
@@ -204,6 +212,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
       this.subscribers.push(subscriber);
+      console.log(this.subscribers)
     });
 
     // On every Stream destroyed...

@@ -9,6 +9,7 @@ import {PublisherComponent} from './publisher/publisher.component';
 import {SubscriberComponent} from './subscriber/subscriber.component';
 import { UserVideoComponent } from './user-video/user-video.component';
 import { OvVideoComponent } from './ov-video/ov-video.component';
+import { VideoLibraryComponent } from './video-library/video-library.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { OvVideoComponent } from './ov-video/ov-video.component';
     PublisherComponent,
     SubscriberComponent,
     UserVideoComponent,
-    OvVideoComponent
+    OvVideoComponent,
+    VideoLibraryComponent
   ],
   imports: [
     CommonModule,

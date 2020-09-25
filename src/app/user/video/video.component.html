@@ -1,7 +1,12 @@
-<app-vjs-player [options]="videoJSPlayerOptions" *ngIf="session"></app-vjs-player>
-<!--  <video width="400" height="300" autoplay id="video" controls #video></video>-->
+<ng-container *ngIf="streamCreated">
+
+  <ng-container *ngFor="let sub of subscribers">
+    <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>
+  </ng-container>
+</ng-container>
+
 <div id="main-container" class="container">
-  <div *ngIf="!session" id="join">
+  <div *ngIf="!session" id="join-form">
     <div id="img-div"><img src="assets/img/openvidu_grey_bg_transp_cropped.png"/></div>
     <div id="join-dialog" class="jumbotron vertical-center">
       <h1>Join a video session</h1>
@@ -15,9 +20,15 @@
           <input class="form-control" id="sessionId" formControlName="myUserName" required>
         </p>
         <p class="text-center">
-          <input class="btn btn-lg btn-success" (click)="joinSession()" value="Join!">
+          <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">Join!</button>
         </p>
       </form>
     </div>
   </div>
+
+<!--  <ng-container *ngIf="session">-->
+<!--    <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
+<!--      <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>-->
+<!--    </div>-->
+<!--  </ng-container>-->
 </div>

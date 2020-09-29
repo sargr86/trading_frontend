@@ -4,6 +4,9 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {Subscription} from 'rxjs';
 import {AuthService} from '@core/services/auth.service';
 import {passwordConfirmation} from '@core/helpers/password-confirmation';
+import {DatePipe} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import {VerifyEmailComponent} from '@core/components/modals/verify-email/verify-email.component';
 
 @Component({
   selector: 'app-register',
@@ -13,32 +16,64 @@ import {passwordConfirmation} from '@core/helpers/password-confirmation';
 export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   subscriptions: Subscription[] = [];
+  isSubmitted = false;
 
   constructor(
     public router: Router,
     private fb: FormBuilder,
-    private auth: AuthService
+    private auth: AuthService,
+    private datePipe: DatePipe,
+    private dialog: MatDialog
   ) {
   }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
         full_name: ['', Validators.required],
+        username: ['', Validators.required],
         email: ['', Validators.required],
         password: ['', Validators.required],
         confirm_password: ['', Validators.required],
+        birthday: ['', Validators.required],
       },
       {validator: passwordConfirmation('password', 'confirm_password')}
     );
   }
 
   register() {
+    console.log(this.registerForm.value)
     if (this.registerForm.valid) {
       this.subscriptions.push(this.auth.register(this.registerForm.value).subscribe(async (dt: any) => {
         localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
         await this.router.navigate(['/']);
       }));
     }
+  }
+
+  dateChanged(e) {
+    const d = this.datePipe.transform(e, 'yyyy-MM-dd');
+    // this.registerForm.patchValue({birthday: d});
+  }
+
+  openModal() {
+    this.isSubmitted = true;
+
+    if (this.registerForm.valid) {
+
+      this.auth.sendEmailVerificationCode(this.registerForm.value).subscribe((code) => {
+        this.dialog.open(VerifyEmailComponent, {
+          height: '548px',
+          width: '548px',
+          data: {code}
+        }).afterClosed().subscribe((confirmed) => {
+          if (confirmed) {
+            this.register();
+          }
+        });
+      });
+    }
+
+
   }
 
   get fullName(): AbstractControl {
@@ -51,6 +86,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   get pass(): AbstractControl {
     return this.registerForm.get('password');
+  }
+
+  get username(): AbstractControl {
+    return this.registerForm.get('username');
   }
 
   get confirmPass(): AbstractControl {

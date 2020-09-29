@@ -35,6 +35,10 @@ export class AuthService {
     return this.httpClient.post<any>(`${API_URL}auth/login`, params);
   }
 
+  sendEmailVerificationCode(params) {
+    return this.httpClient.post<any>(`${API_URL}auth/send-verification-code`, params);
+  }
+
   logout() {
 
     return this.httpClient.get(`${API_URL}auth/logout`);

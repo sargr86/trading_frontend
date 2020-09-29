@@ -1,0 +1,10 @@
+<div id="verify-email">
+  <h1>Sign up</h1>
+  <h3>Enter verification code</h3>
+  <p>We sent a 4 digit code to {{email}}. Confirm it belongs to you to keep your account secure</p>
+  <form [formGroup]="verifyCodeForm">
+    <input placeholder="Enter code" formControlName="code">
+    <p id="resend-code">Resend code</p>
+    <button (click)="verifyCode()">Submit</button>
+  </form>
+</div>

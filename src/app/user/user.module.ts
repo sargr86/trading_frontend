@@ -10,7 +10,7 @@ import {SubscriberComponent} from './subscriber/subscriber.component';
 import { UserVideoComponent } from './user-video/user-video.component';
 import { OvVideoComponent } from './ov-video/ov-video.component';
 import { VideoLibraryComponent } from './video-library/video-library.component';
-
+import { OpenviduSessionModule } from 'openvidu-angular';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { VideoLibraryComponent } from './video-library/video-library.component';
   imports: [
     CommonModule,
     UserRoutingModule,
+    OpenviduSessionModule,
     SharedModule
   ],
   exports: []

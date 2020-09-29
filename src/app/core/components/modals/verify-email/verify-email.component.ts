@@ -30,7 +30,9 @@ export class VerifyEmailComponent implements OnInit {
     console.log(+this.verifyCodeForm.value.code, this.sentCode)
     if (this.sentCode === +this.verifyCodeForm.value.code) {
       this.codeVerified = true;
-      this.matDialogRef.close(true);
+      setTimeout(() => {
+        this.matDialogRef.close(true);
+      }, 4000);
     }
   }
 

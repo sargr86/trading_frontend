@@ -1,10 +1,18 @@
 <div id="verify-email">
-  <h1>Sign up</h1>
-  <h3>Enter verification code</h3>
-  <p>We sent a 4 digit code to {{email}}. Confirm it belongs to you to keep your account secure</p>
-  <form [formGroup]="verifyCodeForm">
-    <input placeholder="Enter code" formControlName="code">
-    <p id="resend-code">Resend code</p>
-    <button (click)="verifyCode()">Submit</button>
-  </form>
+  <ng-container [hidden]="codeVerified">
+    <h1>Sign up</h1>
+    <h3>Enter verification code</h3>
+    <p>We sent a 4 digit code to {{email}}. Confirm it belongs to you to keep your account secure</p>
+    <form [formGroup]="verifyCodeForm">
+      <input placeholder="Enter code" formControlName="code">
+      <p id="resend-code">Resend code</p>
+      <button (click)="verifyCode()">Submit</button>
+    </form>
+  </ng-container>
+  <div [hidden]="!codeVerified" id="thanks">
+    <img src="assets/img/checked.svg">
+    <p>
+      Thanks for verifying your e-mail address.
+    </p>
+  </div>
 </div>

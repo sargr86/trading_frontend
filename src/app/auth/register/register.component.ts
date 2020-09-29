@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         email: ['', Validators.required],
         password: ['', Validators.required],
         confirm_password: ['', Validators.required],
-        birthday: ['', Validators.required],
+        birthday: [''],
       },
       {validator: passwordConfirmation('password', 'confirm_password')}
     );

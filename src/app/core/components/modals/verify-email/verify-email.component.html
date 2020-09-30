@@ -1,5 +1,5 @@
 <div id="verify-email">
-  <ng-container [hidden]="codeVerified">
+  <ng-container *ngIf="!codeVerified">
     <h1>Sign up</h1>
     <h3>Enter verification code</h3>
     <p>We sent a 4 digit code to {{email}}. Confirm it belongs to you to keep your account secure</p>

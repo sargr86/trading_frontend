@@ -17,6 +17,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   subscriptions: Subscription[] = [];
   isSubmitted = false;
+  currentDate = new Date();
+  maxDate: Date;
 
   constructor(
     public router: Router,
@@ -25,6 +27,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private dialog: MatDialog
   ) {
+
+    // Age-restriction of 18
+    this.maxDate = new Date(this.currentDate.setFullYear(this.currentDate.getFullYear() - 18));
   }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 <section class="login-content">
   <div class="login-content-left">
-    <img class="login-logo" src="assets/img/metltvlogo.svg">
+    <img class="login-logo" src="assets/img/metltvlogo.svg" (click)="router.navigate(['/'])">
     <div class="login-abs">
       <a class="register-btn" (click)="router.navigate(['auth/login'])">Login</a>
       <a class="login-btn bg-white">Sign Up</a>
@@ -23,7 +23,7 @@
         <span class="error" *ngIf="confirmPass.hasError('required')">Please confirm the password</span>
         <div class="register-block">
           <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday" class="login-input"
-                 placeholder="Birthday"
+                 placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}" [maxDate]="maxDate"
                  bsDatepicker>
         </div>
         <a class="login-submit" (click)="openModal()">Sign Up</a>

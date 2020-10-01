@@ -20,13 +20,15 @@ html, body, p, h1, h2, h3, h4, ul {
   margin: 0;
   padding: 0;
 }
-
+ 
 input, button {
   outline: none;
   border: none;
   margin: 0;
   padding: 0;
 }
+
+ 
 
 button:hover {
   outline: none;
@@ -35,6 +37,7 @@ button:hover {
 
 a, a:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 button:active, button:focus {
@@ -67,6 +70,31 @@ li {
   color: #18B587 !important;
 }
 
+.left-menu{
+  margin-bottom: 40px;
+}
+
+.body-content-left{
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #ECECEC;
+        border-radius: 4px
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(174, 174, 174);
+    }
+
+    .left-list{
+        max-height: 570px;
+        overflow-x: auto;
+    }
+}
+ 
 .home-header {
   min-height: 80px;
   display: flex;
@@ -123,8 +151,12 @@ li {
   width: 300px;
   height: 36px;
   background: #EFEFEF;
-  padding-left: 15px;
   margin-right: 24px;
+  
+  input{
+    width: 100%;
+    padding-left: 15px;
+  }
 }
 
 .home-search-input {
@@ -306,6 +338,8 @@ li {
 .main-item-block {
   display: flex;
   margin-top: 12px;
+
+ 
 }
 
 .main-item-block img {
@@ -380,6 +414,7 @@ li {
   align-items: center;
   transition: 0.3s ease-in-out;
   margin-bottom: 5px;
+  border-bottom: 1px solid transparent;
 }
 
 .left-menu-main:hover {
@@ -418,7 +453,7 @@ li {
 }
 
 .left-list {
-  margin-top: 40px;
+  // margin-top: 40px;
 }
 
 .subscriptions-text {
@@ -947,7 +982,7 @@ li {
     width: 250px;
   }
   .header-left-logo {
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
   }
 }
 

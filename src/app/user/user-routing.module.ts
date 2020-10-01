@@ -3,9 +3,14 @@ import {Routes, RouterModule} from '@angular/router';
 import {ProfileComponent} from './profile/profile.component';
 import {VideoComponent} from '@app/user/video/video.component';
 import {VideoLibraryComponent} from '@app/user/video-library/video-library.component';
+import {ChatComponent} from './chat/chat.component';
 
 
 const routes: Routes = [
+  {
+    path: 'chat',
+    component: ChatComponent
+  },
   {
     path: 'profile',
     component: ProfileComponent

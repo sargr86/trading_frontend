@@ -11,6 +11,7 @@ import { UserVideoComponent } from './user-video/user-video.component';
 import { OvVideoComponent } from './ov-video/ov-video.component';
 import { VideoLibraryComponent } from './video-library/video-library.component';
 import { OpenviduSessionModule } from 'openvidu-angular';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { OpenviduSessionModule } from 'openvidu-angular';
     SubscriberComponent,
     UserVideoComponent,
     OvVideoComponent,
-    VideoLibraryComponent
+    VideoLibraryComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,

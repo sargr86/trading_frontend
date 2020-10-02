@@ -1,8 +1,10 @@
-<ng-container *ngIf="streamCreated">
-
-  <ng-container *ngFor="let sub of subscribers">
+<ng-container *ngIf="session">
+  <div id="video-chat-container">
+    <!--  <ng-container *ngFor="let sub of subscribers">-->
     <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>
-  </ng-container>
+    <app-chat-box (sendMessage)="sendMessage($event)"></app-chat-box>
+    <!--  </ng-container>-->
+  </div>
 </ng-container>
 
 <div id="main-container" class="container">
@@ -26,9 +28,9 @@
     </div>
   </div>
 
-<!--  <ng-container *ngIf="session">-->
-<!--    <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
-<!--      <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>-->
-<!--    </div>-->
-<!--  </ng-container>-->
+  <!--  <ng-container *ngIf="session">-->
+  <!--    <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
+  <!--      <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>-->
+  <!--    </div>-->
+  <!--  </ng-container>-->
 </div>

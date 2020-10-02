@@ -12,6 +12,8 @@ import {ToastrService} from 'ngx-toastr';
 import {OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {OpenviduService} from '@core/services/openvidu.service';
+import {SubjectService} from '@core/services/subject.service';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
   selector: 'app-video',
@@ -65,69 +67,23 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   // updated by click event in UserVideoComponent children
   mainStreamManager: StreamManager;
 
+  authUser;
+
   constructor(
     private ref: ChangeDetectorRef,
     private toastr: ToastrService,
     private elRef: ElementRef,
     private fb: FormBuilder,
-    private openViduService: OpenviduService
+    private openViduService: OpenviduService,
+    private subject: SubjectService,
+    private getAuthUser: GetAuthUserPipe
   ) {
-    this.initForm();
+
   }
 
   ngOnInit(): void {
-
-
-    // this.opentokService.initSession('ok').subscribe(({apiKey, sessionId, token}: any) => {
-    //   this.session = OT.initSession(apiKey, sessionId);
-    //
-    //   this.session.on('streamCreated', (event) => {
-    //     this.streams.push(event.stream);
-    //     console.log(this.streams)
-    //     console.log(event.stream.videoType)
-    //
-    //
-    //     const streamContainer = event.stream.videoType === 'screen' ? 'screen' : 'subscriber';
-    //     this.session.subscribe(
-    //       event.stream,
-    //       streamContainer,
-    //       {
-    //         insertMode: 'append',
-    //         width: '100%',
-    //         height: '100%'
-    //       },
-    //       (error) => {
-    //         if (error) {
-    //           console.log('error: ' + error.message);
-    //         } else {
-    //           console.log('callback')
-    //           this.handleScreenShare(event.stream.videoType);
-    //           this.getVideo(event.stream);
-    //
-    //         }
-    //       }
-    //     );
-    //
-    //
-    //     this.changeDetectorRef.detectChanges();
-    //   });
-    //   this.session.on('streamDestroyed', (event) => {
-    //     const idx = this.streams.indexOf(event.stream);
-    //     if (idx > -1) {
-    //       this.streams.splice(idx, 1);
-    //       this.changeDetectorRef.detectChanges();
-    //     }
-    //   });
-    //
-    //   this.session.connect(token, (error) => {
-    //     if (error) {
-    //       console.log(error);
-    //     }
-    //     // this.toastr.error(error);
-    //   });
-    //   // this.opentokService.connect();
-    // });
-
+    this.authUser = this.getAuthUser.transform();
+    this.initForm();
   }
 
 
@@ -141,7 +97,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   initForm() {
     this.joinSessionForm = this.fb.group({
       mySessionId: ['SessionA'],
-      myUserName: ['Participant' + Math.floor(Math.random() * 100)]
+      // myUserName: ['Participant' + Math.floor(Math.random() * 100)]
+      myUserName: [this.authUser.username]
     });
   }
 
@@ -153,11 +110,14 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // const authUser = localStorage.getItem()
 
-    this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionA'}).subscribe((token: any) => {
+    this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionB'}).subscribe((token: any) => {
       // const {token} = data;
+
+      this.receiveMessage();
+
       console.log(token)
       console.log({clientData: this.joinSessionForm.value.myUserName})
-      this.session.connect(token.href, {clientData: {myUserName: this.joinSessionForm.value.myUserName}})
+      this.session.connect(token, {clientData: this.joinSessionForm.value})
         .then(() => {
           const video = this.elRef.nativeElement.querySelector('video');
           const publisher: Publisher = this.OV.initPublisher(video, {
@@ -170,6 +130,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
             mirror: false           // Whether to mirror your local video or not
           });
+
 
           this.session.publish(publisher);
 
@@ -212,7 +173,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
       this.subscribers.push(subscriber);
-      console.log(this.subscribers)
+      // console.log(this.subscribers)
     });
 
     // On every Stream destroyed...
@@ -234,6 +195,32 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   leaveSession() {
 
+  }
+
+  sendMessage(e) {
+    console.log(e)
+    this.session.signal({
+      data: e.message,  // Any string (optional)
+      to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
+      type: 'my-chat'             // The type of message (optional)
+    })
+      .then(() => {
+
+        console.log('Message successfully sent');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  receiveMessage() {
+    this.session.on('signal:my-chat', (event: any) => {
+      // console.log(event.from)
+      this.subject.setMsgData({message: event.data, from: event.from.data});
+      // console.log(event.data); // Message
+      // console.log(event.from); // Connection object of the sender
+      // console.log(event.type); // The type of message ("my-chat")
+    });
   }
 
   ngOnDestroy() {

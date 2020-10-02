@@ -30,8 +30,8 @@
       <p>CLIPZ</p>
     </div>
   </div>
+  <p class="subscriptions-text">Subscriptions</p>
   <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
-    <p class="subscriptions-text">Subscriptions</p>
     <div class="main-item-block" *ngFor="let item of sampleList;let i = index" cdkDrag>
       <ng-container *ngIf="i < 5 && router.url!=='/'">
         <img class="list-img" src="assets/img/item-4.png">

@@ -14,6 +14,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {VideoService} from '@core/services/video.service';
 
 @Component({
   selector: 'app-video',
@@ -69,6 +70,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   mainStreamManager: StreamManager;
 
   authUser;
+  openViduToken;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -77,7 +79,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     private fb: FormBuilder,
     private openViduService: OpenviduService,
     private subject: SubjectService,
-    private getAuthUser: GetAuthUserPipe
+    private getAuthUser: GetAuthUserPipe,
+    private videoService: VideoService
   ) {
 
   }
@@ -111,9 +114,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // const authUser = localStorage.getItem()
 
-    this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionB'}).subscribe((token: any) => {
+    this.openViduService.getToken({email: this.authUser.email, sessionName: 'SessionB'}).subscribe((token: any) => {
       // const {token} = data;
-
+      console.log(token)
+      this.openViduToken = token;
       this.receiveMessage();
 
       console.log(token)
@@ -206,7 +210,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       type: 'my-chat'             // The type of message (optional)
     })
       .then(() => {
-
+        this.videoService.saveVideoMessage({}).subscribe(() => {
+        });
         console.log('Message successfully sent');
       })
       .catch(error => {

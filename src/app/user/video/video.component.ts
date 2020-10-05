@@ -25,8 +25,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   videoRecordOptions = {
     controls: true,
     bigPlayButton: false,
-    width: 320,
-    height: 240,
+    width: 640,
+    height: 480,
     fluid: false,
     plugins: {
       record: {
@@ -46,6 +46,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   streamCreated = false;
+  userNickname;
 
   OPENVIDU_SERVER_URL = 'https://localhost:4443';
   OPENVIDU_SERVER_SECRET = 'MY_SECRET';
@@ -238,7 +239,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(video)
 
     if (video) {
-
+      this.userNickname = JSON.parse(eventStream.connection.data.replace(/}%\/%{/g, ',')).clientData.myUserName;
+      console.log(this.userNickname)
       navigator.getUserMedia({
           video: true,
           audio: true

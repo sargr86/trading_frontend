@@ -41,8 +41,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
       autoplay: false,
       fluid: false,
       loop: false,
-      width: 320,
-      height: 240,
+      width: 640,
+      height: 480,
       bigPlayButton: false,
       controlBar: {
         volumePanel: true
@@ -74,11 +74,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         */
         // configure videojs-record plugin
         record: {
-          // audio: true,
-          // video: true,
+          audio: true,
+          video: true,
           screen: true,
           displayMilliseconds: false,
-          maxLength: 10,
+          maxLength: 180,
           debug: true
         }
       }

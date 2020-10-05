@@ -4,6 +4,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {VideoComponent} from '@app/user/video/video.component';
 import {VideoLibraryComponent} from '@app/user/video-library/video-library.component';
 import {ChatComponent} from './chat/chat.component';
+import {AuthGuard} from '@core/guards/auth.guard';
 
 
 const routes: Routes = [
@@ -17,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'video',
-    component: VideoComponent
+    component: VideoComponent,
   },
   {
     path: 'video-library',

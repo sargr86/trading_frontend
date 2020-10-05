@@ -35,8 +35,8 @@ export class ChatBoxComponent implements OnInit {
     this.subject.getMsgData().subscribe((data) => {
       // this.messageSent = sent;
       const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
-      // console.log(from)
       data.from = from.clientData.myUserName;
+      console.log(data.from)
       if (data.from !== this.authUser.username) {
 
         this.messages.push(data);
@@ -47,6 +47,7 @@ export class ChatBoxComponent implements OnInit {
   sendMessage(e) {
     console.log(this.authUser)
     this.messages.push(this.chatForm.value);
+    this.chatForm.reset();
     this.sendMsg.emit(this.chatForm.value);
   }
 

@@ -6,6 +6,7 @@ import {VideoJsRecordComponent} from './components/video-js-record/video-js-reco
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChatBoxComponent} from './components/chat-box/chat-box.component';
 import {GetAuthUserPipe} from './pipes/get-auth-user.pipe';
+import {BlobToFilePipe} from './pipes/blob-to-file.pipe';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {GetAuthUserPipe} from './pipes/get-auth-user.pipe';
     VideoJsComponent,
     VideoJsRecordComponent,
     ChatBoxComponent,
-    GetAuthUserPipe
+    GetAuthUserPipe,
+    BlobToFilePipe
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import {GetAuthUserPipe} from './pipes/get-auth-user.pipe';
     ReactiveFormsModule
   ],
   providers: [
-    GetAuthUserPipe
+    GetAuthUserPipe,
+    BlobToFilePipe
   ],
   exports: [
     FormsModule,

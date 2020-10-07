@@ -1,10 +1,10 @@
 <ng-container *ngIf="!router.url.includes('auth')">
   <app-navbar></app-navbar>
   <section class="body-content">
-    <div class="body-content-left">
+    <div class="body-content-left" *ngIf="!router.url.includes('/user/accessibility-statement')">
       <app-left-sidebar></app-left-sidebar>
     </div>
-    <div class="body-content-right">
+    <div class="body-content-right" [ngClass]="{'full-width': router.url.includes('/user/accessibility-statement')}">
       <router-outlet></router-outlet>
     </div>
   </section>

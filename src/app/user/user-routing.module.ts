@@ -4,9 +4,19 @@ import {ProfileComponent} from './profile/profile.component';
 import {VideoComponent} from '@app/user/video/video.component';
 import {VideoLibraryComponent} from '@app/user/video-library/video-library.component';
 import {ChatComponent} from './chat/chat.component';
+import { AccessibilityStatementComponent } from './accessibility-statement/accessibility-statement.component';
+import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 
 
 const routes: Routes = [
+  {
+    path: 'cookie-policy',
+    component: CookiePolicyComponent
+  },
+  {
+    path: 'accessibility-statement',
+    component: AccessibilityStatementComponent
+  },
   {
     path: 'chat',
     component: ChatComponent

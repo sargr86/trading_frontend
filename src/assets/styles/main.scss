@@ -266,6 +266,9 @@ li {
 
 .body-content-right {
   width: calc(100% - 250px);
+  &.full-width{
+    width: 100%;
+  }
 }
 
 .body-content {

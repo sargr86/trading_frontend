@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,oCAAoC;AACpC,AAAA,SAAS,CAAC,KAAK,CAAC;EAEd,gBAAgB,EAAE,OAAO;CAC1B",
+    "sources": [
+        "video-js-record.component.scss"
+    ],
+    "names": [],
+    "file": "video-js-record.component.css"
+}

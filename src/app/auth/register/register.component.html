@@ -19,12 +19,13 @@
         <input class="login-input" placeholder="Password" type="password" formControlName="password">
         <span class="error" *ngIf="isSubmitted && pass.hasError('required')">Password is required</span>
         <input class="login-input" placeholder="Reenter Password" type="password" formControlName="confirm_password">
-        <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords not match</span>
-        <span class="error" *ngIf="confirmPass.hasError('required')">Please confirm the password</span>
+        <span class="error" *ngIf="isSubmitted && confirmPass.hasError('notMatch')">Passwords not match</span>
+        <span class="error" *ngIf="isSubmitted && confirmPass.hasError('required')">Please confirm the password</span>
         <div class="register-block">
           <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday" class="login-input"
                  placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}" [maxDate]="maxDate"
                  bsDatepicker>
+          <span class="error" *ngIf="isSubmitted && pass.hasError('birthday')">Birth day is required</span>
         </div>
         <a class="login-submit" (click)="openModal()">Sign Up</a>
       </form>

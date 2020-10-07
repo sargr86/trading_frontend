@@ -4,6 +4,7 @@ import {HomeComponent} from './home/home.component';
 import {ChannelsComponent} from './channels/channels.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {NonAuthGuard} from '@core/guards/non-auth.guard';
+import {NotFoundComponent} from '@core/components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
     canActivate: [AuthGuard]
-  }
+  },
+  {path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({

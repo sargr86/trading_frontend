@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -13,7 +13,10 @@ export class ChatBoxComponent implements OnInit {
   messageSent = false;
   messages = [];
   authUser;
+  videoRecordingStarted = false;
 
+  @Input('openViduToken') openViduToken;
+  @Input('session') session;
   @Output('sendMessage') sendMsg = new EventEmitter();
 
   constructor(
@@ -21,17 +24,19 @@ export class ChatBoxComponent implements OnInit {
     private subject: SubjectService,
     private getAuthUser: GetAuthUserPipe
   ) {
-
     this.authUser = this.getAuthUser.transform();
-
-
-    this.chatForm = fb.group({
-      from: [this.authUser.username],
-      message: ['', Validators.required]
-    });
   }
 
   ngOnInit(): void {
+
+    console.log(this.openViduToken)
+
+    this.chatForm = this.fb.group({
+      token: [this.openViduToken],
+      from: [this.authUser.username],
+      message: ['', Validators.required]
+    });
+
     this.subject.getMsgData().subscribe((data) => {
       // this.messageSent = sent;
       const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
@@ -42,13 +47,17 @@ export class ChatBoxComponent implements OnInit {
         this.messages.push(data);
       }
     });
+
+    this.subject.getVideoRecordingState().subscribe(data => {
+      this.videoRecordingStarted = data.recording;
+    });
   }
 
   sendMessage(e) {
-    console.log(this.authUser)
+    console.log(this.chatForm.value)
     this.messages.push(this.chatForm.value);
-    this.chatForm.reset();
     this.sendMsg.emit(this.chatForm.value);
+    this.chatForm.patchValue({message: ''});
   }
 
 }

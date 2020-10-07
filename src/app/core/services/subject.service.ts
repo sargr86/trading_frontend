@@ -6,6 +6,7 @@ import {Observable, Subject} from 'rxjs';
 })
 export class SubjectService {
   public messageData = new Subject<any>();
+  public videoRecordingState = new Subject<any>();
 
   constructor() {
   }
@@ -16,5 +17,13 @@ export class SubjectService {
 
   getMsgData(): Observable<any> {
     return this.messageData.asObservable();
+  }
+
+  setVideoRecordingState(value) {
+    this.videoRecordingState.next(value);
+  }
+
+  getVideoRecordingState(): Observable<any> {
+    return this.videoRecordingState.asObservable();
   }
 }

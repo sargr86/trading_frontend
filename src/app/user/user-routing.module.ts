@@ -17,8 +17,12 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'video',
+    path: 'video/publish',
     component: VideoComponent,
+  },
+  {
+    path: 'video/watch',
+    component: VideoComponent
   },
   {
     path: 'video-library',

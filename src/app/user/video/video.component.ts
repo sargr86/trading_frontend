@@ -15,6 +15,7 @@ import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-video',
@@ -72,6 +73,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   authUser;
   openViduToken;
 
+  recordingStarted = false;
+  watcher = false;
+
+  webcams = [];
+
   constructor(
     private ref: ChangeDetectorRef,
     private toastr: ToastrService,
@@ -80,14 +86,32 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     private openViduService: OpenviduService,
     private subject: SubjectService,
     private getAuthUser: GetAuthUserPipe,
-    private videoService: VideoService
+    private videoService: VideoService,
+    public router: Router
   ) {
 
   }
 
   ngOnInit(): void {
+
+
+    // navigator.mediaDevices.enumerateDevices()
+    //   .then((devices) => {
+    //     this.webcams = devices.filter(d => d.kind === 'videoinput');
+    //     console.log(this.webcams);
+    //   });
+
+
+    this.watcher = this.router.url.includes('watch');
+
     this.authUser = this.getAuthUser.transform();
     this.initForm();
+
+    this.subject.getVideoRecordingState().subscribe(data => {
+      if (!data.viaSocket) {
+        this.sendRecordingState(data.recording);
+      }
+    });
   }
 
 
@@ -119,6 +143,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(token)
       this.openViduToken = token;
       this.receiveMessage();
+      this.receiveRecordingState();
 
       console.log(token)
       console.log({clientData: this.joinSessionForm.value.myUserName})
@@ -210,13 +235,32 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       type: 'my-chat'             // The type of message (optional)
     })
       .then(() => {
-        this.videoService.saveVideoMessage({}).subscribe(() => {
+        this.videoService.saveVideoMessage(e).subscribe(() => {
         });
         console.log('Message successfully sent');
       })
       .catch(error => {
         console.error(error);
       });
+  }
+
+  sendRecordingState(recording) {
+    this.session.signal({
+      data: recording,  // Any string (optional)
+      to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
+      type: 'recording-state'             // The type of message (optional)
+    }).then(() => {
+
+    });
+  }
+
+  receiveRecordingState() {
+    this.session.on('signal:recording-state', (event: any) => {
+      const obj = {event, ...{socket: true}};
+      console.log(obj)
+      console.log('received')
+      this.subject.setVideoRecordingState({recording: event.data, ...{viaSocket: true}});
+    });
   }
 
   receiveMessage() {

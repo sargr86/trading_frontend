@@ -14,6 +14,7 @@ import * as Record from 'videojs-record/dist/videojs.record.js';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from '@shared/pipes/blob-to-file.pipe';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
   selector: 'app-video-js-record',
@@ -25,6 +26,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
   // index to create unique ID for component
   idx = 'clip1';
   authUser;
+  recordingState = 'idle';
   readonly config: any;
   private player: any;
   private plugin: any;
@@ -38,7 +40,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     elementRef: ElementRef,
     private videoService: VideoService,
     private getAuthUser: GetAuthUserPipe,
-    private blobToFile: BlobToFilePipe
+    private blobToFile: BlobToFilePipe,
+    private subject: SubjectService
   ) {
     this.player = false;
 
@@ -128,13 +131,14 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     // user clicked the record button and started recording
     this.player.on('startRecord', (aa) => {
       console.log(this.openViduToken)
+      this.recordingState = 'active';
+      this.subject.setVideoRecordingState({recording: true, viaSocket: false});
       this.videoService.saveVideoToken({
         token: this.openViduToken,
         username: this.authUser.username,
         name: '',
         status: 'pending'
       }).subscribe(() => {
-
       });
       console.log('started recording!');
     });
@@ -148,6 +152,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
       fd.append('username', this.authUser.username);
       fd.append('video_name', this.player.recordedData.name);
       fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
+      this.subject.setVideoRecordingState({recording: false});
+      this.recordingState = 'finished';
       this.videoService.saveRecordedData(fd).subscribe(() => {
 
       });

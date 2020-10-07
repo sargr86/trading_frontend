@@ -20,7 +20,7 @@ html, body, p, h1, h2, h3, h4, ul {
   margin: 0;
   padding: 0;
 }
- 
+
 input, button {
   outline: none;
   border: none;
@@ -28,7 +28,7 @@ input, button {
   padding: 0;
 }
 
- 
+
 
 button:hover {
   outline: none;
@@ -94,7 +94,7 @@ li {
         overflow-x: auto;
     }
 }
- 
+
 .home-header {
   min-height: 80px;
   display: flex;
@@ -152,7 +152,7 @@ li {
   height: 36px;
   background: #EFEFEF;
   margin-right: 24px;
-  
+
   input{
     width: 100%;
     padding-left: 15px;
@@ -339,7 +339,7 @@ li {
   display: flex;
   margin-top: 12px;
 
- 
+
 }
 
 .main-item-block img {
@@ -654,7 +654,7 @@ li {
 }
 
 .chat-content {
-  margin-bottom: 40px;
+  //margin-bottom: 40px;
   box-shadow: 0 0 6px #0000001A;
 }
 

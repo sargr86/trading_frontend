@@ -149,27 +149,31 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log({clientData: this.joinSessionForm.value.myUserName})
       this.session.connect(token, {clientData: this.joinSessionForm.value})
         .then(() => {
-          const video = this.elRef.nativeElement.querySelector('video');
-          const publisher: Publisher = this.OV.initPublisher(video, {
-            audioSource: undefined, // The source of audio. If undefined default microphone
-            videoSource: undefined, // The source of video. If undefined default webcam
-            publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
-            publishVideo: true,     // Whether you want to start publishing with your video enabled or not
-            resolution: '640x480',  // The resolution of your video
-            frameRate: 30,          // The frame rate of your video
-            insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
-            mirror: false           // Whether to mirror your local video or not
-          });
+          console.log(token.includes('PUBLISHER'))
+          if (token.includes('PUBLISHER')) {
 
 
-          this.session.publish(publisher);
+            const video = this.elRef.nativeElement.querySelector('video');
+            const publisher: Publisher = this.OV.initPublisher(video, {
+              audioSource: undefined, // The source of audio. If undefined default microphone
+              videoSource: undefined, // The source of video. If undefined default webcam
+              publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
+              publishVideo: true,     // Whether you want to start publishing with your video enabled or not
+              resolution: '640x480',  // The resolution of your video
+              frameRate: 30,          // The frame rate of your video
+              insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
+              mirror: false           // Whether to mirror your local video or not
+            });
 
-          // Set the main video in the page to display our webcam and store our Publisher
-          this.mainStreamManager = publisher;
-          this.publisher = publisher;
-          console.log(publisher.stream.connection)
+
+            this.session.publish(publisher);
+
+            // Set the main video in the page to display our webcam and store our Publisher
+            this.mainStreamManager = publisher;
+            this.publisher = publisher;
+            console.log(publisher.stream.connection)
+          }
         });
-
 
     });
 
@@ -179,6 +183,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.session.on('streamCreated', (event: StreamEvent) => {
 
       const video = this.elRef.nativeElement.querySelector('video');
+      // const video = undefined;
       this.streamCreated = true;
       console.log('stream created', video)
       console.log(event.stream)
@@ -203,7 +208,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
       this.subscribers.push(subscriber);
-      // console.log(this.subscribers)
+      console.log(this.subscribers)
     });
 
     // On every Stream destroyed...

@@ -1,0 +1,48 @@
+<div class="chat-content">
+  <ng-container *ngIf="videoRecordingStarted">
+    <div class="chat-title">
+      <div class="dropdown">
+        <div class="dropdown-toggle" id="dropdownChat" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="false">
+          Chat
+        </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownChat">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div>
+      <img src="assets/img/dotes.png">
+    </div>
+    <div class="chat-information">
+      <div class="chat-block" *ngFor="let message of messages">
+        <img src="assets/img/item-12.png">
+        <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' : '')}}</p>
+        <p class="chat-block-2">{{message.message}}</p>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <form [formGroup]="chatForm">
+        <input class="chat-input" formControlName="message" placeholder="Comment" (keyup.enter)="sendMessage($event)">
+      </form>
+      <div class="chat-footer-smile">
+        <div class="nav-item dropdown">
+          <a class="chat-by-bits nav-lin" data-toggle="dropdown">Buy Bits</a>
+          <div class="dropdown-menu">
+            <!--              <app-purchase-bits></app-purchase-bits>-->
+          </div>
+        </div>
+
+        <div class="smile-block">
+          <p class="smile">0/200</p>
+          <i class="send fas fa-paper-plane"></i>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!videoRecordingStarted">
+    <div id="chat-placeholder">
+      <span>When recording is started, the chat box will appear here</span>
+    </div>
+  </ng-container>
+</div>

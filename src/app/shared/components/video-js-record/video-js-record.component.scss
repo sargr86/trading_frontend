@@ -3,3 +3,16 @@
   //background-color: #42f489;
   background-color: #000000;
 }
+
+#live-session-finished {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 100%;
+  color: #ffffff;
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

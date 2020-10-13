@@ -1,8 +1,13 @@
-<ng-container *ngIf="streamCreated">
-
-  <ng-container *ngFor="let sub of subscribers">
-    <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>
-  </ng-container>
+<ng-container *ngIf="session">
+  <div id="video-chat-container" *ngIf="openViduToken">
+    <!--  <ng-container *ngFor="let sub of subscribers">-->
+    <!--    <p>{{userNickname}}</p>-->
+    <app-vjs-player [options]="videoJSPlayerOptions" *ngIf="watcher"></app-vjs-player>
+    <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>
+    <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                  (sendMessage)="sendMessage($event)"></app-chat-box>
+    <!--  </ng-container>-->
+  </div>
 </ng-container>
 
 <div id="main-container" class="container">
@@ -12,11 +17,11 @@
       <h1>Join a video session</h1>
       <form class="form-group" [formGroup]="joinSessionForm">
         <p>
-          <label>Participant</label>
+          <label>Session</label>
           <input class="form-control" id="userName" formControlName="mySessionId" required>
         </p>
         <p>
-          <label>Session</label>
+          <label>Participant</label>
           <input class="form-control" id="sessionId" formControlName="myUserName" required>
         </p>
         <p class="text-center">
@@ -26,9 +31,9 @@
     </div>
   </div>
 
-<!--  <ng-container *ngIf="session">-->
-<!--    <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
-<!--      <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>-->
-<!--    </div>-->
-<!--  </ng-container>-->
+  <!--  <ng-container *ngIf="session">-->
+  <!--    <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
+  <!--      <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>-->
+  <!--    </div>-->
+  <!--  </ng-container>-->
 </div>

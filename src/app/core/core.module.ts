@@ -9,6 +9,7 @@ import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/c
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purchase-bits.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     NavbarComponent,
     LeftSidebarComponent,
     CryptoCurrencyComponent,
-    PurchaseBitsComponent
+    PurchaseBitsComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,

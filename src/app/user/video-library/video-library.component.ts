@@ -11,7 +11,7 @@ import {
 } from 'openvidu-browser';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {ToastrService} from 'ngx-toastr';
-import {OpenViduLayout, OpenViduLayoutOptions, OpenviduSessionComponent, UserModel} from 'openvidu-angular';
+import {OpenViduLayout, OpenViduLayoutOptions, OpenviduSessionComponent, OvSettings, UserModel} from 'openvidu-angular';
 
 @Component({
   selector: 'app-video-library',
@@ -53,7 +53,7 @@ export class VideoLibraryComponent implements OnInit {
 
   initForm() {
     this.joinSessionForm = this.fb.group({
-      mySessionId: ['SessionA'],
+      mySessionId: ['SessionB'],
       myUserName: ['Participant' + Math.floor(Math.random() * 100)]
     });
   }
@@ -64,7 +64,7 @@ export class VideoLibraryComponent implements OnInit {
 
   getToken() {
     this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionA'}).subscribe((token: any) => {
-      this.tokens.push(token.href);
+      this.tokens.push(token);
       this.session = true;
       console.log(this.tokens)
     });

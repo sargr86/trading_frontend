@@ -2,7 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ElementRef, AfterViewInit, EventEmitter, Output
+  ElementRef, AfterViewInit, EventEmitter, Output, Input
 } from '@angular/core';
 
 import videojs from 'video.js';
@@ -11,6 +11,10 @@ import * as RecordRTC from 'recordrtc';
 
 
 import * as Record from 'videojs-record/dist/videojs.record.js';
+import {VideoService} from '@core/services/video.service';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {BlobToFilePipe} from '@shared/pipes/blob-to-file.pipe';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
   selector: 'app-video-js-record',
@@ -21,15 +25,24 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
   // index to create unique ID for component
   idx = 'clip1';
-
+  authUser;
+  recordingState = 'idle';
   readonly config: any;
   private player: any;
   private plugin: any;
 
+  @Input('openViduToken') openViduToken;
+
   @Output() shareScreen = new EventEmitter();
 
   // constructor initializes our declared vars
-  constructor(elementRef: ElementRef) {
+  constructor(
+    elementRef: ElementRef,
+    private videoService: VideoService,
+    private getAuthUser: GetAuthUserPipe,
+    private blobToFile: BlobToFilePipe,
+    private subject: SubjectService
+  ) {
     this.player = false;
 
     // save reference to plugin (so it initializes)
@@ -41,8 +54,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
       autoplay: false,
       fluid: false,
       loop: false,
-      width: 320,
-      height: 240,
+      width: 640,
+      height: 480,
       bigPlayButton: false,
       controlBar: {
         volumePanel: true
@@ -74,11 +87,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         */
         // configure videojs-record plugin
         record: {
-          // audio: true,
-          // video: true,
+          audio: true,
+          video: true,
           screen: true,
           displayMilliseconds: false,
-          maxLength: 10,
+          maxLength: 180,
           debug: true
         }
       }
@@ -86,6 +99,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngOnInit() {
+    console.log('TOKEN!!!!!!')
+    console.log(this.openViduToken)
+    this.authUser = this.getAuthUser.transform();
   }
 
   // use ngAfterViewInit to make sure we initialize the videojs element
@@ -113,7 +129,17 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     });
 
     // user clicked the record button and started recording
-    this.player.on('startRecord', () => {
+    this.player.on('startRecord', (aa) => {
+      console.log(this.openViduToken)
+      this.recordingState = 'active';
+      this.subject.setVideoRecordingState({recording: true, viaSocket: false});
+      this.videoService.saveVideoToken({
+        token: this.openViduToken,
+        username: this.authUser.username,
+        name: '',
+        status: 'pending'
+      }).subscribe(() => {
+      });
       console.log('started recording!');
     });
 
@@ -122,6 +148,15 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
       // recordedData is a blob object containing the recorded data that
       // can be downloaded by the user, stored on server etc.
       console.log('finished recording: ', this.player.recordedData);
+      const fd: FormData = new FormData();
+      fd.append('username', this.authUser.username);
+      fd.append('video_name', this.player.recordedData.name);
+      fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
+      this.subject.setVideoRecordingState({recording: false});
+      this.recordingState = 'finished';
+      this.videoService.saveRecordedData(fd).subscribe(() => {
+
+      });
     });
 
     // error handling

@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  userData;
 
   constructor(
     private httpClient: HttpClient,
@@ -37,6 +38,24 @@ export class AuthService {
 
   sendEmailVerificationCode(params) {
     return this.httpClient.post<any>(`${API_URL}auth/send-verification-code`, params);
+  }
+
+  checkRoles(role: string, userData = null) {
+
+    if (userData) {
+      this.userData = userData;
+    }
+    if (this.loggedIn() && this.userData) {
+      if ('role' in this.userData) {
+        return this.userData.role['name_en'].toLowerCase() === role;
+      } else {
+
+        return this.userData.roles.map(r => {
+          return (r['name_en'].toLowerCase().replace(' ', '_') === role);
+        }).some(Boolean);
+      }
+    }
+    return false;
   }
 
   logout() {

@@ -6,7 +6,7 @@ import {VideoLibraryComponent} from '@app/user/video-library/video-library.compo
 import {ChatComponent} from './chat/chat.component';
 import { AccessibilityStatementComponent } from './accessibility-statement/accessibility-statement.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
-
+import {AuthGuard} from '@core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -26,7 +26,11 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'video',
+    path: 'video/publish',
+    component: VideoComponent,
+  },
+  {
+    path: 'video/watch',
     component: VideoComponent
   },
   {

@@ -1,1 +1,4 @@
-<video id="video_{{idx}}" class="video-js vjs-theme-city" playsinline></video>
+<video id="video_{{idx}}" class="video-js" playsinline></video>
+<div id="live-session-finished" *ngIf="recordingState === 'finished'">
+  <h2>Live video ended</h2>
+</div>

@@ -101,6 +101,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return this.registerForm.get('confirm_password');
   }
 
+  get birthday(): AbstractControl {
+    return this.registerForm.get('birthday');
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }

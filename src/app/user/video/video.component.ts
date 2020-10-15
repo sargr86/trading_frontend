@@ -278,15 +278,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    // On component destroyed leave session
-    this.leaveSession();
-  }
-
-
-  ngAfterViewInit() {
-    // this.getVideo();
-  }
 
   getVideo(eventStream) {
     const video = this.elRef.nativeElement.querySelector('video');
@@ -312,5 +303,21 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
     }
+  }
+
+  testSession() {
+    this.openViduService.getSession().subscribe(dt => {
+
+    });
+  }
+
+  ngOnDestroy() {
+    // On component destroyed leave session
+    this.leaveSession();
+  }
+
+
+  ngAfterViewInit() {
+    // this.getVideo();
   }
 }

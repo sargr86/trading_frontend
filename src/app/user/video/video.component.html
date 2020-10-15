@@ -36,8 +36,8 @@
 
     <ng-container *ngIf="session">
 <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
-<!--      <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
-<!--        <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>-->
-<!--      </div>-->
+      <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
+        <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+      </div>
     </ng-container>
 </div>

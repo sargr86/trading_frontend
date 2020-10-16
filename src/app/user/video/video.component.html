@@ -2,14 +2,14 @@
 
 <ng-container *ngIf="session">
   <div id="video-chat-container" *ngIf="openViduToken">
-    <!--  <ng-container *ngFor="let sub of subscribers">-->
-    <!--    <p>{{userNickname}}</p>-->
+      <ng-container *ngFor="let sub of subscribers">
+        <p>{{userNickname}}</p>
     <app-vjs-player [options]="videoJSPlayerOptions" *ngIf="watcher"></app-vjs-player>
 <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
     <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>
     <app-chat-box [openViduToken]="openViduToken" [session]="session"
                   (sendMessage)="sendMessage($event)"></app-chat-box>
-    <!--  </ng-container>-->
+      </ng-container>
   </div>
 </ng-container>
 

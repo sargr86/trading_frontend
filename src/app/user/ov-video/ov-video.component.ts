@@ -7,7 +7,12 @@ import {StreamManager} from 'openvidu-browser';
   styleUrls: ['./ov-video.component.scss']
 })
 export class OvVideoComponent implements OnInit, AfterViewInit {
-
+  videoJSPlayerOptions = {
+    autoplay: true,
+    controls: true,
+    fluid: false,
+    sources: []
+  }
 
   @ViewChild('videoElement') elementRef: ElementRef;
 

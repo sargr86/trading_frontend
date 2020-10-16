@@ -5,9 +5,9 @@
     <!--  <ng-container *ngFor="let sub of subscribers">-->
     <!--    <p>{{userNickname}}</p>-->
     <ng-container *ngIf="watcher">
-      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>
-      <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                    (sendMessage)="sendMessage($event)"></app-chat-box>
+<!--      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>-->
+<!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
+<!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
     </ng-container>
     <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
     <ng-container *ngIf="!watcher">

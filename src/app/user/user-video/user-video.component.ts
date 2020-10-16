@@ -19,7 +19,7 @@ export class UserVideoComponent implements OnInit {
 
   getNicknameTag() { // Gets the nickName of the user
     const from = JSON.parse(this.streamManager.stream.connection.data.replace(/}%\/%{/g, ','));
-    // console.log(from)
+    console.log(from)
     return from.clientData.myUserName;
     // console.log(this.streamManager.stream.connection.data)
     // const streamData = JSON.parse(this.streamManager.stream.connection.data);

@@ -191,21 +191,21 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       // const subscriber: Subscriber = this.session.subscribe(event.stream, undefined);
       // this.subscribers.push(subscriber);
 
-      const subscriber: Subscriber = this.session.subscribe(event.stream, video,
-        {
-          insertMode: 'append'
-        },
-        (error) => {
-          console.log(error)
-          if (error) {
-            console.log('error: ' + error.message);
-          } else {
-            console.log('callback')
-            // this.handleScreenShare(event.stream.videoType);
-            this.getVideo(event.stream);
-
-          }
-        }
+      const subscriber: Subscriber = this.session.subscribe(event.stream, undefined
+        // {
+        //   insertMode: 'append'
+        // },
+        // (error) => {
+        //   console.log(error)
+        //   if (error) {
+        //     console.log('error: ' + error.message);
+        //   } else {
+        //     console.log('callback')
+        //     // this.handleScreenShare(event.stream.videoType);
+        //     // this.getVideo(event.stream);
+        //
+        //   }
+        // }
       );
       this.subscribers.push(subscriber);
       console.log(this.subscribers)

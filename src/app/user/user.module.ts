@@ -14,6 +14,8 @@ import { OpenviduSessionModule } from 'openvidu-angular';
 import { ChatComponent } from './chat/chat.component';
 import { AccessibilityStatementComponent } from './accessibility-statement/accessibility-statement.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
+import { HelpComponent } from './help/help.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
     VideoLibraryComponent,
     ChatComponent,
     AccessibilityStatementComponent,
-    CookiePolicyComponent
+    CookiePolicyComponent,
+    HelpComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,

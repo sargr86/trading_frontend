@@ -21,3 +21,12 @@
   display: flex;
   position: relative;
 }
+
+#streaming-not-started-yet {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Muli-Light";
+  background: #EFEFEF;
+}

@@ -32,6 +32,10 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
     // this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
     //   console.log('onPlayerReady', this);
     // });
+    const video = document.getElementById('live-video') as any;
+    console.log(video)
+    video.setAttribute('controls', 'controls');
+    video.controls = true;
   }
 
   @Input()

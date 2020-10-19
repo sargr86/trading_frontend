@@ -73,7 +73,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   authUser;
   openViduToken;
 
-  recordingStarted = false;
+  recordingState = 'idle';
   watcher = false;
 
   webcams = [];
@@ -262,9 +262,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   receiveRecordingState() {
     this.session.on('signal:recording-state', (event: any) => {
       const obj = {event, ...{socket: true}};
-      this.recordingStarted = !!event.data;
+      this.recordingState = !!event.data ? 'finished' : 'started';
       console.log(obj)
-      console.log(this.recordingStarted)
+      console.log(this.recordingState)
       console.log('received')
       this.subject.setVideoRecordingState({recording: event.data, ...{viaSocket: true}});
     });

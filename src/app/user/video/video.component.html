@@ -15,9 +15,9 @@
           <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
           <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
             <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
-            <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                          (sendMessage)="sendMessage($event)"></app-chat-box>
           </div>
+          <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                        (sendMessage)="sendMessage($event)"></app-chat-box>
         </ng-container>
         <div id="streaming-not-started-yet" *ngIf="recordingState === 'idle'">
           <p>The session video streaming has not been started yet</p>

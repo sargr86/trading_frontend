@@ -33,9 +33,9 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
       this.recordingState = data.recordingState;
       if (this.recordingState === 'finished') {
         let video = document.getElementById('live-video') as any;
-        video = document.getElementsByClassName('video-js') as any;
+        // video = document.getElementsByClassName('video-js') as any;
         console.log(video)
-        // video.pause();
+        video.pause();
         video.currentTime = 0;
         video.controls = false;
         console.log(this.player)
@@ -48,9 +48,9 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this._streamManager.addVideoElement(this.elementRef.nativeElement);
-    this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
-      console.log('onPlayerReady', this);
-    });
+    // this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
+    //   console.log('onPlayerReady', this);
+    // });
     const video = document.getElementById('live-video') as any;
     console.log(video)
     video.setAttribute('controls', 'controls');

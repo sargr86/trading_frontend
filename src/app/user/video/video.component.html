@@ -9,7 +9,7 @@
       <!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
       <!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
       <ng-container *ngIf="session">
-        <ng-container *ngIf="recordingState == 'started'">
+        <ng-container *ngIf="recordingState != 'idle'">
 
 
           <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
@@ -34,7 +34,7 @@
     <ng-container *ngIf="!watcher">
       <app-video-js-record [openViduToken]="openViduToken"></app-video-js-record>
       <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                    (sendMessage)="sendMessage($event)"></app-chat-box>
+                    (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
     </ng-container>
     <!--  </ng-container>-->
   </div>

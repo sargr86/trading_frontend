@@ -14,5 +14,10 @@ export class OpenviduService {
 
   getToken(params) {
     return this.httpClient.get(`${API_URL}users/session/get-token`, {params});
+    // return this.httpClient.post(`${API_URL}api/sessions`, {params});
+  }
+
+  getSession() {
+    return this.httpClient.post(`${API_URL}api/sessions`, {});
   }
 }

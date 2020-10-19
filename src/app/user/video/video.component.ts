@@ -191,21 +191,21 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       // const subscriber: Subscriber = this.session.subscribe(event.stream, undefined);
       // this.subscribers.push(subscriber);
 
-      const subscriber: Subscriber = this.session.subscribe(event.stream, video,
-        {
-          insertMode: 'append'
-        },
-        (error) => {
-          console.log(error)
-          if (error) {
-            console.log('error: ' + error.message);
-          } else {
-            console.log('callback')
-            // this.handleScreenShare(event.stream.videoType);
-            this.getVideo(event.stream);
-
-          }
-        }
+      const subscriber: Subscriber = this.session.subscribe(event.stream, undefined
+        // {
+        //   insertMode: 'append'
+        // },
+        // (error) => {
+        //   console.log(error)
+        //   if (error) {
+        //     console.log('error: ' + error.message);
+        //   } else {
+        //     console.log('callback')
+        //     // this.handleScreenShare(event.stream.videoType);
+        //     // this.getVideo(event.stream);
+        //
+        //   }
+        // }
       );
       this.subscribers.push(subscriber);
       console.log(this.subscribers)
@@ -278,15 +278,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    // On component destroyed leave session
-    this.leaveSession();
-  }
-
-
-  ngAfterViewInit() {
-    // this.getVideo();
-  }
 
   getVideo(eventStream) {
     const video = this.elRef.nativeElement.querySelector('video');
@@ -312,5 +303,21 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
     }
+  }
+
+  testSession() {
+    this.openViduService.getSession().subscribe(dt => {
+
+    });
+  }
+
+  ngOnDestroy() {
+    // On component destroyed leave session
+    this.leaveSession();
+  }
+
+
+  ngAfterViewInit() {
+    // this.getVideo();
   }
 }

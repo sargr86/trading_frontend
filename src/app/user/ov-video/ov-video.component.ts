@@ -37,6 +37,8 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
         video.currentTime = 0;
         video.controls = false;
         this.player.pause();
+        this.player.src('');
+        this.player.reset();
       }
     });
   }

@@ -31,6 +31,12 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
     this.subject.getVideoRecordingState().subscribe(data => {
       console.log('STATE!!!!' + data.recordingState);
       this.recordingState = data.recordingState;
+      if (this.recordingState === 'finished') {
+        const video = document.getElementById('live-video') as any;
+        video.pause();
+        video.currentTime = 0;
+        video.controls = false;
+      }
     });
   }
 

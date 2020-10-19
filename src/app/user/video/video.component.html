@@ -5,11 +5,11 @@
     <!--  <ng-container *ngFor="let sub of subscribers">-->
     <!--    <p>{{userNickname}}</p>-->
     <ng-container *ngIf="watcher">
-<!--      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>-->
-<!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
-<!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
+      <!--      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>-->
+      <!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
+      <!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
       <ng-container *ngIf="session">
-        <ng-container *ngIf="recordingStarted">
+        <ng-container *ngIf="recordingState == 'started'">
 
 
           <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
@@ -19,7 +19,7 @@
                           (sendMessage)="sendMessage($event)"></app-chat-box>
           </div>
         </ng-container>
-        <div id="streaming-not-started-yet">
+        <div id="streaming-not-started-yet" *ngIf="recordingState === 'idle'">
           <p>The session video streaming has not been started yet</p>
         </div>
       </ng-container>

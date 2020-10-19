@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {StreamManager} from 'openvidu-browser';
 import videojs from 'video.js';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
   selector: 'app-ov-video',
@@ -19,12 +20,18 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
 
   _streamManager: StreamManager;
   player: videojs.Player;
+  recordingState;
 
-  constructor() {
+  constructor(
+    private subject: SubjectService
+  ) {
   }
 
   ngOnInit(): void {
-
+    this.subject.getVideoRecordingState().subscribe(state => {
+      console.log('STATE!!!!' + state);
+      this.recordingState = state;
+    });
   }
 
   ngAfterViewInit() {

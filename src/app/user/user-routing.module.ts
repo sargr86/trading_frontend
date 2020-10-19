@@ -6,9 +6,19 @@ import {VideoLibraryComponent} from '@app/user/video-library/video-library.compo
 import {ChatComponent} from './chat/chat.component';
 import { AccessibilityStatementComponent } from './accessibility-statement/accessibility-statement.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
+import { HelpComponent } from './help/help.component';
+import { AboutComponent } from './about/about.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 
 const routes: Routes = [
+  {
+    path: 'about',
+    component: AboutComponent
+  },
+  {
+    path: 'help',
+    component: HelpComponent
+  },
   {
     path: 'cookie-policy',
     component: CookiePolicyComponent

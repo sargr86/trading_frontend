@@ -29,9 +29,9 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this._streamManager.addVideoElement(this.elementRef.nativeElement);
-    this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
-      console.log('onPlayerReady', this);
-    });
+    // this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
+    //   console.log('onPlayerReady', this);
+    // });
   }
 
   @Input()

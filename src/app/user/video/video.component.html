@@ -14,7 +14,9 @@
 
           <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
           <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
-            <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+            <div class="video-container">
+              <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+            </div>
           </div>
           <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
                         (sendMessage)="sendMessage($event)"></app-chat-box>
@@ -32,7 +34,9 @@
     </ng-container>
     <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
     <ng-container *ngIf="!watcher">
-      <app-video-js-record [openViduToken]="openViduToken"></app-video-js-record>
+      <div class="video-container">
+        <app-video-js-record [openViduToken]="openViduToken"></app-video-js-record>
+      </div>
       <app-chat-box [openViduToken]="openViduToken" [session]="session"
                     (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
     </ng-container>

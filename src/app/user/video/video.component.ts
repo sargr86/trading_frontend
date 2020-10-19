@@ -262,7 +262,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   receiveRecordingState() {
     this.session.on('signal:recording-state', (event: any) => {
       const obj = {event, ...{socket: true}};
-      this.recordingState = !!event.data ? 'finished' : 'started';
+      this.recordingState = !!event.data ? 'started' : 'finished';
       console.log(obj)
       console.log(this.recordingState)
       console.log('received')

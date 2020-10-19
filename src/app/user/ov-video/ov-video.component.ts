@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {StreamManager} from 'openvidu-browser';
+import videojs from 'video.js';
 
 @Component({
   selector: 'app-ov-video',
@@ -17,11 +18,15 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
   @ViewChild('videoElement') elementRef: ElementRef;
 
   _streamManager: StreamManager;
+  player: videojs.Player;
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
+      console.log('onPlayerReady', this);
+    });
   }
 
   ngAfterViewInit() {

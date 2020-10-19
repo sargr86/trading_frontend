@@ -28,9 +28,9 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.subject.getVideoRecordingState().subscribe(state => {
-      console.log('STATE!!!!' + state);
-      this.recordingState = state;
+    this.subject.getVideoRecordingState().subscribe(data => {
+      console.log('STATE!!!!' + data.recordingState);
+      this.recordingState = data.recordingState;
     });
   }
 

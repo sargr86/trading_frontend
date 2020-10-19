@@ -10,6 +10,8 @@ import {SubjectService} from '@core/services/subject.service';
 })
 export class OvVideoComponent implements OnInit, AfterViewInit {
   videoJSPlayerOptions = {
+    width: 640,
+    height: 480,
     autoplay: true,
     controls: true,
     fluid: false,

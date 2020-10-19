@@ -24,9 +24,9 @@
 
           <div id="streaming-not-started-yet">
             <p>The session video streaming has not been started yet</p>
-            <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                          (sendMessage)="sendMessage($event)"></app-chat-box>
           </div>
+          <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                        (sendMessage)="sendMessage($event)"></app-chat-box>
         </ng-container>
       </ng-container>
     </ng-container>

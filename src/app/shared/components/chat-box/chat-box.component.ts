@@ -13,7 +13,7 @@ export class ChatBoxComponent implements OnInit {
   messageSent = false;
   messages = [];
   authUser;
-  videoRecordingStarted = false;
+  videoRecordingState = 'idle';
 
   @Input('openViduToken') openViduToken;
   @Input('session') session;
@@ -49,7 +49,7 @@ export class ChatBoxComponent implements OnInit {
     });
 
     this.subject.getVideoRecordingState().subscribe(data => {
-      this.videoRecordingStarted = data.recording;
+      this.videoRecordingState = data.recordingState;
     });
   }
 

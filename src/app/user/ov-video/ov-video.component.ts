@@ -36,15 +36,16 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
         video.pause();
         video.currentTime = 0;
         video.controls = false;
+        this.player.pause();
       }
     });
   }
 
   ngAfterViewInit() {
     this._streamManager.addVideoElement(this.elementRef.nativeElement);
-    // this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
-    //   console.log('onPlayerReady', this);
-    // });
+    this.player = videojs(this.elementRef.nativeElement, this.videoJSPlayerOptions, function onPlayerReady() {
+      console.log('onPlayerReady', this);
+    });
     const video = document.getElementById('live-video') as any;
     console.log(video)
     video.setAttribute('controls', 'controls');

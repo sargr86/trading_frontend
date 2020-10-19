@@ -34,7 +34,8 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
       if (this.recordingState === 'finished') {
         let video = document.getElementById('live-video') as any;
         video = document.getElementsByClassName('video-js') as any;
-        video.pause();
+        console.log(video)
+        // video.pause();
         video.currentTime = 0;
         video.controls = false;
         console.log(this.player)

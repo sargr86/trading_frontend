@@ -13,11 +13,12 @@ export class ChatBoxComponent implements OnInit {
   messageSent = false;
   messages = [];
   authUser;
-  videoRecordingState = 'idle';
+
 
   @Input('openViduToken') openViduToken;
   @Input('session') session;
   @Output('sendMessage') sendMsg = new EventEmitter();
+  @Input('videoRecordingState') videoRecordingState = 'idle';
 
   constructor(
     private fb: FormBuilder,
@@ -50,7 +51,7 @@ export class ChatBoxComponent implements OnInit {
 
     this.subject.getVideoRecordingState().subscribe(data => {
       console.log(data)
-      this.videoRecordingState = data.recordingState;
+      // this.videoRecordingState = data.recordingState;
       console.log('VIDEO RECORDING STATE:' + this.videoRecordingState + '!!!!');
     });
   }

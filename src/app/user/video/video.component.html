@@ -16,7 +16,7 @@
           <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
             <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
           </div>
-          <app-chat-box [openViduToken]="openViduToken" [session]="session"
+          <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
                         (sendMessage)="sendMessage($event)"></app-chat-box>
         </ng-container>
 
@@ -25,7 +25,7 @@
           <div id="streaming-not-started-yet">
             <p>The session video streaming has not been started yet</p>
           </div>
-          <app-chat-box [openViduToken]="openViduToken" [session]="session"
+          <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
                         (sendMessage)="sendMessage($event)"></app-chat-box>
         </ng-container>
       </ng-container>

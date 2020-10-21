@@ -16,7 +16,7 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
     controls: true,
     fluid: false,
     sources: []
-  }
+  };
 
   @ViewChild('videoElement') elementRef: ElementRef;
 

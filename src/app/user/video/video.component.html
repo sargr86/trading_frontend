@@ -25,7 +25,7 @@
         <ng-container *ngIf="recordingState === 'idle'">
 
           <div id="streaming-not-started-yet">
-            <p>The session video streaming has not been started yet</p>
+            <p>The video streaming session has not been started yet</p>
           </div>
           <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
                         (sendMessage)="sendMessage($event)"></app-chat-box>

@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChatBoxComponent} from './components/chat-box/chat-box.component';
 import {GetAuthUserPipe} from './pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from './pipes/blob-to-file.pipe';
-
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import {BlobToFilePipe} from './pipes/blob-to-file.pipe';
     CommonModule,
     CarouselModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PickerModule
   ],
   providers: [
     GetAuthUserPipe,
@@ -31,6 +32,7 @@ import {BlobToFilePipe} from './pipes/blob-to-file.pipe';
     FormsModule,
     ReactiveFormsModule,
     CarouselModule,
+    PickerModule,
     VideoJsComponent,
     VideoJsRecordComponent,
     ChatBoxComponent

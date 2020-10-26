@@ -14,6 +14,17 @@ export class ChatBoxComponent implements OnInit {
   messages = [];
   authUser;
 
+  customEmojis = [
+    {
+      name: 'Octocat',
+      shortNames: ['octocat'],
+      text: '',
+      emoticons: [],
+      keywords: ['github'],
+      imageUrl: 'https://github.githubassets.com/images/icons/emoji/octocat.png',
+    }
+  ];
+
 
   @Input('openViduToken') openViduToken;
   @Input('session') session;
@@ -61,7 +72,7 @@ export class ChatBoxComponent implements OnInit {
     this.subject.getVideoRecordingState().subscribe(data => {
       console.log(data)
       // this.videoRecordingState = data.recordingState;
-      console.log('VIDEO RECORDING STATE:' + this.videoRecordingState + '!!!!');
+      // console.log('VIDEO RECORDING STATE:' + this.videoRecordingState + '!!!!');
     });
   }
 
@@ -70,6 +81,12 @@ export class ChatBoxComponent implements OnInit {
     this.messages.push(this.chatForm.value);
     this.sendMsg.emit(this.chatForm.value);
     this.chatForm.patchValue({message: ''});
+  }
+
+  addEmoji(e) {
+    console.log(e)
+    const message = this.chatForm.value.message;
+    this.chatForm.patchValue({message: message + (e.emoji.native ? e.emoji.native : e.emoji.imageUrl)});
   }
 
 }

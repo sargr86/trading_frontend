@@ -77,6 +77,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   recordingState = 'idle';
   watcher = false;
 
+  sessionName = 'SessionA';
+
   webcams = [];
 
   constructor(
@@ -108,6 +110,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.authUser = this.getAuthUser.transform();
     this.initForm();
 
+    if (!this.watcher) {
+      this.joinSession();
+    }
+
     this.subject.getVideoRecordingState().subscribe(data => {
 
       if (data.recordingState === 'finished') {
@@ -131,7 +137,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initForm() {
     this.joinSessionForm = this.fb.group({
-      mySessionId: ['SessionA'],
+      mySessionId: [this.sessionName],
       // myUserName: ['Participant' + Math.floor(Math.random() * 100)]
       myUserName: [this.authUser.username]
     });
@@ -145,7 +151,15 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // const authUser = localStorage.getItem()
 
-    this.openViduService.getToken({email: this.authUser.email, sessionName: 'SessionB'}).subscribe((token: any) => {
+    // if (this.watcher) {
+    //   this.toastr.error('The session is not exist');
+    // } else {
+
+    this.openViduService.getToken({
+      email: this.authUser.email,
+      sessionName: this.sessionName,
+      role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
+    }).subscribe((token: any) => {
       // const {token} = data;
       console.log(token)
       this.openViduToken = token;
@@ -248,6 +262,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     delete this.publisher;
     delete this.session;
     delete this.OV;
+
+    this.openViduService.leaveSession({token: this.openViduToken, sessionName: this.sessionName}).subscribe(() => {
+
+    });
     // this.generateParticipantInfo();
   }
 

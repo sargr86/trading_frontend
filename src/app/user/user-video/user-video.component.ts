@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {StreamManager} from 'openvidu-browser';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-video',
@@ -11,7 +12,9 @@ export class UserVideoComponent implements OnInit {
 
   @Input() streamManager: StreamManager;
 
-  constructor() {
+  constructor(
+    private toastr: ToastrService
+  ) {
   }
 
   ngOnInit(): void {
@@ -19,6 +22,7 @@ export class UserVideoComponent implements OnInit {
 
   getNicknameTag() { // Gets the nickName of the user
     const from = JSON.parse(this.streamManager.stream.connection.data.replace(/}%\/%{/g, ','));
+    // this.toastr.success(from.clientData.myUserName + 'joined the session');
     // console.log(from)
     return from.clientData.myUserName;
     // console.log(this.streamManager.stream.connection.data)

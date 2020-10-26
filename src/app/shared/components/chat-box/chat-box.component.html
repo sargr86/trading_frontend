@@ -24,6 +24,7 @@
     <div class="chat-footer">
       <form [formGroup]="chatForm">
         <input class="chat-input" formControlName="message" placeholder="Comment" (keyup.enter)="sendMessage($event)">
+        <emoji-mart [custom]="customEmojis" (emojiClick)="addEmoji($event)"></emoji-mart>
       </form>
       <div class="chat-footer-smile">
         <div class="nav-item dropdown">

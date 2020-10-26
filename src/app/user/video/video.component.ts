@@ -24,6 +24,7 @@ import {Router} from '@angular/router';
 })
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
+
   videoRecordOptions = {
     controls: true,
     bigPlayButton: false,
@@ -45,7 +46,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     controls: true,
     fluid: false,
     sources: []
-  }
+  };
 
   streamCreated = false;
   userNickname;
@@ -108,6 +109,12 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initForm();
 
     this.subject.getVideoRecordingState().subscribe(data => {
+
+      if (data.recordingState === 'finished') {
+        this.leaveSession();
+      }
+
+      console.log(data)
       if (!data.viaSocket) {
         this.sendRecordingState(data.recording);
       }
@@ -149,7 +156,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log({clientData: this.joinSessionForm.value.myUserName})
       this.session.connect(token, {clientData: this.joinSessionForm.value})
         .then(() => {
-          console.log(token.includes('PUBLISHER'))
+          console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
           if (token.includes('PUBLISHER')) {
 
 
@@ -214,6 +221,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     // On every Stream destroyed...
     this.session.on('streamDestroyed', (event: StreamEvent) => {
 
+      console.log('stream destroyed!!!!!')
+
       // Remove the stream from 'subscribers' array
       this.deleteSubscriber(event.stream.streamManager);
     });
@@ -229,7 +238,17 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   leaveSession() {
+    console.log('leaving session!!!')
+    if (this.session) {
+      this.session.disconnect();
+    }
 
+    // Empty all properties...
+    this.subscribers = [];
+    delete this.publisher;
+    delete this.session;
+    delete this.OV;
+    // this.generateParticipantInfo();
   }
 
   sendMessage(e) {

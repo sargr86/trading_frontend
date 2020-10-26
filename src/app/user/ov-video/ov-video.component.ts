@@ -37,13 +37,13 @@ export class OvVideoComponent implements OnInit, AfterViewInit {
         let video = document.getElementById('live-video') as any;
         // video = document.getElementsByClassName('video-js') as any;
         console.log(video)
-        video.pause();
-        video.currentTime = 0;
-        video.controls = false;
-        console.log(this.player)
-        this.player.pause();
-        this.player.src('');
-        this.player.reset();
+        // video.pause();
+        // video.currentTime = 0;
+        // video.controls = false;
+        // console.log(this.player)
+        // this.player.pause();
+        // this.player.src('');
+        // this.player.reset();
       }
     });
   }

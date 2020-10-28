@@ -111,7 +111,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initForm();
 
     if (!this.watcher) {
-      this.joinSession();
+      // this.joinSession();
     }
 
     this.subject.getVideoRecordingState().subscribe(data => {

@@ -1,7 +1,6 @@
 @import "./fonts";
 @import "variables";
 @import '~ngx-toastr/toastr';
-
 // Video JS
 @import '~video.js/dist/video-js.css';
 @import '~videojs-record/dist/css/videojs.record.min.css';
@@ -13,9 +12,7 @@
 @import '~@videojs/themes/dist/forest/index.css';
 // Sea
 @import '~@videojs/themes/dist/sea/index.css';
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
 @import '~@ctrl/ngx-emoji-mart/picker';
 
 html, body, p, h1, h2, h3, h4, ul {
@@ -29,7 +26,6 @@ input, button {
   margin: 0;
   padding: 0;
 }
-
 
 
 button:hover {
@@ -62,39 +58,40 @@ li {
 .bs-datepicker-body table td.selected span,
 .bs-datepicker-body table td span[class*="select-"]:after,
 .bs-datepicker-body table td[class*="select-"] span:after,
-.bs-datepicker-body table td.active-week span:hover
-{
+.bs-datepicker-body table td.active-week span:hover {
   background-color: #18B587 !important;
 }
 
-.bs-datepicker-body table td.week span
-{
+.bs-datepicker-body table td.week span {
   color: #18B587 !important;
 }
 
-.left-menu{
+.left-menu {
   margin-bottom: 40px;
 }
 
-.body-content-left{
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #fff;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #ECECEC;
-        border-radius: 4px
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgb(174, 174, 174);
-    }
+.body-content-left {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    .left-list{
-        max-height: 570px;
-        overflow-x: auto;
-    }
+  ::-webkit-scrollbar-track {
+    background: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ECECEC;
+    border-radius: 4px
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(174, 174, 174);
+  }
+
+  .left-list {
+    max-height: 570px;
+    overflow-x: auto;
+  }
 }
 
 .home-header {
@@ -155,7 +152,7 @@ li {
   background: #EFEFEF;
   margin-right: 24px;
 
-  input{
+  input {
     width: 100%;
     padding-left: 15px;
   }
@@ -368,6 +365,10 @@ li {
   color: #545454;
   font-size: 10px;
   font-family: "Muli-Light";
+}
+
+.owl-carousel.owl-drag .owl-item {
+  //width: auto !important;
 }
 
 .main-carousel.owl-theme .owl-dots {
@@ -892,9 +893,11 @@ li {
   align-items: center;
   color: white !important;
 }
+
 .chat-by-bits {
   color: white !important;
 }
+
 .modal-dialog {
   width: 100vw !important;
   max-width: 100vw !important;

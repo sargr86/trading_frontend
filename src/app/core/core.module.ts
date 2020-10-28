@@ -27,7 +27,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ToastrModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   exports: [
     NavbarComponent,

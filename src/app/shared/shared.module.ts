@@ -8,6 +8,7 @@ import {ChatBoxComponent} from './components/chat-box/chat-box.component';
 import {GetAuthUserPipe} from './pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from './pipes/blob-to-file.pipe';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import {MaterialModule} from '@core/modules/material.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     CarouselModule,
     FormsModule,
     ReactiveFormsModule,
-    PickerModule
+    PickerModule,
+    MaterialModule
   ],
   providers: [
     GetAuthUserPipe,
@@ -33,6 +35,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     ReactiveFormsModule,
     CarouselModule,
     PickerModule,
+    MaterialModule,
     VideoJsComponent,
     VideoJsRecordComponent,
     ChatBoxComponent

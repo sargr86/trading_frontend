@@ -32,22 +32,11 @@
   <div class="watchlist pWatchlist">
     <div class="profile-list user-profile-block">
       <ul class="nav nav-tabs" id="profileList" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="pWatch-tab" data-toggle="tab" href="#pWatch" role="tab" aria-controls="pWatch"
-             aria-selected="true">Watchlist</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="pVideos-tab" data-toggle="tab" href="#pVideos" role="tab" aria-controls="pVideos"
-             aria-selected="false">Videos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="pPlaylists-tab" data-toggle="tab" href="#pPlaylists" role="tab"
-             aria-controls="pPlaylists" aria-selected="false">Playlists</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" id="pAbout-tab" data-toggle="tab" href="#pAbout" role="tab" aria-controls="pAbout"
-             aria-selected="false">About</a>
+        <li class="nav-item" *ngFor="let tab of allTabs">
+          <a class="nav-link" [class.active]="tab === activeTab" id="{{tab.link}}-tab"
+             (click)="changeActiveTab(tab)" data-toggle="tab" href="#{{tab.link}}" role="tab"
+             aria-controls="pWatch"
+             aria-selected="true">{{tab.name}}</a>
         </li>
       </ul>
       <div class="watchlist-search">
@@ -55,142 +44,51 @@
         <i class="fas fa-search"></i>
       </div>
     </div>
-    <div class="tab-content" id="profileListContent">
-      <div class="tab-pane fade show active" id="pWatch" role="tabpanel" aria-labelledby="pWatch-tab">
-        <div class="watchlist-analytics">
 
-          <ng-container *ngFor="let owlItem of owlTextsArray">
-            <p class="trending-text">{{owlItem.name}}</p>
-            <owl-carousel-o [options]="owlOptions">
-              <ng-container *ngFor="let item of [0,1,2,3]">
-                <ng-template carouselSlide>
-                  <div class="item main-carousel-item">
-                    <img class="main-item-img" src="assets/img/item-1.png">
-                    <span class="live-now">Live now</span>
-                    <div class="main-item-block">
-                      <img class="main-item-block-img" src="assets/img/item-4.png">
-                      <div>
-                        <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                        <p class="main-text-2">Fox News</p>
-                        <p class="main-text-3">17k watching</p>
-                      </div>
-                    </div>
+    <ng-container *ngIf="activeTab.name === 'Watchlist'">
+      <ng-container *ngFor="let owlItem of owlTextsArray">
+        <p class="trending-text">{{owlItem.name}}</p>
+        <owl-carousel-o [options]="owlOptions">
+          <ng-container *ngFor="let item of [0,1,2,3]">
+            <ng-template carouselSlide>
+              <div class="item main-carousel-item">
+                <img class="main-item-img" src="assets/img/item-1.png">
+                <span class="live-now">Live now</span>
+                <div class="main-item-block">
+                  <img class="main-item-block-img" src="assets/img/item-4.png">
+                  <div>
+                    <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                    <p class="main-text-2">Fox News</p>
+                    <p class="main-text-3">17k watching</p>
                   </div>
-                </ng-template>
-              </ng-container>
-            </owl-carousel-o>
+                </div>
+              </div>
+            </ng-template>
           </ng-container>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="pVideos" role="tabpanel" aria-labelledby="pVideos-tab">
-        <p class="trending-text">Trending CLIPZ</p>
-        <div class="owl-carousel owl-theme main-carousel">
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
+        </owl-carousel-o>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="activeTab.name === 'Videos'">
+      <p class="trending-text">Recent videos</p>
+      <owl-carousel-o>
+        <ng-container *ngFor="let item of userVideos">
+          <ng-template carouselSlide>
+            <div class="item main-carousel-item">
+              <img class="main-item-img" src="assets/img/video-thumbnail-default.png">
+              <div class="main-item-block">
+                <img class="main-item-block-img" src="assets/img/item-4.png">
+                <div>
+                  <p class="main-text-1">{{item.name}}</p>
+                  <p class="main-text-2">David Blaine</p>
+                  <p class="main-text-3">17k watching</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-2.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-3.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="pPlaylists" role="tabpanel" aria-labelledby="pPlaylists-tab">333</div>
-      <div class="tab-pane fade" id="pStore" role="tabpanel" aria-labelledby="pStore-tab">
-        <p class="trending-text">Trending Streams</p>
-        <div class="owl-carousel owl-theme main-carousel">
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-2.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-3.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-          <div class="item main-carousel-item">
-            <img class="main-item-img" src="assets/img/item-1.png">
-            <span class="live-now">Live now</span>
-            <div class="main-item-block">
-              <img class="main-item-block-img" src="assets/img/item-4.png">
-              <div>
-                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                <p class="main-text-2">Fox News</p>
-                <p class="main-text-3">17k watching</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="pAbout" role="tabpanel" aria-labelledby="pAbout-tab">555</div>
-    </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </ng-container>
   </div>
 
 </div>

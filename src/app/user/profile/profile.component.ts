@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
-import {OWL_OPTIONS} from '../../core/constants/global';
+import {OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
+import {VideoService} from '@core/services/video.service';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
   selector: 'app-profile',
@@ -16,11 +18,29 @@ export class ProfileComponent implements OnInit {
     {name: 'Lorem ipsum'},
     {name: 'Lorem ipsum'}
   ];
+  userVideos = [];
+  authUser;
 
-  constructor() {
+  activeTab = PROFILE_PAGE_TABS[0];
+  allTabs = PROFILE_PAGE_TABS;
+
+  constructor(
+    private videoService: VideoService,
+    private getAuthUser: GetAuthUserPipe
+  ) {
+    this.authUser = this.getAuthUser.transform();
   }
 
   ngOnInit(): void {
+    this.videoService.getUserVideos({username: this.authUser.username}).subscribe(dt => {
+      this.userVideos = dt;
+      console.log(this.userVideos.length)
+    });
   }
+
+  changeActiveTab(tab) {
+    this.activeTab = tab;
+  }
+
 
 }

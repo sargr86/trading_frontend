@@ -6,7 +6,7 @@ export const API_URL = environment.apiUrl;
 export const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const OWL_OPTIONS: OwlOptions = {
-  loop: true,
+  loop: false,
   // margin: 10,
   nav: true,
   pullDrag: false,
@@ -25,3 +25,10 @@ export const OWL_OPTIONS: OwlOptions = {
     }
   }
 };
+
+export const PROFILE_PAGE_TABS = [
+  {name: 'Watchlist', link: 'pWatch'},
+  {name: 'Videos', link: 'pVideos'},
+  {name: 'Playlists', link: 'pPlaylists'},
+  {name: 'About', link: 'pAbout'},
+];

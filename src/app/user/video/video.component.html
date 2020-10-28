@@ -83,7 +83,7 @@
         </div>
         <div id="video-tags">
           <mat-form-field class="example-chip-list">
-            <mat-chip-list #tagList aria-label="Fruit selection">
+            <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
               <mat-chip *ngFor="let tag of tags"
                         (removed)="remove(tag)">
                 {{tag.name}}

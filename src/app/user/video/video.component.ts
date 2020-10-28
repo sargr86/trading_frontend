@@ -10,12 +10,14 @@ import {
 } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-video',
@@ -60,6 +62,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   publisher: StreamManager; // Local
   subscribers: StreamManager[] = []; // Remotes
 
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
   @ViewChild('video') videoEl;
 
   // Join form
@@ -80,6 +84,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   sessionName = 'SessionA';
 
   webcams = [];
+  tags = [];
+
+  startStreamingForm: FormGroup;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -93,6 +100,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router
   ) {
 
+    this.startStreamingForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      category: ['', Validators.required],
+      thumbnail: ['', Validators.required],
+      tags: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -148,12 +162,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.session = this.OV.initSession();
     this.getStreamEvents();
-
-    // const authUser = localStorage.getItem()
-
-    // if (this.watcher) {
-    //   this.toastr.error('The session is not exist');
-    // } else {
 
     this.openViduService.getToken({
       email: this.authUser.email,
@@ -287,6 +295,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   sendRecordingState(recording) {
+    console.log('recording!!!!')
     this.session.signal({
       data: recording,  // Any string (optional)
       to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -300,6 +309,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.session.on('signal:recording-state', (event: any) => {
       const obj = {event, ...{socket: true}};
       this.recordingState = !!event.data ? 'started' : 'finished';
+      if (this.recordingState === 'finished') {
+        this.startStreamingForm.reset();
+      }
+
       console.log(obj)
       console.log(this.recordingState)
       console.log('received')
@@ -348,6 +361,29 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openViduService.getSession().subscribe(dt => {
 
     });
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push({name: value.trim()});
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
   ngOnDestroy() {

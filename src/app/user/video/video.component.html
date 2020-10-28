@@ -35,7 +35,7 @@
     <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
     <ng-container *ngIf="!watcher">
       <div class="video-container">
-        <app-video-js-record [openViduToken]="openViduToken"></app-video-js-record>
+        <app-video-js-record [openViduToken]="openViduToken" [videoSettings]="startStreamingForm.value"></app-video-js-record>
       </div>
       <app-chat-box [openViduToken]="openViduToken" [session]="session"
                     (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
@@ -47,11 +47,11 @@
 <div id="main-container" class="container">
   <div *ngIf="!session" id="join-form">
 
-    <ng-container>
+    <ng-container *ngIf="watcher">
 
       <div id="img-div"><img src="assets/img/openvidu_grey_bg_transp_cropped.png"/></div>
       <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>{{watcher? 'Join':'Start'}} a video session</h1>
+        <h1>Join a video session</h1>
         <form class="form-group" [formGroup]="joinSessionForm">
           <p>
             <label>Session</label>
@@ -63,11 +63,46 @@
           </p>
           <p class="text-center">
             <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
-              {{watcher? 'Join!':'Start streaming!'}}
+              Join!
             </button>
           </p>
         </form>
       </div>
+    </ng-container>
+    <ng-container *ngIf="!watcher">
+      <form [formGroup]="startStreamingForm" id="start-streaming-form">
+        <div>
+          <input formControlName="name" id="video-name" placeholder="Video name">
+        </div>
+        <div>
+          <textarea formControlName="description" placeholder="Video description"></textarea>
+        </div>
+        <div>
+          <label>Custom thumbnail</label>
+          <input type="file" formControlName="thumbnail">
+        </div>
+        <div id="video-tags">
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #tagList aria-label="Fruit selection">
+              <mat-chip *ngFor="let tag of tags"
+                        (removed)="remove(tag)">
+                {{tag.name}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Tags..."
+                     [matChipInputFor]="tagList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
+            Start streaming!
+          </button>
+        </div>
+      </form>
     </ng-container>
   </div>
 

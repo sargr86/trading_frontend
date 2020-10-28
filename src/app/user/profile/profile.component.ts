@@ -34,7 +34,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.videoService.getUserVideos({username: this.authUser.username}).subscribe(dt => {
       this.userVideos = dt;
-      console.log(this.userVideos.length)
     });
   }
 

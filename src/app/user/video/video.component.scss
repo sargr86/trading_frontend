@@ -22,6 +22,7 @@
   position: relative;
 }
 
+
 #streaming-not-started-yet {
   width: 500px;
   height: 400px;
@@ -32,6 +33,30 @@
   background: #EFEFEF;
 }
 
-.stream-container{
+.stream-container {
   overflow: hidden;
+}
+
+#start-streaming-form {
+  > div {
+    margin: 20px;
+
+    > input, textarea {
+      width: 100%;
+    }
+  }
+
+  #video-name {
+    border: 1px solid silver;
+  }
+
+  #video-tags {
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .actions {
+    text-align: center;
+  }
 }

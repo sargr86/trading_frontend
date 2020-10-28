@@ -13,7 +13,8 @@
   <li><a>Automotive</a></li>
 </ul>
 <app-stock-profile></app-stock-profile>
-<owl-carousel-o [options]="owlOptions">
+
+<owl-carousel-o [options]="owlOptions" class="slider_home">
   <ng-container *ngFor="let item of [0,1,2,3]">
     <ng-template carouselSlide>
       <div class="item main-carousel-item">
@@ -22,7 +23,7 @@
         <div class="main-item-block">
           <img class="main-item-block-img" src="assets/img/item-4.png">
           <div>
-            <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+            <p class="main-text-1">Trump meets with Florida Sheriffs</p>
             <p class="main-text-2">Fox News</p>
             <p class="main-text-3">17k watching</p>
           </div>
@@ -32,7 +33,7 @@
   </ng-container>
 </owl-carousel-o>
 <p class="trending-text">Trending Streams</p>
-<owl-carousel-o [options]="owlOptions">
+<owl-carousel-o [options]="owlOptions" class="slider_home">
   <ng-container *ngFor="let item of [0,1,2,3]">
     <ng-template carouselSlide>
       <div class="item main-carousel-item">
@@ -41,7 +42,7 @@
         <div class="main-item-block">
           <img class="main-item-block-img" src="assets/img/item-4.png">
           <div>
-            <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+            <p class="main-text-1">Trump meets with Florida Sheriffs</p>
             <p class="main-text-2">Fox News</p>
             <p class="main-text-3">17k watching</p>
           </div>
@@ -53,7 +54,7 @@
 
 <p class="trending-text">Trending CLIPZ</p>
 
-<owl-carousel-o [options]="owlOptions">
+<owl-carousel-o [options]="owlOptions" class="slider_home main-carousel">
   <ng-container *ngFor="let item of [0,1,2,3,4]">
     <ng-template carouselSlide>
       <div class="item main-carousel-item">
@@ -62,7 +63,7 @@
         <div class="main-item-block">
           <img class="main-item-block-img" src="assets/img/item-4.png">
           <div>
-            <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+            <p class="main-text-1">Trump meets with Florida Sheriffs</p>
             <p class="main-text-2">Fox News</p>
             <p class="main-text-3">17k watching</p>
           </div>
@@ -71,4 +72,4 @@
     </ng-template>
   </ng-container>
 </owl-carousel-o>
-
+ 

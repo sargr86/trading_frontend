@@ -378,12 +378,12 @@ li {
     display: none;
 }
 
-.main-carousel .owl-nav button.owl-prev {
+.slider_home .owl-nav .owl-prev {
     display: none;
 }
-
-.main-carousel .owl-nav button.owl-next {
-    font-size: 18px;
+ 
+.slider_home .owl-nav .owl-next {
+    font-size: 16px;
     color: #545454;
     width: 24px;
     height: 24px;
@@ -395,6 +395,8 @@ li {
     top: 29%;
     position: absolute;
 }
+
+ 
 
 .trending-text {
     color: #F53C6F;

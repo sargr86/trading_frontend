@@ -3,26 +3,7 @@
 .slider_home{
     .main-carousel-item{
         width: 100%;
-        padding-right: 32px;
+        padding-right: 48px;
     }
-
-    .owl-next {
-      font-size: 18px;
-      color: #545454;
-      width: 24px;
-      height: 24px;
-      background: #EEEEEE;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      right: 0;
-      top: 29%;
-      position: absolute !important;
-    }
-    
-    
-    .owl-prev {
-      display: none !important;
-    }
-
-}    
+  }    
+ 

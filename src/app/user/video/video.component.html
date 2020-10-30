@@ -38,7 +38,7 @@
         <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
         <ng-container *ngIf="!watcher">
             <div class="video-container">
-                <app-video-js-record [openViduToken]="openViduToken"
+                <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
                                      [videoSettings]="startStreamingForm.value"></app-video-js-record>
 
             </div>
@@ -103,8 +103,18 @@
                     <textarea formControlName="description" placeholder="Video description"></textarea>
                 </div>
                 <div>
-                    <label for="custom-thumbnail">Upload Thumbnail</label>
-                    <input type="file" formControlName="thumbnail" id="custom-thumbnail">
+                    <ng-container *ngIf="!thumbnailUploaded">
+                        <label for="custom-thumbnail">
+                            <i class="fa fa-cloud-alt"></i>
+                            Upload Thumbnail
+                        </label>
+                        <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
+                    </ng-container>
+                    <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
+                        <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
+                        </mat-icon>
+                        <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
+                    </div>
                 </div>
 
 

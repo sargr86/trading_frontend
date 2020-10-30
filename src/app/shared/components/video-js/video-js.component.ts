@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import videojs from 'video.js';
+import {API_URL} from '@core/constants/global';
 
 @Component({
     selector: 'app-vjs-player',
@@ -35,7 +36,8 @@ export class VideoJsComponent implements OnInit, OnDestroy {
 
     };
     player: videojs.Player;
-    @Input('url') videoUrl;
+    @Input('videoData') videoData;
+    videoUrl;
 
     constructor(
         private elementRef: ElementRef,
@@ -43,15 +45,14 @@ export class VideoJsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
         const video = document.getElementsByTagName('video')[0];
-
+        this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
         video.setAttribute('src', this.videoUrl);
+        video.setAttribute('poster', API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail);
+        video.poster = API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail;
         video.muted = true;
         video.load();
         video.play();
-
-
 
 
         // instantiate Video.js

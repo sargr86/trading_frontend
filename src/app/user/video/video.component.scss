@@ -110,6 +110,26 @@
         display: none;
     }
 
+    #uploaded-thumbnail-container {
+        position: relative;
+        width: 300px;
+
+        mat-icon {
+            position: absolute;
+            right: 0;
+        }
+
+        #uploaded-thumbnail {
+            width: 300px;
+            object-fit: cover;
+        }
+
+        #remove-thumbnail{
+            color: #ffffff;
+            cursor: pointer;
+        }
+    }
+
     #video-tags {
         mat-form-field {
             width: 100%;

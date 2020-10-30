@@ -33,6 +33,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
     @Input('openViduToken') openViduToken;
     @Input('videoSettings') videoSettings;
+    @Input('thumbnailFile') thumbnailFile;
 
     @Output() shareScreen = new EventEmitter();
 
@@ -94,7 +95,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 record: {
                     audio: true,
                     // video: true,
-                    video: {frameRate: { ideal: 30, max: 30 }, width: 640, height: 480},
+                    video: {frameRate: {ideal: 30, max: 30}, width: 640, height: 480},
                     screen: true,
                     displayMilliseconds: false,
                     maxLength: 30,
@@ -111,6 +112,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         console.log('TOKEN!!!!!!')
         console.log(this.openViduToken)
         console.log(this.videoSettings)
+        console.log(this.thumbnailFile)
         this.authUser = this.getAuthUser.transform();
     }
 
@@ -165,6 +167,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             fd.append('full_name', this.authUser.full_name);
             fd.append('video_name', this.player.recordedData.name);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
+            console.log(this.thumbnailFile)
+            fd.append('thumbnail', this.thumbnailFile.name);
             fd.append('video_settings', JSON.stringify(this.videoSettings));
             this.subject.setVideoRecordingState({recording: false});
             this.recordingState = 'finished';

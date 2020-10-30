@@ -16,6 +16,14 @@ export class VideoService {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-token`, params);
     }
 
+    saveVideoThumbnail(params) {
+        return this.httpClient.post<any>(`${API_URL}videos/save-video-thumbnail`, params);
+    }
+
+    removeVideoThumbnail(params) {
+        return this.httpClient.delete<any>(`${API_URL}videos/remove-video-thumbnail`, params);
+    }
+
     saveRecordedData(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-data`, params);
     }

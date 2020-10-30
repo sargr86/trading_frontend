@@ -18,6 +18,7 @@ import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {VIDEO_CATEGORIES} from '@core/constants/global';
 
 @Component({
     selector: 'app-video',
@@ -65,6 +66,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     @ViewChild('video') videoEl;
+    @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
 
     // Join form
     joinSessionForm: FormGroup;
@@ -87,6 +89,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     tags = [];
 
     startStreamingForm: FormGroup;
+    videoCategories = VIDEO_CATEGORIES;
+
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -165,45 +169,45 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getStreamEvents();
 
         this.openViduService.getToken({
-          email: this.authUser.email,
-          sessionName: this.sessionName,
-          role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
+            email: this.authUser.email,
+            sessionName: this.sessionName,
+            role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
         }).subscribe((token: any) => {
-          // const {token} = data;
-          console.log(token)
-          this.openViduToken = token;
-          this.receiveMessage();
-          this.receiveRecordingState();
+            // const {token} = data;
+            console.log(token)
+            this.openViduToken = token;
+            this.receiveMessage();
+            this.receiveRecordingState();
 
-          console.log(token)
-          console.log({clientData: this.joinSessionForm.value.myUserName})
-          this.session.connect(token, {clientData: this.joinSessionForm.value})
-            .then(() => {
-              console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
-              if (token.includes('PUBLISHER')) {
+            console.log(token)
+            console.log({clientData: this.joinSessionForm.value.myUserName})
+            this.session.connect(token, {clientData: this.joinSessionForm.value})
+                .then(() => {
+                    console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
+                    if (token.includes('PUBLISHER')) {
 
 
-                const video = this.elRef.nativeElement.querySelector('video');
-                const publisher: Publisher = this.OV.initPublisher(video, {
-                  audioSource: undefined, // The source of audio. If undefined default microphone
-                  videoSource: undefined, // The source of video. If undefined default webcam
-                  publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
-                  publishVideo: true,     // Whether you want to start publishing with your video enabled or not
-                  resolution: '640x480',  // The resolution of your video
-                  frameRate: 30,          // The frame rate of your video
-                  insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
-                  mirror: false           // Whether to mirror your local video or not
+                        const video = this.elRef.nativeElement.querySelector('video');
+                        const publisher: Publisher = this.OV.initPublisher(video, {
+                            audioSource: undefined, // The source of audio. If undefined default microphone
+                            videoSource: undefined, // The source of video. If undefined default webcam
+                            publishAudio: true,     // Whether you want to start publishing with your audio unmuted or not
+                            publishVideo: true,     // Whether you want to start publishing with your video enabled or not
+                            resolution: '640x480',  // The resolution of your video
+                            frameRate: 30,          // The frame rate of your video
+                            insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
+                            mirror: false           // Whether to mirror your local video or not
+                        });
+
+
+                        this.session.publish(publisher);
+
+                        // Set the main video in the page to display our webcam and store our Publisher
+                        this.mainStreamManager = publisher;
+                        this.publisher = publisher;
+                        console.log(publisher.stream.connection)
+                    }
                 });
-
-
-                this.session.publish(publisher);
-
-                // Set the main video in the page to display our webcam and store our Publisher
-                this.mainStreamManager = publisher;
-                this.publisher = publisher;
-                console.log(publisher.stream.connection)
-              }
-            });
 
         });
 
@@ -312,6 +316,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             this.recordingState = !!event.data ? 'started' : 'finished';
             if (this.recordingState === 'finished') {
                 this.startStreamingForm.reset();
+                this.tags = [];
             }
 
             console.log(obj)
@@ -370,7 +375,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Add our fruit
         if ((value || '').trim()) {
-            this.tags.push({name: value.trim()});
+            this.tags.push(value.trim());
             this.startStreamingForm.patchValue({tags: this.tags});
         }
 

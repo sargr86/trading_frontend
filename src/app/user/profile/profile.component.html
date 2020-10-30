@@ -74,7 +74,7 @@
       <owl-carousel-o>
         <ng-container *ngFor="let video of userVideos">
           <ng-template carouselSlide>
-            <div class="item main-carousel-item">
+            <div class="item main-carousel-item" (click)="openVideoPage(video)">
               <img class="main-item-img" src="assets/img/video-thumbnail-default.png">
               <div class="main-item-block">
                 <img class="main-item-block-img" src="assets/img/item-4.png">

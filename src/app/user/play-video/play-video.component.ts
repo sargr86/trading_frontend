@@ -38,7 +38,6 @@ export class PlayVideoComponent implements OnInit {
         const videoId = this.route.snapshot.params.queryParams;
         this.videoService.getVideoById({_id: videoId}).subscribe(dt => {
             this.videoData = dt;
-            this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
         });
 
 

@@ -1284,3 +1284,13 @@ input::placeholder, textarea::placeholder {
     color: #CECECE !important;
     padding-left: 32px !important;
 }
+
+.owl-item {
+    width: 400px !important;
+
+    .main-item-img {
+        object-fit: cover !important;
+        height: 160px !important;
+        cursor: pointer;
+    }
+}

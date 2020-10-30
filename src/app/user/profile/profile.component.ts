@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
-import {OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
+import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Router} from '@angular/router';
@@ -24,6 +24,8 @@ export class ProfileComponent implements OnInit {
 
     activeTab = PROFILE_PAGE_TABS[0];
     allTabs = PROFILE_PAGE_TABS;
+
+    apiUrl = API_URL;
 
     constructor(
         private videoService: VideoService,

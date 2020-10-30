@@ -16,6 +16,7 @@ import { AccessibilityStatementComponent } from './accessibility-statement/acces
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
+import { PlayVideoComponent } from './play-video/play-video.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AboutComponent } from './about/about.component';
     AccessibilityStatementComponent,
     CookiePolicyComponent,
     HelpComponent,
-    AboutComponent
+    AboutComponent,
+    PlayVideoComponent
   ],
   imports: [
     CommonModule,

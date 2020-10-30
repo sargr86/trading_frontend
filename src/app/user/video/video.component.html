@@ -1,110 +1,121 @@
 <!--<button (click)="testSession()">Test session</button>-->
 
 <ng-container *ngIf="session">
-  <div id="video-chat-container" *ngIf="openViduToken">
-    <!--  <ng-container *ngFor="let sub of subscribers">-->
-    <!--    <p>{{userNickname}}</p>-->
-    <ng-container *ngIf="watcher">
-      <!--      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>-->
-      <!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
-      <!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
-      <ng-container *ngIf="session">
-        <ng-container *ngIf="recordingState != 'idle'">
+    <div id="video-chat-container" *ngIf="openViduToken">
+        <!--  <ng-container *ngFor="let sub of subscribers">-->
+        <!--    <p>{{userNickname}}</p>-->
+        <ng-container *ngIf="watcher">
+            <!--      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>-->
+            <!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
+            <!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
+            <ng-container *ngIf="session">
+                <ng-container *ngIf="recordingState != 'idle'">
 
 
-          <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
-          <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
+                    <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
+                    <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
+                        <div class="video-container">
+                            <app-user-video [streamManager]="sub"
+                                            (click)="updateMainStreamManager(sub)"></app-user-video>
+                        </div>
+                    </div>
+                    <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                                  [videoRecordingState]="recordingState"
+                                  (sendMessage)="sendMessage($event)"></app-chat-box>
+                </ng-container>
+
+                <ng-container *ngIf="recordingState === 'idle'">
+
+                    <div id="streaming-not-started-yet">
+                        <p>The video streaming session has not been started yet</p>
+                    </div>
+                    <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                                  [videoRecordingState]="recordingState"
+                                  (sendMessage)="sendMessage($event)"></app-chat-box>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
+        <ng-container *ngIf="!watcher">
             <div class="video-container">
-              <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+                <app-video-js-record [openViduToken]="openViduToken"
+                                     [videoSettings]="startStreamingForm.value"></app-video-js-record>
+
             </div>
-          </div>
-          <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
-                        (sendMessage)="sendMessage($event)"></app-chat-box>
+            <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                          (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
         </ng-container>
-
-        <ng-container *ngIf="recordingState === 'idle'">
-
-          <div id="streaming-not-started-yet">
-            <p>The video streaming session has not been started yet</p>
-          </div>
-          <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
-                        (sendMessage)="sendMessage($event)"></app-chat-box>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-    <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
-    <ng-container *ngIf="!watcher">
-      <div class="video-container">
-        <app-video-js-record [openViduToken]="openViduToken" [videoSettings]="startStreamingForm.value"></app-video-js-record>
-      </div>
-      <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                    (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
-    </ng-container>
-    <!--  </ng-container>-->
-  </div>
+        <!--  </ng-container>-->
+    </div>
 </ng-container>
 
 <div id="main-container" class="container">
-  <div *ngIf="!session" id="join-form">
+    <div *ngIf="!session" id="join-form">
 
-    <ng-container *ngIf="watcher">
+        <ng-container *ngIf="watcher">
 
-      <div id="img-div"><img src="assets/img/openvidu_grey_bg_transp_cropped.png"/></div>
-      <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>Join a video session</h1>
-        <form class="form-group" [formGroup]="joinSessionForm">
-          <p>
-            <label>Session</label>
-            <input class="form-control" id="userName" formControlName="mySessionId" required>
-          </p>
-          <p>
-            <label>Participant</label>
-            <input class="form-control" id="sessionId" formControlName="myUserName" required>
-          </p>
-          <p class="text-center">
-            <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
-              Join!
-            </button>
-          </p>
-        </form>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="!watcher">
-      <form [formGroup]="startStreamingForm" id="start-streaming-form">
-        <div>
-          <input formControlName="name" id="video-name" placeholder="Video name">
-        </div>
-        <div>
-          <textarea formControlName="description" placeholder="Video description"></textarea>
-        </div>
-        <div>
-          <label>Custom thumbnail</label>
-          <input type="file" formControlName="thumbnail">
-        </div>
-        <div id="video-tags">
-          <mat-form-field class="example-chip-list">
-            <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
-              <mat-chip *ngFor="let tag of tags"
-                        (removed)="remove(tag)">
-                {{tag.name}}
-                <mat-icon matChipRemove>cancel</mat-icon>
-              </mat-chip>
-              <input placeholder="Tags..."
-                     [matChipInputFor]="tagList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-          </mat-form-field>
-        </div>
+            <div id="img-div"><img src="assets/img/openvidu_grey_bg_transp_cropped.png"/></div>
+            <div id="join-dialog" class="jumbotron vertical-center">
+                <h1>Join a video session</h1>
+                <form class="form-group" [formGroup]="joinSessionForm">
+                    <p>
+                        <label>Session</label>
+                        <input class="form-control" id="userName" formControlName="mySessionId" required>
+                    </p>
+                    <p>
+                        <label>Participant</label>
+                        <input class="form-control" id="sessionId" formControlName="myUserName" required>
+                    </p>
+                    <p class="text-center">
+                        <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
+                            Join!
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!watcher">
+            <form [formGroup]="startStreamingForm" id="start-streaming-form">
+                <div>
+                    <input formControlName="name" id="video-name" placeholder="Video name">
+                </div>
+                <div id="video-tags">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
+                            <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                                {{tag}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Tags..." #chipsInput
+                                   [matChipInputFor]="tagList"
+                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                   (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                </div>
+                <div id="video-categories">
+                    <select formControlName="category">
+                        <option selected>Category</option>
+                        <option *ngFor="let category of videoCategories">{{category}}</option>
+                    </select>
+                </div>
+                <div id="video-description">
+                    <textarea formControlName="description" placeholder="Video description"></textarea>
+                </div>
+                <div>
+                    <label for="custom-thumbnail">Upload Thumbnail</label>
+                    <input type="file" formControlName="thumbnail" id="custom-thumbnail">
+                </div>
 
-        <div class="actions">
-          <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
-            Start streaming!
-          </button>
-        </div>
-      </form>
-    </ng-container>
-  </div>
+
+                <div class="actions">
+                    <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
+                        Start streaming!
+                    </button>
+                </div>
+            </form>
+        </ng-container>
+    </div>
 
 
 </div>

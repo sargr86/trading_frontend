@@ -1,72 +1,122 @@
 .session-container {
-  height: 100vh;
+    height: 100vh;
 }
 
 #img-div {
-  text-align: center;
+    text-align: center;
 
-  img {
-    height: 200px;
-  }
+    img {
+        height: 200px;
+    }
 }
 
 .join-session-btn {
-  background-color: #18B587;
-  width: 25%;
-  margin-top: 33px;
-  border: none;
+    background-color: #18B587;
+    width: 25%;
+    margin-top: 33px;
+    border: none;
 }
 
 #video-chat-container {
-  display: flex;
-  position: relative;
+    display: flex;
 
-  app-video-js-record{
-    flex: 1;
+    .video-container {
+        flex: 1;
+        display: flex;
+    }
 
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    padding-top: 44%;
-  }
+    app-video-js-record {
+        flex: 1;
+
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding-top: 60%;
+    }
 }
-
 
 
 #streaming-not-started-yet {
-  width: 500px;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Muli-Light";
-  background: #EFEFEF;
+    width: 500px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Muli-Light";
+    background: #EFEFEF;
 }
 
 .stream-container {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 #start-streaming-form {
-  > div {
-    margin: 20px;
+    font-family: 'Muli-Regular';
 
-    > input, textarea {
-      width: 100%;
+    > div {
+        margin: 20px;
+
+        > input, textarea {
+            width: 100%;
+        }
     }
-  }
 
-  #video-name {
-    border: 1px solid silver;
-  }
-
-  #video-tags {
-    mat-form-field {
-      width: 100%;
+    #video-name {
+        width: 548px;
+        height: 51px;
+        background: #FFFFFF 0 0 no-repeat padding-box;
+        box-shadow: 0 0 6px #EEEEEE;
+        color: #CECECE;
+        //border: 0.5px solid #F53C6F;
     }
-  }
 
-  .actions {
-    text-align: center;
-  }
+    #video-categories {
+        select {
+            width: 548px;
+            height: 51px;
+            background: #FFFFFF 0 0 no-repeat padding-box;
+            box-shadow: 0 0 6px #EEEEEE;
+            border: none;
+            font: normal normal normal 16px/20px 'Muli-Regular';
+            color: #CECECE;
+            outline: none;
+        }
+    }
+
+    #video-description {
+        textarea {
+            width: 548px;
+            height: 151px;
+            background: #FFFFFF 0 0 no-repeat padding-box;
+            box-shadow: 0 0 6px #EEEEEE;
+            opacity: 1;
+            border: none;
+            resize: none;
+        }
+    }
+
+    label[for="custom-thumbnail"] {
+        display: flex;
+        align-items: center;
+        width: 316px;
+        height: 49px;
+        background: #EEEEEE 0 0 no-repeat padding-box;
+        font: normal normal normal 18px/19px 'Muli-Regular';
+        color: #C9C9C9;
+    }
+
+
+    #custom-thumbnail {
+        display: none;
+    }
+
+    #video-tags {
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .actions {
+        text-align: center;
+    }
 }

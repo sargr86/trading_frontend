@@ -39,7 +39,7 @@
         <ng-container *ngIf="!watcher">
             <div class="video-container">
                 <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                     [videoSettings]="startStreamingForm.value"></app-video-js-record>
+                                     [videoSettings]="videoSettings"></app-video-js-record>
 
             </div>
             <app-chat-box [openViduToken]="openViduToken" [session]="session"
@@ -74,57 +74,7 @@
                 </form>
             </div>
         </ng-container>
-        <ng-container *ngIf="!watcher">
-            <form [formGroup]="startStreamingForm" id="start-streaming-form">
-                <div>
-                    <input formControlName="name" id="video-name" placeholder="Video name">
-                </div>
-                <div id="video-tags">
-                    <mat-form-field class="example-chip-list">
-                        <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
-                            <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
-                                {{tag}}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                            <input placeholder="Tags..." #chipsInput
-                                   [matChipInputFor]="tagList"
-                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                   (matChipInputTokenEnd)="add($event)">
-                        </mat-chip-list>
-                    </mat-form-field>
-                </div>
-                <div id="video-categories">
-                    <select formControlName="category">
-                        <option selected>Category</option>
-                        <option *ngFor="let category of videoCategories">{{category}}</option>
-                    </select>
-                </div>
-                <div id="video-description">
-                    <textarea formControlName="description" placeholder="Video description"></textarea>
-                </div>
-                <div>
-                    <ng-container *ngIf="!thumbnailUploaded">
-                        <label for="custom-thumbnail">
-                            <i class="fa fa-cloud-alt"></i>
-                            Upload Thumbnail
-                        </label>
-                        <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
-                    </ng-container>
-                    <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
-                        <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
-                        </mat-icon>
-                        <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
-                    </div>
-                </div>
-
-
-                <div class="actions">
-                    <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">
-                        Start streaming!
-                    </button>
-                </div>
-            </form>
-        </ng-container>
+        <app-start-streaming-form *ngIf="!watcher" (formReady)="getVideoSettings($event)"></app-start-streaming-form>
     </div>
 
 

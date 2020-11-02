@@ -1,200 +1,203 @@
 <div class="body-content-left">
-  <div class="left-menu">
-      <div class="left-menu-main" (click)="router.navigate(['user/video/publish'])">
-          <img src="assets/img/item-6.png">
-          <p>Start live video</p>
-      </div>
-    <div class="left-menu-top">
-      <img src="assets/img/item-5.png">
-      <p>Home</p>
-    </div>
-    <div class="left-menu-main">
-      <img src="assets/img/item-6.png">
-      <p>Trendings</p>
-    </div>
-    <div class="left-menu-main">
-      <img src="assets/img/item-7.png">
-      <p>Subscriptions</p>
-    </div>
-    <div class="line-item"></div>
-    <div class="left-menu-main">
-      <img src="assets/img/item-8.png">
-      <p>Chat</p>
-    </div>
-    <div class="left-menu-main">
-      <img src="assets/img/item-9.png">
-      <p>Stock Profile</p>
-    </div>
-    <div class="left-menu-main">
-      <img src="assets/img/item-10.png">
-      <p>Saved Videos</p>
-    </div>
-    <div class="left-menu-main">
-      <img src="assets/img/item-11.png">
-      <p>CLIPZ</p>
-    </div>
-  </div>
-  <p class="subscriptions-text">Subscriptions</p>
-  <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
-    <div class="main-item-block" *ngFor="let item of sampleList;let i = index" cdkDrag>
-      <ng-container *ngIf="i < 5 && router.url!=='/'">
-        <img class="list-img" src="assets/img/item-4.png">
-        <div>
-          <p class="main-text-1">{{item.name}}</p>
-          <p class="main-text-4">{{item.description}}</p>
+    <div class="left-menu">
+        <div class="left-menu-main" [class.active]="router.url.includes('publish')"
+             (click)="router.navigate(['user/video/publish'])">
+            <img src="assets/img/item-6.png">
+            <p>Start live video</p>
         </div>
-      </ng-container>
+        <div class="left-menu-main" (click)="router.navigate(['/'])" [class.active]="router.url ==='/'">
+            <!--            <img src="assets/img/item-5.png">-->
+            <mat-icon>home</mat-icon>
+            <p>Home</p>
+        </div>
+        <div class="left-menu-main">
+            <img src="assets/img/item-6.png">
+            <p>Trendings</p>
+        </div>
+        <div class="left-menu-main">
+            <img src="assets/img/item-7.png">
+            <p>Subscriptions</p>
+        </div>
+        <div class="line-item"></div>
+        <div class="left-menu-main" [class.active]="router.url.includes('chat')" (click)="router.navigate(['chat'])">
+            <img src="assets/img/item-8.png">
+            <p>Chat</p>
+        </div>
+        <div class="left-menu-main" [class.active]="router.url.includes('stock')" (click)="router.navigate(['user/stock-profile'])">
+            <img src="assets/img/item-9.png">
+            <p>Stock Profile</p>
+        </div>
+        <div class="left-menu-main">
+            <img src="assets/img/item-10.png">
+            <p>Saved Videos</p>
+        </div>
+        <div class="left-menu-main">
+            <img src="assets/img/item-11.png">
+            <p>CLIPZ</p>
+        </div>
+    </div>
+    <p class="subscriptions-text">Subscriptions</p>
+    <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="main-item-block" *ngFor="let item of sampleList;let i = index" cdkDrag>
+            <ng-container *ngIf="i < 5 && router.url!=='/'">
+                <img class="list-img" src="assets/img/item-4.png">
+                <div>
+                    <p class="main-text-1">{{item.name}}</p>
+                    <p class="main-text-4">{{item.description}}</p>
+                </div>
+            </ng-container>
 
-      <ng-container *ngIf="router.url==='/'">
-        <img class="list-img" src="assets/img/item-4.png">
-        <div>
-          <p class="main-text-1">{{item.name}}</p>
-          <p class="main-text-4">{{item.description}}</p>
+            <ng-container *ngIf="router.url==='/'">
+                <img class="list-img" src="assets/img/item-4.png">
+                <div>
+                    <p class="main-text-1">{{item.name}}</p>
+                    <p class="main-text-4">{{item.description}}</p>
+                </div>
+            </ng-container>
         </div>
-      </ng-container>
     </div>
-  </div>
-  <div class="watchlist" *ngIf="router.url!=='/'">
-    <ul class="nav nav-tabs" id="watchlist" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab" aria-controls="watch"
-           aria-selected="true">Watchlist</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="room"
-           aria-selected="false">My Room</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="today-tab" data-toggle="tab" href="#today" role="tab" aria-controls="today"
-           aria-selected="false">Today</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="watchlistContent">
-      <div class="tab-pane fade show active" id="watch" role="tabpanel" aria-labelledby="watch-tab">
-        <div class="watchlist-search">
-          <input class="watchlist-input" placeholder="Search">
-          <i class="fas fa-search"></i>
+    <div class="watchlist" *ngIf="router.url!=='/'">
+        <ul class="nav nav-tabs" id="watchlist" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab"
+                   aria-controls="watch"
+                   aria-selected="true">Watchlist</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="room-tab" data-toggle="tab" href="#room" role="tab" aria-controls="room"
+                   aria-selected="false">My Room</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="today-tab" data-toggle="tab" href="#today" role="tab" aria-controls="today"
+                   aria-selected="false">Today</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="watchlistContent">
+            <div class="tab-pane fade show active" id="watch" role="tabpanel" aria-labelledby="watch-tab">
+                <div class="watchlist-search">
+                    <input class="watchlist-input" placeholder="Search">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="dropdown">
+                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                         aria-expanded="false">
+                        Sort by my sort
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+                <div class="watchlist-analytics">
+                    <div class="analytics-item">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">MSFT</p>
+                            <p class="analytics-text-2">micro...</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/green-up.png">
+                            <img src="assets/img/green-point.png">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">205,50</p>
+                            <p class="analytics-text-4">1.60(0.78%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-item">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">MSFT</p>
+                            <p class="analytics-text-2">micro...</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/green-up.png">
+                            <img src="assets/img/green-point.png">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">205,50</p>
+                            <p class="analytics-text-4">1.60(0.78%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-item">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">MSFT</p>
+                            <p class="analytics-text-2">micro...</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/green-up.png">
+                            <img src="assets/img/green-point.png">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">205,50</p>
+                            <p class="analytics-text-4">1.60(0.78%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-item">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">MSFT</p>
+                            <p class="analytics-text-2">micro...</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/green-up.png">
+                            <img src="assets/img/green-point.png">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">205,50</p>
+                            <p class="analytics-text-4">1.60(0.78%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-item">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">MSFT</p>
+                            <p class="analytics-text-2">micro...</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/green-up.png">
+                            <img src="assets/img/green-point.png">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">205,50</p>
+                            <p class="analytics-text-4">1.60(0.78%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-item">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">MSFT</p>
+                            <p class="analytics-text-2">micro...</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/red-down.png">
+                            <img src="assets/img/red-point.png">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">205,50</p>
+                            <p class="analytics-text-5">1.60(0.78%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+                <img class="ads" src="assets/img/ads.png">
+                <img class="ads" src="assets/img/ads.png">
+            </div>
+            <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>
+            <div class="tab-pane fade" id="today" role="tabpanel" aria-labelledby="today-tab">333</div>
         </div>
-        <div class="dropdown">
-          <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false">
-            Sort by my sort
-          </div>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-        <div class="watchlist-analytics">
-          <div class="analytics-item">
-            <div class="analytics-item-1">
-              <p class="analytics-text-1">MSFT</p>
-              <p class="analytics-text-2">micro...</p>
-            </div>
-            <div class="analytics-img">
-              <img src="assets/img/green-up.png">
-              <img src="assets/img/green-point.png">
-            </div>
-            <div class="analytics-percent">
-              <p class="analytics-text-3">205,50</p>
-              <p class="analytics-text-4">1.60(0.78%)</p>
-            </div>
-            <div class="analytics-delete">
-              <i class="fas fa-trash"></i>
-            </div>
-          </div>
-          <div class="analytics-item">
-            <div class="analytics-item-1">
-              <p class="analytics-text-1">MSFT</p>
-              <p class="analytics-text-2">micro...</p>
-            </div>
-            <div class="analytics-img">
-              <img src="assets/img/green-up.png">
-              <img src="assets/img/green-point.png">
-            </div>
-            <div class="analytics-percent">
-              <p class="analytics-text-3">205,50</p>
-              <p class="analytics-text-4">1.60(0.78%)</p>
-            </div>
-            <div class="analytics-delete">
-              <i class="fas fa-trash"></i>
-            </div>
-          </div>
-          <div class="analytics-item">
-            <div class="analytics-item-1">
-              <p class="analytics-text-1">MSFT</p>
-              <p class="analytics-text-2">micro...</p>
-            </div>
-            <div class="analytics-img">
-              <img src="assets/img/green-up.png">
-              <img src="assets/img/green-point.png">
-            </div>
-            <div class="analytics-percent">
-              <p class="analytics-text-3">205,50</p>
-              <p class="analytics-text-4">1.60(0.78%)</p>
-            </div>
-            <div class="analytics-delete">
-              <i class="fas fa-trash"></i>
-            </div>
-          </div>
-          <div class="analytics-item">
-            <div class="analytics-item-1">
-              <p class="analytics-text-1">MSFT</p>
-              <p class="analytics-text-2">micro...</p>
-            </div>
-            <div class="analytics-img">
-              <img src="assets/img/green-up.png">
-              <img src="assets/img/green-point.png">
-            </div>
-            <div class="analytics-percent">
-              <p class="analytics-text-3">205,50</p>
-              <p class="analytics-text-4">1.60(0.78%)</p>
-            </div>
-            <div class="analytics-delete">
-              <i class="fas fa-trash"></i>
-            </div>
-          </div>
-          <div class="analytics-item">
-            <div class="analytics-item-1">
-              <p class="analytics-text-1">MSFT</p>
-              <p class="analytics-text-2">micro...</p>
-            </div>
-            <div class="analytics-img">
-              <img src="assets/img/green-up.png">
-              <img src="assets/img/green-point.png">
-            </div>
-            <div class="analytics-percent">
-              <p class="analytics-text-3">205,50</p>
-              <p class="analytics-text-4">1.60(0.78%)</p>
-            </div>
-            <div class="analytics-delete">
-              <i class="fas fa-trash"></i>
-            </div>
-          </div>
-          <div class="analytics-item">
-            <div class="analytics-item-1">
-              <p class="analytics-text-1">MSFT</p>
-              <p class="analytics-text-2">micro...</p>
-            </div>
-            <div class="analytics-img">
-              <img src="assets/img/red-down.png">
-              <img src="assets/img/red-point.png">
-            </div>
-            <div class="analytics-percent">
-              <p class="analytics-text-3">205,50</p>
-              <p class="analytics-text-5">1.60(0.78%)</p>
-            </div>
-            <div class="analytics-delete">
-              <i class="fas fa-trash"></i>
-            </div>
-          </div>
-        </div>
-        <img class="ads" src="assets/img/ads.png">
-        <img class="ads" src="assets/img/ads.png">
-      </div>
-      <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>
-      <div class="tab-pane fade" id="today" role="tabpanel" aria-labelledby="today-tab">333</div>
     </div>
-  </div>
 </div>

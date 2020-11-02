@@ -167,8 +167,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             fd.append('full_name', this.authUser.full_name);
             fd.append('video_name', this.player.recordedData.name);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
-            console.log(this.thumbnailFile)
-            fd.append('thumbnail', this.thumbnailFile.name);
+            if (this.thumbnailFile) {
+                fd.append('thumbnail', this.thumbnailFile.name);
+            }
             fd.append('video_settings', JSON.stringify(this.videoSettings));
             this.subject.setVideoRecordingState({recording: false});
             this.recordingState = 'finished';

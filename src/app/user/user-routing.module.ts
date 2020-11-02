@@ -10,6 +10,7 @@ import {HelpComponent} from './help/help.component';
 import {AboutComponent} from './about/about.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {PlayVideoComponent} from '@app/user/play-video/play-video.component';
+import {StockProfileComponent} from '@app/user/stock-profile/stock-profile.component';
 
 const routes: Routes = [
     {
@@ -35,6 +36,10 @@ const routes: Routes = [
     {
         path: 'profile',
         component: ProfileComponent
+    },
+    {
+        path: 'stock-profile',
+        component: StockProfileComponent
     },
     {
         path: 'video/publish',

@@ -51,6 +51,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         sources: []
     };
 
+    videoSettings;
+
     streamCreated = false;
     userNickname;
 
@@ -63,10 +65,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     publisher: StreamManager; // Local
     subscribers: StreamManager[] = []; // Remotes
 
-    readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     @ViewChild('video') videoEl;
-    @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
+
 
     // Join form
     joinSessionForm: FormGroup;
@@ -88,8 +89,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     webcams = [];
     tags = [];
 
-    startStreamingForm: FormGroup;
-    videoCategories = VIDEO_CATEGORIES;
+
     thumbnailFile;
     thumbnailUploaded = false;
     apiUrl = API_URL;
@@ -105,14 +105,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private videoService: VideoService,
         public router: Router
     ) {
-
-        this.startStreamingForm = this.fb.group({
-            name: ['', Validators.required],
-            description: ['', Validators.required],
-            category: ['', Validators.required],
-            // thumbnail: ['', Validators.required],
-            tags: [[], Validators.required]
-        });
     }
 
     ngOnInit(): void {
@@ -140,7 +132,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.leaveSession();
             }
 
-            console.log(data)
             if (!data.viaSocket) {
                 this.sendRecordingState(data.recording);
             }
@@ -164,7 +155,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     joinSession() {
-        console.log(this.startStreamingForm.value)
         this.OV = new OpenVidu();
 
         this.session = this.OV.initSession();
@@ -176,7 +166,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
         }).subscribe((token: any) => {
             // const {token} = data;
-            console.log(token)
             this.openViduToken = token;
             this.receiveMessage();
             this.receiveRecordingState();
@@ -320,7 +309,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             const obj = {event, ...{socket: true}};
             this.recordingState = !!event.data ? 'started' : 'finished';
             if (this.recordingState === 'finished') {
-                this.startStreamingForm.reset();
+                // this.startStreamingForm.reset();
                 this.tags = [];
             }
 
@@ -374,50 +363,12 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    add(event: MatChipInputEvent): void {
-        const input = event.input;
-        const value = event.value;
-
-        // Add our fruit
-        if ((value || '').trim()) {
-            this.tags.push(value.trim());
-            this.startStreamingForm.patchValue({tags: this.tags});
-        }
-
-        // Reset the input value
-        if (input) {
-            input.value = '';
-        }
+    getVideoSettings(e) {
+        console.log(e)
+        this.videoSettings = e;
+        this.joinSession();
     }
 
-    remove(fruit): void {
-        const index = this.tags.indexOf(fruit);
-
-        if (index >= 0) {
-            this.tags.splice(index, 1);
-            this.startStreamingForm.patchValue({tags: this.tags});
-        }
-    }
-
-    getThumbnailFile(e) {
-        this.thumbnailFile = e.target.files[0];
-        const fd = new FormData();
-        fd.append('video_thumbnail_file', this.thumbnailFile);
-
-        // this.startStreamingForm.patchValue({thumbnail: this.thumbnailFile.name});
-        this.videoService.saveVideoThumbnail(fd).subscribe(filename => {
-            this.toastr.success('The thumbnail has been uploaded successfully');
-            this.thumbnailUploaded = true;
-        });
-    }
-
-    removeUploadedThumbnail(filename) {
-        // this.videoService.removeVideoThumbnail(filename).subscribe(dt => {
-            this.thumbnailFile = [];
-            this.toastr.success('The thumbnail has been removed successfully');
-            this.thumbnailUploaded = false;
-        // });
-    }
 
     ngOnDestroy() {
         // On component destroyed leave session

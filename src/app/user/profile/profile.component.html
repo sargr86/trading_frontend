@@ -1,95 +1,97 @@
 <div class="profile-list">
-  <ul class="categories">
-    <li><a class="active">Recommendations</a></li>
-    <li><a>Today's picks</a></li>
-    <li><a>AAPL</a></li>
-    <li><a>Phil Ramerez</a></li>
-    <li><a>True Money</a></li>
-    <li><a>PICK 4</a></li>
-    <li><a>Synergy fusion</a></li>
-    <li><a>Sunshine trading stream</a></li>
-    <li><a>Shot stocks</a></li>
-    <li><a>SMP</a></li>
-    <li><a>Strategy for U</a></li>
-    <li><a>Automotive</a></li>
-  </ul>
-  <div class="profile-block">
-    <img src="assets/img/profile.png">
-  </div>
-  <div class="sub-block">
-    <div class="d-flex align-items-center">
-      <img class="list-img" src="assets/img/item-4.png">
-      <div>
-        <p class="main-text-1">{{authUser.full_name}}</p>
-        <p class="main-text-4">83,7 subscribers</p>
-      </div>
+    <ul class="categories">
+        <li><a class="active">Recommendations</a></li>
+        <li><a>Today's picks</a></li>
+        <li><a>AAPL</a></li>
+        <li><a>Phil Ramerez</a></li>
+        <li><a>True Money</a></li>
+        <li><a>PICK 4</a></li>
+        <li><a>Synergy fusion</a></li>
+        <li><a>Sunshine trading stream</a></li>
+        <li><a>Shot stocks</a></li>
+        <li><a>SMP</a></li>
+        <li><a>Strategy for U</a></li>
+        <li><a>Automotive</a></li>
+    </ul>
+    <div class="profile-block">
+        <img src="assets/img/profile.png">
     </div>
-    <div class="d-flex align-items-center">
-      <i class="sub-bell fas fa-bell"></i>
-      <a class="subscribe-btn">Subscribe</a>
-    </div>
-  </div>
-  <div class="watchlist pWatchlist">
-    <div class="profile-list user-profile-block">
-      <ul class="nav nav-tabs" id="profileList" role="tablist">
-        <li class="nav-item" *ngFor="let tab of allTabs">
-          <a class="nav-link" [class.active]="tab === activeTab" id="{{tab.link}}-tab"
-             (click)="changeActiveTab(tab)" data-toggle="tab" href="#{{tab.link}}" role="tab"
-             aria-controls="pWatch"
-             aria-selected="true">{{tab.name}}</a>
-        </li>
-      </ul>
-      <div class="watchlist-search">
-        <input class="watchlist-input" placeholder="Search">
-        <i class="fas fa-search"></i>
-      </div>
-    </div>
-
-    <ng-container *ngIf="activeTab.name === 'Watchlist'">
-      <ng-container *ngFor="let owlItem of owlTextsArray">
-        <p class="trending-text">{{owlItem.name}}</p>
-        <owl-carousel-o [options]="owlOptions">
-          <ng-container *ngFor="let item of [0,1,2,3]">
-            <ng-template carouselSlide>
-              <div class="item main-carousel-item">
-                <img class="main-item-img" src="assets/img/item-1.png">
-                <span class="live-now">Live now</span>
-                <div class="main-item-block">
-                  <img class="main-item-block-img" src="assets/img/item-4.png">
-                  <div>
-                    <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
-                    <p class="main-text-2">Fox News</p>
-                    <p class="main-text-3">17k watching</p>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </ng-container>
-        </owl-carousel-o>
-      </ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="activeTab.name === 'Videos'">
-      <p class="trending-text">Recent videos</p>
-      <owl-carousel-o>
-        <ng-container *ngFor="let video of userVideos">
-          <ng-template carouselSlide>
-            <div class="item main-carousel-item" (click)="openVideoPage(video)">
-              <img class="main-item-img" src="assets/img/video-thumbnail-default.png" *ngIf="!video.thumbnail">
-              <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}" *ngIf="video.thumbnail">
-              <div class="main-item-block">
-                <img class="main-item-block-img" src="assets/img/item-4.png">
-                <div>
-                  <p class="main-text-1">{{video.name}}</p>
-                  <p class="main-text-2">{{video.author}}</p>
-                  <p class="main-text-3">17k watching</p>
-                </div>
-              </div>
+    <div class="sub-block">
+        <div class="d-flex align-items-center">
+            <img class="list-img" src="assets/img/item-4.png">
+            <div>
+                <p class="main-text-1">{{authUser.full_name}}</p>
+                <p class="main-text-4">83,7 subscribers</p>
             </div>
-          </ng-template>
+        </div>
+        <div class="d-flex align-items-center">
+            <i class="sub-bell fas fa-bell"></i>
+            <a class="subscribe-btn">Subscribe</a>
+        </div>
+    </div>
+    <div class="watchlist pWatchlist">
+        <div class="profile-list user-profile-block">
+            <ul class="nav nav-tabs" id="profileList" role="tablist">
+                <li class="nav-item" *ngFor="let tab of allTabs">
+                    <a class="nav-link" [class.active]="tab === activeTab" id="{{tab.link}}-tab"
+                       (click)="changeActiveTab(tab)" data-toggle="tab" href="#{{tab.link}}" role="tab"
+                       aria-controls="pWatch"
+                       aria-selected="true">{{tab.name}}</a>
+                </li>
+            </ul>
+            <div class="watchlist-search">
+                <input class="watchlist-input" placeholder="Search">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <ng-container *ngIf="activeTab.name === 'Watchlist'">
+            <ng-container *ngFor="let owlItem of owlTextsArray">
+                <p class="trending-text">{{owlItem.name}}</p>
+                <owl-carousel-o [options]="owlOptions">
+                    <ng-container *ngFor="let item of [0,1,2,3]">
+                        <ng-template carouselSlide>
+                            <div class="item main-carousel-item">
+                                <img class="main-item-img" src="assets/img/item-1.png">
+                                <span class="live-now">Live now</span>
+                                <div class="main-item-block">
+                                    <img class="main-item-block-img" src="assets/img/item-4.png">
+                                    <div>
+                                        <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                                        <p class="main-text-2">Fox News</p>
+                                        <p class="main-text-3">17k watching</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </ng-container>
         </ng-container>
-      </owl-carousel-o>
-    </ng-container>
-  </div>
+
+        <ng-container *ngIf="activeTab.name === 'Videos'">
+            <p class="trending-text">Recent videos</p>
+            <owl-carousel-o>
+                <ng-container *ngFor="let video of userVideos">
+                    <ng-template carouselSlide>
+                        <div class="item main-carousel-item" (click)="openVideoPage(video)">
+                            <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                 *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
+                            <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                 *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                            <div class="main-item-block">
+                                <img class="main-item-block-img" src="assets/img/item-4.png">
+                                <div>
+                                    <p class="main-text-1">{{video.name}}</p>
+                                    <p class="main-text-2">{{video.author}}</p>
+                                    <p class="main-text-3">17k watching</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </ng-container>
+    </div>
 
 </div>

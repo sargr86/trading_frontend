@@ -17,6 +17,7 @@ import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
 import { PlayVideoComponent } from './play-video/play-video.component';
+import { StartStreamingFormComponent } from './start-streaming-form/start-streaming-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PlayVideoComponent } from './play-video/play-video.component';
     CookiePolicyComponent,
     HelpComponent,
     AboutComponent,
-    PlayVideoComponent
+    PlayVideoComponent,
+    StartStreamingFormComponent
   ],
   imports: [
     CommonModule,

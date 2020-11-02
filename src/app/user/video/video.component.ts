@@ -84,8 +84,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     recordingState = 'idle';
     watcher = false;
 
-    sessionName = 'SessionA';
-
     webcams = [];
     tags = [];
 
@@ -93,6 +91,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     thumbnailFile;
     thumbnailUploaded = false;
     apiUrl = API_URL;
+
+    publisherData;
+    sessionData;
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -120,7 +121,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.watcher = this.router.url.includes('watch');
 
         this.authUser = this.getAuthUser.transform();
-        this.initForm();
 
         if (!this.watcher) {
             // this.joinSession();
@@ -146,14 +146,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
-    initForm() {
-        this.joinSessionForm = this.fb.group({
-            mySessionId: [this.sessionName],
-            // myUserName: ['Participant' + Math.floor(Math.random() * 100)]
-            myUserName: [this.authUser.username]
-        });
-    }
-
     joinSession() {
         this.OV = new OpenVidu();
 
@@ -162,7 +154,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.openViduService.getToken({
             email: this.authUser.email,
-            sessionName: this.sessionName,
+            sessionName: this.sessionData.sessionName,
             role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
         }).subscribe((token: any) => {
             // const {token} = data;
@@ -171,8 +163,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             this.receiveRecordingState();
 
             console.log(token)
-            console.log({clientData: this.joinSessionForm.value.myUserName})
-            this.session.connect(token, {clientData: this.joinSessionForm.value})
+            // console.log({clientData: this.joinSessionForm.value.myUserName})
+            this.session.connect(token, {clientData: this.sessionData})
                 .then(() => {
                     console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
                     if (token.includes('PUBLISHER')) {
@@ -233,7 +225,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 // }
             );
             this.subscribers.push(subscriber);
-            console.log(this.subscribers)
+            console.log(this.subscribers);
         });
 
         // On every Stream destroyed...
@@ -270,7 +262,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.thumbnailFile = [];
         this.thumbnailUploaded = false;
 
-        this.openViduService.leaveSession({token: this.openViduToken, sessionName: this.sessionName}).subscribe(() => {
+        this.openViduService.leaveSession({token: this.openViduToken, sessionName: this.sessionData.sessionName}).subscribe(() => {
 
         });
         // this.generateParticipantInfo();
@@ -357,15 +349,18 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    testSession() {
-        this.openViduService.getSession().subscribe(dt => {
 
-        });
+    getPublisherData(e) {
+        this.videoSettings = e;
+        this.sessionData = {mySessionId: e.mySessionId, myUserName: e.myUserName};
+        console.log(this.sessionData)
+        this.joinSession();
     }
 
-    getVideoSettings(e) {
-        console.log(e)
-        this.videoSettings = e;
+    getWatcherData(e) {
+        this.publisherData = e;
+        this.sessionData = {mySessionId: e.mySessionId, myUserName: e.myUserName};
+        console.log(this.sessionData)
         this.joinSession();
     }
 

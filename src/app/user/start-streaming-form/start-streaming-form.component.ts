@@ -5,6 +5,7 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {VideoService} from '@core/services/video.service';
 import {ToastrService} from 'ngx-toastr';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-start-streaming-form',
@@ -21,7 +22,9 @@ export class StartStreamingFormComponent implements OnInit {
     tags = [];
     videoCategories = VIDEO_CATEGORIES;
 
+    authUser;
 
+    sessionName = 'SessionA';
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
@@ -30,11 +33,13 @@ export class StartStreamingFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private videoService: VideoService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private getAuthUser: GetAuthUserPipe,
     ) {
     }
 
     ngOnInit(): void {
+        this.authUser = this.getAuthUser.transform();
         this.initForm();
     }
 
@@ -43,7 +48,9 @@ export class StartStreamingFormComponent implements OnInit {
             name: ['', Validators.required],
             description: ['', Validators.required],
             category: ['', Validators.required],
-            tags: [[], Validators.required]
+            tags: [[], Validators.required],
+            mySessionId: [this.sessionName],
+            myUserName: [this.authUser.username]
         });
     }
 

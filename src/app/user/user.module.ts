@@ -18,6 +18,7 @@ import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
 import { PlayVideoComponent } from './play-video/play-video.component';
 import { StartStreamingFormComponent } from './start-streaming-form/start-streaming-form.component';
+import { JoinStreamingFormComponent } from './join-streaming-form/join-streaming-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { StartStreamingFormComponent } from './start-streaming-form/start-stream
     HelpComponent,
     AboutComponent,
     PlayVideoComponent,
-    StartStreamingFormComponent
+    StartStreamingFormComponent,
+    JoinStreamingFormComponent
   ],
   imports: [
     CommonModule,

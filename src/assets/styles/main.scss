@@ -197,6 +197,11 @@ li {
     display: flex;
     align-items: center;
     margin-right: 16px;
+
+    p {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
 }
 
 .black-percent-red {
@@ -418,6 +423,11 @@ li {
     transition: 0.3s ease-in-out;
     margin-bottom: 5px;
     border-bottom: 1px solid transparent;
+
+    p {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
 }
 
 .left-menu-main:hover {
@@ -481,6 +491,10 @@ li {
     border-radius: 50%;
 }
 
+#profile-image{
+    cursor: pointer;
+}
+
 .watchlist {
     margin-top: 40px;
 }
@@ -519,7 +533,7 @@ li {
 }
 
 .watchlist .nav-link.active {
-    background: #F53C6F;
+    background: #F53C6F !important;
     color: #FFFFFF !important;
 }
 
@@ -790,12 +804,13 @@ li {
     justify-content: center;
     align-items: center;
     margin-left: 16px;
-    margin-right: 16px;
 }
 
 .profile-block img {
     width: 100%;
     margin-bottom: 28px;
+    object-fit: cover;
+    height: 340px;
 }
 
 .smile-block {
@@ -1282,7 +1297,7 @@ li {
 }
 
 input::placeholder, textarea::placeholder {
-    color: #CECECE !important;
+    //color: #CECECE !important;
     padding-left: 32px !important;
 }
 

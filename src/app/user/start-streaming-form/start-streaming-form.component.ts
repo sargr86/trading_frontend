@@ -50,7 +50,8 @@ export class StartStreamingFormComponent implements OnInit {
             category: ['', Validators.required],
             tags: [[], Validators.required],
             sessionName: [this.sessionName],
-            myUserName: [this.authUser.username]
+            myUserName: [this.authUser.username],
+            thumbnail: ['', Validators.required]
         });
     }
 
@@ -83,6 +84,7 @@ export class StartStreamingFormComponent implements OnInit {
         this.thumbnailFile = e.target.files[0];
         const fd = new FormData();
         fd.append('video_thumbnail_file', this.thumbnailFile);
+        this.startStreamingForm.patchValue({thumbnail: this.thumbnailFile.name});
 
         this.videoService.saveVideoThumbnail(fd).subscribe(filename => {
             this.toastr.success('The thumbnail has been uploaded successfully');

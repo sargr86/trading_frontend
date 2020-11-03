@@ -52,12 +52,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('video') videoEl;
 
-
-    // Join form
-    joinSessionForm: FormGroup;
-    mySessionId: string;
-    myUserName: string;
-
     // Main video of the page, will be 'publisher' or one of the 'subscribers',
     // updated by click event in UserVideoComponent children
     mainStreamManager: StreamManager;
@@ -95,14 +89,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
-
-        // navigator.mediaDevices.enumerateDevices()
-        //   .then((devices) => {
-        //     this.webcams = devices.filter(d => d.kind === 'videoinput');
-        //     console.log(this.webcams);
-        //   });
-
 
         this.watcher = this.router.url.includes('watch');
 
@@ -144,7 +130,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             this.receiveMessage();
             this.receiveRecordingState();
 
-            console.log(token)
+            // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
             this.session.connect(token, {clientData: this.sessionData})
                 .then(() => {
@@ -253,14 +239,18 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             this.session.disconnect();
         }
 
-        // Empty all properties...
-        this.subscribers = [];
-        delete this.publisher;
-        delete this.session;
-        delete this.OV;
+        if (!this.watcher) {
 
-        this.thumbnailFile = [];
-        this.thumbnailUploaded = false;
+
+            // Empty all properties...
+            this.subscribers = [];
+            delete this.publisher;
+            delete this.session;
+            delete this.OV;
+
+            this.thumbnailFile = [];
+            this.thumbnailUploaded = false;
+        }
 
         if (this.sessionData) {
 

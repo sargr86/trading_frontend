@@ -30,7 +30,7 @@
     </div>
     <div id="video-description">
         <textarea formControlName="description" placeholder="Video description"></textarea>
-        <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream desciption is required</mat-error>
+        <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required</mat-error>
     </div>
     <div>
         <ng-container *ngIf="!thumbnailUploaded">

@@ -1,26 +1,21 @@
+<!-- Shown when session connected -->
 <ng-container *ngIf="session">
     <div id="video-chat-container" *ngIf="openViduToken">
-        <!--  <ng-container *ngFor="let sub of subscribers">-->
-        <!--    <p>{{userNickname}}</p>-->
+
+        <!-- Publisher video recording interface -->
+        <ng-container *ngIf="!watcher">
+            <div class="video-container">
+                <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                                     [videoSettings]="videoSettings"></app-video-js-record>
+            </div>
+            <app-chat-box [openViduToken]="openViduToken" [session]="session"
+                          (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+        </ng-container>
+
+        <!-- Subscriber video watching interface -->
         <ng-container *ngIf="watcher">
-            <!--      <app-vjs-player [options]="videoJSPlayerOptions"></app-vjs-player>-->
-            <!--      <app-chat-box [openViduToken]="openViduToken" [session]="session"-->
-            <!--                    (sendMessage)="sendMessage($event)"></app-chat-box>-->
-            <ng-container *ngIf="recordingState != 'idle'">
 
-
-                <!--      <app-video-js-record [openViduToken]="openViduToken" *ngIf="!watcher"></app-video-js-record>-->
-                <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
-                    <div class="video-container">
-                        <app-user-video [streamManager]="sub"
-                                        (click)="updateMainStreamManager(sub)"></app-user-video>
-                    </div>
-                </div>
-                <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                              [videoRecordingState]="recordingState"
-                              (sendMessage)="sendMessage($event)"></app-chat-box>
-            </ng-container>
-
+            <!-- Default screen when streaming not started -->
             <ng-container *ngIf="recordingState === 'idle'">
 
                 <div id="streaming-not-started-yet">
@@ -30,21 +25,30 @@
                               [videoRecordingState]="recordingState"
                               (sendMessage)="sendMessage($event)"></app-chat-box>
             </ng-container>
-        </ng-container>
-        <!--    <video #target class="video-js" controls muted playsinline preload="none"></video>-->
-        <ng-container *ngIf="!watcher">
-            <div class="video-container">
-                <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                     [videoSettings]="videoSettings"></app-video-js-record>
 
-            </div>
-            <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                          (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+            <!-- Streaming started -->
+            <ng-container *ngIf="recordingState != 'idle'">
+                <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
+                    <div class="video-container">
+                        <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+                    </div>
+                </div>
+                <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
+                              (sendMessage)="sendMessage($event)"></app-chat-box>
+            </ng-container>
+
+
         </ng-container>
-        <!--  </ng-container>-->
     </div>
+    <ng-container *ngIf="session">
+        <i class="fa fa-users"></i>{{participants.length}}
+        <ul>
+            <li *ngFor="let participant of participants">{{participant}}</li>
+        </ul>
+    </ng-container>
 </ng-container>
 
+<!-- Showing start-streaming or join-streaming forms based on user role -->
 <div id="main-container" class="container" *ngIf="!session">
     <app-start-streaming-form *ngIf="!watcher" (formReady)="getPublisherData($event)"></app-start-streaming-form>
     <app-join-streaming-form *ngIf="watcher" (formReady)="getWatcherData($event)"></app-join-streaming-form>

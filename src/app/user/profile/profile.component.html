@@ -14,11 +14,33 @@
         <li><a>Automotive</a></li>
     </ul>
     <div class="profile-block">
-        <img src="assets/img/profile.png">
+        <div [hidden]="true">
+            <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
+            <ngx-photo-editor
+                [imageChanedEvent]="coverChangedEvent"
+                (imageCropped)="coverCropped($event)"
+                [autoCrop]="false"
+                [viewMode]="3"></ngx-photo-editor>
+        </div>
+        <label for="cover-image-input">
+            <img [src]="authUser.cover? apiUrl + 'uploads/covers/' + authUser.cover:'assets/img/cover.png'" id="cover-image">
+        </label>
     </div>
     <div class="sub-block">
         <div class="d-flex align-items-center">
-            <img class="list-img" src="assets/img/item-4.png">
+            <label for="profile-image-input">
+                <img [src]="authUser.avatar? apiUrl + 'uploads/avatars/' + authUser.avatar:'assets/img/item-4.png'" class="list-img" id="profile-image">
+            </label>
+            <div [hidden]="true">
+                <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
+                <ngx-photo-editor
+                    [imageChanedEvent]="profileChangedEvent"
+                    (imageCropped)="profileCropped($event)"
+                    [aspectRatio]="4/3"
+                    [viewMode]="1"
+                    [resizeToWidth]="500"></ngx-photo-editor>
+
+            </div>
             <div>
                 <p class="main-text-1">{{authUser.full_name}}</p>
                 <p class="main-text-4">83,7 subscribers</p>
@@ -57,7 +79,7 @@
                                 <div class="main-item-block">
                                     <img class="main-item-block-img" src="assets/img/item-4.png">
                                     <div>
-                                        <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                                        <p class="main-text-1">Trump meets with Florida Sheriffs</p>
                                         <p class="main-text-2">Fox News</p>
                                         <p class="main-text-3">17k watching</p>
                                     </div>
@@ -80,7 +102,7 @@
                             <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
                                  *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
                             <div class="main-item-block">
-                                <img class="main-item-block-img" src="assets/img/item-4.png">
+                                <img class="main-item-block-img" [src]="authUser.avatar? apiUrl + 'uploads/avatars/' + authUser.avatar:'assets/img/item-4.png'">
                                 <div>
                                     <p class="main-text-1">{{video.name}}</p>
                                     <p class="main-text-2">{{video.author}}</p>

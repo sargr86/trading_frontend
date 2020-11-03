@@ -6,7 +6,8 @@ export class User {
   gender?: string;
   email?: string;
   password?: string;
-  profile_img?: string;
+  cover?: string;
+  avatar?: string;
   token?: string;
   roles?: string[];
 }

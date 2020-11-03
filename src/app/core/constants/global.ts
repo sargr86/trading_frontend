@@ -33,5 +33,6 @@ export const PROFILE_PAGE_TABS = [
     {name: 'About', link: 'pAbout'},
 ];
 
-export const VIDEO_CATEGORIES = ['Bearish', 'Bullish', 'Stock', 'Etf', 'Cryptocurrency'];
+export const VIDEO_CATEGORIES = ['Stock', 'Etf', 'Cryptocurrency'];
 
+export const ALLOWED_IMG_MIME_TYPES = ['image/jpeg', 'image/png'];

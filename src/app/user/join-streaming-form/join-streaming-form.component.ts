@@ -34,7 +34,7 @@ export class JoinStreamingFormComponent implements OnInit {
 
     initForm() {
         this.joinSessionForm = this.fb.group({
-            mySessionId: [this.sessionName],
+            sessionName: [this.sessionName],
             // myUserName: ['Participant' + Math.floor(Math.random() * 100)]
             myUserName: [this.authUser.username]
         });

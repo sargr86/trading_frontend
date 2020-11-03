@@ -49,7 +49,7 @@ export class StartStreamingFormComponent implements OnInit {
             description: ['', Validators.required],
             category: ['', Validators.required],
             tags: [[], Validators.required],
-            mySessionId: [this.sessionName],
+            sessionName: [this.sessionName],
             myUserName: [this.authUser.username]
         });
     }

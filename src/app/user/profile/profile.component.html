@@ -68,19 +68,19 @@
         </div>
 
         <ng-container *ngIf="activeTab.name === 'Watchlist'">
-            <ng-container *ngFor="let owlItem of owlTextsArray">
-                <p class="trending-text">{{owlItem.name}}</p>
+            <ng-container *ngFor="let videos of watchlistVideos">
+                <p class="trending-text">{{videos._id}}</p>
                 <owl-carousel-o [options]="owlOptions">
-                    <ng-container *ngFor="let item of [0,1,2,3]">
+                    <ng-container *ngFor="let video of videos.obj">
                         <ng-template carouselSlide>
                             <div class="item main-carousel-item">
-                                <img class="main-item-img" src="assets/img/item-1.png">
+                                <img class="main-item-img" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
                                 <span class="live-now">Live now</span>
                                 <div class="main-item-block">
-                                    <img class="main-item-block-img" src="assets/img/item-4.png">
+                                    <img class="main-item-block-img" [src]="apiUrl+'uploads/avatars/'+video.avatar">
                                     <div>
-                                        <p class="main-text-1">Trump meets with Florida Sheriffs</p>
-                                        <p class="main-text-2">Fox News</p>
+                                        <p class="main-text-1">{{video.name}}</p>
+                                        <p class="main-text-2">{{videos._id}}</p>
                                         <p class="main-text-3">17k watching</p>
                                     </div>
                                 </div>

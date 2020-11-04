@@ -39,4 +39,8 @@ export class VideoService {
     getVideoById(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-video-by-id`, {params});
     }
+
+    getVideosByAuthor(params) {
+        return this.httpClient.get<any>(`${API_URL}videos/get-videos-by-author`, {params});
+    }
 }

@@ -165,6 +165,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             const fd: FormData = new FormData();
             fd.append('username', this.authUser.username);
             fd.append('full_name', this.authUser.full_name);
+            fd.append('avatar', this.authUser.avatar);
             fd.append('video_name', this.player.recordedData.name);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
             if (this.thumbnailFile) {

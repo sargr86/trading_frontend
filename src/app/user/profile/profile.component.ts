@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
         {name: 'Lorem ipsum'}
     ];
     userVideos = [];
+    watchlistVideos = [];
     authUser;
 
     activeTab = PROFILE_PAGE_TABS[0];
@@ -48,6 +49,10 @@ export class ProfileComponent implements OnInit {
     ngOnInit(): void {
         this.videoService.getUserVideos({username: this.authUser.username}).subscribe(dt => {
             this.userVideos = dt;
+        });
+
+        this.videoService.getVideosByAuthor({}).subscribe(dt => {
+            this.watchlistVideos = dt;
         });
     }
 
@@ -75,7 +80,9 @@ export class ProfileComponent implements OnInit {
         fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('avatar', filename);
         fd.append('id', this.authUser.id);
-        this.usersService.changeProfileImage(fd).subscribe(() => {
+        this.usersService.changeProfileImage(fd).subscribe((dt) => {
+            localStorage.setItem('token', dt.token);
+            this.authUser = this.getAuthUser.transform();
         });
     }
 
@@ -86,7 +93,9 @@ export class ProfileComponent implements OnInit {
         fd.append('cover_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('cover', filename);
         fd.append('id', this.authUser.id);
-        this.usersService.changeCoverImage(fd).subscribe(() => {
+        this.usersService.changeCoverImage(fd).subscribe((dt) => {
+            localStorage.setItem('token', dt.token);
+            this.authUser = this.getAuthUser.transform();
         });
     }
 

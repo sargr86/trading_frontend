@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
         {name: 'Lorem ipsum'},
         {name: 'Lorem ipsum'}
     ];
-    userVideos: User;
+    currentUser: User;
     watchlistVideos = [];
     authUser;
 
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit(): void {
         this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
-            this.userVideos = dt;
+            this.currentUser = dt;
         });
 
         this.videoService.getVideosByAuthor({}).subscribe(dt => {

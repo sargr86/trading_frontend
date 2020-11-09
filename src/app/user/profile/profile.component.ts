@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {CroppedEvent} from 'ngx-photo-editor';
 import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
+import {User} from '@shared/models/user';
 
 @Component({
     selector: 'app-profile',
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnInit {
         {name: 'Lorem ipsum'},
         {name: 'Lorem ipsum'}
     ];
-    userVideos = [];
+    userVideos: User;
     watchlistVideos = [];
     authUser;
 

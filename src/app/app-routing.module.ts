@@ -28,7 +28,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path:'chat',
+        path: 'videos',
+        loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
+    },
+    {
+        path: 'chat',
         component: ChatComponent
     },
     {path: '**', component: NotFoundComponent},

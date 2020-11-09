@@ -15,7 +15,7 @@ import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {API_URL, VIDEO_CATEGORIES} from '@core/constants/global';
@@ -73,7 +73,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     apiUrl = API_URL;
 
     publisherData;
-    sessionData;
+    sessionData = {sessionName: '', myUserName: ''};
+
+    sessionName;
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -84,15 +86,25 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private subject: SubjectService,
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
-        public router: Router
+        public router: Router,
+        private route: ActivatedRoute
     ) {
     }
 
     ngOnInit(): void {
 
+        this.authUser = this.getAuthUser.transform();
+        const params: any = this.route.snapshot.queryParams;
+
+        if (params && params.hasOwnProperty('session')) {
+            this.sessionData.sessionName = params.session;
+            this.sessionData.myUserName = this.authUser.username;
+            this.recordingState = 'started';
+            this.joinSession();
+        }
+
         this.watcher = this.router.url.includes('watch');
 
-        this.authUser = this.getAuthUser.transform();
 
         this.subject.getVideoRecordingState().subscribe(data => {
 
@@ -309,7 +321,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     receiveMessage() {
         this.session.on('signal:my-chat', (event: any) => {
-            // console.log(event.from)
+            console.log(event.from)
             this.subject.setMsgData({message: event.data, from: event.from.data});
             // console.log(event.data); // Message
             // console.log(event.from); // Connection object of the sender

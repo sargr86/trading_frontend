@@ -98,7 +98,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     video: {frameRate: {ideal: 30, max: 30}, width: 640, height: 480},
                     screen: true,
                     displayMilliseconds: false,
-                    maxLength: 30,
+                    maxLength: 180, //30
                     debug: true,
                     videoMimeType: 'video/webm;codecs=H264',
                     // convertEngine: 'ts-ebml'
@@ -147,9 +147,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.subject.setVideoRecordingState({recording: true, viaSocket: false});
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
-                username: this.authUser.username,
+                author_id: this.authUser.id,
                 filename: '',
-                status: 'pending'
+                session_name: this.videoSettings.sessionName,
+                publisher: this.videoSettings.myUserName,
+                status: 'live'
             }).subscribe(() => {
             });
             console.log('started recording!');
@@ -163,9 +165,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             console.log('finished recording: ', this.player.recordedData);
             console.log(this.videoSettings)
             const fd: FormData = new FormData();
-            fd.append('username', this.authUser.username);
-            fd.append('full_name', this.authUser.full_name);
-            fd.append('avatar', this.authUser.avatar);
+            // fd.append('username', this.authUser.username);
+            // fd.append('full_name', this.authUser.full_name);
+            // fd.append('avatar', this.authUser.avatar);
+            fd.append('author_id', this.authUser.id);
+            // fd.append('category_id', this.authUser._id);
             fd.append('video_name', this.player.recordedData.name);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
             if (this.thumbnailFile) {

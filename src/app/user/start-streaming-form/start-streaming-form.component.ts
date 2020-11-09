@@ -20,8 +20,7 @@ export class StartStreamingFormComponent implements OnInit {
     thumbnailUploaded = false;
     apiUrl = API_URL;
     tags = [];
-    videoCategories = VIDEO_CATEGORIES;
-
+    videoCategories;
     authUser;
 
     sessionName = 'SessionA';
@@ -41,17 +40,25 @@ export class StartStreamingFormComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.initForm();
+        this.getVideoCategories();
     }
 
     initForm(): void {
         this.startStreamingForm = this.fb.group({
             name: ['', Validators.required],
             description: ['', Validators.required],
-            category: ['', Validators.required],
+            category_id: ['', Validators.required],
             tags: [[], Validators.required],
             sessionName: [this.sessionName],
             myUserName: [this.authUser.username],
-            thumbnail: ['', Validators.required]
+            thumbnail: ['', Validators.required],
+            status: ['live']
+        });
+    }
+
+    getVideoCategories() {
+        this.videoService.getVideoCategories().subscribe(dt => {
+            this.videoCategories = dt;
         });
     }
 
@@ -118,7 +125,7 @@ export class StartStreamingFormComponent implements OnInit {
     }
 
     get streamCategory(): AbstractControl {
-        return this.startStreamingForm.get('category');
+        return this.startStreamingForm.get('category_id');
     }
 
     get streamTags(): AbstractControl {

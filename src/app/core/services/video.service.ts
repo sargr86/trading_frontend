@@ -32,6 +32,10 @@ export class VideoService {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-message`, params);
     }
 
+    getVideoCategories() {
+        return this.httpClient.get<any>(`${API_URL}videos/get-categories`, {});
+    }
+
     getUserVideos(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-user-videos`, {params});
     }

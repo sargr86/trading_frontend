@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.videoService.getUserVideos({username: this.authUser.username}).subscribe(dt => {
+        this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
             this.userVideos = dt;
         });
 
@@ -60,9 +60,20 @@ export class ProfileComponent implements OnInit {
         this.activeTab = tab;
     }
 
-    openVideoPage(video) {
-        console.log(video.filename);
-        this.router.navigate(['user/video/play', {queryParams: video._id}]);
+    openVideoPage(video, username) {
+        console.log(username);
+        let route;
+        let params;
+        if (video.status === 'live') {
+            route = 'user/video/watch';
+            params = {session: video.session_name, publisher: username};
+        } else {
+            route = 'user/video/play';
+            params = {id: video.id};
+        }
+
+
+        this.router.navigate([route], {queryParams: params});
     }
 
     coverChangeEvent(event: any) {

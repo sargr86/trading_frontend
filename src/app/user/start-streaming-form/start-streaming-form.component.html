@@ -21,9 +21,9 @@
         </mat-error>
     </div>
     <div id="video-categories">
-        <select formControlName="category">
+        <select formControlName="category_id">
             <option selected>Category</option>
-            <option *ngFor="let category of videoCategories">{{category}}</option>
+            <option *ngFor="let category of videoCategories" [value]="category.id">{{category.name}}</option>
         </select>
         <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">The stream category is required
         </mat-error>

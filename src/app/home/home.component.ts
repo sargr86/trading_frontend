@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
-import {OWL_OPTIONS} from '../core/constants/global';
+import {OWL_OPTIONS} from '@core/constants/global';
 
 @Component({
   selector: 'app-home',

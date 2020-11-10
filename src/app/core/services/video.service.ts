@@ -12,6 +12,10 @@ export class VideoService {
     ) {
     }
 
+    get(params) {
+        return this.httpClient.get<any>(`${API_URL}videos/get`, {params});
+    }
+
     saveVideoToken(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-token`, params);
     }

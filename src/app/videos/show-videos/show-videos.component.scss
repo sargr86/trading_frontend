@@ -1,0 +1,47 @@
+#videos-list {
+    .video-container {
+        display: flex;
+        margin-bottom: 30px;
+
+        .thumbnail img {
+            width: 432px;
+            height: 249px;
+            cursor: pointer;
+        }
+
+        .details {
+            margin-left: 32px;
+
+            .shortened-details {
+                display: flex;
+
+                .channel-name {
+                    font-weight: bold;
+                    color: #818181
+                }
+
+                .dot {
+                    margin-left: 26px;
+                    margin-top: -3px;
+                }
+
+
+                .upload-time, .watchers-count {
+                    font-size: 14px;
+                    color: #818181;
+                }
+
+                .watchers-count, .upload-time {
+                    margin-left: 26px;
+                }
+
+            }
+
+            .shortened-description {
+                margin-top: 16px;
+            }
+        }
+
+
+    }
+}

@@ -1,5 +1,5 @@
 <div class="chat-content">
-  <ng-container *ngIf="videoRecordingStarted">
+  <ng-container *ngIf="videoRecordingState === 'started'">
     <div class="chat-title">
       <div class="dropdown">
         <div class="dropdown-toggle" id="dropdownChat" data-toggle="dropdown" aria-haspopup="true"
@@ -24,6 +24,7 @@
     <div class="chat-footer">
       <form [formGroup]="chatForm">
         <input class="chat-input" formControlName="message" placeholder="Comment" (keyup.enter)="sendMessage($event)">
+        <emoji-mart [custom]="customEmojis" (emojiClick)="addEmoji($event)"></emoji-mart>
       </form>
       <div class="chat-footer-smile">
         <div class="nav-item dropdown">
@@ -40,7 +41,7 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="!videoRecordingStarted">
+  <ng-container *ngIf="videoRecordingState === 'idle'">
     <div id="chat-placeholder">
       <span>When recording is started, the chat box will appear here</span>
     </div>

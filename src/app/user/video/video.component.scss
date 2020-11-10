@@ -27,7 +27,46 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding-top: 44%; 
+    padding-top: 44%;
   }
 }
 
+
+
+#streaming-not-started-yet {
+  width: 500px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Muli-Light";
+  background: #EFEFEF;
+}
+
+.stream-container {
+  overflow: hidden;
+}
+
+#start-streaming-form {
+  > div {
+    margin: 20px;
+
+    > input, textarea {
+      width: 100%;
+    }
+  }
+
+  #video-name {
+    border: 1px solid silver;
+  }
+
+  #video-tags {
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .actions {
+    text-align: center;
+  }
+}

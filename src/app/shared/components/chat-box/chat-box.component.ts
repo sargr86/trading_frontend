@@ -13,11 +13,23 @@ export class ChatBoxComponent implements OnInit {
   messageSent = false;
   messages = [];
   authUser;
-  videoRecordingStarted = false;
+
+  customEmojis = [
+    {
+      name: 'Octocat',
+      shortNames: ['octocat'],
+      text: '',
+      emoticons: [],
+      keywords: ['github'],
+      imageUrl: 'https://github.githubassets.com/images/icons/emoji/octocat.png',
+    }
+  ];
+
 
   @Input('openViduToken') openViduToken;
   @Input('session') session;
   @Output('sendMessage') sendMsg = new EventEmitter();
+  @Input('videoRecordingState') videoRecordingState = 'idle';
 
   constructor(
     private fb: FormBuilder,
@@ -38,18 +50,29 @@ export class ChatBoxComponent implements OnInit {
     });
 
     this.subject.getMsgData().subscribe((data) => {
+      console.log(this.messages)
       // this.messageSent = sent;
-      const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
-      data.from = from.clientData.myUserName;
-      console.log(data.from)
+      console.log(data.from.includes('clientData'))
+      if (data.from.includes('clientData')) {
+
+        const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
+        data.from = from.clientData.myUserName;
+        console.log(data.from)
+        console.log(this.authUser.username)
+
+      }
+
       if (data.from !== this.authUser.username) {
 
         this.messages.push(data);
+        console.log(this.messages)
       }
     });
 
     this.subject.getVideoRecordingState().subscribe(data => {
-      this.videoRecordingStarted = data.recording;
+      console.log(data)
+      // this.videoRecordingState = data.recordingState;
+      // console.log('VIDEO RECORDING STATE:' + this.videoRecordingState + '!!!!');
     });
   }
 
@@ -58,6 +81,12 @@ export class ChatBoxComponent implements OnInit {
     this.messages.push(this.chatForm.value);
     this.sendMsg.emit(this.chatForm.value);
     this.chatForm.patchValue({message: ''});
+  }
+
+  addEmoji(e) {
+    console.log(e)
+    const message = this.chatForm.value.message;
+    this.chatForm.patchValue({message: message + (e.emoji.native ? e.emoji.native : e.emoji.imageUrl)});
   }
 
 }

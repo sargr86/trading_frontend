@@ -1,72 +1,53 @@
 .session-container {
-  height: 100vh;
+    height: 100vh;
 }
 
 #img-div {
-  text-align: center;
+    text-align: center;
 
-  img {
-    height: 200px;
-  }
+    img {
+        height: 200px;
+    }
 }
 
 .join-session-btn {
-  background-color: #18B587;
-  width: 25%;
-  margin-top: 33px;
-  border: none;
+    background-color: #18B587;
+    width: 25%;
+    margin-top: 33px;
+    border: none;
 }
 
 #video-chat-container {
-  display: flex;
-  position: relative;
+    display: flex;
 
-  app-video-js-record{
-    flex: 1;
+    .video-container {
+        flex: 1;
+        display: flex;
+    }
 
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    padding-top: 44%;
-  }
+    app-video-js-record {
+        flex: 1;
+
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding-top: 60%;
+    }
 }
-
 
 
 #streaming-not-started-yet {
-  width: 500px;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Muli-Light";
-  background: #EFEFEF;
+    width: 500px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Muli-Light";
+    background: #EFEFEF;
 }
 
 .stream-container {
-  overflow: hidden;
+    overflow: hidden;
 }
 
-#start-streaming-form {
-  > div {
-    margin: 20px;
 
-    > input, textarea {
-      width: 100%;
-    }
-  }
-
-  #video-name {
-    border: 1px solid silver;
-  }
-
-  #video-tags {
-    mat-form-field {
-      width: 100%;
-    }
-  }
-
-  .actions {
-    text-align: center;
-  }
-}

@@ -14,6 +14,7 @@ import {RequestInterceptor} from '@core/helpers/http.interceptor';
 import {StockProfileComponent} from '@app/user/stock-profile/stock-profile.component';
 import {DatePipe} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -41,6 +42,7 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:3001/auth/']
       }
     }),
+    NgbModule,
   ],
   providers: [
     DatePipe,

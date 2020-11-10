@@ -32,6 +32,7 @@
     "jquery": "^3.5.1",
     "jwt-decode": "^3.0.0",
     "material-design-icons": "^3.0.1",
+    "moment": "^2.29.1",
     "ngx-bootstrap": "^6.1.0",
     "ngx-owl-carousel-o": "^3.0.0",
     "ngx-photo-editor": "^0.3.2",

@@ -31,7 +31,7 @@
             <img src="assets/img/item-10.png">
             <p>Saved Videos</p>
         </div>
-        <div class="left-menu-main">
+        <div class="left-menu-main" [class.active]="router.url.includes('videos')" (click)="router.navigate(['videos'])">
             <img src="assets/img/item-11.png">
             <p>CLIPZ</p>
         </div>

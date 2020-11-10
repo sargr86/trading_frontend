@@ -15,6 +15,7 @@
 @import '~@videojs/themes/dist/sea/index.css';
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@ctrl/ngx-emoji-mart/picker';
 
 html, body, p, h1, h2, h3, h4, ul {
     margin: 0;
@@ -160,11 +161,10 @@ li {
 }
 
 .home-search-input {
-    font-family: "Muli-Light";
-    background: #EFEFEF;
-    color: #545454;
-    font-size: 16px;
-
+  font-family: "Muli-Light";
+  background: #EFEFEF;
+  color: #545454;
+  font-size: 16px;
 }
 
 .home-search i {
@@ -199,6 +199,11 @@ li {
     display: flex;
     align-items: center;
     margin-right: 16px;
+
+    p {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
 }
 
 .black-percent-red {
@@ -381,7 +386,7 @@ li {
 .slider_home .owl-nav .owl-prev {
     display: none;
 }
- 
+
 .slider_home .owl-nav .owl-next {
     font-size: 16px;
     color: #545454;
@@ -395,8 +400,6 @@ li {
     top: 29%;
     position: absolute;
 }
-
- 
 
 .trending-text {
     color: #F53C6F;
@@ -423,10 +426,16 @@ li {
     transition: 0.3s ease-in-out;
     margin-bottom: 5px;
     border-bottom: 1px solid transparent;
+
+    p {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
 }
 
 .left-menu-main:hover {
     border-bottom: 1px solid #18B587;
+    background-color: #18B587;
     cursor: pointer;
     color: white;
 }
@@ -478,11 +487,15 @@ li {
     font-family: "Muli-Light";
 }
 
-.list-img {
+.avatar {
     margin-right: 16px !important;
     width: 42px !important;
     height: 42px;
     border-radius: 50%;
+}
+
+#profile-image{
+    cursor: pointer;
 }
 
 .watchlist {
@@ -665,7 +678,6 @@ li {
     //margin-bottom: 40px;
     box-shadow: 0 0 6px #0000001A;
 }
-
 
 .chat-information {
     width: 316px;
@@ -1281,4 +1293,27 @@ li {
     width: 100% !important;
     height: 100%;
     border: none;
+}
+
+.mat-chip-input::placeholder {
+    font-family: 'Muli-Regular' !important;
+}
+
+input::placeholder, textarea::placeholder {
+    //color: #CECECE !important;
+    padding-left: 32px !important;
+}
+
+.owl-item {
+    width: 400px !important;
+
+    .main-item-img {
+        object-fit: cover !important;
+        height: 160px !important;
+        cursor: pointer;
+    }
+}
+
+.avatar{
+    object-fit: cover !important;
 }

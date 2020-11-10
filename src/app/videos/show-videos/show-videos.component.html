@@ -1,1 +1,23 @@
-<p>show-videos works!</p>
+<div id="videos-list">
+    <div class="video-container" *ngFor="let video of videos">
+        <div class="thumbnail">
+            <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
+            <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+        </div>
+        <div class="details">
+            <h4 class="title">{{video.name}}</h4>
+            <div class="shortened-details">
+                <span class="channel-name">{{video.user.channel.name}}</span>
+                <span class="dot">.</span>
+                <span class="watchers-count">17k watching</span>
+                <span class="dot">.</span>
+                <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
+            </div>
+            <p class="shortened-description">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
+                consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                sed sda,sasddswd
+            </p>
+        </div>
+    </div>
+</div>

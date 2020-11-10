@@ -1,56 +1,58 @@
 <form [formGroup]="startStreamingForm" id="start-streaming-form">
-    <div>
-        <input formControlName="name" id="video-name" placeholder="Video name">
-        <mat-error *ngIf="streamName.hasError('required') && isSubmitted">The stream name is required</mat-error>
-    </div>
-    <div id="video-tags">
-        <mat-form-field class="example-chip-list">
-            <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
-                <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
-                    {{tag}}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-                <input placeholder="Tags..." #chipsInput
-                       [matChipInputFor]="tagList"
-                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                       (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-
-        </mat-form-field>
-        <mat-error *ngIf="tags.length ===0 && isSubmitted">Please provide some tags describing your live video
-        </mat-error>
-    </div>
-    <div id="video-categories">
-        <select formControlName="category_id">
-            <option selected>Category</option>
-            <option *ngFor="let category of videoCategories" [value]="category.id">{{category.name}}</option>
-        </select>
-        <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">The stream category is required
-        </mat-error>
-    </div>
-    <div id="video-description">
-        <textarea formControlName="description" placeholder="Video description"></textarea>
-        <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required</mat-error>
-    </div>
-    <div>
-        <ng-container *ngIf="!thumbnailUploaded">
-            <label for="custom-thumbnail">
-                <i class="fa fa-cloud-alt"></i>
-                Upload Thumbnail
-            </label>
-            <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
-        </ng-container>
-        <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
-            <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
-            </mat-icon>
-            <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
+    <div class="StartLiveVideo">
+        <div>
+            <input formControlName="name" id="video-name" placeholder="Video name">
+            <mat-error *ngIf="streamName.hasError('required') && isSubmitted">The stream name is required</mat-error>
         </div>
-    </div>
-
-
-    <div class="actions">
-        <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="submit()">
-            Start streaming!
-        </button>
+        <div id="video-tags">
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
+                    <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                        {{tag}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Tags..." #chipsInput
+                           [matChipInputFor]="tagList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+    
+            </mat-form-field>
+            <mat-error *ngIf="tags.length ===0 && isSubmitted">Please provide some tags describing your live video
+            </mat-error>
+        </div>
+        <div id="video-categories">
+            <select formControlName="category_id">
+                <option selected>Category</option>
+                <option *ngFor="let category of videoCategories" [value]="category.id">{{category.name}}</option>
+            </select>
+            <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">The stream category is required
+            </mat-error>
+        </div>
+        <div id="video-description">
+            <textarea formControlName="description" placeholder="Video description"></textarea>
+            <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required</mat-error>
+        </div>
+        <div>
+            <ng-container *ngIf="!thumbnailUploaded">
+                <label for="custom-thumbnail">
+                    <span class="material-icons">backup </span>
+                    Upload Thumbnail
+                </label>
+                <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
+            </ng-container>
+            <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
+                <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
+                </mat-icon>
+                <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
+            </div>
+        </div>
+    
+    
+        <div class="actions">
+            <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="submit()">
+                Start live video
+            </button>
+        </div>
     </div>
 </form>

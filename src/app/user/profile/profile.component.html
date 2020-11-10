@@ -25,7 +25,7 @@
                     [viewMode]="3"></ngx-photo-editor>
             </div>
             <label for="cover-image-input">
-                <img [src]="channelUser.cover? apiUrl + 'uploads/covers/' + authUser.cover:'assets/img/cover.png'"
+                <img [src]="channelUser.cover? apiUrl + 'uploads/covers/' + channelUser.cover:'assets/img/cover.png'"
                      id="cover-image">
             </label>
         </div>

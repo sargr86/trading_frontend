@@ -107,6 +107,7 @@ export class ProfileComponent implements OnInit {
         this.usersService.changeProfileImage(fd).subscribe((dt) => {
             localStorage.setItem('token', dt.token);
             this.authUser = this.getAuthUser.transform();
+            this.channelUser = this.authUser;
         });
     }
 
@@ -120,6 +121,7 @@ export class ProfileComponent implements OnInit {
         this.usersService.changeCoverImage(fd).subscribe((dt) => {
             localStorage.setItem('token', dt.token);
             this.authUser = this.getAuthUser.transform();
+            this.channelUser = this.authUser;
         });
     }
 

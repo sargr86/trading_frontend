@@ -19,4 +19,8 @@ export class UsersService {
     changeCoverImage(params) {
         return this.httpClient.post<any>(`${API_URL}users/change-cover-image`, params);
     }
+
+    getUserInfo(params) {
+        return this.httpClient.get<any>(`${API_URL}users/get-user-info`, {params});
+    }
 }

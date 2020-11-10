@@ -11,6 +11,7 @@ import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purch
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {MaterialModule} from '@core/modules/material.module';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 
 @NgModule({
@@ -38,6 +39,9 @@ import {MaterialModule} from '@core/modules/material.module';
     ],
     entryComponents: [
         // CryptoCurrencyComponent
+    ],
+    providers: [
+        GetAuthUserPipe
     ]
 })
 export class CoreModule {

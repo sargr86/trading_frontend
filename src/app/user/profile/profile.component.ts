@@ -3,7 +3,7 @@ import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CroppedEvent} from 'ngx-photo-editor';
 import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
@@ -37,17 +37,29 @@ export class ProfileComponent implements OnInit {
     profileBase64: any;
     coverBase64: any;
 
+    channelUser;
+    passedUsername;
+
     constructor(
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private usersService: UsersService,
-        private base64ToFile: Base64ToFilePipe
+        private base64ToFile: Base64ToFilePipe,
+        private route: ActivatedRoute
     ) {
         this.authUser = this.getAuthUser.transform();
+        this.passedUsername = this.route.snapshot.queryParams.username;
     }
 
     ngOnInit(): void {
+        if (this.passedUsername) {
+            this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
+                this.channelUser = dt;
+                console.log(this.channelUser.username, this.authUser.username)
+            });
+        }
+
         this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
             this.currentUser = dt;
         });
@@ -95,6 +107,7 @@ export class ProfileComponent implements OnInit {
         this.usersService.changeProfileImage(fd).subscribe((dt) => {
             localStorage.setItem('token', dt.token);
             this.authUser = this.getAuthUser.transform();
+            this.channelUser = this.authUser;
         });
     }
 
@@ -108,6 +121,7 @@ export class ProfileComponent implements OnInit {
         this.usersService.changeCoverImage(fd).subscribe((dt) => {
             localStorage.setItem('token', dt.token);
             this.authUser = this.getAuthUser.transform();
+            this.channelUser = this.authUser;
         });
     }
 

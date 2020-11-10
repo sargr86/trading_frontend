@@ -10,12 +10,14 @@ import {
 } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-video',
@@ -23,6 +25,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./video.component.scss']
 })
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
+
 
   videoRecordOptions = {
     controls: true,
@@ -45,7 +48,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     controls: true,
     fluid: false,
     sources: []
-  }
+  };
 
   streamCreated = false;
   userNickname;
@@ -58,6 +61,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   session: Session;
   publisher: StreamManager; // Local
   subscribers: StreamManager[] = []; // Remotes
+
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @ViewChild('video') videoEl;
 
@@ -73,10 +78,15 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   authUser;
   openViduToken;
 
-  recordingStarted = false;
+  recordingState = 'idle';
   watcher = false;
 
+  sessionName = 'SessionA';
+
   webcams = [];
+  tags = [];
+
+  startStreamingForm: FormGroup;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -90,6 +100,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router
   ) {
 
+    this.startStreamingForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      category: ['', Validators.required],
+      thumbnail: ['', Validators.required],
+      tags: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -107,7 +124,17 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.authUser = this.getAuthUser.transform();
     this.initForm();
 
+    if (!this.watcher) {
+      // this.joinSession();
+    }
+
     this.subject.getVideoRecordingState().subscribe(data => {
+
+      if (data.recordingState === 'finished') {
+        this.leaveSession();
+      }
+
+      console.log(data)
       if (!data.viaSocket) {
         this.sendRecordingState(data.recording);
       }
@@ -124,7 +151,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initForm() {
     this.joinSessionForm = this.fb.group({
-      mySessionId: ['SessionA'],
+      mySessionId: [this.sessionName],
       // myUserName: ['Participant' + Math.floor(Math.random() * 100)]
       myUserName: [this.authUser.username]
     });
@@ -136,9 +163,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.session = this.OV.initSession();
     this.getStreamEvents();
 
-    // const authUser = localStorage.getItem()
-
-    this.openViduService.getToken({email: this.authUser.email, sessionName: 'SessionB'}).subscribe((token: any) => {
+    this.openViduService.getToken({
+      email: this.authUser.email,
+      sessionName: this.sessionName,
+      role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
+    }).subscribe((token: any) => {
       // const {token} = data;
       console.log(token)
       this.openViduToken = token;
@@ -149,7 +178,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log({clientData: this.joinSessionForm.value.myUserName})
       this.session.connect(token, {clientData: this.joinSessionForm.value})
         .then(() => {
-          console.log(token.includes('PUBLISHER'))
+          console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
           if (token.includes('PUBLISHER')) {
 
 
@@ -214,6 +243,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     // On every Stream destroyed...
     this.session.on('streamDestroyed', (event: StreamEvent) => {
 
+      console.log('stream destroyed!!!!!')
+
       // Remove the stream from 'subscribers' array
       this.deleteSubscriber(event.stream.streamManager);
     });
@@ -229,7 +260,21 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   leaveSession() {
+    console.log('leaving session!!!')
+    if (this.session) {
+      this.session.disconnect();
+    }
 
+    // Empty all properties...
+    this.subscribers = [];
+    delete this.publisher;
+    delete this.session;
+    delete this.OV;
+
+    this.openViduService.leaveSession({token: this.openViduToken, sessionName: this.sessionName}).subscribe(() => {
+
+    });
+    // this.generateParticipantInfo();
   }
 
   sendMessage(e) {
@@ -250,6 +295,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   sendRecordingState(recording) {
+    console.log('recording!!!!')
     this.session.signal({
       data: recording,  // Any string (optional)
       to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -262,9 +308,15 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   receiveRecordingState() {
     this.session.on('signal:recording-state', (event: any) => {
       const obj = {event, ...{socket: true}};
+      this.recordingState = !!event.data ? 'started' : 'finished';
+      if (this.recordingState === 'finished') {
+        this.startStreamingForm.reset();
+      }
+
       console.log(obj)
+      console.log(this.recordingState)
       console.log('received')
-      this.subject.setVideoRecordingState({recording: event.data, ...{viaSocket: true}});
+      this.subject.setVideoRecordingState({recordingState: this.recordingState, ...{viaSocket: true}});
     });
   }
 
@@ -309,6 +361,29 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openViduService.getSession().subscribe(dt => {
 
     });
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push({name: value.trim()});
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
   ngOnDestroy() {

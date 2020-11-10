@@ -20,4 +20,8 @@ export class OpenviduService {
   getSession() {
     return this.httpClient.post(`${API_URL}api/sessions`, {});
   }
+
+  leaveSession(params){
+    return this.httpClient.get(`${API_URL}users/session/leave`, {params});
+  }
 }

@@ -32,6 +32,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
   private plugin: any;
 
   @Input('openViduToken') openViduToken;
+  @Input('videoSettings') videoSettings;
 
   @Output() shareScreen = new EventEmitter();
 
@@ -43,6 +44,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     private blobToFile: BlobToFilePipe,
     private subject: SubjectService
   ) {
+
+
     this.player = false;
 
     // save reference to plugin (so it initializes)
@@ -101,6 +104,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnInit() {
     console.log('TOKEN!!!!!!')
     console.log(this.openViduToken)
+    console.log(this.videoSettings)
     this.authUser = this.getAuthUser.transform();
   }
 
@@ -136,7 +140,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
       this.videoService.saveVideoToken({
         token: this.openViduToken,
         username: this.authUser.username,
-        name: '',
+        filename: '',
         status: 'pending'
       }).subscribe(() => {
       });
@@ -150,8 +154,10 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
       console.log('finished recording: ', this.player.recordedData);
       const fd: FormData = new FormData();
       fd.append('username', this.authUser.username);
+      fd.append('full_name', this.authUser.full_name);
       fd.append('video_name', this.player.recordedData.name);
       fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
+      fd.append('video_settings', JSON.stringify(this.videoSettings));
       this.subject.setVideoRecordingState({recording: false});
       this.recordingState = 'finished';
       this.videoService.saveRecordedData(fd).subscribe(() => {

@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "metltv-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/router": "~9.1.12",
     "@auth0/angular-jwt": "^4.0.0",
+    "@ctrl/ngx-emoji-mart": "^3.1.0",
     "@opentok/client": "^2.18.0",
     "@videojs/themes": "^1.0.0",
     "bootstrap": "^4.5.2",

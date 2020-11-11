@@ -1,5 +1,5 @@
 <form [formGroup]="startStreamingForm" id="start-streaming-form">
-    <div class="StartLiveVideo">
+    <div class="start-live-video">
         <div>
             <input formControlName="name" id="video-name" placeholder="Video name">
             <mat-error *ngIf="streamName.hasError('required') && isSubmitted">The stream name is required</mat-error>
@@ -16,7 +16,7 @@
                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                            (matChipInputTokenEnd)="add($event)">
                 </mat-chip-list>
-    
+
             </mat-form-field>
             <mat-error *ngIf="tags.length ===0 && isSubmitted">Please provide some tags describing your live video
             </mat-error>
@@ -33,7 +33,7 @@
             <textarea formControlName="description" placeholder="Video description"></textarea>
             <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required</mat-error>
         </div>
-        <div>
+        <div id="thumbnail">
             <ng-container *ngIf="!thumbnailUploaded">
                 <label for="custom-thumbnail">
                     <span class="material-icons">backup </span>
@@ -47,8 +47,8 @@
                 <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
             </div>
         </div>
-    
-    
+
+
         <div class="actions">
             <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="submit()">
                 Start live video

@@ -9,6 +9,8 @@ import {PlayVideoComponent} from '../videos/play-video/play-video.component';
 
 @NgModule({
     declarations: [ShowVideosComponent, PlayVideoComponent],
+    exports: [
+    ],
     imports: [
         CommonModule,
         VideosRoutingModule,

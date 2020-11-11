@@ -1,7 +1,6 @@
 @import "./fonts";
 @import "variables";
 @import '~ngx-toastr/toastr';
-
 // Video JS
 @import '~video.js/dist/video-js.css';
 @import '~videojs-record/dist/css/videojs.record.min.css';
@@ -13,7 +12,6 @@
 @import '~@videojs/themes/dist/forest/index.css';
 // Sea
 @import '~@videojs/themes/dist/sea/index.css';
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@ctrl/ngx-emoji-mart/picker';
 
@@ -161,10 +159,10 @@ li {
 }
 
 .home-search-input {
-  font-family: "Muli-Light";
-  background: #EFEFEF;
-  color: #545454;
-  font-size: 16px;
+    font-family: "Muli-Light";
+    background: #EFEFEF;
+    color: #545454;
+    font-size: 16px;
 }
 
 .home-search i {
@@ -494,7 +492,7 @@ li {
     border-radius: 50%;
 }
 
-#profile-image{
+#profile-image {
     cursor: pointer;
 }
 
@@ -536,7 +534,7 @@ li {
 }
 
 .watchlist .nav-link.active {
-    background: #F53C6F;
+    background: #F53C6F !important;
     color: #FFFFFF !important;
 }
 
@@ -813,6 +811,8 @@ li {
 .profile-block img {
     width: 100%;
     margin-bottom: 28px;
+    height: 300px;
+    object-fit: cover;
 }
 
 .smile-block {
@@ -997,59 +997,54 @@ li {
     right: 0;
 }
 
-ngb-modal-window{
+ngb-modal-window {
 
-    .modal-dialog{
+    .modal-dialog {
         height: calc(100% - 56px);
         display: flex;
         align-items: center;
     }
 
-    .modal-content{
+    .modal-content {
         max-width: 548px;
         margin: auto;
 
-        .modal-body{
+        .modal-body {
             background-color: #FFFFFF !important;
-            >h5{
+
+            > h5 {
                 color: #545454 !important;
                 font-size: 16px;
             }
         }
 
-        .ngx-photo-editor-icons-container{
+        .ngx-photo-editor-icons-container {
             background-color: #ffffff;
             color: #545454;
         }
 
-        .ngx-photo-editor-custom-modal-footer{
+        .ngx-photo-editor-custom-modal-footer {
             padding: 16px 16px 32px;
             background-color: #FFFFFF !important;
             display: flex;
             justify-content: center;
 
-            button{
-                padding: 8px 18px!important;
+            button {
+                padding: 8px 18px !important;
                 border-radius: 0;
                 border: 0;
-                &.btn-primary{
+
+                &.btn-primary {
                     background: #18B587;
                 }
 
-                &.btn-outline-light{
+                &.btn-outline-light {
                     background: #C9C9C9;
                 }
             }
         }
     }
 }
-
-
-
-
-
-
-
 
 
 @media (max-width: 1700px) {
@@ -1368,7 +1363,7 @@ input, textarea {
     }
 }
 
-.avatar{
+.avatar {
     object-fit: cover !important;
 }
 

@@ -19,6 +19,7 @@ import {HelpComponent} from './help/help.component';
 import {AboutComponent} from './about/about.component';
 import {StartStreamingFormComponent} from './start-streaming-form/start-streaming-form.component';
 import {JoinStreamingFormComponent} from './join-streaming-form/join-streaming-form.component';
+import {HomeComponent} from '@app/user/home/home.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import {JoinStreamingFormComponent} from './join-streaming-form/join-streaming-f
         SubscriberComponent,
         UserVideoComponent,
         OvVideoComponent,
+        HomeComponent,
         VideoLibraryComponent,
         ChatComponent,
         AccessibilityStatementComponent,

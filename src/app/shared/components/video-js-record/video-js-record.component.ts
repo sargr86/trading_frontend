@@ -148,6 +148,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
                 author_id: this.authUser.id,
+                channel_id: this.authUser.channel.id,
                 filename: '',
                 session_name: this.videoSettings.sessionName,
                 publisher: this.videoSettings.myUserName,

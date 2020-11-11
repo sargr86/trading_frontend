@@ -1,55 +1,42 @@
-<ul class="categories">
-    <li><a class="active">Recommendations</a></li>
-    <li><a>Today's picks</a></li>
-    <li><a>AAPL</a></li>
-    <li><a>Phil Ramerez</a></li>
-    <li><a>True Money</a></li>
-    <li><a>PICK 4</a></li>
-    <li><a>Synergy fusion</a></li>
-    <li><a>Sunshine trading stream</a></li>
-    <li><a>Shot stocks</a></li>
-    <li><a>SMP</a></li>
-    <li><a>Strategy for U</a></li>
-    <li><a>Automotive</a></li>
-</ul>
+<app-categories></app-categories>
 <div class="ads-block">
     <div class="ads-block-left">
         <ng-container *ngIf="videoData">
-            <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>
+        <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>
 
-            <div class="main-tags">
-                <div class="main-tags-text">
-                    <p *ngFor="let tag of videoData.tags">#{{tag}}</p>
+        <div class="main-tags">
+            <div class="main-tags-text">
+                <p *ngFor="let tag of videoData.tags">#{{tag}}</p>
+            </div>
+            <div class="main-tags-like">
+                <div class="main-tags-share">
+                    <i class="fas fa-thumbs-up"></i>
+                    <p>4.5k</p>
                 </div>
-                <div class="main-tags-like">
-                    <div class="main-tags-share">
-                        <i class="fas fa-thumbs-up"></i>
-                        <p>4.5k</p>
-                    </div>
-                    <div class="main-tags-share">
-                        <i class="fas fa-thumbs-down"></i>
-                        <p>4.5k</p>
-                    </div>
-                    <div class="main-tags-share">
-                        <i class="fas fa-share-alt"></i>
-                        <p>Share</p>
-                    </div>
-                    <div class="main-tags-share">
-                        <i class="fas fa-plus-square"></i>
-                        <p>Save</p>
-                    </div>
+                <div class="main-tags-share">
+                    <i class="fas fa-thumbs-down"></i>
+                    <p>4.5k</p>
+                </div>
+                <div class="main-tags-share">
+                    <i class="fas fa-share-alt"></i>
+                    <p>Share</p>
+                </div>
+                <div class="main-tags-share">
+                    <i class="fas fa-plus-square"></i>
+                    <p>Save</p>
                 </div>
             </div>
-            <p class="ads-text-1">{{videoData.name}}</p>
-            <p class="ads-text-2">175,000 views 3 years ago</p>
-            <div class="main-item-block">
-                <img class="list-img" src="../../../assets/img/item-4.png">
-                <div>
-                    <p class="main-text-1">{{videoData.author}}</p>
-                    <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
-                </div>
+        </div>
+        <p class="ads-text-1">{{videoData.name}}</p>
+        <p class="ads-text-2">175,000 views 3 years ago</p>
+        <div class="main-item-block">
+            <img class="list-img" src="../../../assets/img/item-4.png">
+            <div>
+                <p class="main-text-1">{{videoData.channel.name}}</p>
+                <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
             </div>
-            <p class="ads-text-2"></p>
+        </div>
+        <p class="ads-text-2"></p>
         </ng-container>
         <div class="ads-maps">
             <div>

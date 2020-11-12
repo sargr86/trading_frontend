@@ -67,7 +67,6 @@ export class ShowVideosComponent implements OnInit {
     }
 
     openVideoPage(video, username) {
-        console.log(username);
         let route;
         let params;
         if (video.status === 'live') {
@@ -80,5 +79,9 @@ export class ShowVideosComponent implements OnInit {
 
 
         this.router.navigate([route], {queryParams: params});
+    }
+
+    openChannelPage(channel, username) {
+        this.router.navigate(['channels/show'], {queryParams: {username}});
     }
 }

@@ -29,9 +29,9 @@
             <div class="channel-container">
                 <div class="channel-avatar-container">
                     <img *ngIf="channel.user.avatar" class="channel-avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar"
-                         (click)="openVideoPage(channel,channel.user.username)">
+                         (click)="openChannelPage(channel,channel.user.username)">
                     <img *ngIf="!channel.user.avatar" class="channel-avatar" [src]="'assets/img/video-thumbnail-default.png'"
-                         (click)="openVideoPage(channel,channel.user.username)">
+                         (click)="openChannelPage(channel,channel.user.username)">
                 </div>
                 <div class="details">
                     <h4 class="title">{{channel.name}}</h4>
@@ -52,9 +52,9 @@
             <div class="video-container" *ngFor="let video of channel.videos">
                 <div class="thumbnail">
                     <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                         (click)="openVideoPage(video,video.user.username)">
+                         (click)="openVideoPage(video,channel.user.username)">
                     <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                         (click)="openVideoPage(video,video.user.username)">
+                         (click)="openVideoPage(video,channel.user.username)">
                 </div>
                 <div class="details">
                     <h4 class="title">{{video.name}}</h4>

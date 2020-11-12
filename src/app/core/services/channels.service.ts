@@ -15,4 +15,8 @@ export class ChannelsService {
     get(params) {
         return this.httpClient.get<any>(`${API_URL}channels/get`, {params});
     }
+
+    searchWithVideos(params) {
+        return this.httpClient.get<any>(`${API_URL}channels/search-with-videos`, {params});
+    }
 }

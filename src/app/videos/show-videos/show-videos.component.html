@@ -1,25 +1,78 @@
 <div id="videos-list">
-    <div class="video-container" *ngFor="let video of videos">
-        <div class="thumbnail">
-            <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                 (click)="openVideoPage(video,video.user.username)">
-            <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                 (click)="openVideoPage(video,video.user.username)">
-        </div>
-        <div class="details">
-            <h4 class="title">{{video.name}}</h4>
-            <div class="shortened-details">
-                <span class="channel-name">{{video.user.channel.name}}</span>
-                <span class="dot">.</span>
-                <span class="watchers-count">17k watching</span>
-                <span class="dot">.</span>
-                <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
+    <ng-container *ngIf="!search">
+        <div class="video-container" *ngFor="let video of videos">
+            <div class="thumbnail">
+                <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
+                     (click)="openVideoPage(video,video.user.username)">
+                <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
+                     (click)="openVideoPage(video,video.user.username)">
             </div>
-            <p class="shortened-description">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
-                consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                sed sda,sasddswd
-            </p>
+            <div class="details">
+                <h4 class="title">{{video.name}}</h4>
+                <div class="shortened-details">
+                    <span class="channel-name">{{video.user.channel.name}}</span>
+                    <span class="dot">.</span>
+                    <span class="watchers-count">17k watching</span>
+                    <span class="dot">.</span>
+                    <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
+                </div>
+                <p class="shortened-description">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
+                    consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                    sed sda,sasddswd
+                </p>
+            </div>
         </div>
+    </ng-container>
+    <div *ngIf="search">
+        <ng-container *ngFor="let channel of channelsVideos">
+            <div class="channel-container">
+                <div class="channel-avatar-container">
+                    <img *ngIf="channel.user.avatar" class="channel-avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar"
+                         (click)="openChannelPage(channel,channel.user.username)">
+                    <img *ngIf="!channel.user.avatar" class="channel-avatar" [src]="'assets/img/video-thumbnail-default.png'"
+                         (click)="openChannelPage(channel,channel.user.username)">
+                </div>
+                <div class="details">
+                    <h4 class="title">{{channel.name}}</h4>
+                    <div class="shortened-details">
+<!--                        <span class="channel-name">{{channel.name}}</span>-->
+<!--                        <span class="dot">.</span>-->
+<!--                        <span class="watchers-count">17k watching</span>-->
+<!--                        <span class="dot">.</span>-->
+<!--                        <span class="upload-time">{{getUploadDateTime(channel.created_at)}}</span>-->
+                    </div>
+                    <p class="shortened-description">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
+                        consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                        sed sda,sasddswd
+                    </p>
+                </div>
+            </div>
+            <div class="video-container" *ngFor="let video of channel.videos">
+                <div class="thumbnail">
+                    <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
+                         (click)="openVideoPage(video,channel.user.username)">
+                    <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
+                         (click)="openVideoPage(video,channel.user.username)">
+                </div>
+                <div class="details">
+                    <h4 class="title">{{video.name}}</h4>
+                    <div class="shortened-details">
+                        <span class="channel-name">{{channel.name}}</span>
+                        <span class="dot">.</span>
+                        <span class="watchers-count">17k watching</span>
+                        <span class="dot">.</span>
+                        <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
+                    </div>
+                    <p class="shortened-description">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
+                        consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                        sed sda,sasddswd
+                    </p>
+                </div>
+            </div>
+
+        </ng-container>
     </div>
 </div>

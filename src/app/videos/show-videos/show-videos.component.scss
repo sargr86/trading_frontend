@@ -1,5 +1,18 @@
 #videos-list {
-    .video-container {
+    .channel-avatar-container {
+        width: 57%;
+        height: 243px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .channel-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+        }
+    }
+
+    .video-container, .channel-container {
         display: flex;
         margin-bottom: 30px;
 

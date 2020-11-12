@@ -6,6 +6,7 @@ import {ActivatedRoute, ActivationEnd, Data, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {ChannelsService} from '@core/services/channels.service';
 import {filter, map, tap} from 'rxjs/operators';
+import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
 
 @Component({
     selector: 'app-show-videos',
@@ -28,30 +29,15 @@ export class ShowVideosComponent implements OnInit {
         router.events.pipe(
             filter(e => e instanceof ActivationEnd),
         ).subscribe((d: Data) => {
-            // console.log(d.snapshot.queryParams)
-            this.search = d.snapshot.queryParams;
+            this.search = !checkIfObjectEmpty(d.snapshot.queryParams);
             this.searchChannelsVideos(d.snapshot.queryParams);
         });
-
-        // console.log(route.snapshot)
-        // this.searchChannelsVideos(route.snapshot.queryParams);
     }
 
     ngOnInit(): void {
         this.videoService.get({}).subscribe(dt => {
             this.videos = dt;
         });
-
-        // this.router.events.subscribe(d => {
-        //     if (d instanceof ActivationEnd) {
-        //         console.log(d)
-        //     }
-        // });
-        //
-        // console.log(this.route.snapshot)
-        // this.subject.getVideosSearch().subscribe(d => {
-        //     console.log(d)
-        // });
 
     }
 

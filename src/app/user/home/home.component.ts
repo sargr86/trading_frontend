@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
+import {OwlOptions} from 'ngx-owl-carousel-o';
+import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
-import {API_URL} from '@core/constants/global';
-import * as moment from 'moment';
 import {Router} from '@angular/router';
 
 @Component({
-    selector: 'app-show-videos',
-    templateUrl: './show-videos.component.html',
-    styleUrls: ['./show-videos.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
-export class ShowVideosComponent implements OnInit {
+export class HomeComponent implements OnInit {
+    owlOptions = OWL_OPTIONS;
     videos = [];
     apiUrl = API_URL;
 
@@ -23,10 +24,6 @@ export class ShowVideosComponent implements OnInit {
         this.videoService.get({}).subscribe(dt => {
             this.videos = dt;
         });
-    }
-
-    getUploadDateTime(datetime) {
-        return moment(datetime).format('MMM DD, YYYY');
     }
 
     openVideoPage(video, username) {
@@ -44,4 +41,5 @@ export class ShowVideosComponent implements OnInit {
 
         this.router.navigate([route], {queryParams: params});
     }
+
 }

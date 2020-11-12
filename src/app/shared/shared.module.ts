@@ -10,11 +10,13 @@ import {BlobToFilePipe} from './pipes/blob-to-file.pipe';
 import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {MaterialModule} from '@core/modules/material.module';
 import {Base64ToFilePipe} from './pipes/base64-to-file.pipe';
+import {CategoriesComponent} from '@shared/components/categories/categories.component';
 
 @NgModule({
     declarations: [
         VideoJsComponent,
         VideoJsRecordComponent,
+        CategoriesComponent,
         ChatBoxComponent,
         GetAuthUserPipe,
         BlobToFilePipe,
@@ -41,8 +43,10 @@ import {Base64ToFilePipe} from './pipes/base64-to-file.pipe';
         MaterialModule,
         VideoJsComponent,
         VideoJsRecordComponent,
-        ChatBoxComponent
+        ChatBoxComponent,
+        CategoriesComponent
     ]
+
 })
 export class SharedModule {
 }

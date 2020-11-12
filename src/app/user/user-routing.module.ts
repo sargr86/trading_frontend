@@ -9,7 +9,7 @@ import {CookiePolicyComponent} from './cookie-policy/cookie-policy.component';
 import {HelpComponent} from './help/help.component';
 import {AboutComponent} from './about/about.component';
 import {AuthGuard} from '@core/guards/auth.guard';
-import {PlayVideoComponent} from '@app/user/play-video/play-video.component';
+import {PlayVideoComponent} from '@app/videos/play-video/play-video.component';
 import {StockProfileComponent} from '@app/user/stock-profile/stock-profile.component';
 
 const routes: Routes = [
@@ -48,10 +48,6 @@ const routes: Routes = [
     {
         path: 'video/watch',
         component: VideoComponent
-    },
-    {
-        path: 'video/play',
-        component: PlayVideoComponent
     },
     {
         path: 'video-library',

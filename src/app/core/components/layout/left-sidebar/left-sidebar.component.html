@@ -23,7 +23,8 @@
             <img src="assets/img/item-8.png">
             <p>Chat</p>
         </div>
-        <div class="left-menu-main" [class.active]="router.url.includes('stock')" (click)="router.navigate(['user/stock-profile'])">
+        <div class="left-menu-main" [class.active]="router.url.includes('stock')"
+             (click)="router.navigate(['user/stock-profile'])">
             <img src="assets/img/item-9.png">
             <p>Stock Profile</p>
         </div>
@@ -31,27 +32,30 @@
             <img src="assets/img/item-10.png">
             <p>Saved Videos</p>
         </div>
-        <div class="left-menu-main" [class.active]="router.url.includes('videos')" (click)="router.navigate(['videos'])">
+        <div class="left-menu-main" [class.active]="router.url.includes('videos')"
+             (click)="router.navigate(['videos'])">
             <img src="assets/img/item-11.png">
             <p>CLIPZ</p>
         </div>
     </div>
     <p class="subscriptions-text">Subscriptions</p>
     <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
-        <div class="main-item-block" *ngFor="let item of sampleList;let i = index" cdkDrag>
+        <div class="main-item-block" *ngFor="let channel of channels;let i = index" cdkDrag>
             <ng-container *ngIf="i < 5 && router.url!=='/'">
-                <img class="list-img" src="assets/img/item-4.png">
+                <img class="list-img" *ngIf="channel.user.avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar">
+                <img class="list-img" *ngIf="!channel.user.avatar" src="assets/img/default-user.png">
                 <div>
-                    <p class="main-text-1">{{item.name}}</p>
-                    <p class="main-text-4">{{item.description}}</p>
+                    <p class="main-text-1">{{channel.name}}</p>
+                    <p class="main-text-4">{{channel.description}}</p>
                 </div>
             </ng-container>
 
             <ng-container *ngIf="router.url==='/'">
-                <img class="list-img" src="assets/img/item-4.png">
+                <img class="list-img" *ngIf="channel.user.avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar">
+                <img class="list-img" *ngIf="!channel.user.avatar" src="assets/img/default-user.png">
                 <div>
-                    <p class="main-text-1">{{item.name}}</p>
-                    <p class="main-text-4">{{item.description}}</p>
+                    <p class="main-text-1">{{channel.name}}</p>
+                    <p class="main-text-4">{{channel.description}}</p>
                 </div>
             </ng-container>
         </div>

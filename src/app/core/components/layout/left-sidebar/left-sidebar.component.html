@@ -1,8 +1,10 @@
 <div class="body-content-left">
     <div class="left-menu">
-        <div class="left-menu-main" [class.active]="router.url.includes('publish')"
+        <div class="left-menu-main st-left-metu" [class.active]="router.url.includes('publish')"
              (click)="router.navigate(['user/video/publish'])">
-            <img src="assets/img/item-6.png">
+            <span class="material-icons">
+            video_call
+            </span>
             <p>Start live video</p>
         </div>
         <div class="left-menu-main" (click)="router.navigate(['/'])" [class.active]="router.url ==='/'">

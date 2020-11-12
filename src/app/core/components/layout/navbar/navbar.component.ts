@@ -1,8 +1,10 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, TemplateRef} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {SubjectService} from '@core/services/subject.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-navbar',
@@ -14,13 +16,20 @@ export class NavbarComponent implements OnInit {
     authUser;
     routerUrl;
 
+    searchVideosForm: FormGroup;
+
+    @Output('search') search = new EventEmitter();
+
 
     constructor(
         public router: Router,
         public auth: AuthService,
         private modalService: BsModalService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService,
+        private fb: FormBuilder
     ) {
+        this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
     }
 
     ngOnInit(): void {
@@ -44,6 +53,12 @@ export class NavbarComponent implements OnInit {
             localStorage.removeItem('token');
             await this.router.navigate(['/']);
         });
+    }
+
+    searchVideos() {
+        console.log('OK')
+        // this.subject.setVideosSearch(this.searchVideosForm.value);
+        this.search.emit(this.searchVideosForm.value);
     }
 
 }

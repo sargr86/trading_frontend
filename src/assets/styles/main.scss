@@ -138,6 +138,16 @@ li {
 .notification-block {
     display: flex;
     align-items: center;
+    .dropdown{
+        .dropdown-menu{
+            left: initial;
+            right: 0;
+
+            .dropdown-item{
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 .header-right {

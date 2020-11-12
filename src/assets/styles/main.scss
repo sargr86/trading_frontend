@@ -27,9 +27,9 @@ input, button {
     padding: 0;
 }
 
-p {
-    margin-bottom: 0 !important;
-}
+//p {
+//    margin-bottom: 0 !important;
+//}
 
 
 button:hover {
@@ -439,17 +439,35 @@ li {
     margin-bottom: 5px;
     border-bottom: 1px solid transparent;
 
+    &.st-left-metu{
+        .material-icons,*{color: #ffffff;}
+        background: #F53C6F;
+        margin-bottom: 12px;
+    }
+    img,.material-icons{
+        width: 20px;
+    }
+    .material-icons{
+        color: #545454;
+    }
     p {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 }
 
-.left-menu-main:hover {
+.left-menu-main:hover , .left-menu-main.active{
     border-bottom: 1px solid #18B587;
     background-color: #18B587;
     cursor: pointer;
     color: white;
+    .material-icons,p{
+        color: #ffffff;
+    }
+
+    img{
+        filter: brightness(100);
+    }
 }
 
 .left-menu i {
@@ -1025,7 +1043,6 @@ ngb-modal-window {
 
         .modal-body {
             background-color: #FFFFFF !important;
-
             > h5 {
                 color: #545454 !important;
                 font-size: 16px;

@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        console.log(this.authUser)
+        // console.log(this.authUser)
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
 

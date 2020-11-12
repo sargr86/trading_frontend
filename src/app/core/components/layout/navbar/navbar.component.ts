@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -12,6 +12,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 export class NavbarComponent implements OnInit {
     modalRef: BsModalRef;
     authUser;
+    routerUrl;
 
 
     constructor(
@@ -24,6 +25,14 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        console.log(this.authUser)
+        this.router.events.subscribe(ev => {
+            if (ev instanceof NavigationEnd) {
+
+                this.routerUrl = ev.url;
+                // console.log(this.routerUrl)
+            }
+        });
     }
 
     openModal(template: TemplateRef<any>) {

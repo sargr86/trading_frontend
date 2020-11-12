@@ -1,8 +1,10 @@
 <div id="videos-list">
     <div class="video-container" *ngFor="let video of videos">
         <div class="thumbnail">
-            <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
-            <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+            <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
+                 (click)="openVideoPage(video,video.user.username)">
+            <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
+                 (click)="openVideoPage(video,video.user.username)">
         </div>
         <div class="details">
             <h4 class="title">{{video.name}}</h4>

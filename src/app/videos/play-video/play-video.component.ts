@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {CHART_1, CHART_2, CHART_3, CHART_4} from '@core/constants/charts';
 import {Chart} from 'chart.js';
 import {ActivatedRoute} from '@angular/router';
@@ -10,7 +10,7 @@ import {VideoService} from '@core/services/video.service';
     templateUrl: './play-video.component.html',
     styleUrls: ['./play-video.component.scss']
 })
-export class PlayVideoComponent implements OnInit {
+export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     canvas: any;
     ctx: any;
@@ -35,8 +35,9 @@ export class PlayVideoComponent implements OnInit {
 
     ngOnInit(): void {
 
-        const videoId = this.route.snapshot.params.queryParams;
-        this.videoService.getVideoById({_id: videoId}).subscribe(dt => {
+        const videoId = this.route.snapshot.queryParams.id;
+        console.log(this.route.snapshot)
+        this.videoService.getVideoById({id: videoId}).subscribe(dt => {
             this.videoData = dt;
         });
 
@@ -45,7 +46,7 @@ export class PlayVideoComponent implements OnInit {
 
     ngAfterViewInit() {
         this.canvas = document.getElementById('myChart');
-        console.log(this.canvas)
+        // console.log(this.canvas)
         this.ctx = this.canvas.getContext('2d');
         this.lineChart = new Chart(this.ctx, CHART_1);
 

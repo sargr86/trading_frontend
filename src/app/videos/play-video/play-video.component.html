@@ -1,0 +1,97 @@
+<app-categories></app-categories>
+<div class="ads-block">
+    <div class="ads-block-left">
+        <ng-container *ngIf="videoData">
+        <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>
+
+        <div class="main-tags">
+            <div class="main-tags-text">
+                <p *ngFor="let tag of videoData.tags">#{{tag}}</p>
+            </div>
+            <div class="main-tags-like">
+                <div class="main-tags-share">
+                    <i class="fas fa-thumbs-up"></i>
+                    <p>4.5k</p>
+                </div>
+                <div class="main-tags-share">
+                    <i class="fas fa-thumbs-down"></i>
+                    <p>4.5k</p>
+                </div>
+                <div class="main-tags-share">
+                    <i class="fas fa-share-alt"></i>
+                    <p>Share</p>
+                </div>
+                <div class="main-tags-share">
+                    <i class="fas fa-plus-square"></i>
+                    <p>Save</p>
+                </div>
+            </div>
+        </div>
+        <p class="ads-text-1">{{videoData.name}}</p>
+        <p class="ads-text-2">175,000 views 3 years ago</p>
+        <div class="main-item-block">
+            <img class="list-img" src="../../../assets/img/item-4.png">
+            <div>
+                <p class="main-text-1">{{videoData.channel.name}}</p>
+                <p class="main-text-4">Lorem ipsum dolor sit amet, consetetur</p>
+            </div>
+        </div>
+        <p class="ads-text-2"></p>
+        </ng-container>
+        <div class="ads-maps">
+            <div>
+                <canvas id="myChart"></canvas>
+                <canvas id="myChart2"></canvas>
+                <canvas id="myChart3"></canvas>
+                <canvas id="myChart4"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="ads-block-right">
+        <div class="ads-info">
+            <img src="../../../assets/img/default.png">
+            <div>
+                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                <p class="main-text-2">Fox News</p>
+                <p class="main-text-3">17k watching</p>
+            </div>
+        </div>
+        <div class="ads-info">
+            <img src="../../../assets/img/default.png">
+            <div>
+                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                <p class="main-text-2">Fox News</p>
+                <p class="main-text-3">17k watching</p>
+            </div>
+        </div>
+        <div class="ads-info">
+            <img src="../../../assets/img/default.png">
+            <div>
+                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                <p class="main-text-2">Fox News</p>
+                <p class="main-text-3">17k watching</p>
+            </div>
+        </div>
+        <div class="ads-info">
+            <img src="../../../assets/img/default.png">
+            <div>
+                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                <p class="main-text-2">Fox News</p>
+                <p class="main-text-3">17k watching</p>
+            </div>
+        </div>
+        <div class="ads-info">
+            <img src="../../../assets/img/default.png">
+            <div>
+                <p class="main-text-1">Trump meets with Florida Sheriffs dsfdsc</p>
+                <p class="main-text-2">Fox News</p>
+                <p class="main-text-3">17k watching</p>
+            </div>
+        </div>
+        <img class="ads" src="../../../assets/img/ads.png">
+        <img class="ads" src="../../../assets/img/ads.png">
+    </div>
+</div>
+
+
+

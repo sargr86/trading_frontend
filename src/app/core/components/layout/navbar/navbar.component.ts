@@ -56,7 +56,6 @@ export class NavbarComponent implements OnInit {
     }
 
     searchVideos() {
-        console.log('OK')
         // this.subject.setVideosSearch(this.searchVideosForm.value);
         this.search.emit(this.searchVideosForm.value);
     }

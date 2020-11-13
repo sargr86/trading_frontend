@@ -12,8 +12,9 @@
                     [viewMode]="3"></ngx-photo-editor>
             </div>
             <label for="cover-image-input">
-                <img [src]="channelUser.cover? apiUrl + 'uploads/covers/' + channelUser.cover:'assets/img/default-thumbnail.png'"
-                     id="cover-image">
+                <img
+                    [src]="channelUser.cover? apiUrl + 'uploads/covers/' + channelUser.cover:'assets/img/default-thumbnail.png'"
+                    id="cover-image">
             </label>
         </div>
 
@@ -55,10 +56,13 @@
                            aria-selected="true">{{tab.name}}</a>
                     </li>
                 </ul>
-                <div class="watchlist-search">
-                    <input class="watchlist-input" placeholder="Search">
-                    <i class="fas fa-search"></i>
-                </div>
+                <form [formGroup]="searchVideosForm">
+                    <div class="watchlist-search">
+                        <input class="watchlist-input" placeholder="Search" formControlName="search"
+                               (keyup.enter)="searchVideos()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </form>
             </div>
 
             <ng-container *ngIf="activeTab.name === 'Watchlist'">

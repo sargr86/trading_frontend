@@ -14,14 +14,11 @@ export class AppComponent {
         public router: Router,
         private subject: SubjectService
     ) {
-        this.subject.getVideosSearch().subscribe((data) => {
-            console.log(data)
-        });
 
     }
 
     getSearch(e) {
-        this.router.navigate(['videos/'], {queryParams: e});
-        console.log(e)
+        const queryParams = e.search ? {queryParams: e} : {};
+        this.router.navigate(['videos/'], queryParams);
     }
 }

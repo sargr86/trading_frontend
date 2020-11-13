@@ -33,6 +33,16 @@ export const PROFILE_PAGE_TABS = [
     {name: 'About', link: 'pAbout'},
 ];
 
+export const NAVBAR_ADDITIONAL_LINKS = [
+    {name: 'Accessibility assessment', link: 'accessibility-assessment'},
+    {name: 'About Metl', link: 'about'},
+    {name: 'Contact us', link: 'contact-us'},
+    {name: 'Help', link: 'help'},
+    {name: 'METL.TV security', link: 'security'},
+    {name: 'Privacy policy', link: 'privacy-policy'},
+    {name: 'Cookie policy', link: 'cookie-policy'},
+];
+
 export const VIDEO_CATEGORIES = ['Stock', 'Etf', 'Cryptocurrency'];
 
 export const ALLOWED_IMG_MIME_TYPES = ['image/jpeg', 'image/png'];

@@ -13,10 +13,6 @@ import {OvVideoComponent} from './ov-video/ov-video.component';
 import {VideoLibraryComponent} from './video-library/video-library.component';
 import {OpenviduSessionModule} from 'openvidu-angular';
 import {ChatComponent} from './chat/chat.component';
-import {AccessibilityStatementComponent} from './accessibility-statement/accessibility-statement.component';
-import {CookiePolicyComponent} from './cookie-policy/cookie-policy.component';
-import {HelpComponent} from './help/help.component';
-import {AboutComponent} from './about/about.component';
 import {StartStreamingFormComponent} from './start-streaming-form/start-streaming-form.component';
 import {JoinStreamingFormComponent} from './join-streaming-form/join-streaming-form.component';
 import {HomeComponent} from '@app/user/home/home.component';
@@ -32,12 +28,9 @@ import {HomeComponent} from '@app/user/home/home.component';
         HomeComponent,
         VideoLibraryComponent,
         ChatComponent,
-        AccessibilityStatementComponent,
-        CookiePolicyComponent,
-        HelpComponent,
-        AboutComponent,
         StartStreamingFormComponent,
         JoinStreamingFormComponent
+
     ],
     imports: [
         CommonModule,

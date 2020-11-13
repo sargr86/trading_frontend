@@ -44,11 +44,20 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/get-user-videos`, {params});
     }
 
+
     getVideoById(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-video-by-id`, {params});
     }
 
     getVideosByAuthor(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-videos-by-author`, {params});
+    }
+
+    searchInVideosByAuthor(params) {
+        return this.httpClient.get<any>(`${API_URL}videos/search-in-videos-by-author`, {params});
+    }
+
+    searchInUserVideos(params) {
+        return this.httpClient.get<any>(`${API_URL}videos/search-in-user-videos`, {params});
     }
 }

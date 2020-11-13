@@ -8,14 +8,14 @@
             <div class="home-search">
                 <input class="home-search-input" placeholder="Search" formControlName="search"
                        (keyup.enter)="searchVideos()">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search" (click)="searchVideos()"></i>
             </div>
         </form>
         <div class="home-black-block" (click)="openModal(cryptoModal)">
             <div class="home-black-item">
                 <p class="black-text">EDF.PA</p>
                 <p class="black-percent-red">3.36%</p>
-        </div>
+            </div>
             <div class="home-black-item">
                 <p class="black-text">MSFT</p>
                 <p class="black-percent-yellow">1.24%</p>
@@ -68,7 +68,17 @@
 
 
             <div class="dotes">
-                <i class="fas fa-ellipsis-v"></i>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <ng-container *ngFor="let l of additionalLinks">
+                        <button mat-menu-item (click)="router.navigate([l.link])">
+                            {{l.name}}
+                        </button>
+                    </ng-container>
+                </mat-menu>
+
             </div>
         </div>
     </div>

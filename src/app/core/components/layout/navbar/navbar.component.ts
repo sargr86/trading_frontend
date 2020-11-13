@@ -5,6 +5,7 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 
 @Component({
     selector: 'app-navbar',
@@ -19,7 +20,7 @@ export class NavbarComponent implements OnInit {
     searchVideosForm: FormGroup;
 
     @Output('search') search = new EventEmitter();
-
+    additionalLinks = NAVBAR_ADDITIONAL_LINKS;
 
     constructor(
         public router: Router,
@@ -56,7 +57,6 @@ export class NavbarComponent implements OnInit {
     }
 
     searchVideos() {
-        console.log('OK')
         // this.subject.setVideosSearch(this.searchVideosForm.value);
         this.search.emit(this.searchVideosForm.value);
     }

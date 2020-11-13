@@ -9,9 +9,14 @@ import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/c
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purchase-bits.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NotFoundComponent} from './components/not-found/not-found.component';
+import {NotFoundComponent} from './components/ungrouped/not-found/not-found.component';
 import {MaterialModule} from '@core/modules/material.module';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {AboutComponent} from './components/ungrouped/about/about.component';
+import {AccessibilityStatementComponent} from '@core/components/ungrouped/accessibility-statement/accessibility-statement.component';
+import { ContactUsComponent } from './components/ungrouped/contact-us/contact-us.component';
+import { PrivacyPolicyComponent } from './components/ungrouped/privacy-policy/privacy-policy.component';
+import { SecurityComponent } from './components/ungrouped/security/security.component';
 
 
 @NgModule({
@@ -20,7 +25,12 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
         LeftSidebarComponent,
         CryptoCurrencyComponent,
         PurchaseBitsComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        AccessibilityStatementComponent,
+        AboutComponent,
+        ContactUsComponent,
+        PrivacyPolicyComponent,
+        SecurityComponent,
     ],
     imports: [
         CommonModule,

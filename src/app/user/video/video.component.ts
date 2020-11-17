@@ -43,6 +43,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     OPENVIDU_SERVER_URL = 'https://localhost:4443';
     OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
+    welcomedUser = false;
+
     // OpenVidu objects
     OV: OpenVidu;
     session: Session;
@@ -369,6 +371,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
         console.log(this.sessionData)
         this.joinSession();
+    }
+
+    greetUser() {
+        this.welcomedUser = true;
     }
 
 

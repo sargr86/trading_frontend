@@ -17,6 +17,7 @@ import {AccessibilityStatementComponent} from '@core/components/ungrouped/access
 import { ContactUsComponent } from './components/ungrouped/contact-us/contact-us.component';
 import { PrivacyPolicyComponent } from './components/ungrouped/privacy-policy/privacy-policy.component';
 import { SecurityComponent } from './components/ungrouped/security/security.component';
+import { StreamPreviewDialogComponent } from './components/modals/stream-preview-dialog/stream-preview-dialog.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { SecurityComponent } from './components/ungrouped/security/security.comp
         ContactUsComponent,
         PrivacyPolicyComponent,
         SecurityComponent,
+        StreamPreviewDialogComponent,
     ],
     imports: [
         CommonModule,

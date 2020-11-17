@@ -144,6 +144,11 @@ li {
         .dropdown-menu{
             left: initial;
             right: 0;
+            padding: 0;
+
+            .purchase-bits{
+                overflow: auto;
+            }
 
             .dropdown-item{
                 cursor: pointer;
@@ -369,8 +374,9 @@ li {
 .main-item-block img {
     width: 42px !important;
     height: 42px;
+    margin-right: 16px;
+    object-fit: cover;
     border-radius: 50%;
-    margin-right: 4px;
 }
 
 .main-text-1 {

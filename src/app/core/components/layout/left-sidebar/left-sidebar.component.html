@@ -46,18 +46,18 @@
             <ng-container *ngIf="i < 5 && router.url!=='/'">
                 <img class="list-img" *ngIf="channel.user.avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar">
                 <img class="list-img" *ngIf="!channel.user.avatar" src="assets/img/default-user.png">
-                <div>
+                <div class="d-flex align-items-center">
                     <p class="main-text-1">{{channel.name}}</p>
-                    <p class="main-text-4">{{channel.description}}</p>
+                    <!-- <p class="main-text-4">{{channel.description}}</p> -->
                 </div>
             </ng-container>
 
             <ng-container *ngIf="router.url==='/'">
                 <img class="list-img" *ngIf="channel.user.avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar">
                 <img class="list-img" *ngIf="!channel.user.avatar" src="assets/img/default-user.png">
-                <div>
+                <div class="d-flex align-items-center">
                     <p class="main-text-1">{{channel.name}}</p>
-                    <p class="main-text-4">{{channel.description}}</p>
+                    <!-- <p class="main-text-4">{{channel.description}}</p> -->
                 </div>
             </ng-container>
         </div>

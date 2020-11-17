@@ -36,9 +36,9 @@
                 <div class="details">
                     <h4 class="title">{{channel.name}}</h4>
                     <div class="shortened-details">
-<!--                        <span class="channel-name">{{channel.name}}</span>-->
-<!--                        <span class="dot">.</span>-->
-<!--                        <span class="watchers-count">17k watching</span>-->
+                        <span class="channel-name">{{channel.name}}</span>
+                        <span class="dot">.</span>
+                        <span class="watchers-count">17k watching</span>
 <!--                        <span class="dot">.</span>-->
 <!--                        <span class="upload-time">{{getUploadDateTime(channel.created_at)}}</span>-->
                     </div>
@@ -47,6 +47,8 @@
                         consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
                         sed sda,sasddswd
                     </p>
+
+                    <button class="btn">Subscribe</button>
                 </div>
             </div>
             <div class="video-container" *ngFor="let video of channel.videos">

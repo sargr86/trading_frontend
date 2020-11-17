@@ -9,6 +9,8 @@ import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
 import {CroppedEvent} from 'ngx-photo-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ChannelsService} from '@core/services/channels.service';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -36,6 +38,7 @@ export class ShowChannelComponent implements OnInit {
     passedUsername;
 
     searchVideosForm: FormGroup;
+    subscribedToChannel = false;
 
     constructor(
         private videoService: VideoService,
@@ -44,7 +47,9 @@ export class ShowChannelComponent implements OnInit {
         private usersService: UsersService,
         private base64ToFile: Base64ToFilePipe,
         private route: ActivatedRoute,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private channelService: ChannelsService,
+        private subject: SubjectService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -55,6 +60,7 @@ export class ShowChannelComponent implements OnInit {
         if (this.passedUsername) {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
                 this.channelUser = dt;
+                this.checkChannelSubscription();
                 console.log(this.channelUser.username, this.authUser.username)
             });
         }
@@ -66,11 +72,23 @@ export class ShowChannelComponent implements OnInit {
         this.videoService.getVideosByAuthor({}).subscribe(dt => {
             this.watchlistVideos = dt;
         });
+
+
     }
 
     changeActiveTab(tab) {
         this.activeTab = tab;
         this.searchVideos();
+    }
+
+    checkChannelSubscription() {
+        console.log(this.channelUser)
+        this.channelService.checkChannelSubscription({
+            user_id: this.authUser.id,
+            channel_id: this.channelUser.channel.id
+        }).subscribe(dt => {
+            this.subscribedToChannel = dt === 'Subscribed';
+        });
     }
 
     openVideoPage(video, username) {
@@ -142,12 +160,22 @@ export class ShowChannelComponent implements OnInit {
         this.videoService.searchInVideosByAuthor(search).subscribe(dt => {
             this.watchlistVideos = dt;
         });
-}
+    }
 
     searchInUserVideos(search) {
         this.currentUser.videos = [];
         this.videoService.searchInUserVideos({user_id: this.authUser.id, ...search}).subscribe(dt => {
             this.currentUser.videos = dt.videos;
+        });
+    }
+
+    subscribeToChannel(channel) {
+        console.log(channel)
+        this.channelService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
+            this.subscribedToChannel = dt === 'Subscribed';
+            this.channelService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
+                this.subject.setUserSubscriptions(d);
+            });
         });
     }
 

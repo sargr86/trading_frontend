@@ -19,4 +19,22 @@ export class ChannelsService {
     searchWithVideos(params) {
         return this.httpClient.get<any>(`${API_URL}channels/search-with-videos`, {params});
     }
+
+    subscribeToChannel(params) {
+        return this.httpClient.put<any>(`${API_URL}channels/subscribe`, params);
+    }
+
+    checkChannelSubscription(params) {
+        return this.httpClient.get<any>(`${API_URL}channels/check-subscription`, {params});
+    }
+
+    getUserChannelSubscriptions(params) {
+        return this.httpClient.get<any>(`${API_URL}channels/get-subscriptions`, {params});
+    }
+
+    changeSubscriptionPriority(params) {
+        return this.httpClient.put<any>(`${API_URL}channels/subscriptions/update-priority`, params);
+    }
+
+
 }

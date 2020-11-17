@@ -3,6 +3,9 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {Router} from '@angular/router';
 import {ChannelsService} from '@core/services/channels.service';
 import {API_URL} from '@core/constants/global';
+import {moveItemInArray} from '@core/helpers/move-item-in-array';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -23,12 +26,19 @@ export class LeftSidebarComponent implements OnInit {
     ];
     channels = [];
     apiUrl = API_URL;
+    authUser;
 
     constructor(
         public router: Router,
-        private channelsService: ChannelsService
+        private channelsService: ChannelsService,
+        private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService
     ) {
-        this.channelsService.get({}).subscribe(dt => {
+        this.authUser = this.getAuthUser.transform();
+        this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
+            this.channels = dt;
+        });
+        this.subject.getUserSubscriptions().subscribe(dt => {
             this.channels = dt;
         });
     }
@@ -37,13 +47,20 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        this.sampleList = this.moveItemInArray(this.sampleList, event.previousIndex, event.currentIndex);
+        // this.channels = moveItemInArray(this.channels, event.previousIndex, event.currentIndex);
+
     }
 
-    moveItemInArray(arr, from, to) {
-        const f = arr.splice(from, 1)[0];
-        arr.splice(to, 0, f);
-        return arr;
+    dragDropped(e, channel) {
+        console.log(e)
+        console.log(channel)
+        this.channels = moveItemInArray(this.channels, e.previousIndex, e.currentIndex);
+        this.channelsService.changeSubscriptionPriority({
+            currentPosition: e.currentIndex + 1,
+            channel_id: channel.id,
+            user_id: this.authUser.id
+        }).subscribe(dt => {
+        });
     }
 
 }

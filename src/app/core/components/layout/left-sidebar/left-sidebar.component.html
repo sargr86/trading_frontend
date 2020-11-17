@@ -42,19 +42,19 @@
     </div>
     <p class="subscriptions-text">Subscriptions</p>
     <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
-        <div class="main-item-block" *ngFor="let channel of channels;let i = index" cdkDrag>
-            <ng-container *ngIf="i < 5 && router.url!=='/'">
-                <img class="list-img" *ngIf="channel.user.avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar">
-                <img class="list-img" *ngIf="!channel.user.avatar" src="assets/img/default-user.png">
-                <div class="d-flex align-items-center">
-                    <p class="main-text-1">{{channel.name}}</p>
-                    <!-- <p class="main-text-4">{{channel.description}}</p> -->
-                </div>
-            </ng-container>
+        <div class="main-item-block" *ngFor="let channel of channels;let i = index" cdkDrag (cdkDragDropped)="dragDropped($event, channel)">
+<!--            <ng-container *ngIf="i < 5 && router.url!=='/'">-->
+<!--                <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">-->
+<!--                <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">-->
+<!--                <div>-->
+<!--                    <p class="main-text-1">{{channel.name}}</p>-->
+<!--                    <p class="main-text-4">{{channel.description}}</p>-->
+<!--                </div>-->
+<!--            </ng-container>-->
 
-            <ng-container *ngIf="router.url==='/'">
-                <img class="list-img" *ngIf="channel.user.avatar" [src]="apiUrl+'uploads/avatars/'+channel.user.avatar">
-                <img class="list-img" *ngIf="!channel.user.avatar" src="assets/img/default-user.png">
+            <ng-container>
+                <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">
+                <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">
                 <div class="d-flex align-items-center">
                     <p class="main-text-1">{{channel.name}}</p>
                     <!-- <p class="main-text-4">{{channel.description}}</p> -->

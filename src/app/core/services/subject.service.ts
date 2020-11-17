@@ -8,6 +8,7 @@ export class SubjectService {
     public messageData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
     public videoSearchData = new Subject<any>();
+    public subscriptionsData = new Subject<any>();
 
     constructor() {
     }
@@ -34,5 +35,13 @@ export class SubjectService {
 
     getVideosSearch(): Observable<any> {
         return this.videoSearchData.asObservable();
+    }
+
+    setUserSubscriptions(value){
+        this.subscriptionsData.next(value);
+    }
+
+    getUserSubscriptions(): Observable<any> {
+        return this.subscriptionsData.asObservable();
     }
 }

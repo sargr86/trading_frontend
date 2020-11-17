@@ -19,6 +19,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {API_URL, VIDEO_CATEGORIES} from '@core/constants/global';
+import {MatDialog} from '@angular/material/dialog';
+import {StreamPreviewDialogComponent} from '@core/components/modals/stream-preview-dialog/stream-preview-dialog.component';
 
 @Component({
     selector: 'app-video',
@@ -42,6 +44,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     OPENVIDU_SERVER_URL = 'https://localhost:4443';
     OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+
+    welcomedUser = false;
 
     // OpenVidu objects
     OV: OpenVidu;
@@ -87,7 +91,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
         public router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private dialog: MatDialog
     ) {
     }
 
@@ -361,7 +366,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.videoSettings = e;
         this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
         console.log(this.sessionData)
-        this.joinSession();
+        this.dialog.open(StreamPreviewDialogComponent, {}).afterClosed().subscribe(result => {
+            this.joinSession();
+        })
     }
 
     getWatcherData(e) {
@@ -369,6 +376,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
         console.log(this.sessionData)
         this.joinSession();
+    }
+
+    greetUser() {
+        this.welcomedUser = true;
     }
 
 

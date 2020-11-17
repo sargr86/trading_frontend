@@ -50,6 +50,9 @@
 
 <!-- Showing start-streaming or join-streaming forms based on user role -->
 <div id="main-container" class="container" *ngIf="!session">
-    <app-start-streaming-form *ngIf="!watcher" (formReady)="getPublisherData($event)"></app-start-streaming-form>
-    <app-join-streaming-form *ngIf="watcher" (formReady)="getWatcherData($event)"></app-join-streaming-form>
+    <ng-container *ngIf="!welcomedUser && !watcher">
+        <button (click)="greetUser()">Start live video</button>
+    </ng-container>
+    <app-start-streaming-form *ngIf="!watcher && welcomedUser" (formReady)="getPublisherData($event)"></app-start-streaming-form>
+    <app-join-streaming-form *ngIf="watcher && welcomedUser" (formReady)="getWatcherData($event)"></app-join-streaming-form>
 </div>

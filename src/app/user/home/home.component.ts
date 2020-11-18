@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
         });
     }
 
+
     openVideoPage(video, username) {
         console.log(username);
         let route;

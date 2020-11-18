@@ -52,14 +52,21 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     dragDropped(e, channel) {
-        console.log(e)
-        console.log(channel)
+        // console.log(e)
+        // console.log(channel)
         this.channels = moveItemInArray(this.channels, e.previousIndex, e.currentIndex);
-        this.channelsService.changeSubscriptionPriority({
-            currentPosition: e.currentIndex + 1,
+        console.log(this.channels)
+        // {
+        //     currentPosition: e.currentIndex + 1,
+        //         channel_id: channel.id,
+        //     user_id: this.authUser.id
+        // }
+        const sendData = {
+            rows: JSON.stringify(this.channels),
             channel_id: channel.id,
             user_id: this.authUser.id
-        }).subscribe(dt => {
+        }
+        this.channelsService.changeSubscriptionPriority(sendData).subscribe(dt => {
         });
     }
 

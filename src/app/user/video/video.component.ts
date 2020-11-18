@@ -368,7 +368,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.sessionData)
         this.dialog.open(StreamPreviewDialogComponent, {}).afterClosed().subscribe(result => {
             this.joinSession();
-        })
+        });
     }
 
     getWatcherData(e) {

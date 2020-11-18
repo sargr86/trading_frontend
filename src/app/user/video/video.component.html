@@ -51,8 +51,15 @@
 <!-- Showing start-streaming or join-streaming forms based on user role -->
 <div id="main-container" class="container" *ngIf="!session">
     <ng-container *ngIf="!welcomedUser && !watcher">
-        <button (click)="greetUser()">Start live video</button>
+        <div class="start-live-video-page" style="background-image: url(../../../../../assets/img/live-video.png);">
+            <div class="text">
+                <h1>Start live video</h1>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
+                <button class="btn" (click)="greetUser()"><span class="material-icons"> video_call </span>Start live video</button>
+            </div>
+        </div>
     </ng-container>
+
     <app-start-streaming-form *ngIf="!watcher && welcomedUser" (formReady)="getPublisherData($event)"></app-start-streaming-form>
     <app-join-streaming-form *ngIf="watcher && welcomedUser" (formReady)="getWatcherData($event)"></app-join-streaming-form>
 </div>

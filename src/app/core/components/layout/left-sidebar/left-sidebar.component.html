@@ -1,8 +1,10 @@
 <div class="body-content-left">
     <div class="left-menu">
-        <div class="left-menu-main" [class.active]="router.url.includes('publish')"
+        <div class="left-menu-main st-left-metu" [class.active]="router.url.includes('publish')"
              (click)="router.navigate(['user/video/publish'])">
-            <img src="assets/img/item-6.png">
+            <span class="material-icons">
+            video_call
+            </span>
             <p>Start live video</p>
         </div>
         <div class="left-menu-main" (click)="router.navigate(['/'])" [class.active]="router.url ==='/'">
@@ -53,9 +55,9 @@
             <ng-container>
                 <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">
                 <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">
-                <div>
+                <div class="d-flex align-items-center">
                     <p class="main-text-1">{{channel.name}}</p>
-                    <p class="main-text-4">{{channel.description}}</p>
+                    <!-- <p class="main-text-4">{{channel.description}}</p> -->
                 </div>
             </ng-container>
         </div>

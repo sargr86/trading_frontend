@@ -31,7 +31,8 @@
         </div>
         <div id="video-description">
             <textarea formControlName="description" placeholder="Video description"></textarea>
-            <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required</mat-error>
+            <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required
+            </mat-error>
         </div>
         <div id="thumbnail">
             <ng-container *ngIf="!thumbnailUploaded">
@@ -40,6 +41,9 @@
                     Upload Thumbnail
                 </label>
                 <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
+                <mat-error *ngIf="startStreamingForm.get('thumbnail').hasError('required') && isSubmitted">
+                    The thumbnail is required
+                </mat-error>
             </ng-container>
             <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
                 <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear

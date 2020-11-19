@@ -39,6 +39,7 @@ export class ShowChannelComponent implements OnInit {
 
     searchVideosForm: FormGroup;
     subscribedToChannel = false;
+    subscribersCount;
 
     constructor(
         private videoService: VideoService,
@@ -87,7 +88,8 @@ export class ShowChannelComponent implements OnInit {
             user_id: this.authUser.id,
             channel_id: this.channelUser.channel.id
         }).subscribe(dt => {
-            this.subscribedToChannel = dt === 'Subscribed';
+            this.subscribedToChannel = dt.status === 'Subscribed';
+            this.subscribersCount = dt.subscribers_count;
         });
     }
 
@@ -172,7 +174,8 @@ export class ShowChannelComponent implements OnInit {
     subscribeToChannel(channel) {
         console.log(channel)
         this.channelService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
-            this.subscribedToChannel = dt === 'Subscribed';
+            this.subscribedToChannel = dt.status === 'Subscribed';
+            this.subscribersCount = dt.subscribers_count;
             this.channelService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
                 this.subject.setUserSubscriptions(d);
             });

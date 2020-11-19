@@ -38,13 +38,14 @@
                 </div>
                 <div>
                     <p class="main-text-1">{{channelUser.channel.name}}</p>
-                    <p class="main-text-4">83,7 subscribers</p>
+                    <p class="main-text-4">{{subscribersCount + ' subscriber' + (subscribersCount === 1 ? '' : 's')}} </p>
                 </div>
             </div>
             <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
                 <i class="sub-bell fas fa-bell"></i>
                 <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribe</a>
-                <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribed</a>
+                <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
+                   (click)="subscribeToChannel(channelUser.channel)">Subscribed</a>
             </div>
         </div>
         <div class="watchlist pWatchlist">

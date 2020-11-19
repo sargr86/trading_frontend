@@ -51,7 +51,7 @@ export class StartStreamingFormComponent implements OnInit {
             tags: [[], Validators.required],
             sessionName: [this.sessionName],
             myUserName: [this.authUser.username],
-            thumbnail: ['', Validators.required],
+            thumbnail: [''], // Validators.required
             status: ['live']
         });
     }

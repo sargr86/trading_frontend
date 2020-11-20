@@ -147,15 +147,19 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.subject.setVideoRecordingState({recording: true, viaSocket: false});
             console.log('RECORDING!!!!')
             console.log(this.authUser)
+            console.log(console.log(this.videoSettings))
             console.log('RECORDING!!!!')
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
                 author_id: this.authUser.id,
                 channel_id: this.authUser.channel.id,
+                category_id: this.videoSettings.category_id,
+                privacy: this.videoSettings.privacy,
                 filename: '',
                 session_name: this.videoSettings.sessionName,
                 publisher: this.videoSettings.myUserName,
-                status: 'live'
+                status: 'live',
+                tags: this.videoSettings.tags
             }).subscribe(() => {
             });
             console.log('started recording!');

@@ -153,8 +153,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 .then(() => {
                     console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
                     if (token.includes('PUBLISHER')) {
-
-
                         const video = this.elRef.nativeElement.querySelector('video');
                         const publisher: Publisher = this.OV.initPublisher(video, {
                             audioSource: undefined, // The source of audio. If undefined default microphone
@@ -371,10 +369,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             maxWidth: '554px',
             width: '100%'
         }).afterClosed().subscribe(result => {
-            console.log(result)
-            this.joinSession();
+            this.videoSettings.privacy = result.privacy;
         });
+        this.joinSession();
     }
+
 
     getWatcherData(e) {
         this.publisherData = e;

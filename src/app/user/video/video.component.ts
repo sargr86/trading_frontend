@@ -363,10 +363,15 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     getPublisherData(e) {
-        this.videoSettings = e;
         this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
+        this.videoSettings = e;
         console.log(this.sessionData)
-        this.dialog.open(StreamPreviewDialogComponent, {}).afterClosed().subscribe(result => {
+        this.dialog.open(StreamPreviewDialogComponent, {
+            data: this.videoSettings,
+            maxWidth: '554px',
+            width: '100%'
+        }).afterClosed().subscribe(result => {
+            console.log(result)
             this.joinSession();
         });
     }

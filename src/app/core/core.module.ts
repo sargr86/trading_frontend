@@ -18,6 +18,7 @@ import { ContactUsComponent } from './components/ungrouped/contact-us/contact-us
 import { PrivacyPolicyComponent } from './components/ungrouped/privacy-policy/privacy-policy.component';
 import { SecurityComponent } from './components/ungrouped/security/security.component';
 import { StreamPreviewDialogComponent } from './components/modals/stream-preview-dialog/stream-preview-dialog.component';
+import {SharedModule} from '@shared/shared.module';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { StreamPreviewDialogComponent } from './components/modals/stream-preview
         ModalModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        SharedModule
     ],
     exports: [
         NavbarComponent,

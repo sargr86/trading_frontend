@@ -1,87 +1,97 @@
-.stream-preview-dialog{
-    min-width: 548px;
-    h2{
+.stream-preview-dialog {
+    width: 100%;
+
+    h2 {
         font-size: 16px;
         font-weight: bold;
         color: #18B587;
     }
 
-    img{
+    img {
         margin-top: 24px;
         width: calc(100% + 48px);
         margin-left: -24px;
     }
 
-    .item-wrap{
+    .item-wrap {
         margin-top: 16px;
-        .item{
+
+        .item {
             margin-bottom: 8px;
 
-            &.d-flex{
-                >div{
+            &.d-flex {
+                > div {
                     margin-right: 40px;
                 }
             }
-            .title{
+
+            .title {
                 display: flex;
                 justify-content: space-between;
                 color: #18B587;
                 font-size: 14px;
                 margin-bottom: 2px;
- 
-                .edit{
-                    font-size: 16px; 
+
+                .edit {
+                    font-size: 16px;
                     color: #545454;
                     cursor: pointer;
-                    span{
+
+                    span {
                         font-size: 20px;
                         margin-left: 4px;
                     }
                 }
             }
 
-            .info{
+            .info {
                 display: flex;
                 align-items: center;
 
-                &.border{
+                &.border {
                     border: 0 !important;
-                    span:not(.material-icons){
+
+                    span:not(.material-icons) {
                         border-bottom: 0.5px solid #DCDCDC;
                     }
                 }
-                span:not(.material-icons){
+
+                span:not(.material-icons) {
                     flex: 1;
                 }
-                .material-icons{
+
+                .material-icons {
                     margin-right: 8px;
                 }
 
-                >span{
+                > span {
                     color: #545454;
                     font-weight: 600;
                     font-size: 16px;
                 }
-                .material-icons{
+
+                .material-icons {
                     font-size: 20px;
                 }
             }
         }
     }
 
-    .btn-wrap{
+    .btn-wrap {
         display: flex;
         justify-content: flex-end;
         margin-top: 20px;
-        .btn{
+
+        .btn {
             margin-left: 24px;
             padding: 12px 32px;
             background: #F53C6F;
             color: #ffffff;
             font-size: 16px;
             border-radius: 0;
-            box-shadow: 0px 0px 6px #006DCC2E;
-            &.share{
+            box-shadow: 0 0 6px #006DCC2E;
+
+            &.share {
                 padding: 12px;
                 font-weight: bold;
                 color: #18B587;

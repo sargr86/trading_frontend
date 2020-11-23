@@ -18,6 +18,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     videoUrl;
     videoData;
+    apiUrl = API_URL;
 
     videoJSPlayerOptions = {
         autoplay: true,
@@ -36,7 +37,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
 
         const videoId = this.route.snapshot.queryParams.id;
-        console.log(this.route.snapshot)
         this.videoService.getVideoById({id: videoId}).subscribe(dt => {
             this.videoData = dt;
         });

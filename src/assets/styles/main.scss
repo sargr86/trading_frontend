@@ -140,17 +140,18 @@ li {
 .notification-block {
     display: flex;
     align-items: center;
-    .dropdown{
-        .dropdown-menu{
+
+    .dropdown {
+        .dropdown-menu {
             left: initial;
             right: 0;
             padding: 0;
 
-            .purchase-bits{
+            .purchase-bits {
                 overflow: auto;
             }
 
-            .dropdown-item{
+            .dropdown-item {
                 cursor: pointer;
             }
         }
@@ -446,33 +447,40 @@ li {
     margin-bottom: 5px;
     border-bottom: 1px solid transparent;
 
-    &.st-left-metu{
-        .material-icons,*{color: #ffffff;}
+    &.st-left-metu {
+        .material-icons, * {
+            color: #ffffff;
+        }
+
         background: #F53C6F;
         margin-bottom: 12px;
     }
-    img,.material-icons{
+
+    img, .material-icons {
         width: 20px;
     }
-    .material-icons{
+
+    .material-icons {
         color: #545454;
     }
+
     p {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
 }
 
-.left-menu-main:hover , .left-menu-main.active{
+.left-menu-main:hover, .left-menu-main.active {
     border-bottom: 1px solid #18B587;
     background-color: #18B587;
     cursor: pointer;
     color: white;
-    .material-icons,p{
+
+    .material-icons, p {
         color: #ffffff;
     }
 
-    img{
+    img {
         filter: brightness(100);
     }
 }
@@ -890,6 +898,14 @@ li {
     color: #545454;
 }
 
+.liked {
+    color: #18B587 !important;
+}
+
+.disliked {
+    color: $red !important;
+}
+
 .main-tags-share {
     display: flex;
     align-items: center;
@@ -900,6 +916,7 @@ li {
     color: #545454;
     font-size: 12px;
     font-family: "Muli-Light";
+    margin-bottom: 0 !important;
 }
 
 .ads-text-1 {
@@ -1050,6 +1067,7 @@ ngb-modal-window {
 
         .modal-body {
             background-color: #FFFFFF !important;
+
             > h5 {
                 color: #545454 !important;
                 font-size: 16px;
@@ -1131,7 +1149,7 @@ ngb-modal-window {
     .home-black-item {
         margin-right: 8px;
     }
- 
+
     .main-tags p {
         font-size: 14px;
     }
@@ -1259,7 +1277,7 @@ ngb-modal-window {
         justify-content: space-between;
     }
 
-    
+
 }
 
 @media (max-width: 767px) {
@@ -1290,7 +1308,7 @@ ngb-modal-window {
     .main-carousel .owl-nav button.owl-next {
         display: none;
     }
- 
+
     .trending-text {
         text-align: center;
     }

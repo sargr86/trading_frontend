@@ -56,18 +56,17 @@ export class LeftSidebarComponent implements OnInit {
         // console.log(channel)
         this.channels = moveItemInArray(this.channels, e.previousIndex, e.currentIndex);
         console.log(this.channels)
-        // {
-        //     currentPosition: e.currentIndex + 1,
-        //         channel_id: channel.id,
-        //     user_id: this.authUser.id
-        // }
         const sendData = {
             rows: JSON.stringify(this.channels),
             channel_id: channel.id,
             user_id: this.authUser.id
-        }
+        };
         this.channelsService.changeSubscriptionPriority(sendData).subscribe(dt => {
         });
+    }
+
+    openChannelPage(channel) {
+        this.router.navigate(['channels/show'], {queryParams: {username: channel.user.username}});
     }
 
 }

@@ -55,7 +55,7 @@
                 <img src="assets/img/user.svg" data-toggle="dropdown"
                      class="user-icon nav-link dropdown-toggle">
                 <div class="dropdown-menu">
-                    <span class="dropdown-item" *ngIf="!router.url.includes('channels/show')"
+                    <span class="dropdown-item" *ngIf="toggleMyChannelLink()"
                           (click)="router.navigate(['channels/show'], {queryParams: {username:authUser.username}})">My Channel</span>
                     <span class="dropdown-item" (click)="logout()">Logout</span>
                 </div>

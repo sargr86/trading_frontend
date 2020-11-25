@@ -44,6 +44,10 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/get-user-videos`, {params});
     }
 
+    getUserSavedVideos(params) {
+        return this.httpClient.get<any>(`${API_URL}videos/get-saved`, {params});
+    }
+
 
     getVideoById(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-video-by-id`, {params});
@@ -63,5 +67,9 @@ export class VideoService {
 
     updateLikes(params) {
         return this.httpClient.put<any>(`${API_URL}videos/update-likes`, params);
+    }
+
+    saveVideo(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/save-video`, params);
     }
 }

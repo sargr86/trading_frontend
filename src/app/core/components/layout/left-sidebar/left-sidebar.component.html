@@ -1,7 +1,7 @@
 <div class="body-content-left">
     <div class="left-menu">
         <div class="left-menu-main st-left-metu" [class.active]="router.url.includes('publish')"
-             (click)="router.navigate(['user/video/publish'])">
+             (click)="router.navigate(['user/video/publish'])" *ngIf="auth.loggedIn()">
             <span class="material-icons">
             video_call
             </span>
@@ -16,12 +16,13 @@
             <img src="assets/img/item-6.png">
             <p>Trendings</p>
         </div>
-        <div class="left-menu-main">
+        <div class="left-menu-main" *ngIf="auth.loggedIn()">
             <img src="assets/img/item-7.png">
             <p>Subscriptions</p>
         </div>
         <div class="line-item"></div>
-        <div class="left-menu-main" [class.active]="router.url.includes('chat')" (click)="router.navigate(['chat'])">
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('chat')"
+             (click)="router.navigate(['chat'])">
             <img src="assets/img/item-8.png">
             <p>Chat</p>
         </div>
@@ -30,39 +31,42 @@
             <img src="assets/img/item-9.png">
             <p>Stock Profile</p>
         </div>
-        <div class="left-menu-main">
+        <div class="left-menu-main" (click)="router.navigate(['videos/saved'])" *ngIf="auth.loggedIn()"
+             [class.active]="routerUrl === '/videos/saved'">
             <img src="assets/img/item-10.png">
             <p>Saved Videos</p>
         </div>
-        <div class="left-menu-main" [class.active]="router.url.includes('videos')"
+        <div class="left-menu-main" [class.active]="routerUrl === '/videos'" *ngIf="auth.loggedIn()"
              (click)="router.navigate(['videos'])">
             <img src="assets/img/item-11.png">
             <p>CLIPZ</p>
         </div>
     </div>
-    <p class="subscriptions-text">Subscriptions</p>
-    <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
-        <div class="main-item-block subscription" *ngFor="let channel of channels;let i = index" cdkDrag
-             (cdkDragDropped)="dragDropped($event, channel)" (click)="openChannelPage(channel)">
-            <!--            <ng-container *ngIf="i < 5 && router.url!=='/'">-->
-            <!--                <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">-->
-            <!--                <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">-->
-            <!--                <div>-->
-            <!--                    <p class="main-text-1">{{channel.name}}</p>-->
-            <!--                    <p class="main-text-4">{{channel.description}}</p>-->
-            <!--                </div>-->
-            <!--            </ng-container>-->
+    <ng-container *ngIf="auth.loggedIn()">
+        <p class="subscriptions-text">Subscriptions</p>
+        <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
+            <div class="main-item-block subscription" *ngFor="let channel of channels;let i = index" cdkDrag
+                 (cdkDragDropped)="dragDropped($event, channel)" (click)="openChannelPage(channel)">
+                <!--            <ng-container *ngIf="i < 5 && router.url!=='/'">-->
+                <!--                <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">-->
+                <!--                <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">-->
+                <!--                <div>-->
+                <!--                    <p class="main-text-1">{{channel.name}}</p>-->
+                <!--                    <p class="main-text-4">{{channel.description}}</p>-->
+                <!--                </div>-->
+                <!--            </ng-container>-->
 
-            <ng-container>
-                <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">
-                <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">
-                <div class="d-flex align-items-center">
-                    <p class="main-text-1">{{channel.name}}</p>
-                    <!-- <p class="main-text-4">{{channel.description}}</p> -->
-                </div>
-            </ng-container>
+                <ng-container>
+                    <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">
+                    <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">
+                    <div class="d-flex align-items-center">
+                        <p class="main-text-1">{{channel.name}}</p>
+                        <!-- <p class="main-text-4">{{channel.description}}</p> -->
+                    </div>
+                </ng-container>
+            </div>
         </div>
-    </div>
+    </ng-container>
     <div class="watchlist" *ngIf="router.url!=='/'">
         <ul class="nav nav-tabs" id="watchlist" role="tablist">
             <li class="nav-item">

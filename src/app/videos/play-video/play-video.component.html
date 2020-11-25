@@ -10,21 +10,22 @@
                 </div>
                 <div class="main-tags-like">
                     <div class="main-tags-share" (click)="updateLikes(videoData, true)">
-                        <i class="fas fa-thumbs-up" [class.liked]="likeStatus ==='liked'"></i>
+                        <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection.liked ==='liked'"></i>
                         <p>{{videoData.likes}}</p>
                     </div>
                     <div class="main-tags-share" (click)="updateLikes(videoData, false)">
                         <i class="fas fa-thumbs-down"
-                           [class.disliked]="likeStatus ==='disliked'"></i>
+                           [class.disliked]="userVideoConnection.liked ==='disliked'"></i>
                         <p>{{videoData.dislikes}}</p>
                     </div>
                     <div class="main-tags-share">
                         <i class="fas fa-share-alt"></i>
                         <p>Share</p>
                     </div>
-                    <div class="main-tags-share">
+                    <div class="main-tags-share" (click)="saveVideo(videoData)"
+                         [class.saved]="userVideoConnection.saved === 'saved'">
                         <i class="fas fa-plus-square"></i>
-                        <p>Save</p>
+                        <p>{{userVideoConnection.saved === 'saved' ? 'Saved' : 'Save'}}</p>
                     </div>
                 </div>
             </div>

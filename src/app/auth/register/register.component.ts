@@ -39,7 +39,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 full_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN)]],
                 username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
                 email: ['', Validators.required],
-                password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15), patternValidator(NO_SPACE_PATTERN)]],
+                password: ['',
+                    [
+                        Validators.required, patternValidator(NO_SPACE_PATTERN),
+                        Validators.minLength(6), Validators.maxLength(15)
+                    ],
+                ],
                 confirm_password: ['', Validators.required],
                 birthday: [''],
             },

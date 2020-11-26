@@ -99,7 +99,6 @@ li {
 }
 
 
-
 nav.home-header {
     min-height: 80px;
     display: flex;
@@ -151,15 +150,19 @@ nav.home-header {
 
             .purchase-bits {
                 overflow: auto;
+
                 &::-webkit-scrollbar {
                     width: 6px;
                 }
+
                 &::-webkit-scrollbar-track {
                     background: #f1f1f1;
                 }
+
                 &::-webkit-scrollbar-thumb {
                     background: #545454;
                 }
+
                 &::-webkit-scrollbar-thumb:hover {
                     background: #a54862;
                 }
@@ -411,7 +414,7 @@ nav.home-header {
     font-family: "Muli-Light";
 }
 
-.main-carousel.owl-theme .owl-dots ,.slider_home .owl-nav .owl-prev{
+.main-carousel.owl-theme .owl-dots, .slider_home .owl-nav .owl-prev {
     display: none;
 }
 
@@ -505,7 +508,7 @@ nav.home-header {
     margin-left: 12px;
 }
 
-.left-menu-top i ,.left-menu-top p{
+.left-menu-top i, .left-menu-top p {
     color: white;
 }
 
@@ -697,7 +700,6 @@ nav.home-header {
 }
 
 
-
 .ads-block-right {
     width: 315px;
 }
@@ -810,12 +812,12 @@ nav.home-header {
     background: #00000000;
 }
 
-.user-profile-block ,.sub-block ,.ads-block{
+.user-profile-block, .sub-block, .ads-block {
     display: flex;
     justify-content: space-between;
 }
 
-.pWatchlist .nav-tabs .nav-item , .pWatchlist .nav-link{
+.pWatchlist .nav-tabs .nav-item, .pWatchlist .nav-link {
     width: 156px;
 }
 
@@ -892,6 +894,11 @@ nav.home-header {
 
 .disliked {
     color: $red !important;
+}
+
+.loader-holder {
+    display: flex;
+    justify-content: center;
 }
 
 .main-tags-share {
@@ -1202,7 +1209,7 @@ ngb-modal-window {
         flex-direction: column;
         align-items: center;
     }
-    .ads-block-left,.ads-block-right {
+    .ads-block-left, .ads-block-right {
         width: 100%;
     }
     .header-login-btn {
@@ -1284,7 +1291,7 @@ ngb-modal-window {
         display: none;
     }
 
-    .trending-text ,.subscriptions-text{
+    .trending-text, .subscriptions-text {
         text-align: center;
     }
     .main-item-block {
@@ -1310,13 +1317,13 @@ ngb-modal-window {
 }
 
 @media (max-width: 480px) {
-    .left-menu ,.left-list ,.categories ,.watchlist{
+    .left-menu, .left-list, .categories, .watchlist {
         width: 100%;
     }
-    .watchlist .tab-pane ,.ads-block-right {
+    .watchlist .tab-pane, .ads-block-right {
         text-align: center;
     }
-    .main-text-1, .main-tags p{
+    .main-text-1, .main-tags p {
         font-size: 11px;
     }
     .analytics-item {
@@ -1331,7 +1338,7 @@ ngb-modal-window {
         margin-bottom: 15px;
     }
 
-    .list-img,.main-item-block img {
+    .list-img, .main-item-block img {
         margin-right: 0 !important;
     }
 }

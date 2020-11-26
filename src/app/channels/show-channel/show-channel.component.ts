@@ -84,7 +84,7 @@ export class ShowChannelComponent implements OnInit {
     }
 
     checkChannelSubscription() {
-        console.log(this.channelUser)
+        // console.log(this.channelUser)
         this.channelService.checkChannelSubscription({
             user_id: this.authUser.id,
             channel_id: this.channelUser.channel.id

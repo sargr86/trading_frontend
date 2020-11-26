@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
 
     openVideoPage(video, username) {
-        console.log(username);
+        // console.log(username);
         let route;
         let params;
         if (video.status === 'live') {

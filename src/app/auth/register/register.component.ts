@@ -78,9 +78,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     width: '548px',
                     data: {code}
                 }).afterClosed().subscribe((confirmed) => {
-                    if (confirmed) {
-                        this.register();
-                    }
+                    // if (confirmed) {
+                    //     this.register();
+                    // }
                 });
             });
         }

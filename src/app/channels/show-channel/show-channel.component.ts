@@ -60,9 +60,10 @@ export class ShowChannelComponent implements OnInit {
     ngOnInit(): void {
         if (this.passedUsername) {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
-                this.channelUser = dt;
-                this.checkChannelSubscription();
-                console.log(this.channelUser.username, this.authUser.username)
+                if (dt) {
+                    this.channelUser = dt;
+                    this.checkChannelSubscription();
+                }
             });
         }
 
@@ -83,6 +84,7 @@ export class ShowChannelComponent implements OnInit {
     }
 
     checkChannelSubscription() {
+        // console.log(this.channelUser)
         this.channelService.checkChannelSubscription({
             user_id: this.authUser.id,
             channel_id: this.channelUser.channel.id

@@ -10,12 +10,12 @@
                 </div>
                 <div class="main-tags-like">
                     <div class="main-tags-share" (click)="updateLikes(videoData, true)">
-                        <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection.liked ==='liked'"></i>
+                        <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection?.liked ==='liked'"></i>
                         <p>{{videoData.likes}}</p>
                     </div>
                     <div class="main-tags-share" (click)="updateLikes(videoData, false)">
                         <i class="fas fa-thumbs-down"
-                           [class.disliked]="userVideoConnection.liked ==='disliked'"></i>
+                           [class.disliked]="userVideoConnection?.liked ==='disliked'"></i>
                         <p>{{videoData.dislikes}}</p>
                     </div>
                     <div class="main-tags-share">
@@ -23,24 +23,24 @@
                         <p>Share</p>
                     </div>
                     <div class="main-tags-share" (click)="saveVideo(videoData)"
-                         [class.saved]="userVideoConnection.saved === 'saved'">
+                         [class.saved]="userVideoConnection?.saved === 'saved'">
                         <i class="fas fa-plus-square"></i>
-                        <p>{{userVideoConnection.saved === 'saved' ? 'Saved' : 'Save'}}</p>
+                        <p>{{userVideoConnection?.saved === 'saved' ? 'Saved' : 'Save'}}</p>
                     </div>
                 </div>
             </div>
-            <p class="ads-text-1">{{videoData.name}}</p>
+            <p class="ads-text-1">{{videoData?.name}}</p>
             <p class="ads-text-2">175,000 views 3 years ago</p>
             <div class="main-item-block">
                 <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
                      (click)="openChannelPage(videoData)"
-                     *ngIf="!videoData.thumbnail || videoData.thumbnail==='undefined'">
-                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+videoData.thumbnail}}"
+                     *ngIf="!videoData?.thumbnail || videoData?.thumbnail==='undefined'">
+                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+videoData?.thumbnail}}"
                      (click)="openChannelPage(videoData)"
                      *ngIf="videoData.thumbnail && videoData.thumbnail!=='undefined'">
                 <div>
-                    <p class="main-text-1">{{videoData.channel.name}}</p>
-                    <p class="main-text-4">{{videoData.channel.subscribers_count + ' subscriber' + (videoData.channel.subscribers_count === 1 ? '' : 's')}}</p>
+                    <p class="main-text-1">{{videoData?.channel.name}}</p>
+                    <p class="main-text-4">{{videoData?.channel.subscribers_count + ' subscriber' + (videoData?.channel?.subscribers_count === 1 ? '' : 's')}}</p>
                 </div>
             </div>
             <p class="ads-text-2"></p>

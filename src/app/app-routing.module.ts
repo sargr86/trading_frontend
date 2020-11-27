@@ -39,6 +39,10 @@ const routes: Routes = [
         loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
     },
     {
+        path: 'trendings',
+        loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
+    },
+    {
         path: 'chat',
         component: ChatComponent
     },

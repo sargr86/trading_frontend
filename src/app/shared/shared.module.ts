@@ -11,6 +11,7 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {MaterialModule} from '@core/modules/material.module';
 import {Base64ToFilePipe} from './pipes/base64-to-file.pipe';
 import {CategoriesComponent} from '@shared/components/categories/categories.component';
+import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import {CategoriesComponent} from '@shared/components/categories/categories.comp
         ChatBoxComponent,
         GetAuthUserPipe,
         BlobToFilePipe,
-        Base64ToFilePipe
+        Base64ToFilePipe,
+        FilterDevicesPipe,
     ],
     imports: [
         CommonModule,
@@ -33,7 +35,8 @@ import {CategoriesComponent} from '@shared/components/categories/categories.comp
     providers: [
         GetAuthUserPipe,
         BlobToFilePipe,
-        Base64ToFilePipe
+        Base64ToFilePipe,
+        FilterDevicesPipe
     ],
     exports: [
         FormsModule,
@@ -44,7 +47,8 @@ import {CategoriesComponent} from '@shared/components/categories/categories.comp
         VideoJsComponent,
         VideoJsRecordComponent,
         ChatBoxComponent,
-        CategoriesComponent
+        CategoriesComponent,
+        FilterDevicesPipe
     ]
 
 })

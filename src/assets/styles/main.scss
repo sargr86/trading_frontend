@@ -142,29 +142,30 @@ nav.home-header {
 .notification-block {
     display: flex;
     align-items: center;
-    .dropdown{
-        .dropdown-menu{
+
+    .dropdown {
+        .dropdown-menu {
             left: initial;
             right: 0;
             padding: 0;
 
-            .purchase-bits{
+            .purchase-bits {
                 overflow: auto;
                 &::-webkit-scrollbar {
                     width: 6px;
                 }
                 &::-webkit-scrollbar-track {
-                    background: #f1f1f1; 
+                    background: #f1f1f1;
                 }
                 &::-webkit-scrollbar-thumb {
                     background: #545454;
                 }
                 &::-webkit-scrollbar-thumb:hover {
-                    background: #a54862; 
+                    background: #a54862;
                 }
             }
 
-            .dropdown-item{
+            .dropdown-item {
                 cursor: pointer;
             }
         }
@@ -454,15 +455,20 @@ nav.home-header {
     margin-bottom: 5px;
     border-bottom: 1px solid transparent;
 
-    &.st-left-metu{
-        .material-icons,*{color: #ffffff;}
+    &.st-left-metu {
+        .material-icons, * {
+            color: #ffffff;
+        }
+
         background: #F53C6F;
         margin-bottom: 12px;
     }
-    img,.material-icons{
+
+    img, .material-icons {
         width: 20px;
     }
-    .material-icons{
+
+    .material-icons {
         color: #545454;
     }
     p {
@@ -471,16 +477,17 @@ nav.home-header {
     }
 }
 
-.left-menu-main:hover , .left-menu-main.active{
+.left-menu-main:hover, .left-menu-main.active {
     border-bottom: 1px solid #18B587;
     background-color: #18B587;
     cursor: pointer;
     color: white;
-    .material-icons,p{
+
+    .material-icons, p {
         color: #ffffff;
     }
 
-    img{
+    img {
         filter: brightness(100);
     }
 }
@@ -878,9 +885,18 @@ nav.home-header {
     color: #545454;
 }
 
+.liked {
+    color: #18B587 !important;
+}
+
+.disliked {
+    color: $red !important;
+}
+
 .main-tags-share {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .main-tags-share p {
@@ -888,6 +904,8 @@ nav.home-header {
     color: #545454;
     font-size: 12px;
     font-family: "Muli-Light";
+    margin-bottom: 0 !important;
+
 }
 
 .ads-text-1 {
@@ -1092,7 +1110,7 @@ ngb-modal-window {
         display: flex;
         justify-content: space-around;
     }
-    nav.home-header {
+    .home-header {
         padding: 20px 50px;
     }
     .body-content {
@@ -1104,7 +1122,7 @@ ngb-modal-window {
     .home-black-item {
         margin-right: 8px;
     }
- 
+
     .main-tags p {
         font-size: 14px;
     }
@@ -1190,7 +1208,13 @@ ngb-modal-window {
     .home-black-block {
         margin-right: 0;
     }
- 
+    .home-black-block {
+        width: 100%;
+    }
+    .home-header {
+        padding: 7px 50px;
+        flex-direction: row;
+    }
     .header-left-logo {
         margin-bottom: 0;
     }
@@ -1210,6 +1234,7 @@ ngb-modal-window {
         margin-top: 20px;
     }
     .home-black-block {
+        width: 100%;
         flex-wrap: wrap;
         justify-content: space-around;
         height: auto;
@@ -1219,7 +1244,7 @@ ngb-modal-window {
         justify-content: space-between;
     }
 
-    
+
 }
 
 @media (max-width: 767px) {
@@ -1230,6 +1255,7 @@ ngb-modal-window {
     .home-search {
         width: 100%;
     }
+
 
     .left-list {
         margin-top: 0;
@@ -1249,7 +1275,7 @@ ngb-modal-window {
     .main-carousel .owl-nav button.owl-next {
         display: none;
     }
- 
+
     .trending-text ,.subscriptions-text{
         text-align: center;
     }
@@ -1261,7 +1287,9 @@ ngb-modal-window {
         margin: 0 auto 20px;
         justify-content: center;
     }
- 
+    .subscriptions-text {
+        text-align: center;
+    }
     .watchlist {
         width: 80%;
         margin: 50px auto 0;
@@ -1288,7 +1316,15 @@ ngb-modal-window {
     .analytics-item {
         justify-content: space-between;
     }
-
+    .left-menu {
+        width: 100%;
+    }
+    .left-list {
+        width: 100%;
+    }
+    .categories {
+        width: 100%;
+    }
     .main-item-block {
         flex-direction: column;
         justify-content: center;

@@ -1,79 +1,116 @@
 <div class="stream-preview-dialog">
     <h2>Stream Preview</h2>
-    <img src="assets/img/item-2.png" alt="">
-    <div class="info-wrap">
-        <div class="item-wrap">
-            <div class="item">
-                <div class="title">
-                    <span>Title</span>
-                    <div class="edit">Edit <span class="material-icons">create</span></div>
-                </div>
-                <div class="info">
-                    <span>Lorem ipsum dolor sit amet, consetetur</span>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="title">
-                    <span>Category</span>
-                </div>
-                <div class="info">
-                    <span>People and blogs</span>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="title">
-                    <span>Scheduled for</span>
-                </div>
-                <div class="info">
-                    <span>Oct 29, 2020, 10:01 AM</span>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="title">
-                    <span>Privacy</span>
-                </div>
-                <div class="info">
-                    <span class="material-icons">public</span><span>Public</span>
-                </div>
-            </div>
-
-            <div class="item d-flex">
-                <div>
+    <!--    <img src="assets/img/item-2.png" alt="">-->
+    <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+data.thumbnail}}">
+    <form [formGroup]="streamPreviewForm">
+        <div class="info-wrap">
+            <div class="item-wrap">
+                <div class="item">
                     <div class="title">
-                        <span>Viewers waiting</span>
+                        <span>Title</span>
+                        <div class="edit">Edit <span class="material-icons">create</span></div>
                     </div>
                     <div class="info">
-                        <span>100</span>
+                        <span>{{data.name}}</span>
                     </div>
                 </div>
-                <div>
+
+                <div class="item">
                     <div class="title">
-                        <span>Likes</span>
+                        <span>Category</span>
                     </div>
                     <div class="info">
-                        <span>0</span>
+                        <span>{{data.categoryName}}</span>
+                    </div>
+                </div>
+
+                <div class="item" [hidden]="true">
+                    <div class="title">
+                        <span>Scheduled for</span>
+                    </div>
+                    <div class="info">
+                        <span>Oct 29, 2020, 10:01 AM</span>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="title">
+                        <span>Privacy</span>
+                    </div>
+                    <div class="info">
+                        <mat-icon>{{selectedPrivacy.icon}}</mat-icon>
+                        <mat-form-field style="width:88%;">
+                            <mat-select formControlName="privacy" required
+                                        (selectionChange)="changedPrivacy($event)">
+                                <!--                                <mat-select-trigger>-->
+                                <!--                                    <div class="selected-privacy">-->
+                                <!--                                        <mat-icon>{{selectedPrivacy.icon}}</mat-icon>-->
+                                <!--                                        <span>{{selectedPrivacy.name}}</span>-->
+                                <!--                                    </div>-->
+                                <!--                                </mat-select-trigger>-->
+                                <mat-option *ngFor="let privacy of privacyTypes" [value]="privacy.name">
+                                    <!--                                    <mat-icon>{{privacy.icon}}</mat-icon>-->
+                                    {{privacy.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="item " [hidden]="true">
+                    <div>
+                        <div class="title">
+                            <span>Viewers waiting</span>
+                        </div>
+                        <div class="info">
+                            <span>100</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title">
+                            <span>Likes</span>
+                        </div>
+                        <div class="info">
+                            <span>0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+
+                    <div class="info border">
+                        <span class="material-icons">videocam</span>
+                        <mat-form-field style="width:88%;">
+                            <mat-select formControlName="video_device">
+                                <mat-option
+                                    *ngFor="let videoDevice of userMediaDevices|filterDevices:{kind:'videoinput'}"
+                                    [value]="videoDevice.label">
+                                    {{videoDevice.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="info border">
+                        <span class="material-icons">mic</span>
+                        <mat-form-field style="width:88%;">
+                            <mat-select formControlName="audio_device">
+                                <mat-option
+                                    *ngFor="let audioDevice of userMediaDevices|filterDevices:{kind:'audioinput'}"
+                                    [value]="audioDevice.label">
+                                    {{audioDevice.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
             </div>
 
-            <div class="item">
-                <div class="info border">
-                    <span class="material-icons">videocam</span> <span>Venus USB2.0 Camera</span>
-                </div>
-            </div>
-            <div class="item">
-                <div class="info border">
-                    <span class="material-icons">mic</span> <span>Default - Microphone</span>
-                </div>
+            <div class="btn-wrap">
+                <button class="btn share">Share</button>
+                <button class="btn go-live" (click)="goLive()">Go Live</button>
             </div>
         </div>
-
-        <div class="btn-wrap">
-            <button class="btn share">Share</button>
-            <button class="btn go-live" (click)="goLive()">Go Live</button>
-        </div>
-    </div>
+    </form>
 </div>

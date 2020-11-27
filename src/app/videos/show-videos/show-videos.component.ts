@@ -7,6 +7,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {ChannelsService} from '@core/services/channels.service';
 import {filter, map, tap} from 'rxjs/operators';
 import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-show-videos',
@@ -18,26 +19,33 @@ export class ShowVideosComponent implements OnInit {
     channelsVideos = [];
     apiUrl = API_URL;
     search;
+    authUser;
 
     constructor(
         private videoService: VideoService,
         public router: Router,
         private subject: SubjectService,
         private channelsService: ChannelsService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private getAuthUser: GetAuthUserPipe
     ) {
         router.events.pipe(
             filter(e => e instanceof ActivationEnd),
         ).subscribe((d: Data) => {
             this.search = !checkIfObjectEmpty(d.snapshot.queryParams);
-            this.searchChannelsVideos(d.snapshot.queryParams);
+            if (this.search) {
+                this.searchChannelsVideos(d.snapshot.queryParams);
+            }
         });
     }
 
     ngOnInit(): void {
+        this.authUser = this.getAuthUser.transform();
+
         this.videoService.get({}).subscribe(dt => {
             this.videos = dt;
         });
+
 
     }
 

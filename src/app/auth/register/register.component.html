@@ -12,16 +12,19 @@
             <form [formGroup]="registerForm">
                 <input class="login-input" placeholder="Full Name" formControlName="full_name">
                 <span class="error" *ngIf="isSubmitted && fullName.hasError('required')">Full name is required</span>
-                <span class="error" *ngIf="fullName.hasError('patternInvalid')">
+                <span class="error" *ngIf="isSubmitted && fullName.hasError('patternInvalid')">
                     Full name should contain only alphabetical characters
                 </span>
                 <input class="login-input" placeholder="User name" formControlName="username">
                 <span class="error" *ngIf="isSubmitted && username.hasError('required')">User name is required</span>
-                <span class="error" *ngIf="username.hasError('patternInvalid')">
+                <span class="error" *ngIf="isSubmitted && username.hasError('patternInvalid')">
                     Please write alphabetical characters before numbers for username
                 </span>
                 <input class="login-input" placeholder="Email" formControlName="email">
                 <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
+                <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
+                    E-mail is <strong>invalid</strong>
+                </span>
                 <input class="login-input" placeholder="Password" type="password" formControlName="password">
                 <span class="error" *ngIf="isSubmitted && pass.hasError('required')">Password is required</span>
                 <span class="error" *ngIf="pass.hasError('patternInvalid')">
@@ -32,17 +35,17 @@
                 </span>
                 <input class="login-input" placeholder="Reenter Password" type="password"
                        formControlName="confirm_password">
-                <span class="error" *ngIf="isSubmitted && confirmPass.hasError('notMatch')">Passwords not match</span>
+                <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords not match</span>
                 <span class="error"
                       *ngIf="isSubmitted && confirmPass.hasError('required')">Please confirm the password</span>
-                <div class="register-block">
+                <div class="register-block birthday-block">
                     <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday"
                            class="login-input"
                            placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}"
                            [maxDate]="maxDate"
                            bsDatepicker>
-                    <span class="error" *ngIf="isSubmitted && pass.hasError('birthday')">Birth day is required</span>
                 </div>
+                <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
                 <a class="login-submit" (click)="openModal()">Sign Up</a>
             </form>
 

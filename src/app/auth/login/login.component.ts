@@ -4,8 +4,8 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {AuthService} from '@core/services/auth.service';
 import {Subscription} from 'rxjs';
 import {patternValidator} from '@core/helpers/pattern-validator';
-import {EMAIL_PATTERN} from '@core/constants/global';
 import {AuthGuard} from '@core/guards/auth.guard';
+import {EMAIL_PATTERN} from '@core/constants/patterns';
 
 @Component({
     selector: 'app-login',

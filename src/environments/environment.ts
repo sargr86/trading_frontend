@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  //apiUrl: 'http://localhost:3001/',
-  apiUrl: 'https://metl.tv/',
+  apiUrl: 'http://localhost:3001/',
+  // apiUrl: 'https://metl.tv/',
   production: false
 };
 

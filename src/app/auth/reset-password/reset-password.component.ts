@@ -5,29 +5,30 @@ import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
 
 @Component({
-    selector: 'app-forgot-password',
-    templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss']
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit {
-    forgotPassForm: FormGroup;
+export class ResetPasswordComponent implements OnInit {
+
+    resetPassForm: FormGroup;
     isSubmitted = false;
 
     constructor(
         private fb: FormBuilder,
         public router: Router
     ) {
-        this.forgotPassForm = this.fb.group({
-            password: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]]
+        this.resetPassForm = this.fb.group({
+            password: ['', [Validators.required]],
+            repassword: ['', [Validators.required]]
         });
     }
 
     ngOnInit(): void {
     }
 
-    sendEmail() {
+    changePassword() {
         this.isSubmitted = true;
-        this.router.navigate(['auth/reset-password']);
     }
 
 }

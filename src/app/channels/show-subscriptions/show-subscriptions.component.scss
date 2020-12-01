@@ -1,0 +1,41 @@
+.channel-item {
+    display: flex;
+    width: 936px;
+    margin-bottom: 32px;
+
+    .avatar {
+        width: 240px !important;
+        height: 240px;
+    }
+
+    .info {
+        margin-top: 4px;
+
+        .name {
+            color: #545454;
+            font-size: 24px;
+            font-family: 'Muli-Bold';
+        }
+
+        .dot {
+            margin-left: 26px;
+            margin-top: -3px;
+        }
+
+        p {
+            font-size: 16px;
+            font-family: 'Muli-Light';
+        }
+
+
+        .watchers-count, .videos-count {
+            font-size: 14px;
+            color: #818181;
+        }
+
+        .videos-count {
+            margin-left: 26px;
+        }
+
+    }
+}

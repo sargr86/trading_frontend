@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ChannelsService} from '@core/services/channels.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
+import {API_URL} from '@core/constants/global';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-show-subscriptions',
@@ -11,6 +13,7 @@ import {AuthService} from '@core/services/auth.service';
 export class ShowSubscriptionsComponent implements OnInit {
     authUser;
     userChannels;
+    apiUrl = API_URL;
 
     constructor(
         private channelsService: ChannelsService,
@@ -24,6 +27,10 @@ export class ShowSubscriptionsComponent implements OnInit {
         this.channelsService.getSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
             this.userChannels = dt;
         });
+    }
+
+    getUploadDateTime(datetime) {
+        return moment(datetime).format('MMM DD, YYYY');
     }
 
 }

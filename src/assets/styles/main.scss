@@ -108,6 +108,10 @@ nav.home-header {
     box-shadow: 0 0 6px #0000002E;
 }
 
+.login-logo {
+    cursor: pointer;
+}
+
 .header-login-btn {
     width: 88px;
     height: 36px;
@@ -221,6 +225,7 @@ nav.home-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 .black-text {

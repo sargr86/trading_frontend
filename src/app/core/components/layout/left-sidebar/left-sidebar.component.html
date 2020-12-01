@@ -20,7 +20,12 @@
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('chat')"
              (click)="router.navigate(['chat'])">
             <img src="assets/img/item-8.png">
-            <p>Chat</p>
+            <p>Messages</p>
+        </div>
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('chat')"
+             (click)="router.navigate(['chat/rooms'])">
+            <img src="assets/img/item-8.png">
+            <p>Chat rooms</p>
         </div>
         <div class="left-menu-main" [class.active]="router.url.includes('stock')"
              (click)="router.navigate(['user/stock-profile'])">
@@ -62,7 +67,7 @@
                 </ng-container>
             </div>
         </div>
-        <button (click)="viewAllSubscriptions()">View all</button>
+        <p (click)="viewAllSubscriptions()" class="see-more">See more</p>
     </ng-container>
     <div class="watchlist" *ngIf="router.url!=='/'">
         <ul class="nav nav-tabs" id="watchlist" role="tablist">

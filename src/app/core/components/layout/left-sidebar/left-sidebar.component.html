@@ -17,8 +17,8 @@
             <p>Trendings</p>
         </div>
         <div class="line-item"></div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('chat')"
-             (click)="router.navigate(['chat'])">
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"
+             (click)="router.navigate(['chat/messages'])">
             <img src="assets/img/item-8.png">
             <p>Messages</p>
         </div>

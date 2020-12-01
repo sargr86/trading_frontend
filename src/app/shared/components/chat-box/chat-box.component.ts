@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {API_URL} from '@core/constants/global';
 
 @Component({
     selector: 'app-chat-box',
@@ -13,6 +14,7 @@ export class ChatBoxComponent implements OnInit {
     messageSent = false;
     messages = [];
     authUser;
+    apiUrl = API_URL;
 
     customEmojis = [
         {
@@ -49,6 +51,7 @@ export class ChatBoxComponent implements OnInit {
         this.chatForm = this.fb.group({
             token: [this.openViduToken],
             from: [this.authUser.username],
+            avatar: [this.authUser.avatar],
             message: ['', Validators.required]
         });
 

@@ -16,6 +16,10 @@ export class ChannelsService {
         return this.httpClient.get<any>(`${API_URL}channels/get`, {params});
     }
 
+    getSubscriptions(params) {
+        return this.httpClient.get<any>(`${API_URL}channels/subscriptions`, {params});
+    }
+
     searchWithVideos(params) {
         return this.httpClient.get<any>(`${API_URL}channels/search-with-videos`, {params});
     }

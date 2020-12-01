@@ -23,8 +23,8 @@ export class LeftSidebarComponent implements OnInit {
         public router: Router,
         private channelsService: ChannelsService,
         private getAuthUser: GetAuthUserPipe,
-        private subject: SubjectService,
-        public auth: AuthService
+        public auth: AuthService,
+        private subject: SubjectService
     ) {
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
@@ -68,6 +68,10 @@ export class LeftSidebarComponent implements OnInit {
 
     openChannelPage(channel) {
         this.router.navigate(['channels/show'], {queryParams: {username: channel.user.username}});
+    }
+
+    viewAllSubscriptions() {
+        this.router.navigate(['channels/subscriptions']);
     }
 
 }

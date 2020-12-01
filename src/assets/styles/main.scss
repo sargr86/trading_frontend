@@ -739,12 +739,16 @@ nav.home-header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+
+    .avatar {
+        width: 15px;
+    }
 }
 
 .chat-title {
     width: 100%;
     height: 30px;
-    background: #F8F8F8 0% 0% no-repeat padding-box;
+    background: #F8F8F8 0 0 no-repeat padding-box;
     padding: 5px 12px;
     display: flex;
     justify-content: space-between;

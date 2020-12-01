@@ -56,12 +56,11 @@
     font-family: "Muli-Bold";
     color: #fff !important;
     transition: 0.3s ease-in-out;
-}
-
-.register-btn:hover {
-    background: white;
     cursor: pointer;
-    color: #18B587 !important;
+    &:hover {
+        background: white;
+        color: #18B587 !important;
+    }
 }
 
 .login-content-right {
@@ -111,6 +110,11 @@
     color: #545454;
     font-size: 16px;
     font-family: "Muli-Regular";
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+        color: #f53c6f;
+    }
 }
 
 .login-block {
@@ -131,11 +135,10 @@
     align-items: center;
     margin-top: 47px;
     transition: 0.3s ease-in-out;
-}
-
-.login-submit:hover {
     cursor: pointer;
-    background: #c52551;
+    &:hover {
+        background: #c52551;
+    }
 }
 
 .register-block {

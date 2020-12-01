@@ -20,7 +20,7 @@
                      [src]="apiUrl+'uploads/avatars/'+message.avatar">
                 <img class="avatar" *ngIf="!message.avatar"
                      [src]="'assets/img/default-user.png'">
-                <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' : '')}}</p>
+                <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' :  '')}}</p>
                 <p class="chat-block-2">{{message.message}}</p>
             </div>
         </div>

@@ -44,7 +44,7 @@ const routes: Routes = [
     },
     {
         path: 'chat',
-        component: ChatComponent
+        loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule),
     },
     {
         path: 'accessibility-assessment',

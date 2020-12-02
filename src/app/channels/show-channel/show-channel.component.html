@@ -127,6 +127,18 @@
                     </ng-container>
                 </owl-carousel-o>
             </ng-container>
+
+            <ng-container *ngIf="activeTab.name === 'About'">
+                <form [formGroup]="aboutForm" id="channel-about-form">
+                    <div id="description">
+                        <textarea formControlName="description" *ngIf="!descriptionUpdated"></textarea>
+                        <p *ngIf="descriptionUpdated">{{channelUser.channel.description}}</p>
+                    </div>
+                    <div>
+                        <button (click)="saveChannelDescription()">Save</button>
+                    </div>
+                </form>
+            </ng-container>
         </div>
     </ng-container>
     <div class="channel-not-found" *ngIf="!channelUser">

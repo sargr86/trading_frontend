@@ -7,3 +7,41 @@
 .subscribed {
     background-color: #D6D6D6 !important;
 }
+
+#channel-about-form {
+    width: 50%;
+
+    #description, textarea {
+        width: 100%;
+    }
+
+    textarea {
+        background: #FFFFFF 0 0 no-repeat padding-box;
+        box-shadow: 0 0 6px #0000000F;
+        border: none;
+        resize: none;
+        height: 200px;
+    }
+
+    textarea:focus {
+        border: none;
+        outline: none;
+        box-shadow: 0 0 6px #18B587;
+    }
+
+    button {
+        width: 88px;
+        height: 36px;
+        background: #F53C6F;
+        font-family: "Muli-Light";
+        font-size: 16px;
+        color: white !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 16px;
+        margin-right: 16px;
+        cursor: pointer;
+        float: right;
+    }
+}

@@ -41,6 +41,9 @@ export class ShowChannelComponent implements OnInit {
     subscribedToChannel = false;
     subscribersCount;
 
+    aboutForm: FormGroup;
+    descriptionUpdated = false;
+
     constructor(
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
@@ -55,6 +58,12 @@ export class ShowChannelComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
+        this.aboutForm = this.fb.group({
+                description: ['', Validators.required],
+                id: ['', Validators.required],
+                username: ['', Validators.required]
+            },
+        );
     }
 
     ngOnInit(): void {
@@ -62,6 +71,7 @@ export class ShowChannelComponent implements OnInit {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
                 if (dt) {
                     this.channelUser = dt;
+                    this.aboutForm.patchValue({username: dt.username, ...dt.channel})
                     this.checkChannelSubscription();
                 }
             });
@@ -180,6 +190,14 @@ export class ShowChannelComponent implements OnInit {
             this.channelService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
                 this.subject.setUserSubscriptions(d);
             });
+        });
+    }
+
+    saveChannelDescription() {
+        console.log(this.aboutForm.value)
+        this.descriptionUpdated = true;
+        this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
+            this.channelUser = dt;
         });
     }
 

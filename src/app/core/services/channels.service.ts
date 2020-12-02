@@ -40,5 +40,9 @@ export class ChannelsService {
         return this.httpClient.put<any>(`${API_URL}channels/subscriptions/update-priority`, params);
     }
 
+    saveDescription(params) {
+        return this.httpClient.put<any>(`${API_URL}channels/save-description`, params);
+    }
+
 
 }

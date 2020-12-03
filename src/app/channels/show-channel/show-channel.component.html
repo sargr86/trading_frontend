@@ -128,6 +128,9 @@
                 </owl-carousel-o>
             </ng-container>
 
+            <ng-container *ngIf="activeTab.name === 'Playlist'">
+            </ng-container>
+
             <ng-container *ngIf="activeTab.name === 'About'">
                 <form [formGroup]="aboutForm" id="channel-about-form">
                     <div id="description">

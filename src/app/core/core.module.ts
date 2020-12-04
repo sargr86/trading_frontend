@@ -19,6 +19,7 @@ import { PrivacyPolicyComponent } from './components/ungrouped/privacy-policy/pr
 import { SecurityComponent } from './components/ungrouped/security/security.component';
 import { StreamPreviewDialogComponent } from './components/modals/stream-preview-dialog/stream-preview-dialog.component';
 import {SharedModule} from '@shared/shared.module';
+import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dialog/add-playlist-dialog.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {SharedModule} from '@shared/shared.module';
         PrivacyPolicyComponent,
         SecurityComponent,
         StreamPreviewDialogComponent,
+        AddPlaylistDialogComponent,
     ],
     imports: [
         CommonModule,

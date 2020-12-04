@@ -11,6 +11,8 @@ import {CroppedEvent} from 'ngx-photo-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
+import {MatDialog} from '@angular/material/dialog';
+import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 
 @Component({
     selector: 'app-show-channel',
@@ -53,7 +55,8 @@ export class ShowChannelComponent implements OnInit {
         private route: ActivatedRoute,
         private fb: FormBuilder,
         private channelService: ChannelsService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private dialog: MatDialog
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -118,6 +121,12 @@ export class ShowChannelComponent implements OnInit {
 
 
         this.router.navigate([route], {queryParams: params});
+    }
+
+    openAddPlaylistModal() {
+        this.dialog.open(AddPlaylistDialogComponent).afterClosed().subscribe(dt=>{
+
+        });
     }
 
     coverChangeEvent(event: any) {

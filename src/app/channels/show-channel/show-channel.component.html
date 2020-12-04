@@ -1,4 +1,15 @@
 <div class="profile-list">
+
+
+
+    
+
+  
+
+
+
+
+
     <app-categories></app-categories>
     <ng-container *ngIf="channelUser">
 
@@ -128,7 +139,65 @@
                 </owl-carousel-o>
             </ng-container>
 
-            <ng-container *ngIf="activeTab.name === 'Playlist'">
+            <ng-container *ngIf="activeTab.name === 'Playlists'">
+                <div class="playlist-tab">
+                    <button class="btn new-playlist">Add New Playlist</button>
+                    <div class="table">
+                        <div class="tr">
+                            <div class="td">Playlist</div>
+                            <div class="td">Visibility</div>
+                            <div class="td">Last updated</div>
+                            <div class="td">Video count</div>
+                            <div class="td"></div>
+                        </div>
+                        <div class="tr">
+                            <div class="td">
+                                <div class="img-info">
+                                    <img src="../../../../../assets/img/item-3.png" alt="">
+                                    <div class="info">
+                                        <h3>Playlist name</h3>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="td"><span class="material-icons">visibility_off</span>Private</div>
+                            <div class="td">Oct 20, 2020</div>
+                            <div class="td">109</div>
+                            <div class="td"><span class="material-icons">create</span></div>
+                        </div>
+                        <div class="tr">
+                            <div class="td">
+                                <div class="img-info">
+                                    <img src="../../../../../assets/img/item-3.png" alt="">
+                                    <div class="info">
+                                        <h3>Playlist name</h3>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="td"><span class="material-icons">visibility_off</span>Private</div>
+                            <div class="td">Oct 20, 2020</div>
+                            <div class="td">109</div>
+                            <div class="td"><span class="material-icons">create</span></div>
+                        </div>
+                        <div class="tr">
+                            <div class="td">
+                                <div class="img-info">
+                                    <img src="../../../../../assets/img/item-3.png" alt="">
+                                    <div class="info">
+                                        <h3>Playlist name</h3>
+                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="td"><span class="material-icons">visibility_off</span>Private</div>
+                            <div class="td">Oct 20, 2020</div>
+                            <div class="td">109</div>
+                            <div class="td"><span class="material-icons">create</span></div>
+                        </div>
+                    </div>
+                </div>
+            
             </ng-container>
 
             <ng-container *ngIf="activeTab.name === 'About'">
@@ -147,4 +216,30 @@
     <div class="channel-not-found" *ngIf="!channelUser">
         <p>Channel with such name is not found</p>
     </div>
+</div>
+
+
+
+<div class="cdk-overlay-container">
+    <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"></div>
+</div>
+
+
+<div class="add-playlist-modal">
+    <form action="">
+        <input type="text" placeholder="Playlist Title">
+
+        <textarea name="" id="" cols="30" rows="10" placeholder="Playlist Description"></textarea>
+
+        <div class="select">
+            <select name="" id="">
+                <option value="">Visibility</option>
+            </select>
+        </div>
+
+        <div class="btn-wrap">
+            <button class="btn cancel">Cancel</button>
+            <button class="btn create">Create</button>
+        </div>
+    </form>
 </div>

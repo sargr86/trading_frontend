@@ -1,0 +1,19 @@
+<div class="add-playlist-modal">
+    <form [formGroup]="addPlaylistForm">
+        <input type="text" placeholder="Playlist Title" formControlName="title">
+
+        <textarea id="playlist-description" cols="30" rows="10" formControlName="description"
+                  placeholder="Playlist Description"></textarea>
+
+        <div class="select">
+            <select name="" id="visibility">
+                <option value="">Visibility</option>
+            </select>
+        </div>
+
+        <div class="btn-wrap">
+            <button class="btn cancel" (click)="cancel()">Cancel</button>
+            <button class="btn create" (click)="createPlaylist()">Create</button>
+        </div>
+    </form>
+</div>

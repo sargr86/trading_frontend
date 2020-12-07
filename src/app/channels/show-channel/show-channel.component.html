@@ -1,15 +1,6 @@
 <div class="profile-list">
 
 
-
-
-
-
-
-
-
-
-
     <app-categories></app-categories>
     <ng-container *ngIf="channelUser">
 
@@ -142,60 +133,45 @@
             <ng-container *ngIf="activeTab.name === 'Playlists'">
                 <div class="playlist-tab">
                     <button class="btn new-playlist" (click)="openAddPlaylistModal()">Add New Playlist</button>
-                    <div class="table">
-                        <div class="tr">
-                            <div class="td">Playlist</div>
-                            <div class="td">Visibility</div>
-                            <div class="td">Last updated</div>
-                            <div class="td">Video count</div>
-                            <div class="td"></div>
-                        </div>
-                        <div class="tr">
-                            <div class="td">
+                    <table>
+                        <tr>
+                            <th>Playlist</th>
+                            <th>Visibility</th>
+                            <th>Last updated</th>
+                            <th>Video count</th>
+                            <th></th>
+                        </tr>
+                        <tr *ngFor="let playlist of playlists">
+                            <td>
                                 <div class="img-info">
                                     <img src="assets/img/item-3.png" alt="">
                                     <div class="info">
-                                        <h3>Playlist name</h3>
-                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+                                        <h3>{{playlist.name}}</h3>
+                                        <p>{{playlist.description}}</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="td"><span class="material-icons">visibility_off</span>Private</div>
-                            <div class="td">Oct 20, 2020</div>
-                            <div class="td">109</div>
-                            <div class="td"><span class="material-icons">create</span></div>
-                        </div>
-                        <div class="tr">
-                            <div class="td">
-                                <div class="img-info">
-                                    <img src="assets/img/item-3.png" alt="">
-                                    <div class="info">
-                                        <h3>Playlist name</h3>
-                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="td"><span class="material-icons">visibility_off</span>Private</div>
-                            <div class="td">Oct 20, 2020</div>
-                            <div class="td">109</div>
-                            <div class="td"><span class="material-icons">create</span></div>
-                        </div>
-                        <div class="tr">
-                            <div class="td">
-                                <div class="img-info">
-                                    <img src="assets/img/item-3.png" alt="">
-                                    <div class="info">
-                                        <h3>Playlist name</h3>
-                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="td"><span class="material-icons">visibility_off</span>Private</div>
-                            <div class="td">Oct 20, 2020</div>
-                            <div class="td">109</div>
-                            <div class="td"><span class="material-icons">create</span></div>
-                        </div>
-                    </div>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="!playlist.privacy">
+                                    <mat-icon>visibility_off</mat-icon>
+                                    <span>Private</span>
+                                </ng-container>
+                                <ng-container *ngIf="playlist.privacy">
+                                    <mat-icon>visibility_on</mat-icon>
+                                    <span>Public</span>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <span>Oct 20, 2020</span>
+                            </td>
+                            <td>
+                                <span>109</span>
+                            </td>
+                            <td>
+                                <span class="material-icons">create</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
             </ng-container>
@@ -217,7 +193,6 @@
         <p>Channel with such name is not found</p>
     </div>
 </div>
-
 
 
 <!--<div class="cdk-overlay-container">-->

@@ -47,6 +47,10 @@ const routes: Routes = [
         loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule),
     },
     {
+        path: 'playlists',
+        loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule),
+    },
+    {
         path: 'accessibility-assessment',
         component: AccessibilityStatementComponent
     },

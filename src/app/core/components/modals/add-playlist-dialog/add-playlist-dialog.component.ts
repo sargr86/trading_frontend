@@ -17,8 +17,9 @@ export class AddPlaylistDialogComponent implements OnInit {
         private playlistService: PlaylistsService
     ) {
         this.addPlaylistForm = this.fb.group({
-            title: ['', Validators.required],
-            description: ['', Validators.required]
+            name: ['', Validators.required],
+            description: ['', Validators.required],
+            privacy: ['', Validators.required]
         });
     }
 
@@ -26,12 +27,13 @@ export class AddPlaylistDialogComponent implements OnInit {
     }
 
     createPlaylist() {
-        this.playlistService.addPlaylist({}).subscribe(dt => {
+        console.log(this.addPlaylistForm.value)
+        this.playlistService.addPlaylist(this.addPlaylistForm.value).subscribe(dt => {
             this.modal.close();
         });
     }
 
-    cancel(){
+    cancel() {
         this.modal.close();
     }
 

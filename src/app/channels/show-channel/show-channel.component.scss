@@ -47,8 +47,8 @@
 }
 
 
-.playlist-tab{
-    .new-playlist{
+.playlist-tab {
+    .new-playlist {
         background: #18B587;
         border-radius: 0;
         color: #fff;
@@ -56,19 +56,22 @@
     }
 
 
-    .table{
+    table {
         display: table;
         margin: 24px 0;
+        width: 100%;
         //border: 1px solid #C9C9C9;
-        .tr{
+        tr {
             display: table-row;
-            &:last-child{
+
+            &:last-child {
                 //border-right: 1px solid #C9C9C9;
-                .td{
+                .td {
                     border-bottom: 0;
                 }
             }
-            .td{
+
+            td {
                 display: table-cell;
                 vertical-align: middle;
                 color: #545454;
@@ -77,31 +80,35 @@
                 padding: 12px 0;
                 // border-bottom: 1px solid #C9C9C9;
                 // border-right: 1px solid #C9C9C9;
-                &:last-child{
+                &:last-child {
                     //border-right: 0;
-                    .material-icons{
+                    .material-icons {
                         margin: 0;
                     }
                 }
 
-                .material-icons{
+                .material-icons {
                     margin-right: 12px;
                     vertical-align: middle;
                     cursor: pointer;
                 }
-                .img-info{
+
+                .img-info {
                     display: flex;
-                    img{
+
+                    img {
                         width: 144px;
                     }
-                    .info{
+
+                    .info {
                         margin-left: 24px;
 
-                        h3{
+                        h3 {
                             font-size: 16px;
                             font-weight: bold;
                         }
-                        p{
+
+                        p {
                             max-width: 240px;
                             font-size: 12px;
                             font-weight: normal;

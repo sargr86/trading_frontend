@@ -1,13 +1,15 @@
 <div class="add-playlist-modal">
     <form [formGroup]="addPlaylistForm">
-        <input type="text" placeholder="Playlist Title" formControlName="title">
+        <input type="text" placeholder="Playlist Title" formControlName="name">
 
         <textarea id="playlist-description" cols="30" rows="10" formControlName="description"
                   placeholder="Playlist Description"></textarea>
 
         <div class="select">
-            <select name="" id="visibility">
-                <option value="">Visibility</option>
+            <select id="visibility" formControlName="privacy">
+                <option [value]="''">Visibility</option>
+                <option [value]="1">Public</option>
+                <option [value]="0">Private</option>
             </select>
         </div>
 

@@ -13,6 +13,7 @@ import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
+import {PlaylistsService} from '@core/services/playlists.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -46,6 +47,8 @@ export class ShowChannelComponent implements OnInit {
     aboutForm: FormGroup;
     descriptionUpdated = false;
 
+    playlists = [];
+
     constructor(
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
@@ -55,6 +58,7 @@ export class ShowChannelComponent implements OnInit {
         private route: ActivatedRoute,
         private fb: FormBuilder,
         private channelService: ChannelsService,
+        private playlistsService: PlaylistsService,
         private subject: SubjectService,
         private dialog: MatDialog
     ) {
@@ -88,7 +92,15 @@ export class ShowChannelComponent implements OnInit {
             this.watchlistVideos = dt;
         });
 
+        this.getPlaylists();
 
+
+    }
+
+    getPlaylists() {
+        this.playlistsService.get().subscribe(dt => {
+            this.playlists = dt;
+        });
     }
 
     changeActiveTab(tab) {
@@ -124,8 +136,8 @@ export class ShowChannelComponent implements OnInit {
     }
 
     openAddPlaylistModal() {
-        this.dialog.open(AddPlaylistDialogComponent).afterClosed().subscribe(dt=>{
-
+        this.dialog.open(AddPlaylistDialogComponent).afterClosed().subscribe(dt => {
+            this.getPlaylists();
         });
     }
 

@@ -31,12 +31,11 @@
             </div>
             <p class="ads-text-1">{{videoData?.name}}</p>
             <p class="ads-text-2">175,000 views 3 years ago</p>
-            <div class="main-item-block">
+            <div class="main-item-block channel-block" (click)="openChannelPage(videoData)">
                 <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
-                     (click)="openChannelPage(videoData)"
+
                      *ngIf="!videoData?.thumbnail || videoData?.thumbnail==='undefined'">
                 <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+videoData?.thumbnail}}"
-                     (click)="openChannelPage(videoData)"
                      *ngIf="videoData.thumbnail && videoData.thumbnail!=='undefined'">
                 <div>
                     <p class="main-text-1">{{videoData?.channel.name}}</p>

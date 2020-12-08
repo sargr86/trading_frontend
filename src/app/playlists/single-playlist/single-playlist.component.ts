@@ -29,4 +29,11 @@ export class SinglePlaylistComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    updatePrivacy(value, playlist) {
+        this.playlistsService.updatePrivacy({privacy: value, id: playlist.id}).subscribe(dt => {
+
+        });
+
+    }
+
 }

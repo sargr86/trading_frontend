@@ -23,4 +23,8 @@ export class PlaylistsService {
     getById(params) {
         return this.httpClient.get<any>(`${API_URL}playlists/get-by-id`, {params});
     }
+
+    updatePrivacy(params) {
+        return this.httpClient.put<any>(`${API_URL}playlists/update-privacy`, params);
+    }
 }

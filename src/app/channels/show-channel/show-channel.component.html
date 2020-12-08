@@ -162,10 +162,10 @@
                                 </ng-container>
                             </td>
                             <td>
-                                <span>Oct 20, 2020</span>
+                                <span>{{playlist.updated_at|date: 'd MMM, yyyy'}}</span>
                             </td>
                             <td>
-                                <span>109</span>
+                                <span>{{playlist.videos.length}}</span>
                             </td>
                             <td>
                                 <span class="material-icons" (click)="router.navigate(['playlists/single/'+playlist.id])">create</span>

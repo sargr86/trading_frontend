@@ -12,7 +12,6 @@ import {UserVideoComponent} from './user-video/user-video.component';
 import {OvVideoComponent} from './ov-video/ov-video.component';
 import {VideoLibraryComponent} from './video-library/video-library.component';
 import {OpenviduSessionModule} from 'openvidu-angular';
-import {ChatComponent} from './chat/chat.component';
 import {StartStreamingFormComponent} from './start-streaming-form/start-streaming-form.component';
 import {JoinStreamingFormComponent} from './join-streaming-form/join-streaming-form.component';
 import {HomeComponent} from '@app/user/home/home.component';
@@ -27,7 +26,6 @@ import {HomeComponent} from '@app/user/home/home.component';
         OvVideoComponent,
         HomeComponent,
         VideoLibraryComponent,
-        ChatComponent,
         StartStreamingFormComponent,
         JoinStreamingFormComponent
 

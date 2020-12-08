@@ -4,7 +4,6 @@ import {HomeComponent} from './user/home/home.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {NonAuthGuard} from '@core/guards/non-auth.guard';
 import {NotFoundComponent} from '@core/components/ungrouped/not-found/not-found.component';
-import {ChatComponent} from '@app/user/chat/chat.component';
 import {AccessibilityStatementComponent} from '@app/core/components/ungrouped/accessibility-statement/accessibility-statement.component';
 import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';

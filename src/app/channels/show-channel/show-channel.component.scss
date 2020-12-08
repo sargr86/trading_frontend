@@ -71,11 +71,11 @@
                 }
             }
 
-            td {
+            td,th {
                 display: table-cell;
                 vertical-align: middle;
                 color: #545454;
-                font-weight: bold;
+                font-family: "Muli-Bold";
                 font-size: 16px;
                 padding: 12px 0;
                 // border-bottom: 1px solid #C9C9C9;
@@ -105,7 +105,7 @@
 
                         h3 {
                             font-size: 16px;
-                            font-weight: bold;
+                            font-family: "Muli-Bold";
                         }
 
                         p {

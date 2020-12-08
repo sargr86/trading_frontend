@@ -19,4 +19,8 @@ export class PlaylistsService {
     get() {
         return this.httpClient.get<any>(`${API_URL}playlists/get`, {});
     }
+
+    getById(params) {
+        return this.httpClient.get<any>(`${API_URL}playlists/get-by-id`, {params});
+    }
 }

@@ -1,26 +1,29 @@
-.single-playlist{
-    h2{
+.single-playlist {
+    h2 {
         font-size: 32px;
         font-weight: bold;
         color: #18B587;
     }
 
-    .inner-wrap{
+    .inner-wrap {
         margin-top: 40px;
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
-        .left{
+
+        .left {
             flex: 0 0 316px;
-            .playlist{
+
+            .playlist {
                 width: 100%;
-                img{
+
+                img {
                     width: 100%;
                     max-height: 190px;
                     object-fit: cover;
                 }
 
-                .play-all{
+                .play-all {
                     width: 100%;
                     display: flex;
                     justify-content: center;
@@ -29,12 +32,13 @@
                     border-radius: 0;
                     font-size: 16px;
                     color: #ffffff;
-                    span{
+
+                    span {
                         margin-right: 12px;
                     }
                 }
 
-                .add-video{
+                .add-video {
                     margin-top: 22px;
                     padding: 6px 24px;
                     background: #18B587;
@@ -43,9 +47,9 @@
                     color: #ffffff;
                 }
 
-                .info{
-                    
-                    h3{
+                .info {
+
+                    h3 {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
@@ -54,27 +58,29 @@
                         font-size: 16px;
                         font-weight: bold;
                         color: #545454;
-                        span{
+
+                        span {
                             font-size: 22px;
                             cursor: pointer;
                         }
                     }
 
-                    p{
+                    p {
                         margin-top: 12px;
                         color: #545454;
                         font-size: 12px;
                     }
 
-                    .select{
+                    .select {
                         margin-top: 16px;
-                        span{
+
+                        span {
                             vertical-align: sub;
                             font-size: 22px;
                             color: #545454;
                         }
 
-                        select{
+                        select {
                             color: #545454;
                             font-size: 16px;
                             font-weight: 600;
@@ -84,19 +90,27 @@
                             margin-left: 6px;
                         }
                     }
+
+                    #privacy-select {
+                        display: flex;
+                    }
                 }
             }
         }
 
-        .right{
+        .right {
             flex: 1;
             margin-left: 32px;
-            .playlist-item{
+
+            .playlist-item {
                 margin-bottom: 30px;
+
                 .video-container {
                     display: flex;
+
                     .img {
                         flex: 0 0 200px;
+
                         img {
                             width: 100%;
                             height: 115px;
@@ -104,15 +118,16 @@
                             cursor: pointer;
                         }
                     }
-            
+
                     .details {
                         flex: 1;
                         margin-left: 32px;
-            
-                        .title{
+
+                        .title {
                             display: flex;
                             justify-content: space-between;
-                            h4{
+
+                            h4 {
                                 margin: 0;
                                 text-transform: capitalize;
                                 font-weight: bold;
@@ -120,41 +135,41 @@
                                 font-size: 16px;
                             }
 
-                            .dotes{
-                                button{
+                            .dotes {
+                                button {
                                     width: 40px;
                                     font-size: 14px;
                                     background: transparent;
                                 }
                             }
                         }
-            
+
                         .shortened-details {
                             margin-top: 4px;
                             display: flex;
-            
+
                             .channel-name {
                                 font-weight: bold;
                                 color: #818181;
                                 font-size: 14px;
                             }
-            
+
                             .dot {
                                 margin-left: 16px;
                                 margin-top: -3px;
                             }
-            
-            
+
+
                             .upload-time, .watchers-count {
                                 font-size: 14px;
                                 color: #818181;
                             }
-            
+
                             .watchers-count, .upload-time {
                                 margin-left: 16px;
                             }
                         }
-            
+
                         .shortened-description {
                             margin-top: 16px;
                             margin-bottom: 0;

@@ -20,6 +20,7 @@ import { SecurityComponent } from './components/ungrouped/security/security.comp
 import { StreamPreviewDialogComponent } from './components/modals/stream-preview-dialog/stream-preview-dialog.component';
 import {SharedModule} from '@shared/shared.module';
 import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dialog/add-playlist-dialog.component';
+import { AddVideoToPlaylistDialogComponent } from './components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dia
         SecurityComponent,
         StreamPreviewDialogComponent,
         AddPlaylistDialogComponent,
+        AddVideoToPlaylistDialogComponent,
     ],
     imports: [
         CommonModule,

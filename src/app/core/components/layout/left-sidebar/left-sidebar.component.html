@@ -22,7 +22,7 @@
             <img src="assets/img/item-8.png">
             <p>Messages</p>
         </div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('chat')"
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')"
              (click)="router.navigate(['chat/rooms'])">
             <img src="assets/img/item-8.png">
             <p>Chat rooms</p>

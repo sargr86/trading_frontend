@@ -5,7 +5,7 @@ import {SinglePlaylistComponent} from '@app/playlists/single-playlist/single-pla
 
 const routes: Routes = [
     {
-        path: 'single',
+        path: 'single/:id',
         component: SinglePlaylistComponent
     }
 ];

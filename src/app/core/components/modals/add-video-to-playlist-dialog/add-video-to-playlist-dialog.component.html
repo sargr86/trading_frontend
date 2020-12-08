@@ -1,0 +1,122 @@
+<div class="add-video-playlist-modal">
+    <div class="content-wrap">
+        <h1 class="title">Add video to playlist</h1>
+
+        <div class="content">
+            <div class="tabList">
+                <ul>
+                    <li><a class="nav-link" [class.active]="activeTab==='search'" (click)="changeTab('search')">Video
+                        search</a></li>
+                    <li><a class="nav-link" [class.active]="activeTab===''" (click)="changeTab('url')">URL</a></li>
+                    <li><a class="nav-link" [class.active]="activeTab==='yours'" (click)="changeTab('yours')">Your
+                        videos</a></li>
+                </ul>
+            </div>
+
+            <div class="tab-items">
+
+                <div class="tab1" *ngIf="activeTab==='search'">
+                    <div class="input-wrap">
+                        <label>Search video</label>
+                        <div class="input search">
+                            <input type="text" placeholder="Search">
+                            <span class="material-icons">search</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab2" *ngIf="activeTab==='url'">
+                    <div class="input-wrap">
+                        <div class="input">
+                            <input type="text" placeholder="Paste URL here">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab3" *ngIf="activeTab==='yours'">
+                    <div class="playlist-item">
+                        <div class="video-container">
+                            <div class="img">
+                                <img src="assets/img/jp-valeryunsplash.png">
+                            </div>
+
+                            <div class="details">
+                                <div class="title">
+                                    <h4 class="">Trump meets with Florida Sheriffs</h4>
+                                </div>
+                                <div class="shortened-details">
+                                    <span class="channel-name">Fox News</span>
+                                    <span class="dot">.</span>
+                                    <span class="watchers-count">17k watching</span>
+                                    <span class="dot">.</span>
+                                    <span class="upload-time">Dec 07, 2020</span>
+                                </div>
+                                <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing
+                                    elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem
+                                    ipsum </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="playlist-item">
+                        <div class="video-container">
+                            <div class="img">
+                                <img src="assets/img/jp-valeryunsplash.png">
+                            </div>
+
+                            <div class="details">
+                                <div class="title">
+                                    <h4 class="">Trump meets with Florida Sheriffs</h4>
+                                </div>
+                                <div class="shortened-details">
+                                    <span class="channel-name">Fox News</span>
+                                    <span class="dot">.</span>
+                                    <span class="watchers-count">17k watching</span>
+                                    <span class="dot">.</span>
+                                    <span class="upload-time">Dec 07, 2020</span>
+                                </div>
+                                <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing
+                                    elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem
+                                    ipsum </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="playlist-item">
+                        <div class="video-container">
+                            <div class="img">
+                                <img src="assets/img/jp-valeryunsplash.png">
+                            </div>
+
+                            <div class="details">
+                                <div class="title">
+                                    <h4 class="">Trump meets with Florida Sheriffs</h4>
+                                </div>
+                                <div class="shortened-details">
+                                    <span class="channel-name">Fox News</span>
+                                    <span class="dot">.</span>
+                                    <span class="watchers-count">17k watching</span>
+                                    <span class="dot">.</span>
+                                    <span class="upload-time">Dec 07, 2020</span>
+                                </div>
+                                <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing
+                                    elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem
+                                    ipsum </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="btn-wrap">
+        <button class="btn cancel" (click)="cancel()">Cancel</button>
+        <button class="btn all-videos">All videos</button>
+    </div>
+
+</div>

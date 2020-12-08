@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
+import {MatDialog} from '@angular/material/dialog';
+import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 
 @Component({
     selector: 'app-single-playlist',
@@ -13,7 +15,8 @@ export class SinglePlaylistComponent implements OnInit {
     constructor(
         public router: Router,
         private route: ActivatedRoute,
-        private playlistsService: PlaylistsService
+        private playlistsService: PlaylistsService,
+        private dialog: MatDialog
     ) {
         console.log(this.route.snapshot);
 
@@ -27,6 +30,12 @@ export class SinglePlaylistComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    openVideosModal() {
+        this.dialog.open(AddVideoToPlaylistDialogComponent, {data: {}}).afterClosed().subscribe(dt => {
+
+        });
     }
 
     updatePrivacy(value, playlist) {

@@ -16,10 +16,10 @@
 <div class="chat-wrap">
     <div class="people-list">
         <div class="tab-wrap">
-            <button class="tab active">Chat</button>
-            <button class="tab">Rooms</button>
+            <button class="tab" [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat</button>
+            <button class="tab" [class.active]="activeTab=='group'" (click)="changeTab('group')">Group</button>
         </div>
-        <div class="list-wrap">
+        <div *ngIf="activeTab=='direct'" class="list-wrap">
 
             <ul class="list">
                 <li>
@@ -185,10 +185,13 @@
                 </li>
             </ul>
         </div>
+        <div *ngIf="activeTab=='group'" class="list-wrap">
+            <h1>OK</h1>
+        </div>
     </div>
 
 
-    <div class="chat">
+    <div class="chat" *ngIf="activeTab=='direct'" >
         <div class="chat-about">
             <div class="left">
                 <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
@@ -278,5 +281,8 @@
                 <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
             </div>
         </div>
+    </div>
+    <div class="chat" *ngIf="activeTab=='group'">
+        <span>Group chat name</span>
     </div>
 </div>

@@ -55,7 +55,7 @@
             .tab-items {
                 margin-top: 24px;
                 overflow: auto;
-                max-height: 300px;
+                max-height: 323px;
 
                 /* width */
                 &::-webkit-scrollbar {
@@ -77,6 +77,8 @@
 
             .playlist-item {
                 margin-bottom: 30px;
+                padding: 5px;
+                cursor: pointer;
 
                 .video-container {
                     display: flex;
@@ -151,6 +153,10 @@
 
                     }
                 }
+            }
+
+            .selected {
+                border: 1px solid #18B587;
             }
         }
     }

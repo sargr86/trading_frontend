@@ -3,14 +3,16 @@
 
     <div class="inner-wrap">
         <div class="left">
-            <div class="playlist">
-                <img src="assets/img/item-3.png" alt="">
+            <div class="playlist" *ngIf="playlist">
+                <img *ngIf="playlist.videos?.length > 0"
+                     [src]="apiUrl+'uploads/thumbnails/'+playlist.videos[0].thumbnail">
+                <img *ngIf="playlist.videos?.length === 0" [src]="'assets/img/video-thumbnail-default.png'">
                 <button class="btn play-all">
                     <span class="material-icons">play_arrow</span>
                     Play All
                 </button>
 
-                <div class="info" *ngIf="playlist">
+                <div class="info">
                     <h3>{{playlist.name}} <span class="material-icons">create</span></h3>
                     <p>{{playlist.description}}</p>
                     <h3>{{playlist.videos?.length}} videos</h3>
@@ -29,29 +31,58 @@
             </div>
         </div>
 
-        <div class="right">
+        <div class="right" *ngIf="playlist">
             <div class="playlist-item" *ngFor="let video of playlist.videos">
                 <div class="video-container">
                     <div class="img">
-                        <img src="assets/img/jp-valeryunsplash.png">
+                        <div class="thumbnail">
+                            <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
+                                 (click)="openVideoPage(video)">
+                            <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
+                                 (click)="openVideoPage(video)">
+                        </div>
                     </div>
 
                     <div class="details">
                         <div class="title">
-                            <h4 class="">Trump meets with Florida Sheriffs</h4>
+                            <h4 class="">{{video.name}}</h4>
                             <div class="dotes">
-                                <button><i class="fas fa-ellipsis-v"></i></button>
+                                <button mat-icon-button [matMenuTriggerFor]="menu"
+                                        aria-label="Example icon-button with a menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item>
+                                        <mat-icon>playlist_add</mat-icon>
+                                        <span>Add to another playlist</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>vertical_align_top</mat-icon>
+                                        <span>Move to top</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>vertical_align_bottom</mat-icon>
+                                        <span>Move to bottom</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>insert_photo</mat-icon>
+                                        <span>Set as playlist thumbnail</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Remove from playlist</span>
+                                    </button>
+                                </mat-menu>
                             </div>
                         </div>
                         <div class="shortened-details">
-                            <span class="channel-name">Fox News</span>
+                            <span class="channel-name">{{video.channel.name}}</span>
                             <span class="dot">.</span>
                             <span class="watchers-count">17k watching</span>
                             <span class="dot">.</span>
-                            <span class="upload-time">Dec 07, 2020</span>
+                            <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
                         </div>
-                        <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                            sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem ipsum </p>
+                        <p class="shortened-description">{{video.description}}</p>
                     </div>
                 </div>
             </div>

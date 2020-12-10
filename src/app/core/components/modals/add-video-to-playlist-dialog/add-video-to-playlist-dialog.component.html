@@ -1,6 +1,6 @@
 <div class="add-video-playlist-modal">
     <div class="content-wrap">
-        <h1 class="title">Add video to playlist</h1>
+        <h1 class="title">Add videos to playlist</h1>
 
         <div class="content">
             <div class="tabList">
@@ -33,60 +33,15 @@
                     </div>
                 </div>
 
-                <div class="tab3" *ngIf="activeTab==='yours'">
-                    <div class="playlist-item">
+                <div class="tab3" *ngIf="activeTab==='yours' && currentUser">
+                    <div class="playlist-item" [class.selected]="checkIfVideoSelected(video.id)"
+                         *ngFor="let video of currentUser.videos" (click)="selectVideo(video.id)">
                         <div class="video-container">
                             <div class="img">
-                                <img src="assets/img/jp-valeryunsplash.png">
-                            </div>
-
-                            <div class="details">
-                                <div class="title">
-                                    <h4 class="">Trump meets with Florida Sheriffs</h4>
-                                </div>
-                                <div class="shortened-details">
-                                    <span class="channel-name">Fox News</span>
-                                    <span class="dot">.</span>
-                                    <span class="watchers-count">17k watching</span>
-                                    <span class="dot">.</span>
-                                    <span class="upload-time">Dec 07, 2020</span>
-                                </div>
-                                <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing
-                                    elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem
-                                    ipsum </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="playlist-item">
-                        <div class="video-container">
-                            <div class="img">
-                                <img src="assets/img/jp-valeryunsplash.png">
-                            </div>
-
-                            <div class="details">
-                                <div class="title">
-                                    <h4 class="">Trump meets with Florida Sheriffs</h4>
-                                </div>
-                                <div class="shortened-details">
-                                    <span class="channel-name">Fox News</span>
-                                    <span class="dot">.</span>
-                                    <span class="watchers-count">17k watching</span>
-                                    <span class="dot">.</span>
-                                    <span class="upload-time">Dec 07, 2020</span>
-                                </div>
-                                <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing
-                                    elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem
-                                    ipsum </p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="playlist-item">
-                        <div class="video-container">
-                            <div class="img">
-                                <img src="assets/img/jp-valeryunsplash.png">
+                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
+                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
                             </div>
 
                             <div class="details">
@@ -116,7 +71,7 @@
 
     <div class="btn-wrap">
         <button class="btn cancel" (click)="cancel()">Cancel</button>
-        <button class="btn all-videos">All videos</button>
+        <button class="btn all-videos" (click)="addVideos()">Add videos</button>
     </div>
 
 </div>

@@ -49,8 +49,12 @@
                 color: #FFFFFF;
                 text-align: left;
                 transition: all 0.3s ease;
-                &.active , &:hover{
+                &.active{
                     background: #F53C6F;
+                }
+                &:not(.active):hover{
+                    background: #18B587;
+                    color: #FFFFFF;
                 }
             }
         }

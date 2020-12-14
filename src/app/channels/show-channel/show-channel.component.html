@@ -177,7 +177,27 @@
             </ng-container>
 
             <ng-container *ngIf="activeTab.name === 'About'">
-                <form [formGroup]="aboutForm" id="channel-about-form">
+
+                <div class="about-tab">
+                    <div class="info">
+                        <h2>Description</h2>
+    
+                        <div class="date">
+                            <span>Joined Oct 20, 2016</span>
+                            <button class="btn">Edit</button>
+                        </div>
+                    </div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+                    </div>
+    
+                    <button class="save">save</button>
+                </div>
+
+
+
+
+                <!-- <form [formGroup]="aboutForm" id="channel-about-form">
                     <div id="description">
                         <textarea formControlName="description" *ngIf="!descriptionUpdated"></textarea>
                         <p *ngIf="descriptionUpdated">{{channelUser.channel.description}}</p>
@@ -185,7 +205,10 @@
                     <div>
                         <button (click)="saveChannelDescription()">Save</button>
                     </div>
-                </form>
+                </form> -->
+
+
+
             </ng-container>
         </div>
     </ng-container>

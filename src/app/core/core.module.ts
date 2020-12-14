@@ -22,6 +22,7 @@ import {SharedModule} from '@shared/shared.module';
 import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import { AddVideoToPlaylistDialogComponent } from './components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 import { SearchVideosFormComponent } from './components/ungrouped/search-videos-form/search-videos-form.component';
+import { ConfirmationDialogComponent } from './components/modals/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { SearchVideosFormComponent } from './components/ungrouped/search-videos-
         AddPlaylistDialogComponent,
         AddVideoToPlaylistDialogComponent,
         SearchVideosFormComponent,
+        ConfirmationDialogComponent,
     ],
     imports: [
         CommonModule,

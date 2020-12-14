@@ -36,6 +36,10 @@ export class PlaylistsService {
         return this.httpClient.put<any>(`${API_URL}playlists/update-video-position`, params);
     }
 
+    updatePlaylistInfo(params) {
+        return this.httpClient.put<any>(`${API_URL}playlists/update-playlist-info`, params);
+    }
+
     changePlaylistThumbnail(params){
         return this.httpClient.put<any>(`${API_URL}playlists/change-thumbnail`, params);
     }

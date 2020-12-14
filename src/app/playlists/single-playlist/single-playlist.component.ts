@@ -6,6 +6,7 @@ import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-vid
 import {API_URL} from '@core/constants/global';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-single-playlist',
@@ -15,19 +16,26 @@ import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-
 export class SinglePlaylistComponent implements OnInit {
     playlist;
     apiUrl = API_URL;
+    playlistInfoForm: FormGroup;
+    editMode = false;
 
     constructor(
         public router: Router,
         private route: ActivatedRoute,
         private playlistsService: PlaylistsService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private fb: FormBuilder
     ) {
-        console.log(this.route.snapshot);
-
         const playlistId = this.route.snapshot?.params?.id;
 
         if (playlistId) {
+            this.playlistInfoForm = this.fb.group({
+                id: [''],
+                name: ['', Validators.required],
+                description: ['']
+            });
             this.getPlaylistDetails(playlistId);
+
         }
     }
 
@@ -89,6 +97,19 @@ export class SinglePlaylistComponent implements OnInit {
                 });
             }
         });
+    }
+
+    editPlaylistInfo(playlist) {
+        this.editMode = true;
+        this.playlistInfoForm.patchValue(playlist);
+    }
+
+    savePlaylistInfoChanges() {
+        this.playlistsService.updatePlaylistInfo(this.playlistInfoForm.value).subscribe((dt) => {
+            this.editMode = false;
+            this.playlist = dt;
+        });
+        console.log(this.playlistInfoForm.value)
     }
 
 }

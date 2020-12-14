@@ -12,27 +12,45 @@
                 </button>
 
                 <div class="info">
-                    <h3>{{playlist.name}} <span class="material-icons">create</span></h3>
-                    <p>{{playlist.description}}</p>
-                    <h3>{{playlist.videos?.length}} videos</h3>
-                    <h3>Last updated on {{playlist.updated_at|date: 'd MMM, yyyy'}}</h3>
-                    <div class="select" id="privacy-select">
-                        <mat-icon *ngIf="!playlist.privacy">visibility_off</mat-icon>
-                        <mat-icon class="material-icons" *ngIf="playlist.privacy">visibility_on</mat-icon>
-                        <select (change)="updatePrivacy($event.target.value, playlist)">
-                            <option [value]="0" [selected]="!playlist.privacy">Private</option>
-                            <option [value]="1" [selected]="playlist.privacy">Public</option>
-                        </select>
-                    </div>
-                </div>
+                    <form [formGroup]="playlistInfoForm" id="playlist-info-form">
+                        <ng-container *ngIf="!editMode">
 
-                <button class="btn add-video" (click)="openVideosModal()">Add Video</button>
+                            <h3>
+                                {{playlist.name}}
+                                <span class="material-icons" (click)="editPlaylistInfo(playlist)">create</span>
+                            </h3>
+                            <p>{{playlist.description}}</p>
+                        </ng-container>
+                        <ng-container *ngIf="editMode">
+                            <input formControlName="name">
+                            <span class="error" *ngIf="playlistInfoForm.get('name').hasError('required')">Playlist name is required</span>
+                            <textarea formControlName="description"></textarea>
+                        </ng-container>
+                        <ng-container *ngIf="!editMode">
+                            <h3>{{playlist.videos?.length}} videos</h3>
+                            <h3 *ngIf="!editMode">Last updated on {{playlist.updated_at|date: 'd MMM, yyyy'}}</h3>
+                            <div class="select" id="privacy-select">
+                                <mat-icon *ngIf="!playlist.privacy">visibility_off</mat-icon>
+                                <mat-icon class="material-icons" *ngIf="playlist.privacy">visibility_on</mat-icon>
+                                <select (change)="updatePrivacy($event.target.value, playlist)">
+                                    <option [value]="0" [selected]="!playlist.privacy">Private</option>
+                                    <option [value]="1" [selected]="playlist.privacy">Public</option>
+                                </select>
+                            </div>
+                        </ng-container>
+                    </form>
+                </div>
+                <button class="btn save-playlist-changes" *ngIf="editMode" (click)="savePlaylistInfoChanges()">Save
+                    changes
+                </button>
+                <button class="btn add-video" *ngIf="!editMode" (click)="openVideosModal()">Add Video</button>
             </div>
         </div>
 
         <div class="right" *ngIf="playlist">
             <div class="playlist" cdkDropList>
-                <div class="playlist-item" cdkDrag  [cdkDragPreviewClass]="'video-container'"  (cdkDragDropped)="dragDropped($event, video)"
+                <div class="playlist-item" cdkDrag [cdkDragPreviewClass]="'video-container'"
+                     (cdkDragDropped)="dragDropped($event, video)"
                      *ngFor="let video of playlist.videos">
                     <div class="video-container">
                         <div class="img">
@@ -57,15 +75,16 @@
                                             <mat-icon>playlist_add</mat-icon>
                                             <span>Add to another playlist</span>
                                         </button>
-<!--                                        <button mat-menu-item>-->
-<!--                                            <mat-icon>vertical_align_top</mat-icon>-->
-<!--                                            <span>Move to top</span>-->
-<!--                                        </button>-->
-<!--                                        <button mat-menu-item>-->
-<!--                                            <mat-icon>vertical_align_bottom</mat-icon>-->
-<!--                                            <span>Move to bottom</span>-->
-<!--                                        </button>-->
-                                        <button mat-menu-item (click)="changePlaylistThumbnail(playlist.id, video.thumbnail)">
+                                        <!--                                        <button mat-menu-item>-->
+                                        <!--                                            <mat-icon>vertical_align_top</mat-icon>-->
+                                        <!--                                            <span>Move to top</span>-->
+                                        <!--                                        </button>-->
+                                        <!--                                        <button mat-menu-item>-->
+                                        <!--                                            <mat-icon>vertical_align_bottom</mat-icon>-->
+                                        <!--                                            <span>Move to bottom</span>-->
+                                        <!--                                        </button>-->
+                                        <button mat-menu-item
+                                                (click)="changePlaylistThumbnail(playlist.id, video.thumbnail)">
                                             <mat-icon>insert_photo</mat-icon>
                                             <span>Set as playlist thumbnail</span>
                                         </button>

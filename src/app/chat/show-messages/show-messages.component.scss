@@ -42,19 +42,15 @@
             margin-bottom: 16px;
             .tab{
                 flex: 1;
-                padding: 6px 12px;
+                padding: 6px 16px;
                 font-size: 16px;
                 font-weight: 500;
-                background: transparent;
-                color: #545454;
-                -webkit-transition: all 0.3s ease;
-                -moz-transition: all 0.3s ease;
-                -o-transition: all 0.3s ease;
-                -ms-transition: all 0.3s ease;
+                background: #C9C9C9;
+                color: #FFFFFF;
+                text-align: left;
                 transition: all 0.3s ease;
                 &.active{
                     background: #F53C6F;
-                    color: #FFFFFF;
                 }
                 &:not(.active):hover{
                     background: #18B587;
@@ -64,13 +60,26 @@
         }
 
         .list-wrap{
-            max-height: 600px;
-            overflow-x: auto;
+            // max-height: 600px;
+            // overflow-x: auto;
         }
 
+        .CreateGroupChat{
+            padding: 0 15px;
+            margin: 4px 0 16px;
+            background: transparent;
+            color: #18B587;
+            font-size: 16px;
+            font-family: "Muli-Bold";
+            img{
+                width: 20px;
+                margin-right: 2px;
+            }
+        }
 
         .list{
-
+            max-height: 600px;
+            overflow-x: auto;
             li{
                 padding: 6px 10px;
                 display: flex;
@@ -200,7 +209,7 @@
                 }
 
                 &.my-message{
-                    padding-right: 0;
+                    padding-right: 8px;
                     margin-left: 48px;
                     .message{
                         background: #18B587;

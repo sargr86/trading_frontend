@@ -64,6 +64,7 @@
         tr {
             display: table-row;
 
+
             &:last-child {
                 //border-right: 1px solid #C9C9C9;
                 .td {
@@ -71,7 +72,11 @@
                 }
             }
 
-            td,th {
+            td {
+                cursor: pointer;
+            }
+
+            td, th {
                 display: table-cell;
                 vertical-align: middle;
                 color: #545454;

@@ -1,3 +1,81 @@
+@mixin videoContainer {
+
+
+    .video-container {
+        display: flex;
+
+        .img {
+            flex: 0 0 200px;
+
+            img {
+                width: 100%;
+                height: 115px;
+                object-fit: cover;
+                cursor: pointer;
+            }
+        }
+
+        .details {
+            flex: 1;
+            margin-left: 32px;
+
+            .title {
+                display: flex;
+                justify-content: space-between;
+
+                h4 {
+                    margin: 0;
+                    text-transform: capitalize;
+                    font-family: "Muli-Bold";
+                    color: #545454;
+                    font-size: 16px;
+                }
+
+                .dotes {
+                    button {
+                        width: 40px;
+                        font-size: 14px;
+                        background: transparent;
+                    }
+                }
+            }
+
+            .shortened-details {
+                margin-top: 4px;
+                display: flex;
+
+                .channel-name {
+                    font-family: "Muli-Bold";
+                    color: #818181;
+                    font-size: 14px;
+                }
+
+                .dot {
+                    margin-left: 16px;
+                    margin-top: -3px;
+                }
+
+
+                .upload-time, .watchers-count {
+                    font-size: 14px;
+                    color: #818181;
+                }
+
+                .watchers-count, .upload-time {
+                    margin-left: 16px;
+                }
+            }
+
+            .shortened-description {
+                margin-top: 16px;
+                margin-bottom: 0;
+                color: #545454;
+            }
+
+        }
+    }
+}
+
 .single-playlist {
     h2 {
         font-size: 32px;
@@ -104,81 +182,31 @@
 
             .playlist-item {
                 margin-bottom: 30px;
-
-                .video-container {
-                    display: flex;
-
-                    .img {
-                        flex: 0 0 200px;
-
-                        img {
-                            width: 100%;
-                            height: 115px;
-                            object-fit: cover;
-                            cursor: pointer;
-                        }
-                    }
-
-                    .details {
-                        flex: 1;
-                        margin-left: 32px;
-
-                        .title {
-                            display: flex;
-                            justify-content: space-between;
-
-                            h4 {
-                                margin: 0;
-                                text-transform: capitalize;
-                                font-family: "Muli-Bold";
-                                color: #545454;
-                                font-size: 16px;
-                            }
-
-                            .dotes {
-                                button {
-                                    width: 40px;
-                                    font-size: 14px;
-                                    background: transparent;
-                                }
-                            }
-                        }
-
-                        .shortened-details {
-                            margin-top: 4px;
-                            display: flex;
-
-                            .channel-name {
-                                font-family: "Muli-Bold";
-                                color: #818181;
-                                font-size: 14px;
-                            }
-
-                            .dot {
-                                margin-left: 16px;
-                                margin-top: -3px;
-                            }
-
-
-                            .upload-time, .watchers-count {
-                                font-size: 14px;
-                                color: #818181;
-                            }
-
-                            .watchers-count, .upload-time {
-                                margin-left: 16px;
-                            }
-                        }
-
-                        .shortened-description {
-                            margin-top: 16px;
-                            margin-bottom: 0;
-                            color: #545454;
-                        }
-
-                    }
-                }
+                @include videoContainer;
             }
         }
     }
 }
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    img {
+        width: 200px !important;
+    }
+    @include videoContainer;
+
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+

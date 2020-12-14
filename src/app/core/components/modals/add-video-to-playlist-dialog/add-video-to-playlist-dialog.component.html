@@ -18,9 +18,31 @@
                 <div class="tab1" *ngIf="activeTab==='search'">
                     <div class="input-wrap">
                         <label>Search video</label>
-                        <div class="input search">
-                            <input type="text" placeholder="Search">
-                            <span class="material-icons">search</span>
+                        <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
+                    </div>
+                    <div class="playlist-item" [class.selected]="checkIfVideoSelected(video.id)"
+                         *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
+                        <div class="video-container">
+                            <div class="img">
+                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
+                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                            </div>
+
+                            <div class="details">
+                                <div class="title">
+                                    <h4 class="">{{video.name}}</h4>
+                                </div>
+                                <div class="shortened-details">
+                                    <span class="channel-name">{{video.channel.name}}</span>
+                                    <span class="dot">.</span>
+                                    <span class="watchers-count">17k watching</span>
+                                    <span class="dot">.</span>
+                                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
+                                </div>
+                                <p class="shortened-description">{{video.description}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,18 +68,16 @@
 
                             <div class="details">
                                 <div class="title">
-                                    <h4 class="">Trump meets with Florida Sheriffs</h4>
+                                    <h4 class="">{{video.name}}</h4>
                                 </div>
                                 <div class="shortened-details">
-                                    <span class="channel-name">Fox News</span>
+                                    <span class="channel-name">{{video.channel.name}}</span>
                                     <span class="dot">.</span>
                                     <span class="watchers-count">17k watching</span>
                                     <span class="dot">.</span>
-                                    <span class="upload-time">Dec 07, 2020</span>
+                                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
                                 </div>
-                                <p class="shortened-description">Lorem ipsum dolor sit amet, consetetur sadipscing
-                                    elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed Lorem
-                                    ipsum </p>
+                                <p class="shortened-description">{{video.description}}</p>
                             </div>
                         </div>
                     </div>

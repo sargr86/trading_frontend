@@ -65,6 +65,10 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/search-in-user-videos`, {params});
     }
 
+    searchInAllVideos(params){
+        return this.httpClient.get<any>(`${API_URL}videos/search-in-all-videos`, {params});
+    }
+
     updateLikes(params) {
         return this.httpClient.put<any>(`${API_URL}videos/update-likes`, params);
     }

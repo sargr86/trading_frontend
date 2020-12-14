@@ -4,6 +4,7 @@ import {PlaylistsService} from '@core/services/playlists.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 import {API_URL} from '@core/constants/global';
+import {moveItemInArray} from '@core/helpers/move-item-in-array';
 
 @Component({
     selector: 'app-single-playlist',
@@ -50,7 +51,27 @@ export class SinglePlaylistComponent implements OnInit {
     }
 
     getPlaylistDetails(playlistId) {
-        this.playlistsService.getById({id: playlistId}).subscribe(dt => {
+        this.playlistsService.getById({playlist_id: playlistId}).subscribe(dt => {
+            this.playlist = dt;
+        });
+    }
+
+    dragDropped(e, video) {
+        console.log(e)
+        // console.log(channel)
+        this.playlist.videos = moveItemInArray(this.playlist.videos, e.previousIndex, e.currentIndex);
+        // console.log(this.playlist)
+        const sendData = {
+            rows: JSON.stringify(this.playlist),
+            playlist_id: this.playlist.id,
+            // user_id: this.authUser.id
+        };
+        this.playlistsService.updateVideoPosition(sendData).subscribe(dt => {
+        });
+    }
+
+    removeVideoFromPlaylist(playlistId, videoId) {
+        this.playlistsService.removeVideoFromPlaylist({playlist_id: playlistId, video_id: videoId}).subscribe(dt => {
             this.playlist = dt;
         });
     }

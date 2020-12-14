@@ -141,7 +141,7 @@
                             <th>Video count</th>
                             <th></th>
                         </tr>
-                        <tr *ngFor="let playlist of playlists">
+                        <tr *ngFor="let playlist of playlists" (click)="router.navigate(['playlists/single/'+playlist.id])">
                             <td>
                                 <div class="img-info">
                                     <img src="assets/img/item-3.png" alt="">
@@ -168,7 +168,7 @@
                                 <span>{{playlist.videos.length}}</span>
                             </td>
                             <td>
-                                <span class="material-icons" (click)="router.navigate(['playlists/single/'+playlist.id])">create</span>
+                                <span class="material-icons">create</span>
                             </td>
                         </tr>
                     </table>

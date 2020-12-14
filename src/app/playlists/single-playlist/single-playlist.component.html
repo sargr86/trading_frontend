@@ -32,57 +32,60 @@
         </div>
 
         <div class="right" *ngIf="playlist">
-            <div class="playlist-item" *ngFor="let video of playlist.videos">
-                <div class="video-container">
-                    <div class="img">
-                        <div class="thumbnail">
-                            <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                                 (click)="openVideoPage(video)">
-                            <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                                 (click)="openVideoPage(video)">
-                        </div>
-                    </div>
-
-                    <div class="details">
-                        <div class="title">
-                            <h4 class="">{{video.name}}</h4>
-                            <div class="dotes">
-                                <button mat-icon-button [matMenuTriggerFor]="menu"
-                                        aria-label="Example icon-button with a menu">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>
-                                        <mat-icon>playlist_add</mat-icon>
-                                        <span>Add to another playlist</span>
-                                    </button>
-                                    <button mat-menu-item>
-                                        <mat-icon>vertical_align_top</mat-icon>
-                                        <span>Move to top</span>
-                                    </button>
-                                    <button mat-menu-item>
-                                        <mat-icon>vertical_align_bottom</mat-icon>
-                                        <span>Move to bottom</span>
-                                    </button>
-                                    <button mat-menu-item>
-                                        <mat-icon>insert_photo</mat-icon>
-                                        <span>Set as playlist thumbnail</span>
-                                    </button>
-                                    <button mat-menu-item>
-                                        <mat-icon>delete</mat-icon>
-                                        <span>Remove from playlist</span>
-                                    </button>
-                                </mat-menu>
+            <div class="playlist" cdkDropList>
+                <div class="playlist-item" cdkDrag  [cdkDragPreviewClass]="'video-container'"  (cdkDragDropped)="dragDropped($event, video)"
+                     *ngFor="let video of playlist.videos">
+                    <div class="video-container">
+                        <div class="img">
+                            <div class="thumbnail">
+                                <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
+                                     (click)="openVideoPage(video)">
+                                <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
+                                     (click)="openVideoPage(video)">
                             </div>
                         </div>
-                        <div class="shortened-details">
-                            <span class="channel-name">{{video.channel.name}}</span>
-                            <span class="dot">.</span>
-                            <span class="watchers-count">17k watching</span>
-                            <span class="dot">.</span>
-                            <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
+
+                        <div class="details">
+                            <div class="title">
+                                <h4 class="">{{video.name}}</h4>
+                                <div class="dotes">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                                            aria-label="Example icon-button with a menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item>
+                                            <mat-icon>playlist_add</mat-icon>
+                                            <span>Add to another playlist</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon>vertical_align_top</mat-icon>
+                                            <span>Move to top</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon>vertical_align_bottom</mat-icon>
+                                            <span>Move to bottom</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon>insert_photo</mat-icon>
+                                            <span>Set as playlist thumbnail</span>
+                                        </button>
+                                        <button mat-menu-item (click)="removeVideoFromPlaylist(playlist.id, video.id)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove from playlist</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                            <div class="shortened-details">
+                                <span class="channel-name">{{video.channel.name}}</span>
+                                <span class="dot">.</span>
+                                <span class="watchers-count">17k watching</span>
+                                <span class="dot">.</span>
+                                <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
+                            </div>
+                            <p class="shortened-description">{{video.description}}</p>
                         </div>
-                        <p class="shortened-description">{{video.description}}</p>
                     </div>
                 </div>
             </div>

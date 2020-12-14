@@ -31,4 +31,12 @@ export class PlaylistsService {
     updatePrivacy(params) {
         return this.httpClient.put<any>(`${API_URL}playlists/update-privacy`, params);
     }
+
+    updateVideoPosition(params) {
+        return this.httpClient.put<any>(`${API_URL}playlists/update-video-position`, params);
+    }
+
+    removeVideoFromPlaylist(params) {
+        return this.httpClient.delete<any>(`${API_URL}playlists/remove-video`, {params});
+    }
 }

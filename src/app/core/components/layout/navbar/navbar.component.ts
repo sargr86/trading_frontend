@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     authUser;
     routerUrl;
 
-    searchVideosForm: FormGroup;
+
 
     @Output('search') search = new EventEmitter();
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
@@ -30,10 +30,10 @@ export class NavbarComponent implements OnInit {
         private modalService: BsModalService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private fb: FormBuilder,
+
         private route: ActivatedRoute
     ) {
-        this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
+
     }
 
     ngOnInit(): void {
@@ -59,9 +59,9 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    searchVideos() {
+    searchVideos(e) {
         // this.subject.setVideosSearch(this.searchVideosForm.value);
-        this.search.emit(this.searchVideosForm.value);
+        this.search.emit(e);
     }
 
     toggleMyChannelLink() {

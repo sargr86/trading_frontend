@@ -21,6 +21,7 @@ import { StreamPreviewDialogComponent } from './components/modals/stream-preview
 import {SharedModule} from '@shared/shared.module';
 import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import { AddVideoToPlaylistDialogComponent } from './components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
+import { SearchVideosFormComponent } from './components/ungrouped/search-videos-form/search-videos-form.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { AddVideoToPlaylistDialogComponent } from './components/modals/add-video
         StreamPreviewDialogComponent,
         AddPlaylistDialogComponent,
         AddVideoToPlaylistDialogComponent,
+        SearchVideosFormComponent,
     ],
     imports: [
         CommonModule,

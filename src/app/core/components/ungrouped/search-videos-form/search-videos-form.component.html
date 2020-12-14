@@ -1,0 +1,7 @@
+<form [formGroup]="searchVideosForm">
+    <div class="home-search">
+        <input class="home-search-input" placeholder="Search" formControlName="search"
+               (keyup.enter)="searchVideos()">
+        <i class="fas fa-search" (click)="searchVideos()"></i>
+    </div>
+</form>

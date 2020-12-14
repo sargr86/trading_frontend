@@ -17,6 +17,7 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
     apiUrl = API_URL;
     selectedVideos = [];
     playlist;
+    searchedVideos = [];
 
     constructor(
         private modal: MatDialogRef<AddVideoToPlaylistDialogComponent>,
@@ -43,12 +44,18 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
         }
     }
 
-    checkIfVideoSelected(id){
+    checkIfVideoSelected(id) {
         return this.selectedVideos.find(v => v === id);
     }
 
     changeTab(tab) {
         this.activeTab = tab;
+    }
+
+    searchVideos(e) {
+        this.videoService.searchInAllVideos(e).subscribe(dt => {
+            this.searchedVideos = dt;
+        });
     }
 
     addVideos() {

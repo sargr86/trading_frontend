@@ -36,6 +36,10 @@ export class PlaylistsService {
         return this.httpClient.put<any>(`${API_URL}playlists/update-video-position`, params);
     }
 
+    changePlaylistThumbnail(params){
+        return this.httpClient.put<any>(`${API_URL}playlists/change-thumbnail`, params);
+    }
+
     removeVideoFromPlaylist(params) {
         return this.httpClient.delete<any>(`${API_URL}playlists/remove-video`, {params});
     }

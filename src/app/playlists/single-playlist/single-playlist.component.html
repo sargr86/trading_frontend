@@ -4,9 +4,8 @@
     <div class="inner-wrap">
         <div class="left">
             <div class="playlist" *ngIf="playlist">
-                <img *ngIf="playlist.videos?.length > 0"
-                     [src]="apiUrl+'uploads/thumbnails/'+playlist.videos[0].thumbnail">
-                <img *ngIf="playlist.videos?.length === 0" [src]="'assets/img/video-thumbnail-default.png'">
+                <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
+                <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
                 <button class="btn play-all">
                     <span class="material-icons">play_arrow</span>
                     Play All
@@ -58,15 +57,15 @@
                                             <mat-icon>playlist_add</mat-icon>
                                             <span>Add to another playlist</span>
                                         </button>
-                                        <button mat-menu-item>
-                                            <mat-icon>vertical_align_top</mat-icon>
-                                            <span>Move to top</span>
-                                        </button>
-                                        <button mat-menu-item>
-                                            <mat-icon>vertical_align_bottom</mat-icon>
-                                            <span>Move to bottom</span>
-                                        </button>
-                                        <button mat-menu-item>
+<!--                                        <button mat-menu-item>-->
+<!--                                            <mat-icon>vertical_align_top</mat-icon>-->
+<!--                                            <span>Move to top</span>-->
+<!--                                        </button>-->
+<!--                                        <button mat-menu-item>-->
+<!--                                            <mat-icon>vertical_align_bottom</mat-icon>-->
+<!--                                            <span>Move to bottom</span>-->
+<!--                                        </button>-->
+                                        <button mat-menu-item (click)="changePlaylistThumbnail(playlist.id, video.thumbnail)">
                                             <mat-icon>insert_photo</mat-icon>
                                             <span>Set as playlist thumbnail</span>
                                         </button>

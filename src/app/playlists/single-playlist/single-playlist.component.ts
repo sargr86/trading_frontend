@@ -70,6 +70,13 @@ export class SinglePlaylistComponent implements OnInit {
         });
     }
 
+    changePlaylistThumbnail(playlistId, thumbnail) {
+        const params = {playlist_id: playlistId, ...{thumbnail}};
+        this.playlistsService.changePlaylistThumbnail(params).subscribe(dt => {
+            this.playlist = dt;
+        });
+    }
+
     removeVideoFromPlaylist(playlistId, videoId) {
         this.playlistsService.removeVideoFromPlaylist({playlist_id: playlistId, video_id: videoId}).subscribe(dt => {
             this.playlist = dt;

@@ -40,9 +40,11 @@
                         </ng-container>
                     </form>
                 </div>
-                <button class="btn save-playlist-changes" *ngIf="editMode" (click)="savePlaylistInfoChanges()">Save
-                    changes
-                </button>
+
+                <button class="btn cancel" *ngIf="editMode">Cancel</button>
+                <button class="btn save-playlist-changes" *ngIf="editMode" (click)="savePlaylistInfoChanges()">Save</button>
+
+
                 <button class="btn add-video" *ngIf="!editMode" (click)="openVideosModal()">Add Video</button>
             </div>
         </div>

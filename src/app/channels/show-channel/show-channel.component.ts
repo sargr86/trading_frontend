@@ -48,6 +48,7 @@ export class ShowChannelComponent implements OnInit {
     descriptionUpdated = false;
 
     playlists = [];
+    editMode = false;
 
     constructor(
         private videoService: VideoService,
@@ -219,6 +220,7 @@ export class ShowChannelComponent implements OnInit {
         this.descriptionUpdated = true;
         this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
             this.channelUser = dt;
+            this.editMode = false;
         });
     }
 

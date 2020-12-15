@@ -7,6 +7,7 @@ import {API_URL} from '@core/constants/global';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AddVideoToAnotherPlaylistComponent} from '@core/components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
 
 @Component({
     selector: 'app-single-playlist',
@@ -110,6 +111,15 @@ export class SinglePlaylistComponent implements OnInit {
             this.playlist = dt;
         });
         console.log(this.playlistInfoForm.value)
+    }
+
+    addToAnotherPlaylist(video) {
+        this.dialog.open(AddVideoToAnotherPlaylistComponent, {
+            width: '500px',
+            data: {video_id: video.id}
+        }).afterClosed().subscribe(result => {
+
+        });
     }
 
 }

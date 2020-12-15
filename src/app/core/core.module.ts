@@ -23,6 +23,7 @@ import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dia
 import { AddVideoToPlaylistDialogComponent } from './components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 import { SearchVideosFormComponent } from './components/ungrouped/search-videos-form/search-videos-form.component';
 import { ConfirmationDialogComponent } from './components/modals/confirmation-dialog/confirmation-dialog.component';
+import { AddVideoToAnotherPlaylistComponent } from './components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ConfirmationDialogComponent } from './components/modals/confirmation-di
         AddVideoToPlaylistDialogComponent,
         SearchVideosFormComponent,
         ConfirmationDialogComponent,
+        AddVideoToAnotherPlaylistComponent,
     ],
     imports: [
         CommonModule,

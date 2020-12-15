@@ -1,0 +1,10 @@
+<form>
+    <ul>
+        <li *ngFor="let playlist of playlists;let i = index" class="playlist">
+            <input type="checkbox" [id]="'playlist-'+(i+1)" (change)="addToPlaylist($event, playlist.id)">
+            <label [for]="'playlist-'+(i+1)">{{playlist.name}}</label>
+        </li>
+    </ul>
+
+    <button (click)="save()">Save</button>
+</form>

@@ -116,13 +116,18 @@
                     }
                 }
 
-                .add-video, .save-playlist-changes {
+                .add-video, .save-playlist-changes ,.cancel{
                     margin-top: 22px;
                     padding: 6px 24px;
                     background: #18B587;
                     border-radius: 0;
                     font-size: 16px;
                     color: #ffffff;
+
+                    &.cancel{
+                        background: #C9C9C9;
+                        margin-right: 24px;
+                    }
                 }
 
                 .info {
@@ -170,9 +175,15 @@
                     }
 
                     #playlist-info-form {
-                        input {
-                            border: 1px solid #545454;
-                            height: 20px;
+                        input ,textarea{
+                            margin-top: 24px;
+                            width: 100%;
+                            padding: 14px 24px;
+                            background: #F4F4F4;
+                            color: #545454;
+                            border: 0;
+                            outline: none;
+                            resize: none;
                         }
                     }
 

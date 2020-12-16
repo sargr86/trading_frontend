@@ -6,10 +6,11 @@ import {ShowChannelComponent} from './show-channel/show-channel.component';
 import {SharedModule} from '@shared/shared.module';
 import {NgxPhotoEditorModule} from 'ngx-photo-editor';
 import { ShowSubscriptionsComponent } from './show-subscriptions/show-subscriptions.component';
+import { ChannelProfileComponent } from './show-channel/channel-profile/channel-profile.component';
 
 
 @NgModule({
-    declarations: [ShowChannelComponent, ShowSubscriptionsComponent],
+    declarations: [ShowChannelComponent, ShowSubscriptionsComponent, ChannelProfileComponent],
     imports: [
         CommonModule,
         ChannelsRoutingModule,

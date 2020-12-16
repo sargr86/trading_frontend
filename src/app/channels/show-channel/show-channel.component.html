@@ -188,10 +188,11 @@
                             <h2>Description</h2>
 
                             <div class="date">
-                                <span>Joined Oct 20, 2016</span>
+                                <span>Joined {{channelUser.channel.created_at|date: 'd MMM, yyyy'}}</span>
                                 <button class="btn" (click)="editMode=!editMode" *ngIf="!editMode">Edit</button>
                             </div>
                         </div>
+
                         <div class="description" *ngIf="!editMode">
                             <p>{{channelUser.channel.description}}</p>
                         </div>

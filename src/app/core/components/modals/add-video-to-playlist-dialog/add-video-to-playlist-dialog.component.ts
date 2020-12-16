@@ -19,6 +19,7 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
     playlist;
     searchedVideos = [];
 
+
     constructor(
         private modal: MatDialogRef<AddVideoToPlaylistDialogComponent>,
         private videoService: VideoService,

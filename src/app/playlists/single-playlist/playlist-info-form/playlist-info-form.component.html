@@ -1,0 +1,45 @@
+<div class="playlist">
+    <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
+    <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+    <button class="btn play-all">
+        <span class="material-icons">play_arrow</span>
+        Play All
+    </button>
+
+    <div class="info">
+        <form [formGroup]="playlistInfoForm" id="playlist-info-form">
+            <ng-container *ngIf="!editMode">
+
+                <h3>
+                    {{playlist.name}}
+                    <span class="material-icons" (click)="editPlaylistInfo(playlist)">create</span>
+                </h3>
+                <p>{{playlist.description}}</p>
+            </ng-container>
+            <ng-container *ngIf="editMode">
+                <input formControlName="name">
+                <span class="error" *ngIf="playlistInfoForm.get('name').hasError('required')">Playlist name is required</span>
+                <textarea formControlName="description"></textarea>
+            </ng-container>
+            <ng-container *ngIf="!editMode">
+                <h3>{{playlist.videos?.length}} videos</h3>
+                <h3 *ngIf="!editMode">Last updated on {{playlist.updated_at|date: 'd MMM, yyyy'}}</h3>
+                <div class="select" id="privacy-select">
+                    <mat-icon *ngIf="!playlist.privacy">visibility_off</mat-icon>
+                    <mat-icon class="material-icons" *ngIf="playlist.privacy">visibility_on</mat-icon>
+                    <select (change)="updatePrivacy($event.target.value, playlist)">
+                        <option [value]="0" [selected]="!playlist.privacy">Private</option>
+                        <option [value]="1" [selected]="playlist.privacy">Public</option>
+                    </select>
+                </div>
+            </ng-container>
+        </form>
+    </div>
+
+    <button class="btn cancel" *ngIf="editMode" (click)="editMode=!editMode">Cancel</button>
+    <button class="btn save-playlist-changes" *ngIf="editMode" (click)="savePlaylistInfoChanges()">Save
+    </button>
+
+
+    <button class="btn add-video" *ngIf="!editMode" (click)="openVideosModal()">Add Video</button>
+</div>

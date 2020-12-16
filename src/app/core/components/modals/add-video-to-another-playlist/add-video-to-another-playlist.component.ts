@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-add-video-to-another-playlist',
@@ -16,13 +16,14 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private playlistsService: PlaylistsService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private dialog: MatDialogRef<AddVideoToAnotherPlaylistComponent>
     ) {
         this.videoId = data.video_id;
         this.playlists = data.playlists;
         this.playlistForm = this.fb.group({
             video_id: [this.videoId, Validators.required],
-            playlist_ids: this.fb.array(
+            playlists: this.fb.array(
                 // this.fb.group({id: ['1']}),
                 // this.fb.group({id: ['2']}),
                 this.getPlaylistsFormGroup()
@@ -73,11 +74,14 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     }
 
     save() {
+        this.playlistsService.addVideoToOtherPlaylists(this.playlistForm.value).subscribe(dt => {
+            this.dialog.close();
+        });
         console.log(this.playlistForm.value);
     }
 
     get playlistIds() {
-        return this.playlistForm.controls.playlist_ids as FormArray;
+        return this.playlistForm.controls.playlists as FormArray;
     }
 
 }

@@ -24,16 +24,12 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
         this.playlistForm = this.fb.group({
             video_id: [this.videoId, Validators.required],
             playlists: this.fb.array(
-                // this.fb.group({id: ['1']}),
-                // this.fb.group({id: ['2']}),
                 this.getPlaylistsFormGroup()
             )
         });
-        console.log(this.playlistForm.value)
     }
 
     ngOnInit(): void {
-        console.log(this.playlistIds.controls)
     }
 
     getPlaylistsFormGroup() {
@@ -42,14 +38,13 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
             const found = p.videos.find(v => v.id === this.videoId);
             ret.push(this.fb.group({id: p.id, name: p.name, privacy: p.privacy, checked: !!found}));
         });
-        console.log(ret)
         return ret;
     }
 
     addToPlaylist(e, control) {
 
         control.patchValue({checked: e.target.checked});
-        console.log(this.playlistForm.value)
+        // console.log(this.playlistForm.value)
         // const value = id;
         // if (e.target.checked && !this.playlistIds.controls.find(c => c.value === value)) {
         //     // this.playlistIds.push(new FormControl(value));
@@ -77,7 +72,6 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
         this.playlistsService.addVideoToOtherPlaylists(this.playlistForm.value).subscribe(dt => {
             this.dialog.close();
         });
-        console.log(this.playlistForm.value);
     }
 
     get playlistIds() {

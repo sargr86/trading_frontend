@@ -10,7 +10,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class AddVideoToAnotherPlaylistComponent implements OnInit {
     playlists;
-    playlistForm: FormGroup;
+    saveToPlaylistsForm: FormGroup;
     videoId;
 
     constructor(
@@ -21,7 +21,7 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     ) {
         this.videoId = data.video_id;
         this.playlists = data.playlists;
-        this.playlistForm = this.fb.group({
+        this.saveToPlaylistsForm = this.fb.group({
             video_id: [this.videoId, Validators.required],
             playlists: this.fb.array(
                 // this.fb.group({id: ['1']}),
@@ -29,7 +29,7 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
                 this.getPlaylistsFormGroup()
             )
         });
-        console.log(this.playlistForm.value)
+        console.log(this.saveToPlaylistsForm.value)
     }
 
     ngOnInit(): void {
@@ -49,7 +49,7 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     addToPlaylist(e, control) {
 
         control.patchValue({checked: e.target.checked});
-        console.log(this.playlistForm.value)
+        console.log(this.saveToPlaylistsForm.value)
         // const value = id;
         // if (e.target.checked && !this.playlistIds.controls.find(c => c.value === value)) {
         //     // this.playlistIds.push(new FormControl(value));
@@ -74,14 +74,14 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     }
 
     save() {
-        this.playlistsService.addVideoToOtherPlaylists(this.playlistForm.value).subscribe(dt => {
+        this.playlistsService.addVideoToOtherPlaylists(this.saveToPlaylistsForm.value).subscribe(dt => {
             this.dialog.close();
         });
-        console.log(this.playlistForm.value);
+        console.log(this.saveToPlaylistsForm.value);
     }
 
     get playlistIds() {
-        return this.playlistForm.controls.playlists as FormArray;
+        return this.saveToPlaylistsForm.controls.playlists as FormArray;
     }
 
 }

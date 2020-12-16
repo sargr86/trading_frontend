@@ -1,11 +1,11 @@
 
 <div class="Add-playlist-popup">
-    <div class="save_to">
+    <div class="save-to-playlists-form">
         <h2>Save to...</h2>
-        <form [formGroup]="playlistForm">
+        <form [formGroup]="saveToPlaylistsForm">
             <ul formArrayName="playlists">
                 <li *ngFor="let c of playlistIds.controls;let i = index" class="playlist">
-        
+
                     <div class="d-flex justify-content-between" [formGroupName]="i">
                         <div class="d-flex align-items-center">
                             <input type="hidden" formControlName="id">
@@ -17,8 +17,8 @@
                     </div>
                 </li>
             </ul>
-        
-            <button class="btn" (click)="save()">Save</button>
+
+            <button class="btn save-playlists" (click)="save()">Save</button>
         </form>
     </div>
 

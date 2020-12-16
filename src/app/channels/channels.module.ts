@@ -7,10 +7,14 @@ import {SharedModule} from '@shared/shared.module';
 import {NgxPhotoEditorModule} from 'ngx-photo-editor';
 import { ShowSubscriptionsComponent } from './show-subscriptions/show-subscriptions.component';
 import { ChannelProfileComponent } from './show-channel/channel-profile/channel-profile.component';
+import { WatchlistTabComponent } from './show-channel/watchlist-tab/watchlist-tab.component';
+import { VideosTabComponent } from './show-channel/videos-tab/videos-tab.component';
+import { PlaylistsTabComponent } from './show-channel/playlists-tab/playlists-tab.component';
+import { AboutTabComponent } from './show-channel/about-tab/about-tab.component';
 
 
 @NgModule({
-    declarations: [ShowChannelComponent, ShowSubscriptionsComponent, ChannelProfileComponent],
+    declarations: [ShowChannelComponent, ShowSubscriptionsComponent, ChannelProfileComponent, WatchlistTabComponent, VideosTabComponent, PlaylistsTabComponent, AboutTabComponent],
     imports: [
         CommonModule,
         ChannelsRoutingModule,

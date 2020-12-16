@@ -1,5 +1,5 @@
 <form [formGroup]="playlistForm">
-    <ul formArrayName="playlist_ids">
+    <ul formArrayName="playlists">
         <li *ngFor="let c of playlistIds.controls;let i = index" class="playlist">
 
             <div [formGroupName]="i">

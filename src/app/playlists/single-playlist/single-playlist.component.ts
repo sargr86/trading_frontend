@@ -119,7 +119,7 @@ export class SinglePlaylistComponent implements OnInit {
                 width: '500px',
                 data: {video_id: video.id, playlists: dt}
             }).afterClosed().subscribe(result => {
-
+                this.getPlaylistDetails(this.playlist.id);
             });
         });
     }

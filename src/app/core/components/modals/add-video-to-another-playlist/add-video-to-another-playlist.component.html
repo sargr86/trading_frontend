@@ -1,8 +1,14 @@
-<form>
-    <ul>
-        <li *ngFor="let playlist of playlists;let i = index" class="playlist">
-            <input type="checkbox" [id]="'playlist-'+(i+1)" (change)="addToPlaylist($event, playlist.id)">
-            <label [for]="'playlist-'+(i+1)">{{playlist.name}}</label>
+<form [formGroup]="playlistForm">
+    <ul formArrayName="playlist_ids">
+        <li *ngFor="let c of playlistIds.controls;let i = index" class="playlist">
+
+            <div [formGroupName]="i">
+                <input type="hidden" formControlName="id">
+                <input type="checkbox" [id]="'playlist-'+(i+1)" formControlName="checked"
+                       (change)="addToPlaylist($event, c)">
+                <label [for]="'playlist-'+(i+1)">{{c.value.name}}</label>
+                <mat-icon>{{c.value.privacy? 'lock':'public'}}</mat-icon>
+            </div>
         </li>
     </ul>
 

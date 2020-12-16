@@ -38,9 +38,6 @@ export class ShowChannelComponent implements OnInit {
     searchVideosForm: FormGroup;
 
 
-    aboutForm: FormGroup;
-    descriptionUpdated = false;
-
     playlists = [];
     editMode = false;
 
@@ -60,12 +57,7 @@ export class ShowChannelComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
-        this.aboutForm = this.fb.group({
-                description: ['', Validators.required],
-                id: ['', Validators.required],
-                username: ['', Validators.required]
-            },
-        );
+
     }
 
     ngOnInit(): void {
@@ -73,7 +65,6 @@ export class ShowChannelComponent implements OnInit {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
                 if (dt) {
                     this.channelUser = dt;
-                    this.aboutForm.patchValue({username: dt.username, ...dt.channel});
                 }
             });
         }
@@ -82,20 +73,8 @@ export class ShowChannelComponent implements OnInit {
             this.currentUser = dt;
         });
 
-        this.videoService.getVideosByAuthor({}).subscribe(dt => {
-            this.watchlistVideos = dt;
-        });
-
-        this.getPlaylists();
-
-
     }
 
-    getPlaylists() {
-        this.playlistsService.get().subscribe(dt => {
-            this.playlists = dt;
-        });
-    }
 
     changeActiveTab(tab) {
         this.activeTab = tab;
@@ -119,11 +98,6 @@ export class ShowChannelComponent implements OnInit {
         this.router.navigate([route], {queryParams: params});
     }
 
-    openAddPlaylistModal() {
-        this.dialog.open(AddPlaylistDialogComponent).afterClosed().subscribe(dt => {
-            this.getPlaylists();
-        });
-    }
 
     searchVideos() {
 
@@ -151,13 +125,6 @@ export class ShowChannelComponent implements OnInit {
     }
 
 
-    saveChannelDescription() {
-        console.log(this.aboutForm.value)
-        this.descriptionUpdated = true;
-        this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
-            this.channelUser = dt;
-            this.editMode = false;
-        });
-    }
+
 
 }

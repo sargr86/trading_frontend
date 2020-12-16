@@ -1,0 +1,21 @@
+<div class="about-tab">
+    <form [formGroup]="aboutForm" id="channel-about-form">
+
+        <div class="info">
+            <h2>Description</h2>
+
+            <div class="date">
+                <span>Joined {{channelUser.channel.created_at|date: 'd MMM, yyyy'}}</span>
+                <button class="btn" (click)="editMode=!editMode" *ngIf="!editMode">Edit</button>
+            </div>
+        </div>
+
+        <div class="description" *ngIf="!editMode">
+            <p>{{channelUser.channel.description}}</p>
+        </div>
+        <textarea formControlName="description" *ngIf="!descriptionUpdated && editMode"></textarea>
+
+        <button class="save" *ngIf="editMode" (click)="saveChannelDescription()">Save</button>
+    </form>
+</div>
+

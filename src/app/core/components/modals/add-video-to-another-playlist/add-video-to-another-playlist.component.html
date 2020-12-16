@@ -1,16 +1,40 @@
-<form [formGroup]="playlistForm">
-    <ul formArrayName="playlists">
-        <li *ngFor="let c of playlistIds.controls;let i = index" class="playlist">
 
-            <div [formGroupName]="i">
-                <input type="hidden" formControlName="id">
-                <input type="checkbox" [id]="'playlist-'+(i+1)" formControlName="checked"
-                       (change)="addToPlaylist($event, c)">
-                <label [for]="'playlist-'+(i+1)">{{c.value.name}}</label>
-                <mat-icon>{{c.value.privacy? 'lock':'public'}}</mat-icon>
-            </div>
-        </li>
-    </ul>
+<div class="Add-playlist-popup">
+    <div class="save_to">
+        <h2>Save to...</h2>
+        <form [formGroup]="playlistForm">
+            <ul formArrayName="playlists">
+                <li *ngFor="let c of playlistIds.controls;let i = index" class="playlist">
+        
+                    <div class="d-flex justify-content-between" [formGroupName]="i">
+                        <div class="d-flex align-items-center">
+                            <input type="hidden" formControlName="id">
+                            <input type="checkbox" [id]="'playlist-'+(i+1)" formControlName="checked"
+                                   (change)="addToPlaylist($event, c)">
+                            <label [for]="'playlist-'+(i+1)">{{c.value.name}}</label>
+                        </div>
+                        <mat-icon>{{c.value.privacy? 'lock':'public'}}</mat-icon>
+                    </div>
+                </li>
+            </ul>
+        
+            <button class="btn" (click)="save()">Save</button>
+        </form>
+    </div>
 
-    <button (click)="save()">Save</button>
-</form>
+    <div class="new-playlist">
+        <h2><i class="fas fa-plus"></i> Create new playlist</h2>
+
+        <div class="input">
+            <input type="text" placeholder="Playlist Title">
+        </div>
+
+        <div class="select">
+            <select name="" id="">
+                <option value="">Visibility</option>
+            </select>
+        </div>
+        <button class="btn">Add playlist</button>
+    </div>
+
+</div>

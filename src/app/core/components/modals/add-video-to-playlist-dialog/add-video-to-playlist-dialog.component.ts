@@ -1,9 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {API_URL} from '@core/constants/global';
 import {PlaylistsService} from '@core/services/playlists.service';
+import {patternValidator} from '@core/helpers/pattern-validator';
+import {URL_PATTERN} from '@core/constants/patterns';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-add-video-to-playlist-dialog',
@@ -18,7 +21,10 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
     selectedVideos = [];
     playlist;
     searchedVideos = [];
+    validUrl = true;
+    searchVideoByUrlForm: FormGroup;
 
+    @ViewChild('urlInput') urlInput;
 
     constructor(
         private modal: MatDialogRef<AddVideoToPlaylistDialogComponent>,
@@ -26,6 +32,7 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
         private playlistsService: PlaylistsService,
         private getAuthUser: GetAuthUserPipe,
         @Inject(MAT_DIALOG_DATA) public data: any,
+        private fb: FormBuilder
     ) {
         this.playlist = data.playlist;
         this.authUser = this.getAuthUser.transform();
@@ -34,6 +41,10 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
     ngOnInit(): void {
         this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
             this.currentUser = dt;
+        });
+
+        this.searchVideoByUrlForm = this.fb.group({
+            url: ['', [Validators.required, patternValidator(URL_PATTERN)]]
         });
     }
 
@@ -51,6 +62,18 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
 
     changeTab(tab) {
         this.activeTab = tab;
+    }
+
+    getUrlString(e) {
+        const possibleUrl = e.clipboardData.getData('text');
+        this.validUrl = URL_PATTERN.test(possibleUrl);
+        if (this.validUrl) {
+            const parsedUrl = new URL(possibleUrl);
+            const id = parsedUrl.searchParams.get('id');
+            this.videoService.getVideoById({id}).subscribe(dt => {
+                this.searchedVideos = [dt];
+            });
+        }
     }
 
     searchVideos(e) {

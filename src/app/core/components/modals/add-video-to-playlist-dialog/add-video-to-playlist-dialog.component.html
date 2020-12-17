@@ -48,9 +48,38 @@
                 </div>
 
                 <div class="tab2" *ngIf="activeTab==='url'">
-                    <div class="input-wrap">
+                    <div class="input-wrap" id="search-by-url-input">
                         <div class="input">
-                            <input type="text" placeholder="Paste URL here">
+                            <form [formGroup]="searchVideoByUrlForm">
+                                <input type="text" placeholder="Paste URL here" #urlInput
+                                       (paste)="getUrlString($event)" formControlName="url">
+                                <span *ngIf="searchVideoByUrlForm.get('url').hasError('patternInvalid')" class="error">Please provide a valid URL</span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="playlist-item" [class.selected]="checkIfVideoSelected(video.id)"
+                         *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
+                        <div class="video-container">
+                            <div class="img">
+                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
+                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                            </div>
+
+                            <div class="details">
+                                <div class="title">
+                                    <h4 class="">{{video.name}}</h4>
+                                </div>
+                                <div class="shortened-details">
+                                    <span class="channel-name">{{video.channel.name}}</span>
+                                    <span class="dot">.</span>
+                                    <span class="watchers-count">17k watching</span>
+                                    <span class="dot">.</span>
+                                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
+                                </div>
+                                <p class="shortened-description">{{video.description}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

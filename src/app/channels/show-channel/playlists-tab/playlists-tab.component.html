@@ -1,6 +1,6 @@
 <div class="playlist-tab">
     <button class="btn new-playlist" (click)="openAddPlaylistModal()">Add New Playlist</button>
-    <table>
+    <table *ngIf="playlists.length > 0">
         <tr>
             <th>Playlist</th>
             <th>Visibility</th>
@@ -42,4 +42,7 @@
             </td>
         </tr>
     </table>
+    <div id="no-playlists-found">
+        <span *ngIf="playlists.length === 0">No playlists found for this channel</span>
+    </div>
 </div>

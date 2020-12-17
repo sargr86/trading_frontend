@@ -24,8 +24,8 @@ export class PlaylistsService {
         return this.httpClient.post<any>(`${API_URL}playlists/add-video-to-other-playlists`, params);
     }
 
-    get() {
-        return this.httpClient.get<any>(`${API_URL}playlists/get`, {});
+    get(params) {
+        return this.httpClient.get<any>(`${API_URL}playlists/get`, {params});
     }
 
     getById(params) {

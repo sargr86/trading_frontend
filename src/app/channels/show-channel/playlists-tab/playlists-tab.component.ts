@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
@@ -14,6 +14,8 @@ export class PlaylistsTabComponent implements OnInit {
     playlists = [];
     apiUrl = API_URL;
 
+    @Input('channelUser') channelUser;
+
     constructor(
         public router: Router,
         private playlistsService: PlaylistsService,
@@ -28,13 +30,13 @@ export class PlaylistsTabComponent implements OnInit {
 
 
     getPlaylists() {
-        this.playlistsService.get().subscribe(dt => {
+        this.playlistsService.get({channel_id: this.channelUser.channel.id}).subscribe(dt => {
             this.playlists = dt;
         });
     }
 
     openAddPlaylistModal() {
-        this.dialog.open(AddPlaylistDialogComponent).afterClosed().subscribe(dt => {
+        this.dialog.open(AddPlaylistDialogComponent, {data: {channel_id: this.channelUser.channel.id}}).afterClosed().subscribe(dt => {
             this.getPlaylists();
         });
     }

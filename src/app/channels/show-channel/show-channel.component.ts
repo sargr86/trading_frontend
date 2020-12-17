@@ -82,9 +82,6 @@ export class ShowChannelComponent implements OnInit {
     }
 
 
-
-
-
     searchVideos() {
 
         const s = this.searchVideosForm.value;

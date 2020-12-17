@@ -16,7 +16,7 @@
                     </li>
                 </ul>
                 <form [formGroup]="searchVideosForm">
-                    <div class="watchlist-search">
+                    <div class="watchlist-search" *ngIf="activeTab.name!=='About'">
                         <input class="watchlist-input" placeholder="Search" formControlName="search"
                                (keyup.enter)="searchVideos()">
                         <i class="fas fa-search"></i>

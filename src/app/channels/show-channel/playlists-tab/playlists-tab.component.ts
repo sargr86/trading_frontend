@@ -25,7 +25,12 @@ export class PlaylistsTabComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.getPlaylists();
+        const s = localStorage.getItem('search');
+        if (!s) {
+            this.getPlaylists();
+        } else {
+            this.getSearchResults(s);
+        }
     }
 
 
@@ -38,6 +43,13 @@ export class PlaylistsTabComponent implements OnInit {
     openAddPlaylistModal() {
         this.dialog.open(AddPlaylistDialogComponent, {data: {channel_id: this.channelUser.channel.id}}).afterClosed().subscribe(dt => {
             this.getPlaylists();
+        });
+    }
+
+    getSearchResults(s) {
+        console.log(s)
+        this.playlistsService.searchPlaylists({search: s}).subscribe(dt => {
+            this.playlists = dt;
         });
     }
 

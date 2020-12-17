@@ -22,6 +22,7 @@ export class VideosTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.channelUser)
     }
 
     openVideoPage(video, username) {
@@ -38,6 +39,10 @@ export class VideosTabComponent implements OnInit {
 
 
         this.router.navigate([route], {queryParams: params});
+    }
+
+    getSearchResults(dt) {
+        this.channelUser.videos = dt;
     }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
@@ -13,16 +13,19 @@ import {SubjectService} from '@core/services/subject.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import {PlaylistsService} from '@core/services/playlists.service';
+import {WatchlistTabComponent} from '@app/channels/show-channel/watchlist-tab/watchlist-tab.component';
+import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-tab.component';
+import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
+import {search} from '@ctrl/ngx-emoji-mart/svgs';
 
 @Component({
     selector: 'app-show-channel',
     templateUrl: './show-channel.component.html',
     styleUrls: ['./show-channel.component.scss']
 })
-export class ShowChannelComponent implements OnInit {
+export class ShowChannelComponent implements OnInit, OnDestroy {
 
     owlOptions: OwlOptions = OWL_OPTIONS;
-    currentUser: User;
     watchlistVideos = [];
     authUser;
 
@@ -40,6 +43,10 @@ export class ShowChannelComponent implements OnInit {
 
     playlists = [];
     editMode = false;
+
+    @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
+    @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
+    @ViewChild(PlaylistsTabComponent) playlistsTab: PlaylistsTabComponent;
 
     constructor(
         private videoService: VideoService,
@@ -61,6 +68,7 @@ export class ShowChannelComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        localStorage.setItem('search', '');
         if (this.passedUsername) {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
                 if (dt) {
@@ -69,9 +77,6 @@ export class ShowChannelComponent implements OnInit {
             });
         }
 
-        this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
-            this.currentUser = dt;
-        });
 
     }
 
@@ -81,33 +86,32 @@ export class ShowChannelComponent implements OnInit {
         this.searchVideos();
     }
 
-
     searchVideos() {
 
         const s = this.searchVideosForm.value;
-        if (s.search) {
-            if (this.activeTab.name === 'Watchlist') {
-                this.searchInVideosByAuthor(s);
-            } else if (this.activeTab.name === 'Videos') {
-                this.searchInUserVideos(s);
-            }
+        localStorage.setItem('search', s.search);
+        if (this.activeTab.name === 'Watchlist') {
+            this.searchInVideosByAuthor(s.search);
+        } else if (this.activeTab.name === 'Videos') {
+            this.searchInUserVideos(s);
         }
     }
 
-    searchInVideosByAuthor(search) {
-        this.videoService.searchInVideosByAuthor(search).subscribe(dt => {
-            this.watchlistVideos = dt;
+    searchInVideosByAuthor(s) {
+        if (this.watchListTab) {
+            this.watchListTab.getSearchResults(s);
+        }
+
+    }
+
+    searchInUserVideos(s) {
+        this.videoService.searchInUserVideos({user_id: this.channelUser.id, ...s}).subscribe(dt => {
+            this.videosTab.getSearchResults(dt?.videos);
         });
     }
 
-    searchInUserVideos(search) {
-        this.currentUser.videos = [];
-        this.videoService.searchInUserVideos({user_id: this.authUser.id, ...search}).subscribe(dt => {
-            this.currentUser.videos = dt.videos;
-        });
+    ngOnDestroy() {
     }
-
-
 
 
 }

@@ -71,7 +71,7 @@ export class PlaylistVideosComponent implements OnInit {
 
 
     addToAnotherPlaylist(video) {
-        this.playlistsService.get().subscribe(dt => {
+        this.playlistsService.get({}).subscribe(dt => {
             this.dialog.open(AddVideoToAnotherPlaylistComponent, {
                 width: '500px',
                 data: {video_id: video.id, playlists: dt}

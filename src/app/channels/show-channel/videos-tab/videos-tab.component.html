@@ -2,19 +2,19 @@
 <owl-carousel-o [options]="owlOptions">
     <ng-container *ngFor="let video of channelUser.videos">
         <ng-template carouselSlide>
-            <div class="item main-carousel-item" (click)="openVideoPage(video, authUser.username)">
+            <div class="item main-carousel-item" (click)="openVideoPage(video, channelUser.username)">
                 <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
                      *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
                 <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
                      *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
                 <div class="main-item-block">
-                    <img class="avatar" *ngIf="authUser.avatar"
-                         [src]="apiUrl + 'uploads/avatars/' + authUser.avatar">
-                    <img class="avatar" *ngIf="!authUser.avatar"
+                    <img class="avatar" *ngIf="channelUser.avatar"
+                         [src]="apiUrl + 'uploads/avatars/' + channelUser.avatar">
+                    <img class="avatar" *ngIf="!channelUser.avatar"
                          [src]="'assets/img/default-user.png'">
                     <div>
                         <p class="main-text-1">{{video.name}}</p>
-                        <p class="main-text-2">{{authUser.full_name}}</p>
+                        <p class="main-text-2">{{channelUser.full_name}}</p>
                         <p class="main-text-3">17k watching</p>
                     </div>
                 </div>

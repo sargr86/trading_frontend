@@ -94,6 +94,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
             this.searchInVideosByAuthor(s.search);
         } else if (this.activeTab.name === 'Videos') {
             this.searchInUserVideos(s);
+        } else if (this.activeTab.name === 'Playlists') {
+            this.searchInPlaylists(s);
         }
     }
 
@@ -108,6 +110,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         this.videoService.searchInUserVideos({user_id: this.channelUser.id, ...s}).subscribe(dt => {
             this.videosTab.getSearchResults(dt?.videos);
         });
+    }
+
+    searchInPlaylists(s) {
+        if (this.playlistsTab) {
+            this.playlistsTab.getSearchResults(s.search);
+        }
     }
 
     ngOnDestroy() {

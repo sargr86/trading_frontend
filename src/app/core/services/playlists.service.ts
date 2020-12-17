@@ -32,6 +32,10 @@ export class PlaylistsService {
         return this.httpClient.get<any>(`${API_URL}playlists/get-by-id`, {params});
     }
 
+    searchPlaylists(params) {
+        return this.httpClient.get<any>(`${API_URL}playlists/search`, {params});
+    }
+
     updatePrivacy(params) {
         return this.httpClient.put<any>(`${API_URL}playlists/update-privacy`, params);
     }
@@ -44,7 +48,7 @@ export class PlaylistsService {
         return this.httpClient.put<any>(`${API_URL}playlists/update-playlist-info`, params);
     }
 
-    changePlaylistThumbnail(params){
+    changePlaylistThumbnail(params) {
         return this.httpClient.put<any>(`${API_URL}playlists/change-thumbnail`, params);
     }
 

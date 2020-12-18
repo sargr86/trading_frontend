@@ -716,13 +716,35 @@ nav.home-header {
 .ads-info {
     display: flex;
     margin-bottom: 12px;
+    
+    img {
+        margin-right: 8px;
+        width: 115px;
+        height: 66px;
+        object-fit: cover;
+    }
+
+    .main-text-1 {
+        font-size: 14px;
+        line-height: 16px;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .main-text-2{
+        margin-top: 4px;
+        margin-bottom: 0;
+    }
+
+    .main-text-3{
+        margin: 0;
+    }
+    
 }
 
-.ads-info img {
-    margin-right: 8px;
-    object-fit: cover;
-}
-
+ 
 .chat-content {
     //margin-bottom: 40px;
     box-shadow: 0 0 6px #0000001A;

@@ -7,9 +7,10 @@ import {SharedModule} from '@shared/shared.module';
 
 import {PlayVideoComponent} from '../videos/play-video/play-video.component';
 import { ShowSavedVideosComponent } from './show-saved-videos/show-saved-videos.component';
+import { VideoSuggestionsComponent } from './play-video/video-suggestions/video-suggestions.component';
 
 @NgModule({
-    declarations: [ShowVideosComponent, PlayVideoComponent, ShowSavedVideosComponent],
+    declarations: [ShowVideosComponent, PlayVideoComponent, ShowSavedVideosComponent, VideoSuggestionsComponent],
     exports: [
     ],
     imports: [

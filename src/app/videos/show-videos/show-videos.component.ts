@@ -15,7 +15,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
     styleUrls: ['./show-videos.component.scss']
 })
 export class ShowVideosComponent implements OnInit {
-    videos = [];
+    items = {videos: [], playlists: []};
     channelsVideos = [];
     apiUrl = API_URL;
     search;
@@ -43,7 +43,7 @@ export class ShowVideosComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
 
         this.videoService.get({}).subscribe(dt => {
-            this.videos = dt;
+            this.items = dt;
         });
 
 
@@ -77,5 +77,11 @@ export class ShowVideosComponent implements OnInit {
 
     openChannelPage(channel, username) {
         this.router.navigate(['channels/show'], {queryParams: {username}});
+    }
+
+    openPlaylistPage(playlist, firstVideoId) {
+        const route = 'videos/play';
+        const params = {id: firstVideoId, playlist_id: playlist.id};
+        this.router.navigate([route], {queryParams: params});
     }
 }

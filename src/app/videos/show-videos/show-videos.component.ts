@@ -42,7 +42,7 @@ export class ShowVideosComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
 
-        this.videoService.get({}).subscribe(dt => {
+        this.videoService.get({withPlaylists: true}).subscribe(dt => {
             this.items = dt;
         });
 
@@ -78,6 +78,7 @@ export class ShowVideosComponent implements OnInit {
     openChannelPage(channel, username) {
         this.router.navigate(['channels/show'], {queryParams: {username}});
     }
+
 
     openPlaylistPage(playlist, firstVideoId) {
         const route = 'videos/play';

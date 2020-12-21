@@ -7,6 +7,7 @@ import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
+import {PlaylistsService} from '@core/services/playlists.service';
 
 @Component({
     selector: 'app-play-video',
@@ -39,7 +40,8 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         public router: Router,
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private playlistsService: PlaylistsService
     ) {
         this.authUser = this.getAuthUser.transform();
 
@@ -48,12 +50,15 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
 
         const videoId = this.route.snapshot.queryParams.id;
-        this.videoService.getVideoById({id: videoId}).subscribe(dt => {
+        const params = {id: videoId};
+
+        this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
             }
         });
+
 
 
     }

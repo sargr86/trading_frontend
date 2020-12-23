@@ -55,4 +55,8 @@ export class PlaylistsService {
     removeVideoFromPlaylist(params) {
         return this.httpClient.delete<any>(`${API_URL}playlists/remove-video`, {params});
     }
+
+    removePlaylist(params) {
+        return this.httpClient.delete<any>(`${API_URL}playlists/remove`, {params});
+    }
 }

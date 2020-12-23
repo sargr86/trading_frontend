@@ -1,47 +1,49 @@
 <div class="playlist-tab">
-    <button class="btn new-playlist" (click)="openAddPlaylistModal()">Add New Playlist</button>
-    <table *ngIf="playlists.length > 0">
-        <tr>
-            <th>Playlist</th>
-            <th>Visibility</th>
-            <th>Last updated</th>
-            <th>Video count</th>
-            <th></th>
-        </tr>
-        <tr *ngFor="let playlist of playlists"
-            (click)="router.navigate(['playlists/single/'+playlist.id])">
-            <td>
-                <div class="img-info">
-                    <img *ngIf="playlist.thumbnail"
-                         [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
-                    <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
-                    <div class="info">
-                        <h3>{{playlist.name}}</h3>
-                        <p>{{playlist.description}}</p>
+    <ng-container *ngIf="authUser.username === channelUser.username">
+        <button class="btn new-playlist" (click)="openAddPlaylistModal()">Add New Playlist</button>
+        <table *ngIf="playlists.length > 0">
+            <tr>
+                <th>Playlist</th>
+                <th>Visibility</th>
+                <th>Last updated</th>
+                <th>Video count</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let playlist of playlists" (click)="goToEditPage(playlist)">
+                <td>
+                    <div class="img-info">
+                        <img *ngIf="playlist.thumbnail"
+                             [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
+                        <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+                        <div class="info">
+                            <h3>{{playlist.name}}</h3>
+                            <p>{{playlist.description}}</p>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>
-                <ng-container *ngIf="!playlist.privacy">
-                    <mat-icon>visibility_off</mat-icon>
-                    <span>Private</span>
-                </ng-container>
-                <ng-container *ngIf="playlist.privacy">
-                    <mat-icon>visibility_on</mat-icon>
-                    <span>Public</span>
-                </ng-container>
-            </td>
-            <td>
-                <span>{{playlist.updated_at|date: 'd MMM, yyyy'}}</span>
-            </td>
-            <td>
-                <span>{{playlist.videos.length}}</span>
-            </td>
-            <td>
-                <span class="material-icons">create</span>
-            </td>
-        </tr>
-    </table>
+                </td>
+                <td>
+                    <ng-container *ngIf="!playlist.privacy">
+                        <mat-icon>visibility_off</mat-icon>
+                        <span>Private</span>
+                    </ng-container>
+                    <ng-container *ngIf="playlist.privacy">
+                        <mat-icon>visibility_on</mat-icon>
+                        <span>Public</span>
+                    </ng-container>
+                </td>
+                <td>
+                    <span>{{playlist.updated_at|date: 'd MMM, yyyy'}}</span>
+                </td>
+                <td>
+                    <span>{{playlist.videos.length}}</span>
+                </td>
+                <td>
+                    <span class="material-icons" (click)="goToEditPage(playlist)">create</span>
+                    <mat-icon (click)="removePlaylist(playlist.id)">delete</mat-icon>
+                </td>
+            </tr>
+        </table>
+    </ng-container>
     <div id="no-playlists-found">
         <span *ngIf="playlists.length === 0">No playlists found for this channel</span>
     </div>

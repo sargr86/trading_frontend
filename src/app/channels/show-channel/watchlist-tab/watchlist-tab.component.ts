@@ -38,7 +38,6 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     openVideoPage(video, username) {
-        console.log(username);
         let route;
         let params;
         if (video.status === 'live') {

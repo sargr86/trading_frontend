@@ -22,7 +22,6 @@ export class VideosTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.channelUser)
     }
 
     openVideoPage(video, username) {

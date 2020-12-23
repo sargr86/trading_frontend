@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {MatDialog} from '@angular/material/dialog';
 import {API_URL} from '@core/constants/global';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-playlist-videos',
@@ -15,6 +16,7 @@ import {API_URL} from '@core/constants/global';
 export class PlaylistVideosComponent implements OnInit {
 
     apiUrl = API_URL;
+    authUser;
 
 
     @Input('playlist') playlist;
@@ -25,10 +27,12 @@ export class PlaylistVideosComponent implements OnInit {
         private route: ActivatedRoute,
         private playlistsService: PlaylistsService,
         private dialog: MatDialog,
+        private getAuthUser: GetAuthUserPipe
     ) {
     }
 
     ngOnInit(): void {
+        this.authUser = this.getAuthUser.transform();
     }
 
     openVideoPage(video) {
@@ -72,7 +76,7 @@ export class PlaylistVideosComponent implements OnInit {
 
 
     addToAnotherPlaylist(video) {
-        this.playlistsService.get({}).subscribe(dt => {
+        this.playlistsService.get({channel_id: this.authUser?.channel?.id}).subscribe(dt => {
             this.dialog.open(AddVideoToAnotherPlaylistComponent, {
                 width: '500px',
                 data: {video_id: video.id, playlists: dt}

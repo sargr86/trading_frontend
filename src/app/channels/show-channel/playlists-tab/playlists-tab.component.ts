@@ -15,12 +15,14 @@ export class PlaylistsTabComponent implements OnInit {
     apiUrl = API_URL;
 
     @Input('channelUser') channelUser;
+    @Input('authUser') authUser;
 
     constructor(
         public router: Router,
         private playlistsService: PlaylistsService,
         private dialog: MatDialog
     ) {
+
     }
 
 
@@ -50,6 +52,16 @@ export class PlaylistsTabComponent implements OnInit {
         console.log(s)
         this.playlistsService.searchPlaylists({search: s}).subscribe(dt => {
             this.playlists = dt;
+        });
+    }
+
+    goToEditPage(playlist) {
+        this.router.navigate(['playlists/single/' + playlist.id]);
+    }
+
+    removePlaylist(id) {
+        this.playlistsService.removePlaylist({id}).subscribe(dt => {
+
         });
     }
 

@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-video-suggestions',
@@ -27,14 +29,16 @@ export class VideoSuggestionsComponent implements OnInit {
         private route: ActivatedRoute,
         private playlistsService: PlaylistsService,
         private videoService: VideoService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        public router: Router,
+        private dialog: MatDialog
     ) {
         this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
         this.urlParams = this.route.snapshot.queryParams;
-        this.videoId = this.urlParams?.id;
+        this.videoId = +this.urlParams?.id;
         this.playlistId = this.urlParams?.playlist_id;
         this.playlistOpened = !!this.playlistId;
         if (this.playlistOpened) {
@@ -47,7 +51,34 @@ export class VideoSuggestionsComponent implements OnInit {
             this.videoSuggestions = dt;
         });
 
-        console.log(!!this.playlistId)
+    }
+
+     openVideoPage(video) {
+        const route = '/videos/play';
+        const params = {id: video.id, playlist_id: this.playlistData?.id};
+
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate([route], {queryParams: params})
+        );
+
+    }
+
+    removeVideoFromPlaylist(video, playlistId) {
+        this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.playlistsService.removeVideoFromPlaylist({
+                    playlist_id: playlistId,
+                    video_id: video.id
+                }).subscribe(dt => {
+                    const oldVideoIndex = this.playlistData.videos.indexOf(video);
+                    this.playlistData.videos = dt.videos;
+                    const nextVideo = this.playlistData.videos[oldVideoIndex];
+                    if (nextVideo) {
+                        this.openVideoPage(nextVideo);
+                    }
+                });
+            }
+        });
     }
 
 }

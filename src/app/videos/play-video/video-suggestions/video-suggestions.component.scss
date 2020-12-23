@@ -1,5 +1,5 @@
 .playlist-wrap {
-    box-shadow: 0px 0px 6px #0000001A;
+    box-shadow: 0 0 6px #0000001A;
 
     ::-webkit-scrollbar {
         width: 6px;
@@ -40,6 +40,10 @@
             }
         }
 
+        .playlist-video {
+            cursor: pointer;
+        }
+
         img {
             width: 68px;
             height: 51px;
@@ -67,4 +71,14 @@
             }
         }
     }
+
+
+}
+
+.suggested-video {
+    cursor: pointer;
+}
+
+.selected {
+    border: 1px solid #555;
 }

@@ -53,6 +53,7 @@ export class PlaylistVideosComponent implements OnInit {
         const params = {playlist_id: playlistId, ...{thumbnail}};
         this.playlistsService.changePlaylistThumbnail(params).subscribe(dt => {
             this.playlist = dt;
+            this.refreshPlaylist.emit();
         });
     }
 

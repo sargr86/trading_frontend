@@ -25,7 +25,11 @@ export class VideoService {
     }
 
     removeVideoThumbnail(params) {
-        return this.httpClient.delete<any>(`${API_URL}videos/remove-video-thumbnail`, params);
+        return this.httpClient.delete<any>(`${API_URL}videos/remove-video-thumbnail`, {params});
+    }
+
+    removeVideo(params) {
+        return this.httpClient.delete<any>(`${API_URL}videos/remove`, {params});
     }
 
     saveRecordedData(params) {
@@ -65,7 +69,7 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/search-in-user-videos`, {params});
     }
 
-    searchInAllVideos(params){
+    searchInAllVideos(params) {
         return this.httpClient.get<any>(`${API_URL}videos/search-in-all-videos`, {params});
     }
 

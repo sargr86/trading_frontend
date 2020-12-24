@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
+import {VideoService} from '@core/services/video.service';
 
 @Component({
     selector: 'app-videos-tab',
@@ -17,7 +18,8 @@ export class VideosTabComponent implements OnInit {
     @Input('authUser') authUser;
 
     constructor(
-        public router: Router
+        public router: Router,
+        private videoService: VideoService
     ) {
     }
 
@@ -42,6 +44,13 @@ export class VideosTabComponent implements OnInit {
 
     getSearchResults(dt) {
         this.channelUser.videos = dt;
+    }
+
+    removeVideo(video) {
+        console.log(video)
+        this.videoService.removeVideo({id: video.id}).subscribe(dt => {
+            this.channelUser.videos = dt;
+        });
     }
 
 }

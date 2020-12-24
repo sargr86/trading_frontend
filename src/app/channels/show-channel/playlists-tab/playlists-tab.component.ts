@@ -59,9 +59,9 @@ export class PlaylistsTabComponent implements OnInit {
         this.router.navigate(['playlists/single/' + playlist.id]);
     }
 
-    removePlaylist(id) {
-        this.playlistsService.removePlaylist({id}).subscribe(dt => {
-
+    removePlaylist(id, channelId) {
+        this.playlistsService.removePlaylist({id, channel_id: channelId}).subscribe(dt => {
+            this.playlists = dt;
         });
     }
 

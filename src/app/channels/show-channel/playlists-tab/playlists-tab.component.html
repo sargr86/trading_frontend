@@ -44,6 +44,9 @@
             </tr>
         </table>
     </ng-container>
+    <ng-container *ngIf="authUser.username !== channelUser.username">
+        <h1>Different users</h1>
+    </ng-container>
     <div id="no-playlists-found">
         <span *ngIf="playlists.length === 0">No playlists found for this channel</span>
     </div>

@@ -9,6 +9,7 @@
                 <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
                      (click)="openVideoPage(video, channelUser.username)"
                      *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                     <div class="overlay"></div>
                 <div class="main-item-block">
                     <img class="avatar" *ngIf="channelUser.avatar"
                          [src]="apiUrl + 'uploads/avatars/' + channelUser.avatar">
@@ -19,7 +20,7 @@
                         <p class="main-text-2">{{channelUser.full_name}}</p>
                         <p class="main-text-3">17k watching</p>
                     </div>
-                    <div>
+                    <div class="removeVideo">
                         <mat-icon (click)="removeVideo(video)">delete</mat-icon>
                     </div>
                 </div>

@@ -30,7 +30,6 @@ export class AboutTabComponent implements OnInit {
     }
 
     saveChannelDescription() {
-        console.log(this.aboutForm.value)
         this.descriptionUpdated = true;
         this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
             this.channelUser = dt;

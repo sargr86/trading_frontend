@@ -45,96 +45,22 @@
         </table>
     </ng-container>
     <ng-container *ngIf="authUser.username !== channelUser.username">
-        <p class="trending-text">David Blaine Ascension</p>
-         
+        <p class="trending-text">Created playlists</p>
+
         <div class="playlists-items">
-            <div class="item">
-                <div class="top-wrap">
-                    <img src="assets/img/item-2.png" alt="">
+            <div class="item" *ngFor="let playlist of playlists">
+                <div class="top-wrap" (click)="openPlaylistPage(playlist, playlist.videos[0]?.id)">
+                    <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
+                    <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
                     <div class="overlay-info">
                         <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>Playlist name</p>
-                        <p>109 video</p>
+                        <p>{{playlist.name}}</p>
+                        <p class="video-count">{{playlist.videos.length + (playlist.videos.length === 1 ? ' video' : ' videos')}}</p>
                     </div>
                 </div>
                 <div class="info">
-                    <h2>Playlist name</h2>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="top-wrap">
-                    <img src="assets/img/jp-valeryunsplash.png" alt="">
-                    <div class="overlay-info">
-                        <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>Playlist name</p>
-                        <p>109 video</p>
-                    </div>
-                </div>
-                <div class="info">
-                    <h2>Playlist name</h2>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="top-wrap">
-                    <img src="assets/img/jp-valeryunsplash.png" alt="">
-                    <div class="overlay-info">
-                        <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>Playlist name</p>
-                        <p>109 video</p>
-                    </div>
-                </div>
-                <div class="info">
-                    <h2>Playlist name</h2>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="top-wrap">
-                    <img src="assets/img/jp-valeryunsplash.png" alt="">
-                    <div class="overlay-info">
-                        <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>Playlist name</p>
-                        <p>109 video</p>
-                    </div>
-                </div>
-                <div class="info">
-                    <h2>Playlist name</h2>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="top-wrap">
-                    <img src="assets/img/jp-valeryunsplash.png" alt="">
-                    <div class="overlay-info">
-                        <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>Playlist name</p>
-                        <p>109 video</p>
-                    </div>
-                </div>
-                <div class="info">
-                    <h2>Playlist name</h2>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="top-wrap">
-                    <img src="assets/img/jp-valeryunsplash.png" alt="">
-                    <div class="overlay-info">
-                        <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>Playlist name</p>
-                        <p>109 video</p>
-                    </div>
-                </div>
-                <div class="info">
-                    <h2>Playlist name</h2>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+                    <h2>{{playlist.name}}</h2>
+                    <p>{{playlist.description}}</p>
                 </div>
             </div>
         </div>

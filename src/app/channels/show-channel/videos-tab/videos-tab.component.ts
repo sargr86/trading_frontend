@@ -48,8 +48,8 @@ export class VideosTabComponent implements OnInit {
 
     removeVideo(video) {
         console.log(video)
-        this.videoService.removeVideo({id: video.id}).subscribe(dt => {
-            this.channelUser.videos = dt;
+        this.videoService.removeVideo({id: video.id, username: this.authUser.username}).subscribe(dt => {
+            this.channelUser.videos = dt.videos;
         });
     }
 

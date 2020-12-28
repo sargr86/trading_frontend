@@ -51,7 +51,7 @@ export class StartStreamingFormComponent implements OnInit {
             tags: [[], Validators.required],
             sessionName: [this.sessionName],
             myUserName: [this.authUser.username],
-            thumbnail: [''], // Validators.required
+            thumbnail: ['', Validators.required],
             status: ['live']
         });
     }
@@ -108,12 +108,13 @@ export class StartStreamingFormComponent implements OnInit {
     }
 
     submit() {
-        console.log(+this.startStreamingForm.value.category_id)
         this.isSubmitted = true;
-        // if (this.startStreamingForm.valid) {
-        console.log(this.videoCategories.find(c => c.id === +this.startStreamingForm.value.category_id))
-        this.formReady.emit({categoryName: this.videoCategories.find(c => c.id === +this.startStreamingForm.value.category_id).name, ...this.startStreamingForm.value});
-        // }
+        if (this.startStreamingForm.valid) {
+            this.formReady.emit({
+                categoryName: this.videoCategories.find(c => c.id === +this.startStreamingForm.value.category_id)?.name,
+                ...this.startStreamingForm.value
+            });
+        }
     }
 
     get streamName(): AbstractControl {

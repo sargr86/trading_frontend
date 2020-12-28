@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="description" *ngIf="!editMode">
+        <div class="description" *ngIf="!editMode && channelUser?.channel.description">
             <p>{{channelUser.channel.description}}</p>
         </div>
         <textarea formControlName="description" *ngIf="!descriptionUpdated && editMode"></textarea>

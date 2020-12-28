@@ -48,6 +48,12 @@ export class PlaylistsTabComponent implements OnInit {
         });
     }
 
+    openPlaylistPage(playlist, firstVideoId) {
+        const route = 'videos/play';
+        const params = {id: firstVideoId, playlist_id: playlist.id};
+        this.router.navigate([route], {queryParams: params});
+    }
+
     getSearchResults(s) {
         console.log(s)
         this.playlistsService.searchPlaylists({search: s}).subscribe(dt => {

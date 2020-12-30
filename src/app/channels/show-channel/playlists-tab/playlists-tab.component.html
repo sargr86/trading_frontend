@@ -12,9 +12,10 @@
             <tr *ngFor="let playlist of playlists">
                 <td>
                     <div class="img-info">
-                        <img *ngIf="playlist.thumbnail"
+                        <img *ngIf="playlist.thumbnail" (click)="goToEditPage(playlist)"
                              [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
-                        <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+                        <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
+                             (click)="goToEditPage(playlist)">
                         <div class="info">
                             <h3>{{playlist.name}}</h3>
                             <p>{{playlist.description}}</p>
@@ -45,24 +46,28 @@
         </table>
     </ng-container>
     <ng-container *ngIf="authUser.username !== channelUser.username">
-        <p class="trending-text">Created playlists</p>
+<!--        <p class="trending-text">Created playlists</p>-->
 
         <div class="playlists-items">
-            <div class="item" *ngFor="let playlist of playlists">
-                <div class="top-wrap" (click)="openPlaylistPage(playlist, playlist.videos[0]?.id)">
-                    <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
-                    <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
-                    <div class="overlay-info">
-                        <p class="icon"><span class="material-icons">playlist_play</span></p>
-                        <p>{{playlist.name}}</p>
-                        <p class="video-count">{{playlist.videos.length + (playlist.videos.length === 1 ? ' video' : ' videos')}}</p>
+            <ng-container *ngFor="let playlist of playlists">
+
+
+                <div class="item" *ngIf="playlist?.videos?.length > 0">
+                    <div class="top-wrap" (click)="openPlaylistPage(playlist, playlist.videos[0]?.id)">
+                        <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
+                        <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+                        <div class="overlay-info">
+                            <p class="icon"><span class="material-icons">playlist_play</span></p>
+                            <p>{{playlist.name}}</p>
+                            <p class="video-count">{{playlist.videos.length + (playlist.videos.length === 1 ? ' video' : ' videos')}}</p>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <h2>{{playlist.name}}</h2>
+                        <p>{{playlist.description}}</p>
                     </div>
                 </div>
-                <div class="info">
-                    <h2>{{playlist.name}}</h2>
-                    <p>{{playlist.description}}</p>
-                </div>
-            </div>
+            </ng-container>
         </div>
 
     </ng-container>

@@ -65,7 +65,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
 
     checkUserVideoConnection(videoData) {
-        const userVideoConnection = videoData.users_vids.find(u => u.id === this.authUser.id);
+        const userVideoConnection = videoData?.users_vids.find(u => u.id === this.authUser.id);
         if (!userVideoConnection) {
             return this.userVideoConnection;
         } else {

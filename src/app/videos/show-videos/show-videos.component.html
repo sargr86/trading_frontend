@@ -10,7 +10,9 @@
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>
                 <div class="shortened-details">
-                    <span class="channel-name">{{video.user.channel.name}}</span>
+                    <span class="channel-name" (click)="openChannelPage(video.user.channel, video.user.username)">
+                        {{video.user.channel.name}}
+                    </span>
                     <span class="dot">.</span>
                     <span class="watchers-count">17k watching</span>
                     <span class="dot">.</span>

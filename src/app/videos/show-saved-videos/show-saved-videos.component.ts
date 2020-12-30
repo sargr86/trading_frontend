@@ -58,4 +58,8 @@ export class ShowSavedVideosComponent implements OnInit {
         this.router.navigate([route], {queryParams: params});
     }
 
+    openChannelPage(channel, username) {
+        this.router.navigate(['channels/show'], {queryParams: {username}});
+    }
+
 }

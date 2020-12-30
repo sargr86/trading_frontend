@@ -53,9 +53,9 @@ export class VideoSuggestionsComponent implements OnInit {
 
     }
 
-     openVideoPage(video) {
+    openVideoPage(video, suggestedVideo = false) {
         const route = '/videos/play';
-        const params = {id: video.id, playlist_id: this.playlistData?.id};
+        const params = {id: video.id, playlist_id: suggestedVideo && this.playlistData ? this.playlistData.id : null};
 
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([route], {queryParams: params})

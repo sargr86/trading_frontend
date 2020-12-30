@@ -35,7 +35,7 @@
                 </span>
                 <input class="login-input" placeholder="Reenter Password" type="password"
                        formControlName="confirm_password">
-                <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords not match</span>
+                <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords don't match</span>
                 <span class="error"
                       *ngIf="isSubmitted && confirmPass.hasError('required')">Please confirm the password</span>
                 <div class="register-block birthday-block">

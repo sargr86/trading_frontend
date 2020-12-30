@@ -65,4 +65,8 @@ export class AuthService {
     sendForgotPassEmail(params) {
         return this.httpClient.post<any>(`${API_URL}auth/send-forgot-pass-email`, params);
     }
+
+    resetPass(params) {
+        return this.httpClient.post<any>(`${API_URL}auth/reset-password`, params);
+    }
 }

@@ -12,7 +12,8 @@ import {MaterialModule} from '@core/modules/material.module';
 import {Base64ToFilePipe} from './pipes/base64-to-file.pipe';
 import {CategoriesComponent} from '@shared/components/categories/categories.component';
 import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
-import { GetThumbPathPipe } from './pipes/get-thumb-path.pipe';
+import {GetThumbPathPipe} from './pipes/get-thumb-path.pipe';
+import {VideoCarouselHolderComponent} from './components/video-carousel-holder/video-carousel-holder.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { GetThumbPathPipe } from './pipes/get-thumb-path.pipe';
         Base64ToFilePipe,
         FilterDevicesPipe,
         GetThumbPathPipe,
+        VideoCarouselHolderComponent,
     ],
     imports: [
         CommonModule,
@@ -51,7 +53,8 @@ import { GetThumbPathPipe } from './pipes/get-thumb-path.pipe';
         ChatBoxComponent,
         CategoriesComponent,
         FilterDevicesPipe,
-        GetThumbPathPipe
+        GetThumbPathPipe,
+        VideoCarouselHolderComponent
     ]
 
 })

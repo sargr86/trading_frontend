@@ -13,6 +13,7 @@ export class VideoCarouselHolderComponent implements OnInit {
     @Input('videos') videos = [];
     @Input('title') title = '';
     @Input('videoList') videoList = false;
+    @Input('detailsSource') detailsSource;
 
     constructor() {
     }
@@ -21,6 +22,7 @@ export class VideoCarouselHolderComponent implements OnInit {
     }
 
     openVideoPage(video, username) {
+        console.log(username)
     }
 
 }

@@ -1,1 +1,2 @@
-<app-video-carousel-holder [videos]="channelUser?.videos" [title]="'Recent videos'"></app-video-carousel-holder>
+<app-video-carousel-holder [videos]="channelUser?.videos" [title]="'Recent videos'" [detailsSource]="channelUser"
+                           [removable]="authUser.username === channelUser.username"></app-video-carousel-holder>

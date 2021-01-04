@@ -1,0 +1,21 @@
+.remove-video{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    color: #ffffff;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover{
+        color: #F53C6F;
+    }
+}
+
+.overlay{
+    background: #000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 32px);
+    height: 182px;
+    opacity: 0.38;
+}

@@ -2,10 +2,8 @@
     <ng-container *ngIf="!search">
         <div class="video-container" *ngFor="let video of items.videos">
             <div class="thumbnail">
-                <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                     (click)="openVideoPage(video,video.user.username)">
-                <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                     (click)="openVideoPage(video,video.user.username)">
+                <img class="thumbnail" [src]="video.thumbnail|getImgPath"
+                     (click)="openVideoPage(video, video.user.username)">
             </div>
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>
@@ -21,6 +19,11 @@
                 <p class="shortened-description">
                     {{video.description}}
                 </p>
+
+                <div class="saved-video" *ngIf="video.users_vids[0]?.users_videos.saved">
+                    <mat-icon>turned_in</mat-icon>
+                    <span>Saved</span>
+                </div>
             </div>
         </div>
         <div class="playlist-container" *ngFor="let playlist of items.playlists">

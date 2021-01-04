@@ -1,0 +1,33 @@
+<p class="trending-text">{{title}}</p>
+<owl-carousel-o [options]="owlOptions" #owlCarousel>
+    <ng-container *ngFor="let video of videos">
+        <ng-template carouselSlide>
+            <div class="item main-carousel-item">
+
+                <ng-container
+                    [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{user:(videoList ? video: video.user)}">
+                </ng-container>
+
+                <ng-template #itemTemplate let-user='user'>
+                    <div class="thumbnail" (click)="openVideoPage(video, user.username)">
+                        <img class="thumbnail" [src]="video.thumbnail|getImgPath">
+                        <span class="live-now" *ngIf="video.status==='live'">Live now</span>
+                    </div>
+
+                    <div class="main-item-block">
+<!--                        {{user|json}}-->
+                        <img class="avatar" [src]="user.avatar|getImgPath: 'avatars'">
+                        <div>
+                            <p class="main-text-1">{{video.name}}</p>
+                            <p class="main-text-2">{{user.full_name}}</p>
+                            <p class="main-text-3">17k watching</p>
+                        </div>
+                    </div>
+                </ng-template>
+
+
+            </div>
+        </ng-template>
+    </ng-container>
+</owl-carousel-o>

@@ -5,8 +5,7 @@
              *ngFor="let video of playlistData.videos">
 
             <div class="thumbnail-container">
-                <img [src]="video?.thumbnail?(video|getThumbPath):defaultVideoThumbPath"
-                     (click)="openVideoPage(video, playlistData?.id)">
+                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, playlistData?.id)">
             </div>
 
             <div class="details-container">
@@ -26,7 +25,7 @@
     <div class="suggested-video">
 
         <div class="thumbnail-container">
-            <img [src]="video?.thumbnail?(video|getThumbPath):defaultVideoThumbPath" (click)="openVideoPage(video)">
+            <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video)">
         </div>
 
         <div class="details-container">

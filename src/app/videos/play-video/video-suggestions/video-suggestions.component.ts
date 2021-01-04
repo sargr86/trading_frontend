@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {VideoService} from '@core/services/video.service';
-import {API_URL, VIDEO_DEFAULT_THUMBNAIL_PATH} from '@core/constants/global';
+import {API_URL, DEFAULT_VIDEO_SUGGESTIONS_COUNT} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -25,7 +25,6 @@ export class VideoSuggestionsComponent implements OnInit {
     apiUrl = API_URL;
     authUser;
 
-    defaultVideoThumbPath = VIDEO_DEFAULT_THUMBNAIL_PATH;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,17 +38,19 @@ export class VideoSuggestionsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.urlParams = this.route.snapshot.queryParams;
         this.videoId = +this.urlParams?.id;
         this.playlistId = this.urlParams?.playlist_id;
         this.playlistOpened = !!this.playlistId;
+
         if (this.playlistOpened) {
             this.playlistsService.getById({playlist_id: this.playlistId}).subscribe(dt => {
                 this.playlistData = dt;
             });
         }
 
-        this.videoService.get({limit: 5}).subscribe(dt => {
+        this.videoService.get({limit: DEFAULT_VIDEO_SUGGESTIONS_COUNT}).subscribe(dt => {
             this.videoSuggestions = dt;
         });
 
@@ -82,9 +83,4 @@ export class VideoSuggestionsComponent implements OnInit {
             }
         });
     }
-
-    getThumbPath(video) {
-        return `${API_URL}uploads/thumbnails/${video?.thumbnail}`;
-    }
-
 }

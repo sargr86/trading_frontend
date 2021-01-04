@@ -12,6 +12,7 @@ import {MaterialModule} from '@core/modules/material.module';
 import {Base64ToFilePipe} from './pipes/base64-to-file.pipe';
 import {CategoriesComponent} from '@shared/components/categories/categories.component';
 import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
+import { GetThumbPathPipe } from './pipes/get-thumb-path.pipe';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
         BlobToFilePipe,
         Base64ToFilePipe,
         FilterDevicesPipe,
+        GetThumbPathPipe,
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
         VideoJsRecordComponent,
         ChatBoxComponent,
         CategoriesComponent,
-        FilterDevicesPipe
+        FilterDevicesPipe,
+        GetThumbPathPipe
     ]
 
 })

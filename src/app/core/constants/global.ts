@@ -3,6 +3,7 @@ import {environment} from '@env';
 
 
 export const API_URL = environment.apiUrl;
+export const VIDEO_DEFAULT_THUMBNAIL_PATH = 'assets/img/video-thumbnail-default.png';
 
 export const OWL_OPTIONS: OwlOptions = {
     loop: false,

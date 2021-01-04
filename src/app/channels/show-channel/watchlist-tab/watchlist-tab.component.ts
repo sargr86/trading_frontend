@@ -3,6 +3,7 @@ import {VideoService} from '@core/services/video.service';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -14,6 +15,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     owlOptions: OwlOptions = OWL_OPTIONS;
     apiUrl = API_URL;
     search;
+    subscriptions: Subscription[] = [];
 
     constructor(
         private videoService: VideoService,
@@ -32,34 +34,20 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     getAllVideosByAuthors() {
-        this.videoService.getVideosByAuthor({}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.getVideosByAuthor({}).subscribe(dt => {
             this.watchlistVideos = dt;
-        });
-    }
-
-    openVideoPage(video, username) {
-        let route;
-        let params;
-        if (video.status === 'live') {
-            route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username};
-        } else {
-            route = 'videos/play';
-            params = {id: video.id};
-        }
-
-
-        this.router.navigate([route], {queryParams: params});
+        }));
     }
 
     getSearchResults(search) {
         this.search = search;
-        this.videoService.searchInVideosByAuthor({search}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.searchInVideosByAuthor({search}).subscribe(dt => {
             this.watchlistVideos = dt;
-        });
+        }));
     }
 
     ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

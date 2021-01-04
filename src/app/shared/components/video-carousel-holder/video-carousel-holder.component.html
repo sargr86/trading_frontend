@@ -9,8 +9,8 @@
                     [ngTemplateOutletContext]="{details: detailsSource || video.user}">
                 </ng-container>
 
-                <ng-template let-d="details" #itemTemplate >
-                    <div class="thumbnail" (click)="openVideoPage(video, detailsSource)">
+                <ng-template let-d="details" #itemTemplate>
+                    <div class="thumbnail" (click)="openVideoPage(video, d.username)">
                         <img class="thumbnail" [src]="video.thumbnail|getImgPath">
                         <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                     </div>
@@ -19,9 +19,12 @@
                         <img class="avatar" [src]="d?.avatar|getImgPath: 'avatars'">
                         <div>
                             <p class="main-text-1">{{video.name}}</p>
-                            <p class="main-text-2">{{d?.full_name}}</p>
+                            <p class="main-text-2" (click)="openChannelPage(d.username)">{{d?.full_name}}</p>
                             <p class="main-text-3">17k watching</p>
                         </div>
+                    </div>
+                    <div class="remove-video" *ngIf="removable">
+                        <mat-icon (click)="removeVideo(video)">delete</mat-icon>
                     </div>
                 </ng-template>
 

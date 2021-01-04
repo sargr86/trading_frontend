@@ -24,9 +24,9 @@
                          *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
                         <div class="video-container">
                             <div class="img">
-                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                <img class="thumbnail" src="assets/img/video-thumbnail-default.png"
                                      *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
                                      *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
                             </div>
 
@@ -61,9 +61,9 @@
                          *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
                         <div class="video-container">
                             <div class="img">
-                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                <img class="thumbnail" src="assets/img/video-thumbnail-default.png"
                                      *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
                                      *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
                             </div>
 
@@ -89,9 +89,9 @@
                          *ngFor="let video of currentUser.videos" (click)="selectVideo(video.id)">
                         <div class="video-container">
                             <div class="img">
-                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+                                <img class="thumbnail" src="assets/img/video-thumbnail-default.png"
                                      *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                                <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
                                      *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
                             </div>
 

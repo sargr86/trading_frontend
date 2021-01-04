@@ -7,9 +7,9 @@
             <div class="item main-carousel-item">
                 <div class="thumbnail" (click)="openVideoPage(video, video.user.username)">
 
-                    <img class="main-item-img" *ngIf="video.thumbnail"
+                    <img class="thumbnail" *ngIf="video.thumbnail"
                          [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
-                    <img class="main-item-img" *ngIf="!video.thumbnail"
+                    <img class="thumbnail" *ngIf="!video.thumbnail"
                          [src]="'assets/img/video-thumbnail-default.png'">
                     <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                 </div>
@@ -34,9 +34,9 @@
         <ng-template carouselSlide>
             <div class="item main-carousel-item"
                  (click)="openVideoPage(video, video.user.username)">
-                <img class="main-item-img" *ngIf="video.thumbnail"
+                <img class="thumbnail" *ngIf="video.thumbnail"
                      [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
-                <img class="main-item-img" *ngIf="!video.thumbnail"
+                <img class="thumbnail" *ngIf="!video.thumbnail"
                      [src]="'assets/img/video-thumbnail-default.png'">
                 <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                 <div class="main-item-block">
@@ -62,9 +62,9 @@
         <ng-template carouselSlide>
             <div class="item main-carousel-item"
                  (click)="openVideoPage(video, video.user.username)">
-                <img class="main-item-img" *ngIf="video.thumbnail"
+                <img class="thumbnail" *ngIf="video.thumbnail"
                      [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
-                <img class="main-item-img" *ngIf="!video.thumbnail"
+                <img class="thumbnail" *ngIf="!video.thumbnail"
                      [src]="'assets/img/video-thumbnail-default.png'">
                 <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                 <div class="main-item-block">

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {VideoService} from '@core/services/video.service';
-import {API_URL} from '@core/constants/global';
+import {API_URL, VIDEO_DEFAULT_THUMBNAIL_PATH} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -24,6 +24,8 @@ export class VideoSuggestionsComponent implements OnInit {
 
     apiUrl = API_URL;
     authUser;
+
+    defaultVideoThumbPath = VIDEO_DEFAULT_THUMBNAIL_PATH;
 
     constructor(
         private route: ActivatedRoute,
@@ -53,9 +55,9 @@ export class VideoSuggestionsComponent implements OnInit {
 
     }
 
-    openVideoPage(video, suggestedVideo = false) {
+    openVideoPage(video, playlistId = null) {
         const route = '/videos/play';
-        const params = {id: video.id, playlist_id: suggestedVideo && this.playlistData ? this.playlistData.id : null};
+        const params = {id: video.id, playlist_id: playlistId};
 
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([route], {queryParams: params})
@@ -79,6 +81,10 @@ export class VideoSuggestionsComponent implements OnInit {
                 });
             }
         });
+    }
+
+    getThumbPath(video) {
+        return `${API_URL}uploads/thumbnails/${video?.thumbnail}`;
     }
 
 }

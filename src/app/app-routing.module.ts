@@ -38,7 +38,7 @@ const routes: Routes = [
         loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
     },
     {
-        path: 'trendings',
+        path: 'trending',
         loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
     },
     {

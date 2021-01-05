@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.videoService.get({}).subscribe(dt => {
-            this.videos = dt;
+            this.videos = dt.videos;
         });
     }
 

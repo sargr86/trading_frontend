@@ -12,9 +12,10 @@
             <mat-icon>home</mat-icon>
             <p>Home</p>
         </div>
-        <div class="left-menu-main" (click)="router.navigate(['trendings'])">
+        <div class="left-menu-main" (click)="router.navigate(['trending'])"
+             [class.active]="router.url.includes('trending')">
             <img src="assets/img/item-6.png">
-            <p>Trendings</p>
+            <p>Trending</p>
         </div>
         <div class="line-item"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"

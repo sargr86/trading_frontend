@@ -20,6 +20,7 @@ export class ShowVideosComponent implements OnInit {
     apiUrl = API_URL;
     search;
     authUser;
+    showTrending = false;
 
     constructor(
         private videoService: VideoService,
@@ -41,8 +42,11 @@ export class ShowVideosComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-
-        this.videoService.get({withPlaylists: true}).subscribe(dt => {
+        this.showTrending = this.router.url.includes('trending');
+        this.videoService.get({
+            withPlaylists: !this.showTrending ? 1 : 0,
+            trending: this.showTrending ? 1 : 0
+        }).subscribe(dt => {
             this.items = dt;
         });
 

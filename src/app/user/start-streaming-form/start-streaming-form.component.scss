@@ -66,6 +66,15 @@
         }
     }
 
+    #thumbnail {
+        display: flex;
+        align-items: center;
+
+        mat-spinner {
+            margin-left: 20px;
+        }
+    }
+
 
     #custom-thumbnail {
         display: none;

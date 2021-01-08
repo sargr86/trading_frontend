@@ -17,6 +17,7 @@ export class StartStreamingFormComponent implements OnInit {
     startStreamingForm: FormGroup;
     isSubmitted = false;
     thumbnailFile;
+    thumbnailUploading = false;
     thumbnailUploaded = false;
     apiUrl = API_URL;
     tags = [];
@@ -92,9 +93,11 @@ export class StartStreamingFormComponent implements OnInit {
         const fd = new FormData();
         fd.append('video_thumbnail_file', this.thumbnailFile);
         this.startStreamingForm.patchValue({thumbnail: this.thumbnailFile.name});
+        this.thumbnailUploading = true;
 
         this.videoService.saveVideoThumbnail(fd).subscribe(filename => {
             this.toastr.success('The thumbnail has been uploaded successfully');
+            this.thumbnailUploading = false;
             this.thumbnailUploaded = true;
         });
     }

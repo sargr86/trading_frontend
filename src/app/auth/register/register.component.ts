@@ -93,8 +93,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     height: '548px',
                     width: '548px',
                     data: this.registerForm.value
-                }).afterClosed().subscribe(async(dt) => {
-                    localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+                }).afterClosed().subscribe(async (dt) => {
+                    localStorage.setItem('token', (dt?.hasOwnProperty('token') ? dt.token : ''));
                     await this.router.navigate(['/']);
                 });
             }));

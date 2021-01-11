@@ -3,9 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '@core/services/auth.service';
 import {patternValidator} from '@core/helpers/pattern-validator';
-import {NUMBERS_ONLY} from '@core/constants/patterns';
+import {FOUR_DIGIT_NUMBERS_ONLY, NUMBERS_ONLY} from '@core/constants/patterns';
 import {LoaderService} from '@core/services/loader.service';
 import {Router} from '@angular/router';
+import {PASSWORD_MIN_LENGTH} from '@core/constants/global';
 
 @Component({
     selector: 'app-verify-email',
@@ -35,7 +36,10 @@ export class VerifyEmailComponent implements OnInit {
         this.email = data.email;
         this.verifyCodeForm = this.fb.group({
             email: [this.email, Validators.required],
-            code: [null, [Validators.required, patternValidator(NUMBERS_ONLY)]]
+            code: [null, [
+                Validators.required, patternValidator(NUMBERS_ONLY),
+                patternValidator(FOUR_DIGIT_NUMBERS_ONLY)
+            ]]
         });
     }
 
@@ -44,6 +48,7 @@ export class VerifyEmailComponent implements OnInit {
 
     verifyCode() {
         this.isSubmitted = true;
+        console.log(this.verifyCodeForm.value)
         if (this.verifyCodeForm.valid) {
             this.loader.formProcessing = true;
             this.auth.checkVerificationCode(this.verifyCodeForm.value).subscribe(async (dt) => {
@@ -70,6 +75,10 @@ export class VerifyEmailComponent implements OnInit {
     }
 
     get emailCtrl(): AbstractControl {
+        return this.verifyCodeForm.get('email');
+    }
+
+    get codeCtrl(): AbstractControl {
         return this.verifyCodeForm.get('code');
     }
 

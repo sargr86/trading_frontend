@@ -48,7 +48,6 @@ export class VerifyEmailComponent implements OnInit {
 
     verifyCode() {
         this.isSubmitted = true;
-        console.log(this.verifyCodeForm.value)
         if (this.verifyCodeForm.valid) {
             this.loader.formProcessing = true;
             this.auth.checkVerificationCode(this.verifyCodeForm.value).subscribe(async (dt) => {

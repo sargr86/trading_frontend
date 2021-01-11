@@ -6,6 +6,8 @@ import {Subscription} from 'rxjs';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
+import {VerifyEmailComponent} from '@core/components/modals/verify-email/verify-email.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-login',
@@ -21,7 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         public router: Router,
         private fb: FormBuilder,
         private auth: AuthService,
-        private authGuard: AuthGuard
+        private authGuard: AuthGuard,
+        private dialog: MatDialog
     ) {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
@@ -36,6 +39,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     login() {
         this.isSubmitted = true;
         if (this.loginForm.valid) {
+            // this.subscriptions.push(this.auth.resendEmailVerificationCode({
+            //     ...this.loginForm.value,
+            //     resend: true
+            // }).subscribe(() => {
+            //     this.dialog.open(VerifyEmailComponent, {
+            //         height: '548px',
+            //         width: '548px',
+            //         data: this.loginForm.value
+            //     }).afterClosed().subscribe(async (result) => {
+            //         await this.router.navigate([this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/']);
+            //     });
+            //
+            // }));
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
                 localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
                 await this.router.navigate([this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/']);

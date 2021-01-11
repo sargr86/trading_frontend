@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
 
         this.email = this.route.snapshot?.queryParams?.email;
         const token = this.route.snapshot?.queryParams?.token;
-        this.tokenExpired = this.jwtHelper.isTokenExpired(token);
+        this.tokenExpired = !this.jwtHelper.isTokenExpired(token);
         this.emailPassed = !!this.email;
 
         this.resetPassForm = this.fb.group({

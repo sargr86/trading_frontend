@@ -31,10 +31,13 @@ export class ForgotPasswordComponent implements OnInit {
 
     sendEmail() {
         this.isSubmitted = true;
-        // this.router.navigate(['auth/reset-password']);
-        this.auth.sendForgotPassEmail(this.forgotPassForm.value).subscribe(dt => {
-            this.toastr.success('Reset password request has been sent to your e-mail');
-        });
+        if (this.forgotPassForm.valid) {
+
+            // this.router.navigate(['auth/reset-password']);
+            this.auth.sendForgotPassEmail(this.forgotPassForm.value).subscribe(dt => {
+                this.toastr.success('Reset password request has been sent to your e-mail');
+            });
+        }
     }
 
 }

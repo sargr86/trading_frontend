@@ -46,7 +46,11 @@
                            bsDatepicker>
                 </div>
                 <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
-                <a class="login-submit" (click)="openModal()">Sign Up</a>
+
+                <div class="actions">
+                    <a class="register-submit" (click)="openModal()">Sign Up</a>
+                    <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+                </div>
             </form>
 
         </div>

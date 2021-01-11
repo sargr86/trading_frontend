@@ -88,7 +88,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.loader.formProcessing = true;
             this.subscriptions.push(this.auth.sendEmailVerificationCode(this.registerForm.value).subscribe((code) => {
                 this.loader.formProcessing = false;
-                localStorage.setItem('verification_code', code);
                 this.dialog.open(VerifyEmailComponent, {
                     height: '548px',
                     width: '548px',

@@ -51,7 +51,7 @@ export class VideoSuggestionsComponent implements OnInit {
         }
 
         this.videoService.get({limit: DEFAULT_VIDEO_SUGGESTIONS_COUNT}).subscribe(dt => {
-            this.videoSuggestions = dt;
+            this.videoSuggestions = dt.videos;
         });
 
     }

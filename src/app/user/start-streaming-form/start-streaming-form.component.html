@@ -1,9 +1,11 @@
 <form [formGroup]="startStreamingForm" id="start-streaming-form">
     <div class="start-live-video">
-        <div>
-            <input formControlName="name" id="video-name" placeholder="Video name">
+
+        <div id="video-name">
+            <input formControlName="name" placeholder="Video name">
             <mat-error *ngIf="streamName.hasError('required') && isSubmitted">The stream name is required</mat-error>
         </div>
+
         <div id="video-tags">
             <mat-form-field class="example-chip-list">
                 <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
@@ -21,6 +23,7 @@
             <mat-error *ngIf="tags.length ===0 && isSubmitted">Please provide some tags describing your live video
             </mat-error>
         </div>
+
         <div id="video-categories">
             <select formControlName="category_id">
                 <option selected [value]="''">Category</option>
@@ -29,15 +32,17 @@
             <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">The stream category is required
             </mat-error>
         </div>
+
         <div id="video-description">
             <textarea formControlName="description" placeholder="Video description"></textarea>
             <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required
             </mat-error>
         </div>
+
         <div id="thumbnail">
             <ng-container *ngIf="!thumbnailUploaded">
                 <label for="custom-thumbnail">
-                    <span class="material-icons">backup </span>
+                    <span class="material-icons">backup</span>
                     Upload Thumbnail
                 </label>
                 <mat-spinner [diameter]="15" *ngIf="thumbnailUploading"></mat-spinner>
@@ -52,7 +57,6 @@
                 <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
             </div>
         </div>
-
 
         <div class="actions">
             <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="submit()">

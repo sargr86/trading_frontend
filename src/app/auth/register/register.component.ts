@@ -15,6 +15,7 @@ import {
 } from '@core/constants/patterns';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH} from '@core/constants/global';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-register',
@@ -33,7 +34,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private auth: AuthService,
         private datePipe: DatePipe,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        public loader: LoaderService
     ) {
 
         // Age-restriction of 18
@@ -65,7 +67,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     register() {
         if (this.registerForm.valid) {
+            this.loader.formProcessing = true;
             this.subscriptions.push(this.auth.register(this.registerForm.value).subscribe(async (dt: any) => {
+                this.loader.formProcessing = false;
                 localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
                 await this.router.navigate(['/']);
             }));
@@ -81,15 +85,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         if (this.registerForm.valid) {
 
+            this.loader.formProcessing = true;
             this.subscriptions.push(this.auth.sendEmailVerificationCode(this.registerForm.value).subscribe((code) => {
+                this.loader.formProcessing = false;
+                localStorage.setItem('verification_code', code);
                 this.dialog.open(VerifyEmailComponent, {
                     height: '548px',
                     width: '548px',
-                    data: {code}
-                }).afterClosed().subscribe((confirmed) => {
-                    if (confirmed) {
-                        this.register();
-                    }
+                    data: this.registerForm.value
+                }).afterClosed().subscribe(async(dt) => {
+                    localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+                    await this.router.navigate(['/']);
                 });
             }));
         }

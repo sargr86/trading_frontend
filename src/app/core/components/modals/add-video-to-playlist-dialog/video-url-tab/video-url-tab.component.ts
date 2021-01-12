@@ -17,6 +17,7 @@ export class VideoUrlTabComponent implements OnInit {
     selectedVideos = [];
 
     apiUrl = API_URL;
+    searched = false;
 
     @Input('playlist') playlist;
 
@@ -35,13 +36,14 @@ export class VideoUrlTabComponent implements OnInit {
     }
 
     getUrlString(e) {
-        const possibleUrl = e.clipboardData.getData('text');
+        const possibleUrl = e?.clipboardData?.getData('text') || this.searchVideoByUrlForm.value.url;
         this.validUrl = URL_PATTERN.test(possibleUrl);
+        this.searched = true;
         if (this.validUrl) {
             const parsedUrl = new URL(possibleUrl);
             const id = parsedUrl.searchParams.get('id');
             this.videoService.getVideoById({id}).subscribe(dt => {
-                this.searchedVideos = [dt];
+                this.searchedVideos = dt ? [dt] : [];
             });
         }
     }

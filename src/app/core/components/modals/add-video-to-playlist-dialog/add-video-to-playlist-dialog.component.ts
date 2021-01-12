@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {PlaylistsService} from '@core/services/playlists.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-add-video-to-playlist-dialog',
@@ -24,6 +25,7 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
         private videoService: VideoService,
         private playlistsService: PlaylistsService,
         private getAuthUser: GetAuthUserPipe,
+        private toastr: ToastrService,
         @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
         this.playlist = data.playlist;
@@ -44,10 +46,14 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
 
 
     addVideos() {
-        const params = {playlist_id: this.playlist.id, video_ids: JSON.stringify(this.selectedVideos)};
-        this.playlistsService.addVideosToPlaylist(params).subscribe(dt => {
-            this.modal.close();
-        });
+        if (this.selectedVideos.length > 0) {
+            const params = {playlist_id: this.playlist.id, video_ids: JSON.stringify(this.selectedVideos)};
+            this.playlistsService.addVideosToPlaylist(params).subscribe(dt => {
+                this.modal.close();
+            });
+        } else {
+            this.toastr.error('Please select at least one video', 'No videos selected');
+        }
     }
 
     cancel() {

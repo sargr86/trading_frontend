@@ -26,7 +26,7 @@
                 <app-search-videos-tab *ngIf="activeTab==='search'" (selectVideo)="selectVideo($event)"></app-search-videos-tab>
                 <app-video-url-tab *ngIf="activeTab==='url'" (selectVideo)="selectVideo($event)"></app-video-url-tab>
                 <app-your-videos-tab *ngIf="activeTab==='yours'" [currentUser]="currentUser" [authUser]="authUser"
-                                     (selectVideo)="selectVideo($event)">
+                                    [playlist]="playlist" (selectVideo)="selectVideo($event)">
                 </app-your-videos-tab>
 
             </div>

@@ -23,6 +23,12 @@
         border: 1px solid #18B587;
     }
 
+    &.added {
+        .thumbnail {
+            border: 1px solid $red;
+        }
+    }
+
     .video-container {
         display: flex;
 
@@ -36,6 +42,7 @@
                 cursor: pointer;
             }
         }
+
 
         .details {
             flex: 1;

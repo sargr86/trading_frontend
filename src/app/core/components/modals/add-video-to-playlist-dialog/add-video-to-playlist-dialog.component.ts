@@ -35,7 +35,6 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
 
     selectVideo(videos) {
         this.selectedVideos = videos;
-        console.log(this.selectedVideos)
     }
 
     changeTab(tab) {

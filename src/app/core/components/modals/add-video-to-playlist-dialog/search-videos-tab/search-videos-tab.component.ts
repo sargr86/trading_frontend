@@ -9,6 +9,7 @@ import {VideoService} from '@core/services/video.service';
 export class SearchVideosTabComponent implements OnInit {
     searchedVideos = [];
     selectedVideos = [];
+    searched = false;
 
     @Input('playlist') playlist;
     @Output('selectVideo') selectVid = new EventEmitter();
@@ -20,6 +21,7 @@ export class SearchVideosTabComponent implements OnInit {
     }
 
     searchVideos(e) {
+        this.searched = true;
         this.videoService.searchInAllVideos(e).subscribe(dt => {
             this.searchedVideos = dt;
         });

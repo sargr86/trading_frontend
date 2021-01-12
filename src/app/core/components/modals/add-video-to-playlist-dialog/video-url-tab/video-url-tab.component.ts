@@ -4,6 +4,7 @@ import {patternValidator} from '@core/helpers/pattern-validator';
 import {URL_PATTERN} from '@core/constants/patterns';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
+import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 
 @Component({
     selector: 'app-video-url-tab',
@@ -25,7 +26,8 @@ export class VideoUrlTabComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private videoService: VideoService
+        private videoService: VideoService,
+        private getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
     ) {
     }
 
@@ -53,18 +55,14 @@ export class VideoUrlTabComponent implements OnInit {
     }
 
     selectVideo(video) {
-        const id = video.id;
-        if (this.selectedVideos.includes(id)) {
-            this.selectedVideos = this.selectedVideos.filter(v => v !== id);
-        } else if (!this.checkIfVideoAddedToPlaylist(video)) {
-            this.selectedVideos.push(id);
-        }
-        console.log(this.selectedVideos)
+        this.selectedVideos = this.getSelectedVideos.transform(video, this.selectedVideos, this.playlist);
         this.selectVid.emit(this.selectedVideos);
     }
 
     checkIfVideoAddedToPlaylist(video) {
         return video?.playlists?.find(p => this.playlist.id === p.id);
     }
+
+
 
 }

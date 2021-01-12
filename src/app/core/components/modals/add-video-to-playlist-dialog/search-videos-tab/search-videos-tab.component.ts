@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
+import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 
 @Component({
     selector: 'app-search-videos-tab',
@@ -14,7 +15,10 @@ export class SearchVideosTabComponent implements OnInit {
     @Input('playlist') playlist;
     @Output('selectVideo') selectVid = new EventEmitter();
 
-    constructor(private videoService: VideoService) {
+    constructor(
+        private videoService: VideoService,
+        private getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
+    ) {
     }
 
     ngOnInit(): void {
@@ -32,13 +36,7 @@ export class SearchVideosTabComponent implements OnInit {
     }
 
     selectVideo(video) {
-        const id = video.id;
-        if (this.selectedVideos.includes(id)) {
-            this.selectedVideos = this.selectedVideos.filter(v => v !== id);
-        } else if (!this.checkIfVideoAddedToPlaylist(video)) {
-            this.selectedVideos.push(id);
-        }
-        console.log(this.selectedVideos)
+        this.selectedVideos = this.getSelectedVideos.transform(video, this.selectedVideos, this.playlist);
         this.selectVid.emit(this.selectedVideos);
     }
 

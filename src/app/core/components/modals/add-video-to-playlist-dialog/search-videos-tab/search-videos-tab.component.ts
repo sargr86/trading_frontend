@@ -40,8 +40,4 @@ export class SearchVideosTabComponent implements OnInit {
         this.selectVid.emit(this.selectedVideos);
     }
 
-    checkIfVideoAddedToPlaylist(video) {
-        return video?.playlists?.find(p => this.playlist.id === p.id);
-    }
-
 }

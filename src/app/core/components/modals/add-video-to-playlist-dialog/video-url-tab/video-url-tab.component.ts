@@ -27,7 +27,7 @@ export class VideoUrlTabComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private videoService: VideoService,
-        private getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
+        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
     ) {
     }
 

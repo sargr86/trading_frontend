@@ -20,7 +20,7 @@ export class YourVideosTabComponent implements OnInit {
 
     constructor(
         private videoService: VideoService,
-        private getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
+        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
     ) {
     }
 

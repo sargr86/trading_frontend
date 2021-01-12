@@ -5,6 +5,7 @@ import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-forgot-password',
@@ -19,7 +20,8 @@ export class ForgotPasswordComponent implements OnInit {
         private fb: FormBuilder,
         public router: Router,
         public auth: AuthService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private loader: LoaderService
     ) {
         this.forgotPassForm = this.fb.group({
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]]
@@ -32,9 +34,10 @@ export class ForgotPasswordComponent implements OnInit {
     sendEmail() {
         this.isSubmitted = true;
         if (this.forgotPassForm.valid) {
-
+            this.loader.formProcessing = true;
             // this.router.navigate(['auth/reset-password']);
             this.auth.sendForgotPassEmail(this.forgotPassForm.value).subscribe(dt => {
+                this.loader.formProcessing = false;
                 this.toastr.success('Reset password request has been sent to your e-mail');
             });
         }

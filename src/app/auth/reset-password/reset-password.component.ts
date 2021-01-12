@@ -8,6 +8,7 @@ import {PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH} from '@core/constants/global';
 import {AuthService} from '@core/services/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ToastrService} from 'ngx-toastr';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -28,12 +29,13 @@ export class ResetPasswordComponent implements OnInit {
         public auth: AuthService,
         private route: ActivatedRoute,
         private jwtHelper: JwtHelperService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        public loader: LoaderService
     ) {
 
         this.email = this.route.snapshot?.queryParams?.email;
         const token = this.route.snapshot?.queryParams?.token;
-        this.tokenExpired = !this.jwtHelper.isTokenExpired(token);
+        this.tokenExpired = this.jwtHelper.isTokenExpired(token);
         this.emailPassed = !!this.email;
 
         this.resetPassForm = this.fb.group({
@@ -55,7 +57,7 @@ export class ResetPasswordComponent implements OnInit {
         this.isSubmitted = true;
         if (this.resetPassForm.valid) {
             this.auth.resetPass(this.resetPassForm.value).subscribe(dt => {
-                localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+                localStorage.setItem('token', (dt?.hasOwnProperty('token') ? dt.token : ''));
                 this.router.navigate(['/']);
             });
         }

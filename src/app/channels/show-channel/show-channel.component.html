@@ -10,7 +10,7 @@
                 <ul class="nav nav-tabs" id="profileList" role="tablist">
                     <li class="nav-item" *ngFor="let tab of allTabs">
                         <a class="nav-link" [class.active]="tab === activeTab" id="{{tab.link}}-tab"
-                           (click)="changeActiveTab(tab)" data-toggle="tab" href="#{{tab.link}}" role="tab"
+                           (click)="changeActiveTab(tab)" data-toggle="tab" [href]="'#'+tab.link" role="tab"
                            aria-controls="pWatch"
                            aria-selected="true">{{tab.name}}</a>
                     </li>
@@ -27,7 +27,8 @@
             <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'"></app-watchlist-tab>
             <app-videos-tab *ngIf="activeTab.name === 'Videos'" [channelUser]="channelUser"
                             [authUser]="authUser"></app-videos-tab>
-            <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser" [authUser]="authUser"></app-playlists-tab>
+            <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser"
+                               [authUser]="authUser"></app-playlists-tab>
             <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>
 
 

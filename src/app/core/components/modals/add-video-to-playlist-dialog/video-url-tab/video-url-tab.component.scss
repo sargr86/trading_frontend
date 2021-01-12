@@ -1,0 +1,13 @@
+@import 'mixins';
+
+.video-item {
+    @include videoItem;
+}
+
+.input-wrap {
+    @include inputWrap;
+}
+
+#search-by-url-input {
+    margin-bottom: 20px;
+}

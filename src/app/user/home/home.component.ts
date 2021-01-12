@@ -22,25 +22,8 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.videoService.get({}).subscribe(dt => {
-            this.videos = dt;
+            this.videos = dt.videos;
         });
-    }
-
-
-    openVideoPage(video, username) {
-        // console.log(username);
-        let route;
-        let params;
-        if (video.status === 'live') {
-            route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username};
-        } else {
-            route = 'videos/play';
-            params = {id: video.id};
-        }
-
-
-        this.router.navigate([route], {queryParams: params});
     }
 
 }

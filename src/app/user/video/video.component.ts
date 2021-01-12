@@ -369,7 +369,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             maxWidth: '554px',
             width: '100%'
         }).afterClosed().subscribe(result => {
-            this.videoSettings.privacy = result.privacy;
+            this.videoSettings.privacy = result?.privacy;
         });
         this.joinSession();
     }

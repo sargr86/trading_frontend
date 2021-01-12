@@ -1,0 +1,6 @@
+@import 'mixins';
+
+.video-item {
+    @include videoItem
+}
+

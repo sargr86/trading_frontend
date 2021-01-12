@@ -3,114 +3,32 @@
         <h1 class="title">Add videos to playlist</h1>
 
         <div class="content">
-            <div class="tabList">
+            <div class="tab-list">
                 <ul>
-                    <li><a class="nav-link" [class.active]="activeTab==='search'" (click)="changeTab('search')">Video
-                        search</a></li>
-                    <li><a class="nav-link" [class.active]="activeTab===''" (click)="changeTab('url')">URL</a></li>
-                    <li><a class="nav-link" [class.active]="activeTab==='yours'" (click)="changeTab('yours')">Your
-                        videos</a></li>
+                    <li>
+                        <a class="nav-link" [class.active]="activeTab==='search'" (click)="changeTab('search')">
+                            Video search
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" [class.active]="activeTab==='url'" (click)="changeTab('url')">URL</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" [class.active]="activeTab==='yours'" (click)="changeTab('yours')">
+                            Your videos
+                        </a>
+                    </li>
                 </ul>
             </div>
 
             <div class="tab-items">
 
-                <div class="tab1" *ngIf="activeTab==='search'">
-                    <div class="input-wrap">
-                        <label>Search video</label>
-                        <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
-                    </div>
-                    <div class="playlist-item" [class.selected]="checkIfVideoSelected(video.id)"
-                         *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
-                        <div class="video-container">
-                            <div class="img">
-                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
-                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
-                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
-                            </div>
+                <app-search-videos-tab *ngIf="activeTab==='search'" (selectVideo)="selectVideo($event)"></app-search-videos-tab>
+                <app-video-url-tab *ngIf="activeTab==='url'" (selectVideo)="selectVideo($event)"></app-video-url-tab>
+                <app-your-videos-tab *ngIf="activeTab==='yours'" [currentUser]="currentUser" [authUser]="authUser"
+                                     (selectVideo)="selectVideo($event)">
+                </app-your-videos-tab>
 
-                            <div class="details">
-                                <div class="title">
-                                    <h4 class="">{{video.name}}</h4>
-                                </div>
-                                <div class="shortened-details">
-                                    <span class="channel-name">{{video.channel.name}}</span>
-                                    <span class="dot">.</span>
-                                    <span class="watchers-count">17k watching</span>
-                                    <span class="dot">.</span>
-                                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
-                                </div>
-                                <p class="shortened-description">{{video.description}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab2" *ngIf="activeTab==='url'">
-                    <div class="input-wrap" id="search-by-url-input">
-                        <div class="input">
-                            <form [formGroup]="searchVideoByUrlForm">
-                                <input type="text" placeholder="Paste URL here" #urlInput
-                                       (paste)="getUrlString($event)" formControlName="url">
-                                <span *ngIf="searchVideoByUrlForm.get('url').hasError('patternInvalid')" class="error">Please provide a valid URL</span>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="playlist-item" [class.selected]="checkIfVideoSelected(video.id)"
-                         *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
-                        <div class="video-container">
-                            <div class="img">
-                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
-                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
-                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
-                            </div>
-
-                            <div class="details">
-                                <div class="title">
-                                    <h4 class="">{{video.name}}</h4>
-                                </div>
-                                <div class="shortened-details">
-                                    <span class="channel-name">{{video.channel.name}}</span>
-                                    <span class="dot">.</span>
-                                    <span class="watchers-count">17k watching</span>
-                                    <span class="dot">.</span>
-                                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
-                                </div>
-                                <p class="shortened-description">{{video.description}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab3" *ngIf="activeTab==='yours' && currentUser">
-                    <div class="playlist-item" [class.selected]="checkIfVideoSelected(video.id)"
-                         *ngFor="let video of currentUser.videos" (click)="selectVideo(video.id)">
-                        <div class="video-container">
-                            <div class="img">
-                                <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
-                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                                <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
-                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
-                            </div>
-
-                            <div class="details">
-                                <div class="title">
-                                    <h4 class="">{{video.name}}</h4>
-                                </div>
-                                <div class="shortened-details">
-                                    <span class="channel-name">{{video.channel.name}}</span>
-                                    <span class="dot">.</span>
-                                    <span class="watchers-count">17k watching</span>
-                                    <span class="dot">.</span>
-                                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
-                                </div>
-                                <p class="shortened-description">{{video.description}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
 
@@ -120,7 +38,7 @@
 
     <div class="btn-wrap">
         <button class="btn cancel" (click)="cancel()">Cancel</button>
-        <button class="btn all-videos" (click)="addVideos()">Add videos</button>
+        <button class="btn add-videos" (click)="addVideos()" [disabled]="ifSubmitInactive(activeTab)">Add videos</button>
     </div>
 
 </div>

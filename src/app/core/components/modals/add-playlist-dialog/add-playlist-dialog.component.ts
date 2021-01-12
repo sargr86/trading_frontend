@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PlaylistsService} from '@core/services/playlists.service';
 
 @Component({
@@ -10,6 +10,7 @@ import {PlaylistsService} from '@core/services/playlists.service';
 })
 export class AddPlaylistDialogComponent implements OnInit {
     addPlaylistForm: FormGroup;
+    isSubmitted = false;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,14 +31,29 @@ export class AddPlaylistDialogComponent implements OnInit {
     }
 
     createPlaylist() {
-        console.log(this.addPlaylistForm.value)
-        this.playlistService.addPlaylist(this.addPlaylistForm.value).subscribe(dt => {
-            this.modal.close();
-        });
+        this.isSubmitted = true;
+        if (this.addPlaylistForm.valid) {
+            this.playlistService.addPlaylist(this.addPlaylistForm.value).subscribe(dt => {
+                this.modal.close();
+            });
+        }
     }
 
     cancel() {
         this.modal.close();
     }
+
+    get nameCtrl(): AbstractControl {
+        return this.addPlaylistForm.get('name');
+    }
+
+    get privacyCtrl(): AbstractControl {
+        return this.addPlaylistForm.get('privacy');
+    }
+
+    get descCtrl(): AbstractControl {
+        return this.addPlaylistForm.get('description');
+    }
+
 
 }

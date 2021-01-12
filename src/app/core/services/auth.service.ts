@@ -40,6 +40,14 @@ export class AuthService {
         return this.httpClient.post<any>(`${API_URL}auth/send-verification-code`, params);
     }
 
+    resendEmailVerificationCode(params) {
+        return this.httpClient.post<any>(`${API_URL}auth/resend-verification-code`, params);
+    }
+
+    checkVerificationCode(params){
+        return this.httpClient.post<any>(`${API_URL}auth/check-verification-code`, params);
+    }
+
     checkRoles(role: string, userData = null) {
 
         if (userData) {

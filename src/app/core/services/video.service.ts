@@ -77,6 +77,10 @@ export class VideoService {
         return this.httpClient.put<any>(`${API_URL}videos/update-likes`, params);
     }
 
+    updateViews(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/update-views`, params);
+    }
+
     saveVideo(params) {
         return this.httpClient.put<any>(`${API_URL}videos/save-video`, params);
     }

@@ -1,17 +1,20 @@
 <div class="playlist-wrap" *ngIf="playlistOpened && playlistData && playlistData.videos.length > 0">
     <h2>{{playlistData.name}}</h2>
     <div class="list-wrap">
-        <div class="ads-info playlist-video" [class.selected]="videoId === video.id" *ngFor="let video of playlistData.videos">
-            <img class="main-item-img" src="assets/img/video-thumbnail-default.png"
+        <div class="playlist-video" [class.selected]="videoId === video.id"
+             *ngFor="let video of playlistData.videos">
 
-                 *ngIf="!video?.thumbnail || video?.thumbnail==='undefined'" (click)="openVideoPage(video)">
-            <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video?.thumbnail}}"
-                 *ngIf="video.thumbnail && video.thumbnail!=='undefined'" (click)="openVideoPage(video)">
-            <div>
+            <div class="thumbnail-container">
+                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, playlistData?.id)">
+            </div>
+
+            <div class="details-container">
                 <p class="main-text-1">{{video.name}}</p>
                 <p class="main-text-3">{{video.channel.name}}</p>
             </div>
-            <div class="remove" *ngIf="authUser.id === playlistData.channel.id" (click)="removeVideoFromPlaylist(video,playlistId)">
+
+            <div class="remove-btn-container" *ngIf="authUser.id === playlistData.channel.id"
+                 (click)="removeVideoFromPlaylist(video,playlistId)">
                 <span class="material-icons">delete</span>
             </div>
         </div>
@@ -19,13 +22,13 @@
 </div>
 
 <div class="suggested-videos" *ngFor="let video of videoSuggestions">
+    <div class="suggested-video">
 
-    <div class="ads-info suggested-video">
-        <img class="main-item-img" src="assets/img/video-thumbnail-default.png" (click)="openVideoPage(video)"
-             *ngIf="!video?.thumbnail || video?.thumbnail==='undefined'">
-        <img class="main-item-img" src="{{apiUrl+'uploads/thumbnails/'+video?.thumbnail}}"
-             *ngIf="video.thumbnail && video.thumbnail!=='undefined'" (click)="openVideoPage(video)">
-        <div>
+        <div class="thumbnail-container">
+            <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video)">
+        </div>
+
+        <div class="details-container">
             <p class="main-text-1">{{video.name}}</p>
             <p class="main-text-2">{{video.channel.name}}</p>
             <p class="main-text-3">17k watching</p>
@@ -33,5 +36,6 @@
     </div>
 
 </div>
+
 <img class="ads" src="assets/img/ads.png">
 <img class="ads" src="assets/img/ads.png">

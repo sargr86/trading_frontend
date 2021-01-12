@@ -58,11 +58,4 @@ export class VideoUrlTabComponent implements OnInit {
         this.selectedVideos = this.getSelectedVideos.transform(video, this.selectedVideos, this.playlist);
         this.selectVid.emit(this.selectedVideos);
     }
-
-    checkIfVideoAddedToPlaylist(video) {
-        return video?.playlists?.find(p => this.playlist.id === p.id);
-    }
-
-
-
 }

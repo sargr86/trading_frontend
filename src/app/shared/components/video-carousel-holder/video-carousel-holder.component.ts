@@ -4,6 +4,8 @@ import {OWL_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-video-carousel-holder',
@@ -22,7 +24,8 @@ export class VideoCarouselHolderComponent implements OnInit {
     constructor(
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
-        public router: Router
+        public router: Router,
+        private dialog: MatDialog
     ) {
     }
 
@@ -50,13 +53,18 @@ export class VideoCarouselHolderComponent implements OnInit {
     }
 
     removeVideo(video) {
-        this.videoService.removeVideo({
-            id: video.id,
-            filename: video.filename,
-            username: this.authUser.username
-        }).subscribe(dt => {
-            this.videos = dt.videos;
+        this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.videoService.removeVideo({
+                    id: video.id,
+                    filename: video.filename,
+                    username: this.authUser.username
+                }).subscribe(dt => {
+                    this.videos = dt.videos;
+                });
+            }
         });
+
     }
 
 }

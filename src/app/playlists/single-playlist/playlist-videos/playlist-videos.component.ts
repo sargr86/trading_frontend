@@ -69,6 +69,7 @@ export class PlaylistVideosComponent implements OnInit {
                     video_id: videoId
                 }).subscribe(dt => {
                     this.playlist = dt;
+                    this.refreshPlaylist.emit();
                 });
             }
         });

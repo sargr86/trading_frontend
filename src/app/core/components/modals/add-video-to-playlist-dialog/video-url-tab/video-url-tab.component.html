@@ -12,10 +12,7 @@
          *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
         <div class="video-container">
             <div class="img">
-                <img class="thumbnail" src="assets/img/video-thumbnail-default.png"
-                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
-                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                <img class="thumbnail" [src]="video.thumbnail|getImgPath">
             </div>
 
             <div class="details">

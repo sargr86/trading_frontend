@@ -1,13 +1,10 @@
 <div class="tab3" *ngIf="currentUser">
-    <ng-container *ngIf="currentUser?.videos?.length > 0">
-        <div class="video-item" [class.selected]="ifVideoSelected(video.id)"
-             *ngFor="let video of currentUser.videos" (click)="selectVideo(video.id)">
+    <ng-container *ngIf="currentUser.videos?.length > 0">
+        <div class="video-item" [class.selected]="ifVideoSelected(video.id)" [class.added]="checkIfVideoAddedToPlaylist(video)"
+             *ngFor="let video of currentUser.videos" (click)="selectVideo(video)">
             <div class="video-container">
                 <div class="img">
-                    <img class="thumbnail" src="assets/img/video-thumbnail-default.png"
-                         *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
-                    <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
-                         *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                    <img class="thumbnail" [src]="video.thumbnail|getImgPath">
                 </div>
 
                 <div class="details">
@@ -26,5 +23,5 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="currentUser?.videos?.length === 0">There are no videos in this list</ng-container>
+    <ng-container *ngIf="currentUser.videos?.length === 0">There are no videos in this list</ng-container>
 </div>

@@ -34,7 +34,6 @@ export class SearchVideosTabComponent implements OnInit {
         } else {
             this.selectedVideos.push(id);
         }
-        console.log(this.selectedVideos)
         this.selectVid.emit(this.selectedVideos);
     }
 

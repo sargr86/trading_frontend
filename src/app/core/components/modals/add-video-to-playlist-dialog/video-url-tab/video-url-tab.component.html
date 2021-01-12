@@ -1,4 +1,4 @@
-<div class="tab2" >
+<div class="tab2">
     <div class="input-wrap" id="search-by-url-input">
         <div class="input">
             <form [formGroup]="searchVideoByUrlForm">
@@ -9,7 +9,8 @@
         </div>
     </div>
     <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
-         *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
+         [class.added]="checkIfVideoAddedToPlaylist(video)"
+         *ngFor="let video of searchedVideos" (click)="selectVideo(video)">
         <div class="video-container">
             <div class="img">
                 <img class="thumbnail" [src]="video.thumbnail|getImgPath">

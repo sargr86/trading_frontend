@@ -42,12 +42,11 @@ export class YourVideosTabComponent implements OnInit {
         } else if (!this.checkIfVideoAddedToPlaylist(video)) {
             this.selectedVideos.push(id);
         }
-        console.log(this.selectedVideos)
         this.selectVid.emit(this.selectedVideos);
     }
 
     checkIfVideoAddedToPlaylist(video) {
-        return video?.playlists.find(p => this.playlist.id === p.id);
+        return video?.playlists?.find(p => this.playlist.id === p.id);
     }
 
 }

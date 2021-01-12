@@ -24,8 +24,23 @@
     }
 
     &.added {
-        .thumbnail {
-            border: 1px solid $red;
+
+        .img{
+            position: relative;
+            overflow: hidden;
+            span{
+                position: absolute;
+                right: -24px;
+                top: 8px;
+                font-size: 13px;
+                transform: rotate(45deg);
+                &::before{
+                    content: "Added";
+                    background: #f53c6f;
+                    color: #ffffff;
+                    padding: 20px 24px 6px;
+                }
+            }
         }
     }
 

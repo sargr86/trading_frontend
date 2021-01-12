@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {URL_PATTERN} from '@core/constants/patterns';
@@ -17,6 +17,8 @@ export class VideoUrlTabComponent implements OnInit {
     selectedVideos = [];
 
     apiUrl = API_URL;
+
+    @Input('playlist') playlist;
 
     @Output('selectVideo') selectVid = new EventEmitter();
 
@@ -48,14 +50,19 @@ export class VideoUrlTabComponent implements OnInit {
         return this.selectedVideos.find(v => v === id);
     }
 
-    selectVideo(id) {
+    selectVideo(video) {
+        const id = video.id;
         if (this.selectedVideos.includes(id)) {
             this.selectedVideos = this.selectedVideos.filter(v => v !== id);
-        } else {
+        } else if (!this.checkIfVideoAddedToPlaylist(video)) {
             this.selectedVideos.push(id);
         }
         console.log(this.selectedVideos)
         this.selectVid.emit(this.selectedVideos);
+    }
+
+    checkIfVideoAddedToPlaylist(video) {
+        return video?.playlists.find(p => this.playlist.id === p.id);
     }
 
 }

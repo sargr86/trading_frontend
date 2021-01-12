@@ -23,10 +23,12 @@
 
             <div class="tab-items">
 
-                <app-search-videos-tab *ngIf="activeTab==='search'" (selectVideo)="selectVideo($event)"></app-search-videos-tab>
-                <app-video-url-tab *ngIf="activeTab==='url'" (selectVideo)="selectVideo($event)"></app-video-url-tab>
+                <app-search-videos-tab *ngIf="activeTab==='search'" [playlist]="playlist"
+                                       (selectVideo)="selectVideo($event)"></app-search-videos-tab>
+                <app-video-url-tab *ngIf="activeTab==='url'" [playlist]="playlist"
+                                   (selectVideo)="selectVideo($event)"></app-video-url-tab>
                 <app-your-videos-tab *ngIf="activeTab==='yours'" [currentUser]="currentUser" [authUser]="authUser"
-                                    [playlist]="playlist" (selectVideo)="selectVideo($event)">
+                                     [playlist]="playlist" (selectVideo)="selectVideo($event)">
                 </app-your-videos-tab>
 
             </div>
@@ -38,7 +40,8 @@
 
     <div class="btn-wrap">
         <button class="btn cancel" (click)="cancel()">Cancel</button>
-        <button class="btn add-videos" (click)="addVideos()" [disabled]="ifSubmitInactive(activeTab)">Add videos</button>
+        <button class="btn add-videos" (click)="addVideos()" [disabled]="ifSubmitInactive(activeTab)">Add videos
+        </button>
     </div>
 
 </div>

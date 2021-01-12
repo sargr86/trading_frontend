@@ -26,35 +26,8 @@ export class VideosTabComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    openVideoPage(video, username) {
-        console.log(username);
-        let route;
-        let params;
-        if (video.status === 'live') {
-            route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username};
-        } else {
-            route = 'videos/play';
-            params = {id: video.id};
-        }
-
-
-        this.router.navigate([route], {queryParams: params});
-    }
-
     getSearchResults(dt) {
         this.channelUser.videos = dt;
-    }
-
-    removeVideo(video) {
-        console.log(video)
-        this.videoService.removeVideo({
-            id: video.id,
-            filename: video.filename,
-            username: this.authUser.username
-        }).subscribe(dt => {
-            this.channelUser.videos = dt.videos;
-        });
     }
 
 }

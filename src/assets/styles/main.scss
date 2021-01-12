@@ -411,6 +411,7 @@ nav.home-header {
     color: #545454;
     font-size: 12px;
     font-family: "Muli-Bold";
+    cursor: pointer;
 }
 
 .main-text-3 {
@@ -713,10 +714,10 @@ nav.home-header {
     width: 100%;
 }
 
-.ads-info {
+.playlist-video, .suggested-video {
     display: flex;
     margin-bottom: 12px;
-    
+
     img {
         margin-right: 8px;
         width: 115px;
@@ -741,10 +742,10 @@ nav.home-header {
     .main-text-3{
         margin: 0;
     }
-    
+
 }
 
- 
+
 .chat-content {
     //margin-bottom: 40px;
     box-shadow: 0 0 6px #0000001A;
@@ -1389,7 +1390,7 @@ input, textarea {
 .owl-item {
     width: 400px !important;
 
-    .main-item-img {
+    .thumbnail {
         object-fit: cover !important;
         height: 182px !important;
         cursor: pointer;
@@ -1400,5 +1401,4 @@ input, textarea {
     object-fit: cover !important;
 }
 
- 
- 
+

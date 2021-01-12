@@ -25,7 +25,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     apiUrl = API_URL;
 
     authUser;
-    userVideoConnection = {liked: '', saved: ''};
+    userVideoConnection = {liked: '', saved: '', viewed: false};
 
     videoJSPlayerOptions = {
         autoplay: true,
@@ -33,6 +33,8 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         fluid: false,
         sources: []
     };
+
+    viewsCount = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -56,9 +58,9 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
             this.videoData = dt;
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
+                this.updateViewsCount(dt);
             }
         });
-
 
 
     }
@@ -71,7 +73,18 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         } else {
             const liked = ['liked', 'disliked'].find(st => userVideoConnection.users_videos[st] ? st : '');
             const saved = userVideoConnection.users_videos.saved ? 'saved' : '';
-            return {liked, saved};
+            const viewed = !!userVideoConnection?.users_videos?.viewed;
+            return {liked, saved, viewed};
+        }
+    }
+
+    updateViewsCount(dt) {
+        const params = {user_id: this.authUser.id, video_id: dt.id};
+        console.log(this.userVideoConnection)
+        if (!this.userVideoConnection.viewed) {
+            this.videoService.updateViews(params).subscribe((d) => {
+                this.videoData = d;
+            });
         }
     }
 

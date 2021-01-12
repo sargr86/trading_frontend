@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NavbarComponent} from './components/layout/navbar/navbar.component';
-import {LeftSidebarComponent} from './components/layout/left-sidebar/left-sidebar.component';
+import {NavbarComponent} from '@core/components/layout/navbar/navbar.component';
+import {LeftSidebarComponent} from '@core/components/layout/left-sidebar/left-sidebar.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
@@ -9,21 +9,24 @@ import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/c
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purchase-bits.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NotFoundComponent} from './components/ungrouped/not-found/not-found.component';
+import {NotFoundComponent} from '@core/components/ungrouped/not-found/not-found.component';
 import {MaterialModule} from '@core/modules/material.module';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {AboutComponent} from './components/ungrouped/about/about.component';
+import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {AccessibilityStatementComponent} from '@core/components/ungrouped/accessibility-statement/accessibility-statement.component';
-import { ContactUsComponent } from './components/ungrouped/contact-us/contact-us.component';
-import { PrivacyPolicyComponent } from './components/ungrouped/privacy-policy/privacy-policy.component';
-import { SecurityComponent } from './components/ungrouped/security/security.component';
-import { StreamPreviewDialogComponent } from './components/modals/stream-preview-dialog/stream-preview-dialog.component';
+import { ContactUsComponent } from '@core/components/ungrouped/contact-us/contact-us.component';
+import { PrivacyPolicyComponent } from '@core/components/ungrouped/privacy-policy/privacy-policy.component';
+import { SecurityComponent } from '@core/components/ungrouped/security/security.component';
+import { StreamPreviewDialogComponent } from '@core/components/modals/stream-preview-dialog/stream-preview-dialog.component';
 import {SharedModule} from '@shared/shared.module';
-import { AddPlaylistDialogComponent } from './components/modals/add-playlist-dialog/add-playlist-dialog.component';
-import { AddVideoToPlaylistDialogComponent } from './components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
-import { SearchVideosFormComponent } from './components/ungrouped/search-videos-form/search-videos-form.component';
-import { ConfirmationDialogComponent } from './components/modals/confirmation-dialog/confirmation-dialog.component';
-import { AddVideoToAnotherPlaylistComponent } from './components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
+import { AddPlaylistDialogComponent } from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
+import { AddVideoToPlaylistDialogComponent } from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
+import { SearchVideosFormComponent } from '@core/components/ungrouped/search-videos-form/search-videos-form.component';
+import { ConfirmationDialogComponent } from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import { AddVideoToAnotherPlaylistComponent } from '@core/components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
+import { SearchVideosTabComponent } from '@core/components/modals/add-video-to-playlist-dialog/search-videos-tab/search-videos-tab.component';
+import { VideoUrlTabComponent } from '@core/components/modals/add-video-to-playlist-dialog/video-url-tab/video-url-tab.component';
+import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playlist-dialog/your-videos-tab/your-videos-tab.component';
 
 
 @NgModule({
@@ -44,6 +47,9 @@ import { AddVideoToAnotherPlaylistComponent } from './components/modals/add-vide
         SearchVideosFormComponent,
         ConfirmationDialogComponent,
         AddVideoToAnotherPlaylistComponent,
+        SearchVideosTabComponent,
+        VideoUrlTabComponent,
+        YourVideosTabComponent
     ],
     imports: [
         CommonModule,

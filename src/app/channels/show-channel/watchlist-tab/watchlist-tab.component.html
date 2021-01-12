@@ -1,31 +1,7 @@
-                <ng-container *ngFor="let videoList of watchlistVideos">
-                    <ng-container *ngIf="videoList.videos.length > 0">
+<ng-container *ngFor="let videoList of watchlistVideos">
+    <ng-container *ngIf="videoList.videos.length > 0">
 
-                        <p class="trending-text">{{videoList.full_name}}</p>
-                        <owl-carousel-o [options]="owlOptions">
-                            <ng-container *ngFor="let video of videoList.videos">
-                                <ng-template carouselSlide>
-                                    <div class="item main-carousel-item"
-                                         (click)="openVideoPage(video, videoList.username)">
-                                        <img class="main-item-img" *ngIf="video.thumbnail"
-                                             [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail">
-                                        <img class="main-item-img" *ngIf="!video.thumbnail"
-                                             [src]="'assets/img/video-thumbnail-default.png'">
-                                        <span class="live-now" *ngIf="video.status==='live'">Live now</span>
-                                        <div class="main-item-block">
-                                            <img class="avatar" *ngIf="videoList.avatar"
-                                                 [src]="apiUrl+'uploads/avatars/'+videoList.avatar">
-                                            <img class="avatar" *ngIf="!videoList.avatar"
-                                                 [src]="'assets/img/default-user.png'">
-                                            <div>
-                                                <p class="main-text-1">{{video.name}}</p>
-                                                <p class="main-text-2">{{videoList.full_name}}</p>
-                                                <p class="main-text-3">17k watching</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ng-container>
-                        </owl-carousel-o>
-                    </ng-container>
-                </ng-container>
+        <app-video-carousel-holder [videos]="videoList.videos" [title]="videoList.full_name"
+                                   [detailsSource]="videoList"></app-video-carousel-holder>
+    </ng-container>
+</ng-container>

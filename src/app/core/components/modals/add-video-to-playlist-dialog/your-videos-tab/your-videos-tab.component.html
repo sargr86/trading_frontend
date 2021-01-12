@@ -1,0 +1,30 @@
+<div class="tab3" *ngIf="currentUser">
+    <ng-container *ngIf="currentUser?.videos?.length > 0">
+        <div class="video-item" [class.selected]="ifVideoSelected(video.id)"
+             *ngFor="let video of currentUser.videos" (click)="selectVideo(video.id)">
+            <div class="video-container">
+                <div class="img">
+                    <img class="thumbnail" src="assets/img/video-thumbnail-default.png"
+                         *ngIf="!video.thumbnail || video.thumbnail==='undefined'">
+                    <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"
+                         *ngIf="video.thumbnail && video.thumbnail!=='undefined'">
+                </div>
+
+                <div class="details">
+                    <div class="title">
+                        <h4 class="">{{video.name}}</h4>
+                    </div>
+                    <div class="shortened-details">
+                        <span class="channel-name">{{video.channel.name}}</span>
+                        <span class="dot">.</span>
+                        <span class="watchers-count">17k watching</span>
+                        <span class="dot">.</span>
+                        <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
+                    </div>
+                    <p class="shortened-description">{{video.description}}</p>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="currentUser?.videos?.length === 0">There are no videos in this list</ng-container>
+</div>

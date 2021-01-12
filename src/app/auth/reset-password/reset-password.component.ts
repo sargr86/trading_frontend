@@ -6,6 +6,9 @@ import {EMAIL_PATTERN, NO_SPACE_PATTERN} from '@core/constants/patterns';
 import {passwordConfirmation} from '@core/helpers/password-confirmation';
 import {PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH} from '@core/constants/global';
 import {AuthService} from '@core/services/auth.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {ToastrService} from 'ngx-toastr';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -17,19 +20,26 @@ export class ResetPasswordComponent implements OnInit {
     resetPassForm: FormGroup;
     isSubmitted = false;
     emailPassed = false;
+    tokenExpired = false;
+    email;
 
     constructor(
         private fb: FormBuilder,
         public router: Router,
         public auth: AuthService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private jwtHelper: JwtHelperService,
+        private toastr: ToastrService,
+        public loader: LoaderService
     ) {
 
-        const email = this.route.snapshot?.queryParams?.email;
-        this.emailPassed = !!email;
+        this.email = this.route.snapshot?.queryParams?.email;
+        const token = this.route.snapshot?.queryParams?.token;
+        this.tokenExpired = this.jwtHelper.isTokenExpired(token);
+        this.emailPassed = !!this.email;
 
         this.resetPassForm = this.fb.group({
-            email: [email, [Validators.required, patternValidator(EMAIL_PATTERN)]],
+            email: [this.email, [Validators.required, patternValidator(EMAIL_PATTERN)]],
             password: ['',
                 [
                     Validators.required, patternValidator(NO_SPACE_PATTERN),
@@ -47,10 +57,16 @@ export class ResetPasswordComponent implements OnInit {
         this.isSubmitted = true;
         if (this.resetPassForm.valid) {
             this.auth.resetPass(this.resetPassForm.value).subscribe(dt => {
-                localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+                localStorage.setItem('token', (dt?.hasOwnProperty('token') ? dt.token : ''));
                 this.router.navigate(['/']);
             });
         }
+    }
+
+    resendEmail() {
+        this.auth.sendForgotPassEmail({email: this.email}).subscribe(dt => {
+            this.toastr.success('Reset password request has been resent to your e-mail');
+        });
     }
 
     get pass(): AbstractControl {

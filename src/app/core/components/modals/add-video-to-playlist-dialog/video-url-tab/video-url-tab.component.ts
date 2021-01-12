@@ -62,7 +62,7 @@ export class VideoUrlTabComponent implements OnInit {
     }
 
     checkIfVideoAddedToPlaylist(video) {
-        return video?.playlists.find(p => this.playlist.id === p.id);
+        return video?.playlists?.find(p => this.playlist.id === p.id);
     }
 
 }

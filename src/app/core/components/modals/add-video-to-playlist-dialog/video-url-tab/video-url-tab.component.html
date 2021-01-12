@@ -13,6 +13,7 @@
          *ngFor="let video of searchedVideos" (click)="selectVideo(video)">
         <div class="video-container">
             <div class="img">
+                <span class="added-placeholder"></span>
                 <img class="thumbnail" [src]="video.thumbnail|getImgPath">
             </div>
 

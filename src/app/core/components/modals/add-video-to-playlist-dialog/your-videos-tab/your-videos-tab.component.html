@@ -4,7 +4,7 @@
              *ngFor="let video of currentUser.videos" (click)="selectVideo(video)">
             <div class="video-container">
                 <div class="img">
-                    <span></span>
+                    <span class="added-placeholder"></span>
                     <img class="thumbnail" [src]="video.thumbnail|getImgPath">
                 </div>
 

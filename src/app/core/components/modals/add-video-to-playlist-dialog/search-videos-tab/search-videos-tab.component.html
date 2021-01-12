@@ -3,14 +3,12 @@
         <label>Search video</label>
         <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
     </div>
-    <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)" [class.added]="checkIfVideoAddedToPlaylist(video)"
+    <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
+         [class.added]="checkIfVideoAddedToPlaylist(video)"
          *ngFor="let video of searchedVideos" (click)="selectVideo(video)">
         <div class="video-container">
             <div class="img">
-                <!--                                <img class="thumbnail" src="assets/img/video-thumbnail-default.png"-->
-                <!--                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">-->
-                <!--                                <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"-->
-                <!--                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">-->
+                <span class="added-placeholder"></span>
                 <img class="thumbnail" [src]="video.thumbnail|getImgPath">
             </div>
 

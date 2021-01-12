@@ -24,7 +24,15 @@
             }
 
             td {
-                cursor: pointer;
+                &:last-child{
+                    text-align: right;
+                    .material-icons{
+                        transition: 0.3s;
+                        &:hover{
+                            color: #18B587;
+                        }
+                    }
+                }
             }
 
             td, th {
@@ -44,30 +52,40 @@
                 }
 
                 .material-icons {
-                    margin-right: 12px;
+                    margin-right: 12px !important;
                     vertical-align: middle;
                     cursor: pointer;
                 }
 
                 .img-info {
                     display: flex;
-
+                    align-items: flex-start;
+                    
                     img {
                         width: 144px;
                     }
 
                     .info {
                         margin-left: 24px;
-
+                     
                         h3 {
+                            max-width: 240px;
                             font-size: 16px;
                             font-family: "Muli-Bold";
+                            -webkit-line-clamp: 1;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
                         }
 
                         p {
                             max-width: 240px;
                             font-size: 12px;
                             font-weight: normal;
+                            -webkit-line-clamp: 2;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
                         }
                     }
                 }

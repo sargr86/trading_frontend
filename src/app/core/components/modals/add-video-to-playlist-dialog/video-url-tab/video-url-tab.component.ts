@@ -1,9 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {METL_URL_PATTERN} from '@core/constants/patterns';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
+import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 
 @Component({
     selector: 'app-video-url-tab',
@@ -20,11 +21,13 @@ export class VideoUrlTabComponent implements OnInit {
 
     searchingVideo = false;
     isSubmitted = false;
+    @Input('playlist') playlist;
     @Output('selectVideo') selectVid = new EventEmitter();
 
     constructor(
         private fb: FormBuilder,
-        private videoService: VideoService
+        private videoService: VideoService,
+        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
     ) {
     }
 
@@ -60,8 +63,8 @@ export class VideoUrlTabComponent implements OnInit {
         return this.selectedVideos.find(v => v === id);
     }
 
-    selectVideo(id) {
-        this.selectedVideos = this.selectedVideos.filter(v => v !== id).concat([id]);
+    selectVideo(video) {
+        this.selectedVideos = this.getSelectedVideos.transform(video, this.selectedVideos, this.playlist);
         this.selectVid.emit(this.selectedVideos);
     }
 

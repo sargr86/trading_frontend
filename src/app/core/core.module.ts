@@ -27,6 +27,7 @@ import { AddVideoToAnotherPlaylistComponent } from '@core/components/modals/add-
 import { SearchVideosTabComponent } from '@core/components/modals/add-video-to-playlist-dialog/search-videos-tab/search-videos-tab.component';
 import { VideoUrlTabComponent } from '@core/components/modals/add-video-to-playlist-dialog/video-url-tab/video-url-tab.component';
 import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playlist-dialog/your-videos-tab/your-videos-tab.component';
+import { AddStockDialogComponent } from './components/modals/add-stock-dialog/add-stock-dialog.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playl
         AddVideoToAnotherPlaylistComponent,
         SearchVideosTabComponent,
         VideoUrlTabComponent,
-        YourVideosTabComponent
+        YourVideosTabComponent,
+        AddStockDialogComponent
     ],
     imports: [
         CommonModule,

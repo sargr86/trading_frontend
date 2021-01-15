@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {patternValidator} from '@core/helpers/pattern-validator';
-import {URL_PATTERN} from '@core/constants/patterns';
+import {METL_URL_PATTERN} from '@core/constants/patterns';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
 
@@ -18,6 +18,8 @@ export class VideoUrlTabComponent implements OnInit {
 
     apiUrl = API_URL;
 
+    searchingVideo = false;
+    isSubmitted = false;
     @Output('selectVideo') selectVid = new EventEmitter();
 
     constructor(
@@ -28,19 +30,29 @@ export class VideoUrlTabComponent implements OnInit {
 
     ngOnInit(): void {
         this.searchVideoByUrlForm = this.fb.group({
-            url: ['', [Validators.required, patternValidator(URL_PATTERN)]]
+            url: ['', [Validators.required, patternValidator(METL_URL_PATTERN)]]
         });
     }
 
     getUrlString(e) {
-        const possibleUrl = e.clipboardData.getData('text');
-        this.validUrl = URL_PATTERN.test(possibleUrl);
+        const possibleUrl = e.clipboardData?.getData('text') || e;
+        this.isSubmitted = true;
+        this.searchedVideos = [];
+        this.getVideos(possibleUrl);
+    }
+
+    getVideos(possibleUrl) {
+        this.validUrl = METL_URL_PATTERN.test(possibleUrl);
         if (this.validUrl) {
             const parsedUrl = new URL(possibleUrl);
             const id = parsedUrl.searchParams.get('id');
-            this.videoService.getVideoById({id}).subscribe(dt => {
-                this.searchedVideos = [dt];
-            });
+            if (id) {
+                this.searchingVideo = true;
+                this.videoService.getVideoById({id}).subscribe(dt => {
+                    this.searchingVideo = false;
+                    this.searchedVideos = dt ? [dt] : [];
+                });
+            }
         }
     }
 
@@ -49,13 +61,12 @@ export class VideoUrlTabComponent implements OnInit {
     }
 
     selectVideo(id) {
-        if (this.selectedVideos.includes(id)) {
-            this.selectedVideos = this.selectedVideos.filter(v => v !== id);
-        } else {
-            this.selectedVideos.push(id);
-        }
-        console.log(this.selectedVideos)
+        this.selectedVideos = this.selectedVideos.filter(v => v !== id).concat([id]);
         this.selectVid.emit(this.selectedVideos);
+    }
+
+    get urlCtrl(): AbstractControl {
+        return this.searchVideoByUrlForm.get('url');
     }
 
 }

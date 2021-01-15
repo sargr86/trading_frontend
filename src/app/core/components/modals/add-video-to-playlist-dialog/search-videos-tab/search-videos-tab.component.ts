@@ -29,11 +29,7 @@ export class SearchVideosTabComponent implements OnInit {
     }
 
     selectVideo(id) {
-        if (this.selectedVideos.includes(id)) {
-            this.selectedVideos = this.selectedVideos.filter(v => v !== id);
-        } else {
-            this.selectedVideos.push(id);
-        }
+        this.selectedVideos = this.selectedVideos.filter(v => v !== id).concat([id]);
         this.selectVid.emit(this.selectedVideos);
     }
 

@@ -12,9 +12,11 @@
     <mat-spinner *ngIf="searchingVideo" [diameter]="15"></mat-spinner>
     <ng-container *ngIf="searchedVideos.length > 0">
         <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
-             *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
+             [class.added]="getSelectedVideos.checkIfVideoAddedToPlaylist(video, playlist)"
+             *ngFor="let video of searchedVideos" (click)="selectVideo(video)">
             <div class="video-container">
                 <div class="img">
+                    <span class="added-placeholder"></span>
                     <img class="thumbnail" [src]="video.thumbnail|getImgPath">
                 </div>
 
@@ -34,7 +36,7 @@
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="searchedVideos.length === 0 && isSubmitted">
+    <ng-container *ngIf="searchedVideos.length === 0 && isSubmitted && validUrl">
         <span>No videos found via specified url</span>
     </ng-container>
 </div>

@@ -3,30 +3,33 @@
         <label>Search video</label>
         <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
     </div>
-    <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
-         *ngFor="let video of searchedVideos" (click)="selectVideo(video.id)">
-        <div class="video-container">
-            <div class="img">
-                <!--                                <img class="thumbnail" src="assets/img/video-thumbnail-default.png"-->
-                <!--                                     *ngIf="!video.thumbnail || video.thumbnail==='undefined'">-->
-                <!--                                <img class="thumbnail" src="{{apiUrl+'uploads/thumbnails/'+video.thumbnail}}"-->
-                <!--                                     *ngIf="video.thumbnail && video.thumbnail!=='undefined'">-->
-                <img class="thumbnail" [src]="video.thumbnail|getImgPath">
-            </div>
+    <ng-container *ngIf="searchedVideos.length > 0">
+        <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
+             [class.added]="getSelectedVideos.checkIfVideoAddedToPlaylist(video, playlist)"
+             *ngFor="let video of searchedVideos" (click)="selectVideo(video)">
+            <div class="video-container">
+                <div class="img">
+                    <span class="added-placeholder"></span>
+                    <img class="thumbnail" [src]="video.thumbnail|getImgPath">
+                </div>
 
-            <div class="details">
-                <div class="title">
-                    <h4 class="">{{video.name}}</h4>
+                <div class="details">
+                    <div class="title">
+                        <h4 class="">{{video.name}}</h4>
+                    </div>
+                    <div class="shortened-details">
+                        <span class="channel-name">{{video.channel.name}}</span>
+                        <span class="dot">.</span>
+                        <span class="watchers-count">17k watching</span>
+                        <span class="dot">.</span>
+                        <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
+                    </div>
+                    <p class="shortened-description">{{video.description}}</p>
                 </div>
-                <div class="shortened-details">
-                    <span class="channel-name">{{video.channel.name}}</span>
-                    <span class="dot">.</span>
-                    <span class="watchers-count">17k watching</span>
-                    <span class="dot">.</span>
-                    <span class="upload-time">{{video.created_at|date: 'd MMM, yyyy'}}</span>
-                </div>
-                <p class="shortened-description">{{video.description}}</p>
             </div>
         </div>
+    </ng-container>
+    <div class="no-results-found" *ngIf="searchedVideos.length === 0">
+        <span>No results found for the provided url</span>
     </div>
 </div>

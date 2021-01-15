@@ -1,10 +1,11 @@
 <div class="tab3" *ngIf="currentUser">
     <ng-container *ngIf="currentUser.videos?.length > 0">
-        <div class="video-item" [class.selected]="ifVideoSelected(video.id)" [class.added]="checkIfVideoAddedToPlaylist(video)"
+        <div class="video-item" [class.selected]="ifVideoSelected(video.id)"
+             [class.added]="getSelectedVideos.checkIfVideoAddedToPlaylist(video, playlist)"
              *ngFor="let video of currentUser.videos" (click)="selectVideo(video)">
             <div class="video-container">
                 <div class="img">
-                    <span></span>
+                    <span class="added-placeholder"></span>
                     <img class="thumbnail" [src]="video.thumbnail|getImgPath">
                 </div>
 

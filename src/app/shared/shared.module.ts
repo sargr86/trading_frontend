@@ -14,6 +14,7 @@ import {CategoriesComponent} from '@shared/components/categories/categories.comp
 import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
 import {GetThumbPathPipe} from './pipes/get-thumb-path.pipe';
 import {VideoCarouselHolderComponent} from './components/video-carousel-holder/video-carousel-holder.component';
+import {GetSelectedVideosToBeAddedToPlaylistPipe} from './pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {VideoCarouselHolderComponent} from './components/video-carousel-holder/v
         FilterDevicesPipe,
         GetThumbPathPipe,
         VideoCarouselHolderComponent,
+        GetSelectedVideosToBeAddedToPlaylistPipe,
     ],
     imports: [
         CommonModule,
@@ -40,7 +42,9 @@ import {VideoCarouselHolderComponent} from './components/video-carousel-holder/v
         GetAuthUserPipe,
         BlobToFilePipe,
         Base64ToFilePipe,
-        FilterDevicesPipe
+        FilterDevicesPipe,
+        GetSelectedVideosToBeAddedToPlaylistPipe
+
     ],
     exports: [
         FormsModule,

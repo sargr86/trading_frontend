@@ -12,7 +12,8 @@
                         {{video.user.channel.name}}
                     </span>
                     <span class="dot">.</span>
-                    <span class="watchers-count">{{video.status ==='live'? '17k watching': video.views + ' view' +(video.views ===1?'':'s')}}</span>
+                    <span
+                        class="watchers-count">{{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}</span>
                     <span class="dot">.</span>
                     <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
                 </div>
@@ -72,7 +73,10 @@
                         sed sda,sasddswd
                     </p>
 
-                    <button class="btn">Subscribe</button>
+                    <button class="btn subscribe-to-channel-btn"
+                            [class.subscribed]="checkIfSubscribed(channel)"
+                            (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
+                    </button>
                 </div>
             </div>
             <div class="video-container" *ngFor="let video of channel.videos">

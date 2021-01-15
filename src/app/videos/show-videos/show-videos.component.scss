@@ -96,6 +96,12 @@
                 border-radius: 0;
                 box-shadow: 0 0 6px #006DCC2E;
             }
+
+            .subscribe-to-channel-btn {
+                &.subscribed {
+                    background-color: #D6D6D6 !important;
+                }
+            }
         }
 
 

@@ -56,7 +56,7 @@ export class ChannelProfileComponent implements OnInit {
         fd.append('avatar', filename);
         fd.append('id', this.authUser.id);
         this.usersService.changeProfileImage(fd).subscribe((dt) => {
-          this.changeAuthUserInfo(dt);
+            this.changeAuthUserInfo(dt);
         });
     }
 
@@ -72,7 +72,7 @@ export class ChannelProfileComponent implements OnInit {
         });
     }
 
-    subscribeToChannel(channel) {
+    subscribeToChannel(channel): void {
         console.log(channel)
         this.channelService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
             this.subscribedToChannel = dt.status === 'Subscribed';
@@ -94,7 +94,7 @@ export class ChannelProfileComponent implements OnInit {
         });
     }
 
-    changeAuthUserInfo(dt){
+    changeAuthUserInfo(dt) {
         localStorage.setItem('token', dt.token);
         this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;

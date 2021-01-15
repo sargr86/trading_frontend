@@ -8,6 +8,7 @@ import {ChannelsService} from '@core/services/channels.service';
 import {filter, map, tap} from 'rxjs/operators';
 import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {ChannelProfileComponent} from '@app/channels/show-channel/channel-profile/channel-profile.component';
 
 @Component({
     selector: 'app-show-videos',
@@ -21,6 +22,7 @@ export class ShowVideosComponent implements OnInit {
     search;
     authUser;
     showTrending = false;
+    subscribedToChannel = false;
 
     constructor(
         private videoService: VideoService,
@@ -28,8 +30,9 @@ export class ShowVideosComponent implements OnInit {
         private subject: SubjectService,
         private channelsService: ChannelsService,
         private route: ActivatedRoute,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
     ) {
+        this.authUser = this.getAuthUser.transform();
         router.events.pipe(
             filter(e => e instanceof ActivationEnd),
         ).subscribe((d: Data) => {
@@ -41,7 +44,7 @@ export class ShowVideosComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+
         this.showTrending = this.router.url.includes('trending');
         this.videoService.get({
             withPlaylists: !this.showTrending ? 1 : 0,
@@ -54,9 +57,13 @@ export class ShowVideosComponent implements OnInit {
     }
 
     searchChannelsVideos(d) {
-        this.channelsService.searchWithVideos(d).subscribe(dt => {
+        this.channelsService.searchWithVideos({user_id: this.authUser.id, ...d}).subscribe(dt => {
             this.channelsVideos = dt;
         });
+    }
+
+    checkIfSubscribed(channel) {
+        return channel.subscribers.find(s => s.id === this.authUser.id) || this.subscribedToChannel;
     }
 
 
@@ -88,5 +95,14 @@ export class ShowVideosComponent implements OnInit {
         const route = 'videos/play';
         const params = {id: firstVideoId, playlist_id: playlist.id};
         this.router.navigate([route], {queryParams: params});
+    }
+
+    subscribeToChannel(channel) {
+        this.channelsService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
+            this.subscribedToChannel = dt.status === 'Subscribed';
+            this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
+                this.subject.setUserSubscriptions(d);
+            });
+        });
     }
 }

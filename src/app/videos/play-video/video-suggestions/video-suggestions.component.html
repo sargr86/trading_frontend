@@ -2,10 +2,10 @@
     <h2>{{playlistData.name}}</h2>
     <div class="list-wrap">
         <div class="playlist-video" [class.selected]="videoId === video.id"
-             *ngFor="let video of playlistData.videos">
+             *ngFor="let video of playlistData.videos" (click)="openVideoPage(video, playlistData?.id)">
 
             <div class="thumbnail-container">
-                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, playlistData?.id)">
+                <img [src]="video.thumbnail|getImgPath">
             </div>
 
             <div class="details-container">

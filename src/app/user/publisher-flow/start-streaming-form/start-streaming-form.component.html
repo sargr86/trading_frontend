@@ -40,6 +40,39 @@
             </mat-error>
         </div>
 
+        <div id="privacy">
+            <mat-icon>{{selectedPrivacy?.icon}}</mat-icon>
+            <select formControlName="privacy" required (change)="changedPrivacy($event)">
+                <option [value]="''">Select privacy</option>
+                <option *ngFor="let privacy of privacyTypes" [value]="privacy.name">
+                    <!--                                    <mat-icon>{{privacy.icon}}</mat-icon>-->
+                    {{privacy.name}}
+                </option>
+            </select>
+        </div>
+
+<!--        <div class="item">-->
+<!--            <div class="info">-->
+<!--                <mat-icon>{{selectedPrivacy?.icon}}</mat-icon>-->
+<!--                <mat-form-field style="width:88%;">-->
+<!--                    <mat-select formControlName="privacy" required-->
+<!--                                (selectionChange)="changedPrivacy($event)">-->
+<!--                        &lt;!&ndash;                                <mat-select-trigger>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                    <div class="selected-privacy">&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                        <mat-icon>{{selectedPrivacy.icon}}</mat-icon>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                        <span>{{selectedPrivacy.name}}</span>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                                </mat-select-trigger>&ndash;&gt;-->
+<!--                        <mat-option [value]="''">Select privacy</mat-option>-->
+<!--                        <mat-option *ngFor="let privacy of privacyTypes" [value]="privacy.name">-->
+<!--                            &lt;!&ndash;                                    <mat-icon>{{privacy.icon}}</mat-icon>&ndash;&gt;-->
+<!--                            {{privacy.name}}-->
+<!--                        </mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
+<!--            </div>-->
+<!--        </div>-->
+
         <div id="thumbnail">
             <ng-container *ngIf="!thumbnailUploaded">
                 <label for="custom-thumbnail">

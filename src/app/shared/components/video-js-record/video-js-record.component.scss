@@ -4,6 +4,11 @@
   background-color: #000000;
 }
 
+.video-container {
+    flex: 1;
+    display: flex;
+}
+
 #live-session-finished {
   position: absolute;
   top: 0;

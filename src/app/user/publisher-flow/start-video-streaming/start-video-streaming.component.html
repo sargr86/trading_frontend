@@ -1,0 +1,18 @@
+<div id="video-chat-container" *ngIf="openViduToken">
+
+    <!-- Publisher video recording interface -->
+    <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                         [videoSettings]="videoSettings"></app-video-js-record>
+    <app-chat-box [openViduToken]="openViduToken" [session]="session" (sendMessage)="sendMessage($event)"
+                  [videoRecordingState]="recordingState"></app-chat-box>
+</div>
+
+<ng-container *ngIf="openViduToken">
+    <i class="fa fa-users"></i>{{participants.length}}
+    <ul>
+        <li *ngFor="let participant of participants">{{participant}}</li>
+    </ul>
+</ng-container>
+<ng-container *ngIf="!openViduToken && !loadingSession">
+    <h1>There is a problem white loading streaming session</h1>
+</ng-container>

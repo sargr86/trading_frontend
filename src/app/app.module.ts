@@ -9,7 +9,7 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import {JwtModule} from '@auth0/angular-jwt';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RequestInterceptor} from '@core/helpers/http.interceptor';
-import {StockProfileComponent} from '@app/user/stock-profile/stock-profile.component';
+import {StockProfileComponent} from '@app/user/created-non-functional/stock-profile/stock-profile.component';
 import {DatePipe} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';

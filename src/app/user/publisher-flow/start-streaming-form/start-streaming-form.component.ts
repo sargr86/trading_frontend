@@ -27,19 +27,23 @@ export class StartStreamingFormComponent implements OnInit {
     sessionName = 'SessionA';
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
+    privacyTypes = [{name: 'Public', icon: 'public'}, {name: 'Private', icon: 'lock'}];
+    selectedPrivacy;
+
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
     @Output('formReady') formReady = new EventEmitter();
 
     constructor(
-        private fb: FormBuilder,
         private videoService: VideoService,
         private toastr: ToastrService,
+        private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        this.selectedPrivacy = this.privacyTypes[0];
         this.initForm();
         this.getVideoCategories();
     }
@@ -53,6 +57,7 @@ export class StartStreamingFormComponent implements OnInit {
             sessionName: [this.sessionName],
             myUserName: [this.authUser.username],
             thumbnail: ['', Validators.required],
+            privacy: ['Public'],
             status: ['live']
         });
     }
@@ -61,6 +66,10 @@ export class StartStreamingFormComponent implements OnInit {
         this.videoService.getVideoCategories().subscribe(dt => {
             this.videoCategories = dt;
         });
+    }
+
+    changedPrivacy(e) {
+        this.selectedPrivacy = this.privacyTypes.find(t => t.name === e.target.value);
     }
 
     add(event: MatChipInputEvent): void {
@@ -113,12 +122,14 @@ export class StartStreamingFormComponent implements OnInit {
     submit() {
         this.isSubmitted = true;
         if (this.startStreamingForm.valid) {
+            console.log('OK')
             this.formReady.emit({
                 categoryName: this.videoCategories.find(c => c.id === +this.startStreamingForm.value.category_id)?.name,
                 ...this.startStreamingForm.value
             });
         }
     }
+
 
     get streamName(): AbstractControl {
         return this.startStreamingForm.get('name');

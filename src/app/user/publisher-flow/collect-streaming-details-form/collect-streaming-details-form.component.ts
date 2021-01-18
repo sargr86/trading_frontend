@@ -1,18 +1,18 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {API_URL, VIDEO_CATEGORIES} from '@core/constants/global';
-import {MatChipInputEvent} from '@angular/material/chips';
+import {API_URL} from '@core/constants/global';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {VideoService} from '@core/services/video.service';
 import {ToastrService} from 'ngx-toastr';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
-    selector: 'app-start-streaming-form',
-    templateUrl: './start-streaming-form.component.html',
-    styleUrls: ['./start-streaming-form.component.scss']
+    selector: 'app-stream-details-form',
+    templateUrl: './collect-streaming-details-form.component.html',
+    styleUrls: ['./collect-streaming-details-form.component.scss']
 })
-export class StartStreamingFormComponent implements OnInit {
+export class CollectStreamingDetailsFormComponent implements OnInit {
 
     startStreamingForm: FormGroup;
     isSubmitted = false;

@@ -12,13 +12,13 @@ import {UserVideoComponent} from './subscriber-flow/user-video/user-video.compon
 import {OvVideoComponent} from './subscriber-flow/ov-video/ov-video.component';
 import {VideoLibraryComponent} from './openvidu-test/video-library/video-library.component';
 import {OpenviduSessionModule} from 'openvidu-angular';
-import {StartStreamingFormComponent} from './publisher-flow/start-streaming-form/start-streaming-form.component';
 import {JoinStreamingFormComponent} from './openvidu-test/join-streaming-form/join-streaming-form.component';
 import {HomeComponent} from '@app/user/home/home.component';
 import { CheckStreamingRequirementsComponent } from './publisher-flow/check-streaming-requirements/check-streaming-requirements.component';
 import { PublisherFlowComponent } from './publisher-flow/publisher-flow.component';
 import { SubscriberFlowComponent } from './subscriber-flow/subscriber-flow.component';
 import { StartVideoStreamingComponent } from './publisher-flow/start-video-streaming/start-video-streaming.component';
+import { CollectStreamingDetailsFormComponent } from './publisher-flow/collect-streaming-details-form/collect-streaming-details-form.component';
 
 @NgModule({
     declarations: [
@@ -30,13 +30,12 @@ import { StartVideoStreamingComponent } from './publisher-flow/start-video-strea
         OvVideoComponent,
         HomeComponent,
         VideoLibraryComponent,
-        StartStreamingFormComponent,
         JoinStreamingFormComponent,
         CheckStreamingRequirementsComponent,
         PublisherFlowComponent,
         SubscriberFlowComponent,
-        StartVideoStreamingComponent
-
+        StartVideoStreamingComponent,
+        CollectStreamingDetailsFormComponent
     ],
     imports: [
         CommonModule,

@@ -100,15 +100,30 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.authUser = this.getAuthUser.transform();
         const params: any = this.route.snapshot.queryParams;
+        this.watcher = this.router.url.includes('watch');
 
         if (params && params.hasOwnProperty('session')) {
+            console.log('has session!!!!!')
             this.sessionData.sessionName = params.session;
             this.sessionData.myUserName = this.authUser.username;
             this.recordingState = 'started';
+            console.log(this.sessionData)
             this.joinSession();
         }
 
-        this.watcher = this.router.url.includes('watch');
+
+        // this.subject.getSessionData().subscribe(dt => {
+        //     this.sessionData = dt;
+        //     this.joinSession();
+        //     console.log(this.sessionData)
+        // });
+
+        if (!this.watcher) {
+            this.getVideoSessionData();
+            if (this.sessionData && this.videoSettings) {
+                this.joinSession();
+            }
+        }
 
 
         this.subject.getVideoRecordingState().subscribe(data => {
@@ -130,12 +145,19 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.leaveSession();
     }
 
+    getVideoSessionData() {
+        this.sessionData = JSON.parse(localStorage.getItem('session'));
+        this.videoSettings = JSON.parse(localStorage.getItem('video_settings'));
+    }
+
 
     joinSession() {
         this.OV = new OpenVidu();
 
         this.session = this.OV.initSession();
         this.getStreamEvents();
+
+        console.log(this.session)
 
         this.openViduService.getToken({
             email: this.authUser.email,
@@ -146,6 +168,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             this.openViduToken = token;
             this.receiveMessage();
             this.receiveRecordingState();
+
+
 
             // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
@@ -215,8 +239,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.session.on('connectionCreated', (event: ConnectionEvent) => {
             console.log('connection created!!!')
-            console.log(event)
             const connection = JSON.parse(event.connection.data.replace(/}%\/%{/g, ','));
+            console.log(event.connection.data)
             // this.toastr.success(from.clientData.myUserName + 'joined the session');
             this.participants.push(connection.clientData.myUserName);
         });
@@ -361,16 +385,16 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     getPublisherData(e) {
-        this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
-        this.videoSettings = e;
-        console.log(this.sessionData)
-        this.dialog.open(StreamPreviewDialogComponent, {
-            data: this.videoSettings,
-            maxWidth: '554px',
-            width: '100%'
-        }).afterClosed().subscribe(result => {
-            this.videoSettings.privacy = result?.privacy;
-        });
+        // this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
+        // this.videoSettings = e;
+        // console.log(this.sessionData)
+        // this.dialog.open(StreamPreviewDialogComponent, {
+        //     data: this.videoSettings,
+        //     maxWidth: '554px',
+        //     width: '100%'
+        // }).afterClosed().subscribe(result => {
+        //     this.videoSettings.privacy = result?.privacy;
+        // });
         this.joinSession();
     }
 

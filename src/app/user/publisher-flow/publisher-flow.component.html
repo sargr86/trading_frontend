@@ -1,0 +1,2 @@
+<app-check-requirements (checked)="requirementsChecked = true" *ngIf="!requirementsChecked"></app-check-requirements>
+<app-start-streaming-form *ngIf="requirementsChecked" (formReady)="getPublisherData($event)"></app-start-streaming-form>

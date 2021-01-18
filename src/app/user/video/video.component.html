@@ -1,5 +1,5 @@
 <!-- Shown when session connected -->
-<ng-container *ngIf="session">
+<ng-container>
     <div id="video-chat-container" *ngIf="openViduToken">
 
         <!-- Publisher video recording interface -->
@@ -37,29 +37,21 @@
                               (sendMessage)="sendMessage($event)"></app-chat-box>
             </ng-container>
 
-
         </ng-container>
     </div>
-    <ng-container *ngIf="session">
+    <ng-container *ngIf="session && openViduToken">
         <i class="fa fa-users"></i>{{participants.length}}
         <ul>
             <li *ngFor="let participant of participants">{{participant}}</li>
         </ul>
     </ng-container>
+    <ng-container *ngIf="!openViduToken">
+        <h1>The session does not exist</h1>
+    </ng-container>
 </ng-container>
 
 <!-- Showing start-streaming or join-streaming forms based on user role -->
-<div id="main-container" class="container" *ngIf="!session">
-    <ng-container *ngIf="!welcomedUser && !watcher">
-        <div class="start-live-video-page">
-            <div class="text">
-                <h1>Start live video</h1>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata</p>
-                <button class="btn" (click)="greetUser()"><span class="material-icons"> video_call </span>Start live video</button>
-            </div>
-        </div>
-    </ng-container>
-
-    <app-start-streaming-form *ngIf="!watcher && welcomedUser" (formReady)="getPublisherData($event)"></app-start-streaming-form>
-    <app-join-streaming-form *ngIf="watcher && welcomedUser" (formReady)="getWatcherData($event)"></app-join-streaming-form>
-</div>
+<!--<div id="main-container" class="container" *ngIf="!session">-->
+<!--    <app-start-streaming-form *ngIf="!watcher" (formReady)="getPublisherData($event)"></app-start-streaming-form>-->
+<!--    <app-join-streaming-form *ngIf="watcher" (formReady)="getWatcherData($event)"></app-join-streaming-form>-->
+<!--</div>-->

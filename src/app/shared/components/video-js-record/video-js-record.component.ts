@@ -98,7 +98,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     video: {frameRate: {ideal: 30, max: 30}, width: 640, height: 480},
                     screen: true,
                     displayMilliseconds: false,
-                    maxLength: 30, //30
+                    maxLength: 3000, //30
                     debug: true,
                     videoMimeType: 'video/webm;codecs=H264',
                     // convertEngine: 'ts-ebml'

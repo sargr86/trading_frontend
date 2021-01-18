@@ -9,8 +9,6 @@ import {HelpComponent} from '@core/components/ungrouped/help/help.component';
 import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {StockProfileComponent} from '@app/user/created-non-functional/stock-profile/stock-profile.component';
-import {CheckStreamingRequirementsComponent} from '@app/user/publisher-flow/check-streaming-requirements/check-streaming-requirements.component';
-import {StartStreamingFormComponent} from '@app/user/publisher-flow/start-streaming-form/start-streaming-form.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {StartVideoStreamingComponent} from '@app/user/publisher-flow/start-video-streaming/start-video-streaming.component';
 

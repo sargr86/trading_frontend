@@ -1,8 +1,10 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
+import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager} from 'openvidu-browser';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {OpenviduService} from '@core/services/openvidu.service';
+import {SubjectService} from '@core/services/subject.service';
+import {VideoService} from '@core/services/video.service';
 
 @Component({
     selector: 'app-start-video-streaming',
@@ -25,6 +27,7 @@ export class StartVideoStreamingComponent implements OnInit {
 
     authUser;
     participants = [];
+    tags = [];
 
     recordingState = 'idle';
 
@@ -35,6 +38,8 @@ export class StartVideoStreamingComponent implements OnInit {
         private toastr: ToastrService,
         private getAuthUser: GetAuthUserPipe,
         private openViduService: OpenviduService,
+        private videoService: VideoService,
+        private subject: SubjectService,
         private elRef: ElementRef,
     ) {
         this.authUser = this.getAuthUser.transform();
@@ -48,19 +53,20 @@ export class StartVideoStreamingComponent implements OnInit {
 
     ngOnInit(): void {
         this.getVideoSessionData();
+        this.getRecordingState();
+    }
+
+
+    getVideoSessionData() {
+        this.sessionData = JSON.parse(localStorage.getItem('session'));
+        this.videoSettings = JSON.parse(localStorage.getItem('video_settings'));
         if (!this.sessionData || !this.videoSettings) {
             this.toastr.error('Video settings and/or session details are unavailable', 'Data unavailable!');
         } else {
             this.joinSession();
         }
-
-
     }
 
-    getVideoSessionData() {
-        this.sessionData = JSON.parse(localStorage.getItem('session'));
-        this.videoSettings = JSON.parse(localStorage.getItem('video_settings'));
-    }
 
     joinSession() {
 
@@ -70,15 +76,12 @@ export class StartVideoStreamingComponent implements OnInit {
         this.loadingSession = true;
         this.getStreamEvents();
 
-        console.log(this.session)
-
         this.openViduService.getToken({
             email: this.authUser.email,
             sessionName: this.sessionData.sessionName,
             role: 'PUBLISHER'
         }).subscribe((token: any) => {
 
-            this.loadingSession = false;
 
             // const {token} = data;
             this.openViduToken = token;
@@ -89,8 +92,10 @@ export class StartVideoStreamingComponent implements OnInit {
             // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
             this.session.connect(token, {clientData: this.sessionData})
-                .then(() => {
-                    console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
+                .then(async () => {
+                    this.loadingSession = false;
+
+                    console.log('PUBLISHER: ' + token.includes('PUBLISHER'));
                     if (token.includes('PUBLISHER')) {
                         const video = this.elRef.nativeElement.querySelector('video');
                         const publisher: Publisher = this.OV.initPublisher(video, {
@@ -105,12 +110,12 @@ export class StartVideoStreamingComponent implements OnInit {
                         });
 
 
-                        this.session.publish(publisher);
+                        await this.session.publish(publisher);
 
                         // Set the main video in the page to display our webcam and store our Publisher
                         this.mainStreamManager = publisher;
                         this.publisher = publisher;
-                        console.log(publisher.stream.connection)
+                        console.log(publisher.stream.connection);
                     } else {
 
                     }
@@ -126,20 +131,20 @@ export class StartVideoStreamingComponent implements OnInit {
             const video = this.elRef.nativeElement.querySelector('video');
             // const video = undefined;
             this.streamCreated = true;
-            console.log('stream created', video)
+            console.log('stream created', video);
             console.log(event.stream);
         });
 
         this.session.on('connectionCreated', (event: ConnectionEvent) => {
-            console.log('connection created!!!')
+            console.log('connection created!!!');
             const connection = JSON.parse(event.connection.data.replace(/}%\/%{/g, ','));
-            console.log(event.connection.data)
+            console.log(event.connection.data);
             // this.toastr.success(from.clientData.myUserName + 'joined the session');
             this.participants.push(connection.clientData.myUserName);
         });
 
         this.session.on('connectionDestroyed', (event: ConnectionEvent) => {
-            console.log('connection destroyed!!!')
+            console.log('connection destroyed!!!');
             const connection = JSON.parse(event.connection.data.replace(/}%\/%{/g, ','));
             this.participants = this.participants.filter(p => p !== connection.clientData.myUserName);
         });
@@ -147,8 +152,8 @@ export class StartVideoStreamingComponent implements OnInit {
         // On every Stream destroyed...
         this.session.on('streamDestroyed', (event: StreamEvent) => {
 
-            console.log('stream destroyed!!!!!')
-            console.log(event)
+            console.log('stream destroyed!!!!!');
+            console.log(event);
 
             // Remove the stream from 'subscribers' array
             this.deleteSubscriber(event.stream.streamManager);
@@ -156,16 +161,70 @@ export class StartVideoStreamingComponent implements OnInit {
         });
     }
 
-    receiveRecordingState() {
+    getRecordingState() {
+        this.subject.getVideoRecordingState().subscribe(data => {
 
+            if (data.recordingState === 'finished') {
+                this.leaveSession();
+            }
+
+            if (!data.viaSocket) {
+                this.sendRecordingState(data.recording);
+            }
+        });
+    }
+
+    sendRecordingState(recording) {
+        console.log('recording!!!!');
+        this.session.signal({
+            data: recording,  // Any string (optional)
+            to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
+            type: 'recording-state'             // The type of message (optional)
+        }).then(() => {
+
+        });
+    }
+
+    receiveRecordingState() {
+        this.session.on('signal:recording-state', (event: any) => {
+            const obj = {event, ...{socket: true}};
+            this.recordingState = !!event.data ? 'started' : 'finished';
+            if (this.recordingState === 'finished') {
+                this.tags = [];
+            }
+
+            console.log(obj);
+            console.log(this.recordingState);
+            console.log('received');
+            this.subject.setVideoRecordingState({recordingState: this.recordingState, ...{viaSocket: true}});
+        });
     }
 
     sendMessage(e) {
-
+        console.log(e)
+        this.session.signal({
+            data: e.message,  // Any string (optional)
+            to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
+            type: 'my-chat'             // The type of message (optional)
+        })
+            .then(() => {
+                this.videoService.saveVideoMessage(e).subscribe(() => {
+                });
+                console.log('Message successfully sent');
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     receiveMessage() {
-
+        this.session.on('signal:my-chat', (event: any) => {
+            console.log(event.from)
+            this.subject.setMsgData({message: event.data, from: event.from.data});
+            // console.log(event.data); // Message
+            // console.log(event.from); // Connection object of the sender
+            // console.log(event.type); // The type of message ("my-chat")
+        });
     }
 
     deleteSubscriber(streamManager: StreamManager) {
@@ -173,7 +232,7 @@ export class StartVideoStreamingComponent implements OnInit {
     }
 
     leaveSession() {
-        console.log('leaving session!!!')
+        console.log('leaving session!!!');
         if (this.session) {
             this.session.disconnect();
         }

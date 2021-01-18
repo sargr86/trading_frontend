@@ -1,12 +1,15 @@
-#video-chat-container {
-    display: flex;
+#video-stream-container {
 
-    app-video-js-record {
-        flex: 1;
+    #video-chat-container {
+        display: flex;
 
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-        padding-top: 60%;
+        app-video-js-record {
+            flex: 1;
+
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-top: 60%;
+        }
     }
 }

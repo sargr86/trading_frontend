@@ -1,18 +1,26 @@
-<div id="video-chat-container" *ngIf="openViduToken">
+<div id="video-stream-container">
 
-    <!-- Publisher video recording interface -->
-    <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                         [videoSettings]="videoSettings"></app-video-js-record>
-    <app-chat-box [openViduToken]="openViduToken" [session]="session" (sendMessage)="sendMessage($event)"
-                  [videoRecordingState]="recordingState"></app-chat-box>
+    <mat-spinner [diameter]="100" class="session-loader" *ngIf="loadingSession"></mat-spinner>
+    <ng-container *ngIf="openViduToken">
+        <div id="video-chat-container">
+
+            <!-- Publisher video recording interface -->
+            <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                                 [videoSettings]="videoSettings"></app-video-js-record>
+            <app-chat-box [openViduToken]="openViduToken" [session]="session" (sendMessage)="sendMessage($event)"
+                          [videoRecordingState]="recordingState"></app-chat-box>
+        </div>
+
+        <div id="participants-count" *ngIf="!loadingSession">
+            <i class="fa fa-users"></i>{{participants.length}}
+            <ul>
+                <li *ngFor="let participant of participants">{{participant}}</li>
+            </ul>
+        </div>
+    </ng-container>
 </div>
 
-<ng-container *ngIf="openViduToken">
-    <i class="fa fa-users"></i>{{participants.length}}
-    <ul>
-        <li *ngFor="let participant of participants">{{participant}}</li>
-    </ul>
-</ng-container>
+
 <ng-container *ngIf="!openViduToken && !loadingSession">
-    <h1>There is a problem white loading streaming session</h1>
+    <h1>There was a problem white loading streaming session</h1>
 </ng-container>

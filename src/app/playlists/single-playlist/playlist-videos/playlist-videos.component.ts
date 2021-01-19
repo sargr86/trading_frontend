@@ -35,8 +35,8 @@ export class PlaylistVideosComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
     }
 
-    openVideoPage(video) {
-        this.router.navigate(['videos/play'], {queryParams: {id: video.id}});
+    openPlaylistPage(video, playlist) {
+        this.router.navigate(['videos/play'], {queryParams: {id: video.id, playlist_id: playlist.id}});
     }
 
     dragDropped(e, video) {

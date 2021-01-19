@@ -5,10 +5,8 @@
         <div class="video-container">
             <div class="img">
                 <div class="thumbnail">
-                    <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                         (click)="openVideoPage(video)">
-                    <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                         (click)="openVideoPage(video)">
+                    <img class="thumbnail" [src]="video.thumbnail|getImgPath"
+                         (click)="openPlaylistPage(video, playlist)">
                 </div>
             </div>
 

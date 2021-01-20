@@ -14,7 +14,7 @@
     </ng-container>
 </div>
 
-<ng-container *ngIf="session && openViduToken && !loader.dataLoading && recordingState ==='started'">
+<ng-container *ngIf="streamCreated">
     <i class="fa fa-users"></i>{{participants.length}}
     <ul>
         <li *ngFor="let participant of participants">{{participant}}</li>
@@ -22,5 +22,8 @@
 </ng-container>
 <ng-container *ngIf="!openViduToken && !loader.dataLoading">
     <h1>The session does not exist</h1>
+</ng-container>
+<ng-container *ngIf="!streamCreated && !loader.dataLoading">
+    <h1>There was a problem creating the video stream</h1>
 </ng-container>
 

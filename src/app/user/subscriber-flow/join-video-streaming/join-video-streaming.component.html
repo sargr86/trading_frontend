@@ -1,0 +1,26 @@
+<div id="video-chat-container" *ngIf="openViduToken">
+
+    <mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
+
+    <!-- Streaming started -->
+    <ng-container *ngIf="streamCreated">
+        <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
+            <div class="video-container">
+                <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+            </div>
+        </div>
+        <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
+                      (sendMessage)="sendMessage($event)"></app-chat-box>
+    </ng-container>
+</div>
+
+<ng-container *ngIf="session && openViduToken && !loader.dataLoading && recordingState ==='started'">
+    <i class="fa fa-users"></i>{{participants.length}}
+    <ul>
+        <li *ngFor="let participant of participants">{{participant}}</li>
+    </ul>
+</ng-container>
+<ng-container *ngIf="!openViduToken && !loader.dataLoading">
+    <h1>The session does not exist</h1>
+</ng-container>
+

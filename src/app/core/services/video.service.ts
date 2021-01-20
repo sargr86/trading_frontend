@@ -32,6 +32,10 @@ export class VideoService {
         return this.httpClient.delete<any>(`${API_URL}videos/remove`, {params});
     }
 
+    removeVideoByToken(params) {
+        return this.httpClient.delete<any>(`${API_URL}videos/remove-by-token`, {params});
+    }
+
     saveRecordedData(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-data`, params);
     }

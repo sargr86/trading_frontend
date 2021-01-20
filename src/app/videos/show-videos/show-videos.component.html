@@ -2,8 +2,8 @@
     <ng-container *ngIf="!search">
         <div class="video-container" *ngFor="let video of items.videos">
             <div class="thumbnail">
-                <img class="thumbnail" [src]="video.thumbnail|getImgPath"
-                     (click)="openVideoPage(video, video.user.username)">
+                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, video.user.username)">
+                <span class="live-now" *ngIf="video.status==='live'">Live now</span>
             </div>
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>

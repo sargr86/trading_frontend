@@ -14,6 +14,8 @@ export class ChatBoxComponent implements OnInit {
     messageSent = false;
     messages = [];
     authUser;
+    selectedUsersToReply = [];
+    userSelected = false;
     apiUrl = API_URL;
 
     customEmojis = [
@@ -51,10 +53,13 @@ export class ChatBoxComponent implements OnInit {
         this.chatForm = this.fb.group({
             token: [this.openViduToken],
             from: [this.authUser.username],
+            from_id: [this.authUser.id],
+            to_id: [''],
             avatar: [this.authUser.avatar],
             message: ['', Validators.required]
         });
 
+        // Getting messages from publisher or subscriber component
         this.subject.getMsgData().subscribe((data) => {
             console.log(this.messages)
             console.log(data)
@@ -82,6 +87,22 @@ export class ChatBoxComponent implements OnInit {
             this.videoRecordingState = data.recording ? 'started' : 'finished';
             // console.log('VIDEO RECORDING STATE:' + this.videoRecordingState + '!!!!');
         });
+    }
+
+    selectUserToReply(m) {
+
+        if (m.from !== this.authUser.username) {
+            this.userSelected = true;
+            if (!this.selectedUsersToReply.includes(m.from)) {
+                this.selectedUsersToReply.push(m.from);
+                this.chatForm.patchValue({message: '@' + m.from + ''});
+            } else {
+                this.selectedUsersToReply = this.selectedUsersToReply.filter(f => f !== m.from);
+                this.chatForm.patchValue({message: ''});
+            }
+
+            console.log(this.selectedUsersToReply)
+        }
     }
 
     sendMessage(e) {

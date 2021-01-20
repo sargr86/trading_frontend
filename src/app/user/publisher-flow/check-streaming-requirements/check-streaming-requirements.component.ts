@@ -36,33 +36,41 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
 
     initForm(): void {
         this.deviceRecognitionForm = this.fb.group({
-            name: ['', Validators.required],
-            description: ['', Validators.required],
-            category_id: ['', Validators.required],
-            tags: [[], Validators.required],
-            // sessionName: [this.sessionName],
-            myUserName: [this.authUser.username],
-            thumbnail: ['', Validators.required],
-            status: ['live']
+            video_device: ['', Validators.required],
+            audio_device: ['', Validators.required]
         });
     }
 
     async startLiveVideo() {
-        this.checked.emit(true);
+        if (this.deviceRecognitionForm.valid) {
+            this.checked.emit(true);
+        }
     }
 
     ngAfterViewInit() {
+        this.getConnectedDevices(true);
+    }
+
+    getConnectedDevices(pageLoad = false) {
         navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
                 this.userMediaDevices = devices;
                 this.defaultVideoDevice = devices.find(d => d.kind === 'videoinput');
-                this.deviceRecognitionForm.patchValue({video_device: this.defaultVideoDevice.label});
+                this.deviceRecognitionForm.patchValue({video_device: this.defaultVideoDevice?.label});
                 this.defaultAudioDevice = devices.find(d => d.kind === 'audioinput');
-                this.deviceRecognitionForm.patchValue({audio_device: this.defaultAudioDevice.label});
+                this.deviceRecognitionForm.patchValue({audio_device: this.defaultAudioDevice?.label});
             })
             .catch((err) => {
                 console.log(err.name + ':' + err.message);
             });
+    }
+
+    get audioDevice() {
+        return this.deviceRecognitionForm.get('audio_device');
+    }
+
+    get videoDevice() {
+        return this.deviceRecognitionForm.get('video_device');
     }
 
 }

@@ -52,3 +52,18 @@ export const ALLOWED_IMG_MIME_TYPES = ['image/jpeg', 'image/png'];
 
 export const PASSWORD_MAX_LENGTH = 15;
 export const PASSWORD_MIN_LENGTH = 6;
+
+export const DEVICES_ICONS = [
+    {
+        name: 'webcam', messages: [
+            {type: 'error', msg: 'Can\'t find camera. Make sure it\'s connected and try again', icon: 'videocam_off'},
+            {type: 'success', msg: 'Camera is connected', icon: 'checked'}
+        ]
+    },
+    {
+        name: 'microphone', messages: [
+            {type: 'error', msg: 'Can\'t find microphone. Make sure it\'s connected and try again', icon: 'mic_off'},
+            {type: 'success', msg: 'Microphone is connected', icon: 'checked'}
+        ]
+    }
+]

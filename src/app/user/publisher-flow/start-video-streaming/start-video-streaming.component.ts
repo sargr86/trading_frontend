@@ -97,8 +97,8 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
 
 
             // console.log(token)
-            // console.log({clientData: this.joinSessionForm.value.myUserName})
-            this.session.connect(token, {clientData: this.sessionData})
+            console.log({...this.sessionData, avatar: this.authUser.avatar})
+            this.session.connect(token, {clientData: {...this.sessionData, avatar: this.authUser.avatar}})
                 .then(async () => {
                     this.loader.dataLoading = false;
 
@@ -194,7 +194,7 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
 
 
     sendMessage(e) {
-        console.log(e)
+        console.log('Message from chat box', e)
         this.session.signal({
             data: e.message,  // Any string (optional)
             to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -213,7 +213,8 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
     receiveMessage() {
         this.session.on('signal:my-chat', (event: any) => {
             console.log(event)
-            this.subject.setMsgData({message: event.data, from: event.from.data});
+            console.log(this.participants)
+            this.subject.setMsgData({message: event.data, from: event.from.data, participants: this.participants});
             // console.log(event.data); // Message
             // console.log(event.from); // Connection object of the sender
             // console.log(event.type); // The type of message ("my-chat")

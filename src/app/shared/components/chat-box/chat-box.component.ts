@@ -64,6 +64,7 @@ export class ChatBoxComponent implements OnInit {
 
                 const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
                 data.from = from.clientData.myUserName;
+                data.avatar = from.clientData.avatar;
                 console.log(data.from)
                 console.log(this.authUser.username)
 

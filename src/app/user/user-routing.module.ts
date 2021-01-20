@@ -11,6 +11,7 @@ import {AuthGuard} from '@core/guards/auth.guard';
 import {StockProfileComponent} from '@app/user/created-non-functional/stock-profile/stock-profile.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {StartVideoStreamingComponent} from '@app/user/publisher-flow/start-video-streaming/start-video-streaming.component';
+import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
 
 const routes: Routes = [
     {
@@ -47,11 +48,11 @@ const routes: Routes = [
     },
     {
         path: 'video/publish',
-        component: StartVideoStreamingComponent
+        component: StartVideoStreamingComponent,
     },
     {
         path: 'video/watch',
-        component: VideoComponent
+        component: SubscriberFlowComponent
     },
     {
         path: 'video-library',

@@ -19,6 +19,7 @@ import { PublisherFlowComponent } from './publisher-flow/publisher-flow.componen
 import { SubscriberFlowComponent } from './subscriber-flow/subscriber-flow.component';
 import { StartVideoStreamingComponent } from './publisher-flow/start-video-streaming/start-video-streaming.component';
 import { CollectStreamingDetailsFormComponent } from './publisher-flow/collect-streaming-details-form/collect-streaming-details-form.component';
+import { JoinVideoStreamingComponent } from './subscriber-flow/join-video-streaming/join-video-streaming.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { CollectStreamingDetailsFormComponent } from './publisher-flow/collect-s
         PublisherFlowComponent,
         SubscriberFlowComponent,
         StartVideoStreamingComponent,
-        CollectStreamingDetailsFormComponent
+        CollectStreamingDetailsFormComponent,
+        JoinVideoStreamingComponent
     ],
     imports: [
         CommonModule,

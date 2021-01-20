@@ -1,21 +1,23 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager} from 'openvidu-browser';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {VideoService} from '@core/services/video.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-start-video-streaming',
     templateUrl: './start-video-streaming.component.html',
     styleUrls: ['./start-video-streaming.component.scss']
 })
-export class StartVideoStreamingComponent implements OnInit {
+export class StartVideoStreamingComponent implements OnInit, OnDestroy {
 
     videoSettings;
-    sessionData;
-    loadingSession = false;
+    sessionData = {sessionName: '', myUserName: ''};
     streamCreated = false;
 
     // OpenVidu objects
@@ -27,6 +29,7 @@ export class StartVideoStreamingComponent implements OnInit {
 
     authUser;
     participants = [];
+    subscribers = [];
     tags = [];
 
     recordingState = 'idle';
@@ -41,19 +44,23 @@ export class StartVideoStreamingComponent implements OnInit {
         private videoService: VideoService,
         private subject: SubjectService,
         private elRef: ElementRef,
+        private dialog: MatDialog,
+        public loader: LoaderService
     ) {
         this.authUser = this.getAuthUser.transform();
+    }
+
+    ngOnInit(): void {
+        this.getVideoSessionData();
+        this.getRecordingState();
+
     }
 
     @HostListener('window:beforeunload')
     beforeunloadHandler() {
         // On window closed leave session
         this.leaveSession();
-    }
-
-    ngOnInit(): void {
-        this.getVideoSessionData();
-        this.getRecordingState();
+        this.removeLiveVideoByToken();
     }
 
 
@@ -73,7 +80,7 @@ export class StartVideoStreamingComponent implements OnInit {
         this.OV = new OpenVidu();
 
         this.session = this.OV.initSession();
-        this.loadingSession = true;
+        this.loader.dataLoading = true;
         this.getStreamEvents();
 
         this.openViduService.getToken({
@@ -86,14 +93,14 @@ export class StartVideoStreamingComponent implements OnInit {
             // const {token} = data;
             this.openViduToken = token;
             this.receiveMessage();
-            this.receiveRecordingState();
+            // this.receiveRecordingState();
 
 
             // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
             this.session.connect(token, {clientData: this.sessionData})
                 .then(async () => {
-                    this.loadingSession = false;
+                    this.loader.dataLoading = false;
 
                     console.log('PUBLISHER: ' + token.includes('PUBLISHER'));
                     if (token.includes('PUBLISHER')) {
@@ -163,7 +170,7 @@ export class StartVideoStreamingComponent implements OnInit {
 
     getRecordingState() {
         this.subject.getVideoRecordingState().subscribe(data => {
-
+            console.log(data)
             if (data.recordingState === 'finished') {
                 this.leaveSession();
             }
@@ -185,20 +192,6 @@ export class StartVideoStreamingComponent implements OnInit {
         });
     }
 
-    receiveRecordingState() {
-        this.session.on('signal:recording-state', (event: any) => {
-            const obj = {event, ...{socket: true}};
-            this.recordingState = !!event.data ? 'started' : 'finished';
-            if (this.recordingState === 'finished') {
-                this.tags = [];
-            }
-
-            console.log(obj);
-            console.log(this.recordingState);
-            console.log('received');
-            this.subject.setVideoRecordingState({recordingState: this.recordingState, ...{viaSocket: true}});
-        });
-    }
 
     sendMessage(e) {
         console.log(e)
@@ -219,7 +212,7 @@ export class StartVideoStreamingComponent implements OnInit {
 
     receiveMessage() {
         this.session.on('signal:my-chat', (event: any) => {
-            console.log(event.from)
+            console.log(event)
             this.subject.setMsgData({message: event.data, from: event.from.data});
             // console.log(event.data); // Message
             // console.log(event.from); // Connection object of the sender
@@ -231,14 +224,28 @@ export class StartVideoStreamingComponent implements OnInit {
 
     }
 
+    removeLiveVideoByToken() {
+        this.videoService.removeVideoByToken({token: this.openViduToken}).subscribe(() => {
+        });
+    }
+
     leaveSession() {
         console.log('leaving session!!!');
+        this.subject.setVideoRecordingState({recording: false});
         if (this.session) {
             this.session.disconnect();
         }
 
-        if (this.sessionData) {
+        // Empty all properties...
+        this.subscribers = [];
+        delete this.publisher;
+        delete this.session;
+        delete this.OV;
 
+        this.thumbnailFile = [];
+        this.thumbnailUploaded = false;
+
+        if (this.sessionData) {
             this.openViduService.leaveSession({
                 token: this.openViduToken,
                 sessionName: this.sessionData.sessionName,
@@ -248,5 +255,17 @@ export class StartVideoStreamingComponent implements OnInit {
             });
         }
     }
+
+    ngOnDestroy() {
+        console.log(this.recordingState)
+        console.log(this.videoSettings)
+        console.log(this.openViduToken)
+        if (this.recordingState === 'started') {
+            this.removeLiveVideoByToken();
+        }
+        this.leaveSession();
+        // On component destroyed leave session
+    }
+
 
 }

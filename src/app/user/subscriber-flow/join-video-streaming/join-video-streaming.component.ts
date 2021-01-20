@@ -101,8 +101,8 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
 
             // console.log(token)
-            // console.log({clientData: this.joinSessionForm.value.myUserName})
-            this.session.connect(token, {clientData: this.sessionData})
+            console.log({...this.sessionData, avatar: this.authUser.avatar})
+            this.session.connect(token, {clientData: {...this.sessionData, avatar: this.authUser.avatar}})
                 .then(() => {
                     this.loader.dataLoading = false;
                 });

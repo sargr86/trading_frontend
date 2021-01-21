@@ -8,6 +8,7 @@ import {VideoService} from '@core/services/video.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {LoaderService} from '@core/services/loader.service';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-start-video-streaming',
@@ -19,6 +20,7 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
     videoSettings;
     sessionData = {sessionName: '', myUserName: ''};
     streamCreated = false;
+    videoId;
 
     // OpenVidu objects
     OV: OpenVidu;
@@ -45,7 +47,8 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         private elRef: ElementRef,
         private dialog: MatDialog,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private chatService: ChatService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -67,6 +70,7 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
     getVideoSessionData() {
         this.sessionData = JSON.parse(localStorage.getItem('session'));
         this.videoSettings = JSON.parse(localStorage.getItem('video_settings'));
+        console.log(this.videoSettings)
         if (!this.sessionData || !this.videoSettings) {
             this.toastr.error('Video settings and/or session details are unavailable', 'Data unavailable!');
         } else {
@@ -201,9 +205,9 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                this.videoService.saveVideoMessage(e).subscribe(() => {
+                this.chatService.saveMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                    console.log('Message successfully sent');
                 });
-                console.log('Message successfully sent');
             })
             .catch(error => {
                 console.error(error);

@@ -76,7 +76,7 @@ export class ShowVideosComponent implements OnInit {
         let params;
         if (video.status === 'live') {
             route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username};
+            params = {session: video.session_name, publisher: username, id: video.id};
         } else {
             route = 'videos/play';
             params = {id: video.id};

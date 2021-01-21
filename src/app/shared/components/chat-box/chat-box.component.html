@@ -16,10 +16,21 @@
         </div>
         <div class="chat-information">
             <div class="chat-block" *ngFor="let message of messages">
-                <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
-                     [class.selected]="selectedUsersToReply.includes(message.from) && userSelected"
-                     [src]="message.avatar|getImgPath:'avatars'" (click)="selectUserToReply(message)">
-                <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' : '')}}</p>
+
+                <ng-container *ngIf="message.from">
+
+                    <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
+                         [class.selected]="selectedUsersToReply.includes(message.from) && userSelected"
+                         [src]="message.avatar|getImgPath:'avatars'" (click)="selectUserToReply(message)">
+                    <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' : '')}}</p>
+                </ng-container>
+
+                <ng-container *ngIf="!message.from">
+                    <img class="avatar" [class.selectable]="message.user.from!==this.authUser.username"
+                         [class.selected]="selectedUsersToReply.includes(message.from) && userSelected"
+                         [src]="message.user.avatar|getImgPath:'avatars'" (click)="selectUserToReply(message)">
+                    <p class="chat-block-1">{{message.user.from + (message.user.from === authUser.username ? '(Me)' : '')}}</p>
+                </ng-container>
                 <p class="chat-block-2">{{message.message}}</p>
             </div>
         </div>

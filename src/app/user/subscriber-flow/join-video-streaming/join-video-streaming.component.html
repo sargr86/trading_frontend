@@ -9,8 +9,9 @@
                 <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
             </div>
         </div>
-        <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
-                      (sendMessage)="sendMessage($event)"></app-chat-box>
+        <app-chat-box *ngIf="videoId" [openViduToken]="openViduToken" [session]="session"
+                      [videoRecordingState]="recordingState"
+                      [videoId]="videoId" (sendMessage)="sendMessage($event)"></app-chat-box>
     </ng-container>
 </div>
 

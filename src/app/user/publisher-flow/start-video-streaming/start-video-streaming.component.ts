@@ -174,6 +174,10 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
 
     getRecordingState() {
         this.subject.getVideoRecordingState().subscribe(data => {
+            // if (data.recording) {
+            //     console.log('save token')
+            //     this.saveVideoToken();
+            // }
             console.log(data)
             if (data.recordingState === 'finished') {
                 this.leaveSession();
@@ -185,15 +189,38 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
         });
     }
 
+    saveVideoToken() {
+        this.videoService.saveVideoToken({
+            token: this.openViduToken,
+            author_id: this.authUser.id,
+            channel_id: this.authUser.channel.id,
+            category_id: this.videoSettings.category_id,
+            privacy: this.videoSettings.privacy,
+            filename: '',
+            session_name: this.videoSettings.sessionName,
+            publisher: this.videoSettings.myUserName,
+            status: 'live',
+            tags: this.videoSettings.tags
+        }).subscribe((dt) => {
+            this.videoId = dt?.id;
+        });
+    }
+
     sendRecordingState(recording) {
         console.log('recording!!!!');
-        this.session.signal({
-            data: recording,  // Any string (optional)
-            to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
-            type: 'recording-state'             // The type of message (optional)
-        }).then(() => {
+        console.log(this.session)
+        if (this.session) {
 
-        });
+            this.session.signal({
+                data: recording,  // Any string (optional)
+                to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
+                type: 'recording-state'             // The type of message (optional)
+            }).then(() => {
+
+            });
+        } else {
+            console.log('RECORDING STATE NOT SEND!!!!')
+        }
     }
 
 

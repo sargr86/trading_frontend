@@ -18,6 +18,7 @@ export class ChatBoxComponent implements OnInit {
     selectedUsersToReply = [];
     userSelected = false;
     apiUrl = API_URL;
+    loadingMessages = false;
 
     customEmojis = [
         {
@@ -41,7 +42,7 @@ export class ChatBoxComponent implements OnInit {
         private fb: FormBuilder,
         private subject: SubjectService,
         private getAuthUser: GetAuthUserPipe,
-        private chatService: ChatService
+        private chatService: ChatService,
     ) {
         this.authUser = this.getAuthUser.transform();
         if (!this.videoRecordingState) {
@@ -70,9 +71,13 @@ export class ChatBoxComponent implements OnInit {
     }
 
     loadVideoPreviousMessages() {
-        this.chatService.getChatMessages({video_id: this.videoId}).subscribe(dt => {
-            this.messages = dt;
-        });
+        if (this.videoId) {
+            this.loadingMessages = true;
+            this.chatService.getChatMessages({video_id: this.videoId}).subscribe(dt => {
+                this.messages = dt;
+                this.loadingMessages = false;
+            });
+        }
     }
 
     // Getting messages from publisher or subscriber component
@@ -125,10 +130,15 @@ export class ChatBoxComponent implements OnInit {
     }
 
     sendMessage(e) {
-        console.log(this.chatForm.value)
-        this.messages.push(this.chatForm.value);
-        this.sendMsg.emit(this.chatForm.value);
-        this.chatForm.patchValue({message: ''});
+        // Getting video id for publisher and subscriber differently
+        if (this.videoId) {
+            const data = {video_id: this.videoId, ...this.chatForm.value}
+            this.messages.push(data);
+            this.sendMsg.emit(data);
+            this.chatForm.patchValue({message: ''});
+        } else {
+            console.log('video id is not set');
+        }
     }
 
     addEmoji(e) {

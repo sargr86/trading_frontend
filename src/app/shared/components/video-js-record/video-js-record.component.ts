@@ -160,7 +160,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 publisher: this.videoSettings.myUserName,
                 status: 'live',
                 tags: this.videoSettings.tags
-            }).subscribe(() => {
+            }).subscribe((dt) => {
             });
             console.log('started recording!');
         });

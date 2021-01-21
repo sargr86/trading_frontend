@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {API_URL} from '@core/constants/global';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-chat-box',
@@ -32,13 +33,15 @@ export class ChatBoxComponent implements OnInit {
 
     @Input('openViduToken') openViduToken;
     @Input('session') session;
+    @Input('videoId') videoId;
     @Output('sendMessage') sendMsg = new EventEmitter();
     @Input('videoRecordingState') videoRecordingState;
 
     constructor(
         private fb: FormBuilder,
         private subject: SubjectService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private chatService: ChatService
     ) {
         this.authUser = this.getAuthUser.transform();
         if (!this.videoRecordingState) {
@@ -48,8 +51,14 @@ export class ChatBoxComponent implements OnInit {
 
     ngOnInit(): void {
 
-        console.log(this.openViduToken)
+        this.initForm();
+        this.getChatMessagesFromParentComponents();
+        this.getVideoRecordingState();
+        this.loadVideoPreviousMessages();
 
+    }
+
+    initForm() {
         this.chatForm = this.fb.group({
             token: [this.openViduToken],
             from: [this.authUser.username],
@@ -58,8 +67,16 @@ export class ChatBoxComponent implements OnInit {
             avatar: [this.authUser.avatar],
             message: ['', Validators.required]
         });
+    }
 
-        // Getting messages from publisher or subscriber component
+    loadVideoPreviousMessages() {
+        this.chatService.getChatMessages({video_id: this.videoId}).subscribe(dt => {
+            this.messages = dt;
+        });
+    }
+
+    // Getting messages from publisher or subscriber component
+    getChatMessagesFromParentComponents() {
         this.subject.getMsgData().subscribe((data) => {
             console.log(this.messages)
             console.log(data)
@@ -81,7 +98,9 @@ export class ChatBoxComponent implements OnInit {
                 console.log(this.messages)
             }
         });
+    }
 
+    getVideoRecordingState() {
         this.subject.getVideoRecordingState().subscribe(data => {
             console.log(data)
             this.videoRecordingState = data.recording ? 'started' : 'finished';

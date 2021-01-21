@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ActivatedRoute} from '@angular/router';
@@ -6,6 +6,8 @@ import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
 import {VideoService} from '@core/services/video.service';
+import {ChatService} from '@core/services/chat.service';
+import {ChatBoxComponent} from '@shared/components/chat-box/chat-box.component';
 
 @Component({
     selector: 'app-join-video-streaming',
@@ -14,6 +16,7 @@ import {VideoService} from '@core/services/video.service';
 })
 export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     recordingState = 'started';
+    videoId;
 
     // OpenVidu objects
     OV: OpenVidu;
@@ -29,11 +32,14 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
     mainStreamManager: StreamManager;
 
+    @ViewChild(ChatBoxComponent) chatBox: ChatBoxComponent;
+
     constructor(
         private getAuthUser: GetAuthUserPipe,
         private route: ActivatedRoute,
         private openViduService: OpenviduService,
         private videoService: VideoService,
+        private chatService: ChatService,
         private subject: SubjectService,
         public loader: LoaderService,
         private elRef: ElementRef
@@ -45,6 +51,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         this.getSessionData();
         this.getRecordingState();
         this.joinSession();
+
     }
 
 
@@ -74,6 +81,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             this.sessionData.sessionName = params.session;
             this.sessionData.myUserName = this.authUser.username;
             this.recordingState = 'started';
+            this.videoId = params.id;
             console.log(this.sessionData)
 
         }
@@ -187,9 +195,9 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                this.videoService.saveVideoMessage(e).subscribe(() => {
+                this.chatService.saveMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                    console.log('Message successfully sent');
                 });
-                console.log('Message successfully sent');
             })
             .catch(error => {
                 console.error(error);

@@ -41,14 +41,21 @@
         </div>
 
         <div id="privacy">
-            <mat-icon>{{selectedPrivacy?.icon}}</mat-icon>
-            <select formControlName="privacy" required (change)="changedPrivacy($event)">
-                <option [value]="''">Select privacy</option>
-                <option *ngFor="let privacy of privacyTypes" [value]="privacy.name">
-                    <!--                                    <mat-icon>{{privacy.icon}}</mat-icon>-->
+            <mat-radio-group>
+                <mat-radio-button *ngFor="let privacy of privacyTypes"
+                                  [value]="privacy.name">
                     {{privacy.name}}
-                </option>
-            </select>
+                    <mat-icon>{{privacy.icon}}</mat-icon>
+                </mat-radio-button>
+            </mat-radio-group>
+            <!--            <mat-icon>{{selectedPrivacy?.icon}}</mat-icon>-->
+            <!--            <select formControlName="privacy" required (change)="changedPrivacy($event)">-->
+            <!--                <option [value]="''">Select privacy</option>-->
+            <!--                <option *ngFor="let privacy of privacyTypes" [value]="privacy.name">-->
+            <!--                    &lt;!&ndash;                                    <mat-icon>{{privacy.icon}}</mat-icon>&ndash;&gt;-->
+            <!--                    {{privacy.name}}-->
+            <!--                </option>-->
+            <!--            </select>-->
         </div>
 
         <!--        <div class="item">-->

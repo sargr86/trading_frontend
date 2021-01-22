@@ -42,9 +42,9 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     }
 
     async startLiveVideo() {
-        if (this.deviceRecognitionForm.valid) {
+        // if (this.deviceRecognitionForm.valid) {
             this.checked.emit(true);
-        }
+        // }
     }
 
     ngAfterViewInit() {

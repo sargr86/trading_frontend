@@ -44,7 +44,7 @@
             <p>CLIPZ</p>
         </div>
     </div>
-    <ng-container *ngIf="auth.loggedIn()">
+    <ng-container *ngIf="auth.loggedIn() && channels?.length!==0">
         <p class="subscriptions-text">Subscriptions</p>
         <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
             <div class="main-item-block subscription" *ngFor="let channel of channels;let i = index" cdkDrag

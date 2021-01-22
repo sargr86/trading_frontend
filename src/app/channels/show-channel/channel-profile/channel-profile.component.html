@@ -8,19 +8,14 @@
             [viewMode]="3"></ngx-photo-editor>
     </div>
     <label for="cover-image-input">
-        <img
-            [src]="channelUser.cover? apiUrl + 'uploads/covers/' + channelUser.cover:'assets/img/default-thumbnail.png'"
-            id="cover-image">
+        <img id="cover-image" [src]="channelUser?.cover|getImgPath: 'covers'">
     </label>
 </div>
 
 <div class="sub-block">
     <div class="d-flex align-items-center">
         <label for="profile-image-input">
-            <img class="avatar list-img" *ngIf="channelUser.avatar"
-                 [src]="apiUrl+'uploads/avatars/'+channelUser.avatar">
-            <img class="avatar" *ngIf="!channelUser.avatar"
-                 [src]="'assets/img/default-user.png'" id="profile-image">
+            <img class="avatar" id="profile-image" [src]="channelUser?.avatar|getImgPath: 'avatars'">
         </label>
         <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
             <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
@@ -36,7 +31,11 @@
             <p class="main-text-1">{{channelUser.channel.name}}</p>
             <p class="main-text-4">{{subscribersCount + ' subscriber' + (subscribersCount === 1 ? '' : 's')}} </p>
         </div>
+        <div class="loader" *ngIf="loader.dataLoading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
     </div>
+
     <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
         <i class="sub-bell fas fa-bell"></i>
         <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribe</a>

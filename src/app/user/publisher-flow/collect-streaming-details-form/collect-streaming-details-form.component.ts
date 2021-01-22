@@ -69,7 +69,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     }
 
     changedPrivacy(e) {
-        this.selectedPrivacy = this.privacyTypes.find(t => t.name === e.target.value);
+        this.selectedPrivacy = this.privacyTypes.find(t => t.name === e.value);
     }
 
     add(event: MatChipInputEvent): void {

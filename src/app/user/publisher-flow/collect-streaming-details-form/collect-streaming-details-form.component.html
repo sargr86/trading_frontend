@@ -41,7 +41,7 @@
         </div>
 
         <div id="privacy">
-            <mat-radio-group>
+            <mat-radio-group formControlName="privacy" (change)="changedPrivacy($event)">
                 <mat-radio-button *ngFor="let privacy of privacyTypes"
                                   [value]="privacy.name">
                     {{privacy.name}}

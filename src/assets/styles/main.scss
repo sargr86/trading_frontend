@@ -1402,3 +1402,36 @@ input, textarea {
 }
 
 
+.start-live-video {
+ 
+    #privacy{
+        margin-bottom: 24px;
+        mat-radio-button{
+            margin-right: 40px;
+
+            .mat-radio-label-content{
+                display: flex;
+                align-items: center;
+                color: #545454;
+                mat-icon{
+                    margin-left: 6px;
+                    font-size: 20px;
+                    height: auto;
+                }
+            }
+
+            .mat-radio-outer-circle {
+                border-color: #18B587;
+            }
+            
+            .mat-radio-inner-circle{
+                background-color: #18B587;
+            }
+
+            .mat-ripple-element {
+                background-color:rgba(24, 181, 135,.8);
+              }
+
+        }
+    }
+}

@@ -6,6 +6,7 @@ import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-channel-profile',
@@ -31,7 +32,8 @@ export class ChannelProfileComponent implements OnInit {
         private base64ToFile: Base64ToFilePipe,
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        public loader: LoaderService
     ) {
     }
 
@@ -55,6 +57,7 @@ export class ChannelProfileComponent implements OnInit {
         fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('avatar', filename);
         fd.append('id', this.authUser.id);
+        this.loader.dataLoading = true;
         this.usersService.changeProfileImage(fd).subscribe((dt) => {
             this.changeAuthUserInfo(dt);
         });
@@ -67,6 +70,7 @@ export class ChannelProfileComponent implements OnInit {
         fd.append('cover_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('cover', filename);
         fd.append('id', this.authUser.id);
+        this.loader.dataLoading = true;
         this.usersService.changeCoverImage(fd).subscribe((dt) => {
             this.changeAuthUserInfo(dt);
         });
@@ -98,6 +102,7 @@ export class ChannelProfileComponent implements OnInit {
         localStorage.setItem('token', dt.token);
         this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;
+        this.loader.dataLoading = false;
     }
 
 }

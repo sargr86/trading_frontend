@@ -1,35 +1,37 @@
-<p class="trending-text">{{title}}</p>
-<owl-carousel-o [options]="owlOptions" *ngIf="videos?.length > 0">
-    <ng-container *ngFor="let video of videos">
-        <ng-template carouselSlide>
-            <div class="item main-carousel-item">
+<ng-container *ngIf="videos?.length > 0">
+    <p class="trending-text">{{title}}</p>
+    <owl-carousel-o [options]="owlOptions">
+        <ng-container *ngFor="let video of videos">
+            <ng-template carouselSlide>
+                <div class="item main-carousel-item">
 
-                <ng-container
-                    [ngTemplateOutlet]="itemTemplate"
-                    [ngTemplateOutletContext]="{details: detailsSource || video.user}">
-                </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTemplate"
+                        [ngTemplateOutletContext]="{details: detailsSource || video.user}">
+                    </ng-container>
 
-                <ng-template let-d="details" #itemTemplate>
-                    <div class="thumbnail" (click)="openVideoPage(video, d.username)">
-                        <img class="thumbnail" [src]="video.thumbnail|getImgPath">
-                        <span class="live-now" *ngIf="video.status==='live'">Live now</span>
-                    </div>
-                    <div class="main-item-block">
-
-                        <img class="avatar" [src]="d?.avatar|getImgPath: 'avatars'">
-                        <div>
-                            <p class="main-text-1">{{video.name}}</p>
-                            <p class="main-text-2" (click)="openChannelPage(d.username)">{{d?.full_name}}</p>
-                            <p class="main-text-3">17k watching</p>
+                    <ng-template let-d="details" #itemTemplate>
+                        <div class="thumbnail" (click)="openVideoPage(video, d.username)">
+                            <img class="thumbnail" [src]="video.thumbnail|getImgPath">
+                            <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                         </div>
-                    </div>
-                    <div class="remove-video" *ngIf="removable">
-                        <mat-icon (click)="removeVideo(video)">delete</mat-icon>
-                    </div>
-                </ng-template>
+                        <div class="main-item-block">
+
+                            <img class="avatar" [src]="d?.avatar|getImgPath: 'avatars'">
+                            <div>
+                                <p class="main-text-1">{{video.name}}</p>
+                                <p class="main-text-2" (click)="openChannelPage(d.username)">{{d?.full_name}}</p>
+                                <p class="main-text-3">17k watching</p>
+                            </div>
+                        </div>
+                        <div class="remove-video" *ngIf="removable">
+                            <mat-icon (click)="removeVideo(video)">delete</mat-icon>
+                        </div>
+                    </ng-template>
 
 
-            </div>
-        </ng-template>
-    </ng-container>
-</owl-carousel-o>
+                </div>
+            </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+</ng-container>

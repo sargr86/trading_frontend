@@ -159,7 +159,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
-            this.session.connect(token, {clientData: this.sessionData})
+            this.session.connect(token, {clientData: this.sessionData, avatar: this.authUser.avatar})
                 .then(() => {
                     console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
                     this.loader.dataLoading = false;
@@ -176,7 +176,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                             mirror: false           // Whether to mirror your local video or not
                         });
 
-
                         this.session.publish(publisher);
 
                         // Set the main video in the page to display our webcam and store our Publisher
@@ -189,7 +188,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 }).catch((err) => {
                     this.toastr.error('There was a problem white loading streaming session')
                     console.log(err)
-            });
+                });
 
         });
 

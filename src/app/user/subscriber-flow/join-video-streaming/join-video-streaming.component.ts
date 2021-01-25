@@ -8,6 +8,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {VideoService} from '@core/services/video.service';
 import {ChatService} from '@core/services/chat.service';
 import {ChatBoxComponent} from '@shared/components/chat-box/chat-box.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-join-video-streaming',
@@ -42,6 +43,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private subject: SubjectService,
         public loader: LoaderService,
+        private toastr: ToastrService,
         private elRef: ElementRef
     ) {
     }
@@ -110,10 +112,14 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
             // console.log(token)
             console.log({...this.sessionData, avatar: this.authUser.avatar})
-            this.session.connect(token, {clientData: {...this.sessionData, avatar: this.authUser.avatar}})
+            this.session.connect(token, {clientData: this.sessionData, avatar: this.authUser.avatar})
                 .then(() => {
                     this.loader.dataLoading = false;
-                });
+                }).catch((err) => {
+                this.toastr.error('There was a problem white loading streaming session')
+                console.log(err)
+            });
+            ;
 
         });
 

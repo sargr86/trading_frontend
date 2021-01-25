@@ -7,12 +7,11 @@ import {AccessibilityStatementComponent} from '@core/components/ungrouped/access
 import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';
 import {HelpComponent} from '@core/components/ungrouped/help/help.component';
 import {AboutComponent} from '@core/components/ungrouped/about/about.component';
-import {AuthGuard} from '@core/guards/auth.guard';
 import {StockProfileComponent} from '@app/user/created-non-functional/stock-profile/stock-profile.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {StartVideoStreamingComponent} from '@app/user/publisher-flow/start-video-streaming/start-video-streaming.component';
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
-import {DoNotLeaveGuard} from '@core/guards/do-not-leave.guard';
+import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 
 const routes: Routes = [
     {
@@ -50,7 +49,7 @@ const routes: Routes = [
     {
         path: 'video/publish',
         component: VideoComponent,
-        canDeactivate: [DoNotLeaveGuard]
+        canDeactivate: [DoNotLeavePageGuard]
     },
     {
         path: 'video/watch',

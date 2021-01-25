@@ -83,26 +83,17 @@ export class ChatBoxComponent implements OnInit {
     // Getting messages from publisher or subscriber component
     getChatMessagesFromParentComponents() {
         this.subject.getMsgData().subscribe((data) => {
-            console.log(this.messages)
-            console.log(data)
-            // this.messageSent = sent;
-            console.log(data.from.includes('clientData'))
             const msgData = {from: '', avatar: '', message: ''};
             if (data.from.includes('clientData')) {
                 const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
-                console.log(from)
                 msgData.from = from.clientData.myUserName;
                 msgData.avatar = from.avatar;
                 msgData.message = data.message;
-                console.log(msgData)
-                console.log(this.authUser.username)
-
             }
 
             if (msgData.from !== this.authUser.username) {
 
                 this.messages.push(msgData);
-                console.log(this.messages)
             }
         });
     }
@@ -133,9 +124,9 @@ export class ChatBoxComponent implements OnInit {
 
     sendMessage(e) {
         // Getting video id for publisher and subscriber differently
-        if (this.videoId) {
+        if (this.videoId && this.chatForm.valid) {
             const data = {video_id: this.videoId, ...this.chatForm.value};
-            console.log(data)
+            // console.log(data)
             this.messages.push(data);
             this.sendMsg.emit(data);
             this.chatForm.patchValue({message: ''});

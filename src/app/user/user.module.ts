@@ -5,7 +5,7 @@ import {UserRoutingModule} from './user-routing.module';
 import {ProfileComponent} from './created-non-functional/profile/profile.component';
 import {SharedModule} from '@shared/shared.module';
 import {NgxPhotoEditorModule} from 'ngx-photo-editor';
-import {VideoComponent} from '@app/user/video/video.component';
+import {VideoComponent} from '@app/user/publisher-flow/video/video.component';
 import {PublisherComponent} from './openvidu-test/publisher/publisher.component';
 import {SubscriberComponent} from './openvidu-test/subscriber/subscriber.component';
 import {UserVideoComponent} from './subscriber-flow/user-video/user-video.component';

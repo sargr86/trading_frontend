@@ -125,6 +125,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.recordingState === 'started') {
             this.removeLiveVideoByToken();
         }
+        return false;
     }
 
     alertOfLeaving() {

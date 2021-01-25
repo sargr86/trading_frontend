@@ -13,7 +13,7 @@
         <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
                       (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
     </div>
-    <div id="participants-count" *ngIf="!loader.dataLoading">
+    <div id="participants-count" *ngIf="!loader.dataLoading && openViduToken">
         <i class="fa fa-users"></i>{{participants.length}}
         <ul>
             <li *ngFor="let participant of participants">{{participant}}</li>

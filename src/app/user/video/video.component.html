@@ -1,57 +1,25 @@
-<!-- Shown when session connected -->
-<ng-container>
+<div id="video-stream-container">
+
+    <mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
+    <!-- Shown when session connected -->
     <div id="video-chat-container" *ngIf="openViduToken">
 
         <!-- Publisher video recording interface -->
-        <ng-container *ngIf="!watcher">
-            <div class="video-container">
-                <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                     [videoSettings]="videoSettings"></app-video-js-record>
-            </div>
-            <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                          (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
-        </ng-container>
-
-        <!-- Subscriber video watching interface -->
-        <ng-container *ngIf="watcher">
-
-            <!-- Default screen when streaming not started -->
-            <ng-container *ngIf="recordingState === 'idle'">
-
-                <div id="streaming-not-started-yet">
-                    <p>The video streaming session has not been started yet</p>
-                </div>
-                <app-chat-box [openViduToken]="openViduToken" [session]="session"
-                              [videoRecordingState]="recordingState"
-                              (sendMessage)="sendMessage($event)"></app-chat-box>
-            </ng-container>
-
-            <!-- Streaming started -->
-            <ng-container *ngIf="recordingState != 'idle'">
-                <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
-                    <div class="video-container">
-                        <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
-                    </div>
-                </div>
-                <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoRecordingState]="recordingState"
-                              (sendMessage)="sendMessage($event)"></app-chat-box>
-            </ng-container>
-
-        </ng-container>
+        <div class="video-container">
+            <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                                 [videoSettings]="videoSettings"
+                                 (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
+        </div>
+        <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
+                      (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
     </div>
-    <ng-container *ngIf="session && openViduToken">
+    <div id="participants-count" *ngIf="!loader.dataLoading">
         <i class="fa fa-users"></i>{{participants.length}}
         <ul>
             <li *ngFor="let participant of participants">{{participant}}</li>
         </ul>
-    </ng-container>
-    <ng-container *ngIf="!openViduToken">
-        <h1>The session does not exist</h1>
-    </ng-container>
+    </div>
+</div>
+<ng-container *ngIf="!openViduToken && !loader.dataLoading">
+    <h1>There was a problem white loading streaming session</h1>
 </ng-container>
-
-<!-- Showing start-streaming or join-streaming forms based on user role -->
-<!--<div id="main-container" class="container" *ngIf="!session">-->
-<!--    <app-start-streaming-form *ngIf="!watcher" (formReady)="getPublisherData($event)"></app-start-streaming-form>-->
-<!--    <app-join-streaming-form *ngIf="watcher" (formReady)="getWatcherData($event)"></app-join-streaming-form>-->
-<!--</div>-->

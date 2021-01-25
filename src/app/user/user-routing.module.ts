@@ -12,6 +12,7 @@ import {StockProfileComponent} from '@app/user/created-non-functional/stock-prof
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {StartVideoStreamingComponent} from '@app/user/publisher-flow/start-video-streaming/start-video-streaming.component';
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
+import {DoNotLeaveGuard} from '@core/guards/do-not-leave.guard';
 
 const routes: Routes = [
     {
@@ -48,7 +49,8 @@ const routes: Routes = [
     },
     {
         path: 'video/publish',
-        component: StartVideoStreamingComponent,
+        component: VideoComponent,
+        canDeactivate: [DoNotLeaveGuard]
     },
     {
         path: 'video/watch',

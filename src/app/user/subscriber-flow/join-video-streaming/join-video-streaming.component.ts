@@ -190,7 +190,6 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
     receiveMessage() {
         this.session.on('signal:my-chat', (event: any) => {
-            console.log(event);
             this.subject.setMsgData({message: event.data, from: event.from.data});
             // console.log(event.data); // Message
             // console.log(event.from); // Connection object of the sender
@@ -199,7 +198,6 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     }
 
     sendMessage(e) {
-        console.log(e)
         this.session.signal({
             data: e.message,  // Any string (optional)
             to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)

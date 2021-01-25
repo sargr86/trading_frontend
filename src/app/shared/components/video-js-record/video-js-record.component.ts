@@ -110,10 +110,6 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     ngOnInit() {
-        console.log('TOKEN!!!!!!')
-        console.log(this.openViduToken)
-        console.log(this.videoSettings)
-        console.log(this.thumbnailFile)
         this.authUser = this.getAuthUser.transform();
     }
 
@@ -212,7 +208,6 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             console.error('device error:', this.player.deviceErrorCode);
         });
     }
-
 
 
     // use ngOnDestroy to detach event handlers and remove the player

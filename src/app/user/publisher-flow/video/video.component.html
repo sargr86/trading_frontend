@@ -23,5 +23,7 @@
     </div>
 </div>
 <ng-container *ngIf="!openViduToken && !loader.dataLoading">
-    <h1>There was a problem white loading streaming session</h1>
+    <p>There was a problem white loading streaming session.</p>
+    <p>Please reload the page or try again later</p>
+    <mat-icon (click)="reloadPage()">refresh</mat-icon>
 </ng-container>

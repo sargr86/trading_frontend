@@ -1,6 +1,6 @@
 import {Component, ElementRef, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager} from 'openvidu-browser';
+import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
@@ -124,7 +124,6 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
                         await this.session.publish(publisher);
 
                         // Set the main video in the page to display our webcam and store our Publisher
-                        this.mainStreamManager = publisher;
                         this.publisher = publisher;
                         console.log(publisher.stream.connection);
                     } else {
@@ -144,6 +143,10 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
             this.streamCreated = true;
             console.log('stream created', video);
             console.log(event.stream);
+
+            const subscriber: Subscriber = this.session.subscribe(event.stream, undefined);
+            this.subscribers.push(subscriber);
+            console.log(this.subscribers);
         });
 
         this.session.on('connectionCreated', (event: ConnectionEvent) => {
@@ -167,9 +170,13 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
             console.log(event);
 
             // Remove the stream from 'subscribers' array
-            this.deleteSubscriber(event.stream.streamManager);
+            // this.deleteSubscriber(event.stream.streamManager);
             this.leaveSession();
         });
+    }
+
+    getRecordedVideoId(id) {
+        this.videoId = id;
     }
 
     getRecordingState() {
@@ -186,23 +193,6 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
             if (!data.viaSocket) {
                 this.sendRecordingState(data.recording);
             }
-        });
-    }
-
-    saveVideoToken() {
-        this.videoService.saveVideoToken({
-            token: this.openViduToken,
-            author_id: this.authUser.id,
-            channel_id: this.authUser.channel.id,
-            category_id: this.videoSettings.category_id,
-            privacy: this.videoSettings.privacy,
-            filename: '',
-            session_name: this.videoSettings.sessionName,
-            publisher: this.videoSettings.myUserName,
-            status: 'live',
-            tags: this.videoSettings.tags
-        }).subscribe((dt) => {
-            this.videoId = dt?.id;
         });
     }
 
@@ -265,6 +255,7 @@ export class StartVideoStreamingComponent implements OnInit, OnDestroy {
         console.log('leaving session!!!');
         this.subject.setVideoRecordingState({recording: false});
         if (this.session) {
+            console.log(this.mainStreamManager)
             this.session.disconnect();
         }
 

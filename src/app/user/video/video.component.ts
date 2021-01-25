@@ -10,17 +10,16 @@ import {
 } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {API_URL, VIDEO_CATEGORIES} from '@core/constants/global';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
+import {API_URL} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
-import {StreamPreviewDialogComponent} from '@core/components/modals/stream-preview-dialog/stream-preview-dialog.component';
+import {LoaderService} from '@core/services/loader.service';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-video',
@@ -39,13 +38,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     videoSettings;
 
-    streamCreated = false;
-    userNickname;
+    videoId;
+
 
     OPENVIDU_SERVER_URL = 'https://localhost:4443';
     OPENVIDU_SERVER_SECRET = 'MY_SECRET';
-
-    welcomedUser = false;
 
     // OpenVidu objects
     OV: OpenVidu;
@@ -64,7 +61,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     openViduToken;
 
     recordingState = 'idle';
-    watcher = false;
 
     webcams = [];
     tags = [];
@@ -85,44 +81,25 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private ref: ChangeDetectorRef,
         private toastr: ToastrService,
         private elRef: ElementRef,
-        private fb: FormBuilder,
         private openViduService: OpenviduService,
         private subject: SubjectService,
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
+        private chatService: ChatService,
         public router: Router,
         private route: ActivatedRoute,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        public loader: LoaderService
     ) {
     }
 
     ngOnInit(): void {
 
         this.authUser = this.getAuthUser.transform();
-        const params: any = this.route.snapshot.queryParams;
-        this.watcher = this.router.url.includes('watch');
 
-        if (params && params.hasOwnProperty('session')) {
-            console.log('has session!!!!!')
-            this.sessionData.sessionName = params.session;
-            this.sessionData.myUserName = this.authUser.username;
-            this.recordingState = 'started';
-            console.log(this.sessionData)
+        this.getVideoSessionData();
+        if (this.sessionData && this.videoSettings) {
             this.joinSession();
-        }
-
-
-        // this.subject.getSessionData().subscribe(dt => {
-        //     this.sessionData = dt;
-        //     this.joinSession();
-        //     console.log(this.sessionData)
-        // });
-
-        if (!this.watcher) {
-            this.getVideoSessionData();
-            if (this.sessionData && this.videoSettings) {
-                this.joinSession();
-            }
         }
 
 
@@ -136,6 +113,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.sendRecordingState(data.recording);
             }
         });
+
+
     }
 
 
@@ -143,6 +122,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     beforeunloadHandler() {
         // On window closed leave session
         this.leaveSession();
+        if (this.recordingState === 'started') {
+            this.removeLiveVideoByToken();
+        }
+    }
+
+    alertOfLeaving() {
+        this.toastr.error('Please stop recording first');
     }
 
     getVideoSessionData() {
@@ -158,11 +144,12 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getStreamEvents();
 
         console.log(this.session)
+        this.loader.dataLoading = true;
 
         this.openViduService.getToken({
             email: this.authUser.email,
             sessionName: this.sessionData.sessionName,
-            role: this.watcher ? 'SUBSCRIBER' : 'PUBLISHER'
+            role: 'PUBLISHER'
         }).subscribe((token: any) => {
             // const {token} = data;
             this.openViduToken = token;
@@ -170,12 +157,12 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             this.receiveRecordingState();
 
 
-
             // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
             this.session.connect(token, {clientData: this.sessionData})
                 .then(() => {
                     console.log('PUBLISHER: ' + token.includes('PUBLISHER'))
+                    this.loader.dataLoading = false;
                     if (token.includes('PUBLISHER')) {
                         const video = this.elRef.nativeElement.querySelector('video');
                         const publisher: Publisher = this.OV.initPublisher(video, {
@@ -199,7 +186,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                     } else {
 
                     }
-                });
+                }).catch((err) => {
+                    this.toastr.error('There was a problem white loading streaming session')
+                    console.log(err)
+            });
 
         });
 
@@ -210,12 +200,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
             const video = this.elRef.nativeElement.querySelector('video');
             // const video = undefined;
-            this.streamCreated = true;
             console.log('stream created', video)
             console.log(event.stream)
-
-            // const subscriber: Subscriber = this.session.subscribe(event.stream, undefined);
-            // this.subscribers.push(subscriber);
 
             const subscriber: Subscriber = this.session.subscribe(event.stream, undefined
                 // {
@@ -233,8 +219,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 //   }
                 // }
             );
-            this.subscribers.push(subscriber);
-            console.log(this.subscribers);
+
         });
 
         this.session.on('connectionCreated', (event: ConnectionEvent) => {
@@ -272,31 +257,31 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.subscribers)
     }
 
+    getRecordedVideoId(id) {
+        this.videoId = id;
+    }
+
     leaveSession() {
         console.log('leaving session!!!')
         if (this.session) {
             this.session.disconnect();
         }
 
-        if (!this.watcher) {
+        // Empty all properties...
+        this.subscribers = [];
+        delete this.publisher;
+        delete this.session;
+        delete this.OV;
 
-
-            // Empty all properties...
-            this.subscribers = [];
-            delete this.publisher;
-            delete this.session;
-            delete this.OV;
-
-            this.thumbnailFile = [];
-            this.thumbnailUploaded = false;
-        }
+        this.thumbnailFile = [];
+        this.thumbnailUploaded = false;
 
         if (this.sessionData) {
 
             this.openViduService.leaveSession({
                 token: this.openViduToken,
                 sessionName: this.sessionData.sessionName,
-                role: this.watcher ? 'subscriber' : 'publisher'
+                role: 'publisher'
             }).subscribe(() => {
 
             });
@@ -311,8 +296,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                // this.videoService.saveVideoMessage(e).subscribe(() => {
-                // });
+                this.chatService.saveMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                    console.log('Message successfully sent');
+                });
                 console.log('Message successfully sent');
             })
             .catch(error => {
@@ -356,68 +342,22 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-
-    getVideo(eventStream) {
-        const video = this.elRef.nativeElement.querySelector('video');
-        console.log(video)
-
-        if (video) {
-            this.userNickname = JSON.parse(eventStream.connection.data.replace(/}%\/%{/g, ',')).clientData.myUserName;
-            console.log(this.userNickname)
-            navigator.getUserMedia({
-                    video: true,
-                    audio: true
-                },
-                (stream) => {
-                    console.log(stream);
-                    console.log(eventStream);
-                    video.srcObject = stream;
-                    video.play();
-
-                    this.videoJSPlayerOptions.sources[0] = stream;
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-        }
+    removeLiveVideoByToken() {
+        this.videoService.removeVideoByToken({token: this.openViduToken}).subscribe(() => {
+        });
     }
-
-
-    getPublisherData(e) {
-        // this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
-        // this.videoSettings = e;
-        // console.log(this.sessionData)
-        // this.dialog.open(StreamPreviewDialogComponent, {
-        //     data: this.videoSettings,
-        //     maxWidth: '554px',
-        //     width: '100%'
-        // }).afterClosed().subscribe(result => {
-        //     this.videoSettings.privacy = result?.privacy;
-        // });
-        this.joinSession();
-    }
-
-
-    getWatcherData(e) {
-        this.publisherData = e;
-        this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
-        console.log(this.sessionData)
-        this.joinSession();
-    }
-
-    greetUser() {
-        this.welcomedUser = true;
-    }
-
 
     ngOnDestroy() {
+
+        if (this.recordingState === 'started') {
+            this.removeLiveVideoByToken();
+        }
+
         // On component destroyed leave session
         this.leaveSession();
     }
 
 
     ngAfterViewInit() {
-        // this.getVideo();
     }
 }

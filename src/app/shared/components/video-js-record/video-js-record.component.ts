@@ -150,7 +150,22 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             console.log(this.authUser)
             console.log(console.log(this.videoSettings))
             console.log('RECORDING!!!!')
-            this.recordingStarted.emit(true);
+
+            this.videoService.saveVideoToken({
+                token: this.openViduToken,
+                author_id: this.authUser.id,
+                channel_id: this.authUser.channel.id,
+                category_id: this.videoSettings.category_id,
+                privacy: this.videoSettings.privacy,
+                filename: '',
+                session_name: this.videoSettings.sessionName,
+                publisher: this.videoSettings.myUserName,
+                status: 'live',
+                tags: this.videoSettings.tags
+            }).subscribe((dt) => {
+                this.recordingStarted.emit(dt?.id);
+            });
+
 
             console.log('started recording!');
         });
@@ -197,6 +212,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             console.error('device error:', this.player.deviceErrorCode);
         });
     }
+
+
 
     // use ngOnDestroy to detach event handlers and remove the player
     ngOnDestroy() {

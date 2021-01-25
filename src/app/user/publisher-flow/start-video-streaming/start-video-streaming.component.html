@@ -6,7 +6,7 @@
 
             <!-- Publisher video recording interface -->
             <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                 [videoSettings]="videoSettings" (recordingStarted)="saveVideoToken()"></app-video-js-record>
+                                 [videoSettings]="videoSettings" (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
             <app-chat-box [openViduToken]="openViduToken" [session]="session" (sendMessage)="sendMessage($event)"
                          [videoId]="videoId" [videoRecordingState]="recordingState"></app-chat-box>
         </div>
@@ -19,11 +19,11 @@
         </div>
 
         <!-- Hidden block only here to avoid Openvidu error-->
-        <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
-            <div class="video-container">
-                <app-user-video [streamManager]="sub"></app-user-video>
-            </div>
-        </div>
+<!--        <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">-->
+<!--            <div class="video-container">-->
+<!--                <app-user-video [streamManager]="sub"></app-user-video>-->
+<!--            </div>-->
+<!--        </div>-->
     </ng-container>
 </div>
 

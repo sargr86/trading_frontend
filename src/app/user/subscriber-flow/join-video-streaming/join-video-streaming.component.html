@@ -1,4 +1,4 @@
-<div id="video-chat-container" *ngIf="openViduToken">
+<div id="video-chat-container" *ngIf="openViduToken && videoFound">
 
     <mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
 
@@ -15,16 +15,19 @@
     </ng-container>
 </div>
 
-<ng-container *ngIf="streamCreated">
+<p *ngIf="!videoFound && !loader.dataLoading">Video is not found.</p>
+<ng-container *ngIf="streamCreated && openViduToken && videoFound">
     <i class="fa fa-users"></i>{{participants.length}}
     <ul>
         <li *ngFor="let participant of participants">{{participant}}</li>
     </ul>
+    <p *ngIf="streamDestroyed">Stream destroyed.</p>
 </ng-container>
-<ng-container *ngIf="!openViduToken && !loader.dataLoading">
-    <h1>The session does not exist</h1>
+<ng-container *ngIf="!openViduToken && !loader.dataLoading && videoFound">
+    <p>The session does not exist.</p>
 </ng-container>
-<ng-container *ngIf="!streamCreated && !loader.dataLoading">
-    <h1>There was a problem creating the video stream</h1>
+<ng-container *ngIf="!streamCreated && !loader.dataLoading && videoFound">
+    <p>There was a problem creating the video stream.</p>
 </ng-container>
+
 

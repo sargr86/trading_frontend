@@ -18,6 +18,7 @@ import {ToastrService} from 'ngx-toastr';
 export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     recordingState = 'started';
     videoId;
+    videoFound;
 
     // OpenVidu objects
     OV: OpenVidu;
@@ -25,6 +26,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     session: Session;
     sessionData = {sessionName: '', myUserName: ''};
     streamCreated;
+    streamDestroyed = false;
 
     authUser;
     participants = [];
@@ -79,13 +81,13 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     getSessionData() {
         const params: any = this.route.snapshot.queryParams;
         if (params && params.hasOwnProperty('session')) {
-            console.log('has session!!!!!')
             this.sessionData.sessionName = params.session;
             this.sessionData.myUserName = this.authUser.username;
             this.recordingState = 'started';
             this.videoId = params.id;
-            console.log(this.sessionData)
-
+            this.videoService.getVideoById({id: this.videoId}).subscribe(dt => {
+                this.videoFound = !!dt || dt.status !== 'live';
+            });
         }
     }
 
@@ -159,6 +161,9 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
             console.log('stream destroyed!!!!!');
             console.log(event);
+
+            this.streamDestroyed = true;
+            this.openViduToken = null;
 
             // Remove the stream from 'subscribers' array
             // this.deleteSubscriber(event.stream.streamManager);

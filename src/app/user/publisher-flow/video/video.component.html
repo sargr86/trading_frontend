@@ -10,8 +10,10 @@
                                  [videoSettings]="videoSettings"
                                  (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
         </div>
-        <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
-                      (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+        <div class="chat-container">
+            <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
+                          (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+        </div>
     </div>
     <div id="participants-count" *ngIf="!loader.dataLoading && openViduToken">
         <i class="fa fa-users"></i>{{participants.length}}

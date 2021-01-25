@@ -20,7 +20,7 @@
 #video-chat-container {
     display: flex;
 
-    .video-container {
+    .video-container, .chat-container {
         flex: 1;
         display: flex;
     }

@@ -207,7 +207,6 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         })
             .then(() => {
                 this.chatService.saveMessage({video_id: this.videoId, ...e}).subscribe(dt => {
-                    console.log('Message successfully sent');
                 });
             })
             .catch(error => {

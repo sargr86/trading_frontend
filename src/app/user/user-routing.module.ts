@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ProfileComponent} from './created-non-functional/profile/profile.component';
-import {VideoComponent} from '@app/user/video/video.component';
+import {VideoComponent} from '@app/user/publisher-flow/video/video.component';
 import {VideoLibraryComponent} from '@app/user/openvidu-test/video-library/video-library.component';
 import {AccessibilityStatementComponent} from '@core/components/ungrouped/accessibility-statement/accessibility-statement.component';
 import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';

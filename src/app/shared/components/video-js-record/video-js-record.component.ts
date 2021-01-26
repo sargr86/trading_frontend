@@ -27,6 +27,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     idx = 'clip1';
     authUser;
     recordingState = 'idle';
+    videoId;
     readonly config: any;
     private player: any;
     private plugin: any;
@@ -121,7 +122,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
         // setup the player via the unique element ID
         this.player = videojs(document.getElementById(el), this.config, () => {
-            console.log('player ready! id:', el);
+            // console.log('player ready! id:', el);
 
             // print version information at startup
             const msg = 'Using video.js ' + videojs.VERSION +
@@ -132,20 +133,20 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
         // device is ready
         this.player.on('deviceReady', (a) => {
-            console.log(a)
+            // console.log(a)
             this.shareScreen.emit();
-            console.log('device is ready!');
+            // console.log('device is ready!');
         });
 
         // user clicked the record button and started recording
         this.player.on('startRecord', (aa) => {
-            console.log(this.openViduToken)
+            // console.log(this.openViduToken)
             this.recordingState = 'active';
             this.subject.setVideoRecordingState({recording: true, viaSocket: false});
-            console.log('RECORDING!!!!')
-            console.log(this.authUser)
-            console.log(console.log(this.videoSettings))
-            console.log('RECORDING!!!!')
+            // console.log('RECORDING!!!!')
+            // console.log(this.authUser)
+            // console.log(console.log(this.videoSettings))
+            // console.log('RECORDING!!!!')
 
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
@@ -159,11 +160,12 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 status: 'live',
                 tags: this.videoSettings.tags
             }).subscribe((dt) => {
-                this.recordingStarted.emit(dt?.id);
+                this.videoId = dt?.id;
+                this.recordingStarted.emit(this.videoId);
             });
 
 
-            console.log('started recording!');
+            // console.log('started recording!');
         });
 
 
@@ -171,13 +173,14 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         this.player.on('finishRecord', () => {
             // recordedData is a blob object containing the recorded data that
             // can be downloaded by the user, stored on server etc.
-            console.log('finished recording: ', this.player.recordedData);
-            console.log(this.videoSettings)
+            // console.log('finished recording: ', this.player.recordedData);
+            // console.log(this.videoSettings)
             const fd: FormData = new FormData();
-            // fd.append('username', this.authUser.username);
-            // fd.append('full_name', this.authUser.full_name);
+            fd.append('username', this.authUser.username);
             // fd.append('avatar', this.authUser.avatar);
+            fd.append('id', this.videoId);
             fd.append('author_id', this.authUser.id);
+            // fd.append('full_name', this.authUser.full_name);
             // fd.append('category_id', this.authUser._id);
             fd.append('video_name', this.player.recordedData.name);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
@@ -188,7 +191,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.subject.setVideoRecordingState({recording: false});
             this.recordingState = 'finished';
             this.videoService.saveRecordedData(fd).subscribe(() => {
-
+                localStorage.setItem('session', '');
+                localStorage.setItem('video_settings', '');
             });
         });
 

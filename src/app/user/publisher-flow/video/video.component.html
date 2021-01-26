@@ -1,29 +1,38 @@
-<div id="video-stream-container">
+<mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
+<div id="video-stream-container" *ngIf="!loader.dataLoading">
 
-    <mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
+
     <!-- Shown when session connected -->
-    <div id="video-chat-container" *ngIf="openViduToken">
+    <ng-container *ngIf="openViduToken">
+        <div id="video-chat-container">
 
-        <!-- Publisher video recording interface -->
-        <div class="video-container">
-            <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                 [videoSettings]="videoSettings"
-                                 (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
+            <!-- Publisher video recording interface -->
+            <div class="video-container">
+                <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                                     [videoSettings]="videoSettings"
+                                     (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
+            </div>
+
+            <div class="chat-container">
+                <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
+                              (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+            </div>
         </div>
-        <div class="chat-container">
-            <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
-                          (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+        <div id="participants-count">
+            <i class="fa fa-users"></i>{{participants.length}}
+            <ul>
+                <li *ngFor="let participant of participants">{{participant}}</li>
+            </ul>
         </div>
+    </ng-container>
+    <div class="no-stored-session-data" *ngIf="!sessionData && !videoSettings">
+        <p>There is no session data defined. Please return to the <a routerLink="/user/video/start-live-video">'Start
+            live video' page</a></p>
     </div>
-    <div id="participants-count" *ngIf="!loader.dataLoading && openViduToken">
-        <i class="fa fa-users"></i>{{participants.length}}
-        <ul>
-            <li *ngFor="let participant of participants">{{participant}}</li>
-        </ul>
+    <div class="stream-errors" *ngIf="!openViduToken && sessionData && videoSettings">
+        <p>There was a problem white loading streaming session. Please reload the page or try again later
+            <mat-icon (click)="reloadPage()">refresh</mat-icon>
+        </p>
     </div>
 </div>
-<ng-container *ngIf="!openViduToken && !loader.dataLoading">
-    <p>There was a problem white loading streaming session.</p>
-    <p>Please reload the page or try again later</p>
-    <mat-icon (click)="reloadPage()">refresh</mat-icon>
-</ng-container>
+

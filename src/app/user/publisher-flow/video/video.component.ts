@@ -133,8 +133,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getVideoSessionData() {
-        this.sessionData = JSON.parse(localStorage.getItem('session'));
-        this.videoSettings = JSON.parse(localStorage.getItem('video_settings'));
+        const savedSession = localStorage.getItem('session');
+        const videoSettings = localStorage.getItem('video_settings');
+        this.sessionData = savedSession ? JSON.parse(savedSession) : null;
+        this.videoSettings = videoSettings ? JSON.parse(videoSettings) : null;
     }
 
 
@@ -269,6 +271,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         delete this.publisher;
         delete this.session;
         delete this.OV;
+
 
         this.thumbnailFile = [];
         this.thumbnailUploaded = false;

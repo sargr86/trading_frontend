@@ -122,7 +122,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     submit() {
         this.isSubmitted = true;
         if (this.startStreamingForm.valid) {
-            console.log('OK')
             this.formReady.emit({
                 categoryName: this.videoCategories.find(c => c.id === +this.startStreamingForm.value.category_id)?.name,
                 ...this.startStreamingForm.value

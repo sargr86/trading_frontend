@@ -67,7 +67,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
     getRecordingState() {
         this.subject.getVideoRecordingState().subscribe(data => {
-            console.log(data)
+            // console.log(data)
             if (data.recordingState === 'finished') {
                 this.leaveSession();
             }
@@ -86,7 +86,8 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             this.recordingState = 'started';
             this.videoId = params.id;
             this.videoService.getVideoById({id: this.videoId}).subscribe(dt => {
-                this.videoFound = !!dt || dt.status !== 'live';
+                this.videoFound = dt?.status === 'live';
+                // console.log(this.videoFound)
             });
         }
     }
@@ -98,7 +99,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         this.loader.dataLoading = true;
         this.getStreamEvents();
 
-        console.log(this.session)
+        // console.log(this.session)
 
         this.openViduService.getToken({
             email: this.authUser.email,
@@ -113,13 +114,13 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
 
             // console.log(token)
-            console.log({...this.sessionData, avatar: this.authUser.avatar})
+            // console.log({...this.sessionData, avatar: this.authUser.avatar})
             this.session.connect(token, {clientData: this.sessionData, avatar: this.authUser.avatar})
                 .then(() => {
                     this.loader.dataLoading = false;
                 }).catch((err) => {
                 this.toastr.error('There was a problem white loading streaming session')
-                console.log(err)
+                // console.log(err)
             });
             ;
 
@@ -133,25 +134,25 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             const video = this.elRef.nativeElement.querySelector('video');
             // const video = undefined;
             // this.streamCreated = true;
-            console.log('stream created', video);
-            console.log(event.stream);
+            // console.log('stream created', video);
+            // console.log(event.stream);
 
             const subscriber: Subscriber = this.session.subscribe(event.stream, undefined);
             this.subscribers.push(subscriber);
-            console.log(this.subscribers)
+            // console.log(this.subscribers)
         });
 
         this.session.on('connectionCreated', (event: ConnectionEvent) => {
-            console.log('connection created!!!');
+            // console.log('connection created!!!');
             const connection = JSON.parse(event.connection.data.replace(/}%\/%{/g, ','));
-            console.log(event.connection.data);
-            console.log('RECORDING STATE' + this.recordingState)
+            // console.log(event.connection.data);
+            // console.log('RECORDING STATE' + this.recordingState)
             // this.toastr.success(from.clientData.myUserName + 'joined the session');
             this.participants.push(connection.clientData.myUserName);
         });
 
         this.session.on('connectionDestroyed', (event: ConnectionEvent) => {
-            console.log('connection destroyed!!!');
+            // console.log('connection destroyed!!!');
             const connection = JSON.parse(event.connection.data.replace(/}%\/%{/g, ','));
             this.participants = this.participants.filter(p => p !== connection.clientData.myUserName);
         });
@@ -159,8 +160,8 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         // On every Stream destroyed...
         this.session.on('streamDestroyed', (event: StreamEvent) => {
 
-            console.log('stream destroyed!!!!!');
-            console.log(event);
+            // console.log('stream destroyed!!!!!');
+            // console.log(event);
 
             this.streamDestroyed = true;
             this.openViduToken = null;
@@ -173,7 +174,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
 
     receiveRecordingState() {
-        console.log('receive recording!!!!')
+        // console.log('receive recording!!!!')
         this.session.on('signal:recording-state', (event: any) => {
             const obj = {event, ...{socket: true}};
             this.recordingState = !!event.data ? 'started' : 'finished';
@@ -181,9 +182,9 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
                 this.tags = [];
             }
 
-            console.log(obj);
-            console.log(this.recordingState);
-            console.log('received');
+            // console.log(obj);
+            // console.log(this.recordingState);
+            // console.log('received');
             this.subject.setVideoRecordingState({recordingState: this.recordingState, ...{viaSocket: true}});
         });
     }

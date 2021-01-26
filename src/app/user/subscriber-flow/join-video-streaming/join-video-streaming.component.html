@@ -15,7 +15,7 @@
     </ng-container>
 </div>
 
-<p *ngIf="!videoFound && !loader.dataLoading">Video is not found.</p>
+<p *ngIf="!videoFound && !loader.dataLoading">Video streaming session is not found.</p>
 <ng-container *ngIf="streamCreated && openViduToken && videoFound">
     <i class="fa fa-users"></i>{{participants.length}}
     <ul>

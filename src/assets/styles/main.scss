@@ -752,7 +752,7 @@ nav.home-header {
 }
 
 .chat-information {
-    width: 316px;
+    //width: 316px;
     height: calc(100% - 115px);
     padding: 14px 12px 30px 12px;
 }
@@ -1403,7 +1403,7 @@ input, textarea {
 
 
 .start-live-video {
- 
+
     #privacy{
         margin-bottom: 24px;
         mat-radio-button{
@@ -1423,7 +1423,7 @@ input, textarea {
             .mat-radio-outer-circle {
                 border-color: #18B587;
             }
-            
+
             .mat-radio-inner-circle{
                 background-color: #18B587;
             }

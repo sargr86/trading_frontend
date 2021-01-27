@@ -22,7 +22,7 @@
                 </p>
 
                 <div class="saved-video"
-                     *ngIf="video.users_vids[0]?.username === authUser.username && video.users_vids[0]?.users_videos.saved">
+                     *ngIf="checkIfSavedByCurrentUser(video)">
                     <mat-icon>turned_in</mat-icon>
                     <span>Saved</span>
                 </div>

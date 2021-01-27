@@ -105,4 +105,8 @@ export class ShowVideosComponent implements OnInit {
             });
         });
     }
+
+    checkIfSavedByCurrentUser(video) {
+        return video.users_vids.find(v => v.username === this.authUser.username && v.users_videos.saved);
+    }
 }

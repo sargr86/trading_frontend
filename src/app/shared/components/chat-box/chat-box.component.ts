@@ -100,7 +100,6 @@ export class ChatBoxComponent implements OnInit {
 
     getVideoRecordingState() {
         this.subject.getVideoRecordingState().subscribe(data => {
-            console.log(data)
             this.videoRecordingState = data.recording ? 'started' : 'finished';
             // console.log('VIDEO RECORDING STATE:' + this.videoRecordingState + '!!!!');
         });

@@ -1,16 +1,15 @@
-.remove-video{
+@import 'variables';
+
+.remove-video {
     position: absolute;
     top: 16px;
     left: 16px;
-    color: #ffffff;
+    color: $red;
     transition: 0.3s;
     cursor: pointer;
-    &:hover{
-        color: #F53C6F;
-    }
 }
 
-.overlay{
+.overlay {
     background: #000000;
     position: absolute;
     top: 0;

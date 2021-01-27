@@ -198,6 +198,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.session.on('streamCreated', (event: StreamEvent) => {
 
             const video = this.elRef.nativeElement.querySelector('video');
+            this.thumbnailFile = this.videoSettings.thumbnail;
             // const video = undefined;
             // console.log('stream created', video)
             // console.log(event.stream)

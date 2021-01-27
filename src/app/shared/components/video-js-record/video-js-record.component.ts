@@ -143,10 +143,10 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // console.log(this.openViduToken)
             this.recordingState = 'active';
             this.subject.setVideoRecordingState({recording: true, viaSocket: false});
-            // console.log('RECORDING!!!!')
-            // console.log(this.authUser)
-            // console.log(console.log(this.videoSettings))
-            // console.log('RECORDING!!!!')
+
+            // this.thumbnailFile = this.videoSettings.thumbnail;
+            // console.log(this.videoSettings.thumbnail)
+
 
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
@@ -158,6 +158,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 session_name: this.videoSettings.sessionName,
                 publisher: this.videoSettings.myUserName,
                 status: 'live',
+                thumbnail: this.videoSettings.thumbnail,
+                name: this.videoSettings.name,
+                description: this.videoSettings.description,
                 tags: this.videoSettings.tags
             }).subscribe((dt) => {
                 this.videoId = dt?.id;
@@ -184,9 +187,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // fd.append('category_id', this.authUser._id);
             fd.append('video_name', this.player.recordedData.name);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
-            if (this.thumbnailFile) {
-                fd.append('thumbnail', this.thumbnailFile.name);
-            }
+            // if (this.thumbnailFile) {
+            //     fd.append('thumbnail', this.thumbnailFile.name);
+            // }
             fd.append('video_settings', JSON.stringify(this.videoSettings));
             this.subject.setVideoRecordingState({recording: false});
             this.recordingState = 'finished';

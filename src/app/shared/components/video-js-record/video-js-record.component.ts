@@ -8,6 +8,7 @@ import {
 import videojs from 'video.js';
 import * as adapter from 'webrtc-adapter/out/adapter_no_global.js';
 import * as RecordRTC from 'recordrtc';
+import * as moment from 'moment';
 
 
 import * as Record from 'videojs-record/dist/videojs.record.js';
@@ -28,6 +29,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     authUser;
     recordingState = 'idle';
     videoId;
+    recordingStartTimeStamp;
+    recordingEndTimeStamp;
     readonly config: any;
     private player: any;
     private plugin: any;
@@ -144,6 +147,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.recordingState = 'active';
             this.subject.setVideoRecordingState({recording: true, viaSocket: false});
 
+            // console.log('start timestamp:' + this.player.currentTimestamp)
+            this.recordingStartTimeStamp = moment(this.player.currentTimestamp);
+
             // this.thumbnailFile = this.videoSettings.thumbnail;
             // console.log(this.videoSettings.thumbnail)
 
@@ -176,7 +182,14 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         this.player.on('finishRecord', () => {
             // recordedData is a blob object containing the recorded data that
             // can be downloaded by the user, stored on server etc.
-            // console.log('finished recording: ', this.player.recordedData);
+            // console.log('finished recording: ', this.player);
+            // console.log(document.getElementsByTagName('video')[0].duration)
+            // console.log('end timestamp:' + this.player.currentTimestamp)
+            this.recordingEndTimeStamp = moment(this.player.currentTimestamp);
+            // console.log('Duration timestamp:' + moment.utc((moment.duration(this.recordingEndTimeStamp - this.recordingStartTimeStamp, 'seconds').asMilliseconds()).format('HH:mm')))
+
+            const recordingDuration = moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)).format('mm:ss');
+
             // console.log(this.videoSettings)
             const fd: FormData = new FormData();
             fd.append('username', this.authUser.username);
@@ -186,6 +199,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // fd.append('full_name', this.authUser.full_name);
             // fd.append('category_id', this.authUser._id);
             fd.append('video_name', this.player.recordedData.name);
+            fd.append('video_duration', recordingDuration);
             fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
             // if (this.thumbnailFile) {
             //     fd.append('thumbnail', this.thumbnailFile.name);

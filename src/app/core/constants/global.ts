@@ -68,3 +68,24 @@ export const DEVICES_ICONS = [
         ]
     }
 ]
+
+
+export const VIDEO_FILTERS = [
+    {
+        group: 'Upload date', items: [
+            {name: 'Last hour'},
+            {name: 'Today'},
+            {name: 'This week'},
+            {name: 'This month'},
+            {name: 'This year'},
+        ]
+    },
+
+    {
+        group: 'Duration', items: [
+            {name: 'Short (<= 30 seconds)'},
+            {name: 'Long (>30 seconds and <1 hour)'},
+        ]
+    }
+
+];

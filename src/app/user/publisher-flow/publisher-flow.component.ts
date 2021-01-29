@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {StreamPreviewDialogComponent} from '@core/components/modals/stream-preview-dialog/stream-preview-dialog.component';
 import {SubjectService} from '@core/services/subject.service';
 import {Router} from '@angular/router';
 

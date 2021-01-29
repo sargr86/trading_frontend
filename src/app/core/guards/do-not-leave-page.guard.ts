@@ -17,6 +17,7 @@ export class DoNotLeavePageGuard implements CanDeactivate<VideoComponent> {
           component.alertOfLeaving();
           return false;
       }
+
       return true;
   }
 }

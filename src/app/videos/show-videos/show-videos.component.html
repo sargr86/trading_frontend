@@ -1,3 +1,4 @@
+<app-video-filters></app-video-filters>
 <div id="videos-list">
     <ng-container *ngIf="!search">
         <div class="video-container" *ngFor="let video of items.videos">
@@ -37,8 +38,7 @@
                             <p class="name">{{playlist.name}}</p>
                             <p class="video-count">{{playlist.videos.length + (playlist.videos.length === 1 ? ' video' : ' videos')}}</p>
                         </div>
-                        <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
-                        <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
+                        <img [src]="playlist.thumbnail|getImgPath">
                     </div>
                     <div class="fake-bg thumbnail"></div>
                 </div>
@@ -52,11 +52,7 @@
         <ng-container *ngFor="let channel of channelsVideos">
             <div class="channel-container">
                 <div class="channel-avatar-container">
-                    <img *ngIf="channel.user.avatar" class="channel-avatar"
-                         [src]="apiUrl+'uploads/avatars/'+channel.user.avatar"
-                         (click)="openChannelPage(channel,channel.user.username)">
-                    <img *ngIf="!channel.user.avatar" class="channel-avatar"
-                         [src]="'assets/img/video-thumbnail-default.png'"
+                    <img [src]="channel.user.avatar|getImgPath:'avatars'" class="channel-avatar"
                          (click)="openChannelPage(channel,channel.user.username)">
                 </div>
                 <div class="details">
@@ -65,13 +61,9 @@
                         <span class="channel-name">{{channel.name}}</span>
                         <span class="dot">.</span>
                         <span class="watchers-count">17k watching</span>
-                        <!--                        <span class="dot">.</span>-->
-                        <!--                        <span class="upload-time">{{getUploadDateTime(channel.created_at)}}</span>-->
                     </div>
                     <p class="shortened-description">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
-                        consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed sda,sasddswd
+                        {{channel.description}}
                     </p>
 
                     <button class="btn subscribe-to-channel-btn"
@@ -82,10 +74,7 @@
             </div>
             <div class="video-container" *ngFor="let video of channel.videos">
                 <div class="thumbnail">
-                    <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                         (click)="openVideoPage(video,channel.user.username)">
-                    <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                         (click)="openVideoPage(video,channel.user.username)">
+                    <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, channel.user.username)">
                 </div>
                 <div class="details">
                     <h4 class="title">{{video.name}}</h4>
@@ -97,9 +86,7 @@
                         <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
                     </div>
                     <p class="shortened-description">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
-                        consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed sda,sasddswd
+                        {{video.description}}
                     </p>
                 </div>
             </div>

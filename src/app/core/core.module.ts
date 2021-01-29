@@ -17,7 +17,6 @@ import {AccessibilityStatementComponent} from '@core/components/ungrouped/access
 import { ContactUsComponent } from '@core/components/ungrouped/contact-us/contact-us.component';
 import { PrivacyPolicyComponent } from '@core/components/ungrouped/privacy-policy/privacy-policy.component';
 import { SecurityComponent } from '@core/components/ungrouped/security/security.component';
-import { StreamPreviewDialogComponent } from '@core/components/modals/stream-preview-dialog/stream-preview-dialog.component';
 import {SharedModule} from '@shared/shared.module';
 import { AddPlaylistDialogComponent } from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import { AddVideoToPlaylistDialogComponent } from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
@@ -42,7 +41,6 @@ import { AddStockDialogComponent } from './components/modals/add-stock-dialog/ad
         ContactUsComponent,
         PrivacyPolicyComponent,
         SecurityComponent,
-        StreamPreviewDialogComponent,
         AddPlaylistDialogComponent,
         AddVideoToPlaylistDialogComponent,
         SearchVideosFormComponent,

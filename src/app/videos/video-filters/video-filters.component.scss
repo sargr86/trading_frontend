@@ -1,0 +1,32 @@
+.filter-toggle-btn {
+    text-transform: uppercase;
+    background-color: unset;
+    display: flex;
+    align-items: center;
+    font-family: "Muli-Bold";
+    padding: 10px;
+
+    span {
+        margin-left: 10px;
+    }
+}
+
+.filter-groups {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+
+    .filter-group {
+
+        .filter-name {
+            margin: 5px;
+            color: #545454;
+        }
+
+        .filter-item {
+            padding: 5px;
+            font-family: 'Muli-Light';
+        }
+    }
+}

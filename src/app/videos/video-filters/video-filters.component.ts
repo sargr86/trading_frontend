@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {VIDEO_FILTERS} from '@core/constants/global';
+import {VideoService} from '@core/services/video.service';
 
 @Component({
     selector: 'app-video-filters',
@@ -8,11 +9,26 @@ import {VIDEO_FILTERS} from '@core/constants/global';
 })
 export class VideoFiltersComponent implements OnInit {
     filters = VIDEO_FILTERS;
+    selectedFilters = {};
 
-    constructor() {
+    @Output('filter') filterAction = new EventEmitter();
+
+    constructor(
+        private videoService: VideoService
+    ) {
     }
 
     ngOnInit(): void {
+    }
+
+    applyFilter({name, value}, group) {
+        this.selectedFilters[group] = {name, value};
+        this.filterAction.emit(this.selectedFilters);
+    }
+
+    removeFilter({name, value}, group) {
+        delete this.selectedFilters[group];
+        this.filterAction.emit(this.selectedFilters);
     }
 
 }

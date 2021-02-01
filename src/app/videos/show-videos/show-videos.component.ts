@@ -8,7 +8,6 @@ import {ChannelsService} from '@core/services/channels.service';
 import {filter, map, tap} from 'rxjs/operators';
 import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {ChannelProfileComponent} from '@app/channels/show-channel/channel-profile/channel-profile.component';
 
 @Component({
     selector: 'app-show-videos',
@@ -23,6 +22,7 @@ export class ShowVideosComponent implements OnInit {
     authUser;
     showTrending = false;
     subscribedToChannel = false;
+    showFilters = false;
 
     constructor(
         private videoService: VideoService,
@@ -44,16 +44,18 @@ export class ShowVideosComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
         this.showTrending = this.router.url.includes('trending');
+        this.getVideosList();
+    }
+
+    getVideosList(filters = {}) {
         this.videoService.get({
             withPlaylists: !this.showTrending ? 1 : 0,
-            trending: this.showTrending ? 1 : 0
+            trending: this.showTrending ? 1 : 0,
+            filters: JSON.stringify(filters)
         }).subscribe(dt => {
             this.items = dt;
         });
-
-
     }
 
     searchChannelsVideos(d) {

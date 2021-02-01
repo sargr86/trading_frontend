@@ -1,5 +1,6 @@
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {environment} from '@env';
+import * as moment from 'moment';
 
 
 export const API_URL = environment.apiUrl;
@@ -72,19 +73,19 @@ export const DEVICES_ICONS = [
 
 export const VIDEO_FILTERS = [
     {
-        group: 'Upload date', items: [
-            {name: 'Last hour'},
-            {name: 'Today'},
-            {name: 'This week'},
-            {name: 'This month'},
-            {name: 'This year'},
+        group: {name: 'Date', value: 'date'}, items: [
+            {name: 'Last hour', value: moment().subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss')},
+            {name: 'Today', value: moment().startOf('day').format('YYYY-MM-DD')},
+            {name: 'This week', value: moment().startOf('isoWeek').format('YYYY-MM-DD HH:mm:ss')},
+            {name: 'This month', value: moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')},
+            {name: 'This year', value: moment().startOf('year').format('YYYY-MM-DD HH:mm:ss')},
         ]
     },
 
     {
-        group: 'Duration', items: [
-            {name: 'Short (<= 30 seconds)'},
-            {name: 'Long (>30 seconds and <1 hour)'},
+        group: {name: 'Duration', value: 'duration'}, items: [
+            {name: 'Short (<= 30 seconds)', value: 'short'},
+            {name: 'Long (>30 seconds and <1 hour)', value: 'long'},
         ]
     }
 

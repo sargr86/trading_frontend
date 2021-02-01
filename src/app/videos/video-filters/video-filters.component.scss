@@ -1,16 +1,3 @@
-.filter-toggle-btn {
-    text-transform: uppercase;
-    background-color: unset;
-    display: flex;
-    align-items: center;
-    font-family: "Muli-Bold";
-    padding: 10px;
-
-    span {
-        margin-left: 10px;
-    }
-}
-
 .filter-groups {
     display: flex;
     justify-content: space-between;
@@ -25,8 +12,18 @@
         }
 
         .filter-item {
+            display: flex;
+            align-items: center;
             padding: 5px;
             font-family: 'Muli-Light';
+            cursor: pointer;
+
+            .remove-filter {
+                mat-icon {
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+            }
         }
     }
 }

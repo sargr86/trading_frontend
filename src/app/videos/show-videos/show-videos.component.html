@@ -1,4 +1,8 @@
-<app-video-filters></app-video-filters>
+<button class="filter-toggle-btn" (click)="showFilters = !showFilters">
+    <mat-icon>tune</mat-icon>
+    <span>Filters</span>
+</button>
+<app-video-filters (filter)="getVideosList($event)" *ngIf="showFilters"></app-video-filters>
 <div id="videos-list">
     <ng-container *ngIf="!search">
         <div class="video-container" *ngFor="let video of items.videos">

@@ -44,6 +44,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     playlists = [];
     editMode = false;
 
+    showFilters = false;
+
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
     @ViewChild(PlaylistsTabComponent) playlistsTab: PlaylistsTabComponent;
@@ -56,6 +58,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private base64ToFile: Base64ToFilePipe,
         private route: ActivatedRoute,
         private fb: FormBuilder,
+        private subjectService: SubjectService,
         private channelService: ChannelsService,
         private playlistsService: PlaylistsService,
         private subject: SubjectService,
@@ -78,6 +81,11 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         }
 
 
+    }
+
+    toggleFilters() {
+        this.showFilters = !this.showFilters;
+        this.subject.setToggleFiltersData(this.showFilters);
     }
 
 

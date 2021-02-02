@@ -15,7 +15,12 @@
                            aria-selected="true">{{tab.name}}</a>
                     </li>
                 </ul>
-                <form [formGroup]="searchVideosForm">
+                <form [formGroup]="searchVideosForm" id="search-videos-form">
+                    <div class="toggle-filters-btn">
+                        <button class="filter-toggle-btn" mat-icon-button (click)="toggleFilters()">
+                            <mat-icon>tune</mat-icon>
+                        </button>
+                    </div>
                     <div class="watchlist-search" *ngIf="activeTab.name!=='About'">
                         <input class="watchlist-input" placeholder="Search" formControlName="search"
                                (keyup.enter)="searchVideos()">

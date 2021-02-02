@@ -1,3 +1,4 @@
+<app-video-filters *ngIf="showFilters" (filter)="getFilteredPlaylists($event)"></app-video-filters>
 <div class="playlist-tab">
     <ng-container *ngIf="authUser.username === channelUser.username">
         <button class="btn new-playlist" (click)="openAddPlaylistModal()">Add New Playlist</button>
@@ -5,6 +6,7 @@
             <tr>
                 <th>Playlist</th>
                 <th>Visibility</th>
+                <th>Created at</th>
                 <th>Last updated</th>
                 <th>Video count</th>
                 <th></th>
@@ -28,6 +30,9 @@
                         <mat-icon>visibility_on</mat-icon>
                         <span>Public</span>
                     </ng-container>
+                </td>
+                <td>
+                    <span>{{playlist.created_at|date: 'd MMM, yyyy'}}</span>
                 </td>
                 <td>
                     <span>{{playlist.updated_at|date: 'd MMM, yyyy'}}</span>

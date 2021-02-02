@@ -73,7 +73,7 @@ export const DEVICES_ICONS = [
 
 export const VIDEO_FILTERS = [
     {
-        group: {name: 'Date', value: 'date'}, items: [
+        group: {name: 'Upload Date', value: 'date'}, items: [
             {name: 'Last hour', value: moment().subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss')},
             {name: 'Today', value: moment().startOf('day').format('YYYY-MM-DD')},
             {name: 'This week', value: moment().startOf('isoWeek').format('YYYY-MM-DD HH:mm:ss')},

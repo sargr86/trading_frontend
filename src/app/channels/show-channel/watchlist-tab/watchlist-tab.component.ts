@@ -4,6 +4,7 @@ import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -16,9 +17,11 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
     search;
     subscriptions: Subscription[] = [];
+    showFilters = false;
 
     constructor(
         private videoService: VideoService,
+        private subjectService: SubjectService,
         public router: Router
     ) {
     }
@@ -31,10 +34,20 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         } else {
             this.getSearchResults(this.search);
         }
+
+        this.subjectService.getToggleFiltersData().subscribe(dt => {
+            this.showFilters = dt;
+        });
     }
 
     getAllVideosByAuthors() {
         this.subscriptions.push(this.videoService.getVideosByAuthor({}).subscribe(dt => {
+            this.watchlistVideos = dt;
+        }));
+    }
+
+    getFilteredVideos(e) {
+        this.subscriptions.push(this.videoService.getVideosByAuthor({filters: JSON.stringify(e)}).subscribe(dt => {
             this.watchlistVideos = dt;
         }));
     }

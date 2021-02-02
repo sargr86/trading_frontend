@@ -6,13 +6,15 @@ import {ShowVideosComponent} from './show-videos/show-videos.component';
 import {SharedModule} from '@shared/shared.module';
 
 import {PlayVideoComponent} from '../videos/play-video/play-video.component';
-import { ShowSavedVideosComponent } from './show-saved-videos/show-saved-videos.component';
-import { VideoSuggestionsComponent } from './play-video/video-suggestions/video-suggestions.component';
-import { VideoFiltersComponent } from './video-filters/video-filters.component';
+import {ShowSavedVideosComponent} from './show-saved-videos/show-saved-videos.component';
+import {VideoSuggestionsComponent} from './play-video/video-suggestions/video-suggestions.component';
 
 @NgModule({
-    declarations: [ShowVideosComponent, PlayVideoComponent, ShowSavedVideosComponent, VideoSuggestionsComponent, VideoFiltersComponent],
-    exports: [
+    declarations: [
+        ShowVideosComponent,
+        PlayVideoComponent,
+        ShowSavedVideosComponent,
+        VideoSuggestionsComponent
     ],
     imports: [
         CommonModule,

@@ -1,3 +1,4 @@
+<app-video-filters *ngIf="showFilters" (filter)="getFilteredVideos($event)"></app-video-filters>
 <ng-container *ngFor="let videoList of watchlistVideos">
     <ng-container *ngIf="videoList.videos.length > 0">
 

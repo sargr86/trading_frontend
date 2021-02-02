@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-playlists-tab',
@@ -13,6 +14,7 @@ import {MatDialog} from '@angular/material/dialog';
 export class PlaylistsTabComponent implements OnInit {
     playlists = [];
     apiUrl = API_URL;
+    showFilters = false;
 
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
@@ -20,6 +22,7 @@ export class PlaylistsTabComponent implements OnInit {
     constructor(
         public router: Router,
         private playlistsService: PlaylistsService,
+        private subjectService: SubjectService,
         private dialog: MatDialog
     ) {
 
@@ -33,6 +36,10 @@ export class PlaylistsTabComponent implements OnInit {
         } else {
             this.getSearchResults(s);
         }
+
+        this.subjectService.getToggleFiltersData().subscribe(dt => {
+            this.showFilters = dt;
+        });
     }
 
 
@@ -57,6 +64,15 @@ export class PlaylistsTabComponent implements OnInit {
     getSearchResults(s) {
         console.log(s)
         this.playlistsService.searchPlaylists({search: s}).subscribe(dt => {
+            this.playlists = dt;
+        });
+    }
+
+    getFilteredPlaylists(e) {
+        this.playlistsService.get({
+            channel_id: this.channelUser.channel.id,
+            filters: JSON.stringify(e)
+        }).subscribe(dt => {
             this.playlists = dt;
         });
     }

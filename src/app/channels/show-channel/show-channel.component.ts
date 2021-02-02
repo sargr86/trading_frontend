@@ -92,6 +92,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     changeActiveTab(tab) {
         this.activeTab = tab;
         this.searchVideos();
+        this.showFilters = false;
+        this.subject.setToggleFiltersData(this.showFilters);
     }
 
     searchVideos() {
@@ -105,6 +107,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         } else if (this.activeTab.name === 'Playlists') {
             this.searchInPlaylists(s);
         }
+
     }
 
     searchInVideosByAuthor(s) {

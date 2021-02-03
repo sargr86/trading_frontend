@@ -82,3 +82,13 @@
 .selected {
     background-color: #F4F4F4;
 }
+
+
+.details-row {
+    display: flex;
+    align-items: center;
+
+    .dot {
+        margin: 0 5px;
+    }
+}

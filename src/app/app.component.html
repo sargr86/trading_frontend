@@ -1,10 +1,10 @@
 <ng-container *ngIf="!router.url.includes('auth')">
   <app-navbar (search)="getSearch($event)"></app-navbar>
   <section class="body-content">
-    <div class="body-content-left" *ngIf="!router.url.includes('/user/accessibility-statement') && !router.url.includes('/user/help') && !router.url.includes('/user/cookie-policy') && !router.url.includes('/user/about')">
+    <div class="body-content-left" *ngIf="!checkIfPolicyPage()">
       <app-left-sidebar></app-left-sidebar>
     </div>
-    <div class="body-content-right" [ngClass]="{'full-width': router.url.includes('/user/accessibility-statement') || router.url.includes('/user/help') || router.url.includes('/user/cookie-policy') || router.url.includes('/user/about')}">
+    <div class="body-content-right" [ngClass]="{'full-width': checkIfPolicyPage()}">
       <router-outlet></router-outlet>
     </div>
   </section>

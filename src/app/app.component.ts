@@ -21,4 +21,8 @@ export class AppComponent {
         const queryParams = e.search ? {queryParams: e} : {};
         this.router.navigate(['videos/'], queryParams);
     }
+
+    checkIfPolicyPage() {
+        return /accessibility-statement|help|cookie-policy|about/.test(this.router.url);
+    }
 }

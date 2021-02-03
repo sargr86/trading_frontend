@@ -23,6 +23,6 @@ export class AppComponent {
     }
 
     checkIfPolicyPage() {
-        return /accessibility-statement|help|cookie-policy|about/.test(this.router.url);
+        return /accessibility-assessment|security|help|privacy-policy|cookie-policy|about/.test(this.router.url);
     }
 }

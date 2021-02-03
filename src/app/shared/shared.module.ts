@@ -16,6 +16,7 @@ import {GetThumbPathPipe} from './pipes/get-thumb-path.pipe';
 import {VideoCarouselHolderComponent} from './components/video-carousel-holder/video-carousel-holder.component';
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from './pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 import {VideoFiltersComponent} from '@shared/components/video-filters/video-filters.component';
+import {DateFromNowPipe} from './pipes/date-from-now.pipe';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {VideoFiltersComponent} from '@shared/components/video-filters/video-filt
         GetThumbPathPipe,
         VideoCarouselHolderComponent,
         GetSelectedVideosToBeAddedToPlaylistPipe,
+        DateFromNowPipe,
     ],
     imports: [
         CommonModule,
@@ -61,7 +63,8 @@ import {VideoFiltersComponent} from '@shared/components/video-filters/video-filt
         FilterDevicesPipe,
         GetThumbPathPipe,
         VideoCarouselHolderComponent,
-        VideoFiltersComponent
+        VideoFiltersComponent,
+        DateFromNowPipe
     ]
 
 })

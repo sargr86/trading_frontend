@@ -3,10 +3,24 @@
         color: #18B587 !important;
     }
 }
-.channel-block{
-    cursor: pointer;
+
+
+.details-row {
+    display: flex;
+    align-items: center;
+
+    .dot {
+        margin: 0 10px;
+    }
 }
 
-.ads-block-right{
+.channel-block {
+    cursor: pointer;
+    border-top: 0.5px solid #C9C9C9;
+    border-bottom: 0.5px solid #C9C9C9;
+    padding: 12px 0;
+}
+
+.ads-block-right {
 
 }

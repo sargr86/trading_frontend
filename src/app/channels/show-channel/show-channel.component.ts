@@ -111,7 +111,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInVideosByAuthor(s) {
-        if (this.watchListTab) {
+        if (this.watchListTab && s) {
             this.watchListTab.getSearchResults(s);
         }
 
@@ -124,7 +124,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInPlaylists(s) {
-        if (this.playlistsTab) {
+        if (this.playlistsTab && s) {
             this.playlistsTab.getSearchResults(s.search);
         }
     }

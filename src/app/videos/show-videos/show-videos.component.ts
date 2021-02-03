@@ -70,7 +70,7 @@ export class ShowVideosComponent implements OnInit {
 
 
     getUploadDateTime(datetime) {
-        return moment(datetime).format('MMM DD, YYYY');
+        return moment(datetime).fromNow();
     }
 
     openVideoPage(video, username) {

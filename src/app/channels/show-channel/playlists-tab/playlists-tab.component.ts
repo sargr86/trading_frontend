@@ -31,6 +31,7 @@ export class PlaylistsTabComponent implements OnInit {
 
     ngOnInit(): void {
         const s = localStorage.getItem('search');
+        console.log(!s)
         if (!s) {
             this.getPlaylists();
         } else {

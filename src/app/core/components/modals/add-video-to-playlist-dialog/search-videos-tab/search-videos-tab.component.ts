@@ -10,6 +10,7 @@ import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-select
 export class SearchVideosTabComponent implements OnInit {
     searchedVideos = [];
     selectedVideos = [];
+    searched = false;
 
     @Input('playlist') playlist;
     @Output('selectVideo') selectVid = new EventEmitter();
@@ -24,6 +25,8 @@ export class SearchVideosTabComponent implements OnInit {
     }
 
     searchVideos(e) {
+        console.log('searched')
+        this.searched = true;
         this.videoService.searchInAllVideos(e).subscribe(dt => {
             this.searchedVideos = dt;
         });

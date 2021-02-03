@@ -1,5 +1,6 @@
-@import "./fonts";
-@import "variables";
+@import './fonts';
+@import 'variables';
+@import 'mixins';
 @import '~ngx-toastr/toastr';
 // Video JS
 @import '~video.js/dist/video-js.css';
@@ -539,6 +540,7 @@ nav.home-header {
     color: #545454;
     font-size: 14px;
     font-family: "Muli-Light";
+    margin-bottom: 0;
 }
 
 .avatar {
@@ -734,12 +736,12 @@ nav.home-header {
         overflow: hidden;
     }
 
-    .main-text-2{
+    .main-text-2 {
         margin-top: 4px;
         margin-bottom: 0;
     }
 
-    .main-text-3{
+    .main-text-3 {
         margin: 0;
     }
 
@@ -960,7 +962,6 @@ nav.home-header {
     font-family: "Muli-Light";
     font-size: 10px;
     padding: 10px 0;
-    border-bottom: 0.5px solid #C9C9C9;
 }
 
 .ads-maps {
@@ -1404,16 +1405,18 @@ input, textarea {
 
 .start-live-video {
 
-    #privacy{
+    #privacy {
         margin-bottom: 24px;
-        mat-radio-button{
+
+        mat-radio-button {
             margin-right: 40px;
 
-            .mat-radio-label-content{
+            .mat-radio-label-content {
                 display: flex;
                 align-items: center;
                 color: #545454;
-                mat-icon{
+
+                mat-icon {
                     margin-left: 6px;
                     font-size: 20px;
                     height: auto;
@@ -1424,13 +1427,13 @@ input, textarea {
                 border-color: #18B587;
             }
 
-            .mat-radio-inner-circle{
+            .mat-radio-inner-circle {
                 background-color: #18B587;
             }
 
             .mat-ripple-element {
-                background-color:rgba(24, 181, 135,.8);
-              }
+                background-color: rgba(24, 181, 135, .8);
+            }
 
         }
     }

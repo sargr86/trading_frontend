@@ -2,24 +2,22 @@
     <ng-container *ngIf="!search">
         <div class="video-container" *ngFor="let video of userVideos.users_vids">
             <div class="thumbnail">
-                <img *ngIf="video.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+video.thumbnail"
-                     (click)="openVideoPage(video,userVideos.username)">
-                <img *ngIf="!video.thumbnail" [src]="'assets/img/video-thumbnail-default.png'"
-                     (click)="openVideoPage(video,userVideos.username)">
+                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, userVideos.username)">
             </div>
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>
                 <div class="shortened-details">
-                    <span class="channel-name" (click)="openChannelPage(video.user.channel, video.user.username)">{{video.channel.name}}</span>
-                    <span class="dot">.</span>
-                    <span class="watchers-count">17k watching</span>
-                    <span class="dot">.</span>
-                    <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
+                    <span class="channel-name"
+                          (click)="openChannelPage(video.user.channel, video.user.username)">{{video.channel.name}}</span>
+                    <span class="dot">&middot;</span>
+                    <span class="watchers-count">
+                        {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                    </span>
+                    <span class="dot">&middot;</span>
+                    <span class="upload-time">{{video.created_at | dateFromNow}}</span>
                 </div>
                 <p class="shortened-description">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet,
-                    consetetur sadipscing elitr, sed Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    sed sda,sasddswd
+                   {{video.description}}
                 </p>
             </div>
         </div>

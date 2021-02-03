@@ -6,6 +6,7 @@ import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-video-carousel-holder',
@@ -65,6 +66,10 @@ export class VideoCarouselHolderComponent implements OnInit {
             }
         });
 
+    }
+
+    getUploadDateTime(datetime) {
+        return moment(datetime).format('MMM DD, YYYY');
     }
 
 }

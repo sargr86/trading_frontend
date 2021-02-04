@@ -13,7 +13,7 @@ export class FilterOutFalsyValuesFromObjectPipe implements PipeTransform {
                 filters: (params.filters ? JSON.stringify(params.filters) : null)
             };
         }
-
+console.log(params)
 
         return Object.entries(params).reduce((a, [k, v]) => (v ? (a[k] = v, a) : a), {});
     }

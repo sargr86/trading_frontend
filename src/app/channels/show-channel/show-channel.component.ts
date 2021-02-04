@@ -29,7 +29,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     watchlistVideos = [];
     authUser;
 
-    activeTab = PROFILE_PAGE_TABS[0];
+    activeTab = PROFILE_PAGE_TABS[1];
     allTabs = PROFILE_PAGE_TABS;
 
     apiUrl = API_URL;
@@ -106,7 +106,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
             console.log(s)
             this.searchInVideosByAuthor(s.search);
         } else if (this.activeTab.name === 'Videos') {
-            this.searchInUserVideos(s);
+            this.searchInUserVideos(s.search);
         } else if (this.activeTab.name === 'Playlists') {
             this.searchInPlaylists(s);
         }
@@ -121,9 +121,9 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInUserVideos(s) {
-        this.videoService.searchInUserVideos({user_id: this.channelUser.id, ...s}).subscribe(dt => {
-            this.videosTab.getSearchResults(dt?.videos);
-        });
+        if (this.videosTab) {
+            this.videosTab.getSearchResults(s);
+        }
     }
 
     searchInPlaylists(s) {

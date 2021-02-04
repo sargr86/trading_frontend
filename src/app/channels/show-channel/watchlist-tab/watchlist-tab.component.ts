@@ -5,6 +5,7 @@ import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -18,45 +19,48 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     search;
     subscriptions: Subscription[] = [];
     showFilters = false;
+    filters = null;
 
     constructor(
         private videoService: VideoService,
         private subjectService: SubjectService,
-        public router: Router
+        public router: Router,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
     }
 
     ngOnInit(): void {
         this.watchlistVideos = [];
         this.search = localStorage.getItem('search');
-        if (!this.search) {
-            this.getAllVideosByAuthors();
-        } else {
-            this.getSearchResults(this.search);
-        }
+        this.getAllVideosByAuthors({search: this.search, filters: this.filters});
+        this.getFiltersToggleState();
+    }
 
-        this.subjectService.getToggleFiltersData().subscribe(dt => {
+    getFiltersToggleState() {
+        this.subscriptions.push(this.subjectService.getToggleFiltersData().subscribe(dt => {
             this.showFilters = dt;
-        });
+        }));
     }
 
-    getAllVideosByAuthors() {
-        this.subscriptions.push(this.videoService.getVideosByAuthor({}).subscribe(dt => {
+    getAllVideosByAuthors(params) {
+        params = this.getExactParams.transform(params);
+
+        console.log(params)
+
+        this.subscriptions.push(this.videoService.getVideosByAuthor(params).subscribe(dt => {
             this.watchlistVideos = dt;
         }));
     }
 
-    getFilteredVideos(e) {
-        this.subscriptions.push(this.videoService.getVideosByAuthor({filters: JSON.stringify(e)}).subscribe(dt => {
-            this.watchlistVideos = dt;
-        }));
+    getFilteredVideos(filters) {
+        this.filters = filters;
+        this.getAllVideosByAuthors({search: this.search, filters});
     }
 
     getSearchResults(search) {
         this.search = search;
-        this.subscriptions.push(this.videoService.searchInVideosByAuthor({search}).subscribe(dt => {
-            this.watchlistVideos = dt;
-        }));
+        console.log('get search results')
+        this.getAllVideosByAuthors({search, filters: this.filters});
     }
 
     ngOnDestroy() {

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {VIDEO_FILTERS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-video-filters',
@@ -14,7 +15,8 @@ export class VideoFiltersComponent implements OnInit {
     @Output('filter') filterAction = new EventEmitter();
 
     constructor(
-        private videoService: VideoService
+        private videoService: VideoService,
+        private ifObjectEmpty: CheckForEmptyObjectPipe
     ) {
     }
 
@@ -28,6 +30,10 @@ export class VideoFiltersComponent implements OnInit {
 
     removeFilter({name, value}, group) {
         delete this.selectedFilters[group];
+        if (this.ifObjectEmpty.transform(this.selectedFilters)) {
+            this.selectedFilters = null;
+        }
+
         this.filterAction.emit(this.selectedFilters);
     }
 

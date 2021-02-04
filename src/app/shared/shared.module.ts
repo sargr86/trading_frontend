@@ -17,6 +17,8 @@ import {VideoCarouselHolderComponent} from './components/video-carousel-holder/v
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from './pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 import {VideoFiltersComponent} from '@shared/components/video-filters/video-filters.component';
 import {DateFromNowPipe} from './pipes/date-from-now.pipe';
+import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-values-from-object.pipe';
+import { CheckForEmptyObjectPipe } from './pipes/check-for-empty-object.pipe';
 
 @NgModule({
     declarations: [
@@ -33,6 +35,8 @@ import {DateFromNowPipe} from './pipes/date-from-now.pipe';
         VideoCarouselHolderComponent,
         GetSelectedVideosToBeAddedToPlaylistPipe,
         DateFromNowPipe,
+        FilterOutFalsyValuesFromObjectPipe,
+        CheckForEmptyObjectPipe,
     ],
     imports: [
         CommonModule,
@@ -47,7 +51,9 @@ import {DateFromNowPipe} from './pipes/date-from-now.pipe';
         BlobToFilePipe,
         Base64ToFilePipe,
         FilterDevicesPipe,
-        GetSelectedVideosToBeAddedToPlaylistPipe
+        GetSelectedVideosToBeAddedToPlaylistPipe,
+        FilterOutFalsyValuesFromObjectPipe,
+        CheckForEmptyObjectPipe
 
     ],
     exports: [

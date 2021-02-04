@@ -100,7 +100,10 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
         const s = this.searchVideosForm.value;
         localStorage.setItem('search', s.search);
+        this.showFilters = false;
+        this.subject.setToggleFiltersData(this.showFilters);
         if (this.activeTab.name === 'Watchlist') {
+            console.log(s)
             this.searchInVideosByAuthor(s.search);
         } else if (this.activeTab.name === 'Videos') {
             this.searchInUserVideos(s);
@@ -111,7 +114,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInVideosByAuthor(s) {
-        if (this.watchListTab && s) {
+        if (this.watchListTab) {
             this.watchListTab.getSearchResults(s);
         }
 

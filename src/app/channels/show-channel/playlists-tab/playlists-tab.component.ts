@@ -51,7 +51,11 @@ export class PlaylistsTabComponent implements OnInit {
     }
 
     openAddPlaylistModal() {
-        this.dialog.open(AddPlaylistDialogComponent, {data: {channel_id: this.channelUser.channel.id}}).afterClosed().subscribe(dt => {
+        this.dialog.open(AddPlaylistDialogComponent,
+            {
+                data: {channel_id: this.channelUser.channel.id}
+            })
+            .afterClosed().subscribe(dt => {
             this.getPlaylists();
         });
     }

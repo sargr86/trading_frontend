@@ -33,13 +33,13 @@
             <i class="down-white fas fa-chevron-down"></i>
         </div>
         <div class="notification-block">
-            <div class="nav-item dropdown">
+            <div class="nav-item dropdown" [hidden]="envName==='production'">
                 <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>
                 <div class="dropdown-menu">
                     <app-purchase-bits></app-purchase-bits>
                 </div>
             </div>
-            <div class="notification">
+            <div class="notification" [hidden]="envName==='production'">
                 <i class="fas fa-bell"></i>
                 <span>+99</span>
             </div>

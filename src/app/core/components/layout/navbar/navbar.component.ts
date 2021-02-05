@@ -6,6 +6,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
+import {environment} from '@env';
 
 @Component({
     selector: 'app-navbar',
@@ -17,6 +18,7 @@ export class NavbarComponent implements OnInit {
     authUser;
     routerUrl;
 
+    envName = environment.envName;
 
 
     @Output('search') search = new EventEmitter();
@@ -30,7 +32,6 @@ export class NavbarComponent implements OnInit {
         private modalService: BsModalService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-
         private route: ActivatedRoute
     ) {
 

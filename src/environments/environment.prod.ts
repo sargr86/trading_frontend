@@ -1,5 +1,6 @@
 export const environment = {
-  apiUrl: 'https://metl.tv/',
-  production: true
+    apiUrl: 'https://metl.tv/',
+    envName: 'production',
+    production: true
 };
 

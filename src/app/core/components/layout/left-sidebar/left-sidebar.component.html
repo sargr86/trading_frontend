@@ -18,17 +18,17 @@
             <p>Trending</p>
         </div>
         <div class="line-item"></div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')" [hidden]="envName==='production'"
              (click)="router.navigate(['chat/messages'])">
             <img src="assets/img/item-8.png">
             <p>Messages</p>
         </div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')"
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')" [hidden]="envName==='production'"
              (click)="router.navigate(['chat/rooms'])">
             <img src="assets/img/item-8.png">
             <p>Chat rooms</p>
         </div>
-        <div class="left-menu-main" [class.active]="router.url.includes('stock')"
+        <div class="left-menu-main" [class.active]="router.url.includes('stock')" [hidden]="envName==='production'"
              (click)="router.navigate(['user/stock-profile'])">
             <img src="assets/img/item-9.png">
             <p>Stock Profile</p>
@@ -70,7 +70,7 @@
         </div>
         <p (click)="viewAllSubscriptions()" class="see-more">See more</p>
     </ng-container>
-    <div class="watchlist" *ngIf="router.url!=='/'">
+    <div class="watchlist" *ngIf="router.url!=='/'" [hidden]="envName==='production'">
         <ul class="nav nav-tabs" id="watchlist" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab"

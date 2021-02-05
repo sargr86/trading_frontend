@@ -7,6 +7,7 @@ import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {AuthService} from '@core/services/auth.service';
+import {environment} from '@env';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -18,6 +19,7 @@ export class LeftSidebarComponent implements OnInit {
     apiUrl = API_URL;
     authUser;
     routerUrl;
+    envName;
 
     constructor(
         public router: Router,
@@ -26,6 +28,7 @@ export class LeftSidebarComponent implements OnInit {
         public auth: AuthService,
         private subject: SubjectService
     ) {
+        this.envName = environment.envName;
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
             this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
@@ -73,5 +76,6 @@ export class LeftSidebarComponent implements OnInit {
     viewAllSubscriptions() {
         this.router.navigate(['channels/subscriptions']);
     }
+
 
 }

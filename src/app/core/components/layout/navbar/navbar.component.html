@@ -5,7 +5,7 @@
     </button>
     <div class="header-right collapse navbar-collapse nav-menu" id="navbarSupportedContent">
         <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
-        <div class="home-black-block" (click)="openModal(cryptoModal)">
+        <div class="home-black-block" (click)="openModal(cryptoModal)" [hidden]="envName==='production'">
             <div class="home-black-item">
                 <p class="black-text">EDF.PA</p>
                 <p class="black-percent-red">3.36%</p>

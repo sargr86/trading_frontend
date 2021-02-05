@@ -43,7 +43,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
 
     async startLiveVideo() {
         // if (this.deviceRecognitionForm.valid) {
-            this.checked.emit(true);
+        this.checked.emit(true);
         // }
     }
 
@@ -54,6 +54,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     getConnectedDevices(pageLoad = false) {
         navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
+                console.log(devices)
                 this.userMediaDevices = devices;
                 this.defaultVideoDevice = devices.find(d => d.kind === 'videoinput');
                 this.deviceRecognitionForm.patchValue({video_device: this.defaultVideoDevice?.label});

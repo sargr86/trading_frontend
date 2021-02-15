@@ -10,7 +10,7 @@
             <mat-form-field class="example-chip-list">
                 <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
                     <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
-                        {{tag}}
+                        {{tag.name}}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                     <input placeholder="Tags..." #chipsInput

@@ -61,6 +61,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
                 this.updateViewsCount(dt);
+                this.indexUserTags(dt);
             }
         });
 
@@ -142,6 +143,13 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         } else {
             this.toastr.error('Please log in first to take this action');
         }
+    }
+
+    indexUserTags(dt) {
+        const params = {user_id: this.authUser.id, video_id: dt.id, tags: this.videoData?.tags};
+        this.videoService.indexUserTags(params).subscribe(d => {
+
+        });
     }
 
 

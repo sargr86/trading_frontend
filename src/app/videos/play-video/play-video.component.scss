@@ -1,7 +1,16 @@
+@import "variables";
+
 .saved {
     i, p {
         color: #18B587 !important;
     }
+}
+
+#add-tags {
+    background-color: $green;
+    color: $white;
+    padding: 5px;
+    margin-left: 10px;
 }
 
 
@@ -23,4 +32,9 @@
 
 .ads-block-right {
 
+}
+
+.tags-container{
+    display: flex;
+    justify-content: space-between;
 }

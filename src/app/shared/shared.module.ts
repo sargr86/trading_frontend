@@ -19,6 +19,7 @@ import {VideoFiltersComponent} from '@shared/components/video-filters/video-filt
 import {DateFromNowPipe} from './pipes/date-from-now.pipe';
 import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-values-from-object.pipe';
 import { CheckForEmptyObjectPipe } from './pipes/check-for-empty-object.pipe';
+import { UserTagsComponent } from './components/user-tags/user-tags.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { CheckForEmptyObjectPipe } from './pipes/check-for-empty-object.pipe';
         DateFromNowPipe,
         FilterOutFalsyValuesFromObjectPipe,
         CheckForEmptyObjectPipe,
+        UserTagsComponent,
     ],
     imports: [
         CommonModule,
@@ -70,7 +72,8 @@ import { CheckForEmptyObjectPipe } from './pipes/check-for-empty-object.pipe';
         GetThumbPathPipe,
         VideoCarouselHolderComponent,
         VideoFiltersComponent,
-        DateFromNowPipe
+        DateFromNowPipe,
+        UserTagsComponent
     ]
 
 })

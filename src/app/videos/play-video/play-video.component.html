@@ -1,4 +1,4 @@
-<app-categories></app-categories>
+<app-user-tags></app-user-tags>
 <div class="ads-block">
     <div class="ads-block-left">
         <ng-container *ngIf="videoData">
@@ -6,8 +6,12 @@
 
             <div class="main-tags">
                 <div class="main-tags-text">
-                    <p *ngFor="let tag of videoData.tags">#{{tag.name}}</p>
+                    <span *ngIf="videoData.tags?.length === 0">No tags defined for this video</span>
+                    <ng-container *ngIf="videoData.tags?.length > 0">
+                        <p *ngFor="let tag of videoData.tags">#{{tag.name}}</p>
+                    </ng-container>
                 </div>
+
                 <div class="main-tags-like">
                     <div class="main-tags-share" (click)="updateLikes(videoData, true)">
                         <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection?.liked ==='liked'"></i>
@@ -27,9 +31,18 @@
                         <i class="fas fa-plus-square"></i>
                         <p>{{userVideoConnection?.saved === 'saved' ? 'Saved' : 'Save'}}</p>
                     </div>
+
+
                 </div>
             </div>
-            <p class="ads-text-1">{{videoData?.name}}</p>
+            <div class="tags-container">
+                <p class="ads-text-1">{{videoData?.name}}</p>
+                <button id="add-tags" *ngIf="!showTagsForm && authUser.id === videoData.author_id"
+                        (click)="showTagsForm = !showTagsForm">Edit tags
+                </button>
+                <app-tags-form [tags]="videoData?.tags" *ngIf="showTagsForm"
+                               (tagsAdded)="saveTags($event)"></app-tags-form>
+            </div>
             <div class="details-row">
                 <span class="ads-text-2">{{videoData?.views}} views</span>
                 <span class="dot">&middot;</span>

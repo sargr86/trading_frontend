@@ -79,6 +79,8 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         if ((value || '').trim()) {
             this.tags.push({name: value.trim()});
             this.startStreamingForm.patchValue({tags: this.tags});
+            console.log(this.tags)
+            console.log(this.startStreamingForm.value)
         }
 
         // Reset the input value

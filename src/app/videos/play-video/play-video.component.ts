@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CHART_1, CHART_2, CHART_3, CHART_4} from '@core/constants/charts';
 import {Chart} from 'chart.js';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -35,6 +35,8 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     };
 
     viewsCount = 0;
+
+    showTagsForm = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -156,6 +158,14 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
             saved: this.userVideoConnection.saved === 'saved' ? 0 : 1
         }).subscribe(dt => {
             this.userVideoConnection.saved = dt.saved ? 'saved' : '';
+        });
+    }
+
+    saveTags(e) {
+        this.videoData.tags = e.tags;
+        this.videoService.saveTags({...e, video_id: this.videoData.id}).subscribe(dt => {
+            this.videoData = dt;
+            this.showTagsForm = false;
         });
     }
 

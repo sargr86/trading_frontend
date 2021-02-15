@@ -76,9 +76,8 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         const input = event.input;
         const value = event.value;
 
-        // Add our fruit
         if ((value || '').trim()) {
-            this.tags.push(value.trim());
+            this.tags.push({name: value.trim()});
             this.startStreamingForm.patchValue({tags: this.tags});
         }
 

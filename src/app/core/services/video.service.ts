@@ -84,4 +84,8 @@ export class VideoService {
     saveVideo(params) {
         return this.httpClient.put<any>(`${API_URL}videos/save-video`, params);
     }
+
+    saveTags(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/save-tags`, params);
+    }
 }

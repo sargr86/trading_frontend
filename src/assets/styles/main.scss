@@ -195,8 +195,10 @@ nav.home-header {
     margin-right: 24px;
 
     input {
+        position: relative;
+        z-index: 1;
         width: 100%;
-        padding-left: 15px;
+        padding: 8px 32px 8px 16px;
     }
 }
 
@@ -462,7 +464,7 @@ nav.home-header {
     display: flex;
     align-items: center;
     transition: 0.3s ease-in-out;
-    margin-bottom: 5px;
+    margin-bottom: 12px;
     border-bottom: 1px solid transparent;
 
     &.st-left-metu {
@@ -588,7 +590,7 @@ nav.home-header {
 }
 
 .watchlist .nav-link:last-child {
-    border-right: 0;
+    //border-right: 0;
 }
 
 .watchlist .nav-link.active {
@@ -761,6 +763,7 @@ nav.home-header {
 
 .chat-block {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
@@ -797,16 +800,18 @@ nav.home-header {
 }
 
 .chat-block-1 {
-    width: 45px;
+    margin: 0;
     color: #9B9B9B;
-    font-size: 10px;
+    font-size: 14px;
     font-family: "Muli-Light";
 }
 
 .chat-block-2 {
-    width: 204px;
+    margin-bottom: 0;
+    margin-left: 16px;
+    flex: 1;
     color: #545454;
-    font-size: 10px;
+    font-size: 14px;
     font-family: "Muli-Light";
 }
 
@@ -819,9 +824,9 @@ nav.home-header {
 
 .chat-input {
     color: #C9C9C9;
-    font-size: 10px;
+    font-size: 14px;
     font-family: "Muli-Light";
-    padding-bottom: 8px;
+    padding: 8px 0;
     width: 100%;
     background: transparent;
     border-bottom: 1px solid silver;
@@ -895,6 +900,21 @@ nav.home-header {
 .ads-block-left {
     width: calc(100% - 350px);
     margin-bottom: 20px;
+
+    .videoWrap {
+        position: relative;
+        padding: 30% 0;
+    }
+
+    video{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        outline: none;
+    }
 }
 
 .main-tags {
@@ -902,11 +922,15 @@ nav.home-header {
     margin-bottom: 16px;
     margin-top: 24px;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+
 }
 
 .main-tags-text {
     display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    margin-right: 24px;
 }
 
 .main-tags p {
@@ -914,7 +938,7 @@ nav.home-header {
     font-size: 16px;
     font-family: "Muli-Bold";
     margin-right: 16px;
-
+    margin-bottom: 8px;
 }
 
 .main-tags-like {

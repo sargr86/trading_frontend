@@ -2,7 +2,9 @@
 <div class="ads-block">
     <div class="ads-block-left">
         <ng-container *ngIf="videoData">
-            <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>
+            <div class="videoWrap">
+                <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>
+            </div>
 
             <div class="main-tags">
                 <div class="main-tags-text">

@@ -20,8 +20,14 @@
 #video-chat-container {
     display: flex;
 
-    .video-container, .chat-container {
+    .video-container{
         flex: 1;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .chat-container {
+        flex: 0.5;
         display: flex;
     }
 
@@ -31,7 +37,7 @@
         position: relative;
         width: 100%;
         overflow: hidden;
-        padding-top: 60%;
+        padding: 30% 0;
     }
 }
 

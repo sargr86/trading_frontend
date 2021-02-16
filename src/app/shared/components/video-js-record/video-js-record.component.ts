@@ -113,10 +113,10 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     // convertEngine: 'ts-ebml'
                 },
 
-                videoJsResolutionSwitcher: {
-                    default: 'low', // Default resolution [{Number}, 'low', 'high'],
-                    dynamicLabel: true
-                }
+                // videoJsResolutionSwitcher: {
+                //     default: 'low', // Default resolution [{Number}, 'low', 'high'],
+                //     dynamicLabel: true
+                // }
 
             }
         };

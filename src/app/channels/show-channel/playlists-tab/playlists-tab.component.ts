@@ -5,6 +5,8 @@ import {PlaylistsService} from '@core/services/playlists.service';
 import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SubjectService} from '@core/services/subject.service';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-playlists-tab',
@@ -15,6 +17,9 @@ export class PlaylistsTabComponent implements OnInit {
     playlists = [];
     apiUrl = API_URL;
     showFilters = false;
+    search = '';
+    filters = null;
+    subscriptions: Subscription[] = [];
 
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
@@ -23,29 +28,31 @@ export class PlaylistsTabComponent implements OnInit {
         public router: Router,
         private playlistsService: PlaylistsService,
         private subjectService: SubjectService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
 
     }
 
 
     ngOnInit(): void {
-        const s = localStorage.getItem('search');
-        console.log(!s)
-        if (!s) {
-            this.getPlaylists();
-        } else {
-            this.getSearchResults(s);
-        }
+        this.search = localStorage.getItem('search');
+        this.getPlaylists({search: this.search, filters: this.filters});
+        this.getFiltersToggleState();
+    }
 
-        this.subjectService.getToggleFiltersData().subscribe(dt => {
+    getFiltersToggleState() {
+        this.subscriptions.push(this.subjectService.getToggleFiltersData().subscribe(dt => {
             this.showFilters = dt;
-        });
+        }));
     }
 
 
-    getPlaylists() {
-        this.playlistsService.get({channel_id: this.channelUser.channel.id}).subscribe(dt => {
+    getPlaylists(params) {
+
+        params = this.getExactParams.transform(params);
+
+        this.playlistsService.get({channel_id: this.channelUser.channel.id, ...params}).subscribe(dt => {
             this.playlists = dt;
         });
     }
@@ -56,7 +63,7 @@ export class PlaylistsTabComponent implements OnInit {
                 data: {channel_id: this.channelUser.channel.id}
             })
             .afterClosed().subscribe(dt => {
-            this.getPlaylists();
+            this.getPlaylists({search: this.search, filters: this.filters});
         });
     }
 
@@ -66,20 +73,14 @@ export class PlaylistsTabComponent implements OnInit {
         this.router.navigate([route], {queryParams: params});
     }
 
-    getSearchResults(s) {
-        console.log(s)
-        this.playlistsService.searchPlaylists({search: s}).subscribe(dt => {
-            this.playlists = dt;
-        });
+    getSearchResults(search) {
+        this.search = search;
+        this.getPlaylists({search, filters: this.filters});
     }
 
-    getFilteredPlaylists(e) {
-        this.playlistsService.get({
-            channel_id: this.channelUser.channel.id,
-            filters: JSON.stringify(e)
-        }).subscribe(dt => {
-            this.playlists = dt;
-        });
+    getFilteredPlaylists(filters) {
+        this.filters = filters;
+        this.getPlaylists({search: this.search, filters});
     }
 
     goToEditPage(playlist) {
@@ -88,7 +89,8 @@ export class PlaylistsTabComponent implements OnInit {
 
     removePlaylist(id, channelId) {
         this.playlistsService.removePlaylist({id, channel_id: channelId}).subscribe(dt => {
-            this.playlists = dt;
+            this.getPlaylists({search: this.search, filters: this.filters});
+            // this.playlists = dt;
         });
     }
 

@@ -46,6 +46,7 @@
         "tslib": "^1.10.0",
         "video.js": "^7.8.4",
         "videojs-record": "^4.1.0",
+        "videojs-resolution-switcher": "^0.4.2",
         "zone.js": "~0.10.2"
     },
     "devDependencies": {

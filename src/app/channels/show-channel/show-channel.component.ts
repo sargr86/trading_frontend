@@ -45,6 +45,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     editMode = false;
 
     showFilters = false;
+    filters = null;
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
@@ -85,6 +86,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     toggleFilters() {
         this.showFilters = !this.showFilters;
+
         this.subject.setToggleFiltersData(this.showFilters);
     }
 

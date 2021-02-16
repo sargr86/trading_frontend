@@ -2,6 +2,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {VIDEO_FILTERS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
+import {Subscription} from 'rxjs';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-video-filters',
@@ -11,20 +13,25 @@ import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe
 export class VideoFiltersComponent implements OnInit {
     filters = VIDEO_FILTERS;
     selectedFilters = {};
+    subscriptions: Subscription[] = [];
 
     @Output('filter') filterAction = new EventEmitter();
 
     constructor(
         private videoService: VideoService,
-        private ifObjectEmpty: CheckForEmptyObjectPipe
+        private ifObjectEmpty: CheckForEmptyObjectPipe,
+        private subjectService: SubjectService
     ) {
     }
 
     ngOnInit(): void {
+        this.subscriptions.push(this.subjectService.getToggleFiltersData().subscribe(dt => {
+            this.selectedFilters = {};
+            this.filterAction.emit(this.selectedFilters);
+        }));
     }
 
     applyFilter({name, value}, group) {
-        console.log(this.selectedFilters)
         this.selectedFilters[group] = {name, value};
         this.filterAction.emit(this.selectedFilters);
     }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
@@ -19,7 +19,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     search;
     subscriptions: Subscription[] = [];
     showFilters = false;
-    filters = null;
+    @Input('filters') filters = null;
 
     constructor(
         private videoService: VideoService,

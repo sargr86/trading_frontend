@@ -24,15 +24,16 @@ export class VideoFiltersComponent implements OnInit {
     }
 
     applyFilter({name, value}, group) {
+        console.log(this.selectedFilters)
         this.selectedFilters[group] = {name, value};
         this.filterAction.emit(this.selectedFilters);
     }
 
     removeFilter({name, value}, group) {
         delete this.selectedFilters[group];
-        if (this.ifObjectEmpty.transform(this.selectedFilters)) {
-            this.selectedFilters = null;
-        }
+        // if (this.ifObjectEmpty.transform(this.selectedFilters)) {
+        // this.selectedFilters = {};
+        // }
 
         this.filterAction.emit(this.selectedFilters);
     }

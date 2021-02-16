@@ -100,7 +100,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 record: {
                     audio: true,
                     // video: true,
-                    video: {frameRate: {ideal: 30, max: 30}, width: 640, height: 480},
+                    video: {
+                        frameRate: {ideal: 30, max: 30},
+                        width: {min: 640, ideal: 640, max: 1280},
+                        height: {min: 480, ideal: 480, max: 720}
+                    },
                     screen: true,
                     displayMilliseconds: false,
                     maxLength: 3000, //30
@@ -108,6 +112,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     videoMimeType: 'video/webm;codecs=H264',
                     // convertEngine: 'ts-ebml'
                 },
+
+                videoJsResolutionSwitcher: {
+                    default: 'low', // Default resolution [{Number}, 'low', 'high'],
+                    dynamicLabel: true
+                }
 
             }
         };
@@ -123,6 +132,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         // ID with which to access the template's video element
         const el = 'video_' + this.idx;
 
+
         // setup the player via the unique element ID
         this.player = videojs(document.getElementById(el), this.config, () => {
             // console.log('player ready! id:', el);
@@ -132,6 +142,24 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 ' with videojs-record ' + videojs.getPluginVersion('record') +
                 ' and recordrtc ' + RecordRTC.version;
             videojs.log(msg);
+        }, () => {
+            this.player.updateSrc([
+                {
+                    src: 'https://vjs.zencdn.net/v/oceans.mp4?SD',
+                    type: 'video/mp4',
+                    label: 'SD',
+                    res: 360
+                },
+                {
+                    src: 'https://vjs.zencdn.net/v/oceans.mp4?HD',
+                    type: 'video/mp4',
+                    label: 'HD',
+                    res: 720
+                }
+            ]);
+            this.player.on('resolutionchange',  () => {
+                console.log('Source changed to %s', this.player.src());
+            });
         });
 
         // device is ready

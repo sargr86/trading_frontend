@@ -30,7 +30,18 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     videoJSPlayerOptions = {
         autoplay: true,
         controls: true,
+        bigPlayButton: false,
+        progressControl: true,
         fluid: false,
+        preload: 'auto',
+        html5: {
+            vhs: {
+                withCredentials: true,
+                overrideNative: true,
+            },
+            nativeAudioTracks: false,
+            nativeVideoTracks: false
+        },
         sources: []
     };
 
@@ -55,6 +66,8 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
         const videoId = this.route.snapshot.queryParams.id;
         const params = {id: videoId};
+
+        console.log(this.videoJSPlayerOptions)
 
         this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;

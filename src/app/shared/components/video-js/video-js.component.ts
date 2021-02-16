@@ -56,9 +56,32 @@ export class VideoJsComponent implements OnInit, OnDestroy {
 
 
         // instantiate Video.js
-        // this.target.nativeElement.setAttribute('src', 'http://www.tools4movies.com/trailers/1012/Kill%20Bill%20Vol.3.mp4');
+        // this.target.nativeElement.setAttribute('src', this.videoUrl);
         // this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
-        //     console.log('onPlayerReady', this);
+        //     const player = this;
+        //     console.log(player)
+        //     player.on('pause', () => {
+        //         console.log('paused')
+        //         player.one('play', () => {
+        //             console.log('play')
+        //             player.load();
+        //             player.play();
+        //         });
+        //     });
+        //
+        //     player.on('error', () => {
+        //
+        //         player.pause();
+        //         player.trigger('ended');
+        //
+        //         player.reset();
+        //
+        //         player.src(player.currentSrc());
+        //
+        //     });
+        //
+        //
+        //     // console.log('onPlayerReady', this);
         // });
         // this.player.src({type: 'video/x-matroska', src: this.videoUrl});
     }

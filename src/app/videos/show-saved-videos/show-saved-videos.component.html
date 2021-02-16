@@ -3,6 +3,7 @@
         <div class="video-container" *ngFor="let video of userVideos.users_vids">
             <div class="thumbnail">
                 <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, userVideos.username)">
+                <span class="duration">{{video.duration}}</span>
             </div>
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>

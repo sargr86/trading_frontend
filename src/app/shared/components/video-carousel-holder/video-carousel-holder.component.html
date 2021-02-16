@@ -14,6 +14,7 @@
                         <div class="thumbnail" (click)="openVideoPage(video, d.username)">
                             <img class="thumbnail" [src]="video.thumbnail|getImgPath">
                             <span class="live-now" *ngIf="video.status==='live'">Live now</span>
+                            <span class="duration">{{video.duration}}</span>
                         </div>
                         <div class="main-item-block">
 

@@ -3,6 +3,7 @@
         display: flex;
 
         .img {
+            position: relative;
             flex: 0 0 200px;
 
             img {
@@ -10,6 +11,15 @@
                 height: 115px;
                 object-fit: cover;
                 cursor: pointer;
+            }
+
+            .duration {
+                position: absolute;
+                bottom: 9px;
+                right: 10px;
+                color: white;
+                background-color: #000;
+                padding: 0 2px;
             }
         }
 

@@ -26,4 +26,8 @@ export class HomeComponent implements OnInit {
         });
     }
 
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
 }

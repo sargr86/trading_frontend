@@ -68,8 +68,4 @@ export class VideoCarouselHolderComponent implements OnInit {
 
     }
 
-    getUploadDateTime(datetime) {
-        return moment(datetime).format('MMM DD, YYYY');
-    }
-
 }

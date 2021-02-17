@@ -8,6 +8,7 @@ import {ChannelsService} from '@core/services/channels.service';
 import {filter, map, tap} from 'rxjs/operators';
 import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 
 @Component({
     selector: 'app-show-videos',
@@ -23,6 +24,7 @@ export class ShowVideosComponent implements OnInit {
     showTrending = false;
     subscribedToChannel = false;
     showFilters = false;
+    filters = {};
 
     constructor(
         private videoService: VideoService,
@@ -31,46 +33,57 @@ export class ShowVideosComponent implements OnInit {
         private channelsService: ChannelsService,
         private route: ActivatedRoute,
         private getAuthUser: GetAuthUserPipe,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
         this.authUser = this.getAuthUser.transform();
         router.events.pipe(
             filter(e => e instanceof ActivationEnd),
         ).subscribe((d: Data) => {
-            this.search = !checkIfObjectEmpty(d.snapshot.queryParams);
+            this.search = d.snapshot.queryParams?.search;
             if (this.search) {
-                this.searchChannelsVideos(d.snapshot.queryParams);
+                this.searchChannelsVideos({search: this.search, filters: this.filters});
             }
         });
     }
 
     ngOnInit(): void {
         this.showTrending = this.router.url.includes('trending');
-        this.getVideosList();
+        this.getVideosList({search: this.search, filters: this.filters});
     }
 
-    getVideosList(filters = {}) {
+    getFilteredList(filters = {}) {
+        this.filters = filters;
+        if (this.search) {
+            this.searchChannelsVideos({search: this.search, filters: this.filters});
+        } else {
+            this.getVideosList({filters: this.filters});
+        }
+    }
+
+    // @todo filters + search implementation for CLIPS section
+    getVideosList(params) {
+        params = this.getExactParams.transform(params);
+
         this.videoService.get({
             withPlaylists: !this.showTrending ? 1 : 0,
             trending: this.showTrending ? 1 : 0,
-            filters: JSON.stringify(filters)
+            ...params
         }).subscribe(dt => {
             this.items = dt;
         });
     }
 
-    searchChannelsVideos(d) {
-        this.channelsService.searchWithVideos({user_id: this.authUser.id, ...d}).subscribe(dt => {
+    searchChannelsVideos(params) {
+
+        params = this.getExactParams.transform(params);
+
+        this.channelsService.searchWithVideos({user_id: this.authUser.id, ...params}).subscribe(dt => {
             this.channelsVideos = dt;
         });
     }
 
     checkIfSubscribed(channel) {
         return channel.subscribers.find(s => s.id === this.authUser.id) || this.subscribedToChannel;
-    }
-
-
-    getUploadDateTime(datetime) {
-        return moment(datetime).fromNow();
     }
 
     openVideoPage(video, username) {

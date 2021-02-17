@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
 import * as moment from 'moment';
@@ -9,22 +9,25 @@ import {filter, map, tap} from 'rxjs/operators';
 import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-show-videos',
     templateUrl: './show-videos.component.html',
     styleUrls: ['./show-videos.component.scss']
 })
-export class ShowVideosComponent implements OnInit {
+export class ShowVideosComponent implements OnInit, OnDestroy {
     items = {videos: [], playlists: []};
     channelsVideos = [];
     apiUrl = API_URL;
     search;
+    selectedTag;
     authUser;
     showTrending = false;
     subscribedToChannel = false;
     showFilters = false;
     filters = {};
+    subscriptions: Subscription[] = [];
 
     constructor(
         private videoService: VideoService,
@@ -36,19 +39,31 @@ export class ShowVideosComponent implements OnInit {
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
         this.authUser = this.getAuthUser.transform();
-        router.events.pipe(
-            filter(e => e instanceof ActivationEnd),
-        ).subscribe((d: Data) => {
-            this.search = d.snapshot.queryParams?.search;
-            if (this.search) {
-                this.searchChannelsVideos({search: this.search, filters: this.filters});
-            }
-        });
+        this.subscriptions.push(
+            router.events.pipe(
+                filter(e => e instanceof ActivationEnd),
+            ).subscribe((d: Data) => {
+                this.search = d.snapshot.queryParams?.search;
+                this.selectedTag = d.snapshot.queryParams?.tag;
+                if (this.search) {
+                    this.searchChannelsVideos({search: this.search, filters: this.filters});
+                }
+
+                else if (this.selectedTag) {
+                    this.videoService.get({tag: this.selectedTag}).subscribe(dt => {
+                        this.items = dt;
+                    });
+                }
+
+                else {
+                    this.getVideosList({search: this.search, filters: this.filters});
+                }
+            }));
     }
 
     ngOnInit(): void {
         this.showTrending = this.router.url.includes('trending');
-        this.getVideosList({search: this.search, filters: this.filters});
+        // this.getVideosList({search: this.search, filters: this.filters});
     }
 
     getFilteredList(filters = {}) {
@@ -60,7 +75,6 @@ export class ShowVideosComponent implements OnInit {
         }
     }
 
-    // @todo filters + search implementation for CLIPS section
     getVideosList(params) {
         params = this.getExactParams.transform(params);
 
@@ -123,5 +137,9 @@ export class ShowVideosComponent implements OnInit {
 
     checkIfSavedByCurrentUser(video) {
         return video.users_vids.find(v => v.username === this.authUser.username && v.users_videos.saved);
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 }

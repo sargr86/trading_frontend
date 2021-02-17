@@ -1,7 +1,10 @@
 <ul class="categories">
-    <li *ngFor="let tag of tags">
-        <a *ngIf="tag.tag_details">{{tag.tag_details.name}}</a>
-    </li>
+    <ng-container *ngFor="let tag of tags">
+
+        <li *ngIf="tag.tag_details">
+            <a (click)="selectTag(tag.tag_details.name)">{{tag.tag_details.name}}</a>
+        </li>
+    </ng-container>
     <!--    <li><a class="active">Recommendations</a></li>-->
     <!--    <li><a>Today's picks</a></li>-->
     <!--    <li><a>AAPL</a></li>-->

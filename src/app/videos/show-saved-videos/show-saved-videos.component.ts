@@ -39,10 +39,6 @@ export class ShowSavedVideosComponent implements OnInit {
         });
     }
 
-    getUploadDateTime(datetime) {
-        return moment(datetime).fromNow();
-    }
-
     openVideoPage(video, username) {
         let route;
         let params;

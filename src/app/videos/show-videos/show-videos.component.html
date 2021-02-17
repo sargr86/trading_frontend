@@ -2,7 +2,7 @@
     <mat-icon>tune</mat-icon>
     <span>Filters</span>
 </button>
-<app-video-filters (filter)="getVideosList($event)" *ngIf="showFilters"></app-video-filters>
+<app-video-filters (filter)="getFilteredList($event)" *ngIf="showFilters"></app-video-filters>
 <div id="videos-list">
     <ng-container *ngIf="!search">
         <div class="video-container" *ngFor="let video of items.videos">
@@ -22,7 +22,7 @@
                         {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
                     </span>
                     <span class="dot">&middot;</span>
-                    <span class="upload-time">{{getUploadDateTime(video.created_at)}}</span>
+                    <span class="upload-time">{{video.created_at | dateFromNow}}</span>
                 </div>
                 <p class="shortened-description">
                     {{video.description}}

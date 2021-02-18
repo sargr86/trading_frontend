@@ -192,6 +192,10 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         });
     }
 
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
     ngAfterViewInit() {
         this.canvas = document.getElementById('myChart');
         // console.log(this.canvas)

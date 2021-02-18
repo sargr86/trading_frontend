@@ -133,6 +133,10 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         }
     }
 
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
     ngOnDestroy() {
     }
 

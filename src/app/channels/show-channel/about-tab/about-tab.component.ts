@@ -9,7 +9,6 @@ import {ChannelsService} from '@core/services/channels.service';
 })
 export class AboutTabComponent implements OnInit {
     aboutForm: FormGroup;
-    descriptionUpdated = false;
     editMode = false;
     @Input('channelUser') channelUser;
 
@@ -29,8 +28,12 @@ export class AboutTabComponent implements OnInit {
         this.aboutForm.patchValue({username: this.channelUser.username, ...this.channelUser.channel});
     }
 
+    editModeOn() {
+        this.editMode = true;
+    }
+
     saveChannelDescription() {
-        this.descriptionUpdated = true;
+        console.log(this.editMode)
         this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
             this.channelUser = dt;
             this.editMode = false;

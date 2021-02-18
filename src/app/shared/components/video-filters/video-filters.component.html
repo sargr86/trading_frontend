@@ -5,7 +5,8 @@
             <p class="filter-name">{{filter.group.name}}</p>
             <mat-divider></mat-divider>
             <ul>
-                <li class="filter-item" *ngFor="let item of filter.items">
+                <li class="filter-item" *ngFor="let item of filter.items"
+                    [class.selected]="selectedFilters && item.name === selectedFilters[filter.group.value]?.name">
                     <span (click)="applyFilter(item, filter.group.value)">{{item.name}}</span>
                     <button mat-icon-button class="remove-filter" (click)="removeFilter(item, filter.group.value)"
                             *ngIf="selectedFilters && item.name === selectedFilters[filter.group.value]?.name">

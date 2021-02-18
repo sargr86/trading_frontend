@@ -160,7 +160,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     indexUserTags(dt) {
         const params = {user_id: this.authUser.id, video_id: dt.id, tags: this.videoData?.tags};
-        console.log('index!')
         this.videoService.indexUserTags(params).subscribe(d => {
 
         });

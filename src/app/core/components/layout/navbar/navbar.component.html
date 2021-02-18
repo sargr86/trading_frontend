@@ -67,7 +67,7 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <ng-container *ngFor="let l of additionalLinks">
-                        <button mat-menu-item (click)="router.navigate([l.link])">
+                        <button mat-menu-item (click)="changePage(l)">
                             {{l.name}}
                         </button>
                     </ng-container>

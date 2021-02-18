@@ -49,14 +49,8 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
                     this.searchChannelsVideos({search: this.search, filters: this.filters});
                 }
 
-                else if (this.selectedTag) {
-                    this.videoService.get({tag: this.selectedTag}).subscribe(dt => {
-                        this.items = dt;
-                    });
-                }
-
                 else {
-                    this.getVideosList({search: this.search, filters: this.filters});
+                    this.getVideosList({search: this.search, filters: this.filters, tag: this.selectedTag});
                 }
             }));
     }

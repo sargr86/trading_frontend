@@ -47,9 +47,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
                 this.selectedTag = d.snapshot.queryParams?.tag;
                 if (this.search) {
                     this.searchChannelsVideos({search: this.search, filters: this.filters});
-                }
-
-                else {
+                } else {
                     this.getVideosList({search: this.search, filters: this.filters, tag: this.selectedTag});
                 }
             }));
@@ -71,6 +69,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
 
     getVideosList(params) {
         params = this.getExactParams.transform(params);
+        console.log(params)
 
         this.videoService.get({
             withPlaylists: !this.showTrending ? 1 : 0,

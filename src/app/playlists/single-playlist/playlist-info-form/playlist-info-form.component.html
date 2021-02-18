@@ -1,7 +1,8 @@
 <div class="playlist">
+    <!--@todo Change to thumbnail pipe here and add play-all onclick -->
     <img *ngIf="playlist.thumbnail" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
     <img *ngIf="!playlist.thumbnail" [src]="'assets/img/video-thumbnail-default.png'">
-    <button class="btn play-all">
+    <button class="btn play-all" *ngIf="playlist.videos?.length!==0">
         <span class="material-icons">play_arrow</span>
         Play All
     </button>
@@ -18,7 +19,8 @@
             </ng-container>
             <ng-container *ngIf="editMode">
                 <input formControlName="name">
-                <span class="error" *ngIf="playlistInfoForm.get('name').hasError('required')">Playlist name is required</span>
+                <span class="error"
+                      *ngIf="playlistInfoForm.get('name').hasError('required')">Playlist name is required</span>
                 <textarea formControlName="description"></textarea>
             </ng-container>
             <ng-container *ngIf="!editMode">

@@ -10,7 +10,8 @@ export class FilterOutFalsyValuesFromObjectPipe implements PipeTransform {
         if (projectSpecific) {
             params = {
                 search: params.search,
-                filters: (params.filters ? JSON.stringify(params.filters) : null)
+                filters: (params.filters ? JSON.stringify(params.filters) : null),
+                tag: params.tag
             };
         }
 // console.log(params)

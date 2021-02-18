@@ -19,8 +19,8 @@ export class SearchVideosFormComponent implements OnInit {
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
         router.events.subscribe((val) => {
             if (val instanceof ActivationEnd) {
-                this.passedSearch = val.snapshot.queryParams.search;
-                this.searchVideosForm.patchValue({search: this.passedSearch})
+                this.passedSearch = val.snapshot.queryParams?.search;
+                this.searchVideosForm.patchValue({search: this.passedSearch});
             }
 
         });

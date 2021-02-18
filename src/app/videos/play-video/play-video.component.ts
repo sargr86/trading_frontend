@@ -67,7 +67,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         const videoId = this.route.snapshot.queryParams.id;
         const params = {id: videoId};
 
-        console.log(this.videoJSPlayerOptions)
+        // console.log(this.videoJSPlayerOptions)
 
         this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
@@ -160,6 +160,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     indexUserTags(dt) {
         const params = {user_id: this.authUser.id, video_id: dt.id, tags: this.videoData?.tags};
+        console.log('index!')
         this.videoService.indexUserTags(params).subscribe(d => {
 
         });
@@ -184,6 +185,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     saveTags(e) {
         this.videoData.tags = e.tags;
+        console.log(e)
         this.videoService.saveTags({...e, video_id: this.videoData.id}).subscribe(dt => {
             this.videoData = dt;
             this.showTagsForm = false;

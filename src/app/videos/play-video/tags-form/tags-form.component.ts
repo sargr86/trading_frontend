@@ -32,7 +32,9 @@ export class TagsFormComponent implements OnInit {
 
         if ((value || '').trim()) {
             this.tags.push({name: value.trim()});
+            console.log(this.tags)
             this.tagsForm.patchValue({tags: this.tags});
+            this.saveTags();
         }
 
         // Reset the input value

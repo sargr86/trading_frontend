@@ -4,6 +4,8 @@ import {API_URL} from '@core/constants/global';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-playlist-info-form',
@@ -21,12 +23,15 @@ export class PlaylistInfoFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private playlistsService: PlaylistsService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private toastr: ToastrService,
+        public router: Router
     ) {
         this.playlistInfoForm = this.fb.group({
             id: [''],
             name: ['', Validators.required],
-            description: ['']
+            description: [''],
+            privacy: ['']
         });
     }
 
@@ -41,7 +46,7 @@ export class PlaylistInfoFormComponent implements OnInit {
 
     updatePrivacy(value, playlist) {
         this.playlistsService.updatePrivacy({privacy: value, id: playlist.id}).subscribe(dt => {
-
+            this.toastr.success('Playlist privacy is updated successfully');
         });
 
     }
@@ -52,11 +57,18 @@ export class PlaylistInfoFormComponent implements OnInit {
     }
 
     savePlaylistInfoChanges() {
-        this.playlistsService.updatePlaylistInfo(this.playlistInfoForm.value).subscribe((dt) => {
-            this.editMode = false;
-            this.playlist = dt;
-        });
-        console.log(this.playlistInfoForm.value)
+        if (this.playlistInfoForm.valid) {
+            this.playlistsService.updatePlaylistInfo(this.playlistInfoForm.value).subscribe((dt) => {
+                this.editMode = false;
+                this.playlist = dt;
+            });
+        }
+    }
+
+    openPlaylistPage(playlist) {
+        const route = 'videos/play';
+        const params = {id: playlist.videos?.[0]?.id, playlist_id: playlist.id};
+        this.router.navigate([route], {queryParams: params});
     }
 
 }

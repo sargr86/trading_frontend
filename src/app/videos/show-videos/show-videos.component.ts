@@ -10,6 +10,7 @@ import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {Subscription} from 'rxjs';
+import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
 
 @Component({
     selector: 'app-show-videos',
@@ -69,7 +70,6 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
 
     getVideosList(params) {
         params = this.getExactParams.transform(params);
-        console.log(params)
 
         this.videoService.get({
             withPlaylists: !this.showTrending ? 1 : 0,
@@ -93,23 +93,13 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         return channel.subscribers.find(s => s.id === this.authUser.id) || this.subscribedToChannel;
     }
 
-    openVideoPage(video, username) {
-        let route;
-        let params;
-        if (video.status === 'live') {
-            route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username, id: video.id};
-        } else {
-            route = 'videos/play';
-            params = {id: video.id};
-        }
-
-
-        this.router.navigate([route], {queryParams: params});
+    async openVideoPage(video, username) {
+        const r = buildPlayVideoRoute(video, username);
+        await this.router.navigate([r.route], {queryParams: r.params});
     }
 
-    openChannelPage(channel, username) {
-        this.router.navigate(['channels/show'], {queryParams: {username}});
+    async openChannelPage(channel, username) {
+        await this.router.navigate(['channels/show'], {queryParams: {username}});
     }
 
 

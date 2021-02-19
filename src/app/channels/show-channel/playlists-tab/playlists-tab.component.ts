@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {SubjectService} from '@core/services/subject.service';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {Subscription} from 'rxjs';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-playlists-tab',
@@ -88,9 +89,12 @@ export class PlaylistsTabComponent implements OnInit {
     }
 
     removePlaylist(id, channelId) {
-        this.playlistsService.removePlaylist({id, channel_id: channelId}).subscribe(dt => {
-            this.getPlaylists({search: this.search, filters: this.filters});
-            // this.playlists = dt;
+        this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.playlistsService.removePlaylist({id, channel_id: channelId}).subscribe(dt => {
+                    this.getPlaylists({search: this.search, filters: this.filters});
+                });
+            }
         });
     }
 

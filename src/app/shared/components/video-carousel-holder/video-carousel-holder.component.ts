@@ -6,7 +6,7 @@ import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import * as moment from 'moment';
+import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
 
 @Component({
     selector: 'app-video-carousel-holder',
@@ -34,19 +34,9 @@ export class VideoCarouselHolderComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
     }
 
-    openVideoPage(video, username) {
-        let route;
-        let params;
-        if (video.status === 'live') {
-            route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username, id: video.id};
-        } else {
-            route = 'videos/play';
-            params = {id: video.id};
-        }
-
-
-        this.router.navigate([route], {queryParams: params});
+    async openVideoPage(video, username) {
+        const r = buildPlayVideoRoute(video, username);
+        await this.router.navigate([r.route], {queryParams: r.params});
     }
 
     openChannelPage(username) {

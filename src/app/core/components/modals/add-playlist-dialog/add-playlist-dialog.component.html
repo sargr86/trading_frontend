@@ -1,7 +1,7 @@
 <div class="add-playlist-modal">
     <form [formGroup]="addPlaylistForm">
-        <input type="text" placeholder="Playlist Title" formControlName="name">
-        <span class="error" *ngIf="nameCtrl.hasError('required') && isSubmitted">Playlist title is required</span>
+        <input type="text" placeholder="Playlist Name" formControlName="name">
+        <span class="error" *ngIf="nameCtrl.hasError('required') && isSubmitted">Playlist name is required</span>
 
         <textarea id="playlist-description" cols="30" rows="10" formControlName="description"
                   placeholder="Playlist Description"></textarea>

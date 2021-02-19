@@ -184,7 +184,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     saveTags(e) {
         this.videoData.tags = e.tags;
-        console.log(e)
         this.videoService.saveTags({...e, video_id: this.videoData.id}).subscribe(dt => {
             this.videoData = dt;
             this.showTagsForm = false;

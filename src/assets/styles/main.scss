@@ -1150,6 +1150,10 @@ ngb-modal-window {
     }
 }
 
+.mat-chip.mat-standard-chip {
+    background-color: unset !important;
+    border: 1px solid #e0e0e0 !important;
+}
 
 @media (max-width: 1700px) {
     nav.home-header {

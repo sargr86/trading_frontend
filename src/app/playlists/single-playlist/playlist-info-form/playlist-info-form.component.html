@@ -1,6 +1,5 @@
 <div class="playlist">
-    <!--@todo Change to thumbnail pipe here and add play-all onclick -->
-    <img *ngIf="playlist.thumbnail|getImgPath" [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail">
+    <img [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail|getImgPath">
     <button class="btn play-all" *ngIf="playlist.videos?.length!==0" (click)="openPlaylistPage(playlist)">
         <span class="material-icons">play_arrow</span>
         Play All

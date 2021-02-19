@@ -31,9 +31,10 @@ export class TagsFormComponent implements OnInit {
         const value = event.value;
 
         if ((value || '').trim()) {
-            this.tags.push({name: value.trim()});
             console.log(this.tags)
+            this.tags.push({name: value.trim()});
             this.tagsForm.patchValue({tags: this.tags});
+
             this.saveTags();
         }
 
@@ -54,7 +55,10 @@ export class TagsFormComponent implements OnInit {
 
 
     saveTags() {
-        this.tagsAdded.emit(this.tagsForm.value);
+        this.tagsForm.patchValue({tags: this.tags});
+        if (this.tagsForm.valid) {
+            this.tagsAdded.emit(this.tagsForm.value);
+        }
     }
 
 }

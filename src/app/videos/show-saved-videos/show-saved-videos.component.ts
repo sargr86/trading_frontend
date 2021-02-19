@@ -5,7 +5,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {ChannelsService} from '@core/services/channels.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {API_URL} from '@core/constants/global';
-import * as moment from 'moment';
+import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
 
 @Component({
     selector: 'app-show-saved-videos',
@@ -39,19 +39,9 @@ export class ShowSavedVideosComponent implements OnInit {
         });
     }
 
-    openVideoPage(video, username) {
-        let route;
-        let params;
-        if (video.status === 'live') {
-            route = 'user/video/watch';
-            params = {session: video.session_name, publisher: username, id: video.id};
-        } else {
-            route = 'videos/play';
-            params = {id: video.id};
-        }
-
-
-        this.router.navigate([route], {queryParams: params});
+    async openVideoPage(video, username) {
+        const r = buildPlayVideoRoute(video, username);
+        await this.router.navigate([r.route], {queryParams: r.params});
     }
 
     openChannelPage(channel, username) {

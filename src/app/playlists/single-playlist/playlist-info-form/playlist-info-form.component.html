@@ -1,5 +1,5 @@
 <div class="playlist">
-    <img [src]="apiUrl+'uploads/thumbnails/'+playlist.thumbnail|getImgPath">
+    <img [src]="playlist.thumbnail|getImgPath">
     <button class="btn play-all" *ngIf="playlist.videos?.length!==0" (click)="openPlaylistPage(playlist)">
         <span class="material-icons">play_arrow</span>
         Play All
@@ -15,8 +15,7 @@
             <h3>{{playlist.videos?.length}} videos</h3>
             <h3 *ngIf="!editMode">Last updated on {{playlist.updated_at|date: 'd MMM, yyyy'}}</h3>
             <div class="select" id="privacy-select">
-                <mat-icon *ngIf="!playlist.privacy">visibility_off</mat-icon>
-                <mat-icon class="material-icons" *ngIf="playlist.privacy">visibility_on</mat-icon>
+                <mat-icon>visibility_{{playlist.privacy? 'on':'off'}}</mat-icon>
                 <select (change)="updatePrivacy($event.target.value, playlist)">
                     <option [value]="0" [selected]="!playlist.privacy">Private</option>
                     <option [value]="1" [selected]="playlist.privacy">Public</option>

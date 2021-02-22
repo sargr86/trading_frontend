@@ -84,13 +84,13 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
 
         params = this.getExactParams.transform(params);
 
-        this.channelsService.searchWithVideos({user_id: this.authUser.id, ...params}).subscribe(dt => {
+        this.channelsService.searchWithVideos({user_id: this.authUser?.id, ...params}).subscribe(dt => {
             this.channelsVideos = dt;
         });
     }
 
     checkIfSubscribed(channel) {
-        return channel.subscribers.find(s => s.id === this.authUser.id) || this.subscribedToChannel;
+        return channel.subscribers.find(s => s.id === this.authUser?.id) || this.subscribedToChannel;
     }
 
     async openVideoPage(video, username) {
@@ -119,7 +119,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     }
 
     checkIfSavedByCurrentUser(video) {
-        return video.users_vids.find(v => v.username === this.authUser.username && v.users_videos.saved);
+        return video.users_vids.find(v => v.username === this.authUser?.username && v.users_videos.saved);
     }
 
     ngOnDestroy() {

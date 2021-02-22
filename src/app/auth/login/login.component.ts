@@ -39,22 +39,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     login() {
         this.isSubmitted = true;
         if (this.loginForm.valid) {
-            // this.subscriptions.push(this.auth.resendEmailVerificationCode({
-            //     ...this.loginForm.value,
-            //     resend: true
-            // }).subscribe(() => {
-            //     this.dialog.open(VerifyEmailComponent, {
-            //         height: '548px',
-            //         width: '548px',
-            //         data: this.loginForm.value
-            //     }).afterClosed().subscribe(async (result) => {
-            //         await this.router.navigate([this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/']);
-            //     });
-            //
-            // }));
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
                 localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-                await this.router.navigate([this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/']);
+                // await this.router.navigate([this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/']);
+                location.href = this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/';
+                // await this.router.navigate([ '/']);
+                // this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+                //     await this.router.navigate(['/'], {queryParams: {}})
+                // );
             }));
         }
     }

@@ -10,7 +10,7 @@
                 <div class="main-tags-text">
                     <span *ngIf="videoData.tags?.length === 0">No tags defined for this video</span>
                     <ng-container *ngIf="videoData.tags?.length > 0">
-                        <p *ngFor="let tag of videoData.tags">#{{tag.name}}</p>
+                        <p *ngFor="let tag of videoData.tags" class="tag" (click)="openVideoByTag(tag.name)">#{{tag.name}}</p>
                     </ng-container>
                 </div>
 
@@ -39,7 +39,7 @@
             </div>
             <div class="tags-container">
                 <p class="ads-text-1">{{videoData?.name}}</p>
-                <button id="add-tags" *ngIf="!showTagsForm && authUser.id === videoData.author_id"
+                <button id="add-tags" *ngIf="!showTagsForm && authUser?.id === videoData.author_id"
                         (click)="showTagsForm = !showTagsForm">Edit tags
                 </button>
                 <app-tags-form [tags]="videoData?.tags" *ngIf="showTagsForm"

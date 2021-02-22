@@ -1,4 +1,5 @@
-<button class="filter-toggle-btn" (click)="showFilters = !showFilters">
+<button class="filter-toggle-btn" *ngIf="items.videos?.length > 0 || (search && channelsVideos?.length > 0)"
+        (click)="showFilters = !showFilters">
     <mat-icon>tune</mat-icon>
     <span>Filters</span>
 </button>
@@ -64,9 +65,9 @@
                     <h4 class="title">{{channel.name}}</h4>
                     <div class="shortened-details">
                         <span class="channel-name">{{channel.name}}</span>
-<!--                        <span class="dot">&middot;</span>-->
+                        <!--                        <span class="dot">&middot;</span>-->
 
-<!--                        <span class="watchers-count">17k watching</span>-->
+                        <!--                        <span class="watchers-count">17k watching</span>-->
                     </div>
                     <p class="shortened-description">
                         {{channel.description}}
@@ -102,4 +103,7 @@
 
         </ng-container>
     </div>
+</div>
+<div *ngIf="items.videos?.length === 0 || (search && channelsVideos?.length === 0)">
+    <span class="error">No results found</span>
 </div>

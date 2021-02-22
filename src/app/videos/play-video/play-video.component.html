@@ -1,4 +1,4 @@
-<app-user-tags (tagSelected)="getVideosByTag($event)"></app-user-tags>
+<app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
 <div class="ads-block">
     <div class="ads-block-left">
         <ng-container *ngIf="videoData">

@@ -3,6 +3,7 @@ import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
     selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private videoService: VideoService,
-        public router: Router
+        public router: Router,
+        public auth: AuthService
     ) {
     }
 

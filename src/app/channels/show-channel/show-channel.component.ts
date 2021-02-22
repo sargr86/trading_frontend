@@ -17,6 +17,7 @@ import {WatchlistTabComponent} from '@app/channels/show-channel/watchlist-tab/wa
 import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-tab.component';
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {search} from '@ctrl/ngx-emoji-mart/svgs';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -63,6 +64,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private channelService: ChannelsService,
         private playlistsService: PlaylistsService,
         private subject: SubjectService,
+        public auth: AuthService,
         private dialog: MatDialog
     ) {
         this.authUser = this.getAuthUser.transform();

@@ -76,7 +76,9 @@
 }
 
 .suggested-video {
-    cursor: pointer;
+    img, .main-text-1 {
+        cursor: pointer;
+    }
 }
 
 .selected {

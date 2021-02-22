@@ -171,6 +171,10 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         this.router.navigate(['channels/show'], {queryParams: {username: videoData.users_vids[0].username}});
     }
 
+    async openVideoByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
     saveVideo(videoData) {
 
         this.videoService.saveVideo({

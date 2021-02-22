@@ -23,7 +23,9 @@ export class UserTagsComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.getUserTags();
+        if (this.auth.loggedIn()) {
+            this.getUserTags();
+        }
     }
 
     getUserTags() {

@@ -1,45 +1,45 @@
 <div class="body-content-left">
     <div class="left-menu">
         <div class="left-menu-main st-left-metu" [class.active]="router.url.includes('publish')"
-             (click)="router.navigate(['user/video/start-live-video'])" *ngIf="auth.loggedIn()">
+             (click)="changePage('user/video/start-live-video')" *ngIf="auth.loggedIn()">
             <span class="material-icons">
             video_call
             </span>
             <p>Start live video</p>
         </div>
-        <div class="left-menu-main" (click)="router.navigate(['/'])" [class.active]="router.url ==='/'">
+        <div class="left-menu-main" (click)="changePage('/')" [class.active]="router.url ==='/'">
             <!--            <img src="assets/img/item-5.png">-->
             <mat-icon>home</mat-icon>
             <p>Home</p>
         </div>
-        <div class="left-menu-main" (click)="router.navigate(['trending'])"
+        <div class="left-menu-main" (click)="changePage('trending')"
              [class.active]="router.url.includes('trending')">
             <img src="assets/img/item-6.png">
             <p>Trending</p>
         </div>
         <div class="line-item"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')" [hidden]="envName==='production'"
-             (click)="router.navigate(['chat/messages'])">
+             (click)="changePage('chat/messages')">
             <img src="assets/img/item-8.png">
             <p>Messages</p>
         </div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')" [hidden]="envName==='production'"
-             (click)="router.navigate(['chat/rooms'])">
+             (click)="changePage('chat/rooms')">
             <img src="assets/img/item-8.png">
             <p>Chat rooms</p>
         </div>
         <div class="left-menu-main" [class.active]="router.url.includes('stock')" [hidden]="envName==='production'"
-             (click)="router.navigate(['user/stock-profile'])">
+             (click)="changePage('user/stock-profile')">
             <img src="assets/img/item-9.png">
             <p>Stock Profile</p>
         </div>
-        <div class="left-menu-main" (click)="router.navigate(['videos/saved'])" *ngIf="auth.loggedIn()"
+        <div class="left-menu-main" (click)="changePage('videos/saved')" *ngIf="auth.loggedIn()"
              [class.active]="routerUrl === '/videos/saved'">
             <img src="assets/img/item-10.png">
             <p>Saved Videos</p>
         </div>
         <div class="left-menu-main" [class.active]="routerUrl === '/videos'" *ngIf="auth.loggedIn()"
-             (click)="router.navigate(['videos'])">
+             (click)="changePage('videos')">
             <img src="assets/img/item-11.png">
             <p>CLIPZ</p>
         </div>

@@ -9,7 +9,7 @@
             </div>
 
             <div class="details-container">
-                <p class="main-text-1">{{video.name}}</p>
+                <p class="main-text-1" (click)="openVideoPage(video, playlistData?.id)">{{video.name}}</p>
                 <p class="main-text-3">{{video.channel.name}}</p>
             </div>
 

@@ -58,7 +58,7 @@
         <ng-container *ngFor="let channel of channelsVideos">
             <div class="channel-container">
                 <div class="channel-avatar-container">
-                    <img [src]="channel.user.avatar|getImgPath:'avatars'" class="channel-avatar"
+                    <img [src]="channel?.user?.avatar|getImgPath:'avatars'" class="channel-avatar"
                          (click)="openChannelPage(channel,channel.user.username)">
                 </div>
                 <div class="details">

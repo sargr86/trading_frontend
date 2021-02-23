@@ -1,6 +1,4 @@
-<button class="filter-toggle-btn"
-        *ngIf="(items.videos?.length > 0 || (search && channelsVideos?.length > 0)) || filterStatus === 'applied' && !loadingVideos"
-        (click)="showFilters = !showFilters">
+<button class="filter-toggle-btn" *ngIf="isFiltersShown()" (click)="showFilters = !showFilters">
     <mat-icon>tune</mat-icon>
     <span>Filters</span>
 </button>
@@ -65,17 +63,15 @@
                 </div>
                 <div class="details">
                     <h4 class="title">{{channel.name}}</h4>
-                    <div class="shortened-details">
-                        <span class="channel-name">{{channel.name}}</span>
-                        <!--                        <span class="dot">&middot;</span>-->
-
-                        <!--                        <span class="watchers-count">17k watching</span>-->
+                    <div class="channel-details">
+<!--                        <p class="channel-name">{{channel.name}}</p>-->
+                        <p class="videos-count">{{channel.videos?.length}} videos</p>
                     </div>
                     <p class="shortened-description">
                         {{channel.description}}
                     </p>
 
-                    <button class="btn subscribe-to-channel-btn"
+                    <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser.username"
                             [class.subscribed]="checkIfSubscribed(channel)"
                             (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
                     </button>

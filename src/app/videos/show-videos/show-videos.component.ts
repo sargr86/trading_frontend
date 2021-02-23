@@ -91,11 +91,16 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         this.channelsService.searchWithVideos({user_id: this.authUser?.id, ...params}).subscribe(dt => {
             this.loadingVideos = false;
             this.channelsVideos = dt;
+            console.log(this.channelsVideos)
         });
     }
 
     checkIfSubscribed(channel) {
         return channel.subscribers.find(s => s.id === this.authUser?.id) || this.subscribedToChannel;
+    }
+
+    isFiltersShown() {
+        return this.items.videos?.length > 0 || (this.search && this.channelsVideos.find(v => v.videos.length > 0)) || this.filterStatus === 'applied' && !this.loadingVideos;
     }
 
     async openVideoPage(video, username) {

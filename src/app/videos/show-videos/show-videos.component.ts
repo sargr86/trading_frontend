@@ -47,6 +47,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
                 filter(e => e instanceof ActivationEnd),
             ).subscribe((d: Data) => {
                 this.search = d.snapshot.queryParams?.search;
+                this.showTrending = this.router.url.includes('trending');
                 this.selectedTag = d.snapshot.queryParams?.tag;
                 if (this.search) {
                     this.searchChannelsVideos({search: this.search, filters: this.filters});
@@ -57,8 +58,6 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.showTrending = this.router.url.includes('trending');
-        // this.getVideosList({search: this.search, filters: this.filters});
     }
 
     getFilteredList(filters = {}) {

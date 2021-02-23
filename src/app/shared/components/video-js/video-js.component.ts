@@ -1,6 +1,12 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import videojs from 'video.js';
 import {API_URL} from '@core/constants/global';
+import * as Plyr from 'plyr';
+// import 'videojs-hls-quality-selector';
+
+declare var require: any;
+require('videojs-contrib-quality-levels');
+require('videojs-hls-quality-selector');
 
 @Component({
     selector: 'app-vjs-player',
@@ -54,6 +60,13 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         video.load();
         video.play();
 
+        //
+        const player = new Plyr('video', {
+            captions: {active: true},
+            quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]},
+            // controls: ['captions']
+        });
+        // console.log(player)
 
         // instantiate Video.js
         // this.target.nativeElement.setAttribute('src', this.videoUrl);
@@ -78,6 +91,11 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         //
         //         player.src(player.currentSrc());
         //
+        //     });
+        //
+        //     player.hlsQualitySelector({
+        //         displayCurrentQuality: true,
+        //         vjsIconClass : 'vjs-icon-hd'
         //     });
         //
         //

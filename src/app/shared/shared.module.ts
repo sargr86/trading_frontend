@@ -73,7 +73,8 @@ import { UserTagsComponent } from './components/user-tags/user-tags.component';
         VideoCarouselHolderComponent,
         VideoFiltersComponent,
         DateFromNowPipe,
-        UserTagsComponent
+        UserTagsComponent,
+        CheckForEmptyObjectPipe
     ]
 
 })

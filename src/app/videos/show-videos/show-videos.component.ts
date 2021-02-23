@@ -28,6 +28,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     subscribedToChannel = false;
     showFilters = false;
     filters = {};
+    filterStatus = 'idle';
     subscriptions: Subscription[] = [];
 
     constructor(
@@ -61,6 +62,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
 
     getFilteredList(filters = {}) {
         this.filters = filters;
+        this.filterStatus = 'applied';
         if (this.search) {
             this.searchChannelsVideos({search: this.search, filters: this.filters});
         } else {

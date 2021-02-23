@@ -15,6 +15,7 @@
 @import '~@videojs/themes/dist/sea/index.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@ctrl/ngx-emoji-mart/picker';
+@import "~plyr/src/sass/plyr";
 
 html, body, p, h1, h2, h3, h4, ul {
     margin: 0;
@@ -904,7 +905,7 @@ nav.home-header {
 
     .videoWrap {
         position: relative;
-        padding: 30% 0;
+        //padding: 30% 0;
     }
 
     video {
@@ -1467,4 +1468,22 @@ input, textarea {
 
         }
     }
+}
+
+// Plyr custom styles
+.plyr {
+    height: 400px;
+    width: 100%;
+
+    .plyr__control--overlaid {
+        background-color: #18B587 !important;
+    }
+
+    .plyr__controls button:hover, .plyr__controls button:focus, .plyr--video .plyr__control[aria-expanded=true] {
+        background: #18B587 !important;
+    }
+}
+
+.plyr--full-ui input[type=range] {
+    color: #18B587 !important;
 }

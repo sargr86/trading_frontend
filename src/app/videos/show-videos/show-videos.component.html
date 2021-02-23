@@ -1,12 +1,13 @@
 <button class="filter-toggle-btn"
-        *ngIf="(items.videos?.length > 0 || (search && channelsVideos?.length > 0)) || filterStatus === 'applied'"
+        *ngIf="(items.videos?.length > 0 || (search && channelsVideos?.length > 0)) || filterStatus === 'applied' && !loadingVideos"
         (click)="showFilters = !showFilters">
     <mat-icon>tune</mat-icon>
     <span>Filters</span>
 </button>
 <app-video-filters (filter)="getFilteredList($event)" *ngIf="showFilters"></app-video-filters>
 <div id="videos-list">
-    <ng-container *ngIf="!search">
+    <mat-spinner [diameter]="20" *ngIf="loadingVideos"></mat-spinner>
+    <ng-container *ngIf="!search && !loadingVideos">
         <div class="video-container" *ngFor="let video of items.videos">
             <div class="thumbnail">
                 <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, video.user.username)">
@@ -55,7 +56,7 @@
             </ng-container>
         </div>
     </ng-container>
-    <div *ngIf="search">
+    <div *ngIf="search && !loadingVideos">
         <ng-container *ngFor="let channel of channelsVideos">
             <div class="channel-container">
                 <div class="channel-avatar-container">

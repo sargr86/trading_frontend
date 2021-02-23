@@ -30,6 +30,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     filters = {};
     filterStatus = 'idle';
     subscriptions: Subscription[] = [];
+    loadingVideos = false;
 
     constructor(
         private videoService: VideoService,
@@ -85,8 +86,10 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     searchChannelsVideos(params) {
 
         params = this.getExactParams.transform(params);
+        this.loadingVideos = true;
 
         this.channelsService.searchWithVideos({user_id: this.authUser?.id, ...params}).subscribe(dt => {
+            this.loadingVideos = false;
             this.channelsVideos = dt;
         });
     }

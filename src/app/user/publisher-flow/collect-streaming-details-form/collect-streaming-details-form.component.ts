@@ -117,6 +117,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         this.thumbnailFile = [];
         this.toastr.success('The thumbnail has been removed successfully');
         this.thumbnailUploaded = false;
+        this.startStreamingForm.patchValue({thumbnail: ''});
         // });
     }
 

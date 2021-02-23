@@ -45,8 +45,6 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     getAllVideosByAuthors(params) {
         params = this.getExactParams.transform(params);
 
-        console.log(params)
-
         this.subscriptions.push(this.videoService.getVideosByAuthor(params).subscribe(dt => {
             this.watchlistVideos = dt;
         }));

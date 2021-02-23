@@ -91,7 +91,6 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         this.channelsService.searchWithVideos({user_id: this.authUser?.id, ...params}).subscribe(dt => {
             this.loadingVideos = false;
             this.channelsVideos = dt;
-            console.log(this.channelsVideos)
         });
     }
 

@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-video-carousel-holder',
@@ -26,7 +27,8 @@ export class VideoCarouselHolderComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
         public router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private toastr: ToastrService
     ) {
     }
 
@@ -51,6 +53,7 @@ export class VideoCarouselHolderComponent implements OnInit {
                     filename: video.filename,
                     username: this.authUser.username
                 }).subscribe(dt => {
+                    this.toastr.success('The video was removed successfully');
                     this.videos = dt.videos;
                 });
             }

@@ -107,8 +107,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     },
                     screen: true,
                     displayMilliseconds: false,
-                    maxLength: 3500, //30
+                    maxLength: 3600, //30
                     debug: true,
+                    videoEngine: 'recordrtc',
                     videoMimeType: 'video/webm;codecs=H264',
                     frameWidth: 640,
                     frameHeight: 480
@@ -159,7 +160,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     res: 720
                 }
             ]);
-            this.player.on('resolutionchange',  () => {
+            this.player.on('resolutionchange', () => {
                 console.log('Source changed to %s', this.player.src());
             });
         });

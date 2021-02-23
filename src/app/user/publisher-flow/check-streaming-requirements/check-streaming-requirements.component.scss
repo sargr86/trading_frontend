@@ -25,6 +25,18 @@
         color: #545454;
     }
 
+    .loader {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
+
+        strong {
+            margin-left: 10px;
+            color: #18B587;
+        }
+    }
+
     .item-wrap {
         margin-top: 16px;
 

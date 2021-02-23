@@ -1,22 +1,24 @@
 <div class="start-live-video-page">
-    <form [formGroup]="deviceRecognitionForm">
 
-        <div class="text">
-            <h1>Start live video</h1>
-            <p>Start sharing your story and connecting with viewers. Get your webcam ready, check your lighting, and
-                click below to go live!
-                We ask that you keep in mind of the <a href="https://www.dmca.com/" target="_blank">DMCA rules</a> and
-                please do not
-                play any music that is not owned by you
-                while you stream. We will remove any videos that are in violation of the DMCA. <br>
-                Smile, you look great!
-            </p>
-
+    <div class="text">
+        <h1>Start live video</h1>
+        <p>Start sharing your story and connecting with viewers. Get your webcam ready, check your lighting, and
+            click below to go live!
+            We ask that you keep in mind of the <a href="https://www.dmca.com/" target="_blank">DMCA rules</a> and
+            please do not
+            play any music that is not owned by you
+            while you stream. We will remove any videos that are in violation of the DMCA. <br>
+            Smile, you look great!
+        </p>
+        <div class="loader" *ngIf="deviceStatus!=='loaded'">
+            <mat-spinner [diameter]="20"></mat-spinner>
+            <strong>Loading devices info</strong>
+        </div>
+        <form [formGroup]="deviceRecognitionForm" *ngIf="deviceStatus==='loaded'">
             <div id="devices">
                 <div class="item-wrap">
 
                     <div class="item">
-
                         <div class="info border" *ngIf="!videoDevice.hasError('required')">
                             <span class="material-icons">videocam</span>
                             <mat-form-field style="width:88%;">
@@ -65,7 +67,7 @@
                 <span class="material-icons"> video_call </span>
                 <span>Start live video</span>
             </button>
-        </div>
+        </form>
+    </div>
 
-    </form>
 </div>

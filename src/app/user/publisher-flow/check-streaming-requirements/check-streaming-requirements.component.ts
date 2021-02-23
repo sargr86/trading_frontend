@@ -18,6 +18,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     defaultAudioDevice;
 
     authUser;
+    deviceStatus = 'idle';
 
     @Output('checked') checked = new EventEmitter();
 
@@ -53,8 +54,10 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
 
     async getConnectedDevices(pageLoad = false) {
         await navigator.mediaDevices.getUserMedia({audio: true, video: true});
+        this.deviceStatus = 'loading';
         navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
+                this.deviceStatus = 'loaded';
                 this.userMediaDevices = devices;
                 this.defaultVideoDevice = devices.find(d => d.kind === 'videoinput');
                 this.deviceRecognitionForm.patchValue({video_device: this.defaultVideoDevice?.label});

@@ -317,6 +317,12 @@ nav.home-header {
     width: 200px;
 }
 
+.body-content.full-width {
+    width: 100%;
+    padding: 0 !important;
+    margin-top: 0!important;
+}
+
 .body-content-right {
     width: calc(100% - 232px);
 

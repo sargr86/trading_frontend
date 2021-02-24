@@ -10,7 +10,8 @@
                 <div class="main-tags-text">
                     <span *ngIf="videoData.tags?.length === 0">No tags defined for this video</span>
                     <ng-container *ngIf="videoData.tags?.length > 0">
-                        <p *ngFor="let tag of videoData.tags" class="tag" (click)="openVideoByTag(tag.name)">#{{tag.name}}</p>
+                        <p *ngFor="let tag of videoData.tags" class="tag" (click)="openVideoByTag(tag.name)">
+                            #{{tag.name}}</p>
                     </ng-container>
                 </div>
 
@@ -50,11 +51,11 @@
                 <span class="dot">&middot;</span>
                 <span class="ads-text-2">{{videoData.created_at|dateFromNow}}</span>
             </div>
-            <div class="main-item-block channel-block" (click)="openChannelPage(videoData)">
-                <img class="thumbnail" [src]="videoData.thumbnail|getImgPath">
+            <div class="main-item-block channel-block" (click)="openChannelPage(videoData)" *ngIf="videoData?.channel">
+                <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
                 <div>
-                    <p class="main-text-1">{{videoData?.channel.name}}</p>
-                    <p class="main-text-4">{{videoData?.channel.subscribers_count + ' subscriber' + (videoData?.channel?.subscribers_count === 1 ? '' : 's')}}</p>
+                    <p class="main-text-1">{{videoData.channel.name}}</p>
+                    <p class="main-text-4">{{videoData.channel.subscribers_count + ' subscriber' + (videoData.channel.subscribers_count === 1 ? '' : 's')}}</p>
                 </div>
             </div>
             <p class="ads-text-2"></p>

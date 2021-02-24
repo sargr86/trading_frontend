@@ -71,6 +71,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
         this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
+            console.log(this.videoData)
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
                 this.updateViewsCount(dt);

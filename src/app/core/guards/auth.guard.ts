@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     ) {
     }
 
-    canActivate(
+   async canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ) {
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
         } else {
             // if user is not authorized in the inside sections, redirecting to login page
             if (this.router.url !== '/admin/login' && this.router.url !== '/register') {
-                this.router.navigate(['auth/login']);
+                await this.router.navigate(['auth/login']);
                 this.toastr.error('', 'You have to be logged in to view that page');
             }
 

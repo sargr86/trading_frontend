@@ -7,7 +7,7 @@
             </span>
             <p>Start live video</p>
         </div>
-        <div class="left-menu-main" (click)="changePage('/')" [class.active]="router.url ==='/'">
+        <div class="left-menu-main" (click)="router.navigate(['/'])" [class.active]="router.url ==='/'">
             <!--            <img src="assets/img/item-5.png">-->
             <mat-icon>home</mat-icon>
             <p>Home</p>
@@ -18,17 +18,20 @@
             <p>Trending</p>
         </div>
         <div class="line-item"></div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')" [hidden]="envName==='production'"
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"
+             [hidden]="envName==='production'"
              (click)="changePage('chat/messages')">
             <img src="assets/img/item-8.png">
             <p>Messages</p>
         </div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')" [hidden]="envName==='production'"
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')"
+             [hidden]="envName==='production'"
              (click)="changePage('chat/rooms')">
             <img src="assets/img/item-8.png">
             <p>Chat rooms</p>
         </div>
-        <div class="left-menu-main" [class.active]="router.url.includes('stock')" [hidden]="envName==='production'"
+        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('stock')"
+             [hidden]="envName==='production'"
              (click)="changePage('user/stock-profile')">
             <img src="assets/img/item-9.png">
             <p>Stock Profile</p>

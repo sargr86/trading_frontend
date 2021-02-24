@@ -8,7 +8,7 @@ import * as Plyr from 'plyr';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
     title = '';
 
     constructor(
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit{
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
         // const player = new Plyr('video', {
         //     captions: {active: true},
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}
@@ -26,9 +26,10 @@ export class AppComponent implements OnInit{
         // console.log(player)
     }
 
-    getSearch(e) {
+    async getSearch(e) {
+        console.log('get search')
         const queryParams = e.search ? {queryParams: e} : {};
-        this.router.navigate(['videos/'], queryParams);
+        await this.router.navigate(['videos/'], queryParams);
     }
 
     checkIfPolicyPage() {

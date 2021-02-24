@@ -1,16 +1,14 @@
-<ng-container *ngIf="!router.url.includes('auth')">
-  <app-navbar (search)="getSearch($event)"></app-navbar>
-  <section class="body-content">
-    <div class="body-content-left" *ngIf="!checkIfPolicyPage()">
-      <app-left-sidebar></app-left-sidebar>
+<app-navbar *ngIf="!router.url.includes('auth')" (search)="getSearch($event)"></app-navbar>
+<section class="body-content" [class.full-width]="router.url.includes('auth')">
+    <div class="body-content-left" *ngIf="!router.url.includes('auth') && !checkIfPolicyPage()">
+        <app-left-sidebar></app-left-sidebar>
     </div>
-    <div class="body-content-right" [ngClass]="{'full-width': checkIfPolicyPage()}">
-      <router-outlet></router-outlet>
+    <div class="body-content-right" [ngClass]="{'full-width': checkIfPolicyPage() || router.url.includes('auth')}">
+        <router-outlet></router-outlet>
     </div>
-  </section>
-</ng-container>
+</section>
 
-<router-outlet *ngIf="router.url.includes('auth')"></router-outlet>
+<!--<router-outlet *ngIf="router.url.includes('auth')"></router-outlet>-->
 <!--<div class="container">-->
 <!--    <video controls crossorigin playsinline poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">-->
 <!--        <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">-->

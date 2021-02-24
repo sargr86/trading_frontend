@@ -62,16 +62,15 @@
                          (click)="openChannelPage(channel,channel.user?.username)">
                 </div>
                 <div class="details">
-                    <h4 class="title">{{channel.name}}</h4>
+                    <h4 class="channel-name">{{channel.name}}</h4>
                     <div class="channel-details">
-<!--                        <p class="channel-name">{{channel.name}}</p>-->
                         <p class="videos-count">{{channel.videos?.length}} videos</p>
                     </div>
                     <p class="shortened-description">
                         {{channel.description}}
                     </p>
 
-                    <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser.username"
+                    <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
                             [class.subscribed]="checkIfSubscribed(channel)"
                             (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
                     </button>

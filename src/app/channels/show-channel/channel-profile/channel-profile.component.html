@@ -3,6 +3,7 @@
     <div class="profile-block">
         <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
             <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
+            <input type="hidden" formControlName="cover">
             <ngx-photo-editor
                 [imageChanedEvent]="coverChangedEvent"
                 (imageCropped)="coverCropped($event)"
@@ -14,7 +15,7 @@
             <label for="cover-image-input">
                 <img id="cover-image" [src]="channelUser.channel?.cover|getImgPath: 'covers'">
             </label>
-            <button mat-icon-button class="remove-cover-btn" (click)="removeCover()"
+            <button mat-icon-button type="button" class="remove-cover-btn" (click)="removeCover()"
                     *ngIf="editMode && channelUser.channel.cover">
                 <mat-icon>clear</mat-icon>
             </button>
@@ -35,6 +36,7 @@
 
             <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
                 <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
+                <input type="hidden" formControlName="avatar">
                 <ngx-photo-editor
                     [imageChanedEvent]="profileChangedEvent"
                     (imageCropped)="profileCropped($event)"
@@ -46,27 +48,28 @@
             <div>
                 <p class="main-text-1" id="channel-name" *ngIf="!editMode">{{channelUser.channel.name}}</p>
                 <mat-form-field *ngIf="editMode">
-                    <input matInput formControlName="name" id="channel-name-input">
+                    <input matInput formControlName="name" id="channel-name-input"
+                           (keyup.enter)="$event.preventDefault()">
                 </mat-form-field>
                 <p class="main-text-4">{{subscribersCount + ' subscriber' + (subscribersCount === 1 ? '' : 's')}} </p>
             </div>
 
         </div>
         <div class="loader" *ngIf="changingImage">
-            <!--            <mat-spinner [diameter]="50"></mat-spinner>-->
+<!--            <mat-spinner [diameter]="50"></mat-spinner>-->
         </div>
         <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
-<!--            <i class="sub-bell fas fa-bell"></i>-->
+            <!--            <i class="sub-bell fas fa-bell"></i>-->
             <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribe</a>
             <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
                (click)="subscribeToChannel(channelUser.channel)">Subscribed</a>
         </div>
         <div class="d-flex align-items-center" *ngIf="channelUser.username === authUser.username">
-            <button class="btn" id="edit-channel" (click)="enableEditMode()" *ngIf="!editMode">
+            <button class="btn" type="button" id="edit-channel" (click)="enableEditMode()" *ngIf="!editMode">
                 <mat-icon>edit</mat-icon>
                 Edit channel
             </button>
-            <button class="btn" id="save-channel-details" *ngIf="editMode" (click)="saveChanges()">
+            <button class="btn" type="button" id="save-channel-details" *ngIf="editMode" (click)="saveChanges()">
                 <mat-icon>save</mat-icon>
                 Save changes
             </button>

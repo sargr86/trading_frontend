@@ -56,35 +56,34 @@ export class ChannelProfileComponent implements OnInit {
         if (this.channelUser) {
             this.checkChannelSubscription();
             this.detectImageChange();
-            this.channelForm.patchValue(this.channelUser);
             this.channelForm.patchValue({
                 name: this.channelUser.channel.name,
                 id: this.channelUser.channel.id,
-                username: this.channelUser.username
+                username: this.channelUser.username,
+                avatar: this.channelUser.channel.avatar,
+                cover: this.channelUser.channel.cover
             });
         }
     }
 
     coverChangeEvent(event: any) {
         this.coverChangedEvent = event;
-
     }
 
     profileChangeEvent(event: any) {
         this.profileChangedEvent = event;
-        console.log('avatar change event')
     }
 
     detectImageChange() {
-        // document.querySelector('img.avatar').addEventListener('load', () => {
-        //     console.log('Loading image!!!')
-        //     if (this.profileChangedEvent || this.coverChangedEvent) {
-        //         this.loader.dataLoading = false;
-        //         this.changingImage = false;
-        //         console.log('Avatar changed');
-        //         console.log(this.loader.dataLoading)
-        //     }
-        // });
+        document.querySelector('img.avatar').addEventListener('load', () => {
+            console.log('Loading image!!!')
+            if (this.profileChangedEvent || this.coverChangedEvent) {
+                this.loader.dataLoading = false;
+                this.changingImage = false;
+                console.log('Avatar changed');
+                console.log(this.loader.dataLoading)
+            }
+        });
     }
 
 
@@ -92,7 +91,6 @@ export class ChannelProfileComponent implements OnInit {
         // this.loader.dataLoading = true;
 
         this.changingImage = true;
-        console.log('cropped')
         this.profileBase64 = event.base64;
         const filename = `avatar_${Date.now()}.jpg`;
         const fd = new FormData();
@@ -161,13 +159,16 @@ export class ChannelProfileComponent implements OnInit {
 
     enableEditMode() {
         this.editMode = !this.editMode;
-        // console.log(this.channelUser)
+        console.log('enabled edit!');
 
 
     }
 
     saveChanges() {
-        // console.log(this.channelForm.value)
+        console.log('save changes!!!')
+        console.log(this.channelForm.value)
+        console.log('save changes!!!')
+
         if (this.channelForm.valid) {
             this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
                 this.editMode = false;

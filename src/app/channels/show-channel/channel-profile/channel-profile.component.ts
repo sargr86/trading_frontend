@@ -55,7 +55,7 @@ export class ChannelProfileComponent implements OnInit {
     ngOnInit(): void {
         if (this.channelUser) {
             this.checkChannelSubscription();
-            this.detectImageChange();
+            // this.detectImageChange();
             this.channelForm.patchValue({
                 name: this.channelUser.channel.name,
                 id: this.channelUser.channel.id,
@@ -75,15 +75,15 @@ export class ChannelProfileComponent implements OnInit {
     }
 
     detectImageChange() {
-        document.querySelector('img.avatar').addEventListener('load', () => {
+        // document.querySelector('img.avatar').addEventListener('load', () => {
             console.log('Loading image!!!')
             if (this.profileChangedEvent || this.coverChangedEvent) {
                 this.loader.dataLoading = false;
                 this.changingImage = false;
                 console.log('Avatar changed');
-                console.log(this.loader.dataLoading)
+                console.log(this.changingImage)
             }
-        });
+        // });
     }
 
 
@@ -153,6 +153,7 @@ export class ChannelProfileComponent implements OnInit {
         localStorage.setItem('token', dt.token);
         this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;
+        this.changingImage = false;
         // this.loader.dataLoading = false;
         // console.log(this.channelUser)
     }

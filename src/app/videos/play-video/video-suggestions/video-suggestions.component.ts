@@ -41,6 +41,7 @@ export class VideoSuggestionsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.isProduction)
 
         this.urlParams = this.route.snapshot.queryParams;
         this.videoId = +this.urlParams?.id;

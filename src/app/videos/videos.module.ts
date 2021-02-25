@@ -8,7 +8,7 @@ import {SharedModule} from '@shared/shared.module';
 import {PlayVideoComponent} from '../videos/play-video/play-video.component';
 import {ShowSavedVideosComponent} from './show-saved-videos/show-saved-videos.component';
 import {VideoSuggestionsComponent} from './play-video/video-suggestions/video-suggestions.component';
-import { TagsFormComponent } from './play-video/tags-form/tags-form.component';
+import { VideoDetailsFormComponent } from './play-video/video-details-form/video-details-form.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +16,7 @@ import { TagsFormComponent } from './play-video/tags-form/tags-form.component';
         PlayVideoComponent,
         ShowSavedVideosComponent,
         VideoSuggestionsComponent,
-        TagsFormComponent
+        VideoDetailsFormComponent
     ],
     imports: [
         CommonModule,

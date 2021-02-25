@@ -1,0 +1,31 @@
+@import 'variables';
+
+#tags-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .right-group {
+        display: flex;
+        align-items: center;
+
+        #video-tags {
+            width: 250px;
+
+            mat-form-field {
+                width: 100%;
+            }
+        }
+
+        #save-tags {
+            background-color: $green;
+            color: $white;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            border-radius: 0;
+            transition: 0.3s ease-in-out;
+            margin-left: 30px;
+        }
+    }
+}

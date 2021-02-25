@@ -13,7 +13,7 @@
     margin-left: 10px;
 }
 
-.tag{
+.tag {
     cursor: pointer;
 }
 
@@ -37,7 +37,10 @@
 
 }
 
-.tags-container{
-    display: flex;
-    justify-content: space-between;
+.tags-container {
+    .editable-details {
+        display: flex;
+        justify-content: space-between;
+    }
+
 }

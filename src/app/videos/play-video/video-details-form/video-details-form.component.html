@@ -1,0 +1,37 @@
+<form [formGroup]="videoDetailsForm" id="tags-form">
+    <div class="left-group">
+
+        <div id="video-name">
+            <mat-form-field>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="right-group">
+
+        <div id="video-tags">
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #tagList formControlName="tags">
+                    <mat-chip *ngFor="let tag of videoData.tags" (removed)="remove(tag)">
+                        {{tag.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Tags..." #chipsInput
+                           [matChipInputFor]="tagList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-hint align="end">Please press 'Enter' after the tag name</mat-hint>
+
+            </mat-form-field>
+            <mat-error *ngIf="videoData.tags.length ===0 && isSubmitted">Please provide some tags describing your live video
+            </mat-error>
+        </div>
+
+        <div class="actions">
+            <button id="save-tags" (click)="saveDetails()">
+                <mat-icon>checked</mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

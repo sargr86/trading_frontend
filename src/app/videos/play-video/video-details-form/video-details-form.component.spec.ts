@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagsFormComponent } from './tags-form.component';
+import { VideoDetailsFormComponent } from './video-details-form.component';
 
-describe('TagsFormComponent', () => {
-  let component: TagsFormComponent;
-  let fixture: ComponentFixture<TagsFormComponent>;
+describe('VideoDetailsFormComponent', () => {
+  let component: VideoDetailsFormComponent;
+  let fixture: ComponentFixture<VideoDetailsFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagsFormComponent ]
+      declarations: [ VideoDetailsFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TagsFormComponent);
+    fixture = TestBed.createComponent(VideoDetailsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

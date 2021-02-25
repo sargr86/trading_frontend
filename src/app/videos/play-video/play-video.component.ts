@@ -61,15 +61,12 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         private playlistsService: PlaylistsService
     ) {
         this.authUser = this.getAuthUser.transform();
-        console.log(this.isProduction)
     }
 
     ngOnInit(): void {
 
         const videoId = this.route.snapshot.queryParams.id;
         const params = {id: videoId};
-
-        // console.log(this.videoJSPlayerOptions)
 
         this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
@@ -188,9 +185,9 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         });
     }
 
-    saveTags(e) {
+    saveVideoDetails(e) {
         this.videoData.tags = e.tags;
-        this.videoService.saveTags({...e, video_id: this.videoData.id}).subscribe(dt => {
+        this.videoService.saveVideoDetails({...e, video_id: this.videoData.id}).subscribe(dt => {
             this.videoData = dt;
             this.showTagsForm = false;
         });

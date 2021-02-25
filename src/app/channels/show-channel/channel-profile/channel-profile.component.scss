@@ -1,3 +1,5 @@
+@import 'variables';
+
 .loader {
     display: flex;
     justify-content: center;
@@ -7,6 +9,47 @@
     margin-top: -17px;
 }
 
+
+.cover-image-container {
+    position: relative;
+
+    .remove-cover-btn {
+        position: absolute;
+        right: 0;
+
+        mat-icon {
+            background-color: $black;
+            color: $white;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+    }
+}
+
+
 label[for="cover-image-input"] {
     width: 100%;
+}
+
+#edit-channel, #save-channel-details {
+    background: #18B587;
+    border-radius: 0;
+    color: #fff;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+}
+
+.avatar-container {
+    position: relative;
+
+    .remove-avatar-btn {
+        position: absolute;
+        right: 20px;
+        top: 13px;
+        //background-color: #000000;
+        color: #000000;
+        font-size: 16px;
+        cursor: pointer;
+    }
 }

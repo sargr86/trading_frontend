@@ -7,6 +7,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-channel-profile',
@@ -24,6 +25,11 @@ export class ChannelProfileComponent implements OnInit {
     subscribedToChannel = false;
     subscribersCount = 0;
 
+    changingImage = false;
+    editMode = false;
+
+    channelForm: FormGroup;
+
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
 
@@ -33,12 +39,30 @@ export class ChannelProfileComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private fb: FormBuilder
     ) {
+        this.channelForm = this.fb.group({
+            id: [''],
+            avatar: [''],
+            cover: [''],
+            name: ['', Validators.required],
+            username: ['']
+        });
+
     }
 
     ngOnInit(): void {
-        this.checkChannelSubscription();
+        if (this.channelUser) {
+            this.checkChannelSubscription();
+            this.detectImageChange();
+            this.channelForm.patchValue(this.channelUser);
+            this.channelForm.patchValue({
+                name: this.channelUser.channel.name,
+                id: this.channelUser.channel.id,
+                username: this.channelUser.username
+            });
+        }
     }
 
     coverChangeEvent(event: any) {
@@ -48,16 +72,34 @@ export class ChannelProfileComponent implements OnInit {
 
     profileChangeEvent(event: any) {
         this.profileChangedEvent = event;
+        console.log('avatar change event')
     }
 
+    detectImageChange() {
+        // document.querySelector('img.avatar').addEventListener('load', () => {
+        //     console.log('Loading image!!!')
+        //     if (this.profileChangedEvent || this.coverChangedEvent) {
+        //         this.loader.dataLoading = false;
+        //         this.changingImage = false;
+        //         console.log('Avatar changed');
+        //         console.log(this.loader.dataLoading)
+        //     }
+        // });
+    }
+
+
     profileCropped(event: CroppedEvent) {
+        // this.loader.dataLoading = true;
+
+        this.changingImage = true;
+        console.log('cropped')
         this.profileBase64 = event.base64;
-        const filename = `profile_${Date.now()}.jpg`;
+        const filename = `avatar_${Date.now()}.jpg`;
         const fd = new FormData();
+        this.channelForm.patchValue({avatar: filename});
         fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('avatar', filename);
         fd.append('id', this.authUser.id);
-        this.loader.dataLoading = true;
         this.usersService.changeProfileImage(fd).subscribe((dt) => {
             this.changeAuthUserInfo(dt);
         });
@@ -65,8 +107,10 @@ export class ChannelProfileComponent implements OnInit {
 
     coverCropped(event: CroppedEvent) {
         this.coverBase64 = event.base64;
+        this.changingImage = true;
         const fd = new FormData();
         const filename = `cover_${Date.now()}.jpg`;
+        this.channelForm.patchValue({cover: filename});
         fd.append('cover_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('cover', filename);
         fd.append('id', this.authUser.id);
@@ -76,8 +120,17 @@ export class ChannelProfileComponent implements OnInit {
         });
     }
 
+    removeCover() {
+        this.channelUser.channel.cover = '';
+        this.channelForm.patchValue({cover: this.channelUser.channel.cover});
+    }
+
+    removeAvatar() {
+        this.channelUser.channel.avatar = '';
+        this.channelForm.patchValue({avatar: this.channelUser.channel.avatar});
+    }
+
     subscribeToChannel(channel): void {
-        console.log(channel)
         this.channelService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
             this.subscribedToChannel = dt.status === 'Subscribed';
             this.subscribersCount = dt.subscribers_count;
@@ -102,7 +155,25 @@ export class ChannelProfileComponent implements OnInit {
         localStorage.setItem('token', dt.token);
         this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;
-        this.loader.dataLoading = false;
+        // this.loader.dataLoading = false;
+        // console.log(this.channelUser)
+    }
+
+    enableEditMode() {
+        this.editMode = !this.editMode;
+        // console.log(this.channelUser)
+
+
+    }
+
+    saveChanges() {
+        // console.log(this.channelForm.value)
+        if (this.channelForm.valid) {
+            this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
+                this.editMode = false;
+                this.changeAuthUserInfo(dt);
+            }));
+        }
     }
 
 }

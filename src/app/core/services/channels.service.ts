@@ -44,5 +44,9 @@ export class ChannelsService {
         return this.httpClient.put<any>(`${API_URL}channels/save-description`, params);
     }
 
+    changeChannelDetails(params) {
+        return this.httpClient.put<any>(`${API_URL}channels/save-channel-details`, params);
+    }
+
 
 }

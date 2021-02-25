@@ -41,8 +41,10 @@ export class VideoCarouselHolderComponent implements OnInit {
         await this.router.navigate([r.route], {queryParams: r.params});
     }
 
-    openChannelPage(username) {
-        this.router.navigate(['channels/show'], {queryParams: {username}});
+    async openChannelPage(username) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate(['channels/show'], {queryParams: {username}})
+        );
     }
 
     removeVideo(video) {

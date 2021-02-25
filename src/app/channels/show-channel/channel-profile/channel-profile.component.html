@@ -1,45 +1,76 @@
-<div class="profile-block">
-    <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
-        <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
-        <ngx-photo-editor
-            [imageChanedEvent]="coverChangedEvent"
-            (imageCropped)="coverCropped($event)"
-            [autoCrop]="false"
-            [viewMode]="3"></ngx-photo-editor>
-    </div>
-    <label for="cover-image-input">
-        <img id="cover-image" [src]="channelUser?.cover|getImgPath: 'covers'">
-    </label>
-</div>
-
-<div class="sub-block">
-    <div class="d-flex align-items-center">
-        <label for="profile-image-input">
-            <img class="avatar" id="profile-image" [src]="channelUser?.avatar|getImgPath: 'avatars'">
-        </label>
-        <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
-            <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
+<form [formGroup]="channelForm">
+    <!--    <ng-container *ngIf="channelUser">-->
+    <div class="profile-block">
+        <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
+            <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
             <ngx-photo-editor
-                [imageChanedEvent]="profileChangedEvent"
-                (imageCropped)="profileCropped($event)"
-                [aspectRatio]="4/3"
-                [viewMode]="1"
-                [resizeToWidth]="500"></ngx-photo-editor>
+                [imageChanedEvent]="coverChangedEvent"
+                (imageCropped)="coverCropped($event)"
+                [autoCrop]="false"
+                [viewMode]="3"></ngx-photo-editor>
+        </div>
 
-        </div>
-        <div>
-            <p class="main-text-1">{{channelUser.channel.name}}</p>
-            <p class="main-text-4">{{subscribersCount + ' subscriber' + (subscribersCount === 1 ? '' : 's')}} </p>
-        </div>
-        <div class="loader" *ngIf="loader.dataLoading">
-            <mat-spinner [diameter]="20"></mat-spinner>
+        <div class="cover-image-container">
+            <label for="cover-image-input">
+                <img id="cover-image" [src]="channelUser.channel?.cover|getImgPath: 'covers'">
+            </label>
+            <button mat-icon-button class="remove-cover-btn" (click)="removeCover()"
+                    *ngIf="editMode && channelUser.channel.cover">
+                <mat-icon>clear</mat-icon>
+            </button>
         </div>
     </div>
 
-    <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
-        <i class="sub-bell fas fa-bell"></i>
-        <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribe</a>
-        <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
-           (click)="subscribeToChannel(channelUser.channel)">Subscribed</a>
+    <div class="sub-block">
+        <div class="d-flex align-items-center">
+            <div class="avatar-container">
+                <label for="profile-image-input">
+                    <img class="avatar" [ngStyle]="{opacity: editMode ? 0.5: 1}" id="profile-image"
+                         [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                </label>
+                <mat-icon (click)="removeAvatar()" class="remove-avatar-btn"
+                          *ngIf="editMode && channelUser.channel.avatar">clear
+                </mat-icon>
+            </div>
+
+            <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
+                <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
+                <ngx-photo-editor
+                    [imageChanedEvent]="profileChangedEvent"
+                    (imageCropped)="profileCropped($event)"
+                    [aspectRatio]="4/3"
+                    [viewMode]="1"
+                    [resizeToWidth]="500"></ngx-photo-editor>
+
+            </div>
+            <div>
+                <p class="main-text-1" id="channel-name" *ngIf="!editMode">{{channelUser.channel.name}}</p>
+                <mat-form-field *ngIf="editMode">
+                    <input matInput formControlName="name" id="channel-name-input">
+                </mat-form-field>
+                <p class="main-text-4">{{subscribersCount + ' subscriber' + (subscribersCount === 1 ? '' : 's')}} </p>
+            </div>
+
+        </div>
+        <div class="loader" *ngIf="changingImage">
+            <!--            <mat-spinner [diameter]="50"></mat-spinner>-->
+        </div>
+        <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
+<!--            <i class="sub-bell fas fa-bell"></i>-->
+            <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribe</a>
+            <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
+               (click)="subscribeToChannel(channelUser.channel)">Subscribed</a>
+        </div>
+        <div class="d-flex align-items-center" *ngIf="channelUser.username === authUser.username">
+            <button class="btn" id="edit-channel" (click)="enableEditMode()" *ngIf="!editMode">
+                <mat-icon>edit</mat-icon>
+                Edit channel
+            </button>
+            <button class="btn" id="save-channel-details" *ngIf="editMode" (click)="saveChanges()">
+                <mat-icon>save</mat-icon>
+                Save changes
+            </button>
+        </div>
     </div>
-</div>
+    <!--    </ng-container>-->
+</form>

@@ -1,8 +1,7 @@
 <div class="profile-list">
-<!--    <app-categories></app-categories>-->
+    <!--    <app-categories></app-categories>-->
     <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
     <ng-container *ngIf="channelUser">
-
         <app-channel-profile [channelUser]="channelUser" [authUser]="authUser"></app-channel-profile>
 
 
@@ -18,7 +17,8 @@
                 </ul>
                 <form [formGroup]="searchVideosForm" id="search-videos-form">
                     <div class="toggle-filters-btn">
-                        <button class="filter-toggle-btn" type="button" [class.filters-active]="showFilters" (click)="toggleFilters()">
+                        <button class="filter-toggle-btn" type="button" [class.filters-active]="showFilters"
+                                (click)="toggleFilters()">
                             <mat-icon>tune</mat-icon>
                         </button>
                     </div>

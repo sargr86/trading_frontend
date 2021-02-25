@@ -2,7 +2,7 @@
 <ng-container *ngFor="let videoList of watchlistVideos">
     <ng-container *ngIf="videoList.videos.length > 0">
 
-        <app-video-carousel-holder [videos]="videoList.videos" [title]="videoList.full_name"
+        <app-video-carousel-holder [videos]="videoList.videos" [title]="videoList.channel.name"
                                    [detailsSource]="videoList"></app-video-carousel-holder>
     </ng-container>
 </ng-container>

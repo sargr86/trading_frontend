@@ -60,7 +60,7 @@
             </div>
             <p class="ads-text-2"></p>
         </ng-container>
-        <div class="ads-maps">
+        <div class="ads-maps" *ngIf="!isProduction">
             <div>
                 <canvas id="myChart"></canvas>
                 <canvas id="myChart2"></canvas>

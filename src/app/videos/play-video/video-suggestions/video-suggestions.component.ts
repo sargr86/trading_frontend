@@ -6,6 +6,7 @@ import {API_URL, DEFAULT_VIDEO_SUGGESTIONS_COUNT} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {environment} from '@env';
 
 @Component({
     selector: 'app-video-suggestions',
@@ -24,6 +25,8 @@ export class VideoSuggestionsComponent implements OnInit {
 
     apiUrl = API_URL;
     authUser;
+
+    isProduction = environment.production;
 
 
     constructor(

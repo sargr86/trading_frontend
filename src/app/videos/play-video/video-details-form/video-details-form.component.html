@@ -5,6 +5,9 @@
             <mat-form-field>
                 <input matInput formControlName="name">
             </mat-form-field>
+            <mat-error *ngIf="isSubmitted && videoDetailsForm.get('name').hasError('required')">
+                The video name is required
+            </mat-error>
         </div>
     </div>
     <div class="right-group">
@@ -24,7 +27,8 @@
                 <mat-hint align="end">Please press 'Enter' after the tag name</mat-hint>
 
             </mat-form-field>
-            <mat-error *ngIf="videoData.tags.length ===0 && isSubmitted">Please provide some tags describing your live video
+            <mat-error *ngIf="videoData.tags.length ===0 && isSubmitted">Please provide some tags describing your live
+                video
             </mat-error>
         </div>
 

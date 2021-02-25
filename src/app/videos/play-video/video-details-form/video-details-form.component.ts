@@ -20,7 +20,7 @@ export class VideoDetailsFormComponent implements OnInit {
         private fb: FormBuilder
     ) {
         this.videoDetailsForm = this.fb.group({
-            name: [''],
+            name: ['', Validators.required],
             tags: [[], Validators.required],
         });
     }
@@ -57,6 +57,7 @@ export class VideoDetailsFormComponent implements OnInit {
 
     saveDetails() {
         this.videoDetailsForm.patchValue({tags: this.videoData.tags});
+        this.isSubmitted = true;
         if (this.videoDetailsForm.valid) {
             this.formReady.emit(this.videoDetailsForm.value);
         }

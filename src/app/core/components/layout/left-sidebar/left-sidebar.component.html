@@ -62,8 +62,7 @@
                 <!--            </ng-container>-->
 
                 <ng-container>
-                    <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">
-                    <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">
+                    <img class="list-img" [src]="channel.avatar | getImgPath:'avatars'">
                     <div class="d-flex align-items-center">
                         <p class="main-text-1">{{channel.name}}</p>
                         <!-- <p class="main-text-4">{{channel.description}}</p> -->

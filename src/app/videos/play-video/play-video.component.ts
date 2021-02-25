@@ -8,6 +8,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {PlaylistsService} from '@core/services/playlists.service';
+import {environment} from '@env';
 
 @Component({
     selector: 'app-play-video',
@@ -26,6 +27,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     authUser;
     userVideoConnection = {liked: '', saved: '', viewed: false};
+    isProduction = environment.production;
 
     videoJSPlayerOptions = {
         autoplay: true,
@@ -59,7 +61,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         private playlistsService: PlaylistsService
     ) {
         this.authUser = this.getAuthUser.transform();
-
+        console.log(this.isProduction)
     }
 
     ngOnInit(): void {
@@ -71,7 +73,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
         this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
-            console.log(this.videoData)
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
                 this.updateViewsCount(dt);
@@ -200,22 +201,24 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.canvas = document.getElementById('myChart');
-        // console.log(this.canvas)
-        this.ctx = this.canvas.getContext('2d');
-        this.lineChart = new Chart(this.ctx, CHART_1);
+        if (!this.isProduction) {
+            this.canvas = document.getElementById('myChart');
+            // console.log(this.canvas)
+            this.ctx = this.canvas.getContext('2d');
+            this.lineChart = new Chart(this.ctx, CHART_1);
 
-        this.canvas = document.getElementById('myChart2');
-        this.ctx = this.canvas.getContext('2d');
-        this.lineChart = new Chart(this.ctx, CHART_2);
+            this.canvas = document.getElementById('myChart2');
+            this.ctx = this.canvas.getContext('2d');
+            this.lineChart = new Chart(this.ctx, CHART_2);
 
-        this.canvas = document.getElementById('myChart3');
-        this.ctx = this.canvas.getContext('2d');
-        this.lineChart = new Chart(this.ctx, CHART_3);
+            this.canvas = document.getElementById('myChart3');
+            this.ctx = this.canvas.getContext('2d');
+            this.lineChart = new Chart(this.ctx, CHART_3);
 
-        this.canvas = document.getElementById('myChart4');
-        this.ctx = this.canvas.getContext('2d');
-        this.lineChart = new Chart(this.ctx, CHART_4);
+            this.canvas = document.getElementById('myChart4');
+            this.ctx = this.canvas.getContext('2d');
+            this.lineChart = new Chart(this.ctx, CHART_4);
+        }
     }
 
 }

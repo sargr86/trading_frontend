@@ -76,12 +76,12 @@ export class ChannelProfileComponent implements OnInit {
 
     detectImageChange() {
         // document.querySelector('img.avatar').addEventListener('load', () => {
-            console.log('Loading image!!!')
+        //     console.log('Loading image!!!')
             if (this.profileChangedEvent || this.coverChangedEvent) {
                 this.loader.dataLoading = false;
                 this.changingImage = false;
                 console.log('Avatar changed');
-                console.log(this.changingImage)
+                console.log(this.changingImage);
             }
         // });
     }

@@ -1,26 +1,28 @@
-.contact-wrap{
-    .form{
-        .inner-wrap{
+.contact-wrap {
+    .form {
+        .inner-wrap {
             width: 100%;
             max-width: 664px;
             margin: auto;
-            h2{
+
+            h2 {
                 color: #18B587;
                 font-size: 32px;
                 font-weight: bold;
                 text-align: center;
             }
 
-            .input-wrap{
-                .input{
+            .input-wrap {
+                .input {
                     margin-bottom: 16px;
-                    label{
+
+                    label {
                         width: 100%;
                         color: #6D6D6D;
                         font-size: 16px;
                     }
 
-                    input, textarea{
+                    input, textarea {
                         width: 100%;
                         padding: 16px;
                         box-shadow: 0px 0px 6px #00000012;
@@ -28,18 +30,19 @@
                         resize: none;
                         outline: none;
                     }
-                    textarea{
+
+                    textarea {
                         height: 182px;
                     }
                 }
             }
 
-            .btn{
+            .btn {
                 display: block;
                 background: #F53C6F;
                 margin: 24px auto 0;
                 padding: 16px 56px;
-                border-radius: 30px;
+                border-radius: 0;
                 color: #FFFFFF;
                 font-size: 16px;
                 text-transform: uppercase;
@@ -47,43 +50,49 @@
         }
     }
 
-    .map-info{
+    .map-info {
         margin-top: 56px;
-        .inner-wrap{
-            .map{
-                iframe{
+
+        .inner-wrap {
+            .map {
+                iframe {
                     width: 100%;
                     height: 460px;
                 }
             }
 
-            .info{
+            .info {
                 margin-top: 32px;
-                ul{
+
+                ul {
                     display: flex;
                     justify-content: space-between;
-                    li{
-                        h2{
+
+                    li {
+                        h2 {
                             font-weight: normal;
                             color: #18B587;
                             font-size: 24px;
                         }
 
-                        P{
-                            font-size: 24px; 
+                        P {
+                            font-size: 24px;
                             color: #6D6D6D;
-                            span{
+
+                            span {
                                 color: #F53C6F;
                                 margin-right: 10px;
                                 vertical-align: middle;
                             }
 
-                            a{
+                            a {
                                 margin-right: 24px;
-                                &:last-child{
+
+                                &:last-child {
                                     margin-right: 0;
                                 }
-                                img{
+
+                                img {
                                     width: 24px;
                                 }
                             }

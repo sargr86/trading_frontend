@@ -7,6 +7,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-navbar',
@@ -26,12 +27,15 @@ export class NavbarComponent implements OnInit {
 
     passedUsername;
 
+    stocks;
+
     constructor(
         public router: Router,
         public auth: AuthService,
         private modalService: BsModalService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
+        private stocksService: StocksService,
         private route: ActivatedRoute
     ) {
 
@@ -46,6 +50,10 @@ export class NavbarComponent implements OnInit {
             } else if (ev instanceof ActivationEnd) {
                 this.passedUsername = ev.snapshot.queryParams.username;
             }
+        });
+
+        this.stocksService.getDailyStocks({}).subscribe(dt => {
+            this.stocks = dt;
         });
     }
 
@@ -69,8 +77,12 @@ export class NavbarComponent implements OnInit {
         return !this.router.url.includes('channels/show') || this.passedUsername !== this.authUser.username;
     }
 
-    changePage(l){
+    changePage(l) {
         this.router.navigate([l.link])
+    }
+
+    getDailyStocks() {
+
     }
 
 }

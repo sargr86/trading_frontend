@@ -72,7 +72,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
             this.videoData = dt;
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
-                console.log(this.userVideoConnection)
                 this.updateViewsCount(dt);
                 this.indexUserTags(dt);
             }
@@ -106,28 +105,14 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     updateLikes(videoData, action) {
         if (this.auth.loggedIn()) {
-            if (action === 'like') {
-                this.userVideoConnection.liked = this.userVideoConnection.liked ? 0 : 1;
-                if (this.userVideoConnection.disliked) {
-                    videoData.dislikes += videoData.dislikes === 0 ? 0 : -1;
-                }
-                this.userVideoConnection.disliked = 0;
-                videoData.likes += this.userVideoConnection.liked ? 1 : -1;
 
-            } else {
-                this.userVideoConnection.disliked = this.userVideoConnection.disliked ? 0 : 1;
-                if (this.userVideoConnection.liked) {
-                    videoData.likes += videoData.likes === 0 ? 0 : -1;
-                }
-                this.userVideoConnection.liked = 0;
-                videoData.dislikes += this.userVideoConnection.disliked ? 1 : -1;
-            }
+            videoData = this.getLikesState(action, videoData);
 
             this.videoService.updateLikes({
                 video_id: videoData.id,
                 user_id: this.authUser.id,
-                likes: videoData.likes > 0 ? videoData.likes : 0,
-                dislikes: videoData.dislikes > 0 ? videoData.dislikes : 0,
+                likes: videoData.likes,
+                dislikes: videoData.dislikes,
                 liked: this.userVideoConnection.liked,
                 disliked: this.userVideoConnection.disliked,
                 saved: videoData.saved
@@ -137,6 +122,26 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         } else {
             this.toastr.error('Please log in first to take this action');
         }
+    }
+
+    getLikesState(action, videoData) {
+        if (action === 'like') {
+            this.userVideoConnection.liked = +!this.userVideoConnection.liked;
+            if (this.userVideoConnection.disliked) {
+                videoData.dislikes += videoData.dislikes === 0 ? 0 : -1;
+            }
+            this.userVideoConnection.disliked = 0;
+            videoData.likes += this.userVideoConnection.liked ? 1 : -1;
+
+        } else {
+            this.userVideoConnection.disliked = +!this.userVideoConnection.disliked;
+            if (this.userVideoConnection.liked) {
+                videoData.likes += videoData.likes === 0 ? 0 : -1;
+            }
+            this.userVideoConnection.liked = 0;
+            videoData.dislikes += this.userVideoConnection.disliked ? 1 : -1;
+        }
+        return videoData;
     }
 
     indexUserTags(dt) {

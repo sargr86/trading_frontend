@@ -5,32 +5,39 @@
     </button>
     <div class="header-right collapse navbar-collapse nav-menu" id="navbarSupportedContent">
         <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
-        <div class="home-black-block" (click)="openModal(cryptoModal)" [hidden]="envName==='production'">
-            <div class="home-black-item">
-                <p class="black-text">EDF.PA</p>
-                <p class="black-percent-red">3.36%</p>
+        <div class="home-black-block" (click)="openModal(cryptoModal)" *ngIf="stocks">
+            <div class="home-black-item" *ngFor="let stock of stocks">
+                <p class="black-text">{{stock.symbol}}</p>
+                <p class="black-percent-red">{{stock.historical[0]?.changePercent.toFixed(2)}}%</p>
             </div>
-            <div class="home-black-item">
-                <p class="black-text">MSFT</p>
-                <p class="black-percent-yellow">1.24%</p>
-            </div>
-            <div class="home-black-item">
-                <p class="black-text">GOOG</p>
-                <p class="black-percent-green">-1.51</p>
-            </div>
-            <div class="home-black-item">
-                <p class="black-text">EDF.PA</p>
-                <p class="black-percent-red">3.36%</p>
-            </div>
-            <div class="home-black-item">
-                <p class="black-text">MSFT</p>
-                <p class="black-percent-yellow">1.24%</p>
-            </div>
-            <div class="home-black-item">
-                <p class="black-text">GOOG</p>
-                <p class="black-percent-green">-1.51</p>
-            </div>
-            <i class="down-white fas fa-chevron-down"></i>
+
+
+            <!--            <div class="home-black-item">-->
+            <!--                <p class="black-text">EDF.PA</p>-->
+            <!--                <p class="black-percent-red">3.36%</p>-->
+            <!--            </div>-->
+            <!--            <div class="home-black-item">-->
+            <!--                <p class="black-text">MSFT</p>-->
+            <!--                <p class="black-percent-yellow">1.24%</p>-->
+            <!--            </div>-->
+            <!--            <div class="home-black-item">-->
+            <!--                <p class="black-text">GOOG</p>-->
+            <!--                <p class="black-percent-green">-1.51</p>-->
+            <!--            </div>-->
+            <!--            <div class="home-black-item">-->
+            <!--                <p class="black-text">EDF.PA</p>-->
+            <!--                <p class="black-percent-red">3.36%</p>-->
+            <!--            </div>-->
+            <!--            <div class="home-black-item">-->
+            <!--                <p class="black-text">MSFT</p>-->
+            <!--                <p class="black-percent-yellow">1.24%</p>-->
+            <!--            </div>-->
+            <!--            <div class="home-black-item">-->
+            <!--                <p class="black-text">GOOG</p>-->
+            <!--                <p class="black-percent-green">-1.51</p>-->
+            <!--            </div>-->
+            <!--            <mat-icon class="down-white">keyboard_arrow_down</mat-icon>-->
+            <i class="down-white fa fa-chevron-down"></i>
         </div>
         <div class="notification-block">
             <div class="nav-item dropdown" [hidden]="envName==='production'">

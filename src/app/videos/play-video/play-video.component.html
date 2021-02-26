@@ -42,7 +42,9 @@
                 <div class="editable-details" *ngIf="!showTagsForm">
                     <p class="ads-text-1">{{videoData?.name}}</p>
                     <button id="add-tags" *ngIf="!showTagsForm && authUser?.id === videoData.author_id"
-                            (click)="showTagsForm = !showTagsForm">Edit details
+                            (click)="showTagsForm = !showTagsForm">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit details</span>
                     </button>
                 </div>
                 <app-video-details-form [videoData]="videoData" *ngIf="showTagsForm"

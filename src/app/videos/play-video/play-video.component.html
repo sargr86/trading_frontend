@@ -16,13 +16,13 @@
                 </div>
 
                 <div class="main-tags-like">
-                    <div class="main-tags-share" (click)="updateLikes(videoData, true)">
-                        <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection?.liked ==='liked'"></i>
+                    <div class="main-tags-share" (click)="updateLikes(videoData, 'like')">
+                        <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection?.liked"></i>
                         <p>{{videoData.likes}}</p>
                     </div>
-                    <div class="main-tags-share" (click)="updateLikes(videoData, false)">
+                    <div class="main-tags-share" (click)="updateLikes(videoData, 'dislike')">
                         <i class="fas fa-thumbs-down"
-                           [class.disliked]="userVideoConnection?.liked ==='disliked'"></i>
+                           [class.disliked]="userVideoConnection?.disliked"></i>
                         <p>{{videoData.dislikes}}</p>
                     </div>
                     <div class="main-tags-share">
@@ -45,8 +45,6 @@
                             (click)="showTagsForm = !showTagsForm">Edit details
                     </button>
                 </div>
-                <!--                <app-tags-form [tags]="videoData" *ngIf="showTagsForm"-->
-                <!--                               (tagsAdded)="saveTags($event)"></app-tags-form>-->
                 <app-video-details-form [videoData]="videoData" *ngIf="showTagsForm"
                                         (formReady)="saveVideoDetails($event)"></app-video-details-form>
             </div>

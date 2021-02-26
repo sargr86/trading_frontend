@@ -26,7 +26,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     apiUrl = API_URL;
 
     authUser;
-    userVideoConnection = {liked: '', saved: '', viewed: false};
+    userVideoConnection = {liked: 0, disliked: 0, saved: '', viewed: false};
     isProduction = environment.production;
 
     videoJSPlayerOptions = {
@@ -72,6 +72,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
             this.videoData = dt;
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
+                console.log(this.userVideoConnection)
                 this.updateViewsCount(dt);
                 this.indexUserTags(dt);
             }
@@ -86,16 +87,16 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         if (!userVideoConnection) {
             return this.userVideoConnection;
         } else {
-            const liked = ['liked', 'disliked'].find(st => userVideoConnection.users_videos[st] ? st : '');
+            const liked = userVideoConnection.users_videos?.liked;
+            const disliked = userVideoConnection.users_videos?.disliked;
             const saved = userVideoConnection.users_videos.saved ? 'saved' : '';
             const viewed = !!userVideoConnection?.users_videos?.viewed;
-            return {liked, saved, viewed};
+            return {liked, disliked, saved, viewed};
         }
     }
 
     updateViewsCount(dt) {
         const params = {user_id: this.authUser.id, video_id: dt.id};
-        console.log(this.userVideoConnection)
         if (!this.userVideoConnection.viewed) {
             this.videoService.updateViews(params).subscribe((d) => {
                 this.videoData = d;
@@ -103,51 +104,32 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         }
     }
 
-    updateLikes(videoData, like = true) {
+    updateLikes(videoData, action) {
         if (this.auth.loggedIn()) {
-            if (this.userVideoConnection) {
+            if (action === 'like') {
+                this.userVideoConnection.liked = this.userVideoConnection.liked ? 0 : 1;
+                if (this.userVideoConnection.disliked) {
+                    videoData.dislikes += videoData.dislikes === 0 ? 0 : -1;
+                }
+                this.userVideoConnection.disliked = 0;
+                videoData.likes += this.userVideoConnection.liked ? 1 : -1;
 
-                // Video liked
-                if (like) {
-                    if (this.userVideoConnection.liked !== 'liked') {
-                        ++videoData.likes;
-                    }
-                    if (this.userVideoConnection.liked === 'disliked' && videoData.dislikes > 0) {
-                        --videoData.dislikes;
-                    }
-                    if (this.userVideoConnection.liked === 'liked' && videoData.likes > 0) {
-                        this.userVideoConnection = null;
-                        --videoData.likes;
-                        like = false;
-                    } else {
-                        this.userVideoConnection.liked = 'liked';
-                    }
+            } else {
+                this.userVideoConnection.disliked = this.userVideoConnection.disliked ? 0 : 1;
+                if (this.userVideoConnection.liked) {
+                    videoData.likes += videoData.likes === 0 ? 0 : -1;
                 }
-                // Video disliked
-                else {
-                    if (this.userVideoConnection.liked === 'liked' && videoData.likes > 0) {
-                        --videoData.likes;
-                    }
-                    if (this.userVideoConnection.liked !== 'disliked') {
-                        ++videoData.dislikes;
-                    }
-                    if (this.userVideoConnection.liked === 'disliked' && videoData.dislikes > 0) {
-                        this.userVideoConnection = null;
-                        --videoData.dislikes;
-                        // console.log(this.likeStatus)
-                    } else {
-                        this.userVideoConnection.liked = 'disliked';
-                    }
-                }
+                this.userVideoConnection.liked = 0;
+                videoData.dislikes += this.userVideoConnection.disliked ? 1 : -1;
             }
-
 
             this.videoService.updateLikes({
                 video_id: videoData.id,
                 user_id: this.authUser.id,
-                likes: videoData.likes,
-                dislikes: videoData.dislikes,
-                likeStatus: ['liked', 'disliked'].find(c => c === this.userVideoConnection?.liked),
+                likes: videoData.likes > 0 ? videoData.likes : 0,
+                dislikes: videoData.dislikes > 0 ? videoData.dislikes : 0,
+                liked: this.userVideoConnection.liked,
+                disliked: this.userVideoConnection.disliked,
                 saved: videoData.saved
             }).subscribe(dt => {
 

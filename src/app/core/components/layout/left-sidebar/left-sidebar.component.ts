@@ -69,8 +69,11 @@ export class LeftSidebarComponent implements OnInit {
         });
     }
 
-    openChannelPage(channel) {
-        this.router.navigate(['channels/show'], {queryParams: {username: channel.user.username}});
+    async openChannelPage(channel) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate(['channels/show'], {queryParams:  {username: channel.user.username}})
+        );
+        // await this.router.navigateByUrl('channels/show', {queryParams: {username: channel.user.username}});
     }
 
     viewAllSubscriptions() {

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {UserRoutingModule} from './user-routing.module';
-import {ProfileComponent} from './created-non-functional/profile/profile.component';
+import {ProfileComponent} from './profile/profile.component';
 import {SharedModule} from '@shared/shared.module';
 import {NgxPhotoEditorModule} from 'ngx-photo-editor';
 import {VideoComponent} from '@app/user/publisher-flow/video/video.component';
@@ -14,11 +14,22 @@ import {VideoLibraryComponent} from './openvidu-test/video-library/video-library
 import {OpenviduSessionModule} from 'openvidu-angular';
 import {JoinStreamingFormComponent} from './openvidu-test/join-streaming-form/join-streaming-form.component';
 import {HomeComponent} from '@app/user/home/home.component';
-import { CheckStreamingRequirementsComponent } from './publisher-flow/check-streaming-requirements/check-streaming-requirements.component';
-import { PublisherFlowComponent } from './publisher-flow/publisher-flow.component';
-import { SubscriberFlowComponent } from './subscriber-flow/subscriber-flow.component';
-import { CollectStreamingDetailsFormComponent } from './publisher-flow/collect-streaming-details-form/collect-streaming-details-form.component';
-import { JoinVideoStreamingComponent } from './subscriber-flow/join-video-streaming/join-video-streaming.component';
+import {CheckStreamingRequirementsComponent} from './publisher-flow/check-streaming-requirements/check-streaming-requirements.component';
+import {PublisherFlowComponent} from './publisher-flow/publisher-flow.component';
+import {SubscriberFlowComponent} from './subscriber-flow/subscriber-flow.component';
+import {CollectStreamingDetailsFormComponent} from './publisher-flow/collect-streaming-details-form/collect-streaming-details-form.component';
+import {JoinVideoStreamingComponent} from './subscriber-flow/join-video-streaming/join-video-streaming.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+    url: '{no_url}',
+    maxFilesize: 50,
+    maxFiles: 1,
+    acceptedFiles: 'image/*',
+    autoProcessQueue: false,
+    addRemoveLinks: true
+};
 
 @NgModule({
     declarations: [
@@ -42,7 +53,15 @@ import { JoinVideoStreamingComponent } from './subscriber-flow/join-video-stream
         UserRoutingModule,
         OpenviduSessionModule,
         NgxPhotoEditorModule,
+        BsDatepickerModule.forRoot(),
+        DropzoneModule,
         SharedModule
+    ],
+    providers: [
+        {
+            provide: DROPZONE_CONFIG,
+            useValue: DEFAULT_DROPZONE_CONFIG
+        }
     ],
     exports: []
 })

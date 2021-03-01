@@ -5,13 +5,31 @@ import {
     VIDEO_DEFAULT_COVERS_PATH,
     VIDEO_DEFAULT_THUMBNAILS_PATH
 } from '@core/constants/global';
+import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 
 @Pipe({
     name: 'getImgPath'
 })
 export class GetThumbPathPipe implements PipeTransform {
 
-    transform(img, folder = 'thumbnails'): string {
+    constructor(
+        private sanitizer: DomSanitizer,
+    ) {
+
+    }
+
+    transform(img, folder = 'thumbnails', extra = null): string | SafeStyle {
+
+        const url = img ? `${API_URL}uploads/${folder}/${img}` : this.getDefaultPaths(folder);
+
+        if (extra === 'background') {
+            console.log(url)
+            // let url = 'url("' + UPLOADS_FOLDER + folder + '/' + name + '")';
+            return this.sanitizer.bypassSecurityTrustStyle(`url("${url}"`);
+        } else if (extra === 'url') {
+            return this.sanitizer.bypassSecurityTrustUrl(url);
+        }
+
         return img ? `${API_URL}uploads/${folder}/${img}` : this.getDefaultPaths(folder);
     }
 

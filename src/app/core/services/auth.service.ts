@@ -44,7 +44,7 @@ export class AuthService {
         return this.httpClient.post<any>(`${API_URL}auth/resend-verification-code`, params);
     }
 
-    checkVerificationCode(params){
+    checkVerificationCode(params) {
         return this.httpClient.post<any>(`${API_URL}auth/check-verification-code`, params);
     }
 
@@ -66,9 +66,6 @@ export class AuthService {
         return false;
     }
 
-    logout() {
-        return this.httpClient.get(`${API_URL}auth/logout`);
-    }
 
     sendForgotPassEmail(params) {
         return this.httpClient.post<any>(`${API_URL}auth/send-forgot-pass-email`, params);
@@ -76,5 +73,11 @@ export class AuthService {
 
     resetPass(params) {
         return this.httpClient.post<any>(`${API_URL}auth/reset-password`, params);
+    }
+
+
+
+    logout() {
+        return this.httpClient.get(`${API_URL}auth/logout`);
     }
 }

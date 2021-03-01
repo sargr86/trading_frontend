@@ -73,6 +73,10 @@ export class NavbarComponent implements OnInit {
         this.search.emit(e);
     }
 
+    toggleMyProfileLink(){
+        return !this.router.url.includes('user/profile');
+    }
+
     toggleMyChannelLink() {
         return !this.router.url.includes('channels/show') || this.passedUsername !== this.authUser.username;
     }

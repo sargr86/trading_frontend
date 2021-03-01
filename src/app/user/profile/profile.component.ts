@@ -78,6 +78,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        console.log(window.screen.availWidth)
     }
 
     dateChanged(e) {
@@ -94,13 +95,42 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.log(e)
     }
 
+    buildFormData() {
+        const formData: FormData = new FormData();
+        const formValue = this.profileForm.value;
+        const dropFileExist = Object.entries(this.dropzoneFiles).length > 0;
+
+        for (const field in this.profileForm.value) {
+            if (field === 'birthday') {
+                if (formValue.birthday) {
+                    formData.append(field, this.profileForm.value[field]);
+                }
+            } else if (field !== 'profile_img' || !dropFileExist) {
+                formData.append(field, this.profileForm.value[field]);
+            }
+        }
+
+        // If drop zone file exists saving it to formData object as well
+        if (dropFileExist) {
+
+            const file = this.dropzoneFiles[0];
+
+            const nameArr = file.name.split('.');
+            const fileName = `${nameArr[0]}.${nameArr[1]}`;
+            formData.append('profile_img', fileName);
+            formData.append('profile_img_file', file, fileName);
+        }
+
+        return formData;
+    }
+
     saveChanges() {
+        const formData = this.buildFormData();
         console.log(this.profileForm.value)
-        this.usersService.saveProfileChanges(this.profileForm.value).subscribe(dt => {
+        this.usersService.saveProfileChanges(formData).subscribe(dt => {
 
         });
     }
-
 
     get fullName(): AbstractControl {
         return this.profileForm.get('full_name');

@@ -13,6 +13,7 @@ import {StockProfileComponent} from '@app/user/created-non-functional/stock-prof
 import {DatePipe} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MaterialModule} from '@core/modules/material.module';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -31,6 +32,7 @@ export function tokenGetter() {
         CoreModule,
         CarouselModule,
         MatDialogModule,
+        MaterialModule,
         JwtModule.forRoot({
             config: {
                 tokenGetter,

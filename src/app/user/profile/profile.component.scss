@@ -1,0 +1,24 @@
+@import '../../auth/register/register.component';
+@import 'variables';
+
+
+form {
+    display: flex;
+
+    .left-side, .right-side {
+        width: 50%;
+    }
+
+    .right-side {
+        margin-left: 30px;
+        // Drop zone styles
+        .profile-img {
+            width: 400px;
+            height: 400px;
+            background-size: cover;
+        }
+
+    }
+}
+
+

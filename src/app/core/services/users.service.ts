@@ -23,4 +23,8 @@ export class UsersService {
     getUserInfo(params) {
         return this.httpClient.get<any>(`${API_URL}users/get-user-info`, {params});
     }
+
+    saveProfileChanges(params) {
+        return this.httpClient.put<any>(`${API_URL}users/save-profile-changes`, params);
+    }
 }

@@ -320,7 +320,7 @@ nav.home-header {
 .body-content.full-width {
     width: 100%;
     padding: 0 !important;
-    margin-top: 0!important;
+    margin-top: 0 !important;
 }
 
 .body-content-right {
@@ -1161,6 +1161,45 @@ ngb-modal-window {
 .mat-chip.mat-standard-chip {
     background-color: unset !important;
     border: 1px solid #e0e0e0 !important;
+}
+
+#dropzone.single {
+    height: 410px !important;
+
+
+    .dz-wrapper {
+        height: 100% !important;
+        width: 400px;
+        overflow: hidden !important;
+
+        .dz-message {
+            height: 400px !important;
+            border: none !important;
+        }
+
+
+        .dz-image img {
+            height: 400px !important;
+            object-fit: cover;
+        }
+
+        .dz-progress {
+            display: none;
+        }
+
+        .dz-remove {
+            //@include namedBtn;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: $red;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            text-decoration: none !important;
+            //color: $white;
+            z-index: 44444;
+        }
+    }
 }
 
 @media (max-width: 1700px) {

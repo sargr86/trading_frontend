@@ -524,6 +524,10 @@ nav.home-header {
     font-size: 16px;
     font-family: "Muli-Regular";
     margin-left: 12px;
+    @media screen and  (max-width:  767px) {
+        font-size: 14px;
+        margin-left: 6px;
+    }
 }
 
 .left-menu-top i, .left-menu-top p {
@@ -1376,6 +1380,13 @@ ngb-modal-window {
     .ads-maps canvas {
         width: 100% !important;
         height: auto !important;
+    }
+    .sub-block {
+        flex-wrap: wrap;
+    }
+    .profile-list .watchlist-search {
+        max-width: 290px;
+        width: 100%;
     }
 }
 

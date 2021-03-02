@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {
-    API_URL,
+    API_URL, USER_DEFAULT_AVATARS_PATH,
     VIDEO_DEFAULT_AVATARS_PATH,
     VIDEO_DEFAULT_COVERS_PATH,
     VIDEO_DEFAULT_THUMBNAILS_PATH
@@ -23,7 +23,6 @@ export class GetThumbPathPipe implements PipeTransform {
         const url = img ? `${API_URL}uploads/${folder}/${img}` : this.getDefaultPaths(folder);
 
         if (extra === 'background') {
-            console.log(url)
             // let url = 'url("' + UPLOADS_FOLDER + folder + '/' + name + '")';
             return this.sanitizer.bypassSecurityTrustStyle(`url("${url}"`);
         } else if (extra === 'url') {
@@ -41,6 +40,9 @@ export class GetThumbPathPipe implements PipeTransform {
                 break;
             case 'avatars':
                 p = VIDEO_DEFAULT_AVATARS_PATH;
+                break;
+            case 'user_avatars':
+                p = USER_DEFAULT_AVATARS_PATH;
                 break;
             case 'covers':
                 p = VIDEO_DEFAULT_COVERS_PATH;

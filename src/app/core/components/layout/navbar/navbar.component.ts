@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
 
 
     @Output('search') search = new EventEmitter();
+    @Output('closeSidenav') closeSidenav = new EventEmitter()
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
 
     passedUsername;

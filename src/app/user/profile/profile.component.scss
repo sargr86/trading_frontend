@@ -9,13 +9,38 @@ form {
         width: 50%;
     }
 
+    .save-profile-changes {
+        width: 100%;
+        height: 51px;
+        background-color: #18B587;
+        padding: 15px 32px;
+        color: #fff !important;
+        font-size: 16px;
+        font-family: "Muli-Regular";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
     .right-side {
         margin-left: 30px;
         // Drop zone styles
         .profile-img {
             width: 400px;
             height: 400px;
-            background-size: cover;
+            position: relative;
+
+            .remove-profile-img {
+                cursor: pointer;
+                position: absolute;
+                right: 7px;
+                top: 6px;
+                color: white;
+                background: #F53C6F;
+                padding: 5px;
+            }
         }
 
     }

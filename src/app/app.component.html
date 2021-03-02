@@ -1,32 +1,51 @@
-<app-navbar *ngIf="!router.url.includes('auth')" (search)="getSearch($event)"></app-navbar>
-<section class="body-content" [class.full-width]="router.url.includes('auth')">
-    <div class="body-content-left" *ngIf="!router.url.includes('auth') && !checkIfPolicyPage()">
-        <div class="position-relative">
-            <div class="close-left-menu">&times;</div>
-            <app-left-sidebar></app-left-sidebar>
-        </div>
-    </div>
-    <div class="body-content-right" [ngClass]="{'full-width': checkIfPolicyPage() || router.url.includes('auth')}">
-        <div class="position-relative">
-            <div class="open-left-menu d-none">&#9776;</div>
-            <router-outlet></router-outlet>
-        </div>
-    </div>
-</section>
+<!--<app-navbar *ngIf="!router.url.includes('auth')" (search)="getSearch($event)"></app-navbar>-->
+<!--<section class="body-content" [class.full-width]="router.url.includes('auth')">-->
+<!--    <div class="body-content-left" *ngIf="!router.url.includes('auth') && !checkIfPolicyPage()">-->
+<!--        <div class="position-relative">-->
+<!--            <div class="close-left-menu" *ngIf="isSmallScreen(768)">&times;</div>-->
+<!--            <app-left-sidebar></app-left-sidebar>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="body-content-right" [ngClass]="{'full-width': checkIfPolicyPage() || router.url.includes('auth')}">-->
+<!--        <div class="position-relative">-->
+<!--            <div class="open-left-menu d-none">&#9776;</div>-->
+<!--            <router-outlet></router-outlet>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 
-<!--<router-outlet *ngIf="router.url.includes('auth')"></router-outlet>-->
-<!--<div class="container">-->
-<!--    <video controls crossorigin playsinline poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg">-->
-<!--        <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">-->
-<!--        <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">-->
-<!--        <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">-->
+<mat-sidenav-container>
+    <mat-sidenav [mode]="getMode(sidenav)" #sidenav
+                 id="sidenav" [opened]="true">
+        <app-left-sidebar *ngIf="isSmallScreen()"></app-left-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <app-navbar (search)="getSearch($event)" *ngIf="!router.url.includes('auth')"
+                    (closeSidenav)="closeSidenav(sidenav)"></app-navbar>
+        <!--        <app-navbar (toggleSide)="sidenav.toggle()"></app-navbar>-->
 
-<!--        &lt;!&ndash; Caption files &ndash;&gt;-->
-<!--        <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"-->
-<!--               default>-->
-<!--        <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">-->
-<!--        &lt;!&ndash; Fallback for browsers that don't support the <video> element &ndash;&gt;-->
-<!--        <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>-->
-<!--    </video>-->
-<!--</div>-->
-<!-- Plyr resources and browser polyfills are specified in the pen settings -->
+<!--        <mat-spinner [diameter]="30" *ngIf="loader.dataLoading"></mat-spinner>-->
+
+        <section class="body-content" [class.full-width]="router.url.includes('auth')">
+            <div class="body-content-left" *ngIf="!router.url.includes('auth') && !checkIfPolicyPage() && !isSmallScreen()">
+                <div class="position-relative">
+                    <div class="close-left-menu" *ngIf="isSmallScreen()">&times;</div>
+                    <app-left-sidebar></app-left-sidebar>
+                </div>
+            </div>
+            <div class="body-content-right"
+                 [ngClass]="{'full-width': checkIfPolicyPage() || router.url.includes('auth')}">
+                <div class="position-relative">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </section>
+
+
+        <!--        <app-header (toggle)="sidenav.toggle()"></app-header>-->
+        <!--    <div class="non-dashboard-page-container" *ngIf="!checkDashboardPage()">-->
+        <!--      <router-outlet></router-outlet>-->
+        <!--    </div>-->
+        <!--        <app-footer *ngIf="!checkDashboardPage() && !router.url.includes('auth')"></app-footer>-->
+    </mat-sidenav-content>
+</mat-sidenav-container>

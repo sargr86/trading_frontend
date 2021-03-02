@@ -1,6 +1,6 @@
 <div id="videos-list" *ngIf="userVideos">
     <ng-container *ngIf="!search">
-        <div class="video-container" *ngFor="let video of userVideos.users_vids">
+        <div class="video-container flex-wrap" *ngFor="let video of userVideos.users_vids">
             <div class="thumbnail">
                 <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, userVideos.username)">
                 <span class="duration">{{video.duration}}</span>

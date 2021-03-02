@@ -8,6 +8,7 @@
 
 .chat-wrap{
     display: flex;
+    flex-wrap: wrap;
 
     .img{
         width: 48px;
@@ -128,10 +129,15 @@
                 }
             }
         }
+        @media screen and (max-width: 1029px) {
+            flex: 1;
+        }
     }
 
     .chat{
         margin-left: 32px;
+        flex: 1;
+        min-width: 350px;
 
         ::-webkit-scrollbar {
             width: 6px;
@@ -275,6 +281,10 @@
                 }
             }
         }
-
+        @media screen and (max-width: 1029px) {
+            margin-left: 0;
+            margin-top: 24px;
+            min-width: 100%;
+        }
     }
 }

@@ -40,6 +40,10 @@
                 height: 249px;
                 object-fit: cover;
                 cursor: pointer;
+                @media screen and (max-width: 991px) {
+                    max-width: 432px!important;
+                    width: 100% !important;
+                }
             }
 
             .duration {
@@ -140,6 +144,9 @@
                     background-color: #D6D6D6 !important;
                 }
             }
+            @media screen and (max-width: 942px) {
+                margin-left: 10px;
+            }
         }
 
 
@@ -170,4 +177,5 @@
             }
         }
     }
+
 }

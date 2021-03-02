@@ -6,7 +6,11 @@ form {
     display: flex;
 
     .left-side, .right-side {
-        width: 50%;
+        flex: 1;
+        min-width: 350px;
+        @media screen and (max-width: 767px) {
+            min-width: 280px;
+        }
     }
 
     .save-profile-changes {
@@ -43,6 +47,9 @@ form {
             }
         }
 
+        @media screen and (max-width: 767px) {
+            margin-left: 0;
+        }
     }
 }
 

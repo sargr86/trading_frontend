@@ -382,6 +382,12 @@ nav.home-header {
     width: 100%;
     padding-right: 32px;
     position: relative;
+    .main-item-block {
+        justify-content: left;
+    }
+    @media screen and  (max-width: 767px) {
+        padding-right: 0;
+    }
 }
 
 .live-now {
@@ -522,11 +528,11 @@ nav.home-header {
 .left-menu p {
     color: #545454;
     font-size: 16px;
+    line-height: 24px;
     font-family: "Muli-Regular";
     margin-left: 12px;
     @media screen and (max-width: 767px) {
         font-size: 14px;
-        margin-left: 6px;
     }
 }
 
@@ -1174,9 +1180,9 @@ ngb-modal-window {
 
     .dz-wrapper {
         height: 100% !important;
-        width: 400px;
+        max-width: 400px;
         overflow: hidden !important;
-
+        width: 100%;
         .dz-message {
             height: 400px !important;
             border: none !important;
@@ -1437,7 +1443,7 @@ ngb-modal-window {
 }
 
 @media (max-width: 480px) {
-    .left-menu, .left-list, .categories, .watchlist {
+    .left-list, .categories, .watchlist {
         width: 100%;
     }
     .watchlist .tab-pane, .ads-block-right {
@@ -1484,7 +1490,7 @@ input, textarea {
 }
 
 .owl-item {
-    width: 400px !important;
+    //width: 400px !important;
 
     .thumbnail {
         object-fit: cover !important;

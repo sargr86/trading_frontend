@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
         this.search.emit(e);
     }
 
-    toggleMyProfileLink(){
+    toggleMyProfileLink() {
         return !this.router.url.includes('user/profile');
     }
 
@@ -88,6 +88,10 @@ export class NavbarComponent implements OnInit {
 
     getDailyStocks() {
 
+    }
+
+    isSmallScreen() {
+        return window.screen.availWidth < 768;
     }
 
 }

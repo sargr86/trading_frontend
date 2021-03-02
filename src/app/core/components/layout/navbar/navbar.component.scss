@@ -1,8 +1,22 @@
 .user-icon {
-  margin-right: 10px;
-  cursor: pointer;
-}
-.navbar-brand{
-  cursor: pointer;
+    margin-right: 10px;
+    cursor: pointer;
 }
 
+.navbar-brand {
+    cursor: pointer;
+}
+
+.right-side-actions {
+    display: flex;
+    align-items: center;
+
+    #top-row-toggle {
+        background: none;
+
+        mat-icon {
+            height: 2px;
+            width: 2px;
+        }
+    }
+}

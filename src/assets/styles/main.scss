@@ -524,7 +524,7 @@ nav.home-header {
     font-size: 16px;
     font-family: "Muli-Regular";
     margin-left: 12px;
-    @media screen and  (max-width:  767px) {
+    @media screen and (max-width: 767px) {
         font-size: 14px;
         margin-left: 6px;
     }
@@ -1167,6 +1167,7 @@ ngb-modal-window {
     border: 1px solid #e0e0e0 !important;
 }
 
+// Drop zone styles
 #dropzone.single {
     height: 410px !important;
 
@@ -1192,7 +1193,6 @@ ngb-modal-window {
         }
 
         .dz-remove {
-            //@include namedBtn;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -1200,10 +1200,17 @@ ngb-modal-window {
             border-radius: 20px;
             transform: translate(-50%, -50%);
             text-decoration: none !important;
-            //color: $white;
+            color: $white;
             z-index: 44444;
+            font-weight: bold;
+            padding: 5px;
         }
     }
+}
+
+// Material side nav styles
+.mat-drawer-container {
+    background-color: $white !important;
 }
 
 @media (max-width: 1700px) {
@@ -1391,7 +1398,7 @@ ngb-modal-window {
     }
     .left-list {
         width: 80%;
-        margin-top: 40px;
+        margin: 40px 0 0;
     }
     .main-carousel .owl-nav button.owl-next {
         display: none;

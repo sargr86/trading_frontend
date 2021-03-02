@@ -27,6 +27,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {DROPZONE_CONFIG} from 'ngx-dropzone-wrapper';
 import {AuthService} from '@core/services/auth.service';
 import * as  moment from 'moment';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-profile',
@@ -51,7 +52,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         public loader: LoaderService,
         public auth: AuthService,
         private usersService: UsersService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private toastr: ToastrService,
+        public router: Router
     ) {
         this.initForm();
         this.authUser = this.getAuthUser.transform();
@@ -61,6 +64,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     initForm() {
         this.profileForm = this.fb.group({
+            id: [''],
             full_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
             username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
@@ -71,14 +75,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 ],
             ],
             // confirm_password: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
-            confirm_password: ['', Validators.required],
+            // confirm_password: ['', Validators.required],
             birthday: ['', Validators.required],
             avatar: ['']
         });
     }
 
     ngOnInit(): void {
-        console.log(window.screen.availWidth)
     }
 
     dateChanged(e) {
@@ -86,7 +89,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     removeImage() {
-
+        this.authUser.avatar = '';
+        this.profileForm.patchValue({avatar: ''});
     }
 
     onAddedFile(e) {
@@ -103,9 +107,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         for (const field in this.profileForm.value) {
             if (field === 'birthday') {
                 if (formValue.birthday) {
-                    formData.append(field, this.profileForm.value[field]);
+                    formData.append(field, moment(new Date(this.profileForm.value[field])).format('YYYY-MM-DD'));
                 }
-            } else if (field !== 'profile_img' || !dropFileExist) {
+            } else if (field !== 'avatar' || !dropFileExist) {
                 formData.append(field, this.profileForm.value[field]);
             }
         }
@@ -115,10 +119,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
             const file = this.dropzoneFiles[0];
 
-            const nameArr = file.name.split('.');
-            const fileName = `${nameArr[0]}.${nameArr[1]}`;
-            formData.append('profile_img', fileName);
-            formData.append('profile_img_file', file, fileName);
+            const fileName = `avatar_${Date.now()}.jpg`;
+            formData.append('avatar', fileName);
+            formData.append('user_avatar_file', file, fileName);
         }
 
         return formData;
@@ -126,9 +129,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     saveChanges() {
         const formData = this.buildFormData();
-        console.log(this.profileForm.value)
-        this.usersService.saveProfileChanges(formData).subscribe(dt => {
-
+        this.usersService.saveProfileChanges(formData).subscribe(async (dt) => {
+            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.toastr.success('The changes are saved successfully');
+            await this.router.navigateByUrl('');
         });
     }
 

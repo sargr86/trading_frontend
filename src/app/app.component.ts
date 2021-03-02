@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import * as Plyr from 'plyr';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
 
     constructor(
         public router: Router,
-        private subject: SubjectService
+        private subject: SubjectService,
+        public loader: LoaderService
     ) {
 
     }
@@ -34,5 +36,26 @@ export class AppComponent implements OnInit {
 
     checkIfPolicyPage() {
         return /accessibility-assessment|security|help|privacy-policy|cookie-policy|about/.test(this.router.url);
+    }
+
+
+    getMode(sidenav) {
+
+        // sidenav.toggle();
+        if (screen.width < 1060 && !this.router.url.includes('auth')) {
+            return 'over';
+        } else {
+            return 'side';
+        }
+    }
+
+    closeSidenav(sidenav) {
+        // if (this.responsiveMode) {
+        sidenav.open();
+        // }
+    }
+
+    isSmallScreen() {
+        return window.screen.availWidth < 768;
     }
 }

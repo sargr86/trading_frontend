@@ -1,4 +1,9 @@
-<div class="body-content-left">
+<div class="logo-container" *ngIf="isSmallScreen()">
+    <img class="header-left-logo navbar-brand" src="assets/img/logo.png"
+         (click)="router.navigate(['/'])">
+</div>
+<div id="left-sidebar">
+
     <div class="left-menu">
         <div class="left-menu-main st-left-metu" [class.active]="router.url.includes('publish')"
              (click)="changePage('user/video/start-live-video')" *ngIf="auth.loggedIn()">
@@ -72,7 +77,7 @@
         </div>
         <p (click)="viewAllSubscriptions()" class="see-more">See more</p>
     </ng-container>
-    <div class="watchlist" *ngIf="router.url!=='/'" [hidden]="envName==='production'">
+    <div class="watchlist" *ngIf="router.url!=='/' && !isSmallScreen()" [hidden]="envName==='production'">
         <ul class="nav nav-tabs" id="watchlist" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab"

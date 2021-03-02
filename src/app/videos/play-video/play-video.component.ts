@@ -153,7 +153,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
 
     openChannelPage(videoData) {
-        console.log(videoData)
         this.router.navigate(['channels/show'], {queryParams: {username: videoData.users_vids[0].username}});
     }
 

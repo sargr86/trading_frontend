@@ -23,12 +23,12 @@ export const OWL_OPTIONS: OwlOptions = {
         0: {
             items: 1
         },
-        767: {
-            items: 3
+        768: {
+            items: 3.2
         },
-        1200: {
-            items: 3
-        }
+        // 1200: {
+        //     items: 3.2
+        // }
     }
 };
 

@@ -1,6 +1,6 @@
 <div class="logo-container" *ngIf="isSmallScreen()">
     <img class="header-left-logo navbar-brand" src="assets/img/logo.png"
-         (click)="router.navigate(['/'])">
+         (click)="changePage('/')">
 </div>
 <div id="left-sidebar">
 
@@ -12,7 +12,7 @@
             </span>
             <p>Start live video</p>
         </div>
-        <div class="left-menu-main" (click)="router.navigate(['/'])" [class.active]="router.url ==='/'">
+        <div class="left-menu-main" (click)="changePage('/')" [class.active]="router.url ==='/'">
             <!--            <img src="assets/img/item-5.png">-->
             <mat-icon>home</mat-icon>
             <p>Home</p>

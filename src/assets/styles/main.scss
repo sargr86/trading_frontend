@@ -1379,10 +1379,13 @@ ngb-modal-window {
         justify-content: space-between;
     }
 
-
+    .body-content{
+        min-height: 100vh;
+    }
 }
 
 @media (max-width: 767px) {
+
     .home-black-item {
         margin-bottom: 5px;
         margin-top: 5px;

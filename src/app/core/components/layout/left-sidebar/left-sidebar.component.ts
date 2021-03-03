@@ -59,7 +59,7 @@ export class LeftSidebarComponent implements OnInit {
         // console.log(e)
         // console.log(channel)
         this.channels = moveItemInArray(this.channels, e.previousIndex, e.currentIndex);
-        console.log(this.channels)
+        // console.log(this.channels)
         const sendData = {
             rows: JSON.stringify(this.channels),
             channel_id: channel.id,

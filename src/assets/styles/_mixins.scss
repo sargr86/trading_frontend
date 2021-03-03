@@ -25,16 +25,18 @@
 
     &.added {
 
-        .img{
+        .img {
             position: relative;
             overflow: hidden;
-            span{
+
+            span.added-placeholder {
                 position: absolute;
                 right: -24px;
                 top: 8px;
                 font-size: 13px;
                 transform: rotate(45deg);
-                &::before{
+
+                &::before {
                     content: "Added";
                     background: #f53c6f;
                     color: #ffffff;

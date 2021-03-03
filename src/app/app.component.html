@@ -1,19 +1,3 @@
-<!--<app-navbar *ngIf="!router.url.includes('auth')" (search)="getSearch($event)"></app-navbar>-->
-<!--<section class="body-content" [class.full-width]="router.url.includes('auth')">-->
-<!--    <div class="body-content-left" *ngIf="!router.url.includes('auth') && !checkIfPolicyPage()">-->
-<!--        <div class="position-relative">-->
-<!--            <div class="close-left-menu" *ngIf="isSmallScreen(768)">&times;</div>-->
-<!--            <app-left-sidebar></app-left-sidebar>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="body-content-right" [ngClass]="{'full-width': checkIfPolicyPage() || router.url.includes('auth')}">-->
-<!--        <div class="position-relative">-->
-<!--            <div class="open-left-menu d-none">&#9776;</div>-->
-<!--            <router-outlet></router-outlet>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
-
 <mat-sidenav-container>
     <mat-sidenav [mode]="getMode(sidenav)" #sidenav
                  id="sidenav" [opened]="true">
@@ -40,12 +24,5 @@
                 </div>
             </div>
         </section>
-
-
-        <!--        <app-header (toggle)="sidenav.toggle()"></app-header>-->
-        <!--    <div class="non-dashboard-page-container" *ngIf="!checkDashboardPage()">-->
-        <!--      <router-outlet></router-outlet>-->
-        <!--    </div>-->
-        <!--        <app-footer *ngIf="!checkDashboardPage() && !router.url.includes('auth')"></app-footer>-->
     </mat-sidenav-content>
 </mat-sidenav-container>

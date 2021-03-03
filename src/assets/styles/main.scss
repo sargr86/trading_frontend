@@ -22,6 +22,7 @@ html, body, p, h1, h2, h3, h4, ul {
     padding: 0;
 }
 
+
 input, button {
     outline: none;
     border: none;
@@ -1186,7 +1187,7 @@ ngb-modal-window {
 
     .dz-wrapper {
         height: 100% !important;
-        max-width: 400px;
+        //max-width: 400px;
         overflow: hidden !important;
         width: 100%;
 
@@ -1363,7 +1364,7 @@ ngb-modal-window {
     }
     .home-search {
         width: 300px;
-        margin-bottom: 20px;
+        margin-bottom: 0;
         margin-right: 0;
     }
     nav.home-header {
@@ -1399,6 +1400,7 @@ ngb-modal-window {
     }
     .home-search {
         width: 100%;
+        margin:  0;
     }
 
     .left-list {
@@ -1406,7 +1408,7 @@ ngb-modal-window {
     }
     .body-content-right {
         width: 100%;
-        margin-top: 40px;
+        //margin-top: 40px;
     }
     .left-menu {
         width: 80%;
@@ -1449,6 +1451,11 @@ ngb-modal-window {
     .profile-list .watchlist-search {
         max-width: 290px;
         width: 100%;
+    }
+    app-search-videos-form.flex-1 {
+        flex: 1;
+        max-width: 200px;
+        margin: 0 8px;
     }
 }
 

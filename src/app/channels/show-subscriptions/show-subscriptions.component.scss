@@ -1,3 +1,16 @@
+.subscribe-to-channel-btn {
+    padding: 12px 28px;
+    font-size: 16px;
+    color: #FFFFFF;
+    background: #F53C6F;
+    border-radius: 0;
+    box-shadow: 0 0 6px #006dcc2e;
+
+    &.subscribed {
+        background-color: #D6D6D6 !important;
+    }
+}
+
 .channel-item {
     display: flex;
     width: 936px;
@@ -15,6 +28,7 @@
             color: #545454;
             font-size: 24px;
             font-family: 'Muli-Bold';
+            cursor: pointer;
         }
 
         .dot {
@@ -39,3 +53,4 @@
 
     }
 }
+

@@ -17,7 +17,8 @@
                 </ul>
                 <form [formGroup]="searchVideosForm" id="search-videos-form">
                     <div class="toggle-filters-btn">
-                        <button class="filter-toggle-btn" type="button" [class.filters-active]="showFilters"
+                        <button class="filter-toggle-btn" *ngIf="activeTab.name!=='About'" type="button"
+                                [class.filters-active]="showFilters"
                                 (click)="toggleFilters()">
                             <mat-icon>tune</mat-icon>
                         </button>

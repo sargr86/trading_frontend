@@ -382,10 +382,12 @@ nav.home-header {
     width: 100%;
     padding-right: 32px;
     position: relative;
+
     .main-item-block {
         justify-content: left;
     }
-    @media screen and  (max-width: 767px) {
+
+    @media screen and (max-width: 767px) {
         padding-right: 0;
     }
 }
@@ -768,8 +770,12 @@ nav.home-header {
 
 }
 
+.chat-container {
+
+}
 
 .chat-content {
+    max-width: 500px;
     //margin-bottom: 40px;
     box-shadow: 0 0 6px #0000001A;
 }
@@ -1183,6 +1189,7 @@ ngb-modal-window {
         max-width: 400px;
         overflow: hidden !important;
         width: 100%;
+
         .dz-message {
             height: 400px !important;
             border: none !important;
@@ -1379,7 +1386,7 @@ ngb-modal-window {
         justify-content: space-between;
     }
 
-    .body-content{
+    .body-content {
         min-height: 100vh;
     }
 }

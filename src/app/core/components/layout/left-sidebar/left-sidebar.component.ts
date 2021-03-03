@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {ChannelsService} from '@core/services/channels.service';
@@ -20,6 +20,8 @@ export class LeftSidebarComponent implements OnInit {
     authUser;
     routerUrl;
     envName;
+
+    @Output('closeSidenav') closeSidenav = new EventEmitter()
 
     constructor(
         public router: Router,
@@ -81,6 +83,7 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     changePage(route, params = {}) {
+        this.closeSidenav.emit(true);
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([route], {queryParams: params})
         );

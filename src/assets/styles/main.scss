@@ -1400,7 +1400,7 @@ ngb-modal-window {
     }
     .home-search {
         width: 100%;
-        margin:  0;
+        margin: 0;
     }
 
     .left-list {
@@ -1507,6 +1507,8 @@ input, textarea {
 }
 
 .owl-item {
+    // @todo look here tomorrow
+    width: 400px !important;
 
     .thumbnail {
         object-fit: cover !important;

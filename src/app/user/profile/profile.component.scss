@@ -7,9 +7,12 @@ form {
 
     .left-side, .right-side {
         flex: 1;
-        min-width: 350px;
-        @media screen and (max-width: 767px) {
-            min-width: 280px;
+        min-width: 360px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        @media screen and (max-width: 410px) {
+            min-width: 260px;
         }
     }
 
@@ -29,7 +32,7 @@ form {
     }
 
     .right-side {
-        margin-left: 30px;
+        //margin-left: 30px;
         // Drop zone styles
         .profile-img {
             width: 400px;

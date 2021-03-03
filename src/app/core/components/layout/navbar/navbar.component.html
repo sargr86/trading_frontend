@@ -1,6 +1,6 @@
 <nav class="home-header navbar navbar-expand-lg navbar-light">
     <img class="header-left-logo navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
-    <app-search-videos-form class="d-block d-md-none" (search)="searchVideos($event)"></app-search-videos-form>
+    <app-search-videos-form class="d-block d-lg-none mb-0 flex-1" (search)="searchVideos($event)"></app-search-videos-form>
     <div class="right-side-actions">
         <button class="navbar-toggler d-block d-md-none" type="button" (click)="closeSidenav.emit()">
             <span class="navbar-toggler-icon "></span>
@@ -10,7 +10,7 @@
         </button>
     </div>
     <div class="header-right collapse navbar-collapse nav-menu" id="navbarSupportedContent">
-        <app-search-videos-form class="d-none d-md-block" (search)="searchVideos($event)"></app-search-videos-form>
+        <app-search-videos-form class="d-none d-lg-block" (search)="searchVideos($event)"></app-search-videos-form>
         <div class="home-black-block" (click)="openModal(cryptoModal)" *ngIf="stocks">
             <div class="home-black-item" *ngFor="let stock of stocks">
                 <p class="black-text">{{stock.symbol}}</p>

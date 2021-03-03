@@ -91,7 +91,7 @@ export class NavbarComponent implements OnInit {
     }
 
     isSmallScreen() {
-        return window.screen.availWidth < 768;
+        return window.screen.availWidth < 992;
     }
 
 }

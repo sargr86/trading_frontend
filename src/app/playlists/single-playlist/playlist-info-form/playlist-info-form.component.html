@@ -15,10 +15,10 @@
             <h3>{{playlist.videos?.length}} videos</h3>
             <h3 *ngIf="!editMode">Last updated on {{playlist.updated_at|date: 'd MMM, yyyy'}}</h3>
             <div class="select" id="privacy-select">
-                <mat-icon>visibility_{{playlist.privacy ? 'on' : 'off'}}</mat-icon>
+                <mat-icon>visibility_{{+playlist.privacy ? 'off' : 'on'}}</mat-icon>
                 <select (change)="updatePrivacy($event.target.value, playlist)">
-                    <option [value]="0" [selected]="playlist.privacy">Private</option>
-                    <option [value]="1" [selected]="!playlist.privacy">Public</option>
+                    <option [value]="+playlist.privacy" [selected]="playlist.privacy">Private</option>
+                    <option [value]="!+playlist.privacy" [selected]="!playlist.privacy">Public</option>
                 </select>
             </div>
         </ng-container>

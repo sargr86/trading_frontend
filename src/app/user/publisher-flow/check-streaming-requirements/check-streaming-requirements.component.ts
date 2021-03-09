@@ -53,20 +53,35 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     }
 
     async getConnectedDevices(pageLoad = false) {
-        await navigator.mediaDevices.getUserMedia({audio: true, video: true});
-        this.deviceStatus = 'loading';
-        navigator.mediaDevices.enumerateDevices()
-            .then((devices) => {
-                this.deviceStatus = 'loaded';
-                this.userMediaDevices = devices;
-                this.defaultVideoDevice = devices.find(d => d.kind === 'videoinput');
-                this.deviceRecognitionForm.patchValue({video_device: this.defaultVideoDevice?.label});
-                this.defaultAudioDevice = devices.find(d => d.kind === 'audioinput');
-                this.deviceRecognitionForm.patchValue({audio_device: this.defaultAudioDevice?.label});
-            })
-            .catch((err) => {
-                console.log(err.name + ':' + err.message);
+        navigator.mediaDevices.getUserMedia({audio: true, video: true}).then(() => {
+            this.deviceStatus = 'loading';
+            navigator.mediaDevices.enumerateDevices()
+                .then((devices) => {
+                    this.deviceStatus = 'loaded';
+                    this.userMediaDevices = devices;
+                    this.defaultVideoDevice = devices.find(d => d.kind === 'videoinput');
+                    this.deviceRecognitionForm.patchValue({video_device: this.defaultVideoDevice?.label});
+                    this.defaultAudioDevice = devices.find(d => d.kind === 'audioinput');
+                    this.deviceRecognitionForm.patchValue({audio_device: this.defaultAudioDevice?.label});
+                })
+                .catch((err) => {
+                    this.deviceRecognitionForm.patchValue({
+                        audio_device: '',
+                        video_device: '',
+                    });
+                    this.toastr.error(err.message);
+                });
+        }).catch((err) => {
+            this.deviceStatus = 'failed';
+            this.deviceRecognitionForm.patchValue({
+                audio_device: '',
+                video_device: '',
             });
+            console.log(this.deviceRecognitionForm.value)
+            this.toastr.error(err.message);
+        });
+
+
     }
 
     get audioDevice() {

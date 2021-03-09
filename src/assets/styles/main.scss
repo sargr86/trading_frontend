@@ -1227,6 +1227,26 @@ ngb-modal-window {
     background-color: $white !important;
 }
 
+.stream-errors {
+    p {
+        &.top {
+            margin-top: -200px;
+        }
+        b {
+
+            text-align: center;
+            font-size: 24px;
+            line-height:30px;
+            font-family: "Muli-Bold", sans-serif;
+            color: #545454;
+        }
+    }
+}
+
+.owl-stage{
+    display: flex;
+}
+
 @media (max-width: 1700px) {
     nav.home-header {
         padding: 0 100px;
@@ -1456,6 +1476,10 @@ ngb-modal-window {
         flex: 1;
         max-width: 200px;
         margin: 0 8px;
+    }
+    #tags-form .right-group #video-tags {
+        max-width: 250px;
+        width: 100%;
     }
 }
 

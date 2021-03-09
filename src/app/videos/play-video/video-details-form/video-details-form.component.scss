@@ -2,8 +2,9 @@
 
 #tags-form {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     .right-group {
         display: flex;
@@ -26,6 +27,9 @@
             border-radius: 0;
             transition: 0.3s ease-in-out;
             margin-left: 30px;
+            @media screen and (max-width: 767px){
+                margin-left: 0;
+            }
         }
     }
 }

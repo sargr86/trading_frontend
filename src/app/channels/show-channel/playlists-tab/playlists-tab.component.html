@@ -2,7 +2,7 @@
 <div class="playlist-tab">
     <ng-container *ngIf="authUser.username === channelUser.username">
         <button class="btn new-playlist" (click)="openAddPlaylistModal()">Add New Playlist</button>
-        <table *ngIf="playlists.length > 0">
+        <table *ngIf="playlists.length > 0" class="table-responsive">
             <tr>
                 <th>Playlist</th>
                 <th>Visibility</th>

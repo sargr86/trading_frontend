@@ -13,7 +13,7 @@ export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 
 export const OWL_OPTIONS: OwlOptions = {
     loop: false,
-    // margin: 10,
+    margin: 25,
     nav: true,
     pullDrag: false,
     dots: false,
@@ -26,9 +26,9 @@ export const OWL_OPTIONS: OwlOptions = {
         768: {
             items: 3
         },
-        // 1200: {
-        //     items: 3.2
-        // }
+        1200: {
+            items: 3
+        }
     }
 };
 

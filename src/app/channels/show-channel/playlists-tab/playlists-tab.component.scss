@@ -39,7 +39,8 @@
                 display: table-cell;
                 vertical-align: middle;
                 color: #545454;
-                font-family: "Muli-Bold";
+                font-family: "Muli-Bold", sans-serif;
+                white-space: nowrap;
                 font-size: 16px;
                 padding: 12px 0;
                 // border-bottom: 1px solid #C9C9C9;
@@ -91,6 +92,10 @@
                     }
                 }
             }
+        }
+        @media screen and (max-width: 991px){
+            display: block;
+            overflow-x: auto;
         }
     }
 }

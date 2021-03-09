@@ -26,13 +26,30 @@
         </div>
     </ng-container>
     <div class="no-stored-session-data" *ngIf="!sessionData && !videoSettings">
-        <p>There is no session data defined. Please return to the <a routerLink="/user/video/start-live-video">'Start
-            live video' page</a></p>
+        <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
+
+            <img src="../../assets/img/errorPage.svg" alt="no-stored-session-data-img" width="500" height="370">
+            <p class="text-center"><b>There is no session data defined.</b> <br> Please return to the <a
+                routerLink="/user/video/start-live-video">'Start
+                live video' page</a></p>
+        </div>
     </div>
     <div class="stream-errors" *ngIf="!openViduToken && sessionData && videoSettings">
-        <p>There was a problem white loading streaming session. Please reload the page or try again later
-            <mat-icon (click)="reloadPage()">refresh</mat-icon>
-        </p>
+        <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
+            <img src="assets/img/errorLoading.svg" alt="no-stored-session-data-img" width="150" height="200">
+            <p class="text-center"><b>There was a problem while loading streaming session.</b> <br>
+                <small>Please <a class="reload" (click)="reloadPage()">reload</a> the page or try again later.</small>
+            </p>
+        </div>
+        <div class="d-none">
+            <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
+                <img src="assets/img/dataError.svg" alt="stream-errors-img" width="334" height="471">
+                <p class="text-center top"><b>There was a problem while loading streaming session.</b> <br>
+                    <small>Please <a class="reload" (click)="reloadPage()">reload</a> the page or try again
+                        later.</small>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 

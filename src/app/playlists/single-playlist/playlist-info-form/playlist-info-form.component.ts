@@ -6,6 +6,7 @@ import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-vid
 import {MatDialog} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-playlist-info-form',
@@ -16,6 +17,7 @@ export class PlaylistInfoFormComponent implements OnInit {
     playlistInfoForm: FormGroup;
     apiUrl = API_URL;
     editMode = false;
+    authUser;
 
     @Input('playlist') playlist;
     @Output('refreshPlaylist') refreshPlaylist = new EventEmitter();
@@ -25,7 +27,8 @@ export class PlaylistInfoFormComponent implements OnInit {
         private playlistsService: PlaylistsService,
         private dialog: MatDialog,
         private toastr: ToastrService,
-        public router: Router
+        public router: Router,
+        private getAuthUser: GetAuthUserPipe
     ) {
         this.playlistInfoForm = this.fb.group({
             id: [''],
@@ -33,6 +36,7 @@ export class PlaylistInfoFormComponent implements OnInit {
             description: [''],
             privacy: ['']
         });
+        this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
@@ -68,6 +72,12 @@ export class PlaylistInfoFormComponent implements OnInit {
     openPlaylistPage(playlist) {
         const route = 'videos/play';
         const params = {id: playlist.videos?.[0]?.id, playlist_id: playlist.id};
+        this.router.navigate([route], {queryParams: params});
+    }
+
+    backToPlaylists() {
+        const route = 'channels/show';
+        const params = {tab: 'playlists', username: this.authUser.username};
         this.router.navigate([route], {queryParams: params});
     }
 

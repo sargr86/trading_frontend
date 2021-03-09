@@ -381,7 +381,7 @@ nav.home-header {
 
 .main-carousel-item {
     width: 100%;
-    padding-right: 32px;
+    //padding-right: 32px;
     position: relative;
 
     .main-item-block {
@@ -1416,17 +1416,27 @@ ngb-modal-window {
     }
     .left-list {
         width: 80%;
-        margin: 40px 0 0;
+        margin: 30px auto 10px;
+        text-align: left;
     }
     .main-carousel .owl-nav button.owl-next {
         display: none;
     }
 
     .trending-text, .subscriptions-text {
-        text-align: center;
+        text-align: left;
+        max-width: 200px;
+        margin: 0 auto;
     }
     .main-item-block {
-        justify-content: center;
+        justify-content: left;
+        max-width: 200px;
+        margin: 10px auto;
+    }
+    .owl-item .main-item-block {
+        justify-content: left;
+        max-width: 100%;
+        margin: 10px 0;
     }
     .categories {
         width: 80%;
@@ -1473,13 +1483,13 @@ ngb-modal-window {
         justify-content: space-between;
     }
 
-    .main-item-block {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin-bottom: 15px;
-    }
+    //.main-item-block {
+    //    flex-direction: column;
+    //    justify-content: center;
+    //    align-items: center;
+    //    text-align: center;
+    //    margin-bottom: 15px;
+    //}
 
     .list-img, .main-item-block img {
         margin-right: 0 !important;
@@ -1508,7 +1518,8 @@ input, textarea {
 
 .owl-item {
     // @todo look here tomorrow
-    width: 400px !important;
+    //max-width: 400px !important;
+    //width: 100% !important;
 
     .thumbnail {
         object-fit: cover !important;

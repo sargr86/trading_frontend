@@ -49,6 +49,9 @@ export class PlaylistInfoFormComponent implements OnInit {
     }
 
     updatePrivacy(value, playlist) {
+        console.log(+value)
+        playlist.privacy = +value;
+        this.playlistInfoForm.patchValue({privacy: +value});
         this.playlistsService.updatePrivacy({privacy: value, id: playlist.id}).subscribe(dt => {
             this.toastr.success('Playlist privacy is updated successfully');
         });

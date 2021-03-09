@@ -14,6 +14,7 @@ export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const OWL_OPTIONS: OwlOptions = {
     loop: false,
     // margin: 10,
+    autoWidth: true,
     nav: true,
     pullDrag: false,
     dots: false,
@@ -21,13 +22,19 @@ export const OWL_OPTIONS: OwlOptions = {
     navText: ['<i class=\'fa fa-chevron-left\'></i>', '<i class=\'fa fa-chevron-right\'></i>'],
     responsive: {
         0: {
-            items: 1
+            items: 1,
+            margin: 30,
         },
         768: {
-            items: 3
+            items: 3,
+            margin: 30,
         },
+        1099: {
+            items: 3.2,
+            margin: 32,
+        }
         // 1200: {
-        //     items: 3.2
+        //     items: 5
         // }
     }
 };

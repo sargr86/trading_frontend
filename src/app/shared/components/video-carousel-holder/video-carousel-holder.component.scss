@@ -51,3 +51,11 @@
         padding: 0 2px;
     }
 }
+
+.one-item {
+    max-width:calc((100% - 50px) / 3);
+    width: 100%;
+    @media screen and (min-width: 568px) and (max-width: 1200px) {
+        max-width:calc((100% - 50px) / 2);
+    }
+}

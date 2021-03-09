@@ -3,7 +3,7 @@
     <owl-carousel-o [options]="owlOptions">
         <ng-container *ngFor="let video of videos">
             <ng-template carouselSlide>
-                <div class="item main-carousel-item">
+                <div class="item main-carousel-item" [class.one-item]="isSmallScreen(videos.length)">
 
                     <ng-container
                         [ngTemplateOutlet]="itemTemplate"

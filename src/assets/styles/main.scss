@@ -1443,7 +1443,12 @@ ngb-modal-window {
         display: none;
     }
 
-    .trending-text, .subscriptions-text {
+    .trending-text {
+        text-align: left;
+        max-width: 200px;
+    }
+
+    .subscriptions-text {
         text-align: left;
         max-width: 200px;
         margin: 0 auto;
@@ -1452,6 +1457,9 @@ ngb-modal-window {
         justify-content: left;
         max-width: 200px;
         margin: 10px auto;
+    }
+    .main-item-block.channel-block {
+        max-width: 100%;
     }
     .owl-item .main-item-block {
         justify-content: left;

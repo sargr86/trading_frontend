@@ -63,4 +63,8 @@ export class VideoCarouselHolderComponent implements OnInit {
 
     }
 
+    isSmallScreen(videoLen) {
+        return window.screen.availWidth > 768 && videoLen === 1;
+    }
+
 }

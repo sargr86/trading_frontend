@@ -27,7 +27,7 @@ export const OWL_OPTIONS: OwlOptions = {
             items: 2
         },
         867: {
-            items: 3.2
+            items: 3
         }
     }
 };

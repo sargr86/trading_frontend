@@ -30,7 +30,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     watchlistVideos = [];
     authUser;
 
-    activeTab = PROFILE_PAGE_TABS[0];
+    activeTab;
     allTabs = PROFILE_PAGE_TABS;
 
     apiUrl = API_URL;
@@ -77,6 +77,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         localStorage.setItem('search', '');
+        this.activeTab = PROFILE_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || PROFILE_PAGE_TABS[0];
         this.getUserInfo();
 
 
@@ -84,7 +85,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     toggleFilters() {
         this.showFilters = !this.showFilters;
-
         this.subject.setToggleFiltersData(this.showFilters);
     }
 

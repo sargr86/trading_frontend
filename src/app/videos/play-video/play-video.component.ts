@@ -183,6 +183,10 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
+    isSmallSize() {
+        return window.screen.availWidth < 992;
+    }
+
     ngAfterViewInit() {
         if (!this.isProduction) {
             this.canvas = document.getElementById('myChart');

@@ -59,7 +59,8 @@
         }
 
         .details {
-            margin-left: 32px;
+            padding-left: 32px;
+            max-width: 260px;
 
             .title {
                 margin: 0;
@@ -144,8 +145,17 @@
                     background-color: #D6D6D6 !important;
                 }
             }
-            @media screen and (max-width: 968px) {
-                margin-left: 0;
+
+        }
+        @media screen and (max-width: 1022px) {
+           flex-direction: column;
+            .thumbnail {
+                max-width: 432px;
+                width: 100%;
+            }
+            .details {
+                padding-left: 0;
+                margin-top: 8px;
             }
         }
 

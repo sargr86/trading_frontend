@@ -38,6 +38,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     channelUser;
     passedUsername;
+    passedTab;
 
     searchVideosForm: FormGroup;
 
@@ -69,6 +70,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
+        this.passedTab = this.route.snapshot.queryParams.tab;
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
 
     }

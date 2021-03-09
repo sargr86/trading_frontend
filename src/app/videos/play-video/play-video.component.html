@@ -64,6 +64,7 @@
             </div>
             <p class="ads-text-2"></p>
         </ng-container>
+        <app-video-suggestions *ngIf="isSmallSize()"></app-video-suggestions>
         <div class="ads-maps" *ngIf="!isProduction">
             <div>
                 <canvas id="myChart"></canvas>
@@ -74,7 +75,7 @@
         </div>
     </div>
     <div class="ads-block-right">
-        <app-video-suggestions></app-video-suggestions>
+        <app-video-suggestions *ngIf="!isSmallSize()"></app-video-suggestions>
     </div>
 </div>
 

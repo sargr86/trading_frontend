@@ -53,7 +53,10 @@ export class PlaylistsTabComponent implements OnInit {
 
         params = this.getExactParams.transform(params);
 
-        this.playlistsService.get({channel_id: this.channelUser.channel.id, ...params}).subscribe(dt => {
+        this.playlistsService.get({
+            channel_id: this.channelUser.channel.id,
+            user_id: this.authUser.id, ...params
+        }).subscribe(dt => {
             this.playlists = dt;
         });
     }

@@ -153,5 +153,11 @@
                 font-weight: 500;
             }
         }
+        @media screen and (max-width: 991px){
+            flex: 0 0 calc(50% - 21px);
+        }
+        @media screen and (max-width: 767px){
+            flex: 0 0 100%;
+        }
     }
 }

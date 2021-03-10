@@ -160,9 +160,6 @@ export class ChannelProfileComponent implements OnInit {
 
     enableEditMode() {
         this.editMode = !this.editMode;
-        console.log('enabled edit!');
-
-
     }
 
     saveChanges() {

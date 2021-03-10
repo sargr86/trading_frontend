@@ -3,7 +3,7 @@
     justify-content: flex-end;
     max-width: 810px;
     margin: 160px auto 0;
-    padding: 144px 0px 80px 280px;
+    padding: 144px 0 80px 280px;
     background-size: contain;
     background-position: left top;
     background-repeat: no-repeat;
@@ -35,6 +35,10 @@
             margin-left: 10px;
             color: #18B587;
         }
+    }
+    
+    .refresh{
+        cursor: pointer;
     }
 
     .item-wrap {

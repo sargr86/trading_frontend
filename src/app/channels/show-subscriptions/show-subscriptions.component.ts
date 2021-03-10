@@ -32,7 +32,6 @@ export class ShowSubscriptionsComponent implements OnInit {
     }
 
     openChannelPage(channel, username) {
-        console.log(channel)
         this.router.navigate(['channels/show'], {queryParams: {username}});
     }
 

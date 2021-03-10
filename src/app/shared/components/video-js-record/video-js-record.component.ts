@@ -16,6 +16,7 @@ import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from '@shared/pipes/blob-to-file.pipe';
 import {SubjectService} from '@core/services/subject.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-video-js-record',
@@ -50,7 +51,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
         private blobToFile: BlobToFilePipe,
-        private subject: SubjectService
+        private subject: SubjectService,
+        public router: Router
     ) {
 
 
@@ -259,6 +261,12 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         this.player.on('deviceError', () => {
             console.error('device error:', this.player.deviceErrorCode);
         });
+    }
+
+    backToChannelVideos() {
+        const route = 'channels/show';
+        const params = {tab: 'videos', username: this.authUser.username};
+        this.router.navigate([route], {queryParams: params});
     }
 
 

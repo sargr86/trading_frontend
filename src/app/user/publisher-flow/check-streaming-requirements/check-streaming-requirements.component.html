@@ -10,11 +10,11 @@
             while you stream. We will remove any videos that are in violation of the DMCA. <br>
             Smile, you look great!
         </p>
-        <div class="loader" *ngIf="deviceStatus!=='loaded'">
+        <div class="loader" *ngIf="deviceStatus!=='loaded' && deviceStatus!=='failed'">
             <mat-spinner [diameter]="20"></mat-spinner>
             <strong>Loading devices info</strong>
         </div>
-        <form [formGroup]="deviceRecognitionForm" *ngIf="deviceStatus==='loaded'">
+        <form [formGroup]="deviceRecognitionForm" *ngIf="deviceStatus==='loaded' || deviceStatus==='failed'">
             <div id="devices">
                 <div class="item-wrap">
 
@@ -30,13 +30,13 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-icon (click)="getConnectedDevices()">refresh</mat-icon>
+                            <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
                         </div>
                         <div class="error-msg" *ngIf="videoDevice.hasError('required')">
                             <mat-icon>videocam_off</mat-icon>
                             <ng-container>
                                 <span>Can't find camera. Make sure it's connected and try again</span>
-                                <mat-icon (click)="getConnectedDevices()">refresh</mat-icon>
+                                <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
                             </ng-container>
                         </div>
                     </div>
@@ -52,12 +52,12 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-icon (click)="getConnectedDevices()">refresh</mat-icon>
+                            <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
                         </div>
                         <div class="error-msg" *ngIf="audioDevice.hasError('required')">
                             <mat-icon>mic</mat-icon>
                             <span>Can't find microphone. Make sure it's connected and try again</span>
-                            <mat-icon (click)="getConnectedDevices()">refresh</mat-icon>
+                            <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,8 @@
 
         <div class="cover-image-container">
             <label for="cover-image-input">
-                <img id="cover-image" [src]="channelUser.channel?.cover|getImgPath: 'covers'" (load)="detectImageChange()">
+                <img id="cover-image" [src]="channelUser.channel?.cover|getImgPath: 'covers'"
+                     (load)="detectImageChange()">
             </label>
             <button mat-icon-button type="button" class="remove-cover-btn" (click)="removeCover()"
                     *ngIf="editMode && channelUser.channel.cover">
@@ -26,8 +27,10 @@
         <div class="d-flex align-items-center">
             <div class="avatar-container">
                 <label for="profile-image-input">
-                    <img class="avatar" [ngStyle]="{opacity: editMode ? 0.5: 1}" id="profile-image" (load)="detectImageChange()"
+                    <img class="avatar" [ngStyle]="{opacity: editMode ? 0.5: 1}" id="profile-image"
+                         (load)="detectImageChange()"
                          [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                    <mat-icon id="add-photo-btn" *ngIf="editMode && !channelUser.channel.avatar">add</mat-icon>
                 </label>
                 <mat-icon (click)="removeAvatar()" class="remove-avatar-btn"
                           *ngIf="editMode && channelUser.channel.avatar">clear

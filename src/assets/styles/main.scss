@@ -1248,6 +1248,20 @@ ngb-modal-window {
     display: flex;
 }
 
+select {
+    option {
+        &:focus,
+        &:active,
+        &:checked,
+        &:hover {
+            background: #18B587!important;
+            color: #fff!important;
+        }
+    }
+}
+
+
+
 @media (max-width: 1700px) {
     nav.home-header {
         padding: 0 100px;
@@ -1514,18 +1528,6 @@ ngb-modal-window {
     }
     .analytics-item {
         justify-content: space-between;
-    }
-
-    //.main-item-block {
-    //    flex-direction: column;
-    //    justify-content: center;
-    //    align-items: center;
-    //    text-align: center;
-    //    margin-bottom: 15px;
-    //}
-
-    .list-img, .main-item-block img {
-        margin-right: 0 !important;
     }
 }
 

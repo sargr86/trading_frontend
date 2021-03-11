@@ -61,7 +61,7 @@
     @media screen and (min-width: 768px) and (max-width: 808px) {
         max-width: 100%
     }
-    @media screen and (min-width: 568px) and (max-width: 767px) {
-        max-width:calc((100% - 25px) / 2);
+    @media screen and  (max-width: 704px) {
+        max-width: 100%
     }
 }

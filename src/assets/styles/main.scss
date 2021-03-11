@@ -1232,18 +1232,19 @@ ngb-modal-window {
         &.top {
             margin-top: -200px;
         }
+
         b {
 
             text-align: center;
             font-size: 24px;
-            line-height:30px;
+            line-height: 30px;
             font-family: "Muli-Bold", sans-serif;
             color: #545454;
         }
     }
 }
 
-.owl-stage{
+.owl-stage {
     display: flex;
 }
 
@@ -1335,7 +1336,7 @@ select {
     // }
 
     .black-text {
-        font-size: 8px;
+        font-size: 10px;
     }
     .ads-block-right {
         width: 230px;

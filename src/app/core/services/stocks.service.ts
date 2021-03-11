@@ -15,4 +15,8 @@ export class StocksService {
     getDailyStocks(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-daily`, {params});
     }
+
+    getIndices(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-indices`, {params});
+    }
 }

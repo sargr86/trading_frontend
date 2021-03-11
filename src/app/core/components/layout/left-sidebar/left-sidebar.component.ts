@@ -8,6 +8,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {AuthService} from '@core/services/auth.service';
 import {environment} from '@env';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -20,15 +21,18 @@ export class LeftSidebarComponent implements OnInit {
     authUser;
     routerUrl;
     envName;
+    stocks;
+    indices;
 
-    @Output('closeSidenav') closeSidenav = new EventEmitter()
+    @Output('closeSidenav') closeSidenav = new EventEmitter();
 
     constructor(
         public router: Router,
         private channelsService: ChannelsService,
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private stocksService: StocksService
     ) {
         this.envName = environment.envName;
         this.authUser = this.getAuthUser.transform();
@@ -49,6 +53,14 @@ export class LeftSidebarComponent implements OnInit {
             } else if (ev instanceof ActivationEnd) {
 
             }
+        });
+
+        this.stocksService.getDailyStocks({}).subscribe(dt => {
+            this.stocks = dt;
+        });
+
+        this.stocksService.getIndices({}).subscribe(dt => {
+            this.indices = dt;
         });
     }
 
@@ -92,6 +104,15 @@ export class LeftSidebarComponent implements OnInit {
 
     isSmallScreen() {
         return window.screen.availWidth < 768;
+    }
+
+    getPercentageDetails(stock) {
+        const value = stock.changesPercentage; //.replace(/[(%)]/g, '')
+        return {
+            ...{value},
+            color: (+value > 0 ? 'green' : 'red'),
+            class: 'analytics-text-' + (+value > 0 ? '4' : '5')
+        };
     }
 
 

@@ -94,4 +94,18 @@ export class NavbarComponent implements OnInit {
         return window.screen.availWidth < 992;
     }
 
+    getPercentageValue(stock) {
+        return stock.changesPercentage.replace(/[(%)]/g, '');
+    }
+
+    getPercentageColor(stock) {
+        return 'black-percent-' + (+this.getPercentageValue(stock) > 0 ? 'green' : 'red');
+    }
+
+    getPercentageDetails(stock) {
+        const value = stock.changesPercentage.replace(/[(%)]/g, '');
+        return {...{value}, color: 'black-percent-' + (+value > 0 ? 'green' : 'red')};
+
+    }
+
 }

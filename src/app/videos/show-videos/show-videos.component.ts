@@ -25,7 +25,6 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     selectedTag;
     authUser;
     showTrending = false;
-    subscribedToChannel = false;
     showFilters = false;
     filters = {};
     filterStatus = 'idle';
@@ -93,12 +92,11 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         });
     }
 
-    checkIfSubscribed(channel) {
-        return channel.subscribers.find(s => s.id === this.authUser?.id) || this.subscribedToChannel;
-    }
 
     isFiltersShown() {
-        return this.items.videos?.length > 0 || (this.search && this.channelsVideos.find(v => v.videos.length > 0)) || this.filterStatus === 'applied' && !this.loadingVideos;
+        return this.items.videos?.length > 0 ||
+            (this.search && this.channelsVideos.find(v => v.videos.length > 0))
+            || this.filterStatus === 'applied' && !this.loadingVideos;
     }
 
     async openVideoPage(video, username) {
@@ -111,19 +109,32 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     }
 
 
-    openPlaylistPage(playlist, firstVideoId) {
+    async openPlaylistPage(playlist, firstVideoId) {
         const route = 'videos/play';
         const params = {id: firstVideoId, playlist_id: playlist.id};
-        this.router.navigate([route], {queryParams: params});
+        await this.router.navigate([route], {queryParams: params});
     }
 
     subscribeToChannel(channel) {
         this.channelsService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
-            this.subscribedToChannel = dt.status === 'Subscribed';
             this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
                 this.subject.setUserSubscriptions(d);
+                if (this.checkIfSubscribed(channel)) {
+                    channel.subscribers = channel.subscribers.filter(s => s.id !== this.authUser?.id);
+                } else {
+                    channel.subscribers.push(this.authUser);
+                }
+                // console.log(channel.subscribers)
+                // channel.subscribers = channel.subscribers.filter(s => s.id !== this.authUser?.id).concat([this.authUser]);
+                // console.log(channel.subscribers)
+
+                // this.searchChannelsVideos({search: this.search, filters: this.filters});
             });
         });
+    }
+
+    checkIfSubscribed(channel) {
+        return channel.subscribers.find(s => s.id === this.authUser?.id);
     }
 
     checkIfSavedByCurrentUser(video) {

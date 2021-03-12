@@ -6,7 +6,10 @@ import {SinglePlaylistComponent} from '@app/playlists/single-playlist/single-pla
 const routes: Routes = [
     {
         path: 'single/:id',
-        component: SinglePlaylistComponent
+        component: SinglePlaylistComponent,
+        data: {
+            title: 'Edit Playlist'
+        }
     }
 ];
 

@@ -10,16 +10,25 @@ const routes: Routes = [
     {
         path: '',
         component: ShowVideosComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: {
+            title: 'Videos',
+        }
     },
     {
         path: 'play',
-        component: PlayVideoComponent
+        component: PlayVideoComponent,
+        data: {
+            title: 'Play Video',
+        }
     },
     {
         path: 'saved',
         component: ShowSavedVideosComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: {
+            title: 'Saved Videos',
+        }
     }
 ];
 

@@ -7,11 +7,17 @@ import {ShowSubscriptionsComponent} from '@app/channels/show-subscriptions/show-
 const routes: Routes = [
     {
         path: 'show',
-        component: ShowChannelComponent
+        component: ShowChannelComponent,
+        data: {
+            title: 'Channel page'
+        }
     },
     {
         path: 'subscriptions',
-        component: ShowSubscriptionsComponent
+        component: ShowSubscriptionsComponent,
+        data: {
+            title: 'My Subscriptions'
+        }
     }
 ];
 

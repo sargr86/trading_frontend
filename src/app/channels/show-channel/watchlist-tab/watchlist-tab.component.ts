@@ -13,13 +13,10 @@ import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy
     styleUrls: ['./watchlist-tab.component.scss']
 })
 export class WatchlistTabComponent implements OnInit, OnDestroy {
-    watchlistVideos = [];
-    owlOptions: OwlOptions = OWL_OPTIONS;
     apiUrl = API_URL;
     search;
     subscriptions: Subscription[] = [];
     showFilters = false;
-    @Input('filters') filters = null;
 
     constructor(
         private videoService: VideoService,
@@ -30,35 +27,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.watchlistVideos = [];
         this.search = localStorage.getItem('search');
-        this.getAllVideosByAuthors({search: this.search, filters: this.filters});
-        this.getFiltersToggleState();
-    }
-
-    getFiltersToggleState() {
-        this.subscriptions.push(this.subjectService.getToggleFiltersData().subscribe(dt => {
-            this.showFilters = dt;
-        }));
-    }
-
-    getAllVideosByAuthors(params) {
-        params = this.getExactParams.transform(params);
-
-        this.subscriptions.push(this.videoService.getVideosByAuthor(params).subscribe(dt => {
-            this.watchlistVideos = dt;
-        }));
-    }
-
-    getFilteredVideos(filters) {
-        this.filters = filters;
-        this.getAllVideosByAuthors({search: this.search, filters});
-    }
-
-    getSearchResults(search) {
-        this.search = search;
-        console.log('get search results')
-        this.getAllVideosByAuthors({search, filters: this.filters});
     }
 
     ngOnDestroy() {

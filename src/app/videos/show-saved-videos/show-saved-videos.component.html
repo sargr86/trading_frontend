@@ -20,6 +20,14 @@
                 <p class="shortened-description">
                    {{video.description}}
                 </p>
+
+                <div class="tags">
+                    <ul>
+                        <li *ngFor="let tag of video?.tags">
+                            <span>{{tag.name}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </ng-container>

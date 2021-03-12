@@ -23,6 +23,7 @@
             </mat-form-field>
             <mat-error *ngIf="tags.length ===0 && isSubmitted">Please provide some tags describing your live video
             </mat-error>
+            <mat-error *ngIf="tags.length > 3 && isSubmitted">Only 3 tags please</mat-error>
         </div>
 
         <div id="video-categories">

@@ -151,9 +151,13 @@
             }
 
             .tags {
-                span {
-                    @include tagItem;
+                li {
                     display: inline-block;
+                    margin-right: 5px;
+
+                    span {
+                        @include tagItem;
+                    }
                 }
             }
 

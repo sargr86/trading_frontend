@@ -7,11 +7,17 @@ import {ShowMessagesComponent} from '@app/chat/show-messages/show-messages.compo
 const routes: Routes = [
     {
         path: 'rooms',
-        component: ShowChatroomsComponent
+        component: ShowChatroomsComponent,
+        data: {
+            title: 'Chat rooms',
+        }
     },
     {
         path: 'messages',
-        component: ShowMessagesComponent
+        component: ShowMessagesComponent,
+        data: {
+            title: 'Chat',
+        }
     }
 ];
 

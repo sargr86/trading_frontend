@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import * as Plyr from 'plyr';
 import {LoaderService} from '@core/services/loader.service';
+import {Title} from '@angular/platform-browser';
+import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-root',
@@ -11,11 +14,15 @@ import {LoaderService} from '@core/services/loader.service';
 })
 export class AppComponent implements OnInit {
     title = '';
+    subscriptions: Subscription[] = [];
+    pageTitle;
 
     constructor(
         public router: Router,
         private subject: SubjectService,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private titleService: Title,
+        private route: ActivatedRoute
     ) {
 
     }
@@ -26,6 +33,26 @@ export class AppComponent implements OnInit {
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}
         // });
         // console.log(player)
+
+        // Getting current page title
+        this.subscriptions.push(this.router.events.pipe(map(() => {
+            let child = this.route.firstChild;
+            while (child) {
+                if (child.firstChild) {
+                    child = child.firstChild;
+                } else if (child.snapshot.data && child.snapshot.data.title) {
+                    return child.snapshot.data.title;
+                } else {
+                    return null;
+                }
+            }
+            return null;
+        })).subscribe(title => {
+            this.pageTitle = title;
+            if (this.pageTitle) {
+                this.titleService.setTitle(this.pageTitle);
+            }
+        }));
     }
 
     async getSearch(e) {

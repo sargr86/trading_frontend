@@ -1,28 +1,31 @@
 <div class="playlist-wrap" *ngIf="playlistOpened && playlistData && playlistData.videos.length > 0">
     <h2>{{playlistData.name}}</h2>
     <div class="list-wrap">
-        <div class="playlist-video" [class.selected]="videoId === video.id"
-             *ngFor="let video of playlistData.videos" (click)="openVideoPage(video, playlistData?.id)">
+        <ng-container *ngFor="let video of playlistData.videos">
 
-            <div class="thumbnail-container">
-                <img [src]="video.thumbnail|getImgPath">
-            </div>
+            <div class="playlist-video" [class.selected]="videoId === video.id"
+                 (click)="openVideoPage(video, playlistData?.id)">
 
-            <div class="details-container">
-                <p class="main-text-1" (click)="openVideoPage(video, playlistData?.id)">{{video.name}}</p>
-                <p class="main-text-3">{{video.channel.name}}</p>
-            </div>
+                <div class="thumbnail-container">
+                    <img [src]="video.thumbnail|getImgPath">
+                </div>
 
-            <div class="remove-btn-container" *ngIf="authUser.id === playlistData.channel.id"
-                 (click)="removeVideoFromPlaylist(video,playlistId)">
-                <span class="material-icons">delete</span>
+                <div class="details-container">
+                    <p class="main-text-1" (click)="openVideoPage(video, playlistData?.id)">{{video.name}}</p>
+                    <p class="main-text-3">{{video.channel.name}}</p>
+                </div>
+
+                <div class="remove-btn-container" *ngIf="authUser.id === playlistData.channel.id"
+                     (click)="removeVideoFromPlaylist(video,playlistId)">
+                    <span class="material-icons">delete</span>
+                </div>
             </div>
-        </div>
+        </ng-container>
     </div>
 </div>
 
-<div class="suggested-videos" *ngFor="let video of videoSuggestions">
-    <div class="suggested-video">
+<div class="suggested-videos" *ngFor="let video of videoSuggestions;let ind = index">
+    <div class="suggested-video" *ngIf="ind < 5">
 
         <div class="thumbnail-container">
             <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video)">

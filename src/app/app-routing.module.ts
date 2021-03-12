@@ -16,7 +16,10 @@ import {ContactUsComponent} from '@core/components/ungrouped/contact-us/contact-
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        data: {
+            title: 'Metl TV',
+        }
     },
     {
         path: 'channels',
@@ -50,32 +53,53 @@ const routes: Routes = [
         loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule),
     },
     {
-        path: 'accessibility-assessment',
-        component: AccessibilityStatementComponent
-    },
-    {
         path: 'about',
-        component: AboutComponent
-    },
-    {
-        path: 'contact-us',
-        component: ContactUsComponent
-    },
-    {
-        path: 'cookie-policy',
-        component: CookiePolicyComponent
-    },
-    {
-        path: 'privacy-policy',
-        component: PrivacyPolicyComponent
-    },
-    {
-        path: 'security',
-        component: SecurityComponent
+        component: AboutComponent,
+        data: {
+            title: 'About',
+        }
     },
     {
         path: 'help',
-        component: HelpComponent
+        component: HelpComponent,
+        data: {
+            title: 'Help',
+        }
+    },
+    {
+        path: 'cookie-policy',
+        component: CookiePolicyComponent,
+        data: {
+            title: 'Cookie policy',
+        }
+    },
+    {
+        path: 'accessibility-assessment',
+        component: AccessibilityStatementComponent,
+        data: {
+            title: 'Accessibility statement',
+        }
+    },
+    {
+        path: 'contact-us',
+        component: ContactUsComponent,
+        data: {
+            title: 'Contact us',
+        }
+    },
+    {
+        path: 'privacy-policy',
+        component: PrivacyPolicyComponent,
+        data: {
+            title: 'Privacy policy',
+        }
+    },
+    {
+        path: 'security',
+        component: SecurityComponent,
+        data: {
+            title: 'Security',
+        }
     },
 
 

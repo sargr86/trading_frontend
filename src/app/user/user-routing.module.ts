@@ -15,44 +15,74 @@ import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 const routes: Routes = [
     {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
+        data: {
+            title: 'About',
+        }
     },
     {
         path: 'help',
-        component: HelpComponent
+        component: HelpComponent,
+        data: {
+            title: 'Help',
+        }
     },
     {
         path: 'cookie-policy',
-        component: CookiePolicyComponent
+        component: CookiePolicyComponent,
+        data: {
+            title: 'Cookie policy',
+        }
     },
     {
         path: 'accessibility-statement',
-        component: AccessibilityStatementComponent
+        component: AccessibilityStatementComponent,
+        data: {
+            title: 'Accessibility statement',
+        }
     },
     {
         path: 'profile',
-        component: ProfileComponent
+        component: ProfileComponent,
+        data: {
+            title: 'User profile',
+        }
     },
     {
         path: 'stock-profile',
-        component: StockProfileComponent
+        component: StockProfileComponent,
+        data: {
+            title: 'Stock profile',
+        }
     },
     {
         path: 'video/check-streaming-requirements',
         component: PublisherFlowComponent,
+        data: {
+            title: 'Streaming requirements check',
+        }
     },
     {
         path: 'video/start-live-video',
-        component: PublisherFlowComponent
+        component: PublisherFlowComponent,
+        data: {
+            title: 'Devices and requirements check',
+        }
     },
     {
         path: 'video/publish',
         component: VideoComponent,
-        canDeactivate: [DoNotLeavePageGuard]
+        canDeactivate: [DoNotLeavePageGuard],
+        data: {
+            title: 'Start live streaming',
+        }
     },
     {
         path: 'video/watch',
-        component: SubscriberFlowComponent
+        component: SubscriberFlowComponent,
+        data: {
+            title: 'Watch live stream',
+        }
     },
     {
         path: 'video-library',

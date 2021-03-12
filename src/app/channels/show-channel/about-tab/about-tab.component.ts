@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-about-tab',
@@ -10,12 +11,15 @@ import {ChannelsService} from '@core/services/channels.service';
 export class AboutTabComponent implements OnInit {
     aboutForm: FormGroup;
     editMode = false;
+    authUser;
     @Input('channelUser') channelUser;
 
     constructor(
         private fb: FormBuilder,
-        private channelService: ChannelsService
+        private channelService: ChannelsService,
+        private getAuthUser: GetAuthUserPipe
     ) {
+        this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {

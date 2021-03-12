@@ -151,6 +151,8 @@
             }
 
             .tags {
+                margin-top: 10px;
+
                 li {
                     display: inline-block;
                     margin-right: 5px;
@@ -191,6 +193,10 @@
                     top: 10px;
                     left: 10px;
                     color: white;
+
+                    .name{
+                        font-weight: bold;
+                    }
                 }
             }
 

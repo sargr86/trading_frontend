@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog} from '@angular/material/dialog';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
+import {STOCK_CATEGORIES} from '@core/constants/global';
 
 @Component({
     selector: 'app-crypto-currency',
@@ -9,7 +10,7 @@ import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/
     styleUrls: ['./crypto-currency.component.scss']
 })
 export class CryptoCurrencyComponent implements OnInit {
-
+    stockCategories = STOCK_CATEGORIES;
     constructor(
         private modalService: BsModalService,
         private dialog: MatDialog

@@ -6,7 +6,9 @@
 
             <div class="date">
                 <span>Joined {{channelUser.channel.created_at|date: 'd MMM, yyyy'}}</span>
-                <button class="btn" (click)="editModeOn()" *ngIf="!editMode">Edit</button>
+                <button class="btn" (click)="editModeOn()"
+                        *ngIf="!editMode && authUser.username === channelUser.username">Edit
+                </button>
             </div>
         </div>
 

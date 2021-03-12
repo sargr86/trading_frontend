@@ -5,7 +5,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {VideoService} from '@core/services/video.service';
 import {ToastrService} from 'ngx-toastr';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {MatChipInputEvent} from '@angular/material/chips';
+import {MatChipInputEvent, MatChipList} from '@angular/material/chips';
 
 @Component({
     selector: 'app-stream-details-form',
@@ -31,6 +31,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     selectedPrivacy;
 
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
+    @ViewChild('tagList') tagList: MatChipList;
     @Output('formReady') formReady = new EventEmitter();
 
     constructor(
@@ -46,6 +47,10 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         this.selectedPrivacy = this.privacyTypes[0];
         this.initForm();
         this.getVideoCategories();
+
+        // this.startStreamingForm.get('tags').statusChanges.subscribe(
+        //     status => this.tagList.errorState = this.tags.length > 3
+        // );
     }
 
     initForm(): void {
@@ -123,7 +128,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
 
     submit() {
         this.isSubmitted = true;
-        if (this.startStreamingForm.valid) {
+        if (this.startStreamingForm.valid && this.tags.length <= 3) {
             this.formReady.emit({
                 categoryName: this.videoCategories.find(c => c.id === +this.startStreamingForm.value.category_id)?.name,
                 ...this.startStreamingForm.value

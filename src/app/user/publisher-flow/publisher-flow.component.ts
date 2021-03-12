@@ -22,13 +22,13 @@ export class PublisherFlowComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    getPublisherData(e) {
+    async getPublisherData(e) {
         this.sessionData = {sessionName: e.sessionName, myUserName: e.myUserName};
         this.videoSettings = e;
         this.subject.setSessionData(this.sessionData);
         localStorage.setItem('session', JSON.stringify(this.sessionData));
         localStorage.setItem('video_settings', JSON.stringify(this.videoSettings));
-        this.router.navigate(['user/video/publish']);
+        await this.router.navigate(['user/video/publish']);
     }
 
 }

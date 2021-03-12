@@ -127,7 +127,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     searchInVideosByAuthor(s) {
         if (this.watchListTab) {
-            this.watchListTab.getSearchResults(s);
+            // this.watchListTab.getSearchResults(s);
         }
 
     }

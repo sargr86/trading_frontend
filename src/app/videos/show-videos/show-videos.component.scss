@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'mixins';
+
 .filter-toggle-btn {
     text-transform: uppercase;
     background-color: unset;
@@ -41,7 +44,7 @@
                 object-fit: cover;
                 cursor: pointer;
                 @media screen and (max-width: 991px) {
-                    max-width: 432px!important;
+                    max-width: 432px !important;
                     width: 100% !important;
                 }
             }
@@ -147,9 +150,17 @@
                 }
             }
 
+            .tags {
+                span {
+                    @include tagItem;
+                    display: inline-block;
+                }
+            }
+
         }
+
         @media screen and (max-width: 1022px) {
-           flex-direction: column;
+            flex-direction: column;
             .thumbnail {
                 max-width: 432px;
                 width: 100%;

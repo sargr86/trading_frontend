@@ -16,19 +16,29 @@
                             <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                             <span class="duration">{{video.duration}}</span>
                         </div>
-                        <div class="main-item-block">
+                        <div class="main-item-block video-info">
 
-                            <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
-                            <div>
-                                <p class="main-text-1">{{video.name}}</p>
-                                <p class="main-text-2" (click)="openChannelPage(d.username)">{{d?.channel.name}}</p>
-                                <div class="shortened-details">
+                            <div class="left-side">
+
+                                <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
+                                <div>
+                                    <p class="main-text-1">{{video.name}}</p>
+                                    <p class="main-text-2" (click)="openChannelPage(d.username)">{{d?.channel.name}}</p>
+                                    <div class="shortened-details">
                                     <span class="watchers-count main-text-3">
                                         {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
                                     </span>
-                                    <span class="dot">&middot;</span>
-                                    <span class="upload-time">{{video.created_at| dateFromNow}}</span>
+                                        <span class="dot">&middot;</span>
+                                        <span class="upload-time">{{video.created_at| dateFromNow}}</span>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="right-side">
+                                <ul>
+                                    <li *ngFor="let tag of video?.tags">
+                                        <span>{{tag.name}}</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="remove-video" *ngIf="removable">

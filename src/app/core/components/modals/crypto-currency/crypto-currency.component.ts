@@ -3,6 +3,7 @@ import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog} from '@angular/material/dialog';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 import {STOCK_CATEGORIES} from '@core/constants/global';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-crypto-currency',
@@ -10,10 +11,13 @@ import {STOCK_CATEGORIES} from '@core/constants/global';
     styleUrls: ['./crypto-currency.component.scss']
 })
 export class CryptoCurrencyComponent implements OnInit {
-    stockCategories = STOCK_CATEGORIES;
+    stockTypes = STOCK_CATEGORIES;
+    stocks = [];
+
     constructor(
         private modalService: BsModalService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private stocksService: StocksService
     ) {
     }
 
@@ -26,8 +30,19 @@ export class CryptoCurrencyComponent implements OnInit {
 
     openAddStockModal() {
         console.log('OK')
-        this.dialog.open(AddStockDialogComponent, {data: {width: '500px', height: '300px'}}).afterClosed().subscribe(dt => {
+        this.dialog.open(AddStockDialogComponent, {
+            data: {
+                width: '500px',
+                height: '300px'
+            }
+        }).afterClosed().subscribe(dt => {
 
+        });
+    }
+
+    stockTypeChanged(e) {
+        this.stocksService.getStocksByType({type: e.target.value}).subscribe(dt => {
+            this.stocks = dt;
         });
     }
 

@@ -67,4 +67,8 @@ export class VideoCarouselHolderComponent implements OnInit {
         return window.screen.availWidth > 568 && videoLen === 1;
     }
 
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
 }

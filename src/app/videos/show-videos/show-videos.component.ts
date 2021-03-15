@@ -41,22 +41,25 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
         this.authUser = this.getAuthUser.transform();
+
         this.subscriptions.push(
-            router.events.pipe(
-                filter(e => e instanceof ActivationEnd),
-            ).subscribe((d: Data) => {
-                this.search = d.snapshot.queryParams?.search;
+            this.route.queryParams.subscribe(d => {
+                this.search = this.route.snapshot.queryParams?.search;
                 this.showTrending = this.router.url.includes('trending');
-                this.selectedTag = d.snapshot.queryParams?.tag;
+                this.selectedTag = this.route.snapshot.queryParams?.tag;
                 if (this.search) {
                     this.searchChannelsVideos({search: this.search, filters: this.filters});
                 } else {
                     this.getVideosList({search: this.search, filters: this.filters, tag: this.selectedTag});
                 }
             }));
+
+
     }
 
     ngOnInit(): void {
+
+
     }
 
     getFilteredList(filters = {}) {
@@ -139,6 +142,10 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
 
     checkIfSavedByCurrentUser(video) {
         return video.users_vids.find(v => v.username === this.authUser?.username && v.users_videos.saved);
+    }
+
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
     ngOnDestroy() {

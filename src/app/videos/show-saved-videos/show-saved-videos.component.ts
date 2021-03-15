@@ -48,4 +48,8 @@ export class ShowSavedVideosComponent implements OnInit {
         this.router.navigate(['channels/show'], {queryParams: {username}});
     }
 
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
 }

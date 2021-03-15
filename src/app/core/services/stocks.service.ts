@@ -19,4 +19,8 @@ export class StocksService {
     getIndices(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-indices`, {params});
     }
+
+    getStocksByType(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-by-type`, {params});
+    }
 }

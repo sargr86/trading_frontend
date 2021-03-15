@@ -36,7 +36,7 @@
 
                 <div class="tags">
                     <ul>
-                        <li *ngFor="let tag of video?.tags">
+                        <li *ngFor="let tag of video?.tags" (click)="getVideosByTag(tag.name)">
                             <span>{{tag.name}}</span>
                         </li>
                     </ul>

@@ -55,9 +55,10 @@ export class LeftSidebarComponent implements OnInit {
             }
         });
 
-        this.stocksService.getDailyStocks({}).subscribe(dt => {
+        this.subject.getStocksData().subscribe(dt => {
             this.stocks = dt;
         });
+
 
         this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
@@ -97,7 +98,7 @@ export class LeftSidebarComponent implements OnInit {
 
     changePage(route, params = {}) {
         this.closeSidenav.emit(true);
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([route], {queryParams: params})
         );
     }

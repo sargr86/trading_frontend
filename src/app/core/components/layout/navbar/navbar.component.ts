@@ -53,9 +53,8 @@ export class NavbarComponent implements OnInit {
             }
         });
 
-        this.stocksService.getDailyStocks({}).subscribe(dt => {
-            this.stocks = dt;
-        });
+        this.getDailyStocks();
+
     }
 
     openModal(template: TemplateRef<any>) {
@@ -87,7 +86,10 @@ export class NavbarComponent implements OnInit {
     }
 
     getDailyStocks() {
-
+        this.stocksService.getDailyStocks({}).subscribe(dt => {
+            this.stocks = dt;
+            this.subject.setStocksData(dt);
+        });
     }
 
     isSmallScreen() {

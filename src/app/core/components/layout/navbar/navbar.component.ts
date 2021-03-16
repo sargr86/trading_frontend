@@ -8,6 +8,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
+import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/crypto-currency.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-navbar',
@@ -37,7 +39,8 @@ export class NavbarComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private stocksService: StocksService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private dialog: MatDialog
     ) {
 
     }
@@ -58,7 +61,13 @@ export class NavbarComponent implements OnInit {
     }
 
     openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+        // this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+        this.dialog.open(CryptoCurrencyComponent, { maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100%',
+            width: '100%'}).afterClosed().subscribe(dt => {
+
+        });
     }
 
     logout() {

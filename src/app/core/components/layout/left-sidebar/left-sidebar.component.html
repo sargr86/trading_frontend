@@ -49,9 +49,9 @@
         <div class="line-item"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('stock')"
              [hidden]="envName==='production'"
-             (click)="changePage('user/stock-profile')">
+             (click)="changePage('user/analytics')">
             <img src="assets/img/item-9.png">
-            <p>Stock Profile</p>
+            <p>Analytics</p>
         </div>
     </div>
     <ng-container *ngIf="auth.loggedIn() && channels?.length!==0">

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 import {STOCK_CATEGORIES} from '@core/constants/global';
 import {StocksService} from '@core/services/stocks.service';
@@ -17,6 +17,7 @@ export class CryptoCurrencyComponent implements OnInit {
     constructor(
         private modalService: BsModalService,
         private dialog: MatDialog,
+        private matDialogRef: MatDialogRef<CryptoCurrencyComponent>,
         private stocksService: StocksService
     ) {
     }
@@ -26,6 +27,7 @@ export class CryptoCurrencyComponent implements OnInit {
 
     closeModal() {
         this.modalService.hide();
+        this.matDialogRef.close();
     }
 
     openAddStockModal() {

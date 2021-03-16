@@ -49,7 +49,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'stock-profile',
+        path: 'analytics',
         component: StockProfileComponent,
         data: {
             title: 'Stock profile',

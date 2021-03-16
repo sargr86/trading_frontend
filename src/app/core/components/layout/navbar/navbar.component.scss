@@ -1,9 +1,18 @@
+@import 'variables';
+nav {
+    position: fixed;
+    background: $white;
+    opacity: 1;
+    z-index: 9999;
+    width: 100%;
+}
+
 .user-icon {
     margin-right: 10px;
     cursor: pointer;
-    @media screen and (min-width: 992px) and  (max-width: 1030px){
+    @media screen and (min-width: 992px) and (max-width: 1030px) {
         margin: 0;
-        padding: 0!important;
+        padding: 0 !important;
     }
 }
 

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-stock-profile',
@@ -6,12 +7,18 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./stock-profile.component.scss']
 })
 export class StockProfileComponent implements OnInit {
-    activeTab = 'home';
+    activeTab = 'summary';
+    indices;
 
-    constructor() {
+    constructor(
+        private stocksService: StocksService
+    ) {
     }
 
     ngOnInit(): void {
+        this.stocksService.getIndices({}).subscribe(dt => {
+            this.indices = dt;
+        });
     }
 
     changeTab(tab) {

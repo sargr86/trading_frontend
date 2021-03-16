@@ -93,7 +93,6 @@ export const VIDEO_FILTERS = [
 ];
 
 export const STOCK_CATEGORIES = [
-    {name: 'All', value: 'all'},
     {name: 'Stocks', value: 'stocks'},
     {name: 'ETF', value: 'etf'},
     {name: 'Forex', value: 'forex'},

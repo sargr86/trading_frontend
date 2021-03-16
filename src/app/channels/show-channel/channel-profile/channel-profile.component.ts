@@ -158,9 +158,10 @@ export class ChannelProfileComponent implements OnInit {
         // console.log(this.channelUser)
     }
 
-    enableEditMode() {
+    toggleEditMode() {
         this.editMode = !this.editMode;
     }
+
 
     saveChanges() {
         console.log('save changes!!!')

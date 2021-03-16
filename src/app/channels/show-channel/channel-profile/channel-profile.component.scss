@@ -47,6 +47,16 @@ label[for="cover-image-input"] {
     align-items: center;
 }
 
+#cancel-changes {
+    display: flex;
+    align-items: center;
+    background: #C9C9C9;
+    border-radius: 0;
+    color: #fff;
+    padding: 8px 24px;
+    margin-right: 20px;
+}
+
 .avatar-container {
     position: relative;
 

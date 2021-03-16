@@ -43,7 +43,7 @@
     height: 179px;
     margin-bottom: 32px;
     background: #F53C6F 0% 0% no-repeat padding-box;
-    padding: 24px;
+    padding: 24px 8px;
     border: 1px dashed transparent;
     transition: 0.2s;
 
@@ -53,9 +53,8 @@
 
     .cryptoRemove, .stock-follow {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 6px;
+        top: 0;
+        right: 5px;
         cursor: pointer;
 
         &:hover {
@@ -77,10 +76,10 @@
             color: white;
             text-transform: uppercase;
             padding: 3px;
-            font-size: 12px;
-            border: 2px solid white;
+            font-size: 9px;
+            border: 1px solid white;
             font-weight: bold;
-            border-radius: 4px;
+            border-radius: 0px;
         }
     }
 }
@@ -116,14 +115,19 @@
     color: #FFFFFF;
     font-size: 14px;
     font-family: "Muli-Light";
-    margin-bottom: 11px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .crypto-text-2 {
     color: #FFFFFF;
     font-size: 26px;
+    line-height: 26px;
     font-family: "Muli-Bold";
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     position: relative;
     margin-left: 6px;
 }

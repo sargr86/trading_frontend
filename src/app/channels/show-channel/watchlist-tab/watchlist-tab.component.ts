@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
@@ -29,6 +29,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.search = localStorage.getItem('search');
     }
+
+
 
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());

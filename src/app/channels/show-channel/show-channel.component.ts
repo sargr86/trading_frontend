@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
@@ -18,6 +18,7 @@ import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-t
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {search} from '@ctrl/ngx-emoji-mart/svgs';
 import {AuthService} from '@core/services/auth.service';
+import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/crypto-currency.component';
 
 @Component({
     selector: 'app-show-channel',
@@ -48,6 +49,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     showFilters = false;
     filters = null;
+
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
@@ -147,6 +149,16 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
+
+    openModal() {
+        this.dialog.open(CryptoCurrencyComponent, { maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100%',
+            width: '100%'}).afterClosed().subscribe(dt => {
+
+        });
+    }
+
 
     ngOnDestroy() {
     }

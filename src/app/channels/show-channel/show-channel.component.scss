@@ -7,7 +7,6 @@
 }
 
 
-
 #search-videos-form {
     display: flex;
 
@@ -15,10 +14,23 @@
         display: flex;
         margin-right: 20px;
         padding-top: 4px;
+        height: 31px;
 
         .filter-toggle-btn {
             background-color: unset;
             height: 23px;
+        }
+    }
+
+    .open-add-stock-modal {
+        display: flex;
+        align-items: center;
+        height: 31px;
+        margin-right: 20px;
+
+        button {
+            background-color: unset;
+            height: 23px
         }
     }
 

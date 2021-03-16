@@ -17,10 +17,15 @@
                 </ul>
                 <form [formGroup]="searchVideosForm" id="search-videos-form">
                     <div class="toggle-filters-btn">
-                        <button class="filter-toggle-btn" *ngIf="activeTab.name!=='About'" type="button"
+                        <button class="filter-toggle-btn" *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
                                 [class.filters-active]="showFilters"
                                 (click)="toggleFilters()">
                             <mat-icon>tune</mat-icon>
+                        </button>
+                    </div>
+                    <div class="open-add-stock-modal" *ngIf="activeTab.name==='Watchlist'" (click)="openModal()">
+                        <button>
+                            <mat-icon>add_circle_outline</mat-icon>
                         </button>
                     </div>
                     <div class="watchlist-search" *ngIf="activeTab.name!=='About'">

@@ -5,7 +5,7 @@
 <div id="left-sidebar">
 
     <div class="left-menu">
-        <div class="left-menu-main st-left-metu" [class.active]="router.url.includes('publish')"
+        <div class="left-menu-main st-left-menu" [class.active]="router.url.includes('publish')"
              (click)="changePage('user/video/start-live-video')" *ngIf="auth.loggedIn()">
             <span class="material-icons">
             video_call

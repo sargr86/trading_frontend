@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-search-videos-tab',
@@ -17,7 +18,8 @@ export class SearchVideosTabComponent implements OnInit {
 
     constructor(
         private videoService: VideoService,
-        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
+        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe,
+        public router: Router
     ) {
     }
 
@@ -39,6 +41,10 @@ export class SearchVideosTabComponent implements OnInit {
     selectVideo(video) {
         this.selectedVideos = this.getSelectedVideos.transform(video, this.selectedVideos, this.playlist);
         this.selectVid.emit(this.selectedVideos);
+    }
+
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
 }

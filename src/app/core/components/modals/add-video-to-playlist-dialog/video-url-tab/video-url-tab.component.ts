@@ -5,6 +5,7 @@ import {METL_URL_PATTERN} from '@core/constants/patterns';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-video-url-tab',
@@ -27,7 +28,8 @@ export class VideoUrlTabComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private videoService: VideoService,
-        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe
+        public getSelectedVideos: GetSelectedVideosToBeAddedToPlaylistPipe,
+        public router: Router
     ) {
     }
 
@@ -70,6 +72,10 @@ export class VideoUrlTabComponent implements OnInit {
 
     get urlCtrl(): AbstractControl {
         return this.searchVideoByUrlForm.get('url');
+    }
+
+    async getVideosByTag(name) {
+        await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
 }

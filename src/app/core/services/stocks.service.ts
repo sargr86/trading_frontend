@@ -23,4 +23,8 @@ export class StocksService {
     getStocksByType(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-by-type`, {params});
     }
+
+    getHistoricalPrices(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-historical`, {params});
+    }
 }

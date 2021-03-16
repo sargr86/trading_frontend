@@ -1,40 +1,44 @@
 <div class="stock-content">
+    <div class="major-indexes">
+        <h2>Major indexes</h2>
+
+        <div class="favorites">
+
+            <div class="crypto-content">
+                <div class="crypto-item crypto-item-green" *ngFor="let stock of indices">
+                    <p class="crypto-text-1">{{stock.name}}</p>
+                    <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
+                    <div class="crypto-block">
+                        <p class="crypto-text-1">-489,86</p>
+                        <p class="crypto-text-1">-4,16%</p>
+                    </div>
+                    <img class="crypto-map" src="assets/img/map.png">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="stock-tabs">
 
         <ul class="nav nav-tabs">
-            <li (click)="changeTab('home')" [class.active]="activeTab==='home'">
-                <a data-toggle="tab" href="#home">Home</a>
-            </li>
-            <li [class.active]="activeTab==='menu1'">
-                <a data-toggle="tab" (click)="changeTab('menu1')" href="#menu1">
-                    Menu 1</a></li>
-            <li [class.active]="activeTab==='menu2'">
-                <a data-toggle="tab" (click)="changeTab('menu2')" href="#menu2">
-                    Menu 2</a></li>
-            <li [class.active]="activeTab==='menu3'">
-                <a data-toggle="tab" (click)="changeTab('menu3')" href="#menu3">
-                    Menu 3</a>
+            <li [class.active]="activeTab==='summary'">
+                <a data-toggle="tab" (click)="changeTab('summary')" href="#summary">
+                    Summary</a></li>
+
+            <li [class.active]="activeTab==='historical'">
+                <a data-toggle="tab" (click)="changeTab('historical')" href="#historical">
+                    Historical data</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h3>HOME</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.</p>
-            </div>
-            <div id="menu1" class="tab-pane fade">
-                <h3>Menu 1</h3>
+
+            <div id="summary" class="tab-pane fade show">
+                <h3>Summary</h3>
                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                     consequat.</p>
             </div>
-            <div id="menu2" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                    totam rem aperiam.</p>
-            </div>
-            <div id="menu3" class="tab-pane fade">
-                <h3>Menu 3</h3>
+            <div id="historical" class="tab-pane fade">
+                <h3>Historical data</h3>
                 <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
                     explicabo.</p>
             </div>

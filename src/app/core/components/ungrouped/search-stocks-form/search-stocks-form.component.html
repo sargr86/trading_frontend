@@ -1,0 +1,7 @@
+<form [formGroup]="searchStocksForm">
+    <div class="home-search">
+        <input class="home-search-input" placeholder="Search for stocks..." formControlName="search"
+               (keyup.enter)="searchStocks()">
+        <i class="fas fa-search" (click)="searchStocks()"></i>
+    </div>
+</form>

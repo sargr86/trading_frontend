@@ -27,6 +27,7 @@ import { SearchVideosTabComponent } from '@core/components/modals/add-video-to-p
 import { VideoUrlTabComponent } from '@core/components/modals/add-video-to-playlist-dialog/video-url-tab/video-url-tab.component';
 import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playlist-dialog/your-videos-tab/your-videos-tab.component';
 import { AddStockDialogComponent } from './components/modals/add-stock-dialog/add-stock-dialog.component';
+import { SearchStocksFormComponent } from './components/ungrouped/search-stocks-form/search-stocks-form.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { AddStockDialogComponent } from './components/modals/add-stock-dialog/ad
         SearchVideosTabComponent,
         VideoUrlTabComponent,
         YourVideosTabComponent,
-        AddStockDialogComponent
+        AddStockDialogComponent,
+        SearchStocksFormComponent
     ],
     imports: [
         CommonModule,

@@ -62,10 +62,12 @@ export class NavbarComponent implements OnInit {
 
     openModal(template: TemplateRef<any>) {
         // this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-        this.dialog.open(CryptoCurrencyComponent, { maxWidth: '100vw',
+        this.dialog.open(CryptoCurrencyComponent, {
+            maxWidth: '100vw',
             maxHeight: '100vh',
             height: '100%',
-            width: '100%'}).afterClosed().subscribe(dt => {
+            width: '100%'
+        }).afterClosed().subscribe(dt => {
 
         });
     }
@@ -79,7 +81,11 @@ export class NavbarComponent implements OnInit {
 
     searchVideos(e) {
         // this.subject.setVideosSearch(this.searchVideosForm.value);
-        this.search.emit(e);
+        this.search.emit({...e, searchType: 'videos'});
+    }
+
+    searchStocks(e) {
+        this.search.emit({...e, searchType: 'stocks'});
     }
 
     toggleMyProfileLink() {

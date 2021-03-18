@@ -116,5 +116,11 @@ export class LeftSidebarComponent implements OnInit {
         };
     }
 
+    openStockProfile(stock) {
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate([`stocks/${stock}/analytics`], {queryParams: {stock}})
+        );
+    }
+
 
 }

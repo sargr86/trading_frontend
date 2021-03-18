@@ -2,15 +2,20 @@
 @import 'mixins';
 
 .table-chart-container {
-    .loader{
-        width:100%;
+    .loader {
+        width: 100%;
         display: flex;
         justify-content: center;
     }
+
     .table-container {
         table {
             width: 100%;
         }
+    }
+
+    .selected-stock {
+        margin: 20px 0;
     }
 
     .chart-container {
@@ -21,8 +26,8 @@
         justify-content: center;
         align-items: center;
 
-         h1{
-             display: inline-block;
-         }
+        h1 {
+            display: inline-block;
+        }
     }
 }

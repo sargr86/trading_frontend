@@ -45,7 +45,6 @@
         </div>
         <div class="line-item" *ngIf="auth.loggedIn()"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('stock')"
-             [hidden]="envName==='production'"
              (click)="changePage('stocks/analytics')">
             <img src="assets/img/item-9.png">
             <p>Analytics</p>
@@ -116,7 +115,7 @@
                     </div>
                 </div>
                 <div class="watchlist-analytics">
-                    <div class="analytics-item" *ngFor="let stock of indices">
+                    <div class="analytics-item" *ngFor="let stock of indices" (click)="openStockProfile(stock.symbol)">
                         <div class="analytics-item-1">
                             <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
                             <p class="analytics-text-2">{{stock.name}}</p>

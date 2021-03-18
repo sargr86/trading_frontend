@@ -12,13 +12,13 @@
             </div>
         </div>
 
-        <div class="description" *ngIf="!editMode && channelUser?.channel.description">
+        <div class="description" [hidden]="editMode">
             <p>{{getDesc(channelUser.channel.description)}}</p>
         </div>
 
         <ng-container *ngIf="editMode">
 
-            <textarea formControlName="description"></textarea>
+            <textarea rows="15" formControlName="description"></textarea>
 
             <button class="save" (click)="saveChannelDescription()">Save</button>
         </ng-container>

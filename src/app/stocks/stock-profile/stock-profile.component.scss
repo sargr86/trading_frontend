@@ -74,7 +74,10 @@
     }
 }
 
-
+.small-chart-container {
+    width: 100%;
+    height: 150px;
+}
 
 @media(max-width: 991px) {
     .stock-block {

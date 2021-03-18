@@ -13,7 +13,18 @@
                         <p class="crypto-text-1">{{stock.price}}</p>
                         <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
                     </div>
-                                        <img class="crypto-map" src="assets/img/map.png">
+                    <div class="small-chart-container">
+                        <ngx-charts-line-chart  [scheme]="colorScheme" [legend]="legend"
+                                               [showXAxisLabel]="showXAxisLabel"
+                                               [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis"
+                                               [results]="multi"
+                                               [autoScale]="true"
+                                               [yAxisTicks]="[]" [xAxisTicks]="[]" [timeline]="true"
+                                               [referenceLines]="referenceLines" [showRefLines]="true"
+                                               [showGridLines]="true" [showRefLabels]="false">
+                        </ngx-charts-line-chart>
+                    </div>
+                    <!--                                        <img class="crypto-map" src="assets/img/map.png">-->
                 </div>
             </div>
         </div>

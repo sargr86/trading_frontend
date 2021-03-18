@@ -7,13 +7,10 @@
     <div class="left-menu">
         <div class="left-menu-main st-left-menu" [class.active]="router.url.includes('publish')"
              (click)="changePage('user/video/start-live-video')" *ngIf="auth.loggedIn()">
-            <span class="material-icons">
-            video_call
-            </span>
+            <span class="material-icons">video_call</span>
             <p>Start live video</p>
         </div>
         <div class="left-menu-main" (click)="changePage('/')" [class.active]="router.url ==='/'">
-            <!--            <img src="assets/img/item-5.png">-->
             <mat-icon>home</mat-icon>
             <p>Home</p>
         </div>
@@ -22,7 +19,7 @@
             <img src="assets/img/item-6.png">
             <p>Trending</p>
         </div>
-        <div class="line-item"></div>
+        <div class="line-item" *ngIf="auth.loggedIn()"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"
              [hidden]="envName==='production'"
              (click)="changePage('chat/messages')">
@@ -35,7 +32,7 @@
             <img src="assets/img/item-8.png">
             <p>Chat rooms</p>
         </div>
-        <div class="line-item"></div>
+        <div class="line-item" *ngIf="auth.loggedIn()"></div>
         <div class="left-menu-main" (click)="changePage('videos/saved')" *ngIf="auth.loggedIn()"
              [class.active]="routerUrl === '/videos/saved'">
             <img src="assets/img/item-10.png">
@@ -44,12 +41,12 @@
         <div class="left-menu-main" [class.active]="routerUrl === '/videos'" *ngIf="auth.loggedIn()"
              (click)="changePage('videos')">
             <img src="assets/img/item-11.png">
-            <p>CLIPZ</p>
+            <p>Videos</p>
         </div>
-        <div class="line-item"></div>
+        <div class="line-item" *ngIf="auth.loggedIn()"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('stock')"
              [hidden]="envName==='production'"
-             (click)="changePage('user/analytics')">
+             (click)="changePage('stocks/analytics')">
             <img src="assets/img/item-9.png">
             <p>Analytics</p>
         </div>

@@ -16,7 +16,7 @@
         </ngx-charts-area-chart>
     </div>
     <div class="table-container" *ngIf="chartData">
-        <h1>{{selectedStock}}</h1>
+        <h1 class="selected-stock">{{selectedStock.replace('^', '')}}</h1>
         <table mat-table [dataSource]="tableData" class="mat-elevation-z8">
 
             <!--- Note that these columns can be defined in any order.

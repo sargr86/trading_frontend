@@ -5,6 +5,7 @@
                 <input type="text" placeholder="Paste URL here" #urlInput
                        (keyup.enter)="getUrlString($event.target.value)"
                        (paste)="getUrlString($event)" formControlName="url">
+                <mat-hint>Please put only Metl.tv URLs here</mat-hint>
                 <span *ngIf="urlCtrl.hasError('patternInvalid')" class="error">Please provide a valid URL</span>
             </form>
         </div>

@@ -13,7 +13,7 @@
         </div>
 
         <div class="description" *ngIf="!editMode && channelUser?.channel.description">
-            <p>{{channelUser.channel.description}}</p>
+            <p>{{getDesc(channelUser.channel.description)}}</p>
         </div>
 
         <ng-container *ngIf="editMode">

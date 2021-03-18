@@ -942,7 +942,6 @@ nav.home-header {
     align-items: flex-start;
 
 }
-
 .main-tags-text {
     display: flex;
     flex-wrap: wrap;
@@ -1249,6 +1248,16 @@ select {
         }
     }
 }
+
+.tags {
+    ul {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+}
+
 
 
 @media (max-width: 1700px) {

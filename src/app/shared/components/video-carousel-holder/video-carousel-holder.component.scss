@@ -7,21 +7,17 @@
         width: 50%;
         display: flex;
     }
-
     .right-side {
         width: 50%;
-
         ul {
             text-align: right;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
-
             li {
                 display: inline-block;
                 margin-right: 5px;
-
                 span {
                     @include tagItem;
                 }
@@ -29,7 +25,6 @@
         }
     }
 }
-
 
 .remove-video {
     position: absolute;
@@ -66,7 +61,6 @@
         font-family: "Muli-Light";
         white-space: nowrap;
     }
-
     .watchers-count, .upload-time {
         //margin-left: 26px;
     }

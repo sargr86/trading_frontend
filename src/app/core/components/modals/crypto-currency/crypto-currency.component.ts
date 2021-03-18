@@ -23,6 +23,7 @@ export class CryptoCurrencyComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getStocksByType('stocks');
     }
 
     closeModal() {
@@ -43,7 +44,11 @@ export class CryptoCurrencyComponent implements OnInit {
     }
 
     stockTypeChanged(e) {
-        this.stocksService.getStocksByType({type: e.target.value}).subscribe(dt => {
+        this.getStocksByType(e.target.value);
+    }
+
+    getStocksByType(type) {
+        this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
         });
     }

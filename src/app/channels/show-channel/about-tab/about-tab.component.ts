@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -8,7 +8,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
     templateUrl: './about-tab.component.html',
     styleUrls: ['./about-tab.component.scss']
 })
-export class AboutTabComponent implements OnInit {
+export class AboutTabComponent implements OnInit, AfterViewInit {
     aboutForm: FormGroup;
     editMode = false;
     authUser;
@@ -30,10 +30,15 @@ export class AboutTabComponent implements OnInit {
             },
         );
         this.aboutForm.patchValue({username: this.channelUser.username, ...this.channelUser.channel});
+
     }
 
     editModeOn() {
         this.editMode = true;
+    }
+
+    getDesc(d) {
+        return d.replace('<br>', '\\n');
     }
 
     saveChannelDescription() {
@@ -42,6 +47,10 @@ export class AboutTabComponent implements OnInit {
             this.channelUser = dt;
             this.editMode = false;
         });
+    }
+
+    ngAfterViewInit() {
+        document.querySelector('.description').innerHTML = this.channelUser.channel.description;
     }
 
 }

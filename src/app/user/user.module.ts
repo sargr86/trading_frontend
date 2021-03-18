@@ -21,6 +21,7 @@ import {CollectStreamingDetailsFormComponent} from './publisher-flow/collect-str
 import {JoinVideoStreamingComponent} from './subscriber-flow/join-video-streaming/join-video-streaming.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -46,7 +47,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         PublisherFlowComponent,
         SubscriberFlowComponent,
         CollectStreamingDetailsFormComponent,
-        JoinVideoStreamingComponent
+        JoinVideoStreamingComponent,
     ],
     imports: [
         CommonModule,

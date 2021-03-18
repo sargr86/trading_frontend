@@ -1,6 +1,5 @@
 <div class="tab1">
     <div class="input-wrap">
-        <label>Search video</label>
         <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
     </div>
     <ng-container *ngIf="searchedVideos.length > 0">

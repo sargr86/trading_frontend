@@ -29,7 +29,11 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
                 username: ['', Validators.required]
             },
         );
-        this.aboutForm.patchValue({username: this.channelUser.username, ...this.channelUser.channel});
+        this.aboutForm.patchValue({
+            username: this.channelUser.username,
+            description: this.channelUser.channel.description.replace(/<br\s*[\/]?>/gi, '\n')
+            // ...this.channelUser.channel
+        });
 
     }
 
@@ -38,13 +42,14 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
     }
 
     getDesc(d) {
-        return d.replace('<br>', '\\n');
+        return d.replace('<br>', '');
     }
 
     saveChannelDescription() {
         console.log(this.editMode)
         this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
             this.channelUser = dt;
+            document.querySelector('.description').innerHTML = this.channelUser.channel.description;
             this.editMode = false;
         });
     }

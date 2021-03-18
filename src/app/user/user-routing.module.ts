@@ -7,7 +7,6 @@ import {AccessibilityStatementComponent} from '@core/components/ungrouped/access
 import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';
 import {HelpComponent} from '@core/components/ungrouped/help/help.component';
 import {AboutComponent} from '@core/components/ungrouped/about/about.component';
-import {StockProfileComponent} from '@app/user/created-non-functional/stock-profile/stock-profile.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
@@ -46,13 +45,6 @@ const routes: Routes = [
         component: ProfileComponent,
         data: {
             title: 'User profile',
-        }
-    },
-    {
-        path: 'analytics',
-        component: StockProfileComponent,
-        data: {
-            title: 'Stock profile',
         }
     },
     {

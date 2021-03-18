@@ -9,11 +9,12 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import {JwtModule} from '@auth0/angular-jwt';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RequestInterceptor} from '@core/helpers/http.interceptor';
-import {StockProfileComponent} from '@app/user/created-non-functional/stock-profile/stock-profile.component';
 import {DatePipe} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from '@core/modules/material.module';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {UserModule} from '@app/user/user.module';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -23,7 +24,6 @@ export function tokenGetter() {
 @NgModule({
     declarations: [
         AppComponent,
-        StockProfileComponent,
     ],
     imports: [
         BrowserModule,
@@ -33,6 +33,7 @@ export function tokenGetter() {
         CarouselModule,
         MatDialogModule,
         MaterialModule,
+        NgxChartsModule,
         JwtModule.forRoot({
             config: {
                 tokenGetter,
@@ -41,6 +42,7 @@ export function tokenGetter() {
             }
         }),
         NgbModule,
+        UserModule,
     ],
     providers: [
         DatePipe,

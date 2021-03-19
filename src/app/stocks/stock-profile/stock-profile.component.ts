@@ -40,16 +40,6 @@ export class StockProfileComponent implements OnInit {
     view: any[] = [300, 150];
 
     // options
-    legend: boolean = false;
-    showLabels: boolean = true;
-    animations: boolean = true;
-    xAxis: boolean = true;
-    yAxis: boolean = true;
-    showYAxisLabel: boolean = false;
-    showXAxisLabel: boolean = false;
-    xAxisLabel: string = 'Year';
-    yAxisLabel: string = 'Population';
-    timeline: boolean = true;
     referenceLines = [
         {
             name: '2009',
@@ -73,8 +63,7 @@ export class StockProfileComponent implements OnInit {
         this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
         });
-
-        this.selectedStock = this.route.snapshot?.params?.symbol;
+        this.selectedStock = this.route.snapshot?.params?.symbol.toUpperCase();
     }
 
 

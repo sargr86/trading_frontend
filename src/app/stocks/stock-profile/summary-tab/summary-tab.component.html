@@ -2,38 +2,41 @@
     <div class="loader">
         <mat-spinner [diameter]="50" *ngIf="loader.dataLoading"></mat-spinner>
     </div>
-    <div class="chart-container" *ngIf="chartData">
+    <ng-container *ngIf="chartData && chartData[0].series.length > 0">
 
-        <ngx-charts-area-chart
-            [scheme]="colorScheme"
-            [legend]="false"
-            [showXAxisLabel]="false"
-            [showYAxisLabel]="false"
-            [autoScale]="true"
-            [xAxis]="true"
-            [yAxis]="true"
-            [results]="chartData">
-        </ngx-charts-area-chart>
-    </div>
-    <div class="table-container" *ngIf="chartData">
-        <h1 class="selected-stock">{{selectedStock.replace('^', '')}}</h1>
-        <table mat-table [dataSource]="tableData" class="mat-elevation-z8">
+        <div class="chart-container">
 
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-            <!-- Symbol Column -->
-            <ng-container *ngFor="let col of displayedColumns">
-                <ng-container [matColumnDef]="col">
-                    <th mat-header-cell *matHeaderCellDef> {{normalizeColName(col)}}</th>
-                    <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+            <ngx-charts-area-chart
+                [scheme]="colorScheme"
+                [legend]="false"
+                [showXAxisLabel]="false"
+                [showYAxisLabel]="false"
+                [autoScale]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [results]="chartData">
+            </ngx-charts-area-chart>
+        </div>
+        <div class="table-container">
+            <h1 class="selected-stock">{{selectedStock.replace('^', '')}}</h1>
+            <table mat-table [dataSource]="tableData" class="mat-elevation-z8">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <!-- Symbol Column -->
+                <ng-container *ngFor="let col of displayedColumns">
+                    <ng-container [matColumnDef]="col">
+                        <th mat-header-cell *matHeaderCellDef> {{normalizeColName(col)}}</th>
+                        <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
 
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
-
-
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </ng-container>
 </div>
+<mat-error *ngIf="(!chartData || chartData[0].series.length === 0) && !loader.dataLoading">No chart data found
+</mat-error>

@@ -1,0 +1,24 @@
+@import 'variables';
+@import 'mixins';
+
+.modal-form {
+    .home-search, input {
+        background: transparent !important;
+    }
+
+    input {
+        border-bottom: 1px solid $white;
+    }
+
+    ::placeholder {
+        color: $white !important;
+    }
+
+    .home-search {
+        i {
+            top: 8px;
+            color: #ffffff;
+            font-size: 20px;
+        }
+    }
+}

@@ -172,16 +172,23 @@ app-search-stocks-form {
     padding-top: 10px !important;
 }
 
-select, select:focus {
+select {
     background: transparent;
-    border: none !important;
+    //border: none !important;
     border-bottom: 1px solid $white !important;
-    color: $white !important;
+    border-left: none;
+    border-right: none;
+    border-top: none;
     font-family: 'Muli-Light';
     font-size: 18px;
+    color: $white !important;
+    &:focus {
+        outline: none;
+    }
 
-    option:checked {
-        color: red !important;
+    option{
+    color: $black !important;
+
     }
 }
 

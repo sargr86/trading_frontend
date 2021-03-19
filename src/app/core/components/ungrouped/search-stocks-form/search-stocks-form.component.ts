@@ -41,7 +41,6 @@ export class SearchStocksFormComponent implements OnInit {
     }
 
     async openStockPage(stock, trigger) {
-        console.log(stock)
         trigger.closePanel();
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([`stocks/${stock}/analytics`])

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivationEnd, Router} from '@angular/router';
 import {StocksService} from '@core/services/stocks.service';
@@ -14,6 +14,7 @@ export class SearchStocksFormComponent implements OnInit {
     myControl = new FormControl();
 
     passedSearch;
+    @Input('modal') modal = false;
     @Output('search') search = new EventEmitter();
 
     constructor(

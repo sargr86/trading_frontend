@@ -13,12 +13,18 @@ import {StocksService} from '@core/services/stocks.service';
 export class CryptoCurrencyComponent implements OnInit {
     stockTypes = STOCK_CATEGORIES;
     stocks = [];
+    stocksLoading = false;
+    filteredStocks = [];
+
+    public pageSize = 14;
+    public pageIndex = 0;
+
 
     constructor(
         private modalService: BsModalService,
         private dialog: MatDialog,
         private matDialogRef: MatDialogRef<CryptoCurrencyComponent>,
-        private stocksService: StocksService
+        private stocksService: StocksService,
     ) {
     }
 
@@ -48,9 +54,25 @@ export class CryptoCurrencyComponent implements OnInit {
     }
 
     getStocksByType(type) {
+        this.stocksLoading = true;
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
+            this.stocksLoading = false;
+            this.filterStocks();
         });
+    }
+
+    // Filters routes for floating panel
+    filterStocks() {
+        this.filteredStocks = this.stocks.slice(this.pageIndex * this.pageSize,
+            this.pageIndex * this.pageSize + this.pageSize);
+    }
+
+    // Handles floating panel routes pagination
+    handle(e) {
+        this.pageIndex = e.pageIndex;
+        this.pageSize = e.pageSize;
+        this.filterStocks();
     }
 
 }

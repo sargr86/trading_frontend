@@ -119,9 +119,14 @@
             }
 
             .shortened-description {
-                max-width: 432px;
                 margin-top: 16px;
                 color: #545454;
+                white-space: pre-wrap;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                max-width: 350px;
             }
 
             .saved-video {

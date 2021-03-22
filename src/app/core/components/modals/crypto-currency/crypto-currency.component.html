@@ -30,7 +30,7 @@
                     <p class="crypto-text-1">-489,86</p>
                     <p class="crypto-text-1">-4,16%</p>
                 </div>
-<!--                <img class="crypto-map" src="assets/img/map.png">-->
+                <!--                <img class="crypto-map" src="assets/img/map.png">-->
             </div>
 
             <div class="crypto-item">
@@ -44,7 +44,7 @@
                     <p class="crypto-text-1">-489,86</p>
                     <p class="crypto-text-1">-4,16%</p>
                 </div>
-<!--                <img class="crypto-map" src="assets/img/map.png">-->
+                <!--                <img class="crypto-map" src="assets/img/map.png">-->
             </div>
 
             <div class="crypto-item">
@@ -57,7 +57,7 @@
                     <p class="crypto-text-1">-489,86</p>
                     <p class="crypto-text-1">-4,16%</p>
                 </div>
-<!--                <img class="crypto-map" src="assets/img/map.png">-->
+                <!--                <img class="crypto-map" src="assets/img/map.png">-->
             </div>
 
             <div class="crypto-item">
@@ -70,7 +70,7 @@
                     <p class="crypto-text-1">-489,86</p>
                     <p class="crypto-text-1">-4,16%</p>
                 </div>
-<!--                <img class="crypto-map" src="assets/img/map.png">-->
+                <!--                <img class="crypto-map" src="assets/img/map.png">-->
             </div>
 
             <div class="crypto-item">
@@ -89,9 +89,21 @@
     </div>
 
 
-    <div class="AllStocks">
+    <div class="all-stocks">
         <div class="top-wrap">
             <h2>All Stocks</h2>
+
+            <div class="center-group">
+                <mat-spinner [diameter]="20" *ngIf="stocksLoading"></mat-spinner>
+                <app-search-stocks-form [modal]="true"
+                                        *ngIf="stocks.length > 0 && !stocksLoading"></app-search-stocks-form>
+                <mat-paginator *ngIf="stocks.length > 0 && !stocksLoading" (page)="handle($event)"
+                               #paginator
+                               [length]="stocks.length" [pageIndex]="pageIndex"
+                               [pageSize]="pageSize" [hidePageSize]="true"
+                               [pageSizeOptions]="[2,5,10,25,100]">
+                </mat-paginator>
+            </div>
 
             <select (change)="stockTypeChanged($event)">
                 <option *ngFor="let type of stockTypes" [value]="type.value">{{type.name}}</option>
@@ -99,7 +111,7 @@
         </div>
 
         <div class="crypto-content">
-            <div class="crypto-item" *ngFor="let stock of stocks"
+            <div class="crypto-item" *ngFor="let stock of filteredStocks"
                  [class.crypto-item-green]="stock.changesPercentage > 0">
                 <div class="stock-follow">
                     <button>Follow</button>
@@ -110,7 +122,7 @@
                     <p class="crypto-text-1">{{stock.change?.toFixed(2)}}</p>
                     <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
                 </div>
-<!--                <img class="crypto-map" src="assets/img/map.png">-->
+                <!--                <img class="crypto-map" src="assets/img/map.png">-->
             </div>
         </div>
 

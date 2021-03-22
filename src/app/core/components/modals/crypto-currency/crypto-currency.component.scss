@@ -1,5 +1,8 @@
+@import 'variables';
+@import 'mixins';
+
 .crypto-section {
-    background: #0E1D43 0% 0% no-repeat padding-box;
+    background: #0E1D43 0 0 no-repeat padding-box;
     width: 100%;
     padding: 60px 200px;
     margin: -1.75rem auto;
@@ -114,7 +117,7 @@
 .crypto-text-1 {
     color: #FFFFFF;
     font-size: 14px;
-    font-family: "Muli-Light";
+    font-family: 'Muli-Light';
     margin-bottom: 4px;
     overflow: hidden;
     display: -webkit-box;
@@ -126,7 +129,7 @@
     color: #FFFFFF;
     font-size: 26px;
     line-height: 26px;
-    font-family: "Muli-Bold";
+    font-family: 'Muli-Bold';
     margin-bottom: 4px;
     position: relative;
     margin-left: 6px;
@@ -137,7 +140,7 @@
     left: -5px;
     top: -6px;
     font-size: 16px;
-    font-family: "Muli-Bold";
+    font-family: 'Muli-Bold';
 }
 
 .crypto-block {
@@ -154,6 +157,44 @@
 
 .modal-dialog {
     margin: 0 !important;
+}
+
+.all-stocks {
+    .mat-paginator {
+        background: transparent;
+        color: white;
+        font-family: 'Muli-Regular';
+        font-size: 12px;
+    }
+}
+
+app-search-stocks-form {
+    padding-top: 10px !important;
+}
+
+select {
+    background: transparent;
+    //border: none !important;
+    border-bottom: 1px solid $white !important;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-family: 'Muli-Light';
+    font-size: 18px;
+    color: $white !important;
+    &:focus {
+        outline: none;
+    }
+
+    option{
+    color: $black !important;
+
+    }
+}
+
+.center-group {
+    display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 1400px) {

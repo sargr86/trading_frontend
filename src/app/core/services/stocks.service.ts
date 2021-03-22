@@ -35,4 +35,8 @@ export class StocksService {
     getStockChartData(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-stock-chart-data`, {params});
     }
+
+    searchStocks(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/search`, {params});
+    }
 }

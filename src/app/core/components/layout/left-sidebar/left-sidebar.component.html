@@ -19,7 +19,7 @@
             <img src="assets/img/item-6.png">
             <p>Trending</p>
         </div>
-        <div class="line-item" *ngIf="auth.loggedIn()"></div>
+        <div class="line-item" *ngIf="auth.loggedIn()" [hidden]="envName==='production'"></div>
         <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"
              [hidden]="envName==='production'"
              (click)="changePage('chat/messages')">
@@ -32,7 +32,7 @@
             <img src="assets/img/item-8.png">
             <p>Chat rooms</p>
         </div>
-        <div class="line-item" *ngIf="auth.loggedIn()"></div>
+        <div class="line-item" *ngIf="auth.loggedIn()" [hidden]="envName==='production'"></div>
         <div class="left-menu-main" (click)="changePage('videos/saved')" *ngIf="auth.loggedIn()"
              [class.active]="routerUrl === '/videos/saved'">
             <img src="assets/img/item-10.png">
@@ -76,7 +76,7 @@
         <p (click)="viewAllSubscriptions()" *ngIf="routerUrl !== '/channels/subscriptions'" class="see-more">See
             more</p>
     </ng-container>
-    <div class="watchlist" *ngIf="router.url!=='/' && !isSmallScreen()" [hidden]="envName==='production'">
+    <div class="watchlist" *ngIf="router.url!=='/' && !isSmallScreen()">
         <ul class="nav nav-tabs" id="watchlist" role="tablist">
             <li class="nav-item">
                 <a class="nav-link" id="watch-tab" data-toggle="tab" href="#watch" role="tab"

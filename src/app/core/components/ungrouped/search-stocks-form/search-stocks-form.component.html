@@ -1,7 +1,14 @@
-<form [formGroup]="searchStocksForm">
+<form [formGroup]="searchStocksForm" [class.modal-form]="modal">
     <div class="home-search">
-        <input class="home-search-input" placeholder="Search for stocks..." formControlName="search"
-               (keyup.enter)="searchStocks()">
-        <i class="fas fa-search" (click)="searchStocks()"></i>
+        <input class="home-search-input" placeholder="Search for stocks..." formControlName="search" #searchInput
+               (keyup)="searchStocks()"  #trigger="matAutocompleteTrigger"   [formControl]="myControl" (keyup.enter)="openStockPage(searchInput.value, trigger)"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let result of searchResults" [value]="result.Ticker"
+                        (click)="openStockPage(result.Ticker, trigger)">
+                {{result.Ticker}}
+            </mat-option>
+        </mat-autocomplete>
+        <i class="fas fa-search"></i>
     </div>
 </form>

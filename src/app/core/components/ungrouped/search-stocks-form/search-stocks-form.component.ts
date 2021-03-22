@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivationEnd, Router} from '@angular/router';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-search-stocks-form',
@@ -9,13 +10,17 @@ import {ActivationEnd, Router} from '@angular/router';
 })
 export class SearchStocksFormComponent implements OnInit {
     searchStocksForm: FormGroup;
+    searchResults = [];
+    myControl = new FormControl();
 
     passedSearch;
+    @Input('modal') modal = false;
     @Output('search') search = new EventEmitter();
 
     constructor(
         private fb: FormBuilder,
-        public router: Router
+        public router: Router,
+        private stocksService: StocksService
     ) {
     }
 
@@ -30,7 +35,16 @@ export class SearchStocksFormComponent implements OnInit {
     }
 
     searchStocks() {
-        this.search.emit(this.searchStocksForm.value);
+        this.stocksService.searchStocks(this.searchStocksForm.value).subscribe(dt => {
+            this.searchResults = dt;
+        });
+    }
+
+    async openStockPage(stock, trigger) {
+        trigger.closePanel();
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate([`stocks/${stock}/analytics`])
+        );
     }
 
 }

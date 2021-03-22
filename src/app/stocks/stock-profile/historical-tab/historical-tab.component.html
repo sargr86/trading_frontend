@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="tableData" class="mat-elevation-z8" *ngIf="tableData">
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8" *ngIf="tableData && tableData.data.length">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -15,4 +15,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="paginationValues"
-               [hidden]=" !tableData"></mat-paginator>
+               [hidden]="!tableData?.data.length"></mat-paginator>
+
+<mat-error *ngIf="!tableData?.data.length">No historical prices found</mat-error>

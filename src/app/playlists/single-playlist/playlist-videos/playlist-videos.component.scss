@@ -4,6 +4,7 @@
     .video-container {
         display: flex;
         flex-wrap: wrap;
+        align-items: flex-start;
 
         .img {
             position: relative;
@@ -83,6 +84,7 @@
 
             .video-details-2nd-row {
                 display: flex;
+                flex-direction: column;
 
                 .tags {
                     //margin-top: 10px;
@@ -99,10 +101,15 @@
             }
 
             .shortened-description {
-                margin-top: 16px;
+                margin-top: 5px;
                 margin-bottom: 0;
                 color: #545454;
-                white-space: nowrap;
+                white-space: pre-wrap;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                max-width: 250px;
             }
 
         }

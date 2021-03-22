@@ -49,6 +49,7 @@
 
     .video-container {
         display: flex;
+        align-items: flex-start;
 
         .img {
             position: relative;
@@ -127,6 +128,12 @@
                 margin-top: 16px;
                 margin-bottom: 0;
                 color: #545454;
+                white-space: pre-wrap;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                //max-width: 250px;
             }
 
         }

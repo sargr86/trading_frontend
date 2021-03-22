@@ -3,19 +3,16 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         h2 {
             margin: 0;
             font-size: 16px;
             color: #18B587;
             font-family: "Muli-Bold";
         }
-
         .date {
-            margin-top: 0px;
+            margin-top: 0;
             display: flex;
             align-items: center;
-
             span {
                 font-size: 16px;
                 color: #545454;
@@ -24,7 +21,6 @@
                     text-align: center;
                 }
             }
-
             .btn {
                 margin-left: 24px;
                 background: #18B587;
@@ -34,7 +30,6 @@
             }
         }
     }
-
     .description {
         margin-top: 24px;
         padding: 24px;

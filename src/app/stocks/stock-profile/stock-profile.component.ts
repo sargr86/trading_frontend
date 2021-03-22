@@ -63,7 +63,7 @@ export class StockProfileComponent implements OnInit {
         this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
         });
-        this.selectedStock = this.route.snapshot?.params?.symbol.toUpperCase();
+        this.selectedStock = this.route.snapshot?.params?.symbol?.toUpperCase();
     }
 
 

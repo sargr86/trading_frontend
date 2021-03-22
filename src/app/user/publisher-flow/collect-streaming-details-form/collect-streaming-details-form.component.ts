@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {API_URL} from '@core/constants/global';
+import {API_URL, DESCRIPTION_CHARACTERS_LIMIT} from '@core/constants/global';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {VideoService} from '@core/services/video.service';
 import {ToastrService} from 'ngx-toastr';
@@ -56,7 +56,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     initForm(): void {
         this.startStreamingForm = this.fb.group({
             name: ['', Validators.required],
-            description: ['', Validators.required],
+            description: ['', [Validators.required, Validators.maxLength(DESCRIPTION_CHARACTERS_LIMIT)]],
             category_id: ['', Validators.required],
             tags: [[], Validators.required],
             sessionName: [this.sessionName],

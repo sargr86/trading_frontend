@@ -98,3 +98,5 @@ export const STOCK_CATEGORIES = [
     {name: 'Forex', value: 'forex'},
     {name: 'Cryptocurrency', value: 'crypto'},
 ];
+
+export const DESCRIPTION_CHARACTERS_LIMIT = 100;

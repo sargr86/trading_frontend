@@ -122,5 +122,14 @@ export class LeftSidebarComponent implements OnInit {
         );
     }
 
+    async viewFullWatchlist() {
+        await this.router.navigate(['channels/show'], {
+            queryParams: {
+                username: this.authUser.username,
+                tab: 'watchlist'
+            }
+        });
+    }
+
 
 }

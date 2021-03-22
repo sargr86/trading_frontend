@@ -23,6 +23,7 @@ export class LeftSidebarComponent implements OnInit {
     envName;
     stocks;
     indices;
+    activeTab = {name: 'watchlist'};
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
@@ -129,6 +130,10 @@ export class LeftSidebarComponent implements OnInit {
                 tab: 'watchlist'
             }
         });
+    }
+
+    changeTab(tab) {
+        this.activeTab.name = tab;
     }
 
 

@@ -48,13 +48,13 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
     }
 
     saveChannelDescription() {
-        // if (this.aboutForm.valid) {
-        this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
-            this.channelUser = dt;
-            document.querySelector('.description').innerHTML = this.channelUser.channel.description;
-            this.editMode = false;
-        });
-        // }
+        if (this.aboutForm.valid) {
+            this.channelService.saveDescription(this.aboutForm.value).subscribe(dt => {
+                this.channelUser = dt;
+                document.querySelector('.description').innerHTML = this.channelUser.channel.description;
+                this.editMode = false;
+            });
+        }
     }
 
     ngAfterViewInit() {

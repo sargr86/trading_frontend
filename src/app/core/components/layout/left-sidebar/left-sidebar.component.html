@@ -77,23 +77,19 @@
             more</p>
     </ng-container>
     <div class="watchlist" *ngIf="router.url!=='/' && !isSmallScreen()">
-        <ul class="nav nav-tabs" id="watchlist" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link" id="watch-tab" data-toggle="tab" href="#watch" role="tab"
-                   aria-controls="watch"
-                   aria-selected="true">My Watchlist</a>
+        <ul class="nav nav-tabs" id="watchlist">
+            <li class="nav-item" (click)="changeTab('watchlist')">
+                <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" id="today-tab" data-toggle="tab" href="#today" role="tab"
-                   aria-controls="today"
-                   aria-selected="false">Today</a>
+            <li class="nav-item" (click)="changeTab('today')">
+                <a class="nav-link active" [class.active]="activeTab.name==='today'" id="today-tab">Today</a>
             </li>
         </ul>
-        <div class="tab-content" id="watchlistContent">
+        <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
             <div class="tab-pane fade" id="watch" role="tabpanel" aria-labelledby="watch-tab">
             </div>
         </div>
-        <div class="tab-content" id="todayContent">
+        <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
 
 
             <!--            <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>-->

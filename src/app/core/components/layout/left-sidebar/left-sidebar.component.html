@@ -139,6 +139,11 @@
                         </div>
                     </div>
                 </div>
+
+                <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">
+                    See more
+                </p>
+
                 <img class="ads" src="assets/img/ads.png">
                 <img class="ads" src="assets/img/ads.png">
             </div>

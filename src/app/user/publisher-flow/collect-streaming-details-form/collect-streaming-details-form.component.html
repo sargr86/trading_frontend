@@ -39,6 +39,9 @@
             <textarea formControlName="description" placeholder="Video description"></textarea>
             <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required
             </mat-error>
+            <mat-error *ngIf="streamDesc.hasError('maxlength')">
+                Not more than 100 characters please
+            </mat-error>
         </div>
 
         <div id="privacy">

@@ -182,6 +182,45 @@ nav.home-header {
     }
 }
 
+
+
+
+
+
+.home-black-block {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    overflow-x: hidden;
+}
+
+.home-black-block>div {
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee 4s linear infinite;
+    display: flex;
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .header-right {
     display: flex;
     justify-content: space-between;
@@ -225,7 +264,6 @@ nav.home-header {
 }
 
 .home-black-block {
-    //width: 625px;
     height: 36px;
     background: #393939;
     padding: 11px 12px;
@@ -233,6 +271,11 @@ nav.home-header {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    max-width: 455px;
+    overflow: hidden;
+    @media screen and (min-width: 992px) and  (max-width: 1200px) {
+        max-width: 290px;
+    }
 }
 
 .black-text {

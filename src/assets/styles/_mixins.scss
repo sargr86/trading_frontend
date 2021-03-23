@@ -44,6 +44,9 @@
                 }
             }
         }
+        .shortened-description {
+            -webkit-line-clamp: 1!important;
+        }
     }
 
 
@@ -159,14 +162,43 @@
                 white-space: pre-wrap;
                 overflow: hidden;
                 display: -webkit-box;
-                -webkit-line-clamp: 1;
+                -webkit-line-clamp: 4;
                 -webkit-box-orient: vertical;
-                //max-width: 250px;
+                max-width: 250px;
+            }
+
+            .channel-details {
+                margin-top: 4px;
+
+                .channel-name {
+                    font-weight: bold;
+                    color: #818181;
+                    font-size: 14px;
+                    cursor: pointer;
+                }
+
+
+                .videos-count {
+                    font-size: 14px;
+                    color: #818181;
+                }
             }
 
         }
     }
 
+    .tags {
+        margin-top: 10px;
+
+        li {
+            display: inline-block;
+            margin-right: 5px;
+
+            span {
+                @include tagItem;
+            }
+        }
+    }
 
 }
 
@@ -252,3 +284,4 @@
         }
     }
 }
+

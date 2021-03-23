@@ -20,12 +20,15 @@
         <app-search-stocks-form class="d-none d-lg-block" *ngIf="routerUrl?.includes('analytics')"
                                 (search)="searchStocks($event)"></app-search-stocks-form>
         <div class="home-black-block" (click)="openModal(cryptoModal)" *ngIf="stocks">
-            <div class="home-black-item" *ngFor="let stock of stocks">
-                <p class="black-text">{{stock.symbol}}</p>
-                <p [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
+            <div class="w-100">
+                <div class="home-black-item" *ngFor="let stock of stocks">
+                    <p class="black-text">{{stock.symbol}}</p>
+                    <p [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
+                </div>
             </div>
-            <i class="down-white fa fa-chevron-down"></i>
+<!--            <i class="down-white fa fa-chevron-down"></i>-->
         </div>
+
         <div class="notification-block">
             <div class="nav-item dropdown" [hidden]="envName==='production'">
                 <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>

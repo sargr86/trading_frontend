@@ -30,40 +30,19 @@
             border-radius: 50%;
         }
     }
-//
+
     .video-container, .channel-container, .playlist-container {
         display: flex;
         margin-bottom: 30px;
 
         .thumbnail {
             position: relative;
-
-            img {
-                width: 432px;
-                height: 249px;
-                object-fit: cover;
-                cursor: pointer;
-                @media screen and (max-width: 991px) {
-                    max-width: 432px !important;
-                    width: 100% !important;
-                }
-            }
-
-            .duration {
-                position: absolute;
-                bottom: 9px;
-                right: 10px;
-                color: white;
-                background-color: #000;
-                padding: 0 2px;
-            }
-
-
         }
 
         .details {
             padding-left: 32px;
             max-width: 310px;
+
             .saved-video {
                 display: flex;
                 align-items: center;
@@ -74,12 +53,12 @@
                     color: #18B587;
                 }
             }
-//
+
             .btn {
                 padding: 12px 28px;
                 font-size: 16px;
-                color: #FFFFFF;
-                background: #F53C6F;
+                color: $white;
+                background: $red;
                 border-radius: 0;
                 box-shadow: 0 0 6px #006DCC2E;
             }
@@ -109,6 +88,6 @@
 
 }
 
-#videos-list{
+#videos-list {
     @include videoItem;
 }

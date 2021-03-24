@@ -19,15 +19,15 @@
                                 (search)="searchVideos($event)"></app-search-videos-form>
         <app-search-stocks-form class="d-none d-lg-block" *ngIf="routerUrl?.includes('analytics')"
                                 (search)="searchStocks($event)"></app-search-stocks-form>
-        <div class="home-black-block" (click)="openModal(cryptoModal)" *ngIf="stocks">
-            <div class="w-100">
+        <marquee class="home-black-block marquee"  direction="left" height="40px" (click)="openModal(cryptoModal)" *ngIf="stocks">
+            <div class="w-100 marquee-content">
                 <div class="home-black-item" *ngFor="let stock of stocks">
                     <p class="black-text">{{stock.symbol}}</p>
                     <p [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
                 </div>
             </div>
 <!--            <i class="down-white fa fa-chevron-down"></i>-->
-        </div>
+        </marquee>
 
         <div class="notification-block">
             <div class="nav-item dropdown" [hidden]="envName==='production'">

@@ -95,21 +95,21 @@
             <!--            <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>-->
             <div class="tab-pane fade  show active" id="today" role="tabpanel" aria-labelledby="today-tab">
 
-                <div class="watchlist-search">
-                    <input class="watchlist-input" placeholder="Search">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="dropdown">
-                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                         aria-expanded="false">
-                        Sort by my sort
-                    </div>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
+<!--                <div class="watchlist-search">-->
+<!--                    <input class="watchlist-input" placeholder="Search">-->
+<!--                    <i class="fas fa-search"></i>-->
+<!--                </div>-->
+<!--                <div class="dropdown">-->
+<!--                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"-->
+<!--                         aria-expanded="false">-->
+<!--                        Sort by my sort-->
+<!--                    </div>-->
+<!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Another action</a>-->
+<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="watchlist-analytics">
                     <ng-container *ngFor="let stock of indices; let ind = index">
                         <div class="analytics-item" *ngIf="ind < 10" (click)="openStockProfile(stock.symbol)">

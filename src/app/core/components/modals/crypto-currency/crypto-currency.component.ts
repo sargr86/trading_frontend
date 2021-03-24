@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 import {STOCK_CATEGORIES} from '@core/constants/global';
 import {StocksService} from '@core/services/stocks.service';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-crypto-currency',
@@ -15,6 +16,8 @@ export class CryptoCurrencyComponent implements OnInit {
     stocks = [];
     stocksLoading = false;
     filteredStocks = [];
+    userStocks = [];
+    authUser;
 
     public pageSize = 14;
     public pageIndex = 0;
@@ -25,11 +28,20 @@ export class CryptoCurrencyComponent implements OnInit {
         private dialog: MatDialog,
         private matDialogRef: MatDialogRef<CryptoCurrencyComponent>,
         private stocksService: StocksService,
+        private getAuthUser: GetAuthUserPipe
     ) {
     }
 
     ngOnInit(): void {
         this.getStocksByType('stocks');
+        this.authUser = this.getAuthUser.transform();
+        this.getUserStocks();
+    }
+
+    getUserStocks() {
+        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+            this.userStocks = dt.user_stocks;
+        });
     }
 
     closeModal() {
@@ -38,7 +50,6 @@ export class CryptoCurrencyComponent implements OnInit {
     }
 
     openAddStockModal() {
-        console.log('OK')
         this.dialog.open(AddStockDialogComponent, {
             data: {
                 width: '500px',
@@ -73,6 +84,46 @@ export class CryptoCurrencyComponent implements OnInit {
         this.pageIndex = e.pageIndex;
         this.pageSize = e.pageSize;
         this.filterStocks();
+    }
+
+    followStock(stock) {
+
+        const following = this.userStocks.find(f => f.name === stock.name);
+
+        if (!following) {
+            this.userStocks.push({
+                name: stock.name,
+                symbol: stock.symbol,
+                change: stock.change,
+                changesPercentage: stock.changesPercentage,
+                price: stock.price,
+            });
+        } else {
+            this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
+        }
+
+        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: this.userStocks}).subscribe(dt => {
+            this.userStocks = dt.user_stocks;
+        });
+    }
+
+    isStockFollowed(stock) {
+        return !!this.userStocks.find(s => s.name === stock.name);
+    }
+
+    compareWithMainStockList(userStocks) {
+        // console.log(this.stocks)
+        userStocks.map(st => {
+            const found = this.stocks.find(fs => fs.name === st.name);
+            // console.log(found)
+            if (found) {
+                st.change = found.change;
+                st.changesPercentage = found.changesPercentage;
+                st.price = found.price;
+                return st;
+            }
+        });
+        return userStocks;
     }
 
 }

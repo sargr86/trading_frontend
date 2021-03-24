@@ -23,6 +23,7 @@ export class LeftSidebarComponent implements OnInit {
     envName;
     stocks;
     indices;
+    activeTab = {name: 'watchlist'};
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
@@ -120,6 +121,19 @@ export class LeftSidebarComponent implements OnInit {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([`stocks/${stock}/analytics`])
         );
+    }
+
+    async viewFullWatchlist() {
+        await this.router.navigate(['channels/show'], {
+            queryParams: {
+                username: this.authUser.username,
+                tab: 'watchlist'
+            }
+        });
+    }
+
+    changeTab(tab) {
+        this.activeTab.name = tab;
     }
 
 

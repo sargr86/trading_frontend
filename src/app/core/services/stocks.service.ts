@@ -39,4 +39,13 @@ export class StocksService {
     searchStocks(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/search`, {params});
     }
+
+    getUserStocks(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-user-stocks`, {params});
+    }
+
+
+    updateFollowedStocks(params) {
+        return this.httpClient.put<any>(`${API_URL}stocks/update-user-stocks`, params);
+    }
 }

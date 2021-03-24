@@ -37,7 +37,6 @@
 .crypto-content {
     padding: 32px 0 0;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -50,6 +49,8 @@
     padding: 24px 8px;
     border: 1px dashed transparent;
     transition: 0.2s;
+    margin-right: 13px;
+
 
     &:hover {
         border: 1px dashed #FFFFFF;

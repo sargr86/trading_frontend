@@ -77,68 +77,71 @@
             more</p>
     </ng-container>
     <div class="watchlist" *ngIf="router.url!=='/' && !isSmallScreen()">
-        <ul class="nav nav-tabs" id="watchlist" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link" id="watch-tab" data-toggle="tab" href="#watch" role="tab"
-                   aria-controls="watch"
-                   aria-selected="true">My Watchlist</a>
+        <ul class="nav nav-tabs" id="watchlist">
+            <li class="nav-item" (click)="changeTab('watchlist')">
+                <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" id="today-tab" data-toggle="tab" href="#today" role="tab"
-                   aria-controls="today"
-                   aria-selected="false">Today</a>
+            <li class="nav-item" (click)="changeTab('today')">
+                <a class="nav-link active" [class.active]="activeTab.name==='today'" id="today-tab">Today</a>
             </li>
         </ul>
-        <div class="tab-content" id="watchlistContent">
+        <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
             <div class="tab-pane fade" id="watch" role="tabpanel" aria-labelledby="watch-tab">
             </div>
         </div>
-        <div class="tab-content" id="todayContent">
+        <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
 
 
             <!--            <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>-->
             <div class="tab-pane fade  show active" id="today" role="tabpanel" aria-labelledby="today-tab">
 
-                <!--                <div class="watchlist-search">-->
-                <!--                    <input class="watchlist-input" placeholder="Search">-->
-                <!--                    <i class="fas fa-search"></i>-->
-                <!--                </div>-->
+<!--                <div class="watchlist-search">-->
+<!--                    <input class="watchlist-input" placeholder="Search">-->
+<!--                    <i class="fas fa-search"></i>-->
+<!--                </div>-->
 <!--                <div class="dropdown">-->
-                    <!--                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"-->
-                    <!--                         aria-expanded="false">-->
-                    <!--                        Sort by my sort-->
-                    <!--                    </div>-->
-                    <!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-                    <!--                        <a class="dropdown-item" href="#">Action</a>-->
-                    <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-                    <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-                    <!--                    </div>-->
+<!--                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"-->
+<!--                         aria-expanded="false">-->
+<!--                        Sort by my sort-->
+<!--                    </div>-->
+<!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Another action</a>-->
+<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                    </div>-->
 <!--                </div>-->
                 <div class="watchlist-analytics">
-                    <div class="analytics-item" *ngFor="let stock of indices" (click)="openStockProfile(stock.symbol)">
-                        <div class="analytics-item-1">
-                            <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
-                            <p class="analytics-text-2">{{stock.name}}</p>
+                    <ng-container *ngFor="let stock of indices; let ind = index">
+                        <div class="analytics-item" *ngIf="ind < 10" (click)="openStockProfile(stock.symbol)">
+                            <div class="analytics-item-1">
+                                <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
+                                <p class="analytics-text-2">{{stock.name}}</p>
+                            </div>
+                            <div class="analytics-img">
+                                <img src="assets/img/green-up.png"
+                                     *ngIf="getPercentageDetails(stock)?.color === 'green'">
+                                <img src="assets/img/green-point.png"
+                                     *ngIf="getPercentageDetails(stock)?.color === 'green'">
+                                <img src="assets/img/red-down.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
+                                <img src="assets/img/red-point.png"
+                                     *ngIf="getPercentageDetails(stock)?.color === 'red'">
+                            </div>
+                            <div class="analytics-percent">
+                                <p class="analytics-text-3">{{stock.price}}</p>
+                                <p [ngClass]="getPercentageDetails(stock)?.class">
+                                    1.60({{getPercentageDetails(stock)?.value}}%)</p>
+                            </div>
+                            <div class="analytics-delete">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
-                        <div class="analytics-img">
-                            <img src="assets/img/green-up.png"
-                                 *ngIf="getPercentageDetails(stock)?.color === 'green'">
-                            <img src="assets/img/green-point.png"
-                                 *ngIf="getPercentageDetails(stock)?.color === 'green'">
-                            <img src="assets/img/red-down.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
-                            <img src="assets/img/red-point.png"
-                                 *ngIf="getPercentageDetails(stock)?.color === 'red'">
-                        </div>
-                        <div class="analytics-percent">
-                            <p class="analytics-text-3">{{stock.price}}</p>
-                            <p [ngClass]="getPercentageDetails(stock)?.class">
-                                1.60({{getPercentageDetails(stock)?.value}}%)</p>
-                        </div>
-                        <div class="analytics-delete">
-                            <i class="fas fa-trash"></i>
-                        </div>
-                    </div>
+                    </ng-container>
                 </div>
+
+                <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">
+                    See more
+                </p>
+
                 <img class="ads" src="assets/img/ads.png">
                 <img class="ads" src="assets/img/ads.png">
             </div>

@@ -31,13 +31,18 @@
                 <option selected [value]="''">Category</option>
                 <option *ngFor="let category of videoCategories" [value]="category.id">{{category.name}}</option>
             </select>
-            <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">The stream category is required
+            <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">
+                The stream category is required
             </mat-error>
         </div>
 
         <div id="video-description">
             <textarea formControlName="description" placeholder="Video description"></textarea>
-            <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">The stream description is required
+            <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">
+                The stream description is required
+            </mat-error>
+            <mat-error *ngIf="streamDesc.hasError('maxlength')">
+                Not more than 100 characters please
             </mat-error>
         </div>
 

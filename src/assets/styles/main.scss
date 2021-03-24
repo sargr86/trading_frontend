@@ -183,42 +183,19 @@ nav.home-header {
 }
 
 
-
-
-
-
-.home-black-block {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    height: 200px;
-    overflow-x: hidden;
-}
-
-.home-black-block>div {
-    white-space: nowrap;
-    will-change: transform;
-    animation: marquee 4s linear infinite;
+.marquee {
     display: flex;
+    align-items: center;
+    .marquee-content {
+        display: flex;
+        animation: marquee 10s linear infinite;
+    }
 }
 
 @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .header-right {
@@ -271,11 +248,11 @@ nav.home-header {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    max-width: 455px;
+    max-width: 450px;
     overflow: hidden;
-    @media screen and (min-width: 992px) and  (max-width: 1200px) {
-        max-width: 290px;
-    }
+    //@media screen and (min-width: 992px) and  (max-width: 1200px) {
+    //    max-width: 290px;
+    //}
 }
 
 .black-text {

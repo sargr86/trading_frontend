@@ -6,11 +6,12 @@
         "start": "ng serve",
         "build": "ng build",
         "prod": "ng build --prod",
-        "staging": "ng build --configuration staging",
+        "staging": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --configuration staging",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
     },
+    "sideEffects": false,
     "private": true,
     "dependencies": {
         "@angular/animations": "~9.1.12",

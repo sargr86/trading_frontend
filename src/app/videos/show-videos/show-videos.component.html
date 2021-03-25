@@ -75,7 +75,7 @@
                         <p class="videos-count">{{channel.videos?.length}} videos</p>
                     </div>
                     <p class="shortened-description">
-                        {{channel.description}}
+                        {{fixChannelDescription(channel.description)}}
                     </p>
 
                     <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
@@ -101,7 +101,7 @@
                         <span class="upload-time">{{video.created_at | dateFromNow}}</span>
                     </div>
                     <p class="shortened-description">
-                        {{video.description}}
+                        {{fixChannelDescription(video.description)}}
                     </p>
                     <div class="tags">
                         <ul>

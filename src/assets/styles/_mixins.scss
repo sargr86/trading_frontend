@@ -272,6 +272,17 @@
                         font-weight: bold;
                     }
                 }
+
+                img {
+                    width: 432px;
+                    height: 249px;
+                    object-fit: cover;
+                    cursor: pointer;
+                    @media screen and (max-width: 991px) {
+                        max-width: 432px !important;
+                        width: 100% !important;
+                    }
+                }
             }
 
             .fake-bg {

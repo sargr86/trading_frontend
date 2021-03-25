@@ -35,9 +35,13 @@ export class SearchStocksFormComponent implements OnInit {
     }
 
     searchStocks() {
-        this.stocksService.searchStocks(this.searchStocksForm.value).subscribe(dt => {
-            this.searchResults = dt;
-        });
+        if (!this.modal) {
+            this.stocksService.searchStocks(this.searchStocksForm.value).subscribe(dt => {
+                this.searchResults = dt;
+            });
+        } else {
+            this.search.emit(this.searchStocksForm.value);
+        }
     }
 
     async openStockPage(stock, trigger) {

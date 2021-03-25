@@ -186,6 +186,7 @@ nav.home-header {
 .marquee {
     display: flex;
     align-items: center;
+
     .marquee-content {
         display: flex;
         animation: marquee 10s linear infinite;
@@ -193,8 +194,12 @@ nav.home-header {
 }
 
 @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 
@@ -225,6 +230,10 @@ nav.home-header {
     background: #EFEFEF;
     color: #545454;
     font-size: 16px;
+
+    &.white {
+        color: $white;
+    }
 }
 
 .home-search i {
@@ -962,6 +971,7 @@ nav.home-header {
     align-items: flex-start;
 
 }
+
 .main-tags-text {
     display: flex;
     flex-wrap: wrap;
@@ -1268,6 +1278,7 @@ select {
         }
     }
 }
+
 .tags {
     ul {
         overflow: hidden;
@@ -1594,6 +1605,7 @@ input, textarea {
 
     #privacy {
         margin-bottom: 24px;
+
         mat-radio-button {
             margin-right: 40px;
 

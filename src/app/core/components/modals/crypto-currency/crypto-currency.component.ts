@@ -14,10 +14,12 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 export class CryptoCurrencyComponent implements OnInit {
     stockTypes = STOCK_CATEGORIES;
     stocks = [];
-    stocksLoading = false;
+    selectedStockType = STOCK_CATEGORIES[0].value;
+    stocksLoading = 'idle';
     filteredStocks = [];
     userStocks = [];
     authUser;
+    search;
 
     public pageSize = 14;
     public pageIndex = 0;
@@ -61,14 +63,19 @@ export class CryptoCurrencyComponent implements OnInit {
     }
 
     stockTypeChanged(e) {
-        this.getStocksByType(e.target.value);
+        this.selectedStockType = e.target.value;
+        if (this.search) {
+            this.searchInStockType();
+        } else {
+            this.getStocksByType(this.selectedStockType);
+        }
     }
 
     getStocksByType(type) {
-        this.stocksLoading = true;
+        this.stocksLoading = 'loading';
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
-            this.stocksLoading = false;
+            this.stocksLoading = 'finished';
             this.filterStocks();
         });
     }
@@ -126,4 +133,21 @@ export class CryptoCurrencyComponent implements OnInit {
         return userStocks;
     }
 
+    getSearchResults(e) {
+        this.search = e?.search;
+        this.stocksLoading = 'loading';
+        this.searchInStockType();
+
+    }
+
+    searchInStockType() {
+        this.stocksService.searchInStockTypeData({
+            search: this.search,
+            stockType: this.selectedStockType
+        }).subscribe((dt: any) => {
+            this.stocks = dt;
+            this.stocksLoading = 'finished';
+            this.filterStocks();
+        });
+    }
 }

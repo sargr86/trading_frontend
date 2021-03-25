@@ -48,4 +48,8 @@ export class StocksService {
     updateFollowedStocks(params) {
         return this.httpClient.put<any>(`${API_URL}stocks/update-user-stocks`, params);
     }
+
+    searchInStockTypeData(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/search-in-stock-type-data`, {params});
+    }
 }

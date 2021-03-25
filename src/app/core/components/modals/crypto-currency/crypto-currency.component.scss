@@ -184,19 +184,28 @@ select {
     font-family: 'Muli-Light';
     font-size: 18px;
     color: $white !important;
+
     &:focus {
         outline: none;
     }
 
-    option{
-    color: $black !important;
+    option {
+        color: $black !important;
 
     }
 }
 
 .center-group {
     display: flex;
+    align-items: center;
     justify-content: center;
+}
+
+.stock-type-selector {
+    display: flex;
+    justify-content: space-between;
+    max-width: 200px;
+    width: 100%;
 }
 
 @media (max-width: 1400px) {

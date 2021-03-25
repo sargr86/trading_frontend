@@ -56,7 +56,8 @@ export class AppComponent implements OnInit {
     }
 
     async getSearch(e) {
-        if (e.type === 'videos') {
+        console.log(e.searchType)
+        if (e.searchType === 'videos') {
             const queryParams = e.search ? {queryParams: e} : {};
             await this.router.navigate(['videos/'], queryParams);
         }

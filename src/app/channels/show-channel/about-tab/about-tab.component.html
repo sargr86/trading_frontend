@@ -18,7 +18,7 @@
 
     <div class="edit-form-controls" [hidden]="!editMode">
         <form [formGroup]="aboutForm" id="channel-about-form">
-            <textarea rows="15" formControlName="description"></textarea>
+            <textarea rows="3" formControlName="description"></textarea>
 
             <button class="save" (click)="saveChannelDescription()">Save</button>
 

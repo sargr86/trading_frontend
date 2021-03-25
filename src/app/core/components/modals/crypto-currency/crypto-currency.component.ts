@@ -112,10 +112,8 @@ export class CryptoCurrencyComponent implements OnInit {
     }
 
     compareWithMainStockList(userStocks) {
-        // console.log(this.stocks)
         userStocks.map(st => {
             const found = this.stocks.find(fs => fs.name === st.name);
-            // console.log(found)
             if (found) {
                 st.change = found.change;
                 st.changesPercentage = found.changesPercentage;

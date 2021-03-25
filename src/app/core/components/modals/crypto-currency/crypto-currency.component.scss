@@ -45,11 +45,12 @@
     width: 200px;
     height: 179px;
     margin-bottom: 32px;
-    background: #F53C6F 0% 0% no-repeat padding-box;
+    background: #F53C6F 0 0 no-repeat padding-box;
     padding: 24px 8px;
     border: 1px dashed transparent;
     transition: 0.2s;
     margin-right: 13px;
+    cursor: pointer;
 
 
     &:hover {

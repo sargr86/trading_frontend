@@ -33,7 +33,7 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
         this.aboutForm.patchValue({
             username: this.channelUser.username,
             id: this.channelUser.channel.id,
-            description: this.channelUser.channel.description.replace(/<br\s*[\/]?>/gi, '\n')
+            description: this.channelUser.channel.description?.replace(/<br\s*[\/]?>/gi, '\n')
             // ...this.channelUser.channel
         });
 

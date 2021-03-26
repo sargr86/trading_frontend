@@ -21,6 +21,8 @@ export class VideosListHolderComponent implements OnInit {
     @Input('removable') removable = false;
     @Input('detailsSource') detailsSource;
 
+    videoLoading = 'idle';
+
     constructor(
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
@@ -31,7 +33,10 @@ export class VideosListHolderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // console.log(this.videos)
+        this.videoLoading = 'loading';
+        if(this.videos.length > 0){
+            this.videoLoading = 'finished';
+        }
     }
 
     async openVideoPage(video, username) {

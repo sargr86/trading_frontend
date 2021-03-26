@@ -13,9 +13,12 @@
 @import '~@videojs/themes/dist/forest/index.css';
 // Sea
 @import '~@videojs/themes/dist/sea/index.css';
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@ctrl/ngx-emoji-mart/picker';
 @import "~plyr/src/sass/plyr";
+
+@import "~placeholder-loading/src/scss/placeholder-loading";
 
 html, body, p, h1, h2, h3, h4, ul {
     margin: 0;

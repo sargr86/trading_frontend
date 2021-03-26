@@ -19,6 +19,22 @@
         min-width: 300px;
     }
 }
+.ph-item {
+    padding: 0;
+    border: 0;
+    &>div {
+        padding: 0;
+        .ph-picture {
+            height: 225px;
+        }
+        .ph-avatar {
+            min-width: 42px;
+            width: 42px !important;
+            height: 42px;
+            margin: 0;
+        }
+    }
+}
 
 .video-info {
 

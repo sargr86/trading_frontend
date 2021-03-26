@@ -1,5 +1,20 @@
 <ng-container *ngIf="videos?.length > 0">
     <p class="trending-text">{{title}}</p>
+    <div class="ph-item">
+        <div class="ph-col-12">
+            <div class="ph-picture"></div>
+            <div class="ph-col-4 ph-avatar"></div>
+            <div class="ph-row">
+                <div class="ph-col-4 empty big"></div>
+                <div class="ph-col-2 big"></div>
+                <div class="ph-col-4"></div>
+                <div class="ph-col-8 empty"></div>
+                <div class="ph-col-6"></div>
+                <div class="ph-col-6 empty"></div>
+                <div class="ph-col-12"></div>
+            </div>
+        </div>
+    </div>
     <div class="list-container d-flex justify-content-center justify-content-lg-start flex-wrap">
         <ng-container *ngFor="let video of videos">
             <div class="item mx-2 ml-lg-0  mr-lg-4" [class.one-item]="isSmallScreen(videos.length)">
@@ -11,6 +26,7 @@
 
                 <ng-template let-d="details" #itemTemplate>
                     <div class="thumbnail" (click)="openVideoPage(video, d.username)">
+<!--                        <img class="thumbnail-image" [lazyload]="video.thumbnail|getImgPath">-->
                         <img class="thumbnail-image" [src]="video.thumbnail|getImgPath">
                         <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                         <span class="duration">{{video.duration}}</span>
@@ -19,6 +35,7 @@
 
                         <div class="left-side">
 
+<!--                            <img class="avatar" [lazyload]="d?.channel?.avatar|getImgPath: 'avatars'">-->
                             <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
                             <div>
                                 <p class="main-text-1">{{video.name}}</p>

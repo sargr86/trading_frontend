@@ -106,7 +106,7 @@
 
         .details {
             flex: 1;
-            margin-left: 32px;
+            margin-left: 2px;
 
             .title {
                 display: flex;
@@ -164,7 +164,7 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 4;
                 -webkit-box-orient: vertical;
-                max-width: 250px;
+                max-width: 370px;
             }
 
             .channel-details {

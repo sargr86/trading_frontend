@@ -31,7 +31,7 @@ export class VideosListHolderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.videos)
+        // console.log(this.videos)
     }
 
     async openVideoPage(video, username) {

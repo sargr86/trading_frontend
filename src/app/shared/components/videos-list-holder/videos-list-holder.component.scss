@@ -6,6 +6,7 @@
     width: 100%;
     max-width: 400px;
     min-width: 300px;
+    margin-bottom: 15px;
 
     .thumbnail-image {
         width: 100%;
@@ -85,8 +86,8 @@
 
 .thumbnail {
     position: relative;
-    
-    .thumbnail-image{
+
+    .thumbnail-image {
         cursor: pointer;
     }
 

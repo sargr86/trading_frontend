@@ -21,6 +21,7 @@ import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-value
 import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
+import {LazyloadDirective} from './directives/lazyload.directive';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import {VideosListHolderComponent} from './components/videos-list-holder/videos-
         CheckForEmptyObjectPipe,
         UserTagsComponent,
         VideosListHolderComponent,
+        LazyloadDirective,
     ],
     imports: [
         CommonModule,
@@ -57,7 +59,8 @@ import {VideosListHolderComponent} from './components/videos-list-holder/videos-
         FilterDevicesPipe,
         GetSelectedVideosToBeAddedToPlaylistPipe,
         FilterOutFalsyValuesFromObjectPipe,
-        CheckForEmptyObjectPipe
+        CheckForEmptyObjectPipe,
+        GetThumbPathPipe
 
     ],
     exports: [

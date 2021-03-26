@@ -51,7 +51,7 @@ import { SearchStocksFormComponent } from './components/ungrouped/search-stocks-
         VideoUrlTabComponent,
         YourVideosTabComponent,
         AddStockDialogComponent,
-        SearchStocksFormComponent
+        SearchStocksFormComponent,
     ],
     imports: [
         CommonModule,

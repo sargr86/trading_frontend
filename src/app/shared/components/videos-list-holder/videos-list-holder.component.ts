@@ -6,6 +6,7 @@ import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
+import {GetThumbPathPipe} from '@shared/pipes/get-thumb-path.pipe';
 
 @Component({
     selector: 'app-videos-list-holder',
@@ -26,7 +27,8 @@ export class VideosListHolderComponent implements OnInit {
         private videoService: VideoService,
         public router: Router,
         private dialog: MatDialog,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private getImgPath: GetThumbPathPipe
     ) {
     }
 
@@ -67,6 +69,11 @@ export class VideosListHolderComponent implements OnInit {
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
+    getSrc(video) {
+        console.log(this.getImgPath.transform(video.thumbnail))
+        return this.getImgPath.transform(video.thumbnail);
     }
 
 

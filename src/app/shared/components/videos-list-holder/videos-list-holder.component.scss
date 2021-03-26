@@ -6,6 +6,7 @@
     width: 30%;
     max-width: 400px;
     min-width: 320px;
+    margin-bottom: 15px;
 
     .thumbnail-image {
         width: 100%;
@@ -92,6 +93,10 @@
 
 .thumbnail {
     position: relative;
+
+    .thumbnail-image {
+        cursor: pointer;
+    }
 
 
     .duration {

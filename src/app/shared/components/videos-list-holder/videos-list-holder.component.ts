@@ -26,12 +26,12 @@ export class VideosListHolderComponent implements OnInit {
         private videoService: VideoService,
         public router: Router,
         private dialog: MatDialog,
-        private toastr: ToastrService
+        private toastr: ToastrService,
     ) {
     }
 
     ngOnInit(): void {
-        console.log(this.videos)
+        // console.log(this.videos)
     }
 
     async openVideoPage(video, username) {

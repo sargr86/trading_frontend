@@ -28,6 +28,7 @@
                     <div class="thumbnail" (click)="openVideoPage(video, d.username)">
 <!--                        <img class="thumbnail-image" [lazyload]="video.thumbnail|getImgPath">-->
                         <img class="thumbnail-image" [src]="video.thumbnail|getImgPath">
+
                         <span class="live-now" *ngIf="video.status==='live'">Live now</span>
                         <span class="duration">{{video.duration}}</span>
                     </div>

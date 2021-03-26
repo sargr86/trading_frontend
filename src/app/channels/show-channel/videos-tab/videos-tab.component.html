@@ -1,3 +1,5 @@
 <app-video-filters *ngIf="showFilters" (filter)="getFilteredVideos($event)"></app-video-filters>
-<app-video-carousel-holder [videos]="channelUser.videos" [title]="'Recent videos'" [detailsSource]="channelUser"
-                           [removable]="authUser.username === channelUser.username"></app-video-carousel-holder>
+<!--<app-video-carousel-holder [videos]="channelUser.videos" [title]="'Recent videos'" [detailsSource]="channelUser"-->
+<!--                           [removable]="authUser.username === channelUser.username"></app-video-carousel-holder>-->
+<app-videos-list-holder [videos]="channelUser.videos" [title]="'Recent videos'" [detailsSource]="channelUser"
+                        [removable]="authUser.username === channelUser.username"></app-videos-list-holder>

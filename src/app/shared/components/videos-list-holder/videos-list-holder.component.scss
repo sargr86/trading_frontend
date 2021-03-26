@@ -1,6 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
+.ph-item{
+    height: 323px;
+}
+
 .item {
     position: relative;
     width: 30%;

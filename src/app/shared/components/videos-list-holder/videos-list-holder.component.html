@@ -1,8 +1,8 @@
 <ng-container *ngIf="videos?.length > 0">
     <p class="trending-text">{{title}}</p>
-    <div class="list-container d-flex flex-wrap">
+    <div class="list-container d-flex justify-content-center justify-content-lg-start flex-wrap">
         <ng-container *ngFor="let video of videos">
-            <div class="item mr-4" [class.one-item]="isSmallScreen(videos.length)">
+            <div class="item mx-2 ml-lg-0  mr-lg-4" [class.one-item]="isSmallScreen(videos.length)">
 
                 <ng-container
                     [ngTemplateOutlet]="itemTemplate"

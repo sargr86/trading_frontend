@@ -189,18 +189,9 @@ nav.home-header {
 
     .marquee-content {
         display: flex;
-        animation: marquee 10s linear infinite;
     }
 }
 
-@keyframes marquee {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
 
 
 .header-right {
@@ -362,10 +353,13 @@ nav.home-header {
 }
 
 .body-content {
-    margin-top: 112px;
+    //margin-top: 112px;
     display: flex;
     justify-content: space-between;
-    padding: 0 200px;
+    //padding: 0 200px;
+    padding: 0 15px !important;
+    width: 90%;
+    margin: 112px auto 0;
 }
 
 .categories {
@@ -1502,7 +1496,7 @@ select {
     }
     .main-item-block {
         justify-content: left;
-        max-width: 200px;
+        //max-width: 200px;
         margin: 10px auto;
     }
     .main-item-block.channel-block {

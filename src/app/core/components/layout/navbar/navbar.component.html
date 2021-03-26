@@ -20,7 +20,7 @@
         <app-search-stocks-form class="d-none d-lg-block" *ngIf="routerUrl?.includes('analytics')"
                                 (search)="searchStocks($event)"></app-search-stocks-form>
         <marquee class="home-black-block marquee"  direction="left" height="40px" (click)="openModal(cryptoModal)" *ngIf="stocks">
-            <div class="w-100 marquee-content">
+            <div class="marquee-content">
                 <div class="home-black-item" *ngFor="let stock of stocks">
                     <p class="black-text">{{stock.symbol}}</p>
                     <p [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>

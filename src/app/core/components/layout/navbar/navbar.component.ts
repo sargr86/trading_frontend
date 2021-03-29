@@ -9,7 +9,7 @@ import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
-import {StocksListsComponent} from '@core/components/modals/stocks-lists/stocks-lists.component';
+import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
 
 @Component({
     selector: 'app-navbar',

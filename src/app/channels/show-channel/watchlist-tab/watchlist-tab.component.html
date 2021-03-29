@@ -7,84 +7,25 @@
 <!--    </ng-container>-->
 <!--</ng-container>-->
 <div class="favorites">
-
     <div class="crypto-content">
-        <div class="crypto-item crypto-item-green">
-            <div class="cryptoRemove">
-                <span class="material-icons">delete</span>
+        <ng-container *ngIf="filteredStocks">
+            <div class="crypto-item" *ngFor="let stock of compareWithMainStockList(userStocks)"
+                 [class.crypto-item-green]="stock.changesPercentage > 0">
+                <div class="stock-follow">
+                    <button
+                        (click)="followStock(stock)">{{isStockFollowed(stock) ? 'Following' : 'Follow'}}</button>
+                </div>
+                <p class="crypto-text-1">{{stock.name}}</p>
+                <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
+                <div class="crypto-block">
+                    <p class="crypto-text-1">{{stock.change?.toFixed(2)}}</p>
+                    <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
+                </div>
+                <!--                <img class="crypto-map" src="assets/img/map.png">-->
             </div>
-            <p class="crypto-text-1">Bitcoin 24h</p>
-            <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
-            <div class="crypto-block">
-                <p class="crypto-text-1">-489,86</p>
-                <p class="crypto-text-1">-4,16%</p>
-            </div>
-            <img class="crypto-map" src="assets/img/map.png">
-        </div>
+        </ng-container>
 
-        <div class="crypto-item crypto-item-green">
-            <div class="cryptoRemove">
-                <span class="material-icons">delete</span>
-            </div>
-            <p class="crypto-text-1">Bitcoin 24h</p>
-            <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
-            <div class="crypto-block">
-                <p class="crypto-text-1">-489,86</p>
-                <p class="crypto-text-1">-4,16%</p>
-            </div>
-            <img class="crypto-map" src="assets/img/map.png">
-        </div>
-
-        <div class="crypto-item">
-            <div class="cryptoRemove">
-                <span class="material-icons">delete</span>
-            </div>
-            <p class="crypto-text-1">Bitcoin 24h</p>
-            <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
-            <div class="crypto-block">
-                <p class="crypto-text-1">-489,86</p>
-                <p class="crypto-text-1">-4,16%</p>
-            </div>
-            <img class="crypto-map" src="assets/img/map.png">
-        </div>
-
-        <div class="crypto-item">
-            <div class="cryptoRemove">
-                <span class="material-icons">delete</span>
-            </div>
-            <p class="crypto-text-1">Bitcoin 24h</p>
-            <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
-            <div class="crypto-block">
-                <p class="crypto-text-1">-489,86</p>
-                <p class="crypto-text-1">-4,16%</p>
-            </div>
-            <img class="crypto-map" src="assets/img/map.png">
-        </div>
-
-        <div class="crypto-item">
-            <div class="cryptoRemove">
-                <span class="material-icons">delete</span>
-            </div>
-            <p class="crypto-text-1">Bitcoin 24h</p>
-            <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
-            <div class="crypto-block">
-                <p class="crypto-text-1">-489,86</p>
-                <p class="crypto-text-1">-4,16%</p>
-            </div>
-            <img class="crypto-map" src="assets/img/map.png">
-        </div>
-
-        <div class="crypto-item">
-            <div class="cryptoRemove">
-                <span class="material-icons">delete</span>
-            </div>
-            <p class="crypto-text-1">Bitcoin 24h</p>
-            <p class="crypto-text-2"><span class="crypto-text-abs">$</span>11,300.38</p>
-            <div class="crypto-block">
-                <p class="crypto-text-1">-489,86</p>
-                <p class="crypto-text-1">-4,16%</p>
-            </div>
-            <img class="crypto-map" src="assets/img/map.png">
-        </div>
     </div>
+
+
 </div>

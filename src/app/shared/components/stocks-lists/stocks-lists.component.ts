@@ -13,8 +13,8 @@ import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/
 })
 export class StocksListsComponent implements OnInit {
 
-    stockTypes = STOCK_CATEGORIES;
     stocks = [];
+    stockTypes = STOCK_CATEGORIES;
     selectedStockType = STOCK_CATEGORIES[0].value;
     stocksLoading = 'idle';
     filteredStocks = [];

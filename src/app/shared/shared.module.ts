@@ -22,6 +22,7 @@ import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
 import {LazyloadDirective} from './directives/lazyload.directive';
+import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
 
 @NgModule({
     declarations: [
@@ -43,6 +44,7 @@ import {LazyloadDirective} from './directives/lazyload.directive';
         UserTagsComponent,
         VideosListHolderComponent,
         LazyloadDirective,
+        StocksListsComponent
     ],
     imports: [
         CommonModule,
@@ -80,7 +82,8 @@ import {LazyloadDirective} from './directives/lazyload.directive';
         DateFromNowPipe,
         UserTagsComponent,
         CheckForEmptyObjectPipe,
-        VideosListHolderComponent
+        VideosListHolderComponent,
+        StocksListsComponent
     ]
 
 })

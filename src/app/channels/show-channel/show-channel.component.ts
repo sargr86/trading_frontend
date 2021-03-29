@@ -18,7 +18,7 @@ import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-t
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {search} from '@ctrl/ngx-emoji-mart/svgs';
 import {AuthService} from '@core/services/auth.service';
-import {StocksListsComponent} from '@core/components/modals/stocks-lists/stocks-lists.component';
+import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
 
 @Component({
     selector: 'app-show-channel',

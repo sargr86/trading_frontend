@@ -27,7 +27,6 @@ import { VideoUrlTabComponent } from '@core/components/modals/add-video-to-playl
 import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playlist-dialog/your-videos-tab/your-videos-tab.component';
 import { AddStockDialogComponent } from './components/modals/add-stock-dialog/add-stock-dialog.component';
 import { SearchStocksFormComponent } from './components/ungrouped/search-stocks-form/search-stocks-form.component';
-import { StocksListsComponent } from './components/modals/stocks-lists/stocks-lists.component';
 
 
 @NgModule({
@@ -51,7 +50,6 @@ import { StocksListsComponent } from './components/modals/stocks-lists/stocks-li
         YourVideosTabComponent,
         AddStockDialogComponent,
         SearchStocksFormComponent,
-        StocksListsComponent,
     ],
     imports: [
         CommonModule,
@@ -67,7 +65,7 @@ import { StocksListsComponent } from './components/modals/stocks-lists/stocks-li
     exports: [
         NavbarComponent,
         LeftSidebarComponent,
-        PurchaseBitsComponent
+        PurchaseBitsComponent,
     ],
     entryComponents: [
         // CryptoCurrencyComponent

@@ -34,7 +34,7 @@ export class VideosListHolderComponent implements OnInit {
 
     ngOnInit(): void {
         this.videoLoading = 'loading';
-        if(this.videos.length > 0){
+        if(this.videos.length >= 0){
             this.videoLoading = 'finished';
         }
     }

@@ -5,7 +5,6 @@ import {LeftSidebarComponent} from '@core/components/layout/left-sidebar/left-si
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
-import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/crypto-currency.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purchase-bits.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -28,13 +27,13 @@ import { VideoUrlTabComponent } from '@core/components/modals/add-video-to-playl
 import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playlist-dialog/your-videos-tab/your-videos-tab.component';
 import { AddStockDialogComponent } from './components/modals/add-stock-dialog/add-stock-dialog.component';
 import { SearchStocksFormComponent } from './components/ungrouped/search-stocks-form/search-stocks-form.component';
+import { StocksListsComponent } from './components/modals/stocks-lists/stocks-lists.component';
 
 
 @NgModule({
     declarations: [
         NavbarComponent,
         LeftSidebarComponent,
-        CryptoCurrencyComponent,
         PurchaseBitsComponent,
         NotFoundComponent,
         AccessibilityStatementComponent,
@@ -52,6 +51,7 @@ import { SearchStocksFormComponent } from './components/ungrouped/search-stocks-
         YourVideosTabComponent,
         AddStockDialogComponent,
         SearchStocksFormComponent,
+        StocksListsComponent,
     ],
     imports: [
         CommonModule,

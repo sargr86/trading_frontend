@@ -8,8 +8,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
-import {CryptoCurrencyComponent} from '@core/components/modals/crypto-currency/crypto-currency.component';
 import {MatDialog} from '@angular/material/dialog';
+import {StocksListsComponent} from '@core/components/modals/stocks-lists/stocks-lists.component';
 
 @Component({
     selector: 'app-navbar',
@@ -62,7 +62,7 @@ export class NavbarComponent implements OnInit {
 
     openModal(template: TemplateRef<any>) {
         // this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-        this.dialog.open(CryptoCurrencyComponent, {
+        this.dialog.open(StocksListsComponent, {
             maxWidth: '100vw',
             maxHeight: '100vh',
             height: '100%',
@@ -97,7 +97,7 @@ export class NavbarComponent implements OnInit {
     }
 
     async changePage(l) {
-       await this.router.navigate([l.link]);
+        await this.router.navigate([l.link]);
     }
 
     getDailyStocks() {

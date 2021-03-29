@@ -86,7 +86,32 @@
             </li>
         </ul>
         <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-            <div class="tab-pane fade" id="watch" role="tabpanel" aria-labelledby="watch-tab">
+            <div class="" id="watch" role="tabpanel" aria-labelledby="watch-tab">
+                <ng-container *ngFor="let stock of userStocks; let ind = index">
+                    <div class="analytics-item" *ngIf="ind < 10" (click)="openStockProfile(stock.symbol)">
+                        <div class="analytics-item-1">
+                            <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
+                            <p class="analytics-text-2">{{stock.name}}</p>
+                        </div>
+                        <div class="analytics-img">
+                            <img src="assets/img/green-up.png"
+                                 *ngIf="getPercentageDetails(stock)?.color === 'green'">
+                            <img src="assets/img/green-point.png"
+                                 *ngIf="getPercentageDetails(stock)?.color === 'green'">
+                            <img src="assets/img/red-down.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
+                            <img src="assets/img/red-point.png"
+                                 *ngIf="getPercentageDetails(stock)?.color === 'red'">
+                        </div>
+                        <div class="analytics-percent">
+                            <p class="analytics-text-3">{{stock.price}}</p>
+                            <p [ngClass]="getPercentageDetails(stock)?.class">
+                                1.60({{getPercentageDetails(stock)?.value}}%)</p>
+                        </div>
+                        <div class="analytics-delete">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
         </div>
         <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">

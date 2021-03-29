@@ -21,7 +21,7 @@ export class LeftSidebarComponent implements OnInit {
     authUser;
     routerUrl;
     envName;
-    stocks;
+    userStocks;
     indices;
     activeTab = {name: 'watchlist'};
 
@@ -45,6 +45,8 @@ export class LeftSidebarComponent implements OnInit {
         this.subject.getUserSubscriptions().subscribe(dt => {
             this.channels = dt;
         });
+
+        this.getUserStocks();
     }
 
     ngOnInit(): void {
@@ -56,13 +58,15 @@ export class LeftSidebarComponent implements OnInit {
             }
         });
 
-        this.subject.getStocksData().subscribe(dt => {
-            this.stocks = dt;
-        });
-
 
         this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
+        });
+    }
+
+    getUserStocks() {
+        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+            this.userStocks = dt.user_stocks;
         });
     }
 

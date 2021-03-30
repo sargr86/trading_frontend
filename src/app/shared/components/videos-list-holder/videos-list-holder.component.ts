@@ -30,11 +30,12 @@ export class VideosListHolderComponent implements OnInit {
         private dialog: MatDialog,
         private toastr: ToastrService,
     ) {
+        this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
         this.videoLoading = 'loading';
-        if(this.videos.length >= 0){
+        if (this.videos.length > 0) {
             this.videoLoading = 'finished';
         }
     }
@@ -51,6 +52,7 @@ export class VideosListHolderComponent implements OnInit {
     }
 
     removeVideo(video) {
+        console.log(this.authUser)
         this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.videoService.removeVideo({

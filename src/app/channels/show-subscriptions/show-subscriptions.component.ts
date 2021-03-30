@@ -36,6 +36,7 @@ export class ShowSubscriptionsComponent implements OnInit {
     }
 
     getUserChannelSubscriptions() {
+        console.log(this.authUser)
         this.channelsService.getSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
             this.userChannels = dt;
         });

@@ -40,9 +40,9 @@
             <h2>All Stocks</h2>
 
             <div class="center-group">
-<!--                <app-search-stocks-form [modal]="true" *ngIf="stocksLoading!=='idle'"-->
-<!--                                        (search)="getSearchResults($event)"-->
-<!--                ></app-search-stocks-form>-->
+                <app-search-stocks-form [modal]="true" *ngIf="stocksLoading!=='idle'"
+                                        (search)="getSearchResults($event)"
+                ></app-search-stocks-form>
                 <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>
 
             </div>

@@ -23,6 +23,7 @@ import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
 import {LazyloadDirective} from './directives/lazyload.directive';
 import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists
         UserTagsComponent,
         VideosListHolderComponent,
         LazyloadDirective,
-        StocksListsComponent
+        StocksListsComponent,
+        SearchStocksFormComponent
     ],
     imports: [
         CommonModule,
@@ -83,7 +85,8 @@ import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists
         UserTagsComponent,
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
-        StocksListsComponent
+        StocksListsComponent,
+        SearchStocksFormComponent
     ]
 
 })

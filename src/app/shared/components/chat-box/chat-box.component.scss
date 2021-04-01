@@ -21,10 +21,16 @@
         .chat-block{
             .avatar{
                 width: 24px !important;
-                height: 24px !important;   
+                height: 24px !important;
+            }
+            .chat-block-1,
+            .chat-block-2 {
+                max-width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
- 
         }
     }
 

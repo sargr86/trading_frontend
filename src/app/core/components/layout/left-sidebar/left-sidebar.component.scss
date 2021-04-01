@@ -26,6 +26,13 @@
     cursor: pointer;
 }
 
+.analytics-text-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
 @media (max-width: 768px) {
     #left-sidebar {
         width: 300px;

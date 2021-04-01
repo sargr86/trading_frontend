@@ -27,9 +27,6 @@
             ],
             "@core/*": [
                 "app/core/*"
-            ],
-            "rxjs": [
-                "./vendor/rxjs.ts"
             ]
         }
     },

@@ -1,30 +1,30 @@
-<ng-container *ngIf="videos?.length > 0">
-    <p class="trending-text">{{title}}</p>
-    <div class="ph-item item">
-        <div class="ph-col-12">
-            <div class="ph-picture"></div>
+<!--<ng-container *ngIf="videos?.length > 0">-->
+<!--    <p class="trending-text">{{title}}</p>-->
+<!--    <div class="ph-item item">-->
+<!--        <div class="ph-col-12">-->
+<!--            <div class="ph-picture"></div>-->
 
-            <div class="d-flex">
-                <div class="ph-avatar mr-3"></div>
+<!--            <div class="d-flex">-->
+<!--                <div class="ph-avatar mr-3"></div>-->
 
-                <div class="ph-col-10">
-                    <div class="ph-row align-items-start">
-                        <div class="ph-col-2"></div>
-                        <div class="ph-col-8 empty"></div>
-                        <div class="ph-col-2"></div>
-                    </div>
-                    <div class="ph-row align-items-start">
-                        <div class="ph-col-4"></div>
-                    </div>
-                    <div class="ph-row align-items-start">
-                        <div class="ph-col-6"></div>
-                    </div>
-                </div>
-            </div>
+<!--                <div class="ph-col-10">-->
+<!--                    <div class="ph-row align-items-start">-->
+<!--                        <div class="ph-col-2"></div>-->
+<!--                        <div class="ph-col-8 empty"></div>-->
+<!--                        <div class="ph-col-2"></div>-->
+<!--                    </div>-->
+<!--                    <div class="ph-row align-items-start">-->
+<!--                        <div class="ph-col-4"></div>-->
+<!--                    </div>-->
+<!--                    <div class="ph-row align-items-start">-->
+<!--                        <div class="ph-col-6"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-        </div>
-    </div>
+<!--        </div>-->
+<!--    </div>-->
     <div class="list-container d-flex flex-wrap justify-content-center justify-content-lg-start">
         <ng-container *ngFor="let video of videos">
             <div class="item mx-2 ml-lg-0  mr-lg-4" [class.one-item]="isSmallScreen(videos.length)">
@@ -75,4 +75,4 @@
             </div>
         </ng-container>
     </div>
-</ng-container>
+<!--</ng-container>-->

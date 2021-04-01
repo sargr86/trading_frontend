@@ -15,6 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 export class VideosListHolderComponent implements OnInit {
 
     authUser;
+    videoLoading = 'idle';
 
     @Input('videos') videos = [];
     @Input('title') title = '';
@@ -28,10 +29,14 @@ export class VideosListHolderComponent implements OnInit {
         private dialog: MatDialog,
         private toastr: ToastrService
     ) {
+        this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
-        console.log(this.videos)
+        this.videoLoading = 'loading';
+        if (this.videos.length > 0) {
+            this.videoLoading = 'finished';
+        }
     }
 
     async openVideoPage(video, username) {

@@ -68,12 +68,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
             full_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
             username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
-            password: ['',
-                [
-                    Validators.required, patternValidator(NO_SPACE_PATTERN),
-                    Validators.minLength(PASSWORD_MIN_LENGTH), Validators.maxLength(PASSWORD_MAX_LENGTH)
-                ],
-            ],
+            // password: ['',
+            //     [
+            //         Validators.required, patternValidator(NO_SPACE_PATTERN),
+            //         Validators.minLength(PASSWORD_MIN_LENGTH), Validators.maxLength(PASSWORD_MAX_LENGTH)
+            //     ],
+            // ],
             // confirm_password: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
             // confirm_password: ['', Validators.required],
             birthday: ['', Validators.required],

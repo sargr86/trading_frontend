@@ -20,6 +20,7 @@ import {DateFromNowPipe} from './pipes/date-from-now.pipe';
 import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-values-from-object.pipe';
 import { CheckForEmptyObjectPipe } from './pipes/check-for-empty-object.pipe';
 import { UserTagsComponent } from './components/user-tags/user-tags.component';
+import { VideosListHolderComponent } from './components/videos-list-holder/videos-list-holder.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { UserTagsComponent } from './components/user-tags/user-tags.component';
         FilterOutFalsyValuesFromObjectPipe,
         CheckForEmptyObjectPipe,
         UserTagsComponent,
+        VideosListHolderComponent,
     ],
     imports: [
         CommonModule,
@@ -74,7 +76,8 @@ import { UserTagsComponent } from './components/user-tags/user-tags.component';
         VideoFiltersComponent,
         DateFromNowPipe,
         UserTagsComponent,
-        CheckForEmptyObjectPipe
+        CheckForEmptyObjectPipe,
+        VideosListHolderComponent
     ]
 
 })

@@ -1,4 +1,4 @@
-<nav class="home-header navbar navbar-expand-lg navbar-light" >
+<nav class="home-header navbar navbar-expand-lg navbar-light">
     <img class="header-left-logo navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
     <div>
 
@@ -19,14 +19,15 @@
                                 (search)="searchVideos($event)"></app-search-videos-form>
         <app-search-stocks-form class="d-none d-lg-block" *ngIf="routerUrl?.includes('analytics')"
                                 (search)="searchStocks($event)"></app-search-stocks-form>
-        <marquee class="home-black-block marquee"  direction="left" height="40px" (click)="openModal(cryptoModal)" *ngIf="stocks">
+        <marquee class="home-black-block marquee" direction="left" height="40px" (click)="openModal(cryptoModal)"
+                 *ngIf="stocks">
             <div class="marquee-content">
                 <div class="home-black-item" *ngFor="let stock of stocks">
                     <p class="black-text">{{stock.symbol}}</p>
                     <p [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
                 </div>
             </div>
-<!--            <i class="down-white fa fa-chevron-down"></i>-->
+            <!--            <i class="down-white fa fa-chevron-down"></i>-->
         </marquee>
 
         <div class="notification-block">
@@ -56,7 +57,7 @@
 
             <!-- Crypto currency page will be opened in modal -->
             <ng-template #cryptoModal>
-                <app-crypto-currency></app-crypto-currency>
+                <app-stocks-lists></app-stocks-lists>
             </ng-template>
 
 

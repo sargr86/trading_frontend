@@ -18,9 +18,11 @@ import {GetSelectedVideosToBeAddedToPlaylistPipe} from './pipes/get-selected-vid
 import {VideoFiltersComponent} from '@shared/components/video-filters/video-filters.component';
 import {DateFromNowPipe} from './pipes/date-from-now.pipe';
 import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-values-from-object.pipe';
-import { CheckForEmptyObjectPipe } from './pipes/check-for-empty-object.pipe';
-import { UserTagsComponent } from './components/user-tags/user-tags.component';
-import { VideosListHolderComponent } from './components/videos-list-holder/videos-list-holder.component';
+import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
+import {UserTagsComponent} from './components/user-tags/user-tags.component';
+import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
+import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
+import { StocksListsComponent } from './components/stocks-lists/stocks-lists.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +43,8 @@ import { VideosListHolderComponent } from './components/videos-list-holder/video
         CheckForEmptyObjectPipe,
         UserTagsComponent,
         VideosListHolderComponent,
+        SearchStocksFormComponent,
+        StocksListsComponent
     ],
     imports: [
         CommonModule,
@@ -77,7 +81,9 @@ import { VideosListHolderComponent } from './components/videos-list-holder/video
         DateFromNowPipe,
         UserTagsComponent,
         CheckForEmptyObjectPipe,
-        VideosListHolderComponent
+        VideosListHolderComponent,
+        SearchStocksFormComponent,
+        StocksListsComponent
     ]
 
 })

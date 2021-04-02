@@ -1,17 +1,18 @@
 import {Component, OnInit} from '@angular/core';
+import {STOCK_CATEGORIES} from '@core/constants/global';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
-import {STOCK_CATEGORIES} from '@core/constants/global';
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 
 @Component({
-    selector: 'app-crypto-currency',
-    templateUrl: './crypto-currency.component.html',
-    styleUrls: ['./crypto-currency.component.scss']
+    selector: 'app-stocks-lists',
+    templateUrl: './stocks-lists.component.html',
+    styleUrls: ['./stocks-lists.component.scss']
 })
-export class CryptoCurrencyComponent implements OnInit {
+export class StocksListsComponent implements OnInit {
+
     stockTypes = STOCK_CATEGORIES;
     stocks = [];
     selectedStockType = STOCK_CATEGORIES[0].value;
@@ -28,7 +29,7 @@ export class CryptoCurrencyComponent implements OnInit {
     constructor(
         private modalService: BsModalService,
         private dialog: MatDialog,
-        private matDialogRef: MatDialogRef<CryptoCurrencyComponent>,
+        private matDialogRef: MatDialogRef<StocksListsComponent>,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe
     ) {
@@ -150,4 +151,5 @@ export class CryptoCurrencyComponent implements OnInit {
             this.filterStocks();
         });
     }
+
 }

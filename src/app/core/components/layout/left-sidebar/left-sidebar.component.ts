@@ -42,12 +42,12 @@ export class LeftSidebarComponent implements OnInit {
             this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
                 this.channels = dt;
             });
-        }
-        this.subject.getUserSubscriptions().subscribe(dt => {
-            this.channels = dt;
-        });
+            this.subject.getUserSubscriptions().subscribe(dt => {
+                this.channels = dt;
+            });
 
-        this.getUserStocks();
+            this.getUserStocks();
+        }
     }
 
     ngOnInit(): void {

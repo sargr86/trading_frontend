@@ -74,5 +74,14 @@ export class VideosListHolderComponent implements OnInit {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
+    updatePrivacy(video, privacy) {
+        this.videoService.updatePrivacy({
+            video_id: video.id,
+            privacy: privacy === 'Public' ? 'Private' : 'Public'
+        }).subscribe(dt => {
+            video.privacy = dt;
+        });
+    }
+
 
 }

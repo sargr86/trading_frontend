@@ -13,9 +13,8 @@
 
             <div class="crypto-item" *ngFor="let stock of compareWithMainStockList(userStocks)"
                  [class.crypto-item-green]="stock.changesPercentage > 0">
-                <div class="stock-follow">
-                    <button
-                        (click)="followStock(stock)">{{isStockFollowed(stock) ? 'Following' : 'Follow'}}</button>
+                <div class="stock-unfollow" (click)="followStock(stock)">
+                    <span class="material-icons">delete</span>
                 </div>
                 <p class="crypto-text-1">{{stock.name}}</p>
                 <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>

@@ -24,6 +24,7 @@ export class LeftSidebarComponent implements OnInit {
     stocks;
     indices;
     activeTab = {name: 'watchlist'};
+    userStocks;
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
@@ -45,6 +46,8 @@ export class LeftSidebarComponent implements OnInit {
         this.subject.getUserSubscriptions().subscribe(dt => {
             this.channels = dt;
         });
+
+        this.getUserStocks();
     }
 
     ngOnInit(): void {
@@ -134,6 +137,12 @@ export class LeftSidebarComponent implements OnInit {
 
     changeTab(tab) {
         this.activeTab.name = tab;
+    }
+
+    getUserStocks() {
+        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+            this.userStocks = dt.user_stocks;
+        });
     }
 
 

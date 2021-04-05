@@ -10,8 +10,13 @@
     //padding-top: 550px;
 }
 
-.analytics-item{
+.analytics-item {
     cursor: pointer;
+
+    .stock-info {
+        display: flex;
+        width: 100%;
+    }
 }
 
 .subscription {

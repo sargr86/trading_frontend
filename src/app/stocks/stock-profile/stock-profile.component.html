@@ -6,7 +6,7 @@
 
             <div class="crypto-content">
                 <div class="crypto-item" [class.crypto-item-green]="stock.changesPercentage > 0"
-                     *ngFor="let stock of indices">
+                     *ngFor="let stock of indices" (click)="openStockProfile(stock.symbol)">
                     <p class="crypto-text-1">{{stock.name}}</p>
                     <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
                     <div class="crypto-block">

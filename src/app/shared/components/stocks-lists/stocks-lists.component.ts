@@ -5,6 +5,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-stocks-lists',
@@ -31,7 +32,8 @@ export class StocksListsComponent implements OnInit {
         private dialog: MatDialog,
         private matDialogRef: MatDialogRef<StocksListsComponent>,
         private stocksService: StocksService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService
     ) {
     }
 
@@ -49,7 +51,8 @@ export class StocksListsComponent implements OnInit {
 
     closeModal() {
         this.modalService.hide();
-        this.matDialogRef.close();
+        this.matDialogRef.close(this.userStocks);
+        this.subject.setUserStocksData(this.userStocks);
     }
 
     openAddStockModal() {

@@ -12,6 +12,7 @@ export class SubjectService {
     public streamSessionData = new Subject<any>();
     public toggleFiltersData = new Subject<any>();
     private stocksData = new Subject<any>();
+    private userStocksData = new Subject<any>();
 
     constructor() {
     }
@@ -70,5 +71,14 @@ export class SubjectService {
 
     getStocksData(): Observable<any> {
         return this.stocksData.asObservable();
+    }
+
+
+    setUserStocksData(value) {
+        this.userStocksData.next(value);
+    }
+
+    getUserStocksData(): Observable<any> {
+        return this.userStocksData.asObservable();
     }
 }

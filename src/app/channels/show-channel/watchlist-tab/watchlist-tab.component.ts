@@ -38,7 +38,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         public router: Router,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         private stocksService: StocksService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService
     ) {
     }
 
@@ -47,6 +48,10 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.search = localStorage.getItem('search');
         this.getStocksByType('stocks');
         this.getUserStocks();
+
+        this.subject.getUserStocksData().subscribe(dt => {
+            this.userStocks = dt;
+        });
     }
 
     getStocksByType(type) {

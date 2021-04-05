@@ -46,6 +46,11 @@ export class LeftSidebarComponent implements OnInit {
                 this.channels = dt;
             });
 
+            this.subject.getUserStocksData().subscribe(dt => {
+                this.userStocks = dt;
+            });
+
+
             this.getUserStocks();
         }
     }

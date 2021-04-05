@@ -19,3 +19,12 @@ button {
         margin-left: 40px;
     }
 }
+
+.confirmation-modal{
+    min-height: 140px;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center
+}

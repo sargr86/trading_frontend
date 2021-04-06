@@ -12,7 +12,7 @@
 
 .analytics-item {
     cursor: pointer;
-
+    position: relative;
     .stock-info {
         display: flex;
         width: 100%;
@@ -36,6 +36,25 @@
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
+}
+
+.stocks-top-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    .search-stocks{
+        max-width: 178px;
+        width: 100%;
+    }
+
+    .context-actions{
+        z-index: 2;
+    }
+
+    mat-icon{
+        cursor: pointer;
+    }
 }
 
 @media (max-width: 768px) {

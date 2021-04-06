@@ -74,8 +74,24 @@ li {
     color: #18B587 !important;
 }
 
-.left-menu {
+#left-menu {
     margin-bottom: 40px;
+
+    i {
+        font-size: 19px;
+        color: #545454;
+    }
+
+    p {
+        color: #545454;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: "Muli-Regular";
+        margin-left: 12px;
+        @media screen and (max-width: 767px) {
+            font-size: 14px;
+        }
+    }
 }
 
 .body-content-left {
@@ -480,6 +496,21 @@ nav.home-header {
     margin-bottom: 5px;
 }
 
+.left-menu-main:hover, .left-menu-main.active {
+    border-bottom: 1px solid #18B587;
+    background-color: #18B587;
+    cursor: pointer;
+    color: $white !important;
+
+    mat-icon, p {
+        color: #ffffff!important;
+    }
+
+    img {
+        filter: brightness(100);
+    }
+}
+
 .left-menu-main {
     height: 38px;
     background: white;
@@ -491,8 +522,8 @@ nav.home-header {
     border-bottom: 1px solid transparent;
 
     &.st-left-menu {
-        .material-icons, * {
-            color: #ffffff;
+        mat-icon, * {
+            color: #ffffff !important;
         }
 
         background: #F53C6F;
@@ -513,36 +544,6 @@ nav.home-header {
     }
 }
 
-.left-menu-main:hover, .left-menu-main.active {
-    border-bottom: 1px solid #18B587;
-    background-color: #18B587;
-    cursor: pointer;
-    color: white;
-
-    .material-icons, p {
-        color: #ffffff;
-    }
-
-    img {
-        filter: brightness(100);
-    }
-}
-
-.left-menu i {
-    font-size: 19px;
-    color: #545454;
-}
-
-.left-menu p {
-    color: #545454;
-    font-size: 16px;
-    line-height: 24px;
-    font-family: "Muli-Regular";
-    margin-left: 12px;
-    @media screen and (max-width: 767px) {
-        font-size: 14px;
-    }
-}
 
 .left-menu-top i, .left-menu-top p {
     color: white;
@@ -592,7 +593,7 @@ nav.home-header {
     font-size: 12px;
     box-shadow: 0 0 6px #0000000F;
     font-family: "Muli-Bold";
-    width: 90px;
+    width: 100px;
     margin-bottom: 16px;
 }
 
@@ -602,7 +603,7 @@ nav.home-header {
 
 .watchlist .nav-link {
     padding: 5px;
-    width: 90px;
+    width: 100px;
     height: 31px;
     border-right: 1px solid silver;
     background: #fff;
@@ -719,7 +720,8 @@ nav.home-header {
 
 .analytics-delete {
     font-size: 10px;
-    margin-left: 9px;
+    position: absolute;
+    right: 0;
 }
 
 .watchlist .dropdown-toggle {
@@ -1463,9 +1465,11 @@ select {
         width: 100%;
         //margin-top: 40px;
     }
-    .left-menu {
+    #left-menu {
         width: 80%;
         margin: 0 auto;
+
+
     }
     .left-list {
         width: 80%;

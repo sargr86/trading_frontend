@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {ChannelsService} from '@core/services/channels.service';
-import {API_URL} from '@core/constants/global';
+import {API_URL, MAIN_SECTIONS} from '@core/constants/global';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
@@ -25,6 +25,8 @@ export class LeftSidebarComponent implements OnInit {
     indices;
     activeTab = {name: 'watchlist'};
     userStocks;
+    editUserStocks = false;
+
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
@@ -74,6 +76,13 @@ export class LeftSidebarComponent implements OnInit {
         });
     }
 
+    changePage(route, params = {}) {
+        this.closeSidenav.emit(true);
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate([route], {queryParams: params})
+        );
+    }
+
     drop(event: CdkDragDrop<string[]>) {
         // this.channels = moveItemInArray(this.channels, event.previousIndex, event.currentIndex);
 
@@ -105,12 +114,7 @@ export class LeftSidebarComponent implements OnInit {
         this.closeSidenav.emit(true);
     }
 
-    changePage(route, params = {}) {
-        this.closeSidenav.emit(true);
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([route], {queryParams: params})
-        );
-    }
+
 
     isSmallScreen() {
         return window.screen.availWidth < 768;

@@ -1,0 +1,10 @@
+<ng-container *ngFor="let section of mainSections;let i = index">
+    <div class="left-menu-main" [class.st-left-menu]="i===0" [class.active]="router.url === section.link"
+         (click)="changePage(section.link)" *ngIf="(section.auth && auth.loggedIn()) || !section.auth"
+         [hidden]="!section.production && envName==='production'">
+        <mat-icon *ngIf="section.icon">{{section.icon}}</mat-icon>
+        <img *ngIf="section.img" [src]="'assets/img/'+section.img+'.png'">
+        <p>{{section.name}}</p>
+    </div>
+    <div class="line-item" *ngIf="auth.loggedIn() && section.separator" [hidden]="envName==='production'"></div>
+</ng-container>

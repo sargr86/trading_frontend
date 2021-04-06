@@ -3,80 +3,28 @@
          (click)="changePage('/')">
 </div>
 <div id="left-sidebar">
-
-    <div class="left-menu">
-        <div class="left-menu-main st-left-menu" [class.active]="router.url.includes('publish')"
-             (click)="changePage('user/video/start-live-video')" *ngIf="auth.loggedIn()">
-            <span class="material-icons">video_call</span>
-            <p>Start live video</p>
-        </div>
-        <div class="left-menu-main" (click)="changePage('/')" [class.active]="router.url ==='/'">
-            <mat-icon>home</mat-icon>
-            <p>Home</p>
-        </div>
-        <div class="left-menu-main" (click)="changePage('trending')"
-             [class.active]="router.url.includes('trending')">
-            <img src="assets/img/item-6.png">
-            <p>Trending</p>
-        </div>
-        <div class="line-item" *ngIf="auth.loggedIn()" [hidden]="envName==='production'"></div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('messages')"
-             [hidden]="envName==='production'"
-             (click)="changePage('chat/messages')">
-            <img src="assets/img/item-8.png">
-            <p>Messages</p>
-        </div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('rooms')"
-             [hidden]="envName==='production'"
-             (click)="changePage('chat/rooms')">
-            <img src="assets/img/item-8.png">
-            <p>Chat rooms</p>
-        </div>
-        <div class="line-item" *ngIf="auth.loggedIn()" [hidden]="envName==='production'"></div>
-        <div class="left-menu-main" (click)="changePage('videos/saved')" *ngIf="auth.loggedIn()"
-             [class.active]="routerUrl === '/videos/saved'">
-            <img src="assets/img/item-10.png">
-            <p>Saved Videos</p>
-        </div>
-        <div class="left-menu-main" [class.active]="routerUrl === '/videos'" *ngIf="auth.loggedIn()"
-             (click)="changePage('videos')">
-            <img src="assets/img/item-11.png">
-            <p>Videos</p>
-        </div>
-        <div class="line-item" *ngIf="auth.loggedIn()"></div>
-        <div class="left-menu-main" *ngIf="auth.loggedIn()" [class.active]="router.url.includes('stock')"
-             (click)="changePage('stocks/analytics')">
-            <img src="assets/img/item-9.png">
-            <p>Analytics</p>
-        </div>
+    <div id="left-menu">
+        <app-section-links (closeSidenav)="closeSidenav.emit($event)"></app-section-links>
     </div>
-    <ng-container *ngIf="auth.loggedIn() && channels?.length!==0">
+
+    <div id="channel-subscriptions" *ngIf="auth.loggedIn() && channels?.length!==0">
         <p class="subscriptions-text">Subscriptions</p>
         <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
             <div class="main-item-block subscription" *ngFor="let channel of channels;let i = index" cdkDrag
                  (cdkDragDropped)="dragDropped($event, channel)" (click)="openChannelPage(channel)">
-                <!--            <ng-container *ngIf="i < 5 && router.url!=='/'">-->
-                <!--                <img class="list-img" *ngIf="channel.avatar" [src]="apiUrl+'uploads/avatars/'+channel.avatar">-->
-                <!--                <img class="list-img" *ngIf="!channel.avatar" src="assets/img/default-user.png">-->
-                <!--                <div>-->
-                <!--                    <p class="main-text-1">{{channel.name}}</p>-->
-                <!--                    <p class="main-text-4">{{channel.description}}</p>-->
-                <!--                </div>-->
-                <!--            </ng-container>-->
-
                 <ng-container *ngIf="i < 5">
                     <img class="list-img" [src]="channel.avatar | getImgPath:'avatars'">
                     <div class="d-flex align-items-center">
                         <p class="main-text-1">{{channel.name}}</p>
-                        <!-- <p class="main-text-4">{{channel.description}}</p> -->
                     </div>
                 </ng-container>
             </div>
         </div>
-        <p (click)="viewAllSubscriptions()" *ngIf="routerUrl !== '/channels/subscriptions'" class="see-more">See
-            more</p>
-    </ng-container>
-    <div class="watchlist" *ngIf="router.url!=='/' && !isSmallScreen()">
+        <p (click)="viewAllSubscriptions()" *ngIf="routerUrl !== '/channels/subscriptions'" class="see-more">
+            See more</p>
+    </div>
+
+    <div class="watchlist" *ngIf="auth.loggedIn() && !isSmallScreen()">
         <ul class="nav nav-tabs" id="watchlist">
             <li class="nav-item" (click)="changeTab('watchlist')">
                 <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
@@ -86,9 +34,44 @@
             </li>
         </ul>
         <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
+            <div class="stocks-top-actions">
+
+                <div class="search-stocks">
+                    <ng-container>
+                        <div class="watchlist-search" *ngIf="editUserStocks">
+                            <input class="watchlist-input" placeholder="Search">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="dropdown">
+                            <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                 aria-haspopup="true"
+                                 aria-expanded="false">
+                                Sort by My sort
+                            </div>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item">My sort</a>
+                                <a class="dropdown-item">A-Z</a>
+                                <a class="dropdown-item">Gain</a>
+                                <a class="dropdown-item">Loss</a>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="context-actions">
+                    <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>
+                    <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="editUserStocks = !editUserStocks">
+                            Edit Watchlist
+                        </button>
+                    </mat-menu>
+                </div>
+
+
+            </div>
             <div class="" id="watch" role="tabpanel" aria-labelledby="watch-tab">
                 <ng-container *ngFor="let stock of userStocks; let ind = index">
-                    <div class="analytics-item" *ngIf="ind < 10" >
+                    <div class="analytics-item" *ngIf="ind < 10">
                         <div class="stock-info" (click)="openStockProfile(stock.symbol)">
 
                             <div class="analytics-item-1">
@@ -111,12 +94,15 @@
                                     1.60({{getPercentageDetails(stock)?.value}}%)</p>
                             </div>
                         </div>
-                        <div class="analytics-delete" (click)="removeStockFromWatchlist(stock)">
+
+
+                        <div class="analytics-delete" *ngIf="editUserStocks" (click)="removeStockFromWatchlist(stock)">
                             <i class="fas fa-trash"></i>
                         </div>
                     </div>
                 </ng-container>
             </div>
+
         </div>
         <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
 
@@ -124,21 +110,7 @@
             <!--            <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>-->
             <div class="tab-pane fade  show active" id="today" role="tabpanel" aria-labelledby="today-tab">
 
-                <!--                <div class="watchlist-search">-->
-                <!--                    <input class="watchlist-input" placeholder="Search">-->
-                <!--                    <i class="fas fa-search"></i>-->
-                <!--                </div>-->
-                <!--                <div class="dropdown">-->
-                <!--                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"-->
-                <!--                         aria-expanded="false">-->
-                <!--                        Sort by my sort-->
-                <!--                    </div>-->
-                <!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-                <!--                        <a class="dropdown-item" href="#">Action</a>-->
-                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-                <!--                    </div>-->
-                <!--                </div>-->
+
                 <div class="watchlist-analytics">
                     <ng-container *ngFor="let stock of indices; let ind = index">
                         <div class="analytics-item" *ngIf="ind < 10" (click)="openStockProfile(stock.symbol)">

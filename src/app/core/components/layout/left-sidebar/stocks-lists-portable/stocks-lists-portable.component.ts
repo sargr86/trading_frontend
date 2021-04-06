@@ -56,7 +56,8 @@ export class StocksListsPortableComponent implements OnInit {
 
 
     getPercentageDetails(stock) {
-        const value = stock.changesPercentage; //.replace(/[(%)]/g, '')
+        // console.log(+stock.changesPercentage.toFixed(2))
+        const value = +stock.changesPercentage; //.replace(/[(%)]/g, '')
         return {
             ...{value},
             color: (+value > 0 ? 'green' : 'red'),

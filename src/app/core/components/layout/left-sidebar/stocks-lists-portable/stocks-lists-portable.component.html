@@ -1,4 +1,4 @@
-<div class="watchlist" *ngIf="auth.loggedIn() && !isSmallScreen">
+<div class="stocks-watchlist" id="sidebar-watchlist" *ngIf="auth.loggedIn() && !isSmallScreen">
     <ul class="nav nav-tabs" id="watchlist">
         <li class="nav-item" (click)="changeTab('watchlist')">
             <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
@@ -65,7 +65,7 @@
                         <div class="analytics-percent">
                             <p class="analytics-text-3">{{stock.price}}</p>
                             <p [ngClass]="getPercentageDetails(stock)?.class">
-                                1.60({{getPercentageDetails(stock)?.value}}%)</p>
+                                {{stock.change.toFixed(2)}}({{getPercentageDetails(stock)?.value.toFixed(2)}}%)</p>
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@
                         <div class="analytics-percent">
                             <p class="analytics-text-3">{{stock.price}}</p>
                             <p [ngClass]="getPercentageDetails(stock)?.class">
-                                1.60({{getPercentageDetails(stock)?.value}}%)</p>
+                                {{stock.change.toFixed(2)}}({{getPercentageDetails(stock)?.value.toFixed(2)}}%)</p>
                         </div>
                         <div class="analytics-delete">
                             <i class="fas fa-trash"></i>

@@ -1,4 +1,7 @@
 @import 'variables';
+@import "mixins";
+
+@include stocksWatchlist;
 
 .profile-block {
     label {
@@ -41,6 +44,6 @@
 }
 
 
-
-
-
+#channel-tabs-list {
+    width: 624px;
+}

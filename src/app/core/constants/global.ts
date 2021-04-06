@@ -102,11 +102,11 @@ export const STOCK_CATEGORIES = [
 export const DESCRIPTION_CHARACTERS_LIMIT = 100;
 
 export const MAIN_SECTIONS = [
-    {name: 'Start live video', img: '', icon: 'video_call', link: '/user/video/start-live-video', auth: true},
-    {name: 'Home', img: '', icon: 'home', link: '/', auth: false},
-    {name: 'Trending', img: 'item-9', icon: '', link: '/trending', separator: true, auth: false},
+    {name: 'Start live video', img: '', icon: 'video_call', link: '/user/video/start-live-video', auth: true, production: true},
+    {name: 'Home', img: '', icon: 'home', link: '/', auth: false, production: true},
+    {name: 'Trending', img: 'item-9', icon: '', link: '/trending', separator: true, auth: false, production: true},
     {name: 'Messages', img: 'item-8', icon: '', link: '/chat/messages', production: false, auth: true},
     {name: 'Chat rooms', img: 'item-8', icon: '', link: '/chat/rooms', separator: true, production: false, auth: true},
-    {name: 'Videos', img: 'item-11', icon: '', link: '/videos', auth: true},
-    {name: 'Analytics', img: 'item-9', icon: '', link: '/stocks/analytics', auth: true},
+    {name: 'Videos', img: 'item-11', icon: '', link: '/videos', auth: true, production: true},
+    {name: 'Analytics', img: 'item-9', icon: '', link: '/stocks/analytics', auth: true, production: true},
 ];

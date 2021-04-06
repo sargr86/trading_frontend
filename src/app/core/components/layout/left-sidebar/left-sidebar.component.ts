@@ -16,7 +16,7 @@ import {StocksService} from '@core/services/stocks.service';
     styleUrls: ['./left-sidebar.component.scss']
 })
 export class LeftSidebarComponent implements OnInit {
-    channels = [];
+
     apiUrl = API_URL;
     authUser;
     routerUrl;
@@ -41,17 +41,9 @@ export class LeftSidebarComponent implements OnInit {
         this.envName = environment.envName;
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
-            this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
-                this.channels = dt;
-            });
-            this.subject.getUserSubscriptions().subscribe(dt => {
-                this.channels = dt;
-            });
-
             this.subject.getUserStocksData().subscribe(dt => {
                 this.userStocks = dt;
             });
-
 
             this.getUserStocks();
         }
@@ -82,38 +74,6 @@ export class LeftSidebarComponent implements OnInit {
             await this.router.navigate([route], {queryParams: params})
         );
     }
-
-    drop(event: CdkDragDrop<string[]>) {
-        // this.channels = moveItemInArray(this.channels, event.previousIndex, event.currentIndex);
-
-    }
-
-    dragDropped(e, channel) {
-        // console.log(e)
-        // console.log(channel)
-        this.channels = moveItemInArray(this.channels, e.previousIndex, e.currentIndex);
-        // console.log(this.channels)
-        const sendData = {
-            rows: JSON.stringify(this.channels),
-            channel_id: channel.id,
-            user_id: this.authUser.id
-        };
-        this.channelsService.changeSubscriptionPriority(sendData).subscribe(dt => {
-        });
-    }
-
-    async openChannelPage(channel) {
-        this.closeSidenav.emit(true);
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate(['channels/show'], {queryParams: {username: channel.user.username}})
-        );
-    }
-
-    viewAllSubscriptions() {
-        this.router.navigate(['channels/subscriptions']);
-        this.closeSidenav.emit(true);
-    }
-
 
 
     isSmallScreen() {

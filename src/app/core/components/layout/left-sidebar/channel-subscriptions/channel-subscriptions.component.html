@@ -1,0 +1,16 @@
+<ng-container *ngIf="auth.loggedIn() && channels?.length!==0">
+    <p class="subscriptions-text">Subscriptions</p>
+    <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="main-item-block subscription" *ngFor="let channel of channels;let i = index" cdkDrag
+             (cdkDragDropped)="dragDropped($event, channel)" (click)="openChannelPage(channel)">
+            <ng-container *ngIf="i < 5">
+                <img class="list-img" [src]="channel.avatar | getImgPath:'avatars'">
+                <div class="d-flex align-items-center">
+                    <p class="main-text-1">{{channel.name}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <p (click)="viewAllSubscriptions()" *ngIf="routerUrl !== '/channels/subscriptions'" class="see-more">
+        See more</p>
+</ng-container>

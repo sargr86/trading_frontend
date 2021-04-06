@@ -124,4 +124,10 @@ export class NavbarComponent implements OnInit {
 
     }
 
+    goToChannelPage() {
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            this.router.navigate(['channels/show'], {queryParams: {username: this.authUser.username}})
+        );
+    }
+
 }

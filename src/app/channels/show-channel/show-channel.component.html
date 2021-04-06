@@ -36,7 +36,7 @@
                 </form>
             </div>
 
-            <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'"></app-watchlist-tab>
+            <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'" [channelUser]="channelUser"></app-watchlist-tab>
             <app-videos-tab *ngIf="activeTab.name === 'Videos'" [channelUser]="channelUser"
                             [authUser]="authUser"></app-videos-tab>
             <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser"

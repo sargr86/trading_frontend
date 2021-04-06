@@ -32,6 +32,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
     authUser;
 
+    @Input('channelUser') channelUser;
+
     constructor(
         private videoService: VideoService,
         private subjectService: SubjectService,

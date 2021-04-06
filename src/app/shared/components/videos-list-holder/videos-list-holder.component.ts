@@ -74,6 +74,11 @@ export class VideosListHolderComponent implements OnInit {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
+    isChannelPage(){
+        return this.router.url.includes('channel') && this.removable;
+    }
+
+
     updatePrivacy(video, privacy) {
         this.videoService.updatePrivacy({
             video_id: video.id,

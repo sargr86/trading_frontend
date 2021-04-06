@@ -69,7 +69,7 @@
                 <div class="remove-video" *ngIf="removable">
                     <mat-icon (click)="removeVideo(video)">delete</mat-icon>
                 </div>
-                <div class="update-privacy" (click)="updatePrivacy(video, video.privacy.name)" [ngClass]="video.privacy.name !== 'Public'  ? 'red':'green'">
+                <div class="update-privacy" *ngIf="isChannelPage()" (click)="updatePrivacy(video, video.privacy.name)" [ngClass]="video.privacy.name !== 'Public'  ? 'red':'green'">
                     <mat-icon>visibility_{{video.privacy.name !== 'Public' ? 'off' : 'on'}}</mat-icon>
                 </div>
             </ng-template>

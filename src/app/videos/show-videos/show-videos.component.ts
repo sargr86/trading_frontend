@@ -148,6 +148,10 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
+    getDesc(d) {
+        return d?.replace(/<br\s*[\/]?>/gi, '\n');
+    }
+
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }

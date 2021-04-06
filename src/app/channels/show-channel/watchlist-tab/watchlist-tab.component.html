@@ -9,7 +9,7 @@
 <div class="favorites">
 
     <div class="crypto-content">
-        <ng-container *ngIf="filteredStocks">
+        <ng-container *ngIf="filteredStocks && channelUser.username === authUser.username">
 
             <div class="crypto-item" *ngFor="let stock of compareWithMainStockList(userStocks)"
                  [class.crypto-item-green]="stock.changesPercentage > 0">

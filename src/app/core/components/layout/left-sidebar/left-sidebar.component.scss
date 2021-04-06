@@ -7,17 +7,9 @@
 
 #left-sidebar {
     width: 200px;
-    //padding-top: 550px;
 }
 
-.analytics-item {
-    cursor: pointer;
-    position: relative;
-    .stock-info {
-        display: flex;
-        width: 100%;
-    }
-}
+
 
 .subscription {
     cursor: pointer;
@@ -25,38 +17,9 @@
 
 
 
-.analytics-text-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-}
-
-.stocks-top-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-
-    .search-stocks{
-        max-width: 178px;
-        width: 100%;
-    }
-
-    .context-actions{
-        z-index: 2;
-    }
-
-    mat-icon{
-        cursor: pointer;
-    }
-}
-
 @media (max-width: 768px) {
     #left-sidebar {
         width: 300px;
     }
-    .see-more {
-        max-width: 200px;
-        margin: 0 auto;
-    }
+
 }

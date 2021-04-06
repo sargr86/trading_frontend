@@ -9,6 +9,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {AuthService} from '@core/services/auth.service';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -21,11 +22,10 @@ export class LeftSidebarComponent implements OnInit {
     authUser;
     routerUrl;
     envName;
-    stocks;
-    indices;
-    activeTab = {name: 'watchlist'};
-    userStocks;
-    editUserStocks = false;
+    isSmallScreen = IsResponsive.isSmallScreen();
+
+
+
 
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
@@ -36,17 +36,9 @@ export class LeftSidebarComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private subject: SubjectService,
-        private stocksService: StocksService
     ) {
         this.envName = environment.envName;
         this.authUser = this.getAuthUser.transform();
-        if (this.authUser) {
-            this.subject.getUserStocksData().subscribe(dt => {
-                this.userStocks = dt;
-            });
-
-            this.getUserStocks();
-        }
     }
 
     ngOnInit(): void {
@@ -58,14 +50,7 @@ export class LeftSidebarComponent implements OnInit {
             }
         });
 
-        this.subject.getStocksData().subscribe(dt => {
-            this.stocks = dt;
-        });
 
-
-        this.stocksService.getIndices({}).subscribe(dt => {
-            this.indices = dt;
-        });
     }
 
     changePage(route, params = {}) {
@@ -74,67 +59,4 @@ export class LeftSidebarComponent implements OnInit {
             await this.router.navigate([route], {queryParams: params})
         );
     }
-
-
-    isSmallScreen() {
-        return window.screen.availWidth < 768;
-    }
-
-    getPercentageDetails(stock) {
-        const value = stock.changesPercentage; //.replace(/[(%)]/g, '')
-        return {
-            ...{value},
-            color: (+value > 0 ? 'green' : 'red'),
-            class: 'analytics-text-' + (+value > 0 ? '4' : '5')
-        };
-    }
-
-    openStockProfile(stock) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock}/analytics`])
-        );
-    }
-
-    async viewFullWatchlist() {
-        await this.router.navigate(['channels/show'], {
-            queryParams: {
-                username: this.authUser.username,
-                tab: 'watchlist'
-            }
-        });
-    }
-
-    changeTab(tab) {
-        this.activeTab.name = tab;
-    }
-
-    getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
-        });
-    }
-
-    removeStockFromWatchlist(stock) {
-
-        const following = this.userStocks.find(f => f.name === stock.name);
-
-        if (!following) {
-            this.userStocks.push({
-                name: stock.name,
-                symbol: stock.symbol,
-                change: stock.change,
-                changesPercentage: stock.changesPercentage,
-                price: stock.price,
-            });
-        } else {
-            this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
-        }
-
-
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: this.userStocks}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
-        });
-    }
-
-
 }

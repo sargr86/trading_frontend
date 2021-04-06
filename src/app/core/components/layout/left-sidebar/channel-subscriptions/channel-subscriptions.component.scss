@@ -5,3 +5,15 @@
     margin-top: 32px;
     cursor: pointer;
 }
+
+.channel-name{
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .see-more {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+}

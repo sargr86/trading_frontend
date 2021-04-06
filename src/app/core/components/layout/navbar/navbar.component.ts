@@ -10,6 +10,7 @@ import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
 import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-navbar',
@@ -20,6 +21,7 @@ export class NavbarComponent implements OnInit {
     modalRef: BsModalRef;
     authUser;
     routerUrl;
+    isSmallScreen = IsResponsive.isSmallScreen();
 
     envName = environment.envName;
 
@@ -104,10 +106,6 @@ export class NavbarComponent implements OnInit {
             this.stocks = dt;
             this.subject.setStocksData(dt);
         });
-    }
-
-    isSmallScreen() {
-        return window.screen.availWidth < 992;
     }
 
     getPercentageValue(stock) {

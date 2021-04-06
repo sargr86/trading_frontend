@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
-import * as Plyr from 'plyr';
 import {LoaderService} from '@core/services/loader.service';
 import {Title} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-root',
@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     title = '';
     subscriptions: Subscription[] = [];
     pageTitle;
+    isSmallScreen = IsResponsive.isSmallScreen();
 
     constructor(
         public router: Router,
@@ -85,9 +86,5 @@ export class AppComponent implements OnInit {
             sidenav.open();
         }
         // }
-    }
-
-    isSmallScreen() {
-        return window.screen.availWidth < 768;
     }
 }

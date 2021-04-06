@@ -28,6 +28,7 @@ import {YourVideosTabComponent} from '@core/components/modals/add-video-to-playl
 import {AddStockDialogComponent} from './components/modals/add-stock-dialog/add-stock-dialog.component';
 import {SectionLinksComponent} from '@core/components/layout/left-sidebar/section-links/section-links.component';
 import { ChannelSubscriptionsComponent } from './components/layout/left-sidebar/channel-subscriptions/channel-subscriptions.component';
+import { StocksListsPortableComponent } from './components/layout/left-sidebar/stocks-lists-portable/stocks-lists-portable.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ChannelSubscriptionsComponent } from './components/layout/left-sidebar/
         AddStockDialogComponent,
         SectionLinksComponent,
         ChannelSubscriptionsComponent,
+        StocksListsPortableComponent,
     ],
     imports: [
         CommonModule,

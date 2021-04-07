@@ -188,24 +188,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (!this.isProduction) {
-            this.canvas = document.getElementById('myChart');
-            // console.log(this.canvas)
-            this.ctx = this.canvas.getContext('2d');
-            this.lineChart = new Chart(this.ctx, CHART_1);
-
-            this.canvas = document.getElementById('myChart2');
-            this.ctx = this.canvas.getContext('2d');
-            this.lineChart = new Chart(this.ctx, CHART_2);
-
-            this.canvas = document.getElementById('myChart3');
-            this.ctx = this.canvas.getContext('2d');
-            this.lineChart = new Chart(this.ctx, CHART_3);
-
-            this.canvas = document.getElementById('myChart4');
-            this.ctx = this.canvas.getContext('2d');
-            this.lineChart = new Chart(this.ctx, CHART_4);
-        }
     }
 
 }

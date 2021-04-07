@@ -65,14 +65,6 @@
             <p class="ads-text-2"></p>
         </ng-container>
         <app-video-suggestions *ngIf="isSmallSize()"></app-video-suggestions>
-        <div class="ads-maps" *ngIf="!isProduction">
-            <div>
-                <canvas id="myChart"></canvas>
-                <canvas id="myChart2"></canvas>
-                <canvas id="myChart3"></canvas>
-                <canvas id="myChart4"></canvas>
-            </div>
-        </div>
     </div>
     <div class="ads-block-right">
         <app-video-suggestions *ngIf="!isSmallSize()"></app-video-suggestions>

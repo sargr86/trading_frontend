@@ -14,6 +14,8 @@
     transition: 0.3s ease-in-out;
 }
 
+
+// Playlist videos modal
 @mixin videoItem {
     margin-bottom: 30px;
     padding: 5px;
@@ -51,8 +53,27 @@
     }
 
 
+    .tags {
+        margin-top: 10px;
+
+        li {
+            display: inline-block;
+            margin-right: 5px;
+
+            span {
+                @include tagItem;
+            }
+        }
+    }
+
+}
+
+
+// Playlist videos for edit-playlist page
+@mixin videoContainer {
     .video-container {
         display: flex;
+        flex-wrap: wrap;
         align-items: flex-start;
 
         .img {
@@ -64,7 +85,6 @@
                 height: 115px;
                 object-fit: cover;
                 cursor: pointer;
-                margin-bottom: 0;
             }
 
             .duration {
@@ -101,10 +121,7 @@
                 background-color: #000;
                 padding: 0 2px;
             }
-
-
         }
-
 
         .details {
             flex: 1;
@@ -113,6 +130,7 @@
             .title {
                 display: flex;
                 justify-content: space-between;
+                height: 23px;
 
                 h4 {
                     margin: 0;
@@ -127,46 +145,68 @@
                         width: 40px;
                         font-size: 14px;
                         background: transparent;
+                        line-height: 0 !important;
                     }
                 }
             }
 
             .shortened-details {
-                margin-top: 4px;
                 display: flex;
+                align-items: center;
+                margin-top: 4px;
 
                 .channel-name {
                     font-family: "Muli-Bold";
                     color: #818181;
                     font-size: 14px;
+                    white-space: nowrap;
                 }
 
                 .dot {
-                    margin-left: 16px;
-                    margin-top: -3px;
+                    margin: 0 10px;
                 }
 
 
                 .upload-time, .watchers-count {
-                    font-size: 14px;
+                    font-size: 12px;
                     color: #818181;
+                    white-space: nowrap;
                 }
 
                 .watchers-count, .upload-time {
-                    margin-left: 16px;
+                    //margin-left: 16px;
+                    white-space: nowrap;
                 }
             }
 
             .shortened-description {
-                margin-top: 16px;
+                margin-top: 5px;
                 margin-bottom: 0;
                 color: #545454;
                 white-space: pre-wrap;
                 overflow: hidden;
                 display: -webkit-box;
-                -webkit-line-clamp: 4;
+                -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
                 max-width: 250px;
+            }
+
+            .video-details-2nd-row {
+                display: flex;
+                flex-direction: column;
+
+                .tags {
+                    //margin-top: 10px;
+
+                    li {
+                        display: inline-block;
+                        margin-right: 5px;
+
+                        span {
+                            @include tagItem;
+                        }
+                    }
+                }
             }
 
             .channel-details {
@@ -186,22 +226,32 @@
                 }
             }
 
+            .saved-video {
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                color: #545454;
+
+                mat-icon {
+                    color: #18B587;
+                }
+            }
+
         }
-    }
 
-    .tags {
-        margin-top: 10px;
+        .tags {
+            margin-top: 10px;
 
-        li {
-            display: inline-block;
-            margin-right: 5px;
+            li {
+                display: inline-block;
+                margin-right: 5px;
 
-            span {
-                @include tagItem;
+                span {
+                    @include tagItem;
+                }
             }
         }
     }
-
 }
 
 @mixin inputWrap {
@@ -255,127 +305,17 @@
     cursor: pointer;
 }
 
-// Playlist videos for edit-playlist page
-@mixin videoContainer {
-    .video-container {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
 
-        .img {
-            position: relative;
-            flex: 0 0 200px;
-            margin-right: 32px;
-
-            img {
-                width: 100%;
-                height: 115px;
-                object-fit: cover;
-                cursor: pointer;
-            }
-
-            .duration {
-                position: absolute;
-                bottom: 9px;
-                right: 10px;
-                color: white;
-                background-color: #000;
-                padding: 0 2px;
-            }
-        }
-
-        .details {
-            flex: 1;
-
-            .title {
-                display: flex;
-                justify-content: space-between;
-                height: 23px;
-
-                h4 {
-                    margin: 0;
-                    text-transform: capitalize;
-                    font-family: "Muli-Bold";
-                    color: #545454;
-                    font-size: 16px;
-                }
-
-                .dotes {
-                    button {
-                        width: 40px;
-                        font-size: 14px;
-                        background: transparent;
-                        line-height: 0 !important;
-                    }
-                }
-            }
-
-            .shortened-details {
-                display: flex;
-                align-items: center;
-
-                .channel-name {
-                    font-family: "Muli-Bold";
-                    color: #818181;
-                    font-size: 14px;
-                    white-space: nowrap;
-                }
-
-                .dot {
-                    margin: 0 10px;
-                }
-
-
-                .upload-time, .watchers-count {
-                    font-size: 12px;
-                    color: #818181;
-                    white-space: nowrap;
-                }
-
-                .watchers-count, .upload-time {
-                    //margin-left: 16px;
-                    white-space: nowrap;
-                }
-            }
-
-            .video-details-2nd-row {
-                display: flex;
-                flex-direction: column;
-
-                .tags {
-                    //margin-top: 10px;
-
-                    li {
-                        display: inline-block;
-                        margin-right: 5px;
-
-                        span {
-                            @include tagItem;
-                        }
-                    }
-                }
-            }
-
-            .shortened-description {
-                margin-top: 5px;
-                margin-bottom: 0;
-                color: #545454;
-                white-space: pre-wrap;
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical;
-                max-width: 250px;
-            }
-
-        }
-    }
-}
 
 
 // Playlist item for 'Videos' section
 @mixin playlistItem {
+
     .playlist-container {
+        width: 432px;
+        display: flex;
+        margin-bottom: 30px;
+
         .thumbnail-container {
             position: relative;
             cursor: pointer;
@@ -395,7 +335,7 @@
                 }
 
                 img {
-                    width: 432px;
+                    width: 400px;
                     height: 249px;
                     object-fit: cover;
                     cursor: pointer;

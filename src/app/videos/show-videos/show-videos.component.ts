@@ -102,55 +102,15 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
             || this.filterStatus === 'applied' && !this.loadingVideos;
     }
 
-    async openVideoPage(video, username) {
-        const r = buildPlayVideoRoute(video, username);
-        await this.router.navigate([r.route], {queryParams: r.params});
-    }
-
-    async openChannelPage(channel, username) {
-        await this.router.navigate(['channels/show'], {queryParams: {username}});
-    }
 
 
-    async openPlaylistPage(playlist, firstVideoId) {
-        const route = 'videos/play';
-        const params = {id: firstVideoId, playlist_id: playlist.id};
-        await this.router.navigate([route], {queryParams: params});
-    }
 
-    subscribeToChannel(channel) {
-        this.channelsService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
-            this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
-                this.subject.setUserSubscriptions(d);
-                if (this.checkIfSubscribed(channel)) {
-                    channel.subscribers = channel.subscribers.filter(s => s.id !== this.authUser?.id);
-                } else {
-                    channel.subscribers.push(this.authUser);
-                }
-                // console.log(channel.subscribers)
-                // channel.subscribers = channel.subscribers.filter(s => s.id !== this.authUser?.id).concat([this.authUser]);
-                // console.log(channel.subscribers)
 
-                // this.searchChannelsVideos({search: this.search, filters: this.filters});
-            });
-        });
-    }
 
-    checkIfSubscribed(channel) {
-        return channel.subscribers.find(s => s.id === this.authUser?.id);
-    }
 
-    checkIfSavedByCurrentUser(video) {
-        return video.users_vids.find(v => v.username === this.authUser?.username && v.users_videos.saved);
-    }
 
-    async getVideosByTag(name) {
-        await this.router.navigate(['videos'], {queryParams: {tag: name}});
-    }
 
-    getDesc(d) {
-        return d?.replace(/<br\s*[\/]?>/gi, '\n');
-    }
+
 
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());

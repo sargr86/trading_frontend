@@ -503,7 +503,7 @@ nav.home-header {
     color: $white !important;
 
     mat-icon, p {
-        color: #ffffff!important;
+        color: #ffffff !important;
     }
 
     img {
@@ -583,7 +583,6 @@ nav.home-header {
 #profile-image {
     cursor: pointer;
 }
-
 
 
 .ads {
@@ -1131,6 +1130,198 @@ select {
 .mat-paginator-range-label {
     margin: 0 32px 0 24px;
     white-space: nowrap;
+}
+
+// Video item container styles
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    img {
+        width: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    .duration {
+        position: absolute;
+        bottom: 9px;
+        right: 10px;
+        color: $white;
+        background-color: $black;
+        padding: 0 2px;
+    }
+
+    .img {
+        position: relative;
+        flex: 0 0 200px;
+
+        img {
+            height: 115px;
+        }
+
+
+    }
+
+    .thumbnail {
+        position: relative;
+        margin-bottom: 24px;
+
+        img {
+            height: 249px;
+            max-width: 400px;
+            @media screen and (max-width: 991px) {
+                max-width: 432px !important;
+                width: 100% !important;
+            }
+        }
+    }
+
+    .details {
+        flex: 1;
+        margin-left: 32px;
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            height: 23px;
+
+            h4 {
+                margin: 0;
+                text-transform: capitalize;
+                font-family: "Muli-Bold";
+                color: #545454;
+                font-size: 16px;
+            }
+
+            .dotes {
+                button {
+                    width: 40px;
+                    font-size: 14px;
+                    background: transparent;
+                    line-height: 0 !important;
+                }
+            }
+        }
+
+        .shortened-details {
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+
+            .channel-name {
+                font-family: "Muli-Bold";
+                color: #818181;
+                font-size: 14px;
+                white-space: nowrap;
+            }
+
+            .dot {
+                margin: 0 10px;
+            }
+
+
+            .upload-time, .watchers-count {
+                font-size: 12px;
+                color: #818181;
+                white-space: nowrap;
+            }
+
+            .watchers-count, .upload-time {
+                //margin-left: 16px;
+                white-space: nowrap;
+            }
+        }
+
+        .shortened-description {
+            margin-top: 5px;
+            margin-bottom: 0;
+            color: #545454;
+            white-space: pre-wrap;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            max-width: 250px;
+        }
+
+        .video-details-2nd-row {
+            display: flex;
+            flex-direction: column;
+
+            .tags {
+                //margin-top: 10px;
+
+                li {
+                    display: inline-block;
+                    margin-right: 5px;
+
+                    span {
+                        @include tagItem;
+                    }
+                }
+            }
+        }
+
+        .channel-details {
+            margin-top: 4px;
+
+            .channel-name {
+                font-weight: bold;
+                color: #818181;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+
+            .videos-count {
+                font-size: 14px;
+                color: #818181;
+            }
+        }
+
+        .saved-video {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #545454;
+
+            mat-icon {
+                color: #18B587;
+            }
+        }
+
+    }
+
+    .tags {
+        margin-top: 10px;
+
+        li {
+            display: inline-block;
+            margin-right: 5px;
+
+            span {
+                @include tagItem;
+            }
+        }
+    }
+}
+
+// Subscribe-to-channel button
+.subscribe-to-channel-btn {
+    padding: 12px 28px;
+    font-size: 16px;
+    color: $white !important;
+    background: $red !important;
+    border-radius: 0;
+    box-shadow: 0 0 6px #006DCC2E;
+    outline: none;
+
+    &.subscribed {
+        background-color: #D6D6D6 !important;
+        color: $white;
+    }
 }
 
 

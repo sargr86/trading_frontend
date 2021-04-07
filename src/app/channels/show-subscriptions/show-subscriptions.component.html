@@ -7,16 +7,13 @@
         <div class="info">
             <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
             <div class="shortened-details">
-                <!--                <span class="watchers-count">17k watching</span>-->
-                <!--                <span class="dot">.</span>-->
-                <!--                <span class="videos-count">250 videos</span>-->
                 <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
             </div>
+            <p>{{channel.description}}</p>
             <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
                     [class.subscribed]="checkIfSubscribed(channel)"
                     (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
             </button>
-            <p>{{channel.description}}</p>
         </div>
     </li>
 </ul>

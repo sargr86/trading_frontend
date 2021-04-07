@@ -1,10 +1,5 @@
 @import 'mixins';
 
-#regular-video-list-container{
-    @include videoContainer;
-}
-
-
  .playlist-container {
     display: flex;
     margin-bottom: 30px;
@@ -16,19 +11,6 @@
     .details {
         padding-left: 32px;
         max-width: 310px;
-
-        .subscribe-to-channel-btn {
-            padding: 12px 28px;
-            font-size: 16px;
-            color: $white;
-            background: $red;
-            border-radius: 0;
-            box-shadow: 0 0 6px #006DCC2E;
-            &.subscribed {
-                background-color: #D6D6D6 !important;
-            }
-        }
-
     }
 
     @media screen and (max-width: 1022px) {

@@ -1,21 +1,17 @@
 <div id="search-results-container">
     <ng-container *ngFor="let channel of channelsVideos">
-        <div class="channel-container">
-            <div class="channel-avatar-container">
-                <img [src]="channel?.avatar|getImgPath:'avatars'" class="channel-avatar"
+        <div class="channel-item">
+            <div class="thumbnail">
+                <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'"
                      (click)="openChannelPage(channel,channel.user?.username)">
             </div>
-            <div class="details">
-                <h4 class="channel-name">{{channel.name}}</h4>
-                <div class="channel-details">
-                    <p class="videos-count">{{channel.videos?.length}} videos</p>
+            <div class="info">
+                <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                <div class="shortened-details">
+                    <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
                 </div>
-                <p class="shortened-description">
-                    {{getDesc(channel.description)}}
-                </p>
-
-                <button class="btn subscribe-to-channel-btn"
-                        *ngIf="channel?.user?.username !== authUser?.username"
+                <p>{{getDesc(channel.description)}}</p>
+                <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
                         [class.subscribed]="checkIfSubscribed(channel)"
                         (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
                 </button>

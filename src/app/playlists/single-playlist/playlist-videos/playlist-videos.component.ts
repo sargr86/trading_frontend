@@ -42,7 +42,7 @@ export class PlaylistVideosComponent implements OnInit {
     }
 
     dragDropped(e, video) {
-        console.log(e)
+        // console.log(e)
         // console.log(channel)
         this.playlist.videos = moveItemInArray(this.playlist.videos, e.previousIndex, e.currentIndex);
         // console.log(this.playlist)

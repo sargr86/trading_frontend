@@ -1,5 +1,11 @@
 @import 'mixins';
 
+#regular-video-list-container{
+    .shortened-description{
+        -webkit-line-clamp: 4;
+    }
+}
+
  .playlist-container {
     display: flex;
     margin-bottom: 30px;

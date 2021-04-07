@@ -1,0 +1,28 @@
+<div class="crypto-content">
+    <div class="crypto-item" *ngFor="let stock of passedStocks" (click)="openStockProfile(stock.symbol)"
+         [class.crypto-item-green]="stock.changesPercentage > 0">
+        <div class="stock-follow" [hidden]="!follow">
+            <button (click)="followStock(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
+            <button (click)="followStock(stock)" *ngIf="isStockFollowed(stock)">Following</button>
+        </div>
+        <p class="crypto-text-1">{{stock.name}}</p>
+        <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
+        <div class="crypto-block">
+            <p class="crypto-text-1">{{stock.change?.toFixed(2)}}</p>
+            <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
+        </div>
+        <!--                    <div class="small-chart-container">-->
+        <!--                        <ngx-charts-line-chart  [scheme]="colorScheme" [legend]="false"-->
+        <!--                                               [showXAxisLabel]="false"-->
+        <!--                                               [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"-->
+        <!--                                               [results]="multi"-->
+        <!--                                               [autoScale]="true"-->
+        <!--                                               [yAxisTicks]="[]" [xAxisTicks]="[]" [timeline]="true"-->
+        <!--                                               [referenceLines]="referenceLines" [showRefLines]="true"-->
+        <!--                                               [showGridLines]="true" [showRefLabels]="false">-->
+        <!--                        </ngx-charts-line-chart>-->
+        <!--                    </div>-->
+        <!--                <img class="crypto-map" src="assets/img/map.png">-->
+    </div>
+    <mat-error *ngIf="stocksLoading=='finished' && passedStocks?.length ===0">No results found</mat-error>
+</div>

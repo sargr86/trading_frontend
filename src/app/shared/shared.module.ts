@@ -23,6 +23,7 @@ import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
 import { StocksListsComponent } from './components/stocks-lists/stocks-lists.component';
+import { StocksListSampleComponent } from './components/stocks-list-sample/stocks-list-sample.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { StocksListsComponent } from './components/stocks-lists/stocks-lists.com
         UserTagsComponent,
         VideosListHolderComponent,
         SearchStocksFormComponent,
-        StocksListsComponent
+        StocksListsComponent,
+        StocksListSampleComponent
     ],
     imports: [
         CommonModule,
@@ -83,7 +85,8 @@ import { StocksListsComponent } from './components/stocks-lists/stocks-lists.com
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
         SearchStocksFormComponent,
-        StocksListsComponent
+        StocksListsComponent,
+        StocksListSampleComponent
     ]
 
 })

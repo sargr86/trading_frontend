@@ -37,7 +37,7 @@
                 top: 8px;
                 font-size: 13px;
                 transform: rotate(45deg);
-
+                z-index: 3;
                 &::before {
                     content: "Added";
                     background: #f53c6f;

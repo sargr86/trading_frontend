@@ -97,23 +97,8 @@ export class StocksListsComponent implements OnInit {
         this.filterStocks();
     }
 
-    followStock(stock) {
-
-        const following = this.userStocks.find(f => f.name === stock.name);
-
-        if (!following) {
-            this.userStocks.push({
-                name: stock.name,
-                symbol: stock.symbol,
-                change: stock.change,
-                changesPercentage: stock.changesPercentage,
-                price: stock.price,
-            });
-        } else {
-            this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
-        }
-
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: this.userStocks}).subscribe(dt => {
+    followStock(e) {
+        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: e}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });
     }

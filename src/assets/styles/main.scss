@@ -1307,7 +1307,13 @@ select {
         }
     }
 }
-
+.add-video-playlist-modal {
+    .video-container {
+        .thumbnail {
+            margin-bottom: 0;
+        }
+    }
+}
 // Subscribe-to-channel button
 .subscribe-to-channel-btn {
     padding: 12px 28px;

@@ -1,6 +1,9 @@
-<section class="crypto-section">
-
-    <div class="favorites">
+<section class="crypto-section" id="stocks-lists-modal">
+    <div class="spinner-container" *ngIf="stocksLoading==='loading'">
+        <mat-spinner [diameter]="25"></mat-spinner>
+        <span>Loading stocks lists...</span>
+    </div>
+    <div class="favorites" *ngIf="stocksLoading==='finished'">
         <div class="top-wrap">
             <h2>My Watchlist</h2>
 
@@ -12,26 +15,24 @@
             </div>
         </div>
 
-        <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)"
+        <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" (updatedStocksList)="updateFollowedStocks($event)"
                                 [userStocks]="compareWithMainStockList(userStocks)"
                                 *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
     </div>
 
 
-    <div class="all-stocks">
+    <div class="all-stocks" *ngIf="stocksLoading==='finished'">
         <div class="top-wrap">
             <h2>All Stocks</h2>
 
             <div class="center-group">
-                <app-search-stocks-form [modal]="true" *ngIf="stocksLoading!=='idle'"
-                                        (search)="getSearchResults($event)"
-                ></app-search-stocks-form>
-                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>
+                <app-search-stocks-form [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
+                <!--                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>-->
 
             </div>
 
             <div class="paginator">
-                <mat-paginator *ngIf="stocks.length > 0 && stocksLoading!=='loading'" (page)="handle($event)"
+                <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
                                #paginator
                                [length]="stocks.length" [pageIndex]="pageIndex"
                                [pageSize]="pageSize" [hidePageSize]="true"
@@ -43,7 +44,7 @@
 
         <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
                                 [userStocks]="compareWithMainStockList(userStocks)"
-                                (followedStock)="followStock($event)"></app-stocks-list-sample>
+                                (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
     </div>
 
 </section>

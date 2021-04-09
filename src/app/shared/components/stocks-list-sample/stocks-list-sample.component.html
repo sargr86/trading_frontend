@@ -1,9 +1,9 @@
-<div class="crypto-content">
+<div class="crypto-content" *ngIf="!portable">
     <div class="crypto-item" *ngFor="let stock of passedStocks" (click)="openStockProfile(stock.symbol)"
          [class.crypto-item-green]="stock.changesPercentage > 0">
         <div class="stock-follow" [hidden]="!follow">
-            <button (click)="followStock(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
-            <button (click)="followStock(stock)" *ngIf="isStockFollowed(stock)">Following</button>
+            <button (click)="updateFollowedStocksList(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
+            <button (click)="updateFollowedStocksList(stock)" *ngIf="isStockFollowed(stock)">Following</button>
         </div>
         <p class="crypto-text-1">{{stock.name}}</p>
         <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
@@ -25,4 +25,66 @@
         <!--                <img class="crypto-map" src="assets/img/map.png">-->
     </div>
     <mat-error *ngIf="stocksLoading=='finished' && passedStocks?.length ===0">No results found</mat-error>
+</div>
+<div id="portable-stocks-list" *ngIf="portable">
+
+    <div class="stocks-top-actions">
+
+        <div class="search-stocks">
+            <ng-container>
+                <div class="watchlist-search" *ngIf="editUserStocks">
+                    <input class="watchlist-input" placeholder="Search">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="dropdown">
+                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                         aria-haspopup="true"
+                         aria-expanded="false">
+                        Sort by My sort
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item">My sort</a>
+                        <a class="dropdown-item">A-Z</a>
+                        <a class="dropdown-item">Gain</a>
+                        <a class="dropdown-item">Loss</a>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="context-actions">
+            <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>
+            <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editUserStocks = !editUserStocks">
+                    Edit Watchlist
+                </button>
+            </mat-menu>
+        </div>
+
+
+    </div>
+    <ng-container *ngFor="let stock of passedStocks; let ind = index">
+        <div class="analytics-item" *ngIf="ind < 10" (click)="openStockProfile(stock.symbol)">
+            <div class="analytics-item-1">
+                <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
+                <p class="analytics-text-2">{{stock.name}}</p>
+            </div>
+            <div class="analytics-img">
+                <ng-container *ngIf="getPercentageDetails(stock)?.color === 'green'">
+                    <img src="assets/img/green-up.png">
+                    <img src="assets/img/green-point.png">
+                </ng-container>
+                <img src="assets/img/red-down.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
+                <img src="assets/img/red-point.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
+            </div>
+            <div class="analytics-percent">
+                <p class="analytics-text-3">{{stock.price}}</p>
+                <p [ngClass]="getPercentageDetails(stock)?.class">
+                    {{stock.change.toFixed(2)}}({{getPercentageDetails(stock)?.value.toFixed(2)}}%)</p>
+            </div>
+            <div class="analytics-delete" *ngIf="editUserStocks" (click)="updateFollowedStocksList(stock)">
+                <i class="fas fa-trash"></i>
+            </div>
+        </div>
+    </ng-container>
 </div>

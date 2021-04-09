@@ -8,114 +8,26 @@
         </li>
     </ul>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-        <div class="stocks-top-actions">
-
-            <div class="search-stocks">
-                <ng-container>
-                    <div class="watchlist-search" *ngIf="editUserStocks">
-                        <input class="watchlist-input" placeholder="Search">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
-                             aria-haspopup="true"
-                             aria-expanded="false">
-                            Sort by My sort
-                        </div>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item">My sort</a>
-                            <a class="dropdown-item">A-Z</a>
-                            <a class="dropdown-item">Gain</a>
-                            <a class="dropdown-item">Loss</a>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="context-actions">
-                <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>
-                <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="editUserStocks = !editUserStocks">
-                        Edit Watchlist
-                    </button>
-                </mat-menu>
-            </div>
 
 
-        </div>
-        <div class="" id="watch" role="tabpanel" aria-labelledby="watch-tab">
-            <ng-container *ngFor="let stock of userStocks; let ind = index">
-                <div class="analytics-item" *ngIf="ind < 10">
-                    <div class="stock-info" (click)="openStockProfile(stock.symbol)">
+        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"
+                                (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
-                        <div class="analytics-item-1">
-                            <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
-                            <p class="analytics-text-2">{{stock.name}}</p>
-                        </div>
-
-                        <div class="analytics-img">
-                            <img src="assets/img/green-up.png"
-                                 *ngIf="getPercentageDetails(stock)?.color === 'green'">
-                            <img src="assets/img/green-point.png"
-                                 *ngIf="getPercentageDetails(stock)?.color === 'green'">
-                            <img src="assets/img/red-down.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
-                            <img src="assets/img/red-point.png"
-                                 *ngIf="getPercentageDetails(stock)?.color === 'red'">
-                        </div>
-                        <div class="analytics-percent">
-                            <p class="analytics-text-3">{{stock.price}}</p>
-                            <p [ngClass]="getPercentageDetails(stock)?.class">
-                                {{stock.change.toFixed(2)}}({{getPercentageDetails(stock)?.value.toFixed(2)}}%)</p>
-                        </div>
-                    </div>
-
-
-                    <div class="analytics-delete" *ngIf="editUserStocks" (click)="removeStockFromWatchlist(stock)">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
+            See more
+        </p>
 
     </div>
     <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
+        <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks"
+                                (updatedStocksList)="updateFollowedLists($event)"
+                                [portable]="true"></app-stocks-list-sample>
 
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
+            See more
+        </p>
 
-        <!--            <div class="tab-pane fade" id="room" role="tabpanel" aria-labelledby="room-tab">222</div>-->
-        <div class="tab-pane fade  show active" id="today" role="tabpanel" aria-labelledby="today-tab">
-            <div class="watchlist-analytics">
-                <ng-container *ngFor="let stock of indices; let ind = index">
-                    <div class="analytics-item" *ngIf="ind < 10" (click)="openStockProfile(stock.symbol)">
-                        <div class="analytics-item-1">
-                            <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
-                            <p class="analytics-text-2">{{stock.name}}</p>
-                        </div>
-                        <div class="analytics-img">
-                            <ng-container *ngIf="getPercentageDetails(stock)?.color === 'green'">
-                                <img src="assets/img/green-up.png">
-                                <img src="assets/img/green-point.png">
-                            </ng-container>
-                            <img src="assets/img/red-down.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
-                            <img src="assets/img/red-point.png" *ngIf="getPercentageDetails(stock)?.color === 'red'">
-                        </div>
-                        <div class="analytics-percent">
-                            <p class="analytics-text-3">{{stock.price}}</p>
-                            <p [ngClass]="getPercentageDetails(stock)?.class">
-                                {{stock.change.toFixed(2)}}({{getPercentageDetails(stock)?.value.toFixed(2)}}%)</p>
-                        </div>
-                        <div class="analytics-delete">
-                            <i class="fas fa-trash"></i>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-
-            <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">
-                See more
-            </p>
-
-            <img class="ads" src="assets/img/ads.png">
-            <img class="ads" src="assets/img/ads.png">
-        </div>
+        <img class="ads" src="assets/img/ads.png">
+        <img class="ads" src="assets/img/ads.png">
     </div>
 </div>

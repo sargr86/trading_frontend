@@ -97,7 +97,7 @@ export class StocksListsComponent implements OnInit {
         this.filterStocks();
     }
 
-    followStock(e) {
+    updateFollowedStocks(e) {
         this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: e}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });

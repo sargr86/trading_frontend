@@ -1705,3 +1705,17 @@ mat-optgroup {
         justify-content: space-between !important;
     }
 }
+
+#stocks-lists-modal{
+    .mat-progress-spinner circle, .mat-spinner circle {
+        stroke: $white;
+    }
+}
+
+.see-more {
+    color: #18B587;
+    font-size: 16px;
+    font-family: 'Muli-Regular';
+    margin-top: 32px;
+    cursor: pointer;
+}

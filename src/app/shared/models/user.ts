@@ -2,6 +2,7 @@ export class User {
     id?: number;
     first_name?: string;
     last_name?: string;
+    username?: string;
     birthday?: string;
     gender?: string;
     email?: string;

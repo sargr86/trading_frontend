@@ -1,13 +1,13 @@
-import {Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
-import {OwlOptions} from 'ngx-owl-carousel-o';
-import {API_URL, OWL_OPTIONS, STOCK_CATEGORIES} from '@core/constants/global';
+import {API_URL, STOCK_CATEGORIES} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {User} from '@shared/models/user';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -16,7 +16,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 })
 export class WatchlistTabComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
-    search;
+    search: string | null;
     subscriptions: Subscription[] = [];
     showFilters = false;
     userStocks = [];
@@ -30,7 +30,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     selectedStockType = STOCK_CATEGORIES[0].value;
     stocksLoading = 'idle';
 
-    authUser;
+    authUser: User;
 
     @Input('channelUser') channelUser;
 
@@ -78,30 +78,14 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.filterStocks();
     }
 
-    followStock(stock) {
+    followStock(stocks) {
 
-        const following = this.userStocks.find(f => f.name === stock.name);
-
-        if (!following) {
-            this.userStocks.push({
-                name: stock.name,
-                symbol: stock.symbol,
-                change: stock.change,
-                changesPercentage: stock.changesPercentage,
-                price: stock.price,
-            });
-        } else {
-            this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
-        }
-
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: this.userStocks}).subscribe(dt => {
+        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
+            this.subject.setUserStocksData(this.userStocks);
         });
     }
 
-    isStockFollowed(stock) {
-        return !!this.userStocks.find(s => s.name === stock.name);
-    }
 
     compareWithMainStockList(userStocks) {
         userStocks.map(st => {

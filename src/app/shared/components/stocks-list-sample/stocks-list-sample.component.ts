@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Router} from '@angular/router';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-stocks-list-sample',
@@ -11,23 +12,32 @@ export class StocksListSampleComponent implements OnInit {
     @Input('stocks') passedStocks = [];
     @Input('userStocks') userStocks = [];
     @Input('follow') follow = true;
+    @Input('portable') portable = false;
+    editUserStocks = false;
     stocksLoading = 'idle';
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
 
-    @Output('followedStock') followedStock = new EventEmitter();
+    @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
     constructor(
         private getAuthUser: GetAuthUserPipe,
-        public router: Router
+        public router: Router,
+        private subject: SubjectService,
+        private cdr: ChangeDetectorRef
     ) {
         this.authUser = this.getAuthUser.transform();
+        this.subject.getUserStocksData().subscribe(dt => {
+            this.userStocks = dt;
+            this.cdr.detectChanges();
+        });
     }
 
     ngOnInit(): void {
+        // console.log(this.portable)
     }
 
-    followStock(stock) {
+    updateFollowedStocksList(stock) {
 
         const following = this.userStocks.find(f => f.name === stock.name);
 
@@ -43,7 +53,7 @@ export class StocksListSampleComponent implements OnInit {
             this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
         }
 
-        this.followedStock.emit(this.userStocks);
+        this.updatedStocksList.emit(this.userStocks);
 
     }
 
@@ -52,9 +62,21 @@ export class StocksListSampleComponent implements OnInit {
     }
 
     openStockProfile(stock) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock}/analytics`])
-        );
+        if (!this.follow) {
+            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+                await this.router.navigate([`stocks/${stock}/analytics`])
+            );
+        }
+    }
+
+    getPercentageDetails(stock) {
+        // console.log(+stock.changesPercentage.toFixed(2))
+        const value = +stock.changesPercentage; //.replace(/[(%)]/g, '')
+        return {
+            ...{value},
+            color: (+value > 0 ? 'green' : 'red'),
+            class: 'analytics-text-' + (+value > 0 ? '4' : '5')
+        };
     }
 
 }

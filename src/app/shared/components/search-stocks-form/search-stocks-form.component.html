@@ -1,6 +1,6 @@
 <form [formGroup]="searchStocksForm" [class.modal-form]="modal">
     <div class="home-search">
-        <input class="home-search-input" id="stocks-search-input" [class.white]="modal"
+        <input class="home-search-input" [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'" [class.white]="modal"
                [placeholder]="(modal? 'Search':'Search for stocks')+'...'"
                formControlName="search" #searchInput
                (keyup)="searchStocks()" #trigger="matAutocompleteTrigger" [formControl]="myControl"

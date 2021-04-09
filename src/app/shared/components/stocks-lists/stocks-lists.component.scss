@@ -52,13 +52,6 @@
 }
 
 
-
-
-
-
-
-
-
 .crypto-map {
     width: 100%;
 }
@@ -113,6 +106,23 @@ select {
     justify-content: space-between;
     max-width: 200px;
     width: 100%;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    mat-spinner{
+        color: $white;
+    }
+
+
+    span {
+        font-size: 14px;
+        margin-left: 20px;
+        color: $white;
+    }
 }
 
 @media (max-width: 1400px) {

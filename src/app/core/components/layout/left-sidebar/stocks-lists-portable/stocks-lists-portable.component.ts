@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {SubjectService} from '@core/services/subject.service';
@@ -17,7 +17,7 @@ export class StocksListsPortableComponent implements OnInit {
     @Input('routerUrl') routerUrl;
     userStocks;
     activeTab = {name: 'watchlist'};
-    editUserStocks = false;
+
 
     stocks;
     indices;
@@ -29,7 +29,8 @@ export class StocksListsPortableComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private subject: SubjectService,
-        private stocksService: StocksService
+        private stocksService: StocksService,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -39,6 +40,7 @@ export class StocksListsPortableComponent implements OnInit {
         if (this.authUser) {
             this.subject.getUserStocksData().subscribe(dt => {
                 this.userStocks = dt;
+                this.cdr.detectChanges();
             });
 
             this.getUserStocks();
@@ -46,6 +48,7 @@ export class StocksListsPortableComponent implements OnInit {
 
         this.subject.getStocksData().subscribe(dt => {
             this.stocks = dt;
+            this.cdr.detectChanges();
         });
 
 
@@ -55,15 +58,7 @@ export class StocksListsPortableComponent implements OnInit {
     }
 
 
-    getPercentageDetails(stock) {
-        // console.log(+stock.changesPercentage.toFixed(2))
-        const value = +stock.changesPercentage; //.replace(/[(%)]/g, '')
-        return {
-            ...{value},
-            color: (+value > 0 ? 'green' : 'red'),
-            class: 'analytics-text-' + (+value > 0 ? '4' : '5')
-        };
-    }
+
 
     openStockProfile(stock) {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
@@ -88,27 +83,15 @@ export class StocksListsPortableComponent implements OnInit {
         this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });
+
+
     }
 
-    removeStockFromWatchlist(stock) {
-
-        const following = this.userStocks.find(f => f.name === stock.name);
-
-        if (!following) {
-            this.userStocks.push({
-                name: stock.name,
-                symbol: stock.symbol,
-                change: stock.change,
-                changesPercentage: stock.changesPercentage,
-                price: stock.price,
-            });
-        } else {
-            this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
-        }
-
-
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: this.userStocks}).subscribe(dt => {
+    updateFollowedLists(stocks){
+        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });
     }
+
+
 }

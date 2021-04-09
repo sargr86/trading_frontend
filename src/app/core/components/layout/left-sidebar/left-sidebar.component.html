@@ -11,7 +11,8 @@
     </div>
 
     <div id="stock-lists">
-        <app-stocks-lists-portable [routerUrl]="routerUrl" [authUser]="authUser"></app-stocks-lists-portable>
+        <app-stocks-lists-portable [routerUrl]="routerUrl" [authUser]="authUser"
+                                   *ngIf="routerUrl"></app-stocks-lists-portable>
     </div>
 </div>
 

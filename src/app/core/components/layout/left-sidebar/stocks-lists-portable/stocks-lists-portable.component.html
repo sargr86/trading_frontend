@@ -8,8 +8,6 @@
         </li>
     </ul>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-
-
         <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 

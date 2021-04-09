@@ -80,9 +80,10 @@
     font-size: 26px;
     line-height: 26px;
     font-family: 'Muli-Bold';
-    margin-bottom: 4px;
     position: relative;
-    margin-left: 6px;
+    max-width: max-content;
+    margin: 0 auto 4px;
+    padding-left: 8px;
 }
 
 .crypto-text-abs {

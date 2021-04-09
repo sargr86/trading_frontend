@@ -1,17 +1,30 @@
 <form [formGroup]="searchStocksForm" [class.modal-form]="modal">
     <div class="home-search">
-        <input class="home-search-input" [class.white]="modal"
+        <input class="home-search-input" id="stocks-search-input" [class.white]="modal"
                [placeholder]="(modal? 'Search':'Search for stocks')+'...'"
                formControlName="search" #searchInput
                (keyup)="searchStocks()" #trigger="matAutocompleteTrigger" [formControl]="myControl"
                (keyup.enter)="openStockPage(searchInput.value, trigger)"
                [matAutocomplete]="auto">
+
         <mat-autocomplete #auto="matAutocomplete" [hidden]="modal">
-            <mat-option *ngFor="let result of searchResults" [value]="result.Ticker"
-                        (click)="openStockPage(result.Ticker, trigger)">
-                {{result.Ticker}}
-            </mat-option>
+
+            <ng-container *ngIf="loadingSearchRes==='finished'">
+                <mat-optgroup *ngFor="let group of searchResults" [label]="group.name">
+                    <mat-option *ngFor="let stock of group.stocks" [value]="stock.name"
+                                (click)="openStockPage(stock.symbol, trigger)">
+                        <p>{{stock.symbol}}</p>
+                        <p>{{stock.name}}</p>
+                    </mat-option>
+                </mat-optgroup>
+            </ng-container>
+
+            <!--            <mat-option *ngFor="let result of searchResults" [value]="result.Ticker"-->
+            <!--                        (click)="openStockPage(result.Ticker, trigger)">-->
+            <!--                {{result.Ticker}}-->
+            <!--            </mat-option>-->
         </mat-autocomplete>
         <i class="fas fa-search"></i>
     </div>
+    <mat-spinner [diameter]="25" *ngIf="loadingSearchRes ==='loading'"></mat-spinner>
 </form>

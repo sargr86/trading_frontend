@@ -6,25 +6,27 @@
 <!--                                   [detailsSource]="videoList"></app-video-carousel-holder>-->
 <!--    </ng-container>-->
 <!--</ng-container>-->
-<div class="favorites">
+<div class="favorites" *ngIf="filteredStocks && channelUser.username === authUser.username">
 
-    <div class="crypto-content">
-        <ng-container *ngIf="filteredStocks && channelUser.username === authUser.username">
+    <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" *ngIf="filteredStocks.length > 0"
+                            [userStocks]="compareWithMainStockList(userStocks)"
+                            (followedStock)="followStock($event)"></app-stocks-list-sample>
 
-            <div class="crypto-item" *ngFor="let stock of compareWithMainStockList(userStocks)"
-                 [class.crypto-item-green]="stock.changesPercentage > 0">
-                <div class="stock-unfollow" (click)="followStock(stock)">
-                    <span class="material-icons">delete</span>
-                </div>
-                <p class="crypto-text-1">{{stock.name}}</p>
-                <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
-                <div class="crypto-block">
-                    <p class="crypto-text-1">{{stock.change?.toFixed(2)}}</p>
-                    <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
-                </div>
-                <!--                <img class="crypto-map" src="assets/img/map.png">-->
-            </div>
-        </ng-container>
+<!--    <div class="crypto-content">-->
 
-    </div>
+<!--            <div class="crypto-item" *ngFor="let stock of compareWithMainStockList(userStocks)"-->
+<!--                 [class.crypto-item-green]="stock.changesPercentage > 0">-->
+<!--                <div class="stock-unfollow" (click)="followStock(stock)">-->
+<!--                    <span class="material-icons">delete</span>-->
+<!--                </div>-->
+<!--                <p class="crypto-text-1">{{stock.name}}</p>-->
+<!--                <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>-->
+<!--                <div class="crypto-block">-->
+<!--                    <p class="crypto-text-1">{{stock.change?.toFixed(2)}}</p>-->
+<!--                    <p class="crypto-text-1">{{stock.changesPercentage}}%</p>-->
+<!--                </div>-->
+<!--                &lt;!&ndash;                <img class="crypto-map" src="assets/img/map.png">&ndash;&gt;-->
+<!--            </div>-->
+
+<!--    </div>-->
 </div>

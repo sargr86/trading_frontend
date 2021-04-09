@@ -13,6 +13,7 @@ export class StocksListSampleComponent implements OnInit {
     @Input('follow') follow = true;
     stocksLoading = 'idle';
     authUser;
+    userStocksOnly = this.passedStocks === this.userStocks;
 
     @Output('followedStock') followedStock = new EventEmitter();
 

@@ -1,6 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
+form {
+    display: flex;
+    align-items: center;
+}
 
 .modal-form {
     .home-search, input {

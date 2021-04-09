@@ -1698,3 +1698,10 @@ input, textarea {
 .green {
     color: $green;
 }
+
+mat-optgroup {
+    .mat-option-text {
+        display: flex !important;
+        justify-content: space-between !important;
+    }
+}

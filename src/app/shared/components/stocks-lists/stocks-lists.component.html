@@ -25,7 +25,7 @@
         <div class="top-wrap">
             <h2>All Stocks</h2>
 
-            <div class="center-group">
+            <div class="center-group" [hidden]="true">
                 <app-search-stocks-form [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
                 <!--                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>-->
 

@@ -39,6 +39,12 @@
 }
 
 .favorites {
+    .user-stocks-list {
+        p {
+            color: $white;
+        }
+    }
+
     .right-group {
         display: flex;
         justify-content: flex-end;

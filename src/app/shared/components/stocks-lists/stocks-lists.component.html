@@ -26,10 +26,14 @@
             </div>
         </div>
 
-        <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" [type]="selectedStockType"
-                                (updatedStocksList)="updateFollowedStocks($event)"
-                                [userStocks]="compareWithMainStockList(userStocks)"
-                                *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
+        <div class="user-stocks-list">
+
+            <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" [type]="selectedStockType"
+                                    (updatedStocksList)="updateFollowedStocks($event)"
+                                    [userStocks]="compareWithMainStockList(userStocks)"
+                                    *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
+            <p *ngIf="userStocks?.length===0">No user stocks of selected type is found</p>
+        </div>
     </div>
 
 
@@ -39,7 +43,7 @@
                 <h2>All Stocks</h2>
             </div>
 
-            <div class="center-group" [hidden]="stocksLoading==='loading' && !search">
+            <div class="center-group" [hidden]="stocksLoading==='loading' && !searched">
                 <app-search-stocks-form [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
                 <!--                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>-->
 
@@ -59,9 +63,16 @@
         </div>
 
 
-        <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [type]="selectedStockType"
-                                [userStocks]="compareWithMainStockList(userStocks)"
-                                (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
+        <div class="all-stocks-list">
+
+            <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
+                                    [type]="selectedStockType"
+                                    [userStocks]="compareWithMainStockList(userStocks)"
+                                    (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
+            <p *ngIf="filteredStocks?.length===0">No stocks of selected type is found</p>
+        </div>
+
+
     </div>
 
 </section>

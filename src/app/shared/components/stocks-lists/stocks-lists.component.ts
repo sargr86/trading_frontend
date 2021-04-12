@@ -21,6 +21,7 @@ export class StocksListsComponent implements OnInit {
     userStocks = [];
     authUser;
     search;
+    searched = false;
 
     public pageSize = 14;
     public pageIndex = 0;
@@ -144,6 +145,7 @@ export class StocksListsComponent implements OnInit {
 
     getSearchResults(e) {
         this.search = e?.search;
+        this.searched = true;
         this.stocksLoading = 'loading';
         this.searchInStockType();
 

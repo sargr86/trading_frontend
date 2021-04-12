@@ -90,11 +90,11 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes)
+        // console.log(changes)
         for (const property in changes) {
             if (property === 'selectedStockType') {
                 this.selectedStockType = changes.selectedStockType.currentValue;
-                console.log('Current:', changes.selectedStockType.currentValue);
+                // console.log('Current:', changes.selectedStockType.currentValue);
             }
         }
     }

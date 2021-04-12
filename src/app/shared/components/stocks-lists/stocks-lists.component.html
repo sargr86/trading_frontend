@@ -1,48 +1,65 @@
 <section class="crypto-section" id="stocks-lists-modal">
-    <div class="spinner-container" *ngIf="stocksLoading==='loading'">
-        <mat-spinner [diameter]="25"></mat-spinner>
-        <span>Loading stocks lists...</span>
-    </div>
-    <div class="favorites" *ngIf="stocksLoading==='finished'">
+    <div class="favorites">
         <div class="top-wrap">
-            <h2>My Watchlist</h2>
+            <div class="left-group">
+                <h2>My Watchlist</h2>
+            </div>
 
-            <div class="stock-type-selector">
-                <select (change)="stockTypeChanged($event)">
-                    <option *ngFor="let type of stockTypes" [value]="type.value">{{type.name}}</option>
-                </select>
-                <i class="fas fa-times" (click)="closeModal()"></i>
+            <div class="center-group">
+                <div class="spinner-container" *ngIf="stocksLoading==='loading'">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                    <span>Loading stocks lists...</span>
+                </div>
+            </div>
+
+            <div class="right-group">
+
+                <div class="stock-type-selector">
+                    <select (change)="stockTypeChanged($event)">
+                        <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType.value"
+                                [value]="type.value">{{type.name}}</option>
+                    </select>
+                </div>
+                <div class="close-modal-btn">
+                    <i class="fas fa-times" (click)="closeModal()"></i>
+                </div>
             </div>
         </div>
 
-        <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" (updatedStocksList)="updateFollowedStocks($event)"
+        <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" [type]="selectedStockType"
+                                (updatedStocksList)="updateFollowedStocks($event)"
                                 [userStocks]="compareWithMainStockList(userStocks)"
                                 *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
     </div>
 
 
-    <div class="all-stocks" *ngIf="stocksLoading==='finished'">
+    <div class="all-stocks">
         <div class="top-wrap">
-            <h2>All Stocks</h2>
+            <div class="left-group">
+                <h2>All Stocks</h2>
+            </div>
 
-            <div class="center-group" [hidden]="true">
+            <div class="center-group" [hidden]="stocksLoading==='loading' && !search">
                 <app-search-stocks-form [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
                 <!--                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>-->
 
             </div>
 
-            <div class="paginator">
-                <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
-                               #paginator
-                               [length]="stocks.length" [pageIndex]="pageIndex"
-                               [pageSize]="pageSize" [hidePageSize]="true"
-                               [pageSizeOptions]="[2,5,10,25,100]">
-                </mat-paginator>
+            <div class="right-group">
+                <div class="paginator" *ngIf="stocksLoading==='finished'">
+                    <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
+                                   #paginator
+                                   [length]="stocks.length" [pageIndex]="pageIndex"
+                                   [pageSize]="pageSize" [hidePageSize]="true"
+                                   [pageSizeOptions]="[2,5,10,25,100]">
+                    </mat-paginator>
+                </div>
             </div>
+
         </div>
 
 
-        <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
+        <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [type]="selectedStockType"
                                 [userStocks]="compareWithMainStockList(userStocks)"
                                 (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
     </div>

@@ -101,7 +101,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+        this.stocksService.getUserStocks({user_id: this.authUser.id, type: this.selectedStockType}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });
     }

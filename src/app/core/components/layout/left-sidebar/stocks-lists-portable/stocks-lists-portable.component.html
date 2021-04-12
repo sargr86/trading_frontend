@@ -8,7 +8,7 @@
         </li>
     </ul>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"
+        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true" [follow]="false"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
         <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
@@ -17,7 +17,7 @@
 
     </div>
     <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
-        <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks"
+        <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [follow]="false"
                                 (updatedStocksList)="updateFollowedLists($event)"
                                 [portable]="true"></app-stocks-list-sample>
 

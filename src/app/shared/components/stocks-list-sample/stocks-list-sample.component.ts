@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
@@ -8,11 +17,12 @@ import {SubjectService} from '@core/services/subject.service';
     templateUrl: './stocks-list-sample.component.html',
     styleUrls: ['./stocks-list-sample.component.scss']
 })
-export class StocksListSampleComponent implements OnInit {
+export class StocksListSampleComponent implements OnInit, OnChanges {
     @Input('stocks') passedStocks = [];
     @Input('userStocks') userStocks = [];
     @Input('follow') follow = true;
     @Input('portable') portable = false;
+    @Input('type') selectedStockType;
     editUserStocks = false;
     stocksLoading = 'idle';
     authUser;
@@ -34,7 +44,6 @@ export class StocksListSampleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // console.log(this.portable)
     }
 
     updateFollowedStocksList(stock) {
@@ -48,6 +57,7 @@ export class StocksListSampleComponent implements OnInit {
                 change: stock.change,
                 changesPercentage: stock.changesPercentage,
                 price: stock.price,
+                type_id: this.selectedStockType.id
             });
         } else {
             this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
@@ -71,12 +81,22 @@ export class StocksListSampleComponent implements OnInit {
 
     getPercentageDetails(stock) {
         // console.log(+stock.changesPercentage.toFixed(2))
-        const value = +stock.changesPercentage; //.replace(/[(%)]/g, '')
+        const value = +stock.changesPercentage; // .replace(/[(%)]/g, '')
         return {
             ...{value},
             color: (+value > 0 ? 'green' : 'red'),
             class: 'analytics-text-' + (+value > 0 ? '4' : '5')
         };
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        console.log(changes)
+        for (const property in changes) {
+            if (property === 'selectedStockType') {
+                this.selectedStockType = changes.selectedStockType.currentValue;
+                console.log('Current:', changes.selectedStockType.currentValue);
+            }
+        }
     }
 
 }

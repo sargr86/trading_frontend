@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {STOCK_CATEGORIES} from '@core/constants/global';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StocksService} from '@core/services/stocks.service';
@@ -14,9 +13,9 @@ import {SubjectService} from '@core/services/subject.service';
 })
 export class StocksListsComponent implements OnInit {
 
-    stockTypes = STOCK_CATEGORIES;
+    stockTypes;
     stocks = [];
-    selectedStockType = STOCK_CATEGORIES[0].value;
+    selectedStockType;
     stocksLoading = 'idle';
     filteredStocks = [];
     userStocks = [];
@@ -40,12 +39,24 @@ export class StocksListsComponent implements OnInit {
     ngOnInit(): void {
         this.getStocksByType('stocks');
         this.authUser = this.getAuthUser.transform();
-        this.getUserStocks();
+        this.getStockTypes();
+
+    }
+
+    getStockTypes() {
+        this.stocksService.getStockTypes({}).subscribe(dt => {
+            this.stockTypes = dt;
+            this.selectedStockType = dt[0];
+            this.getUserStocks();
+        });
     }
 
     getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+        this.stocksService.getUserStocks({
+            user_id: this.authUser.id,
+            type_id: this.selectedStockType?.id
+        }).subscribe(dt => {
+            this.userStocks = dt?.user_stocks || [];
         });
     }
 
@@ -67,11 +78,12 @@ export class StocksListsComponent implements OnInit {
     }
 
     stockTypeChanged(e) {
-        this.selectedStockType = e.target.value;
+        this.selectedStockType = this.stockTypes.find(t => t.value === e.target.value);
         if (this.search) {
             this.searchInStockType();
         } else {
-            this.getStocksByType(this.selectedStockType);
+            this.getUserStocks();
+            this.getStocksByType(this.selectedStockType.value);
         }
     }
 
@@ -98,7 +110,11 @@ export class StocksListsComponent implements OnInit {
     }
 
     updateFollowedStocks(e) {
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, stocks: e}).subscribe(dt => {
+        this.stocksService.updateFollowedStocks({
+            user_id: this.authUser.id,
+            stocks: e,
+            type_id: this.selectedStockType.id
+        }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });
     }
@@ -108,17 +124,21 @@ export class StocksListsComponent implements OnInit {
     }
 
     compareWithMainStockList(userStocks) {
-        // console.log(this.stocks)
-        userStocks.map(st => {
-            const found = this.stocks.find(fs => fs.name === st.name);
-            // console.log(found)
-            if (found) {
-                st.change = found.change;
-                st.changesPercentage = found.changesPercentage;
-                st.price = found.price;
-                return st;
-            }
-        });
+
+        if (!this.search) {
+
+            // console.log(this.stocks)
+            userStocks.map(st => {
+                const found = this.stocks.find(fs => fs.name === st.name);
+                // console.log(found)
+                if (found) {
+                    st.change = found.change;
+                    st.changesPercentage = found.changesPercentage;
+                    st.price = found.price;
+                    return st;
+                }
+            });
+        }
         return userStocks;
     }
 
@@ -132,7 +152,7 @@ export class StocksListsComponent implements OnInit {
     searchInStockType() {
         this.stocksService.searchInStockTypeData({
             search: this.search,
-            stockType: this.selectedStockType
+            stockType: this.selectedStockType.value
         }).subscribe((dt: any) => {
             this.stocks = dt;
             this.stocksLoading = 'finished';

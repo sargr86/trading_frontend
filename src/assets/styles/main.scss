@@ -527,6 +527,7 @@ nav.home-header {
         }
 
         background: #F53C6F;
+        border:none;
         margin-bottom: 12px;
     }
 
@@ -667,7 +668,7 @@ nav.home-header {
     align-items: center;
 }
 
-.chat-content .dropdown-toggle {
+.dropdown-toggle {
     color: #545454;
     font-family: "Muli-Light";
     font-size: 12px;
@@ -1344,6 +1345,10 @@ select {
     //.mat-icon {
     //    margin-top: 12px;
     //}
+}
+
+.mat-paginator-range-label {
+    font-weight: bold !important;
 }
 
 @media (max-width: 1700px) {

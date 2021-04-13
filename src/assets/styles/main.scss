@@ -18,7 +18,6 @@
 @import "~plyr/src/sass/plyr";
 @import "~placeholder-loading/src/scss/placeholder-loading";
 @import "plyr-custom";
-
 @import 'dropzone-custom';
 
 html, body, p, h1, h2, h3, h4, ul {
@@ -103,29 +102,32 @@ li {
         object-fit: cover;
         border-radius: 50%;
     }
-
-
-
-    .main-text-2 {
-        color: #545454;
-        font-size: 12px;
-        font-family: "Muli-Bold";
-        cursor: pointer;
-        margin-bottom: 0;
-    }
-
-    .main-text-3 {
-        color: #545454;
-        font-size: 10px;
-        font-family: "Muli-Light";
-    }
 }
 
-.main-text-1 {
+.video-name, .channel-name {
     color: #545454;
     font-size: 16px;
     font-family: "Muli-Bold";
     margin-bottom: 4px;
+}
+
+.channel-sub-name {
+    color: #545454;
+    font-size: 12px;
+    font-family: "Muli-Bold";
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.upload-time{
+    font-size: 10px;
+    color: #818181;
+}
+
+.main-text-3, .watchers-count {
+    color: #545454;
+    font-size: 10px;
+    font-family: "Muli-Light";
 }
 
 .menu-left {
@@ -224,7 +226,7 @@ li {
         object-fit: cover;
     }
 
-    .main-text-1 {
+    .video-name {
         font-size: 14px;
         line-height: 16px;
         -webkit-line-clamp: 2;
@@ -233,7 +235,7 @@ li {
         overflow: hidden;
     }
 
-    .main-text-2 {
+    .channel-sub-name {
         margin-top: 4px;
         margin-bottom: 0;
     }
@@ -294,6 +296,7 @@ li {
     max-width: 100vw !important;
     margin-top: 0;
 }
+
 .publisher {
     position: absolute;
     width: 25vmin;
@@ -303,7 +306,6 @@ li {
     align-self: flex-end;
     bottom: 0;
 }
-
 
 
 ngb-modal-window {
@@ -361,7 +363,6 @@ ngb-modal-window {
 }
 
 
-
 // Material side nav styles
 .mat-drawer-container {
     background-color: $white !important;
@@ -383,7 +384,6 @@ ngb-modal-window {
         }
     }
 }
-
 
 
 select {
@@ -740,7 +740,6 @@ select {
 input, textarea {
     padding: 16px 24px;
 }
-
 
 
 .avatar {

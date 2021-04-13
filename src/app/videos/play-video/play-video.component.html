@@ -58,7 +58,7 @@
             <div class="main-item-block channel-block" (click)="openChannelPage(videoData)" *ngIf="videoData?.channel">
                 <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
                 <div>
-                    <p class="main-text-1">{{videoData.channel.name}}</p>
+                    <p class="channel-name">{{videoData.channel.name}}</p>
                     <p class="main-text-4">{{videoData.channel.subscribers_count + ' subscriber' + (videoData.channel.subscribers_count === 1 ? '' : 's')}}</p>
                 </div>
             </div>

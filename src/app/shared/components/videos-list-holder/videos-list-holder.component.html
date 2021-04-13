@@ -46,11 +46,11 @@
 
                         <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
                         <div>
-                            <p class="main-text-1">{{video.name}}</p>
-                            <p class="main-text-2"
+                            <p class="video-name">{{video.name}}</p>
+                            <p class="channel-sub-name"
                                (click)="openChannelPage(d.username)">{{d?.channel.name}}</p>
                             <div class="shortened-details">
-                                    <span class="watchers-count main-text-3">
+                                    <span class="watchers-count">
                                         {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
                                     </span>
                                 <span class="dot">&middot;</span>

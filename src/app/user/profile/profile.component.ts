@@ -1,12 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
-import {
-    API_URL,
-    OWL_OPTIONS,
-    PASSWORD_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
-    PROFILE_PAGE_TABS
-} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ActivatedRoute, Router} from '@angular/router';

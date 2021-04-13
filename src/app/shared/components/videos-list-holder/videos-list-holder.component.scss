@@ -1,6 +1,13 @@
 @import 'variables';
 @import 'mixins';
 
+.trending-text {
+    color: $red;
+    font-size: 18px;
+    font-family: "Muli-Bold";
+    margin-bottom: 24px;
+}
+
 .item {
     position: relative;
     width: 30%;

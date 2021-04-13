@@ -1,0 +1,36 @@
+@import 'variables';
+.home-search {
+    display: flex;
+    position: relative;
+    width: 300px;
+    height: 36px;
+    background: #EFEFEF;
+    margin-right: 24px;
+
+    input {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        padding: 8px 32px 8px 16px;
+    }
+}
+
+.home-search-input {
+    font-family: "Muli-Light";
+    background: #EFEFEF;
+    color: #545454;
+    font-size: 16px;
+
+    &.white {
+        color: $white;
+    }
+}
+
+.home-search i {
+    position: absolute;
+    color: #6A6A6A;
+    right: 11px;
+    top: 10px;
+    z-index: 333;
+    cursor: pointer;
+}

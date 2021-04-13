@@ -1,3 +1,53 @@
+.body-content-left {
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #ECECEC;
+        border-radius: 4px
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(174, 174, 174);
+    }
+
+    .left-list {
+        max-height: 570px;
+        overflow-x: auto;
+    }
+}
+
+.body-content-left {
+    width: 200px;
+}
+
+.body-content.full-width {
+    width: 100%;
+    padding: 0 !important;
+    margin-top: 0 !important;
+}
+
+.body-content-right {
+    width: calc(100% - 232px);
+
+    &.full-width {
+        width: 100%;
+    }
+}
+
+.body-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px !important;
+    width: 90%;
+    margin: 112px auto 0;
+}
+
 @media screen and (max-width: 767px) {
     .open-left-menu.d-none {
         font-size: 30px;

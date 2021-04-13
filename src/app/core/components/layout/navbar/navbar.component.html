@@ -24,7 +24,7 @@
             <div class="marquee-content">
                 <div class="home-black-item" *ngFor="let stock of stocks">
                     <p class="black-text">{{stock.symbol}}</p>
-                    <p [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
+                    <p class="black-percent" [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
                 </div>
             </div>
             <!--            <i class="down-white fa fa-chevron-down"></i>-->

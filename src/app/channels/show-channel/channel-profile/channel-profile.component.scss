@@ -1,5 +1,24 @@
 @import 'variables';
 
+.sub-bell {
+    color: $red;
+    margin-right: 16px;
+}
+
+.subscribe-btn {
+    width: 119px;
+    height: 36px;
+    background: #18B587;
+    font-family: "Muli-Light";
+    font-size: 16px;
+    color: white !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
 .loader {
     display: flex;
     justify-content: center;

@@ -1,6 +1,13 @@
+@import 'variables';
 
+.subscriptions-text {
+    margin-bottom: 24px;
+    color: $red;
+    font-size: 18px;
+    font-family: "Muli-Bold";
+}
 
-.channel-name{
+.channel-name {
     cursor: pointer;
 }
 

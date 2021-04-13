@@ -1,0 +1,53 @@
+.main-carousel {
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.main-carousel-item {
+    width: 100%;
+    //padding-right: 32px;
+    position: relative;
+
+    .main-item-block {
+        justify-content: left;
+    }
+
+    @media screen and (max-width: 767px) {
+        padding-right: 0;
+    }
+}
+
+.main-carousel.owl-theme .owl-dots, .slider_home .owl-nav .owl-prev {
+    display: none;
+}
+
+.slider_home .owl-nav .owl-next {
+    font-size: 16px;
+    color: #545454;
+    width: 24px;
+    height: 24px;
+    background: #EEEEEE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    top: 29%;
+    position: absolute;
+}
+
+.owl-stage {
+    display: flex;
+}
+
+.owl-item {
+    // @todo look here tomorrow
+    //max-width: 400px !important;
+    //width: 100% !important;
+
+    .thumbnail {
+        object-fit: cover !important;
+        height: 182px !important;
+        cursor: pointer;
+    }
+
+}

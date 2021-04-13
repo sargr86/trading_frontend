@@ -13,11 +13,12 @@
     width: 200px;
     height: 179px;
     margin-bottom: 32px;
-    background: #F53C6F 0% 0% no-repeat padding-box;
+    background: $red 0 0 no-repeat padding-box;
     padding: 24px 8px;
     border: 1px dashed transparent;
     transition: 0.2s;
     margin-right: 13px;
+    cursor: pointer;
 
 
     &:hover {
@@ -102,13 +103,13 @@
     margin: auto;
 }
 
-
-@import "mixins";
-
-@include stocksWatchlist;
 .analytics-item {
     display: flex;
     margin-bottom: 12px;
+
+    .analytics-texts {
+        display: flex;
+    }
 }
 
 .analytics-item-1 {
@@ -210,6 +211,15 @@
     }
 }
 
-#dropdownMenuButton{
+#dropdownMenuButton {
     cursor: pointer;
+}
+
+.unfollow-btn {
+    border: none !important;
+    margin-top: 5px;
+
+    mat-icon {
+        font-size: 16px;
+    }
 }

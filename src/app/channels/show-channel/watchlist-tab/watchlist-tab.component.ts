@@ -26,8 +26,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     public pageSize = 14;
     public pageIndex = 0;
 
-    stockTypes = STOCK_CATEGORIES;
-    selectedStockType = STOCK_CATEGORIES[0].value;
+    stockTypes;
+    selectedStockType;
     stocksLoading = 'idle';
 
     authUser: User;
@@ -49,10 +49,18 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
         this.getStocksByType('stocks');
+        this.getStockTypes();
         this.getUserStocks();
 
         this.subject.getUserStocksData().subscribe(dt => {
             this.userStocks = dt;
+        });
+    }
+
+    getStockTypes() {
+        this.stocksService.getStockTypes({}).subscribe(dt => {
+            this.stockTypes = dt;
+            this.selectedStockType = dt[0];
         });
     }
 
@@ -80,7 +88,10 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
     followStock(stocks) {
 
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
+        this.stocksService.updateFollowedStocks({
+            user_id: this.authUser.id,
+             ...{stocks}
+        }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.setUserStocksData(this.userStocks);
         });
@@ -101,7 +112,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id, type: this.selectedStockType}).subscribe(dt => {
+        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
         });
     }

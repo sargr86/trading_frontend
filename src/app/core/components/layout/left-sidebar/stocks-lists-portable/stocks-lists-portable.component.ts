@@ -58,8 +58,6 @@ export class StocksListsPortableComponent implements OnInit {
     }
 
 
-
-
     openStockProfile(stock) {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([`stocks/${stock}/analytics`])
@@ -81,15 +79,16 @@ export class StocksListsPortableComponent implements OnInit {
 
     getUserStocks() {
         this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+            this.userStocks = dt?.user_stocks || [];
         });
 
 
     }
 
-    updateFollowedLists(stocks){
+    updateFollowedLists(stocks) {
         this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
+            this.subject.setUserStocksData(this.userStocks);
         });
     }
 

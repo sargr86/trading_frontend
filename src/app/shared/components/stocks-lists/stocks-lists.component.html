@@ -16,7 +16,7 @@
 
                 <div class="stock-type-selector">
                     <select (change)="stockTypeChanged($event)">
-                        <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType.value"
+                        <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType?.value"
                                 [value]="type.value">{{type.name}}</option>
                     </select>
                 </div>
@@ -32,7 +32,7 @@
                                     (updatedStocksList)="updateFollowedStocks($event)"
                                     [userStocks]="compareWithMainStockList(userStocks)"
                                     *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
-            <p *ngIf="userStocks?.length===0">No user stocks of selected type is found</p>
+            <p *ngIf="userStocks?.length===0 && stocksLoading!=='loading'">No user stocks of selected type is found</p>
         </div>
     </div>
 
@@ -41,6 +41,7 @@
         <div class="top-wrap">
             <div class="left-group">
                 <h2>All Stocks</h2>
+
             </div>
 
             <div class="center-group" [hidden]="stocksLoading==='loading' && !searched">
@@ -50,6 +51,7 @@
             </div>
 
             <div class="right-group">
+
                 <div class="paginator" *ngIf="stocksLoading==='finished'">
                     <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
                                    #paginator
@@ -69,7 +71,7 @@
                                     [type]="selectedStockType"
                                     [userStocks]="compareWithMainStockList(userStocks)"
                                     (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
-            <p *ngIf="filteredStocks?.length===0">No stocks of selected type is found</p>
+            <p *ngIf="filteredStocks?.length===0 && stocksLoading!=='loading'">No stocks of selected type is found</p>
         </div>
 
 

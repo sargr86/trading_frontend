@@ -48,23 +48,27 @@ export class StocksListsComponent implements OnInit {
         this.stocksService.getStockTypes({}).subscribe(dt => {
             this.stockTypes = dt;
             this.selectedStockType = dt[0];
-            this.getUserStocks();
+            this.getUserStocks({type_id: this.selectedStockType?.id});
         });
     }
 
-    getUserStocks() {
+    getUserStocks(params = {}) {
         this.stocksService.getUserStocks({
             user_id: this.authUser.id,
-            type_id: this.selectedStockType?.id
+            ...params
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            if (params.hasOwnProperty('close')) {
+                this.subject.setUserStocksData(this.userStocks);
+            }
         });
     }
 
     closeModal() {
         this.modalService.hide();
         this.matDialogRef.close(this.userStocks);
-        this.subject.setUserStocksData(this.userStocks);
+        this.selectedStockType = null;
+        this.getUserStocks({close: true});
     }
 
     openAddStockModal() {
@@ -83,7 +87,7 @@ export class StocksListsComponent implements OnInit {
         if (this.search) {
             this.searchInStockType();
         } else {
-            this.getUserStocks();
+            this.getUserStocks({type_id: this.selectedStockType.id});
             this.getStocksByType(this.selectedStockType.value);
         }
     }
@@ -116,7 +120,7 @@ export class StocksListsComponent implements OnInit {
             stocks: e,
             type_id: this.selectedStockType.id
         }).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+            this.userStocks = dt?.user_stocks || [];
         });
     }
 

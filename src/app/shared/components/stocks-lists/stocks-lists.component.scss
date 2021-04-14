@@ -51,6 +51,14 @@
     }
 }
 
+.all-stocks {
+    .all-stocks-list {
+        p {
+            color: $white;
+        }
+    }
+}
+
 .addStockWrap {
     .crypto-item {
         display: flex;

@@ -90,7 +90,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
         this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
-             ...{stocks}
+            ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.setUserStocksData(this.userStocks);
@@ -113,7 +113,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
     getUserStocks() {
         this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+            this.userStocks = dt?.user_stocks || [];
         });
     }
 

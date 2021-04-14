@@ -48,6 +48,14 @@ export class StocksService {
         return this.httpClient.get<any>(`${API_URL}stocks/get-user-stocks`, {params});
     }
 
+    updateUserStocksPriority(params) {
+        return this.httpClient.put<any>(`${API_URL}stocks/update-user-stocks-priority`, params);
+    }
+
+    getStocksSorted(params){
+        return this.httpClient.get<any>(`${API_URL}stocks/get-by-sort-type`, {params});
+    }
+
 
     updateFollowedStocks(params) {
         return this.httpClient.put<any>(`${API_URL}stocks/update-user-stocks`, params);

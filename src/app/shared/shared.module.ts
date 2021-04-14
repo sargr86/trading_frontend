@@ -24,6 +24,7 @@ import {VideosListHolderComponent} from './components/videos-list-holder/videos-
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
 import { StocksListsComponent } from './components/stocks-lists/stocks-lists.component';
 import { StocksListSampleComponent } from './components/stocks-list-sample/stocks-list-sample.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { StocksListSampleComponent } from './components/stocks-list-sample/stock
         FormsModule,
         ReactiveFormsModule,
         PickerModule,
-        MaterialModule
+        MaterialModule,
+        DragDropModule
     ],
     providers: [
         GetAuthUserPipe,

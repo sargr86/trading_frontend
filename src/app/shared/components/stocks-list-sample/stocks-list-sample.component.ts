@@ -11,6 +11,8 @@ import {
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
+import {moveItemInArray} from '@core/helpers/move-item-in-array';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-stocks-list-sample',
@@ -35,7 +37,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private subject: SubjectService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private stocksService: StocksService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.subject.getUserStocksData().subscribe(dt => {
@@ -74,9 +77,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     openStockProfile(stock) {
         // if (!this.follow) {
-            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-                await this.router.navigate([`stocks/${stock}/analytics`])
-            );
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate([`stocks/${stock}/analytics`])
+        );
         // }
     }
 
@@ -88,6 +91,34 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             color: (+value > 0 ? 'green' : 'red'),
             class: 'analytics-text-' + (+value > 0 ? '4' : '5')
         };
+    }
+
+    drop(e) {
+
+    }
+
+    dragDropped(e, stock) {
+        console.log(e)
+        // console.log(channel)
+        this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
+        console.log(this.passedStocks)
+        const sendData = {
+            rows: JSON.stringify(this.passedStocks),
+            stock_id: stock.id,
+            user_id: this.authUser.id
+        };
+        this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
+        });
+    }
+
+    onlyFirst10Stocks(stocks) {
+        return stocks.filter((st, index) => index < 10);
+    }
+
+    sortStocks(type) {
+        this.stocksService.getStocksSorted({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
+            this.passedStocks = dt;
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -3,6 +3,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {StocksService} from '@core/services/stocks.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {LoaderService} from '@core/services/loader.service';
+import {XAxisTicksComponent} from '@swimlane/ngx-charts';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-summary-tab',
@@ -15,6 +17,7 @@ export class SummaryTabComponent implements OnInit {
     colorScheme = {
         domain: ['#18B587', '#F53C6F']
     };
+
 
     // Table settings
     displayedColumns: string[] = ['symbol', 'name', 'price', 'change', 'changesPercentage', 'marketCap', 'open', 'volume'];
@@ -31,6 +34,13 @@ export class SummaryTabComponent implements OnInit {
 
     ngOnInit(): void {
         this.getStockInfo();
+    }
+
+    axisFormatting(tick) {
+        const xAxisComponent = this as any;
+        const ticks = xAxisComponent.ticks;
+        const tickPresent = ticks.find((t, i) => t === tick && moment(t, 'HH:mm:ss').minute() % 30 === 0);
+        return tickPresent ? moment(tickPresent, 'HH:mm:ss').format('HH:mm A') : '';
     }
 
     normalizeColName(col): string {

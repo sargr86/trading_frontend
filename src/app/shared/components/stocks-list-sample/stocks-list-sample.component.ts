@@ -101,13 +101,10 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     dragDropped(e, stock) {
-        console.log(e)
         // console.log(channel)
         this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
-        console.log(this.passedStocks)
         const sendData = {
             rows: JSON.stringify(this.passedStocks),
-            // stock_id: stock.id,
             user_id: this.authUser.id
         };
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {

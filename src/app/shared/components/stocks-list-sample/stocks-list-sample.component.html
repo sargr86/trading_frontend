@@ -95,7 +95,7 @@
                             <img src="assets/img/red-point.png" *ngIf="d?.color === 'red'">
                         </div>
                         <div class="analytics-percent">
-                            <p class="analytics-text-3">{{stock.price}}</p>
+                            <p class="analytics-text-3">{{stock.price?.toFixed(2)}}</p>
                             <p [ngClass]="d?.class">
                                 {{stock.change?.toFixed(2)}}({{d?.value?.toFixed(2)}}%)</p>
                         </div>

@@ -40,22 +40,22 @@
                     <input class="watchlist-input" placeholder="Search">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="dropdown">
+                <div class="dropdown" *ngIf="sort">
                     <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
                          aria-haspopup="true"
                          aria-expanded="false">
-                        Sort by My sort
+                        Sort by {{selectedSortType}}
                     </div>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item">My sort</a>
-                        <a class="dropdown-item" (click)="sortStocks('A-Z')">A-Z</a>
-                        <a class="dropdown-item">Gain</a>
-                        <a class="dropdown-item">Loss</a>
+                        <a class="dropdown-item" [class.red]="selectedSortType === 'A-Z'" (click)="sortStocks('A-Z')">A-Z</a>
+                        <a class="dropdown-item" [class.red]="selectedSortType === 'Gain'" (click)="sortStocks('Gain')">Gain</a>
+                        <a class="dropdown-item" [class.red]="selectedSortType === 'Loss'" (click)="sortStocks('Loss')">Loss</a>
                     </div>
                 </div>
             </ng-container>
         </div>
-        <div class="context-actions">
+        <div class="context-actions" *ngIf="editPortable">
             <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>
             <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>
             <mat-menu #menu="matMenu">

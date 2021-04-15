@@ -26,10 +26,13 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     @Input('unfollow') unfollow = false;
     @Input('portable') portable = false;
     @Input('type') selectedStockType;
+    @Input('sort') sort = false;
+    @Input('editPortable') editPortable = false;
     editUserStocks = false;
     stocksLoading = 'idle';
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
+    selectedSortType = 'My sort';
 
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
@@ -104,7 +107,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         console.log(this.passedStocks)
         const sendData = {
             rows: JSON.stringify(this.passedStocks),
-            stock_id: stock.id,
+            // stock_id: stock.id,
             user_id: this.authUser.id
         };
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
@@ -116,9 +119,51 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     sortStocks(type) {
-        this.stocksService.getStocksSorted({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
-            this.passedStocks = dt;
+
+        switch (type) {
+            case 'A-Z':
+                this.selectedSortType = 'A-Z';
+                this.passedStocks.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'Gain':
+                this.selectedSortType = 'Gain';
+                this.passedStocks.sort((a, b) => {
+                    if (a.change > b.change) {
+                        return -1;
+                    }
+                    if (a.change < b.change) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                break;
+            case 'Loss':
+                this.selectedSortType = 'Loss';
+                this.passedStocks.sort((a, b) => {
+                    if (a.change < b.change) {
+                        return -1;
+                    }
+                    if (a.change > b.change) {
+                        return 1;
+                    }
+                    return 0;
+                });
+
+                break;
+        }
+
+
+        const sendData = {
+            rows: JSON.stringify(this.passedStocks),
+            user_id: this.authUser.id
+        };
+
+        this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
         });
+        // this.stocksService.getStocksSorted({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
+        //     this.passedStocks = dt?.user_stocks || [];
+        //     console.log(this.passedStocks)
+        // });
     }
 
     ngOnChanges(changes: SimpleChanges) {

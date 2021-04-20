@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
     getMode(sidenav) {
 
         // sidenav.toggle();
-        if (screen.width < 767 && !this.router.url.includes('auth')) {
+        if (screen.width <= 991 && !this.router.url.includes('auth')) {
             return 'over';
         } else {
             return 'side';

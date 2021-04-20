@@ -6,6 +6,10 @@
     height: 36px;
     background: #EFEFEF;
     margin-right: 24px;
+    @media (max-width: 767px) {
+        max-width: 300px;
+        width: 100%;
+    }
 
     input {
         position: relative;

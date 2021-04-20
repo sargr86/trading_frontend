@@ -4,7 +4,7 @@ export default class IsResponsive {
     }
 
     static isSmallScreen() {
-        return window.screen.availWidth < 768;
+        return window.screen.availWidth <= 991;
     }
 
 

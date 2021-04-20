@@ -59,7 +59,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.selectedSortType = this.sort;
-        console.log(this.selectedSortType)
+        // console.log(this.selectedSortType)
         // console.log(this.passedStocks, this.portable, this.sort)
     }
 

@@ -1,7 +1,7 @@
 <mat-sidenav-container>
     <mat-sidenav [mode]="getMode(sidenav)" #sidenav
                  id="sidenav" [opened]="!router.url.includes('auth')">
-        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)"></app-left-sidebar>
+        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)" ></app-left-sidebar>
     </mat-sidenav>
 
     <mat-sidenav-content class="ml-0 ml-md-0">
@@ -13,9 +13,9 @@
 
         <section class="body-content" [class.full-width]="router.url.includes('auth')">
             <div class="body-content-left"
-                 *ngIf="!router.url.includes('auth') && !checkIfPolicyPage() ">
+                 *ngIf="!router.url.includes('auth') && !checkIfPolicyPage()">
                 <div class="position-relative">
-                    <div class="close-left-menu" >&times;</div>
+                    <div class="close-left-menu">&times;</div>
                     <app-left-sidebar></app-left-sidebar>
                 </div>
             </div>

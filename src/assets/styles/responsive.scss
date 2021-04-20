@@ -149,7 +149,7 @@
         margin-top: 20px;
     }
     .home-black-block {
-        flex-wrap: wrap;
+        //flex-wrap: wrap;
         justify-content: space-around;
         height: auto;
     }
@@ -163,8 +163,7 @@
     }
 }
 
-@media (max-width: 767px) {
-
+@media (max-width: 991px) {
     .home-black-item {
         margin-bottom: 5px;
         margin-top: 5px;
@@ -267,4 +266,16 @@
     .analytics-item {
         justify-content: space-between;
     }
+}
+
+
+@media only screen and (min-width: 991px) {
+    mat-sidenav, .close-left-menu {
+        display: none !important;
+    }
+
+    .body-content-left {
+        display: block;
+    }
+
 }

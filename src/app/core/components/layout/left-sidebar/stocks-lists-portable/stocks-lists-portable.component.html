@@ -8,8 +8,10 @@
         </li>
     </ul>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true" [follow]="false" [editPortable]="true"
-                                [sort]="true" (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
+        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true" [follow]="false"
+                                [editPortable]="true"
+                                *ngIf="selectedSortType" [sort]="selectedSortType"
+                                (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
         <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
             See more

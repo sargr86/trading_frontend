@@ -40,17 +40,16 @@
                     <input class="watchlist-input" placeholder="Search">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="dropdown" *ngIf="sort">
+                <div class="dropdown" *ngIf="sort.name">
                     <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
                          aria-haspopup="true"
                          aria-expanded="false">
-                        Sort by {{selectedSortType}}
+                        Sort by {{selectedSortType.name}}
                     </div>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item">My sort</a>
-                        <a class="dropdown-item" [class.red]="selectedSortType === 'A-Z'" (click)="sortStocks('A-Z')">A-Z</a>
-                        <a class="dropdown-item" [class.red]="selectedSortType === 'Gain'" (click)="sortStocks('Gain')">Gain</a>
-                        <a class="dropdown-item" [class.red]="selectedSortType === 'Loss'" (click)="sortStocks('Loss')">Loss</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" *ngFor="let sortType of sortTypes"
+                           [class.red]="selectedSortType === sortType"
+                           (click)="sortStocks(sortType)">{{sortType.name}}</a>
                     </div>
                 </div>
             </ng-container>

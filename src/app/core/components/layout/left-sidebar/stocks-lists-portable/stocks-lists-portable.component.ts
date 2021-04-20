@@ -17,7 +17,7 @@ export class StocksListsPortableComponent implements OnInit {
     @Input('routerUrl') routerUrl;
     userStocks;
     activeTab = {name: 'watchlist'};
-
+    selectedSortType;
 
     stocks;
     indices;
@@ -79,6 +79,7 @@ export class StocksListsPortableComponent implements OnInit {
 
     getUserStocks() {
         this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+            this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
         });
 

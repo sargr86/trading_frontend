@@ -26,13 +26,20 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     @Input('unfollow') unfollow = false;
     @Input('portable') portable = false;
     @Input('type') selectedStockType;
-    @Input('sort') sort = false;
+    @Input('sort') sort = {name: '', id: ''};
     @Input('editPortable') editPortable = false;
-    editUserStocks = false;
     stocksLoading = 'idle';
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
-    selectedSortType = 'My sort';
+
+    editUserStocks = false;
+    sortTypes = [
+        {name: 'My sort', value: 'custom'},
+        {name: 'A-Z', value: 'alphabetical'},
+        {name: 'Gain', value: 'gain'},
+        {name: 'Loss', value: 'loss'}
+    ];
+    selectedSortType;
 
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
@@ -51,6 +58,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        this.selectedSortType = this.sort;
+        console.log(this.selectedSortType)
+        // console.log(this.passedStocks, this.portable, this.sort)
     }
 
     updateFollowedStocksList(stock) {
@@ -104,10 +114,12 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         // console.log(channel)
         this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
         const sendData = {
+            order_type: 'custom',
             rows: JSON.stringify(this.passedStocks),
             user_id: this.authUser.id
         };
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
+            this.selectedSortType = this.sortTypes[0];
         });
     }
 
@@ -116,44 +128,29 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     sortStocks(type) {
+        console.log(type)
+        this.selectedSortType = type;
+        if (type.name !== 'My sort') {
 
-        switch (type) {
-            case 'A-Z':
-                this.selectedSortType = 'A-Z';
-                this.passedStocks.sort((a, b) => a.name.localeCompare(b.name));
-                break;
-            case 'Gain':
-                this.selectedSortType = 'Gain';
-                this.passedStocks.sort((a, b) => {
-                    if (a.change > b.change) {
-                        return -1;
-                    }
-                    if (a.change < b.change) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                break;
-            case 'Loss':
-                this.selectedSortType = 'Loss';
-                this.passedStocks.sort((a, b) => {
-                    if (a.change < b.change) {
-                        return -1;
-                    }
-                    if (a.change > b.change) {
-                        return 1;
-                    }
-                    return 0;
-                });
+            this.passedStocks.sort((a, b) => {
+                if (type.name === 'A-Z') {
+                    return a.name.localeCompare(b.symbol);
+                } else {
+                    return a.change > b.change ? -1 : 1;
+                }
+            });
 
-                break;
+            if (type.name === 'Loss') {
+                this.passedStocks.reverse();
+            }
         }
-
 
         const sendData = {
             rows: JSON.stringify(this.passedStocks),
-            user_id: this.authUser.id
+            user_id: this.authUser.id,
+            order_type: type.value
         };
+        console.log(sendData)
 
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
         });

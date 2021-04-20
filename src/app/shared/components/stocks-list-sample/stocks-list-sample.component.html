@@ -47,7 +47,7 @@
                         Sort by {{selectedSortType.name}}
                     </div>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" *ngFor="let sortType of sortTypes"
+                        <a class="dropdown-item" *ngFor="let sortType of sortTypes;let ind = index"
                            [class.red]="selectedSortType === sortType"
                            (click)="sortStocks(sortType)">{{sortType.name}}</a>
                     </div>

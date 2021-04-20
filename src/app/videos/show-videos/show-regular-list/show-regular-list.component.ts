@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-show-regular-list',
@@ -31,6 +32,11 @@ export class ShowRegularListComponent implements OnInit {
 
     checkIfSavedByCurrentUser(video) {
         return video.users_vids.find(v => v.username === this.authUser?.username && v.users_videos.saved);
+    }
+
+    checkIfNewVideo(video) {
+        const duration = moment.duration(moment().diff(video.created_at));
+        return Math.floor(duration.asDays()) < 7;
     }
 
     async getVideosByTag(name) {

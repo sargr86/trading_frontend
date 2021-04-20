@@ -59,7 +59,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.selectedSortType = this.sort;
-        console.log(this.selectedSortType)
+        // console.log(this.selectedSortType)
         // console.log(this.passedStocks, this.portable, this.sort)
     }
 
@@ -128,7 +128,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     sortStocks(type) {
-        console.log(type)
+        // console.log(type)
         this.selectedSortType = type;
         if (type.name !== 'My sort') {
 
@@ -150,7 +150,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             user_id: this.authUser.id,
             order_type: type.value
         };
-        console.log(sendData)
+        // console.log(sendData)
 
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
         });

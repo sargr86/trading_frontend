@@ -34,6 +34,10 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="is-new-video" *ngIf="checkIfNewVideo(video)">
+                <span class="new">New</span>
+            </div>
         </div>
     </div>
 </div>

@@ -1,12 +1,19 @@
 @import 'mixins';
+@import 'variables';
 
-#regular-video-list-container{
-    .shortened-description{
+#regular-video-list-container {
+    .shortened-description {
         -webkit-line-clamp: 4;
+    }
+
+    .new {
+        background-color: #18B587;
+        color: white;
+        padding: 2px;
     }
 }
 
- .playlist-container {
+.playlist-container {
     display: flex;
     margin-bottom: 30px;
 

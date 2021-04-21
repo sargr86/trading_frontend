@@ -9,7 +9,7 @@ import {
     SimpleChanges
 } from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {StocksService} from '@core/services/stocks.service';
@@ -31,6 +31,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     stocksLoading = 'idle';
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
+    routerUrl;
 
     editUserStocks = false;
     sortTypes = [
@@ -40,6 +41,20 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         {name: 'Loss', value: 'loss'}
     ];
     selectedSortType;
+
+
+
+    view: any[] = [180, 130];
+    portableView: any[] = [100, 130];
+
+
+
+
+
+    colorScheme = {
+        domain: ['#ffffff']
+    };
+
 
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
@@ -61,7 +76,15 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         this.selectedSortType = this.sort;
         // console.log(this.selectedSortType)
         // console.log(this.passedStocks, this.portable, this.sort)
+
+        this.router.events.subscribe(ev => {
+            if (ev instanceof NavigationEnd) {
+                this.routerUrl = ev.url;
+            }
+        });
     }
+
+
 
     updateFollowedStocksList(stock) {
 
@@ -158,6 +181,12 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         //     this.passedStocks = dt?.user_stocks || [];
         //     console.log(this.passedStocks)
         // });
+    }
+
+    getPortableColorScheme(stock) {
+        return {
+            domain: (stock.changesPercentage > 0 ? ['#18B587'] : ['#F53C6F'])
+        };
     }
 
     ngOnChanges(changes: SimpleChanges) {

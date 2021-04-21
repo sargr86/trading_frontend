@@ -3,7 +3,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {SubjectService} from '@core/services/subject.service';
 import {StocksService} from '@core/services/stocks.service';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
@@ -14,15 +14,16 @@ import IsResponsive from '@core/helpers/is-responsive';
 export class StocksListsPortableComponent implements OnInit {
 
     @Input('authUser') authUser;
-    @Input('routerUrl') routerUrl;
+    routerUrl;
     userStocks;
-    activeTab = {name: 'watchlist'};
+    activeTab = {name: 'today'};
     selectedSortType;
 
     stocks;
     indices;
 
     isSmallScreen = IsResponsive.isSmallScreen();
+    dataLoading = 'idle';
 
     constructor(
         public router: Router,
@@ -35,6 +36,19 @@ export class StocksListsPortableComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.router.events.subscribe(ev => {
+            if (ev instanceof NavigationEnd) {
+                this.routerUrl = ev.url;
+                if (this.routerUrl !== '/stocks/analytics') {
+                    this.stocksService.getIndices({}).subscribe(dt => {
+                        this.indices = dt;
+                        this.dataLoading = 'finished';
+                        this.subject.setIndicesData(dt);
+                    });
+                }
+            }
+        });
+
 
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
@@ -51,10 +65,8 @@ export class StocksListsPortableComponent implements OnInit {
             this.cdr.detectChanges();
         });
 
+        this.dataLoading = 'loading';
 
-        this.stocksService.getIndices({}).subscribe(dt => {
-            this.indices = dt;
-        });
     }
 
 
@@ -62,15 +74,6 @@ export class StocksListsPortableComponent implements OnInit {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([`stocks/${stock}/analytics`])
         );
-    }
-
-    async viewFullWatchlist() {
-        await this.router.navigate(['channels/show'], {
-            queryParams: {
-                username: this.authUser.username,
-                tab: 'watchlist'
-            }
-        });
     }
 
     changeTab(tab) {
@@ -90,6 +93,15 @@ export class StocksListsPortableComponent implements OnInit {
         this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.setUserStocksData(this.userStocks);
+        });
+    }
+
+    async viewFullWatchlist() {
+        await this.router.navigate(['channels/show'], {
+            queryParams: {
+                username: this.authUser.username,
+                tab: 'watchlist'
+            }
         });
     }
 

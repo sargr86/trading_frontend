@@ -798,4 +798,25 @@ mat-optgroup {
     cursor: pointer;
 }
 
+.indices-small-chart-container g.line-chart {
+    transform: translate(0, 0);
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    mat-spinner {
+        color: $white;
+    }
+
+
+    span {
+        font-size: 14px;
+        margin-left: 20px;
+        color: $white;
+    }
+}
+
 @import "responsive";

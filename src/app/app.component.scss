@@ -24,6 +24,9 @@
 
 .body-content-left {
     width: 240px;
+    @media (max-width: 991px) {
+        display: none;
+    }
 }
 
 .body-content.full-width {
@@ -48,6 +51,7 @@
     margin: 112px auto 0;
 }
 
+
 @media screen and (max-width: 767px) {
     .open-left-menu.d-none {
         font-size: 30px;
@@ -62,16 +66,5 @@
         right: -30px;
         top: -20px;
         font-size: 30px;
-    }
-    .body-content-left {
-        width: 300px;
-        position: absolute;
-        background-color: #fff;
-        z-index: 55;
-        padding: 30px;
-        display: flex;
-        left: 0;
-        top: 0;
-        justify-content: center;
     }
 }

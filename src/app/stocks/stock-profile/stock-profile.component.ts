@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StocksService} from '@core/services/stocks.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-stock-profile',
@@ -13,54 +14,24 @@ export class StockProfileComponent implements OnInit {
     indices;
     selectedStock;
     stockInfo;
-
-    multi = [
-        {
-            name: 'USA',
-            series: [
-                {
-                    name: '1990',
-                    value: 250000000
-                },
-                {
-                    name: '2009',
-                    value: 109000000
-                },
-                {
-                    name: '2010',
-                    value: 309000000
-                },
-                {
-                    name: '2011',
-                    value: 311000000
-                }
-            ]
-        }
-    ];
-    view: any[] = [300, 150];
-
-    // options
-    referenceLines = [
-        {
-            name: '2009',
-            value: 209000000
-        }
-    ];
-
-    colorScheme = {
-        domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-    };
-
+    dataLoading = 'idle';
 
     constructor(
         private stocksService: StocksService,
         public router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private subject: SubjectService
     ) {
     }
 
     ngOnInit(): void {
+        this.dataLoading = 'loading';
+        // this.subject.getIndicesData().subscribe(dt => {
+        //     this.dataLoading = 'finished';
+        //     this.indices = dt;
+        // });
         this.stocksService.getIndices({}).subscribe(dt => {
+            this.dataLoading = 'finished';
             this.indices = dt;
         });
         this.selectedStock = this.route.snapshot?.params?.symbol?.toUpperCase();

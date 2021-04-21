@@ -13,20 +13,21 @@
                                 *ngIf="selectedSortType" [sort]="selectedSortType"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
-        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
-            See more
-        </p>
+        <!--        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">-->
+        <!--            See more-->
+        <!--        </p>-->
 
     </div>
     <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
+        <div class="spinner-container">
+            <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
+        </div>
         <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [follow]="false"
                                 (updatedStocksList)="updateFollowedLists($event)"
                                 [portable]="true"></app-stocks-list-sample>
-
-        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show') && dataLoading==='finished'" class="see-more">
             See more
         </p>
-
         <img class="ads" src="assets/img/ads.png">
         <img class="ads" src="assets/img/ads.png">
     </div>

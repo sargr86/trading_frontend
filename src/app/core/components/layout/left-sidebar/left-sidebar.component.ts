@@ -25,9 +25,6 @@ export class LeftSidebarComponent implements OnInit {
     isSmallScreen = IsResponsive.isSmallScreen();
 
 
-
-
-
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
     constructor(

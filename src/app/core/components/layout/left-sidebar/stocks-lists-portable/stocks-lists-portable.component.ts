@@ -1,17 +1,18 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {SubjectService} from '@core/services/subject.service';
 import {StocksService} from '@core/services/stocks.service';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import IsResponsive from '@core/helpers/is-responsive';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-stocks-lists-portable',
     templateUrl: './stocks-lists-portable.component.html',
     styleUrls: ['./stocks-lists-portable.component.scss']
 })
-export class StocksListsPortableComponent implements OnInit {
+export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     @Input('authUser') authUser;
     routerUrl;
@@ -25,6 +26,8 @@ export class StocksListsPortableComponent implements OnInit {
     isSmallScreen = IsResponsive.isSmallScreen();
     dataLoading = 'idle';
 
+    subscriptions: Subscription[] = [];
+
     constructor(
         public router: Router,
         private getAuthUser: GetAuthUserPipe,
@@ -36,36 +39,39 @@ export class StocksListsPortableComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.router.events.subscribe(ev => {
-            if (ev instanceof NavigationEnd) {
-                this.routerUrl = ev.url;
-                if (this.routerUrl !== '/stocks/analytics') {
-                    this.stocksService.getIndices({}).subscribe(dt => {
-                        this.indices = dt;
-                        this.dataLoading = 'finished';
-                        this.subject.setIndicesData(dt);
-                    });
+        this.subscriptions.push(this.router.events.subscribe(ev => {
+            if (ev instanceof RoutesRecognized) {
+                if (ev.url !== '/test') {
+                    this.routerUrl = ev.url;
+                    if (!this.routerUrl?.includes('analytics')) {
+                        this.dataLoading = 'loading';
+                        this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
+                            this.indices = dt;
+                            this.dataLoading = 'finished';
+                            this.subject.setIndicesData(dt);
+                        }));
+                    }
                 }
+
             }
-        });
+        }));
 
 
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
-            this.subject.getUserStocksData().subscribe(dt => {
+            this.subscriptions.push(this.subject.getUserStocksData().subscribe(dt => {
                 this.userStocks = dt;
                 this.cdr.detectChanges();
-            });
+            }));
 
             this.getUserStocks();
         }
 
-        this.subject.getStocksData().subscribe(dt => {
+        this.subscriptions.push(this.subject.getStocksData().subscribe(dt => {
             this.stocks = dt;
             this.cdr.detectChanges();
-        });
+        }));
 
-        this.dataLoading = 'loading';
 
     }
 
@@ -81,19 +87,19 @@ export class StocksListsPortableComponent implements OnInit {
     }
 
     getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+        this.subscriptions.push(this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
             this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
-        });
+        }));
 
 
     }
 
     updateFollowedLists(stocks) {
-        this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
+        this.subscriptions.push(this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.setUserStocksData(this.userStocks);
-        });
+        }));
     }
 
     async viewFullWatchlist() {
@@ -105,5 +111,8 @@ export class StocksListsPortableComponent implements OnInit {
         });
     }
 
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
 }

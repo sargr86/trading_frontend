@@ -16,17 +16,17 @@
                 <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
             </div>
         </div>
-        <!--                    <div class="small-chart-container">-->
-        <!--                        <ngx-charts-line-chart  [scheme]="colorScheme" [legend]="false"-->
-        <!--                                               [showXAxisLabel]="false"-->
-        <!--                                               [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"-->
-        <!--                                               [results]="multi"-->
-        <!--                                               [autoScale]="true"-->
-        <!--                                               [yAxisTicks]="[]" [xAxisTicks]="[]" [timeline]="true"-->
-        <!--                                               [referenceLines]="referenceLines" [showRefLines]="true"-->
-        <!--                                               [showGridLines]="true" [showRefLabels]="false">-->
-        <!--                        </ngx-charts-line-chart>-->
-        <!--                    </div>-->
+                            <div class="small-chart-container">
+                                <ngx-charts-line-chart  [scheme]="colorScheme" [legend]="false"
+                                                       [showXAxisLabel]="false"
+                                                       [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"
+                                                       [results]="[stock]" [rotateXAxisTicks]="false"
+                                                       [autoScale]="true" [xAxisTicks]="[]"
+                                                        [timeline]="true" [yAxisTicks]="[]" [view]="view"
+                                                       [referenceLines]="referenceLines" [showRefLines]="true"
+                                                       [showGridLines]="true" [showRefLabels]="false">
+                                </ngx-charts-line-chart>
+                            </div>
         <!--                <img class="crypto-map" src="assets/img/map.png">-->
     </div>
     <mat-error *ngIf="stocksLoading=='finished' && passedStocks?.length ===0">No results found</mat-error>
@@ -85,7 +85,15 @@
                     </ng-container>
 
                     <ng-template let-d="details" #itemTemplate>
-                        <div class="analytics-img">
+                        <div class="indices-small-chart-container" *ngIf="stock.hasOwnProperty('series')">
+                            <ngx-charts-line-chart  [scheme]="getPortableColorScheme(stock)"
+                                                    [results]="[stock]" [tooltipDisabled]="true"
+                                                    [autoScale]="true" [view]="portableView"
+                                                    [timeline]="true" [xAxisTicks]="[]" [yAxisTicks]="[]"
+                                                    [showGridLines]="false" [showRefLabels]="false">
+                            </ngx-charts-line-chart>
+                        </div>
+                        <div class="analytics-img" *ngIf="!stock.hasOwnProperty('series')">
                             <ng-container *ngIf="d?.color === 'green'">
                                 <img src="assets/img/green-up.png">
                                 <img src="assets/img/green-point.png">

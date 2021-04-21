@@ -1,7 +1,7 @@
 <mat-sidenav-container>
     <mat-sidenav [mode]="getMode(sidenav)" #sidenav
                  id="sidenav" [opened]="!router.url.includes('auth')">
-        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)" ></app-left-sidebar>
+        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)" *ngIf="isSmallScreen"></app-left-sidebar>
     </mat-sidenav>
 
     <mat-sidenav-content class="ml-0 ml-md-0">

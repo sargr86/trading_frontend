@@ -13,7 +13,7 @@
                                 *ngIf="selectedSortType" [sort]="selectedSortType"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
-        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">
             See more
         </p>
 
@@ -23,7 +23,7 @@
                                 (updatedStocksList)="updateFollowedLists($event)"
                                 [portable]="true"></app-stocks-list-sample>
 
-        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl.includes('/channels/show')" class="see-more">
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">
             See more
         </p>
 

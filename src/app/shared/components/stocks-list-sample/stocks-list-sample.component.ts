@@ -41,6 +41,74 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     ];
     selectedSortType;
 
+
+    multi = [
+        {
+            name: 'USA',
+            series: [
+                {
+                    name: '1990',
+                    value: 250000000
+                },
+                {
+                    name: '2009',
+                    value: 109000000
+                },
+                {
+                    name: '2010',
+                    value: 309000000
+                },
+                {
+                    name: '2011',
+                    value: 311000000
+                }
+            ]
+        },
+        {
+            name: 'UK',
+            series: [
+                {
+                    name: '1991',
+                    value: 250000000
+                },
+                {
+                    name: '2009',
+                    value: 109000000
+                },
+                {
+                    name: '2010',
+                    value: 309000000
+                },
+                {
+                    name: '2011',
+                    value: 311000000
+                }
+            ]
+        }
+    ];
+    view: any[] = [180, 130];
+    portableView: any[] = [100, 130];
+
+
+    getPortableColorScheme(stock) {
+        return {
+            domain: (stock.changesPercentage > 0 ? ['#18B587'] : ['#F53C6F'])
+        };
+    }
+
+    // options
+    referenceLines = [
+        {
+            name: '2009',
+            value: 209000000
+        }
+    ];
+
+    colorScheme = {
+        domain: ['#ffffff']
+    };
+
+
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
     constructor(

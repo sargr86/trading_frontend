@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StocksService} from '@core/services/stocks.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-stock-profile',
@@ -55,14 +56,19 @@ export class StockProfileComponent implements OnInit {
     constructor(
         private stocksService: StocksService,
         public router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private subject: SubjectService
     ) {
     }
 
     ngOnInit(): void {
-        this.stocksService.getIndices({}).subscribe(dt => {
+        this.subject.getIndicesData().subscribe(dt=>{
             this.indices = dt;
+            console.log(dt)
         });
+        // this.stocksService.getIndices({}).subscribe(dt => {
+        //     this.indices = dt;
+        // });
         this.selectedStock = this.route.snapshot?.params?.symbol?.toUpperCase();
     }
 

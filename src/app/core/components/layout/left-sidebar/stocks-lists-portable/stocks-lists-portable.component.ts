@@ -23,6 +23,7 @@ export class StocksListsPortableComponent implements OnInit {
     indices;
 
     isSmallScreen = IsResponsive.isSmallScreen();
+    dataLoading = 'idle';
 
     constructor(
         public router: Router,
@@ -35,10 +36,16 @@ export class StocksListsPortableComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('ngOnInit!')
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
+                if (this.routerUrl !== '/stocks/analytics') {
+                    this.stocksService.getIndices({}).subscribe(dt => {
+                        this.indices = dt;
+                        this.dataLoading = 'finished';
+                        this.subject.setIndicesData(dt);
+                    });
+                }
             }
         });
 
@@ -58,12 +65,8 @@ export class StocksListsPortableComponent implements OnInit {
             this.cdr.detectChanges();
         });
 
+        this.dataLoading = 'loading';
 
-        this.stocksService.getIndices({}).subscribe(dt => {
-            console.log('OK!!!')
-            this.indices = dt;
-            this.subject.setIndicesData(dt);
-        });
     }
 
 
@@ -71,15 +74,6 @@ export class StocksListsPortableComponent implements OnInit {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([`stocks/${stock}/analytics`])
         );
-    }
-
-    async viewFullWatchlist() {
-        await this.router.navigate(['channels/show'], {
-            queryParams: {
-                username: this.authUser.username,
-                tab: 'watchlist'
-            }
-        });
     }
 
     changeTab(tab) {
@@ -99,6 +93,15 @@ export class StocksListsPortableComponent implements OnInit {
         this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.setUserStocksData(this.userStocks);
+        });
+    }
+
+    async viewFullWatchlist() {
+        await this.router.navigate(['channels/show'], {
+            queryParams: {
+                username: this.authUser.username,
+                tab: 'watchlist'
+            }
         });
     }
 

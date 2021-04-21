@@ -1,4 +1,7 @@
 <div class="crypto-content" *ngIf="!portable">
+    <div class="spinner-container" *ngIf="stocksLoading==='loading'">
+        <mat-spinner [diameter]="25"></mat-spinner>
+    </div>
     <div class="crypto-item" *ngFor="let stock of passedStocks"
          [class.crypto-item-green]="stock.changesPercentage > 0">
         <div class="stock-follow" [hidden]="!follow">
@@ -16,24 +19,22 @@
                 <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
             </div>
         </div>
-                            <div class="small-chart-container">
-                                <ngx-charts-line-chart  [scheme]="colorScheme" [legend]="false"
-                                                       [showXAxisLabel]="false"
-                                                       [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"
-                                                       [results]="[stock]" [rotateXAxisTicks]="false"
-                                                       [autoScale]="true" [xAxisTicks]="[]"
-                                                        [timeline]="true" [yAxisTicks]="[]" [view]="view"
-                                                       [referenceLines]="referenceLines" [showRefLines]="true"
-                                                       [showGridLines]="true" [showRefLabels]="false">
-                                </ngx-charts-line-chart>
-                            </div>
+        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series') && stocksLoading!=='finished'">
+            <ngx-charts-line-chart [scheme]="colorScheme" [legend]="false"
+                                   [showXAxisLabel]="false" [tooltipDisabled]="true"
+                                   [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"
+                                   [results]="[stock]" [rotateXAxisTicks]="false"
+                                   [autoScale]="true" [xAxisTicks]="[]" [animations]="false"
+                                   [timeline]="true" [yAxisTicks]="[]" [view]="view"
+                                   [showGridLines]="true" [showRefLabels]="false">
+            </ngx-charts-line-chart>
+        </div>
         <!--                <img class="crypto-map" src="assets/img/map.png">-->
     </div>
     <mat-error *ngIf="stocksLoading=='finished' && passedStocks?.length ===0">No results found</mat-error>
 </div>
 <div id="portable-stocks-list" *ngIf="portable">
     <div class="stocks-top-actions">
-
         <div class="search-stocks">
             <ng-container>
                 <div class="watchlist-search" *ngIf="editUserStocks">
@@ -86,11 +87,11 @@
 
                     <ng-template let-d="details" #itemTemplate>
                         <div class="indices-small-chart-container" *ngIf="stock.hasOwnProperty('series')">
-                            <ngx-charts-line-chart  [scheme]="getPortableColorScheme(stock)"
-                                                    [results]="[stock]" [tooltipDisabled]="true"
-                                                    [autoScale]="true" [view]="portableView"
-                                                    [timeline]="true" [xAxisTicks]="[]" [yAxisTicks]="[]"
-                                                    [showGridLines]="false" [showRefLabels]="false">
+                            <ngx-charts-line-chart [scheme]="getPortableColorScheme(stock)" [animations]="false"
+                                                   [results]="[stock]" [tooltipDisabled]="true"
+                                                   [autoScale]="true" [view]="portableView"
+                                                   [timeline]="true" [xAxisTicks]="[]" [yAxisTicks]="[]"
+                                                   [showGridLines]="false" [showRefLabels]="false">
                             </ngx-charts-line-chart>
                         </div>
                         <div class="analytics-img" *ngIf="!stock.hasOwnProperty('series')">

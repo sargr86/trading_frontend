@@ -9,7 +9,7 @@ import {
     SimpleChanges
 } from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {StocksService} from '@core/services/stocks.service';
@@ -31,6 +31,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     stocksLoading = 'idle';
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
+    routerUrl;
 
     editUserStocks = false;
     sortTypes = [
@@ -42,67 +43,13 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     selectedSortType;
 
 
-    multi = [
-        {
-            name: 'USA',
-            series: [
-                {
-                    name: '1990',
-                    value: 250000000
-                },
-                {
-                    name: '2009',
-                    value: 109000000
-                },
-                {
-                    name: '2010',
-                    value: 309000000
-                },
-                {
-                    name: '2011',
-                    value: 311000000
-                }
-            ]
-        },
-        {
-            name: 'UK',
-            series: [
-                {
-                    name: '1991',
-                    value: 250000000
-                },
-                {
-                    name: '2009',
-                    value: 109000000
-                },
-                {
-                    name: '2010',
-                    value: 309000000
-                },
-                {
-                    name: '2011',
-                    value: 311000000
-                }
-            ]
-        }
-    ];
+
     view: any[] = [180, 130];
     portableView: any[] = [100, 130];
 
 
-    getPortableColorScheme(stock) {
-        return {
-            domain: (stock.changesPercentage > 0 ? ['#18B587'] : ['#F53C6F'])
-        };
-    }
 
-    // options
-    referenceLines = [
-        {
-            name: '2009',
-            value: 209000000
-        }
-    ];
+
 
     colorScheme = {
         domain: ['#ffffff']
@@ -129,7 +76,15 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         this.selectedSortType = this.sort;
         // console.log(this.selectedSortType)
         // console.log(this.passedStocks, this.portable, this.sort)
+
+        this.router.events.subscribe(ev => {
+            if (ev instanceof NavigationEnd) {
+                this.routerUrl = ev.url;
+            }
+        });
     }
+
+
 
     updateFollowedStocksList(stock) {
 
@@ -226,6 +181,12 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         //     this.passedStocks = dt?.user_stocks || [];
         //     console.log(this.passedStocks)
         // });
+    }
+
+    getPortableColorScheme(stock) {
+        return {
+            domain: (stock.changesPercentage > 0 ? ['#18B587'] : ['#F53C6F'])
+        };
     }
 
     ngOnChanges(changes: SimpleChanges) {

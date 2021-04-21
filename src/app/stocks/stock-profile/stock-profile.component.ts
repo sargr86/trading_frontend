@@ -14,44 +14,7 @@ export class StockProfileComponent implements OnInit {
     indices;
     selectedStock;
     stockInfo;
-
-    multi = [
-        {
-            name: 'USA',
-            series: [
-                {
-                    name: '1990',
-                    value: 250000000
-                },
-                {
-                    name: '2009',
-                    value: 109000000
-                },
-                {
-                    name: '2010',
-                    value: 309000000
-                },
-                {
-                    name: '2011',
-                    value: 311000000
-                }
-            ]
-        }
-    ];
-    view: any[] = [300, 150];
-
-    // options
-    referenceLines = [
-        {
-            name: '2009',
-            value: 209000000
-        }
-    ];
-
-    colorScheme = {
-        domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-    };
-
+    dataLoading = 'idle';
 
     constructor(
         private stocksService: StocksService,
@@ -62,13 +25,15 @@ export class StockProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.subject.getIndicesData().subscribe(dt=>{
-            this.indices = dt;
-            console.log(dt)
-        });
-        // this.stocksService.getIndices({}).subscribe(dt => {
+        this.dataLoading = 'loading';
+        // this.subject.getIndicesData().subscribe(dt => {
+        //     this.dataLoading = 'finished';
         //     this.indices = dt;
         // });
+        this.stocksService.getIndices({}).subscribe(dt => {
+            this.dataLoading = 'finished';
+            this.indices = dt;
+        });
         this.selectedStock = this.route.snapshot?.params?.symbol?.toUpperCase();
     }
 

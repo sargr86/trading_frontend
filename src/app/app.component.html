@@ -13,7 +13,7 @@
 
         <section class="body-content" [class.full-width]="router.url.includes('auth')">
             <div class="body-content-left"
-                 *ngIf="!router.url.includes('auth') && !checkIfPolicyPage()">
+                 *ngIf="!router.url.includes('auth') && !checkIfPolicyPage() && !isSmallScreen">
                 <div class="position-relative">
                     <div class="close-left-menu">&times;</div>
                     <app-left-sidebar></app-left-sidebar>

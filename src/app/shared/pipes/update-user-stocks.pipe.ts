@@ -21,8 +21,8 @@ export class UpdateUserStocksPipe implements PipeTransform {
             userStocks = userStocks.filter(f => f.name !== stock.name);
         }
 
+        // return {userStocks, following};
         return userStocks;
-
     }
 
 }

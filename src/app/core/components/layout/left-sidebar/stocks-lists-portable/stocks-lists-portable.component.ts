@@ -17,7 +17,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     @Input('authUser') authUser;
     routerUrl;
     userStocks;
-    activeTab = {name: 'today'};
+    activeTab = {name: 'watchlist'};
     selectedSortType;
 
     stocks;
@@ -54,7 +54,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
-            this.subscriptions.push(this.subject.getUserStocksData().subscribe(dt => {
+            this.subscriptions.push(this.subject.currentUserStocks.subscribe(dt => {
                 this.userStocks = dt;
                 this.cdr.detectChanges();
             }));

@@ -7,6 +7,8 @@ import {XAxisTicksComponent} from '@swimlane/ngx-charts';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
+import {Subscription} from 'rxjs';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-summary-tab',
@@ -29,6 +31,9 @@ export class SummaryTabComponent implements OnInit {
     userStocks = [];
 
     addedToWatchlist = false;
+    subscriptions: Subscription[] = [];
+
+    authUser;
 
     @Input('selectedStock') selectedStock;
 
@@ -36,13 +41,15 @@ export class SummaryTabComponent implements OnInit {
         private stocksService: StocksService,
         public loader: LoaderService,
         private subject: SubjectService,
-        private updateStocks: UpdateUserStocksPipe
+        private updateStocks: UpdateUserStocksPipe,
+        private getAuthUser: GetAuthUserPipe
     ) {
     }
 
 
     ngOnInit(): void {
         this.getUserStocks();
+        this.authUser = this.getAuthUser.transform();
     }
 
     axisFormatting(tick) {
@@ -57,6 +64,7 @@ export class SummaryTabComponent implements OnInit {
     }
 
     getStockInfo() {
+
         this.loader.dataLoading = true;
         this.stocksService.getStockChartData({stock: this.selectedStock}).subscribe(dt => {
             this.chartData = dt.chart;
@@ -75,6 +83,13 @@ export class SummaryTabComponent implements OnInit {
 
     updateUserStocks(stock) {
         this.userStocks = this.updateStocks.transform(this.userStocks, stock, stock.type_id);
+        this.subscriptions.push(this.stocksService.updateFollowedStocks({
+            user_id: this.authUser.id,
+            stocks: this.userStocks
+        }).subscribe(dt => {
+            this.userStocks = dt.user_stocks;
+            this.subject.changeUserStocks(this.userStocks);
+        }));
     }
 
 }

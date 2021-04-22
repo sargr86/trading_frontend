@@ -63,10 +63,10 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         private updateStocks: UpdateUserStocksPipe
     ) {
         this.authUser = this.getAuthUser.transform();
-        this.subject.getUserStocksData().subscribe(dt => {
-            this.userStocks = dt;
-            this.cdr.detectChanges();
-        });
+        // this.subject.getUserStocksData().subscribe(dt => {
+        //     this.userStocks = dt;
+        //     this.cdr.detectChanges();
+        // });
     }
 
     ngOnInit(): void {
@@ -166,9 +166,12 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
         for (const property in changes) {
             if (property === 'selectedStockType') {
                 this.selectedStockType = changes.selectedStockType.currentValue;
+            } else if (property === 'userStocks') {
+                this.userStocks = changes.userStocks.currentValue;
             }
         }
     }

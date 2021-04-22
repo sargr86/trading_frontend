@@ -28,7 +28,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     @Input('type') selectedStockType;
     @Input('sort') sort = {name: '', id: ''};
     @Input('editPortable') editPortable = false;
-    stocksLoading = 'idle';
+
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
     routerUrl;
@@ -43,14 +43,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     selectedSortType;
 
 
-
+    // Stock chart settings
     view: any[] = [180, 130];
     portableView: any[] = [100, 130];
-
-
-
-
-
     colorScheme = {
         domain: ['#ffffff']
     };
@@ -74,8 +69,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.selectedSortType = this.sort;
-        // console.log(this.selectedSortType)
-        // console.log(this.passedStocks, this.portable, this.sort)
 
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
@@ -83,7 +76,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             }
         });
     }
-
 
 
     updateFollowedStocksList(stock) {
@@ -120,7 +112,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     getPercentageDetails(stock) {
-        // console.log(+stock.changesPercentage.toFixed(2))
         const value = +stock.changesPercentage; // .replace(/[(%)]/g, '')
         return {
             ...{value},
@@ -134,7 +125,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     dragDropped(e, stock) {
-        // console.log(channel)
         this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
         const sendData = {
             order_type: 'custom',
@@ -151,7 +141,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     sortStocks(type) {
-        // console.log(type)
         this.selectedSortType = type;
         if (type.name !== 'My sort') {
 
@@ -190,11 +179,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        // console.log(changes)
         for (const property in changes) {
             if (property === 'selectedStockType') {
                 this.selectedStockType = changes.selectedStockType.currentValue;
-                // console.log('Current:', changes.selectedStockType.currentValue);
             }
         }
     }

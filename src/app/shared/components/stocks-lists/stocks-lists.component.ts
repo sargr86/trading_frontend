@@ -97,6 +97,8 @@ export class StocksListsComponent implements OnInit {
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
             this.stocksLoading = 'finished';
+            this.pageSize = 14;
+            this.pageIndex = 0;
             this.filterStocks();
         });
     }

@@ -22,6 +22,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     stocks;
     indices;
+    indicesLoaded = false;
 
     isSmallScreen = IsResponsive.isSmallScreen();
     dataLoading = 'idle';
@@ -44,17 +45,17 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                 if (ev.url !== '/test') {
                     this.routerUrl = ev.url;
                     if (!this.routerUrl?.includes('analytics')) {
-                        this.dataLoading = 'loading';
-                        this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
-                            this.indices = dt;
-                            this.dataLoading = 'finished';
-                            this.subject.setIndicesData(dt);
-                        }));
+                        this.indicesLoaded = true;
+                        this.getIndices();
                     }
                 }
 
             }
         }));
+
+        if (!this.indicesLoaded) {
+            this.getIndices();
+        }
 
 
         this.authUser = this.getAuthUser.transform();
@@ -73,6 +74,15 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         }));
 
 
+    }
+
+    getIndices() {
+        this.dataLoading = 'loading';
+        this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
+            this.indices = dt;
+            this.dataLoading = 'finished';
+            this.subject.setIndicesData(dt);
+        }));
     }
 
 

@@ -81,8 +81,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
 
     updateFollowedStocksList(stock) {
-        this.userStocks = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType.id);
-        this.updatedStocksList.emit(this.userStocks);
+        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+        this.updatedStocksList.emit(userStocks);
 
     }
 

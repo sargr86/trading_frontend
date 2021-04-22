@@ -6,7 +6,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class UpdateUserStocksPipe implements PipeTransform {
 
     transform(userStocks: any[], stock: any, selectedTypeId: any): any {
-        const following = userStocks.find(f => f.name === stock.name);
+        let following = !!userStocks.find(f => f.name === stock.name);
 
         if (!following) {
             userStocks.push({
@@ -17,12 +17,14 @@ export class UpdateUserStocksPipe implements PipeTransform {
                 price: stock.price,
                 type_id: selectedTypeId
             });
+            following = true;
         } else {
             userStocks = userStocks.filter(f => f.name !== stock.name);
+            following = false;
         }
 
-        // return {userStocks, following};
-        return userStocks;
+        return {userStocks, following};
+        // return userStocks;
     }
 
 }

@@ -34,6 +34,7 @@ export class SummaryTabComponent implements OnInit {
     subscriptions: Subscription[] = [];
 
     authUser;
+    stocksUpdatedHere = false;
 
     @Input('selectedStock') selectedStock;
 
@@ -49,7 +50,24 @@ export class SummaryTabComponent implements OnInit {
 
     ngOnInit(): void {
         this.getUserStocks();
+        this.getStockInfo();
         this.authUser = this.getAuthUser.transform();
+    }
+
+    getUserStocks() {
+        this.subject.currentUserStocks.subscribe(dt => {
+            this.userStocks = dt;
+            this.addedToWatchlist = !!this.userStocks.find(us => us.symbol === this.selectedStock);
+        });
+    }
+
+    getStockInfo() {
+        this.loader.dataLoading = true;
+        this.stocksService.getStockChartData({stock: this.selectedStock}).subscribe(dt => {
+            this.chartData = dt.chart;
+            this.tableData = new MatTableDataSource(dt.table);
+            this.loader.dataLoading = false;
+        });
     }
 
     axisFormatting(tick) {
@@ -63,31 +81,16 @@ export class SummaryTabComponent implements OnInit {
         return normalizeColName(col);
     }
 
-    getStockInfo() {
-
-        this.loader.dataLoading = true;
-        this.stocksService.getStockChartData({stock: this.selectedStock}).subscribe(dt => {
-            this.chartData = dt.chart;
-            this.tableData = new MatTableDataSource(dt.table);
-            this.loader.dataLoading = false;
-            this.addedToWatchlist = !!this.userStocks.find(us => us.symbol === dt.table[0].symbol);
-        });
-    }
-
-    getUserStocks() {
-        this.subject.currentUserStocks.subscribe(dt => {
-            this.userStocks = dt;
-            this.getStockInfo();
-        });
-    }
 
     updateUserStocks(stock) {
-        this.userStocks = this.updateStocks.transform(this.userStocks, stock, stock.type_id);
+        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, stock.type_id);
+        this.addedToWatchlist = following;
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
-            stocks: this.userStocks
+            stocks: userStocks
         }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
+            this.stocksUpdatedHere = true;
             this.subject.changeUserStocks(this.userStocks);
         }));
     }

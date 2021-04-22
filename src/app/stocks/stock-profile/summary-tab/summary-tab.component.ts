@@ -5,6 +5,8 @@ import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {LoaderService} from '@core/services/loader.service';
 import {XAxisTicksComponent} from '@swimlane/ngx-charts';
 import * as moment from 'moment';
+import {SubjectService} from '@core/services/subject.service';
+import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 
 @Component({
     selector: 'app-summary-tab',
@@ -12,6 +14,7 @@ import * as moment from 'moment';
     styleUrls: ['./summary-tab.component.scss']
 })
 export class SummaryTabComponent implements OnInit {
+
     // Chart settings
     chartData: any[];
     colorScheme = {
@@ -20,20 +23,26 @@ export class SummaryTabComponent implements OnInit {
 
 
     // Table settings
-    displayedColumns: string[] = ['symbol', 'name', 'price', 'change', 'changesPercentage', 'marketCap', 'open', 'volume'];
+    displayedColumns: string[] = ['symbol', 'name', 'price', 'change', 'changesPercentage', 'marketCap', 'open', 'volume', 'action'];
     tableData;
+
+    userStocks = [];
+
+    addedToWatchlist = false;
 
     @Input('selectedStock') selectedStock;
 
     constructor(
         private stocksService: StocksService,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private subject: SubjectService,
+        private updateStocks: UpdateUserStocksPipe
     ) {
     }
 
 
     ngOnInit(): void {
-        this.getStockInfo();
+        this.getUserStocks();
     }
 
     axisFormatting(tick) {
@@ -53,7 +62,19 @@ export class SummaryTabComponent implements OnInit {
             this.chartData = dt.chart;
             this.tableData = new MatTableDataSource(dt.table);
             this.loader.dataLoading = false;
+            this.addedToWatchlist = !!this.userStocks.find(us => us.symbol === dt.table[0].symbol);
         });
+    }
+
+    getUserStocks() {
+        this.subject.currentUserStocks.subscribe(dt => {
+            this.userStocks = dt;
+            this.getStockInfo();
+        });
+    }
+
+    updateUserStocks(stock) {
+        this.userStocks = this.updateStocks.transform(this.userStocks, stock, stock.type_id);
     }
 
 }

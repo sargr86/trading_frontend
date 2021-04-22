@@ -13,6 +13,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {StocksService} from '@core/services/stocks.service';
+import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 
 @Component({
     selector: 'app-stocks-list-sample',
@@ -58,7 +59,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         public router: Router,
         private subject: SubjectService,
         private cdr: ChangeDetectorRef,
-        private stocksService: StocksService
+        private stocksService: StocksService,
+        private updateStocks: UpdateUserStocksPipe
     ) {
         this.authUser = this.getAuthUser.transform();
         this.subject.getUserStocksData().subscribe(dt => {
@@ -79,22 +81,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
 
     updateFollowedStocksList(stock) {
-
-        const following = this.userStocks.find(f => f.name === stock.name);
-
-        if (!following) {
-            this.userStocks.push({
-                name: stock.name,
-                symbol: stock.symbol,
-                change: stock.change,
-                changesPercentage: stock.changesPercentage,
-                price: stock.price,
-                type_id: this.selectedStockType.id
-            });
-        } else {
-            this.userStocks = this.userStocks.filter(f => f.name !== stock.name);
-        }
-
+        this.userStocks = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType.id);
         this.updatedStocksList.emit(this.userStocks);
 
     }

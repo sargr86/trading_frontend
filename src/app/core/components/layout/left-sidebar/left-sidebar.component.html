@@ -8,11 +8,10 @@
 
     <div id="channel-subscriptions">
         <app-channel-subscriptions [authUser]="authUser"></app-channel-subscriptions>
-
     </div>
 
-    <div id="stock-lists" *ngIf="routerUrl!=='/stocks/analytics'">
-       <app-stocks-lists-portable [authUser]="authUser"></app-stocks-lists-portable>
+    <div id="stock-lists">
+        <app-stocks-lists-portable [authUser]="authUser"></app-stocks-lists-portable>
     </div>
 </div>
 

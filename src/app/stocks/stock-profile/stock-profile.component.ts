@@ -26,11 +26,7 @@ export class StockProfileComponent implements OnInit {
 
     ngOnInit(): void {
         this.dataLoading = 'loading';
-        // this.subject.getIndicesData().subscribe(dt => {
-        //     this.dataLoading = 'finished';
-        //     this.indices = dt;
-        // });
-        this.stocksService.getIndices({}).subscribe(dt => {
+        this.subject.currentIndices.subscribe(dt => {
             this.dataLoading = 'finished';
             this.indices = dt;
         });

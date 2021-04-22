@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SubjectService {
+
+    userStocks = [];
+    indices = [];
+
     public messageData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
     public videoSearchData = new Subject<any>();
@@ -14,6 +18,12 @@ export class SubjectService {
     private stocksData = new Subject<any>();
     private indicesData = new Subject<any>();
     private userStocksData = new Subject<any>();
+
+    private userStocksSource = new BehaviorSubject(this.userStocks);
+    private indicesSource = new BehaviorSubject(this.indices);
+
+    currentUserStocks = this.userStocksSource.asObservable();
+    currentIndices = this.indicesSource.asObservable();
 
     constructor() {
     }
@@ -88,5 +98,13 @@ export class SubjectService {
 
     getUserStocksData(): Observable<any> {
         return this.userStocksData.asObservable();
+    }
+
+    changeUserStocks(stocks) {
+        this.userStocksSource.next(stocks);
+    }
+
+    changeIndices(stocks) {
+        this.indicesSource.next(stocks);
     }
 }

@@ -1,4 +1,4 @@
-<div class="stocks-watchlist" id="sidebar-watchlist" *ngIf="auth.loggedIn() && !isSmallScreen && !routerUrl?.includes('analytics')">
+<div class="stocks-watchlist" id="sidebar-watchlist" *ngIf="auth.loggedIn() && !isSmallScreen">
     <ul class="nav nav-tabs" id="watchlist">
         <li class="nav-item" (click)="changeTab('watchlist')">
             <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
@@ -25,7 +25,8 @@
         <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [follow]="false"
                                 (updatedStocksList)="updateFollowedLists($event)" *ngIf="dataLoading==='finished'"
                                 [portable]="true"></app-stocks-list-sample>
-        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('analytics') && dataLoading==='finished'" class="see-more">
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('analytics') && dataLoading==='finished'"
+           class="see-more">
             See more
         </p>
         <img class="ads" src="assets/img/ads.png">

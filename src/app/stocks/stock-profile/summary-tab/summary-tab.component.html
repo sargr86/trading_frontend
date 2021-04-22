@@ -25,13 +25,14 @@
             <h1 class="selected-stock">{{selectedStock.replace('^', '')}}</h1>
             <table mat-table [dataSource]="tableData" class="mat-elevation-z8">
 
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-                <!-- Symbol Column -->
                 <ng-container *ngFor="let col of displayedColumns">
                     <ng-container [matColumnDef]="col">
                         <th mat-header-cell *matHeaderCellDef> {{normalizeColName(col)}}</th>
-                        <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="col!=='action'">{{element[col]}}</span>
+                            <button id="watchlist-act-btn" (click)="updateUserStocks(element)" [ngClass]="addedToWatchlist? 'red-bg':'green-bg'"
+                                    *ngIf="col==='action'">{{(addedToWatchlist ? 'Remove from' : 'Add to') + ' watchlist'}}</button>
+                        </td>
                     </ng-container>
                 </ng-container>
 

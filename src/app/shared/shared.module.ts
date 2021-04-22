@@ -26,6 +26,7 @@ import {StocksListsComponent} from './components/stocks-lists/stocks-lists.compo
 import {StocksListSampleComponent} from './components/stocks-list-sample/stocks-list-sample.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { UpdateUserStocksPipe } from './pipes/update-user-stocks.pipe';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         VideosListHolderComponent,
         SearchStocksFormComponent,
         StocksListsComponent,
-        StocksListSampleComponent
+        StocksListSampleComponent,
+        UpdateUserStocksPipe
     ],
     imports: [
         CommonModule,
@@ -67,7 +69,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         FilterDevicesPipe,
         GetSelectedVideosToBeAddedToPlaylistPipe,
         FilterOutFalsyValuesFromObjectPipe,
-        CheckForEmptyObjectPipe
+        CheckForEmptyObjectPipe,
+        UpdateUserStocksPipe
 
     ],
     exports: [

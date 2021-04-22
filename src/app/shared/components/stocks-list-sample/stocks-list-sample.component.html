@@ -1,7 +1,4 @@
 <div class="crypto-content" *ngIf="!portable">
-    <div class="spinner-container" *ngIf="stocksLoading==='loading'">
-        <mat-spinner [diameter]="25"></mat-spinner>
-    </div>
     <div class="crypto-item" *ngFor="let stock of passedStocks"
          [class.crypto-item-green]="stock.changesPercentage > 0">
         <div class="stock-follow" [hidden]="!follow">
@@ -19,7 +16,7 @@
                 <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
             </div>
         </div>
-        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series') && stocksLoading!=='finished'">
+        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')">
             <ngx-charts-line-chart [scheme]="colorScheme" [legend]="false"
                                    [showXAxisLabel]="false" [tooltipDisabled]="true"
                                    [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"
@@ -31,7 +28,7 @@
         </div>
         <!--                <img class="crypto-map" src="assets/img/map.png">-->
     </div>
-    <mat-error *ngIf="stocksLoading=='finished' && passedStocks?.length ===0">No results found</mat-error>
+    <mat-error *ngIf="passedStocks?.length ===0">No results found</mat-error>
 </div>
 <div id="portable-stocks-list" *ngIf="portable">
     <div class="stocks-top-actions">

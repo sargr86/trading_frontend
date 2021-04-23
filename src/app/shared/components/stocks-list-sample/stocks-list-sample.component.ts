@@ -92,8 +92,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     openStockProfile(stock) {
         // if (!this.follow) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock}/analytics`])
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
+                await this.router.navigate([`stocks/${stock}/analytics`])
+            }
         );
         // }
     }

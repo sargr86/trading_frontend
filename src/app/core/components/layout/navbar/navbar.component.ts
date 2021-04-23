@@ -96,8 +96,8 @@ export class NavbarComponent implements OnInit {
         return !this.router.url.includes('channels/show') || this.passedUsername !== this.authUser.username;
     }
 
-    changePage(l) {
-        this.router.navigate([l.link])
+    async changePage(l) {
+        await this.router.navigate([l.link]);
     }
 
     getDailyStocks() {

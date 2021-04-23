@@ -27,8 +27,10 @@ export class StockProfileComponent implements OnInit {
     ngOnInit(): void {
         this.dataLoading = 'loading';
         this.subject.currentIndices.subscribe(dt => {
-            this.dataLoading = 'finished';
-            this.indices = dt;
+            if (dt.length > 0) {
+                this.dataLoading = 'finished';
+                this.indices = dt;
+            }
         });
         this.selectedStock = this.route.snapshot?.params?.symbol?.toUpperCase();
     }

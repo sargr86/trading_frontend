@@ -1,10 +1,9 @@
 <div class="stock-content">
     <div class="major-indexes">
         <h2>Major indexes</h2>
-
         <div class="favorites">
             <div class="spinner-container">
-                <mat-spinner [diameter]="25" *ngIf="dataLoading==='loading'"></mat-spinner>
+                <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
             </div>
             <app-stocks-list-sample [stocks]="indices" [follow]="false"></app-stocks-list-sample>
         </div>
@@ -36,7 +35,7 @@
             </div>
         </div>
     </div>
-    <mat-error *ngIf="!selectedStock && dataLoading==='finished'">Please select a stock to view its information
+    <mat-error *ngIf="!selectedStock && indices?.length !== 0">Please select a stock to view its information
     </mat-error>
     <!-- <img class="stock-content-img" src="assets/img/stock.jpg"> -->
 </div>

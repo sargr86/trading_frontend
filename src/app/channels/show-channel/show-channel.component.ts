@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
 import {VideoService} from '@core/services/video.service';
@@ -11,12 +10,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
 import {MatDialog} from '@angular/material/dialog';
-import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {WatchlistTabComponent} from '@app/channels/show-channel/watchlist-tab/watchlist-tab.component';
 import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-tab.component';
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
-import {search} from '@ctrl/ngx-emoji-mart/svgs';
 import {AuthService} from '@core/services/auth.service';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 
@@ -27,8 +24,6 @@ import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/s
 })
 export class ShowChannelComponent implements OnInit, OnDestroy {
 
-    owlOptions: OwlOptions = OWL_OPTIONS;
-    watchlistVideos = [];
     authUser;
 
     activeTab;

@@ -16,7 +16,7 @@
                 <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
             </div>
         </div>
-        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')">
+        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')" (click)="openStockProfile(stock.symbol)">
             <ngx-charts-line-chart [scheme]="colorScheme" [legend]="false"
                                    [showXAxisLabel]="false" [tooltipDisabled]="true"
                                    [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"

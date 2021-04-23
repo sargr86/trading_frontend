@@ -18,7 +18,7 @@ import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-t
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {search} from '@ctrl/ngx-emoji-mart/svgs';
 import {AuthService} from '@core/services/auth.service';
-import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 
 @Component({
     selector: 'app-show-channel',
@@ -151,13 +151,13 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     openModal() {
-        this.dialog.open(StocksListsComponent, {
+        this.dialog.open(StocksListsModalComponent, {
             maxWidth: '100vw',
             maxHeight: '100vh',
             height: '100%',
             width: '100%'
         }).afterClosed().subscribe(dt => {
-
+            this.subject.changeUserStocks(dt);
         });
     }
 

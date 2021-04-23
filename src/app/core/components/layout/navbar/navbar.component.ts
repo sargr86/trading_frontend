@@ -9,7 +9,7 @@ import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
-import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
@@ -62,14 +62,14 @@ export class NavbarComponent implements OnInit {
 
     }
 
-    openModal(template: TemplateRef<any>) {
-        // this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-        this.dialog.open(StocksListsComponent, {
+    openModal() {
+        this.dialog.open(StocksListsModalComponent, {
             maxWidth: '100vw',
             maxHeight: '100vh',
             height: '100%',
             width: '100%'
         }).afterClosed().subscribe(dt => {
+            this.subject.changeUserStocks(dt);
         });
     }
 

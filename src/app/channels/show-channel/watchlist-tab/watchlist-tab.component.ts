@@ -52,7 +52,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.getStockTypes();
         this.getUserStocks();
 
-        this.subject.getUserStocksData().subscribe(dt => {
+        this.subject.currentUserStocks.subscribe(dt => {
             this.userStocks = dt;
         });
     }
@@ -93,7 +93,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
-            this.subject.setUserStocksData(this.userStocks);
+            this.subject.changeUserStocks(this.userStocks);
         });
     }
 

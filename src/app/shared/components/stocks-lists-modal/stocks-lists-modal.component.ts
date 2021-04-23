@@ -8,11 +8,10 @@ import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-stocks-lists',
-    templateUrl: './stocks-lists.component.html',
-    styleUrls: ['./stocks-lists.component.scss']
+    templateUrl: './stocks-lists-modal.component.html',
+    styleUrls: ['./stocks-lists-modal.component.scss']
 })
-export class StocksListsComponent implements OnInit {
-
+export class StocksListsModalComponent implements OnInit {
     stockTypes;
     stocks = [];
     selectedStockType;
@@ -30,7 +29,7 @@ export class StocksListsComponent implements OnInit {
     constructor(
         private modalService: BsModalService,
         private dialog: MatDialog,
-        private matDialogRef: MatDialogRef<StocksListsComponent>,
+        private matDialogRef: MatDialogRef<StocksListsModalComponent>,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService

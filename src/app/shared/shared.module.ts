@@ -22,7 +22,7 @@ import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
-import {StocksListsComponent} from './components/stocks-lists/stocks-lists.component';
+import {StocksListsModalComponent} from './components/stocks-lists-modal/stocks-lists-modal.component';
 import {StocksListSampleComponent} from './components/stocks-list-sample/stocks-list-sample.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
@@ -48,7 +48,7 @@ import { UpdateUserStocksPipe } from './pipes/update-user-stocks.pipe';
         UserTagsComponent,
         VideosListHolderComponent,
         SearchStocksFormComponent,
-        StocksListsComponent,
+        StocksListsModalComponent,
         StocksListSampleComponent,
         UpdateUserStocksPipe
     ],
@@ -92,7 +92,7 @@ import { UpdateUserStocksPipe } from './pipes/update-user-stocks.pipe';
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
         SearchStocksFormComponent,
-        StocksListsComponent,
+        StocksListsModalComponent,
         StocksListSampleComponent
     ]
 

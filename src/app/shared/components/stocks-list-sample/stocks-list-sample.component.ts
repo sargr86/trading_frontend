@@ -121,6 +121,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         };
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
             this.selectedSortType = this.sortTypes[0];
+            console.log(dt)
+            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
         });
     }
 
@@ -152,12 +154,17 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         };
         // console.log(sendData)
 
-        this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
-        });
-        // this.stocksService.getStocksSorted({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
-        //     this.passedStocks = dt?.user_stocks || [];
-        //     console.log(this.passedStocks)
-        // });
+        if (type.name !== 'My sort') {
+            this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
+                localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            });
+        } else {
+            this.stocksService.getUserStocks({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
+                this.passedStocks = dt?.user_stocks || [];
+                console.log(this.passedStocks)
+            });
+        }
+
     }
 
     getPortableColorScheme(stock) {

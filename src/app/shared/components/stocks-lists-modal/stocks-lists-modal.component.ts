@@ -58,14 +58,14 @@ export class StocksListsModalComponent implements OnInit {
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
             if (params.hasOwnProperty('close')) {
-                this.subject.setUserStocksData(this.userStocks);
+                this.subject.changeUserStocks(this.userStocks);
             }
         });
     }
 
     closeModal() {
         this.modalService.hide();
-        this.matDialogRef.close(this.userStocks);
+        this.matDialogRef.close();
         this.selectedStockType = null;
         this.getUserStocks({close: true});
     }

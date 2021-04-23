@@ -69,7 +69,6 @@ export class NavbarComponent implements OnInit {
             height: '100%',
             width: '100%'
         }).afterClosed().subscribe(dt => {
-            this.subject.changeUserStocks(dt);
         });
     }
 

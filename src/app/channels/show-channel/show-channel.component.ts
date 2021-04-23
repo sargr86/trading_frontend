@@ -157,7 +157,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
             height: '100%',
             width: '100%'
         }).afterClosed().subscribe(dt => {
-            this.subject.changeUserStocks(dt);
         });
     }
 

@@ -41,24 +41,42 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     searchStocks() {
         if (!this.modal) {
             this.loadingSearch = 'loading';
+            this.searchResults = [];
             this.subscriptions.push(
-                this.stocksService.searchStocks({...this.searchStocksForm.value, autocomplete: 1}).subscribe(dt => {
-                    console.log('finished')
+                this.stocksService.searchStocks({
+                    ...this.searchStocksForm.value,
+                    grouped: this.portable ? 0 : 1
+                }).subscribe(dt => {
                     this.loadingSearch = 'finished';
-                    this.searchResults = dt;
+                    if (this.portable) {
+
+                        this.searchResults = dt?.[0]?.stocks.slice(0, 10);
+                    } else {
+
+                        this.searchResults = dt.slice(0, 10);
+                    }
                 }));
+        } else if (this.portable) {
+            this.stocksService.searchStocksBySymbol({...this.searchStocksForm.value}).subscribe(dt => {
+                this.loadingSearch = 'finished';
+                this.searchResults = dt;
+            });
         } else {
             this.search.emit(this.searchStocksForm.value);
         }
     }
 
     async openStockPage(stock, trigger) {
-        if (!this.portable) {
-            trigger.closePanel();
-            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-                await this.router.navigate([`stocks/${stock}/analytics`])
-            );
-        }
+        trigger.closePanel();
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate([`stocks/${stock.symbol}/analytics`])
+        );
+    }
+
+    sendBack(stock, trigger) {
+        trigger.closePanel();
+        this.search.emit(stock);
+        this.searchStocksForm.reset();
     }
 
     ngOnDestroy() {

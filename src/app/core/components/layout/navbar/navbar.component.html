@@ -16,35 +16,35 @@
             <mat-icon>more_vert</mat-icon>
         </button>
     </div>
-    <div class="header-right collapse navbar-collapse nav-menu" id="navbarSupportedContent">
-        <app-search-videos-form class="d-none d-lg-block" *ngIf="!routerUrl?.includes('analytics')"
-                                (search)="searchVideos($event)"></app-search-videos-form>
-        <app-search-stocks-form class="d-none d-lg-block" *ngIf="routerUrl?.includes('analytics')"
-                                (search)="searchStocks($event)"></app-search-stocks-form>
-        <marquee class="home-black-block marquee" direction="left" height="40px" (click)="openModal()"
-                 *ngIf="stocks">
-            <div class="marquee-content">
-                <div class="home-black-item" *ngFor="let stock of stocks">
-                    <p class="black-text">{{stock.symbol}}</p>
-                    <p class="black-percent"
-                       [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
-                </div>
-            </div>
-            <!--            <i class="down-white fa fa-chevron-down"></i>-->
-        </marquee>
 
-        <div class="notification-block">
-            <div class="nav-item dropdown" [hidden]="envName==='production'">
-                <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>
-                <div class="dropdown-menu">
-                    <app-purchase-bits></app-purchase-bits>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div  class="header-right nav-menu">
+            <app-search-videos-form class="d-none d-lg-block" *ngIf="!routerUrl?.includes('analytics')"
+                                    (search)="searchVideos($event)"></app-search-videos-form>
+            <app-search-stocks-form class="d-none d-lg-block" *ngIf="routerUrl?.includes('analytics')"
+                                    (search)="searchStocks($event)"></app-search-stocks-form>
+            <marquee class="home-black-block marquee" direction="left" height="40px" (click)="openModal()"
+                     *ngIf="stocks">
+                <div class="marquee-content">
+                    <div class="home-black-item" *ngFor="let stock of stocks">
+                        <p class="black-text">{{stock.symbol}}</p>
+                        <p class="black-percent" [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
+                    </div>
                 </div>
-            </div>
-            <div class="notification" [hidden]="envName==='production'">
-                <i class="fas fa-bell"></i>
-                <span>+99</span>
-            </div>
-            <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
+                <!--            <i class="down-white fa fa-chevron-down"></i>-->
+            </marquee>
+            <div class="notification-block">
+                <div class="nav-item dropdown" [hidden]="envName==='production'">
+                    <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>
+                    <div class="dropdown-menu">
+                        <app-purchase-bits></app-purchase-bits>
+                    </div>
+                </div>
+                <div class="notification" [hidden]="envName==='production'">
+                    <i class="fas fa-bell"></i>
+                    <span>+99</span>
+                </div>
+                <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
 
             <div class="nav-item dropdown" *ngIf="auth.loggedIn()">
                 <img src="assets/img/user.svg" data-toggle="dropdown"
@@ -72,5 +72,6 @@
 
             </div>
         </div>
+    </div>
     </div>
 </nav>

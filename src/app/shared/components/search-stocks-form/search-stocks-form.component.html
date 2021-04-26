@@ -1,6 +1,7 @@
 <form [formGroup]="searchStocksForm" [class.modal-form]="modal" [class.portable]="portable">
     <div class="home-search">
-        <input class="home-search-input" [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'" [class.white]="modal"
+        <input class="home-search-input" [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'"
+               [class.white]="modal"
                [placeholder]="(modal? 'Search':'Search for stocks')+'...'"
                formControlName="search" #searchInput
                (keyup)="searchStocks()" #trigger="matAutocompleteTrigger" [formControl]="myControl"
@@ -9,20 +10,25 @@
 
         <mat-autocomplete #auto="matAutocomplete" [hidden]="modal">
 
-            <ng-container *ngIf="loadingSearch==='finished'">
+            <ng-container *ngIf="loadingSearch==='finished' && !portable">
                 <mat-optgroup *ngFor="let group of searchResults" [label]="group.name">
                     <mat-option *ngFor="let stock of group.stocks" [value]="stock.name"
-                                (click)="openStockPage(stock.symbol, trigger)">
+                                (click)="openStockPage(stock, trigger)">
                         <p>{{stock.symbol}}</p>
                         <p>{{stock.name}}</p>
                     </mat-option>
                 </mat-optgroup>
             </ng-container>
 
-            <!--            <mat-option *ngFor="let result of searchResults" [value]="result.Ticker"-->
-            <!--                        (click)="openStockPage(result.Ticker, trigger)">-->
-            <!--                {{result.Ticker}}-->
-            <!--            </mat-option>-->
+            <ng-container *ngIf="loadingSearch==='finished' && portable">
+                <mat-option *ngFor="let stock of searchResults" [value]="stock.symbol" [@.disabled]="true"
+                            (click)="sendBack(stock, trigger)">
+                    <span class="stock-symbol">{{stock.symbol}}</span>
+                    <span class="stock-name">{{stock.name}}</span>
+                </mat-option>
+            </ng-container>
+
+
         </mat-autocomplete>
         <i class="fas fa-search"></i>
     </div>

@@ -44,6 +44,11 @@ export class StocksService {
         return this.httpClient.get<any>(`${API_URL}stocks/search`, {params});
     }
 
+    searchStocksBySymbol(params) {
+        console.log('OK')
+        return this.httpClient.get<any>(`${API_URL}stocks/search-in-symbols-only`, {params});
+    }
+
     getUserStocks(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-user-stocks`, {params});
     }
@@ -52,7 +57,7 @@ export class StocksService {
         return this.httpClient.put<any>(`${API_URL}stocks/update-user-stocks-priority`, params);
     }
 
-    getStocksSorted(params){
+    getStocksSorted(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-by-sort-type`, {params});
     }
 

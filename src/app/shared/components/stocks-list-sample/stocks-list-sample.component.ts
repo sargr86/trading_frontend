@@ -91,16 +91,12 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     openStockProfile(stock) {
-        console.log(this.portable)
-        if (!this.portable) {
-            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
-                    await this.router.navigate([`stocks/${stock}/analytics`]);
-                }
-            );
-        } else {
-            this.updateFollowedStocksList(stock);
-        }
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
+                await this.router.navigate([`stocks/${stock}/analytics`]);
+            }
+        );
     }
+
 
     getPercentageDetails(stock) {
         const value = +stock.changesPercentage; // .replace(/[(%)]/g, '')
@@ -111,8 +107,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         };
     }
 
+
     getSearchResults(e) {
-        console.log(e)
+        this.updateFollowedStocksList(e);
     }
 
     drop(e) {
@@ -168,7 +165,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         } else {
             this.stocksService.getUserStocks({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
                 this.passedStocks = dt?.user_stocks || [];
-                console.log(this.passedStocks)
             });
         }
 

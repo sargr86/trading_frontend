@@ -35,15 +35,12 @@
                     </div>
                 </form>
             </div>
-
             <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'" [channelUser]="channelUser"></app-watchlist-tab>
             <app-videos-tab *ngIf="activeTab.name === 'Videos'" [channelUser]="channelUser"
                             [authUser]="authUser"></app-videos-tab>
             <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser"
                                [authUser]="authUser"></app-playlists-tab>
             <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>
-
-
         </div>
     </ng-container>
     <div class="channel-not-found" *ngIf="!channelUser">

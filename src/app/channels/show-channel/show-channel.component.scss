@@ -46,4 +46,8 @@
 
 #channel-tabs-list {
     width: 624px;
+    @media (max-width: 991px) {
+        max-width: 624px;
+        width: 100%;
+    }
 }

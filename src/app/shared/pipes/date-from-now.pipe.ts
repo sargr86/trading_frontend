@@ -10,7 +10,12 @@ export class DateFromNowPipe implements PipeTransform {
         let fromNow = moment(datetime).fromNow();
         if (fromNow === 'a day ago') {
             fromNow = '1 day ago';
+        } else if (fromNow === 'a month ago') {
+            fromNow = '1 month ago';
+        } else if (fromNow === 'a year ago') {
+            fromNow = '1 year ago';
         }
+
         return fromNow;
     }
 

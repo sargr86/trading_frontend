@@ -13,11 +13,12 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     searchStocksForm: FormGroup;
     searchResults = [];
     myControl = new FormControl();
-    loadingSearchRes = 'idle';
+    loadingSearch = 'idle';
     subscriptions: Subscription[] = [];
 
     passedSearch;
     @Input('modal') modal = false;
+    @Input('portable') portable = false;
     @Output('search') search = new EventEmitter();
 
     constructor(
@@ -39,11 +40,11 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
 
     searchStocks() {
         if (!this.modal) {
-            this.loadingSearchRes = 'loading';
+            this.loadingSearch = 'loading';
             this.subscriptions.push(
                 this.stocksService.searchStocks({...this.searchStocksForm.value, autocomplete: 1}).subscribe(dt => {
                     console.log('finished')
-                    this.loadingSearchRes = 'finished';
+                    this.loadingSearch = 'finished';
                     this.searchResults = dt;
                 }));
         } else {
@@ -52,10 +53,12 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     }
 
     async openStockPage(stock, trigger) {
-        trigger.closePanel();
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock}/analytics`])
-        );
+        if (!this.portable) {
+            trigger.closePanel();
+            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+                await this.router.navigate([`stocks/${stock}/analytics`])
+            );
+        }
     }
 
     ngOnDestroy() {

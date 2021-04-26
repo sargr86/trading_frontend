@@ -16,7 +16,8 @@
                 <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
             </div>
         </div>
-        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')" (click)="openStockProfile(stock.symbol)">
+        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')"
+             (click)="openStockProfile(stock.symbol)">
             <ngx-charts-line-chart [scheme]="colorScheme" [legend]="false"
                                    [showXAxisLabel]="false" [tooltipDisabled]="true"
                                    [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"
@@ -33,24 +34,23 @@
 <div id="portable-stocks-list" *ngIf="portable">
     <div class="stocks-top-actions">
         <div class="search-stocks">
-            <ng-container>
-                <div class="watchlist-search" *ngIf="editUserStocks">
-                    <input class="watchlist-input" placeholder="Search">
-                    <i class="fas fa-search"></i>
+            <div class="watchlist-search" *ngIf="editUserStocks">
+                <!--                    <input class="watchlist-input" placeholder="Search" (keyup)="searchStocks()">-->
+                <!--                    <i class="fas fa-search"></i>-->
+                <app-search-stocks-form [portable]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
+            </div>
+            <div class="dropdown" *ngIf="sort.name">
+                <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                     aria-haspopup="true"
+                     aria-expanded="false">
+                    Sort by {{selectedSortType.name}}
                 </div>
-                <div class="dropdown" *ngIf="sort.name">
-                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
-                         aria-haspopup="true"
-                         aria-expanded="false">
-                        Sort by {{selectedSortType.name}}
-                    </div>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" *ngFor="let sortType of sortTypes;let ind = index"
-                           [class.red]="selectedSortType === sortType"
-                           (click)="sortStocks(sortType)">{{sortType.name}}</a>
-                    </div>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" *ngFor="let sortType of sortTypes;let ind = index"
+                       [class.red]="selectedSortType === sortType"
+                       (click)="sortStocks(sortType)">{{sortType.name}}</a>
                 </div>
-            </ng-container>
+            </div>
         </div>
         <div class="context-actions" *ngIf="editPortable">
             <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>

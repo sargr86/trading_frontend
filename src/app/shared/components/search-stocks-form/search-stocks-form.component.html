@@ -1,4 +1,4 @@
-<form [formGroup]="searchStocksForm" [class.modal-form]="modal">
+<form [formGroup]="searchStocksForm" [class.modal-form]="modal" [class.portable]="portable">
     <div class="home-search">
         <input class="home-search-input" [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'" [class.white]="modal"
                [placeholder]="(modal? 'Search':'Search for stocks')+'...'"
@@ -9,7 +9,7 @@
 
         <mat-autocomplete #auto="matAutocomplete" [hidden]="modal">
 
-            <ng-container *ngIf="loadingSearchRes==='finished'">
+            <ng-container *ngIf="loadingSearch==='finished'">
                 <mat-optgroup *ngFor="let group of searchResults" [label]="group.name">
                     <mat-option *ngFor="let stock of group.stocks" [value]="stock.name"
                                 (click)="openStockPage(stock.symbol, trigger)">
@@ -26,5 +26,5 @@
         </mat-autocomplete>
         <i class="fas fa-search"></i>
     </div>
-    <mat-spinner [diameter]="25" *ngIf="loadingSearchRes ==='loading'"></mat-spinner>
+    <mat-spinner [diameter]="25" *ngIf="loadingSearch ==='loading'"></mat-spinner>
 </form>

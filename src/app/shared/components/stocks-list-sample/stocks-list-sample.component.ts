@@ -91,12 +91,15 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     openStockProfile(stock) {
-        // if (!this.follow) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
-                await this.router.navigate([`stocks/${stock}/analytics`])
-            }
-        );
-        // }
+        console.log(this.portable)
+        if (!this.portable) {
+            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
+                    await this.router.navigate([`stocks/${stock}/analytics`]);
+                }
+            );
+        } else {
+            this.updateFollowedStocksList(stock);
+        }
     }
 
     getPercentageDetails(stock) {
@@ -106,6 +109,10 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             color: (+value > 0 ? 'green' : 'red'),
             class: 'analytics-text-' + (+value > 0 ? '4' : '5')
         };
+    }
+
+    getSearchResults(e) {
+        console.log(e)
     }
 
     drop(e) {
@@ -172,6 +179,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             domain: (stock.changesPercentage > 0 ? ['#18B587'] : ['#F53C6F'])
         };
     }
+
 
     ngOnChanges(changes: SimpleChanges) {
 

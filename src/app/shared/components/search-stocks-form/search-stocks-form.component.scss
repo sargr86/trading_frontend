@@ -7,6 +7,16 @@ form {
     align-items: center;
 }
 
+.portable {
+    & {
+        width: 72%;
+    }
+
+    input {
+        background: $white;
+    }
+}
+
 .modal-form {
     .home-search, input {
         background: transparent !important;

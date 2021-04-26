@@ -63,15 +63,10 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         private updateStocks: UpdateUserStocksPipe
     ) {
         this.authUser = this.getAuthUser.transform();
-        // this.subject.getUserStocksData().subscribe(dt => {
-        //     this.userStocks = dt;
-        //     this.cdr.detectChanges();
-        // });
     }
 
     ngOnInit(): void {
         this.selectedSortType = this.sort;
-
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
@@ -125,7 +120,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         };
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
             this.selectedSortType = this.sortTypes[0];
-            console.log(dt)
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
         });
     }

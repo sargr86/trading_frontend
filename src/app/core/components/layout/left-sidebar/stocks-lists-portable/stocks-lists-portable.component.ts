@@ -91,7 +91,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     getUserStocks() {
-        console.log(this.authUser)
         this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             sort_type: this.authUser.stocks_order_type?.name

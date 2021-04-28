@@ -217,6 +217,15 @@
     cursor: pointer;
 }
 
+.sort-types-dropdown {
+    display: flex;
+    align-items: center;
+
+    .spinner-container {
+        margin-left: 10px;
+    }
+}
+
 .unfollow-btn {
     border: none !important;
     margin-top: 5px;

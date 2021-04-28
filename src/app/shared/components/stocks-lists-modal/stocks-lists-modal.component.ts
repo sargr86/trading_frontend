@@ -5,6 +5,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 import {SubjectService} from '@core/services/subject.service';
+import {updateStockDetails} from '@core/helpers/update-stock-details';
 
 @Component({
     selector: 'app-stocks-lists',
@@ -129,23 +130,13 @@ export class StocksListsModalComponent implements OnInit {
         return !!this.userStocks.find(s => s.name === stock.name);
     }
 
-    compareWithMainStockList(userStocks) {
+    updateStockDetails(userStocks) {
 
-        if (!this.search) {
+        // if (!this.search) {
 
-            // console.log(this.stocks)
-            userStocks.map(st => {
-                const found = this.stocks.find(fs => fs.name === st.name);
-                // console.log(found)
-                if (found) {
-                    st.change = found.change;
-                    st.changesPercentage = found.changesPercentage;
-                    st.price = found.price;
-                    return st;
-                }
-            });
-        }
-        return userStocks;
+
+        // }
+        return updateStockDetails(userStocks, this.stocks);
     }
 
     getSearchResults(e) {

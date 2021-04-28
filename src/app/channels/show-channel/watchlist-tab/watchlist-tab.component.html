@@ -1,6 +1,6 @@
 <div class="favorites" *ngIf="filteredStocks && channelUser.username === authUser.username">
     <mat-spinner *ngIf="stocksLoading==='loading'" [diameter]="20"></mat-spinner>
-    <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" *ngIf="filteredStocks.length > 0"
-                            [userStocks]="compareWithMainStockList(userStocks)"
+    <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" *ngIf="stocks.length > 0"
+                            [userStocks]="updateStockDetails(userStocks)"
                             (updatedStocksList)="followStock($event)"></app-stocks-list-sample>
 </div>

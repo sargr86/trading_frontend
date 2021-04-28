@@ -28,9 +28,9 @@
 
         <div class="user-stocks-list">
 
-            <app-stocks-list-sample [stocks]="compareWithMainStockList(userStocks)" [type]="selectedStockType"
+            <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" [type]="selectedStockType"
                                     (updatedStocksList)="updateFollowedStocks($event)"
-                                    [userStocks]="compareWithMainStockList(userStocks)"
+                                    [userStocks]="updateStockDetails(userStocks)"
                                     *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
             <p *ngIf="userStocks?.length===0 && stocksLoading!=='loading'">No user stocks of selected type is found</p>
         </div>
@@ -69,7 +69,7 @@
 
             <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
                                     [type]="selectedStockType"
-                                    [userStocks]="compareWithMainStockList(userStocks)"
+                                    [userStocks]="updateStockDetails(userStocks)"
                                     (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
             <p *ngIf="filteredStocks?.length===0 && stocksLoading!=='loading'">No stocks of selected type is found</p>
         </div>

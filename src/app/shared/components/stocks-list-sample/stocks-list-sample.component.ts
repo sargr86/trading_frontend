@@ -42,6 +42,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         {name: 'Loss', value: 'loss'}
     ];
     selectedSortType;
+    sortedListLoading = false;
 
 
     // Stock chart settings
@@ -148,17 +149,19 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         const sendData = {
             rows: JSON.stringify(this.passedStocks),
             user_id: this.authUser.id,
-            order_type: type.value
+            order_type: type.value,
+            changeSortTypeOnly: true
         };
         // console.log(sendData)
+        this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
+            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+        });
 
-        if (type.name !== 'My sort') {
-            this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
-                localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-            });
-        } else {
-            this.stocksService.getUserStocks({sort_type: type, user_id: this.authUser.id}).subscribe(dt => {
+        if (type.name === 'My sort') {
+            this.sortedListLoading = true;
+            this.stocksService.getUserStocks({sort_type: type.value, user_id: this.authUser.id}).subscribe(dt => {
                 this.passedStocks = dt?.user_stocks || [];
+                this.sortedListLoading = false;
             });
         }
 

@@ -28,6 +28,10 @@ export class StocksService {
         return this.httpClient.get<any>(`${API_URL}stocks/get-by-type`, {params});
     }
 
+    getBatchStocksList(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-batch-results`, {params});
+    }
+
     getHistoricalPrices(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-historical`, {params});
     }

@@ -8,6 +8,7 @@ import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {User} from '@shared/models/user';
+import {updateStockDetails} from '@core/helpers/update-stock-details';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -48,73 +49,43 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
-        this.getStocksByType('stocks');
-        this.getStockTypes();
-        this.getUserStocks();
 
         this.subject.currentUserStocks.subscribe(dt => {
             this.userStocks = dt;
+            if (dt.length > 0) {
+                this.getBatchStocksList();
+            }
         });
     }
 
-    getStockTypes() {
-        this.stocksService.getStockTypes({}).subscribe(dt => {
-            this.stockTypes = dt;
-            this.selectedStockType = dt[0];
-        });
-    }
 
-    getStocksByType(type) {
+    getBatchStocksList() {
+        let stocks = '';
+
+        this.userStocks.map((us, index) => {
+            stocks += us.symbol + (index === this.userStocks.length - 1 ? '' : ',');
+        });
         this.stocksLoading = 'loading';
-        this.stocksService.getStocksByType({type}).subscribe(dt => {
+        this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
             this.stocks = dt;
             this.stocksLoading = 'finished';
-            this.filterStocks();
-        });
-    }
-
-    // Filters routes for floating panel
-    filterStocks() {
-        this.filteredStocks = this.stocks.slice(this.pageIndex * this.pageSize,
-            this.pageIndex * this.pageSize + this.pageSize);
-    }
-
-    // Handles floating panel routes pagination
-    handle(e) {
-        this.pageIndex = e.pageIndex;
-        this.pageSize = e.pageSize;
-        this.filterStocks();
+        }));
     }
 
     followStock(stocks) {
 
-        this.stocksService.updateFollowedStocks({
+        this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.changeUserStocks(this.userStocks);
-        });
+        }));
     }
 
 
-    compareWithMainStockList(userStocks) {
-        userStocks.map(st => {
-            const found = this.stocks.find(fs => fs.name === st.name);
-            if (found) {
-                st.change = found.change;
-                st.changesPercentage = found.changesPercentage;
-                st.price = found.price;
-                return st;
-            }
-        });
-        return userStocks;
-    }
-
-    getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
-            this.userStocks = dt?.user_stocks || [];
-        });
+    updateStockDetails(userStocks) {
+        return updateStockDetails(userStocks, this.stocks);
     }
 
 

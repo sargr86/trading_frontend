@@ -13,9 +13,9 @@
                                 *ngIf="selectedSortType" [sort]="selectedSortType"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
-        <!--        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('/channels/show')" class="see-more">-->
-        <!--            See more-->
-        <!--        </p>-->
+                <p (click)="viewFullWatchlist()"  class="see-more">
+                    See more
+                </p>
 
     </div>
     <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">

@@ -88,6 +88,15 @@ export const VIDEO_FILTERS = [
             {name: 'Short (<= 30 seconds)', value: 'short'},
             {name: 'Long (>30 seconds and <1 hour)', value: 'long'},
         ]
+    },
+    {
+        group: {name: 'Category', value: 'category'}, items: [
+            {name: 'All', value: 'all'},
+            {name: 'Stock', value: 'stocks'},
+            {name: 'ETF', value: 'etf'},
+            {name: 'Forex', value: 'forex'},
+            {name: 'Crypto', value: 'crypto'},
+        ]
     }
 
 ];
@@ -102,12 +111,19 @@ export const STOCK_CATEGORIES = [
 export const DESCRIPTION_CHARACTERS_LIMIT = 100;
 
 export const MAIN_SECTIONS = [
-    {name: 'Start live video', img: '', icon: 'video_call', link: '/user/video/start-live-video', auth: true, production: true},
+    {
+        name: 'Start live video',
+        img: '',
+        icon: 'video_call',
+        link: '/user/video/start-live-video',
+        auth: true,
+        production: true
+    },
     {name: 'Home', img: '', icon: 'home', link: '/', auth: false, production: true},
     {name: 'Trending', img: 'item-9', icon: '', link: '/trending', separator: true, auth: false, production: true},
     {name: 'Messages', img: 'item-8', icon: '', link: '/chat/messages', production: false, auth: true},
     {name: 'Chat rooms', img: 'item-8', icon: '', link: '/chat/rooms', separator: true, production: false, auth: true},
-    {name: 'Saved videos', img: 'item-11', icon: '', link: '/videos/saved',  production: true, auth: true},
+    {name: 'Saved videos', img: 'item-11', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11', icon: '', link: '/videos', auth: true, separator: true, production: true},
     {name: 'Analytics', img: 'item-9', icon: '', link: '/stocks/analytics', auth: true, production: true},
 ];

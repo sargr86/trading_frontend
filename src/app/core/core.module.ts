@@ -29,6 +29,7 @@ import {AddStockDialogComponent} from './components/modals/add-stock-dialog/add-
 import {SectionLinksComponent} from '@core/components/layout/left-sidebar/section-links/section-links.component';
 import { ChannelSubscriptionsComponent } from './components/layout/left-sidebar/channel-subscriptions/channel-subscriptions.component';
 import { StocksListsPortableComponent } from './components/layout/left-sidebar/stocks-lists-portable/stocks-lists-portable.component';
+import { PageLoadingComponent } from './components/ungrouped/page-loading/page-loading.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { StocksListsPortableComponent } from './components/layout/left-sidebar/s
         SectionLinksComponent,
         ChannelSubscriptionsComponent,
         StocksListsPortableComponent,
+        PageLoadingComponent,
     ],
     imports: [
         CommonModule,

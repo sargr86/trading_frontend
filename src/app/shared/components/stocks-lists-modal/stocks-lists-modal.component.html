@@ -6,9 +6,9 @@
             </div>
 
             <div class="center-group">
-                <div class="spinner-container" *ngIf="stocksLoading==='loading'">
+                <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
                     <mat-spinner [diameter]="25"></mat-spinner>
-                    <span>Loading stocks lists...</span>
+                    <span>{{stocksLoading.text}}...</span>
                 </div>
             </div>
 
@@ -29,10 +29,11 @@
         <div class="user-stocks-list">
 
             <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" [type]="selectedStockType"
-                                    (updatedStocksList)="updateFollowedStocks($event)"
+                                    (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"
                                     [userStocks]="updateStockDetails(userStocks)"
-                                    *ngIf="filteredStocks.length > 0"></app-stocks-list-sample>
-            <p *ngIf="userStocks?.length===0 && stocksLoading!=='loading'">No user stocks of selected type is found</p>
+                                    *ngIf="userStocks.length > 0"></app-stocks-list-sample>
+            <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">No user stocks of selected type is
+                found</p>
         </div>
     </div>
 
@@ -44,7 +45,7 @@
 
             </div>
 
-            <div class="center-group" [hidden]="stocksLoading==='loading' && !searched">
+            <div class="center-group" [hidden]="stocksLoading.status==='loading' && !searched">
                 <app-search-stocks-form [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
                 <!--                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>-->
 
@@ -52,7 +53,7 @@
 
             <div class="right-group">
 
-                <div class="paginator" *ngIf="stocksLoading==='finished'">
+                <div class="paginator" *ngIf="stocksLoading.status==='finished'">
                     <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
                                    #paginator
                                    [length]="stocks.length" [pageIndex]="pageIndex"
@@ -68,10 +69,11 @@
         <div class="all-stocks-list">
 
             <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
-                                    [type]="selectedStockType"
+                                    [type]="selectedStockType" [modal]="true"
                                     [userStocks]="updateStockDetails(userStocks)"
                                     (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
-            <p *ngIf="filteredStocks?.length===0 && stocksLoading!=='loading'">No stocks of selected type is found</p>
+            <p *ngIf="filteredStocks?.length===0 && stocksLoading.status!=='loading'">No stocks of selected type is
+                found</p>
         </div>
 
 

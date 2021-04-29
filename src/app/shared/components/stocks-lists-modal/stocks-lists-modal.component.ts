@@ -16,7 +16,7 @@ export class StocksListsModalComponent implements OnInit {
     stockTypes;
     stocks = [];
     selectedStockType;
-    stocksLoading = 'idle';
+    stocksLoading = {status: 'idle', text: 'Loading stocks list and charts'};
     filteredStocks = [];
     userStocks = [];
     authUser;
@@ -93,10 +93,10 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     getStocksByType(type) {
-        this.stocksLoading = 'loading';
+        this.stocksLoading.status = 'loading';
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
-            this.stocksLoading = 'finished';
+            this.stocksLoading.status = 'finished';
             this.pageSize = 14;
             this.pageIndex = 0;
             this.filterStocks();
@@ -117,12 +117,15 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     updateFollowedStocks(e) {
+        this.stocksLoading.status = 'loading';
+        this.stocksLoading.text = 'Updating stocks lists, details and charts';
         this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             stocks: e,
             type_id: this.selectedStockType.id
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            this.stocksLoading.status = 'finished';
         });
     }
 
@@ -142,7 +145,7 @@ export class StocksListsModalComponent implements OnInit {
     getSearchResults(e) {
         this.search = e?.search;
         this.searched = true;
-        this.stocksLoading = 'loading';
+        this.stocksLoading.status = 'loading';
         this.searchInStockType();
 
     }
@@ -153,7 +156,7 @@ export class StocksListsModalComponent implements OnInit {
             stockType: this.selectedStockType.value
         }).subscribe((dt: any) => {
             this.stocks = dt;
-            this.stocksLoading = 'finished';
+            this.stocksLoading.status = 'finished';
             this.filterStocks();
         });
     }

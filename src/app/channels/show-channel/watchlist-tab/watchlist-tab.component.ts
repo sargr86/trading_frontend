@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {API_URL, STOCK_CATEGORIES} from '@core/constants/global';
 import {Router} from '@angular/router';
@@ -42,7 +42,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -52,6 +53,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
         this.subject.currentUserStocks.subscribe(dt => {
             this.userStocks = dt;
+            this.stocksLoading = 'loading';
             if (dt.length > 0) {
                 this.getBatchStocksList();
             }
@@ -69,17 +71,20 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
             this.stocks = dt;
             this.stocksLoading = 'finished';
+            this.cdr.detectChanges();
         }));
     }
 
-    followStock(stocks) {
-
+    updateStocksList(stocks) {
+        this.stocksLoading = 'loading';
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt.user_stocks;
             this.subject.changeUserStocks(this.userStocks);
+            this.stocksLoading = 'finished';
+            this.cdr.detectChanges();
         }));
     }
 

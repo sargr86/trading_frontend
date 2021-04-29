@@ -7,6 +7,9 @@
             <a class="nav-link active" [class.active]="activeTab.name==='today'" id="today-tab">Today</a>
         </li>
     </ul>
+    <div class="spinner-container">
+        <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
+    </div>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
         <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true" [follow]="false"
                                 [editPortable]="true"
@@ -19,9 +22,7 @@
 
     </div>
     <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
-        <div class="spinner-container">
-            <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
-        </div>
+
         <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [follow]="false"
                                 (updatedStocksList)="updateFollowedLists($event)" *ngIf="dataLoading==='finished'"
                                 [portable]="true"></app-stocks-list-sample>

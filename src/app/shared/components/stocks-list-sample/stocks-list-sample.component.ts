@@ -29,6 +29,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     @Input('type') selectedStockType;
     @Input('sort') sort = {name: '', id: ''};
     @Input('editPortable') editPortable = false;
+    @Input('modal') modal = false;
 
     authUser;
     userStocksOnly = this.passedStocks === this.userStocks;
@@ -78,6 +79,9 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     updateFollowedStocksList(stock) {
         const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+        if (!this.modal) {
+            this.passedStocks = userStocks;
+        }
         this.updatedStocksList.emit(userStocks);
 
     }

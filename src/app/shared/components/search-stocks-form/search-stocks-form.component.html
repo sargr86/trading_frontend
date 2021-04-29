@@ -10,7 +10,10 @@
 
         <mat-autocomplete #auto="matAutocomplete" [hidden]="modal">
 
-            <ng-container *ngIf="loadingSearch==='finished' && !portable">
+            <ng-container *ngIf="loadingSearch==='finished' && portable then regularList else groupedList">
+            </ng-container>
+
+            <ng-template #groupedList>
                 <mat-optgroup *ngFor="let group of searchResults" [label]="group.name">
                     <mat-option *ngFor="let stock of group.stocks" [value]="stock.name"
                                 (click)="openStockPage(stock, trigger)">
@@ -18,15 +21,15 @@
                         <p>{{stock.name}}</p>
                     </mat-option>
                 </mat-optgroup>
-            </ng-container>
+            </ng-template>
 
-            <ng-container *ngIf="loadingSearch==='finished' && portable">
+            <ng-template #regularList>
                 <mat-option *ngFor="let stock of searchResults" [value]="stock.symbol" [@.disabled]="true"
                             (click)="sendBack(stock, trigger)">
                     <span class="stock-symbol">{{stock.symbol}}</span>
                     <span class="stock-name">{{stock.name}}</span>
                 </mat-option>
-            </ng-container>
+            </ng-template>
 
 
         </mat-autocomplete>

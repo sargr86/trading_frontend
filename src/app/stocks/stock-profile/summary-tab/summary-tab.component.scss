@@ -11,6 +11,15 @@
     .table-container {
         table {
             width: 100%;
+
+            .action-column {
+                display: flex;
+                align-items: center;
+
+                mat-spinner {
+                    margin-left: 20px;
+                }
+            }
         }
 
         #watchlist-act-btn {

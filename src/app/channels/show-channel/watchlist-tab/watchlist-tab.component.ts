@@ -9,6 +9,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {User} from '@shared/models/user';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -43,7 +44,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private loader: LoaderService
     ) {
     }
 
@@ -53,7 +55,6 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
         this.subject.currentUserStocks.subscribe(dt => {
             this.userStocks = dt;
-            this.stocksLoading = 'loading';
             if (dt.length > 0) {
                 this.getBatchStocksList();
             }
@@ -71,19 +72,20 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
             this.stocks = dt;
             this.stocksLoading = 'finished';
+            this.loader.hide();
             this.cdr.detectChanges();
         }));
     }
 
     updateStocksList(stocks) {
-        this.stocksLoading = 'loading';
+        // this.stocksLoading = 'loading';
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks}
         }).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+            this.userStocks = dt?.user_stocks || [];
             this.subject.changeUserStocks(this.userStocks);
-            this.stocksLoading = 'finished';
+            // this.stocksLoading = 'finished';
             this.cdr.detectChanges();
         }));
     }

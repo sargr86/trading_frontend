@@ -30,9 +30,12 @@
                         <th mat-header-cell *matHeaderCellDef> {{normalizeColName(col)}}</th>
                         <td mat-cell *matCellDef="let element">
                             <span *ngIf="col!=='action'">{{element[col]}}</span>
-                            <button id="watchlist-act-btn" (click)="updateUserStocks(element)"
-                                    [ngClass]="addedToWatchlist? 'red-bg':'green-bg'"
-                                    *ngIf="col==='action'">{{(addedToWatchlist ? 'Remove from' : 'Add to') + ' watchlist'}}</button>
+                            <div *ngIf="col==='action'" class="action-column">
+                                <button id="watchlist-act-btn" (click)="updateUserStocks(element)"
+                                        [ngClass]="addedToWatchlist? 'red-bg':'green-bg'"
+                                >{{(addedToWatchlist ? 'Remove from' : 'Add to') + ' watchlist'}}</button>
+                                <mat-spinner [diameter]="15" *ngIf="processingStock"></mat-spinner>
+                            </div>
                         </td>
                     </ng-container>
                 </ng-container>

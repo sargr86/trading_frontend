@@ -35,6 +35,7 @@ export class SummaryTabComponent implements OnInit {
 
     authUser;
     stocksUpdatedHere = false;
+    processingStock = false;
 
     @Input('selectedStock') selectedStock;
 
@@ -83,14 +84,18 @@ export class SummaryTabComponent implements OnInit {
 
 
     updateUserStocks(stock) {
+        this.processingStock = true;
         const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, stock.type_id);
         this.addedToWatchlist = following;
+        this.loader.show();
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             stocks: userStocks
         }).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+            this.processingStock = false;
+            this.userStocks = dt?.user_stocks || [];
             this.stocksUpdatedHere = true;
+            this.loader.hide();
             this.subject.changeUserStocks(this.userStocks);
         }));
     }

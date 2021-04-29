@@ -6,6 +6,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -34,7 +35,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         private subject: SubjectService,
         private stocksService: StocksService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private loader: LoaderService
     ) {
     }
 
@@ -56,7 +58,9 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         if (this.authUser) {
             this.subscriptions.push(this.subject.currentUserStocks.subscribe(dt => {
                 this.userStocks = dt;
+                this.selectedSortType = this.authUser.stocks_order_type;
                 this.cdr.detectChanges();
+                this.loader.hide();
             }));
 
             this.getUserStocks();
@@ -105,7 +109,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     updateFollowedLists(stocks) {
         this.subscriptions.push(this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
+            this.userStocks = dt?.user_stocks || [];
             this.subject.changeUserStocks(this.userStocks);
         }));
     }

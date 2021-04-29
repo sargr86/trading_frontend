@@ -14,6 +14,8 @@ import {SubjectService} from '@core/services/subject.service';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {StocksService} from '@core/services/stocks.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
+import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-stocks-list-sample',
@@ -53,6 +55,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         domain: ['#ffffff']
     };
 
+    subscriptions: Subscription[] = [];
+
 
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
@@ -62,7 +66,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         private subject: SubjectService,
         private cdr: ChangeDetectorRef,
         private stocksService: StocksService,
-        private updateStocks: UpdateUserStocksPipe
+        private updateStocks: UpdateUserStocksPipe,
+        private loader: LoaderService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -74,14 +79,25 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
                 this.routerUrl = ev.url;
             }
         });
+
+        this.subscriptions.push(this.loader.currentLoaderState.subscribe(dt => {
+            this.sortedListLoading = dt;
+        }));
     }
 
 
     updateFollowedStocksList(stock) {
-        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
         if (!this.modal) {
             this.passedStocks = userStocks;
+        } else {
+            if (following) {
+                this.userStocks = userStocks;
+            } else {
+                this.passedStocks = userStocks;
+            }
         }
+        this.loader.show();
         this.updatedStocksList.emit(userStocks);
 
     }
@@ -185,6 +201,14 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
                 this.selectedStockType = changes.selectedStockType.currentValue;
             } else if (property === 'userStocks') {
                 this.userStocks = changes.userStocks.currentValue;
+                if (this.selectedSortType?.name) {
+                    this.sortStocks(this.selectedSortType);
+                }
+            } else if (property === 'passedStocks') {
+                this.passedStocks = changes.passedStocks.currentValue;
+                if (this.selectedSortType?.name) {
+                    this.sortStocks(this.selectedSortType);
+                }
             }
         }
     }

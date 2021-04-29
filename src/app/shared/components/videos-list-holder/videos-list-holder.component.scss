@@ -22,6 +22,7 @@
         max-width: 400px;
         cursor: pointer;
     }
+
     @media (max-width: 992px) {
 
         min-width: 300px;
@@ -29,9 +30,12 @@
 }
 
 .video-info {
+    display: flex;
+    margin-top: 12px;
+    flex-direction: column;
 
     .left-side {
-        width: 50%;
+        width: 100%;
         display: flex;
         @media (max-width: 992px) {
             width: 100%;
@@ -39,10 +43,10 @@
     }
 
     .right-side {
-        width: 50%;
+        width: 100%;
+        margin-left: 56px;
 
         ul {
-            text-align: right;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -56,10 +60,12 @@
                     @include tagItem;
                 }
             }
+
             @media (max-width: 992px) {
-               text-align: left;
+                text-align: left;
             }
         }
+
         @media (max-width: 992px) {
             width: 100%;
         }
@@ -75,7 +81,7 @@
     cursor: pointer;
 }
 
-.update-privacy{
+.update-privacy {
     position: absolute;
     top: 16px;
     right: 16px;

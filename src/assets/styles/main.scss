@@ -102,6 +102,9 @@ li {
         object-fit: cover;
         border-radius: 50%;
     }
+    @media (max-width: 992px) {
+        flex-direction: column;
+    }
 }
 
 .video-name, .channel-name {
@@ -109,6 +112,10 @@ li {
     font-size: 16px;
     font-family: "Muli-Bold";
     margin-bottom: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .channel-sub-name {
@@ -442,6 +449,13 @@ select {
 
         img {
             height: 115px;
+            @media (max-width: 992px) {
+                height: 140px;
+            }
+        }
+        @media (max-width: 992px) {
+            flex: 0 0 100%;
+            margin-bottom: 10px;
         }
 
 
@@ -464,18 +478,38 @@ select {
     .details {
         flex: 1;
         margin-left: 32px;
+        min-width: 250px;
+
+        h4.title {
+            margin: 0;
+            text-transform: capitalize;
+            font-family: "Muli-Bold", sans-serif;
+            color: #545454;
+            font-size: 16px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            max-width: 400px;
+            height: 20px;
+        }
 
         .title {
             display: flex;
             justify-content: space-between;
-            height: 23px;
+            min-height: 23px;
 
             h4 {
                 margin: 0;
                 text-transform: capitalize;
-                font-family: "Muli-Bold";
+                font-family: "Muli-Bold", sans-serif;
                 color: #545454;
                 font-size: 16px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                height: 20px;
             }
 
             .dotes {
@@ -516,7 +550,6 @@ select {
                 white-space: nowrap;
             }
         }
-
         .shortened-description {
             margin-top: 5px;
             margin-bottom: 0;
@@ -528,7 +561,6 @@ select {
             -webkit-box-orient: vertical;
             max-width: 250px;
         }
-
         .video-details-2nd-row {
             display: flex;
             flex-direction: column;
@@ -546,7 +578,6 @@ select {
                 }
             }
         }
-
         .channel-details {
             margin-top: 4px;
 
@@ -563,7 +594,6 @@ select {
                 color: #818181;
             }
         }
-
         .saved-video {
             display: flex;
             align-items: center;
@@ -573,6 +603,13 @@ select {
             mat-icon {
                 color: #18B587;
             }
+        }
+        @media (min-width: 883px) and (max-width: 991px) {
+            min-width: 300px;
+        }
+        @media (max-width: 882px) {
+            margin-left: 0;
+            min-width: 332px;
         }
 
     }

@@ -17,8 +17,14 @@
         flex-wrap: wrap;
 
 
-        .left-group, .center-group, .right-group {
+        .left-group,
+        .center-group,
+        .right-group {
             width: 30%;
+            min-width: 190px;
+            @media (max-width: 540px) {
+                width: 100%;
+            }
         }
 
         h2 {
@@ -36,6 +42,13 @@
         }
 
     }
+    @media (max-width: 1400px) {
+        padding: 60px 150px;
+    }
+    @media (max-width: 991px) {
+        padding: 60px 50px;
+        justify-content: space-around;
+    }
 }
 
 .favorites {
@@ -50,7 +63,6 @@
         justify-content: flex-end;
     }
 }
-
 .all-stocks {
     .all-stocks-list {
         p {
@@ -58,7 +70,6 @@
         }
     }
 }
-
 .addStockWrap {
     .crypto-item {
         display: flex;
@@ -75,13 +86,9 @@
         }
     }
 }
-
-
 .crypto-map {
     width: 100%;
 }
-
-
 .modal-dialog {
     margin: 0 !important;
 }
@@ -131,21 +138,23 @@ select {
     justify-content: space-between;
     max-width: 200px;
     width: 100%;
-}
-
-
-
-@media (max-width: 1400px) {
-    .crypto-section {
-        padding: 60px 150px;
+    @media (max-width: 540px) {
+        max-width: 100%;
     }
 }
+.close-modal-btn {
+    @media (max-width: 540px) {
+        position: absolute;
+        top: 20px;
+    }
+
+}
+
+
+
+
 
 @media (max-width: 991px) {
-    .crypto-section {
-        padding: 60px 50px;
-        justify-content: space-around;
-    }
     .crypto-content {
         justify-content: space-around;
     }

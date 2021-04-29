@@ -2,10 +2,10 @@
 </ng-container>
 
 <ng-template #tilesList>
-    <div class="crypto-content">
-        <div class="crypto-item" *ngFor="let stock of passedStocks"
-             [class.crypto-item-green]="stock.changesPercentage > 0">
-            <div class="stock-follow" [hidden]="!follow">
+    <div class="stocks-list-holder">
+        <div class="stock-item" *ngFor="let stock of passedStocks"
+             [class.stock-item-green]="stock.changesPercentage > 0">
+            <div class="stock-follow" [hidden]="!followAllowed">
                 <button (click)="updateFollowedStocksList(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
 
                 <button class="unfollow-btn" (click)="updateFollowedStocksList(stock)" *ngIf="isStockFollowed(stock)">
@@ -13,11 +13,11 @@
                 </button>
             </div>
             <div (click)="openStockProfile(stock.symbol)">
-                <p class="crypto-text-1">{{stock.name}}</p>
-                <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
-                <div class="crypto-block">
-                    <p class="crypto-text-1">{{stock.change?.toFixed(2)}}</p>
-                    <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
+                <p class="stock-name">{{stock.name}}</p>
+                <p class="stock-price"><span class="dollar-sign">$</span>{{stock.price}}</p>
+                <div class="stock-price-details">
+                    <p class="stock-price-change">{{stock.change?.toFixed(2)}}</p>
+                    <p class="stock-price-change-percent">{{stock.changesPercentage}}%</p>
                 </div>
             </div>
             <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')"

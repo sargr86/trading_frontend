@@ -23,7 +23,7 @@ import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 export class StocksListSampleComponent implements OnInit, OnChanges {
     @Input('stocks') passedStocks = [];
     @Input('userStocks') userStocks = [];
-    @Input('follow') follow = true;
+    @Input('followAllowed') followAllowed = true;
     @Input('unfollow') unfollow = false;
     @Input('portable') portable = false;
     @Input('type') selectedStockType;

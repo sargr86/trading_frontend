@@ -1,11 +1,11 @@
 <div class="stock-content">
     <div class="major-indexes">
         <h2>Major indexes</h2>
-        <div class="favorites">
+        <div class="stocks-list-container">
             <div class="spinner-container">
                 <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
             </div>
-            <app-stocks-list-sample [stocks]="indices" [follow]="false"></app-stocks-list-sample>
+            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"></app-stocks-list-sample>
         </div>
     </div>
     <div class="stock-tabs" *ngIf="selectedStock">

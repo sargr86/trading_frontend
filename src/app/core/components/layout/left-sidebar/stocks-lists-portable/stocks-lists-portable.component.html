@@ -11,7 +11,7 @@
         <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
     </div>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true" [follow]="false"
+        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true" [followAllowed]="false"
                                 [editPortable]="true"
                                 *ngIf="selectedSortType" [sort]="selectedSortType"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
@@ -23,7 +23,7 @@
     </div>
     <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
 
-        <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [follow]="false"
+        <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"
                                 (updatedStocksList)="updateFollowedLists($event)" *ngIf="dataLoading==='finished'"
                                 [portable]="true"></app-stocks-list-sample>
         <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('analytics') && dataLoading==='finished'"

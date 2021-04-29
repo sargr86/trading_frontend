@@ -41,7 +41,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
         if (!this.modal) {
             this.loadingSearchRes = 'loading';
             this.subscriptions.push(
-                this.stocksService.searchStocks({...this.searchStocksForm.value, autocomplete: 1}).subscribe(dt => {
+                this.stocksService.searchStocks({...this.searchStocksForm.value, grouped: 1}).subscribe(dt => {
                     console.log('finished')
                     this.loadingSearchRes = 'finished';
                     this.searchResults = dt;

@@ -119,7 +119,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         return {
             ...{value},
             color: (+value > 0 ? 'green' : 'red'),
-            class: 'analytics-text-' + (+value > 0 ? '4' : '5')
+            class: 'stock-' + (+value > 0 ? 'green' : 'red')
         };
     }
 

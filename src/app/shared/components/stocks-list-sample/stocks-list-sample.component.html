@@ -2,7 +2,7 @@
 </ng-container>
 
 <ng-template #tilesList>
-    <div class="stocks-list-holder">
+    <div id="stock-tiles-holder">
         <div class="stock-item" *ngFor="let stock of passedStocks"
              [class.stock-item-green]="stock.changesPercentage > 0">
             <div class="stock-follow" [hidden]="!followAllowed">
@@ -36,18 +36,17 @@
         <mat-error *ngIf="passedStocks?.length ===0">No results found</mat-error>
     </div>
 </ng-template>
+
 <ng-template #portableStocksList>
     <div id="portable-stocks-list">
         <div class="stocks-top-actions">
             <div class="search-stocks">
                 <div class="watchlist-search" *ngIf="editUserStocks">
-                    <!--                    <input class="watchlist-input" placeholder="Search" (keyup)="searchStocks()">-->
-                    <!--                    <i class="fas fa-search"></i>-->
                     <app-search-stocks-form [portable]="true"
                                             (search)="getSearchResults($event)"></app-search-stocks-form>
                 </div>
                 <div class="sort-types-dropdown dropdown" *ngIf="sort.name">
-                    <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                    <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown"
                          aria-haspopup="true"
                          aria-expanded="false">
                         Sort by {{selectedSortType.name}}
@@ -76,15 +75,15 @@
         </div>
         <div id="portable-stocks" cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="passedStocks?.length > 0">
             <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks); let ind = index">
-                <div class="analytics-item" cdkDrag
+                <div class="portable-stock-item" cdkDrag
                      (cdkDragDropped)="dragDropped($event, stock)">
-                    <div class="analytics-delete" *ngIf="editUserStocks" (click)="updateFollowedStocksList(stock)">
+                    <div class="remove-stock" *ngIf="editUserStocks" (click)="updateFollowedStocksList(stock)">
                         <i class="fas fa-trash"></i>
                     </div>
-                    <div class="analytics-texts" (click)="openStockProfile(stock.symbol)">
-                        <div class="analytics-item-1">
-                            <p class="analytics-text-1">{{stock.symbol.replace('^', '')}}</p>
-                            <p class="analytics-text-2">{{stock.name}}</p>
+                    <div class="stock-details" (click)="openStockProfile(stock.symbol)">
+                        <div class="stock-name-symbol">
+                            <p class="stock-symbol">{{stock.symbol.replace('^', '')}}</p>
+                            <p class="stock-name">{{stock.name}}</p>
                         </div>
 
                         <ng-container
@@ -101,9 +100,9 @@
                                                        [showGridLines]="false" [showRefLabels]="false">
                                 </ngx-charts-line-chart>
                             </div>
-                            <div class="analytics-percent">
-                                <p class="analytics-text-3">{{stock.price?.toFixed(2)}}</p>
-                                <p [ngClass]="d?.class">
+                            <div class="stock-price-change">
+                                <p class="stock-price">{{stock.price?.toFixed(2)}}</p>
+                                <p [ngClass]="d?.class" class="stock-change-details">
                                     {{stock.change?.toFixed(2)}}({{d?.value?.toFixed(2)}}%)</p>
                             </div>
                         </ng-template>

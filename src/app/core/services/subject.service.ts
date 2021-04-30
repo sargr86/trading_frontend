@@ -8,6 +8,7 @@ export class SubjectService {
 
     userStocks = [];
     indices = [];
+    stockTypes = [];
 
     public messageData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
@@ -21,8 +22,10 @@ export class SubjectService {
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
     private indicesSource = new BehaviorSubject(this.indices);
+    private stockTypesSource = new BehaviorSubject(this.stockTypes);
 
     currentUserStocks = this.userStocksSource.asObservable();
+    currentStockTypes = this.stockTypesSource.asObservable();
     currentIndices = this.indicesSource.asObservable();
 
     constructor() {
@@ -106,5 +109,9 @@ export class SubjectService {
 
     changeIndices(stocks) {
         this.indicesSource.next(stocks);
+    }
+
+    changeStockTypes(stocks) {
+        this.stockTypesSource.next(stocks);
     }
 }

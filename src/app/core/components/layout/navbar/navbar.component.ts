@@ -18,7 +18,6 @@ import IsResponsive from '@core/helpers/is-responsive';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-    modalRef: BsModalRef;
     authUser;
     routerUrl;
     isSmallScreen = IsResponsive.isSmallScreen();

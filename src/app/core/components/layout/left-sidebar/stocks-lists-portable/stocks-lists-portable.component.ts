@@ -41,12 +41,13 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.selectedSortType = this.authUser.stocks_order_type;
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof RoutesRecognized) {
                 if (ev.url !== '/test') {
                     this.routerUrl = ev.url;
                     // if (!this.routerUrl?.includes('analytics')) {
-                    this.getIndices();
+                    // this.getIndices();  //@todo responsible for indices refresh on every page change
                     // }
                 }
 
@@ -58,12 +59,15 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         if (this.authUser) {
             this.subscriptions.push(this.subject.currentUserStocks.subscribe(dt => {
                 this.userStocks = dt;
-                this.selectedSortType = this.authUser.stocks_order_type;
+                // this.getStockTypes();
+
                 this.cdr.detectChanges();
                 this.loader.hide();
             }));
 
+
             this.getUserStocks();
+            this.getIndices(); // @todo remove if refreshing implemented
         }
 
         this.subscriptions.push(this.subject.getStocksData().subscribe(dt => {
@@ -73,6 +77,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
 
     }
+
 
     getIndices() {
         this.dataLoading = 'loading';
@@ -95,6 +100,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     getUserStocks() {
+        console.log('get user stocks from left-sidebar!!!')
         this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             sort_type: this.authUser.stocks_order_type?.name
@@ -108,6 +114,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     updateFollowedLists(stocks) {
+
         this.subscriptions.push(this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
             this.subject.changeUserStocks(this.userStocks);

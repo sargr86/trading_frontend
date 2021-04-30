@@ -32,8 +32,9 @@
                                     (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"
                                     [userStocks]="updateStockDetails(userStocks)"
                                     *ngIf="userStocks.length > 0"></app-stocks-list-sample>
-            <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">No user stocks of selected type is
-                found</p>
+            <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">
+                No user stocks of selected type is found
+            </p>
         </div>
     </div>
 
@@ -42,7 +43,6 @@
         <div class="top-wrap">
             <div class="left-group">
                 <h2>Tilez</h2>
-
             </div>
 
             <div class="center-group" [hidden]="stocksLoading.status==='loading' && !searched">

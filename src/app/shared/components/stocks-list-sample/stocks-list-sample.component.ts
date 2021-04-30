@@ -199,17 +199,19 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         for (const property in changes) {
             if (property === 'selectedStockType') {
                 this.selectedStockType = changes.selectedStockType.currentValue;
-            } else if (property === 'userStocks') {
-                this.userStocks = changes.userStocks.currentValue;
-                if (this.selectedSortType?.name) {
-                    this.sortStocks(this.selectedSortType);
-                }
-            } else if (property === 'passedStocks') {
-                this.passedStocks = changes.passedStocks.currentValue;
-                if (this.selectedSortType?.name) {
-                    this.sortStocks(this.selectedSortType);
-                }
             }
+            // else if (property === 'userStocks') {
+            //     this.userStocks = changes.userStocks.currentValue;
+            //     if (this.selectedSortType?.name) {
+            //         this.sortStocks(this.selectedSortType);
+            //     }
+            // }
+            // else if (property === 'passedStocks') {
+            //     this.passedStocks = changes.passedStocks.currentValue;
+            //     if (this.selectedSortType?.name) {
+            //         this.sortStocks(this.selectedSortType);
+            //     }
+            // }
         }
     }
 

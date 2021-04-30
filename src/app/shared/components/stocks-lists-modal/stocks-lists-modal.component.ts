@@ -6,6 +6,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 import {SubjectService} from '@core/services/subject.service';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-stocks-lists',
@@ -26,6 +27,8 @@ export class StocksListsModalComponent implements OnInit {
     public pageSize = 14;
     public pageIndex = 0;
 
+    subscriptions: Subscription[] = [];
+
 
     constructor(
         private modalService: BsModalService,
@@ -40,16 +43,11 @@ export class StocksListsModalComponent implements OnInit {
     ngOnInit(): void {
         this.getStocksByType('stocks');
         this.authUser = this.getAuthUser.transform();
-        this.getStockTypes();
-
-    }
-
-    getStockTypes() {
-        this.stocksService.getStockTypes({}).subscribe(dt => {
+        this.subscriptions.push(this.subject.currentStockTypes.subscribe(dt => {
             this.stockTypes = dt;
             this.selectedStockType = dt[0];
             this.getUserStocks({type_id: this.selectedStockType?.id});
-        });
+        }));
     }
 
     getUserStocks(params = {}) {

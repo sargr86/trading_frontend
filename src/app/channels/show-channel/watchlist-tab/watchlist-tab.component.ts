@@ -78,14 +78,14 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     updateStocksList(stocks) {
-        // this.stocksLoading = 'loading';
+        this.stocksLoading = 'loading';
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
             this.subject.changeUserStocks(this.userStocks);
-            // this.stocksLoading = 'finished';
+            this.stocksLoading = 'finished';
             this.cdr.detectChanges();
         }));
     }

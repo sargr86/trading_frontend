@@ -100,7 +100,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     getUserStocks() {
-        console.log('get user stocks from left-sidebar!!!')
         this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             sort_type: this.authUser.stocks_order_type?.name

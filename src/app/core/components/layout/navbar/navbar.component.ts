@@ -62,13 +62,15 @@ export class NavbarComponent implements OnInit {
     }
 
     openModal() {
-        this.dialog.open(StocksListsModalComponent, {
-            maxWidth: '100vw',
-            maxHeight: '100vh',
-            height: '100%',
-            width: '100%'
-        }).afterClosed().subscribe(dt => {
-        });
+        if (this.auth.loggedIn()) {
+            this.dialog.open(StocksListsModalComponent, {
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                height: '100%',
+                width: '100%'
+            }).afterClosed().subscribe(dt => {
+            });
+        }
     }
 
     logout() {

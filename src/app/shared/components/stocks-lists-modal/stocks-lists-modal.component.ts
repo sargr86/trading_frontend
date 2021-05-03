@@ -7,6 +7,7 @@ import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/
 import {SubjectService} from '@core/services/subject.service';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-stocks-lists',
@@ -36,7 +37,8 @@ export class StocksListsModalComponent implements OnInit {
         private matDialogRef: MatDialogRef<StocksListsModalComponent>,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private loader: LoaderService
     ) {
     }
 
@@ -94,24 +96,47 @@ export class StocksListsModalComponent implements OnInit {
         this.stocksLoading.status = 'loading';
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
-            this.stocksLoading.status = 'finished';
-            this.pageSize = 14;
-            this.pageIndex = 0;
+
+            // this.pageSize = 14;
+            // this.pageIndex = 0;
             this.filterStocks();
+            this.stocksLoading.status = 'finished';
+            // const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
+            // this.getStockGraphsDataByType(stockNamesList, dt);
         });
     }
 
+    getStockGraphsDataByType(stocks, allStocks, filter = false) {
+        this.stocksLoading.status = 'loading';
+        this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
+            const st = allStocks.map((item, i) => Object.assign({}, item, dt[i]));
+            if (filter) {
+                this.filteredStocks = st;
+            } else {
+                this.stocks = st;
+                this.filterStocks();
+            }
+            this.stocksLoading.status = 'finished';
+
+        });
+
+    }
+
     // Filters routes for floating panel
-    filterStocks() {
+    filterStocks(loadGraphsData = false) {
         this.filteredStocks = this.stocks.slice(this.pageIndex * this.pageSize,
             this.pageIndex * this.pageSize + this.pageSize);
+
     }
 
     // Handles floating panel routes pagination
     handle(e) {
+
         this.pageIndex = e.pageIndex;
         this.pageSize = e.pageSize;
         this.filterStocks();
+        const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
+        this.getStockGraphsDataByType(stockNamesList, this.filteredStocks, true);
     }
 
     updateFollowedStocks(e) {

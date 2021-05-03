@@ -6,10 +6,10 @@
             </div>
 
             <div class="center-group">
-                <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
-                    <mat-spinner [diameter]="25"></mat-spinner>
-                    <span>{{stocksLoading.text}}...</span>
-                </div>
+<!--                <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">-->
+<!--                    <mat-spinner [diameter]="25"></mat-spinner>-->
+<!--                    <span>{{stocksLoading.text}}...</span>-->
+<!--                </div>-->
             </div>
 
             <div class="right-group">
@@ -45,7 +45,13 @@
                 <h2>Tilez</h2>
             </div>
 
+            <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
+                <mat-spinner [diameter]="25"></mat-spinner>
+                <span>{{stocksLoading.text}}...</span>
+            </div>
+
             <div class="center-group" [hidden]="stocksLoading.status==='loading' && !searched">
+
                 <app-search-stocks-form [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
                 <!--                <mat-spinner [diameter]="20" *ngIf="stocksLoading==='loading'"></mat-spinner>-->
 

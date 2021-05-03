@@ -107,10 +107,12 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     openStockProfile(stock) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
-                await this.router.navigate([`stocks/${stock}/analytics`]);
-            }
-        );
+        if (!this.modal) {
+            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
+                    await this.router.navigate([`stocks/${stock}/analytics`]);
+                }
+            );
+        }
     }
 
 

@@ -49,7 +49,7 @@
                     <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown"
                          aria-haspopup="true"
                          aria-expanded="false">
-                        Sort by {{selectedSortType.name}}
+                        Sort by <strong class="order-type">{{selectedSortType.name}}</strong>
                     </div>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" *ngFor="let sortType of sortTypes;let ind = index"

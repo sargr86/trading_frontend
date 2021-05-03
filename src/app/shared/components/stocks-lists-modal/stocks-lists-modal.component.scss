@@ -17,11 +17,23 @@
         flex-wrap: wrap;
 
 
-        .left-group,
-        .center-group,
+        .left-group {
+            min-width: 190px;
+            flex: 1;
+        }
+
+        .center-group {
+            flex: 1;
+
+            .spinner-container {
+                min-width: max-content;
+            }
+        }
+
         .right-group {
             width: 30%;
             min-width: 190px;
+            flex: 1;
             @media (max-width: 540px) {
                 width: 100%;
             }

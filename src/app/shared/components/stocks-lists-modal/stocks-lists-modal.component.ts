@@ -18,7 +18,7 @@ export class StocksListsModalComponent implements OnInit {
     stockTypes;
     stocks = [];
     selectedStockType;
-    stocksLoading = {status: 'idle', text: 'Loading stocks list and charts'};
+    stocksLoading = {status: 'idle', text: 'Loading user stocks list and charts'};
     filteredStocks = [];
     userStocks = [];
     authUser;
@@ -58,6 +58,7 @@ export class StocksListsModalComponent implements OnInit {
             ...params
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            this.stocksLoading.text = 'Loading stocks of selected category and charts';
             if (params.hasOwnProperty('close')) {
                 this.subject.changeUserStocks(this.userStocks);
             }
@@ -71,19 +72,9 @@ export class StocksListsModalComponent implements OnInit {
         this.getUserStocks({close: true});
     }
 
-    openAddStockModal() {
-        this.dialog.open(AddStockDialogComponent, {
-            data: {
-                width: '500px',
-                height: '300px'
-            }
-        }).afterClosed().subscribe(dt => {
-
-        });
-    }
-
     stockTypeChanged(e) {
         this.selectedStockType = this.stockTypes.find(t => t.value === e.target.value);
+        this.filteredStocks = [];
         if (this.search) {
             this.searchInStockType();
         } else {
@@ -97,8 +88,8 @@ export class StocksListsModalComponent implements OnInit {
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
 
-            // this.pageSize = 14;
-            // this.pageIndex = 0;
+            this.pageSize = 14;
+            this.pageIndex = 0;
             this.filterStocks();
             this.stocksLoading.status = 'finished';
             // const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
@@ -107,18 +98,20 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     getStockGraphsDataByType(stocks, allStocks, filter = false) {
-        this.stocksLoading.status = 'loading';
-        this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
-            const st = allStocks.map((item, i) => Object.assign({}, item, dt[i]));
-            if (filter) {
-                this.filteredStocks = st;
-            } else {
-                this.stocks = st;
-                this.filterStocks();
-            }
-            this.stocksLoading.status = 'finished';
+        this.stocksLoading = {status: 'loading', text: 'Loading charts data'};
+        if (stocks) {
+            this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
+                const st = allStocks.map((item, i) => Object.assign({}, item, dt[i]));
+                if (filter) {
+                    this.filteredStocks = st;
+                } else {
+                    this.stocks = st;
+                    this.filterStocks();
+                }
 
-        });
+            });
+        }
+        this.stocksLoading.status = 'finished';
 
     }
 
@@ -168,20 +161,29 @@ export class StocksListsModalComponent implements OnInit {
     getSearchResults(e) {
         this.search = e?.search;
         this.searched = true;
-        this.stocksLoading.status = 'loading';
-        this.searchInStockType();
+        if (this.search) {
+            this.stocksLoading.status = 'loading';
+            this.stocksLoading.text = 'Searching in the selected category of stocks';
+            this.searchInStockType();
+        } else {
+            this.getStocksByType(this.selectedStockType.value);
+        }
 
     }
 
     searchInStockType() {
-        this.stocksService.searchInStockTypeData({
-            search: this.search,
-            stockType: this.selectedStockType.value
-        }).subscribe((dt: any) => {
-            this.stocks = dt;
-            this.stocksLoading.status = 'finished';
-            this.filterStocks();
-        });
+        if (this.search) {
+            this.stocksService.searchInStockTypeData({
+                search: this.search,
+                stockType: this.selectedStockType.value
+            }).subscribe((dt: any) => {
+                this.stocks = dt;
+                this.stocksLoading.status = 'finished';
+                this.filterStocks();
+                const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
+                this.getStockGraphsDataByType(stockNamesList, this.filteredStocks, true);
+            });
+        }
     }
 
 }

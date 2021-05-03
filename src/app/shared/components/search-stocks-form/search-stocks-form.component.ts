@@ -67,10 +67,15 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     }
 
     async openStockPage(stock, trigger) {
-        trigger.closePanel();
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock.symbol}/analytics`])
-        );
+        if (!this.modal) {
+            trigger.closePanel();
+            this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+                await this.router.navigate([`stocks/${stock.symbol || stock}/analytics`])
+            );
+        } else {
+            this.searchStocks();
+            this.search.emit(this.searchStocksForm.value);
+        }
     }
 
     sendBack(stock, trigger) {

@@ -3,7 +3,6 @@ import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {AddStockDialogComponent} from '@core/components/modals/add-stock-dialog/add-stock-dialog.component';
 import {SubjectService} from '@core/services/subject.service';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {Subscription} from 'rxjs';
@@ -108,10 +107,11 @@ export class StocksListsModalComponent implements OnInit {
                     this.stocks = st;
                     this.filterStocks();
                 }
-
+                this.stocksLoading.status = 'finished';
             });
+        } else {
+            this.stocksLoading.status = 'finished';
         }
-        this.stocksLoading.status = 'finished';
 
     }
 
@@ -178,7 +178,7 @@ export class StocksListsModalComponent implements OnInit {
                 stockType: this.selectedStockType.value
             }).subscribe((dt: any) => {
                 this.stocks = dt;
-                this.stocksLoading.status = 'finished';
+                // this.stocksLoading.status = 'finished';
                 this.filterStocks();
                 const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
                 this.getStockGraphsDataByType(stockNamesList, this.filteredStocks, true);

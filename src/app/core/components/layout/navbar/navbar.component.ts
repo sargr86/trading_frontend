@@ -67,7 +67,8 @@ export class NavbarComponent implements OnInit {
                 maxWidth: '100vw',
                 maxHeight: '100vh',
                 height: '100%',
-                width: '100%'
+                width: '100%',
+                panelClass: 'stocks-lists-modal'
             }).afterClosed().subscribe(dt => {
             });
         }

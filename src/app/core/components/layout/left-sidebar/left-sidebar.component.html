@@ -6,12 +6,14 @@
         <app-section-links (closeSidenav)="closeSidenav.emit($event)"></app-section-links>
     </div>
 
-    <div id="channel-subscriptions">
-        <app-channel-subscriptions [authUser]="authUser"></app-channel-subscriptions>
-    </div>
+    <ng-container *ngIf="auth.loggedIn()">
+        <div id="channel-subscriptions">
+            <app-channel-subscriptions [authUser]="authUser"></app-channel-subscriptions>
+        </div>
 
-    <div id="stock-lists">
-        <app-stocks-lists-portable [authUser]="authUser"></app-stocks-lists-portable>
-    </div>
+        <div id="stock-lists">
+            <app-stocks-lists-portable [authUser]="authUser"></app-stocks-lists-portable>
+        </div>
+    </ng-container>
 </div>
 

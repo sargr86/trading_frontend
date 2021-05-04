@@ -62,7 +62,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
                 this.searchResults = dt;
             });
         } else {
-            this.search.emit(this.searchStocksForm.value);
+            // this.search.emit(this.searchStocksForm.value);
         }
     }
 

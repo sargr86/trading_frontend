@@ -22,7 +22,7 @@ form {
 }
 
 .modal-form {
-    .home-search, input {
+    #stocks-search, input {
         background: transparent !important;
     }
 
@@ -31,10 +31,11 @@ form {
     }
 
     ::placeholder {
+        font-size: 12px;
         color: $white !important;
     }
 
-    .home-search {
+    .search-wrapper {
         i {
             top: 8px;
             color: #ffffff;

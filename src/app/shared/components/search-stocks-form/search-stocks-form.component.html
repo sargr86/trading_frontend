@@ -1,8 +1,8 @@
 <form [formGroup]="searchStocksForm" [class.modal-form]="modal" [class.portable]="portable">
-    <div class="home-search">
-        <input class="home-search-input" [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'"
+    <div class="search-wrapper" id="stocks-search">
+        <input [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'"
                [class.white]="modal"
-               [placeholder]="(modal? 'Search':'Search for stocks')+'...'"
+               [placeholder]="(modal? 'Press \'Enter\' key to search stocks':'Search for stocks...')"
                formControlName="search" #searchInput
                (keyup)="searchStocks()" #trigger="matAutocompleteTrigger" [formControl]="myControl"
                (keyup.enter)="openStockPage(searchInput.value, trigger)"

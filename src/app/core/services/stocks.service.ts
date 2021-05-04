@@ -75,6 +75,6 @@ export class StocksService {
     }
 
     searchInStockTypeData(params) {
-        return this.httpClient.get<any>(`${API_URL}stocks/search-in-stock-type-data`, {params});
+        return this.httpClient.get<any>(`${API_URL}stocks/search-in-typed-stocks-data`, {params});
     }
 }

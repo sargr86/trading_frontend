@@ -1,5 +1,6 @@
 <div *ngIf="filteredStocks && channelUser.username === authUser.username">
     <mat-spinner *ngIf="stocksLoading==='loading'" [diameter]="20"></mat-spinner>
+    <small class="error" *ngIf="stocks.length === 0 && stocksLoading!=='loading'">No stocks added to watchlist</small>
     <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" *ngIf="stocks.length > 0"
                             [userStocks]="updateStockDetails(userStocks)"
                             (updatedStocksList)="updateStocksList($event)"></app-stocks-list-sample>

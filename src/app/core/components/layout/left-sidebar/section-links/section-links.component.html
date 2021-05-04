@@ -3,7 +3,7 @@
          (click)="changePage(section.link)" *ngIf="(section.auth && auth.loggedIn()) || !section.auth"
          [hidden]="!section.production && envName==='production'">
         <mat-icon *ngIf="section.icon">{{section.icon}}</mat-icon>
-        <img *ngIf="section.img" [src]="'assets/img/'+section.img+'.png'">
+        <img *ngIf="section.img" [src]="'assets/img/'+section.img+'.png'" alt="section-icon">
         <p>{{section.name}}</p>
     </div>
     <div class="line-item" *ngIf="auth.loggedIn() && section.separator" [hidden]="envName==='production'"></div>

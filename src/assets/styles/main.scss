@@ -878,4 +878,8 @@ mat-optgroup {
     }
 }
 
+.mat-drawer-content {
+    overflow: hidden !important;
+}
+
 @import "responsive";

@@ -41,7 +41,9 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.authUser = this.getAuthUser.transform();
         this.selectedSortType = this.authUser.stocks_order_type;
+        console.log(this.selectedSortType)
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof RoutesRecognized) {
                 if (ev.url !== '/test') {
@@ -55,7 +57,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         }));
 
 
-        this.authUser = this.getAuthUser.transform();
+
         if (this.authUser) {
             this.subscriptions.push(this.subject.currentUserStocks.subscribe(dt => {
                 this.userStocks = dt;

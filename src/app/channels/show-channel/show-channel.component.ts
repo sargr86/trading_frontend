@@ -16,6 +16,7 @@ import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-t
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {AuthService} from '@core/services/auth.service';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -45,6 +46,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     showFilters = false;
     filters = null;
 
+    dataLoading = 'idle';
+
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
@@ -63,7 +66,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private playlistsService: PlaylistsService,
         private subject: SubjectService,
         public auth: AuthService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private loader: LoaderService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -86,11 +90,13 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     getUserInfo() {
+        this.dataLoading = 'loading';
         if (this.passedUsername) {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
                 if (dt) {
                     this.channelUser = dt;
                 }
+                this.dataLoading = 'finished';
             });
         }
     }

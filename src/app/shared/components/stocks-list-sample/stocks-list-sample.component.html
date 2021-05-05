@@ -45,7 +45,8 @@
                     <app-search-stocks-form [portable]="true"
                                             (search)="getSearchResults($event)"></app-search-stocks-form>
                 </div>
-                <div class="sort-types-dropdown dropdown" *ngIf="sort.name">
+
+                <div class="sort-types-dropdown dropdown" *ngIf="sort?.name">
                     <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown"
                          aria-haspopup="true"
                          aria-expanded="false">

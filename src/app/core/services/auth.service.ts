@@ -13,7 +13,6 @@ export class AuthService {
     constructor(
         private httpClient: HttpClient,
         private jwtHelper: JwtHelperService,
-        private router: Router
     ) {
     }
 

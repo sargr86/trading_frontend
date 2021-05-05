@@ -28,6 +28,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     dataLoading = 'idle';
 
     subscriptions: Subscription[] = [];
+    authDataLoaded = false;
 
     constructor(
         public router: Router,
@@ -41,9 +42,14 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
-        this.selectedSortType = this.authUser.stocks_order_type;
-        console.log(this.selectedSortType)
+
+        this.subject.authUser.subscribe(dt => {
+            this.authUser = dt;
+            this.selectedSortType = this.authUser.stocks_order_type;
+            this.authDataLoaded = true;
+        });
+
+
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof RoutesRecognized) {
                 if (ev.url !== '/test') {
@@ -55,7 +61,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
             }
         }));
-
 
 
         if (this.authUser) {

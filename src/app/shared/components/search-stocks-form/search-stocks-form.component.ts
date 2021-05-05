@@ -19,6 +19,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     passedSearch;
     @Input('modal') modal = false;
     @Input('portable') portable = false;
+    @Input('returnSearchText') returnSearchText = false;
     @Output('search') search = new EventEmitter();
 
     constructor(
@@ -61,8 +62,8 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
                 this.loadingSearch = 'finished';
                 this.searchResults = dt;
             });
-        } else {
-            // this.search.emit(this.searchStocksForm.value);
+        } else if (this.returnSearchText) {
+            this.search.emit(this.searchStocksForm.value);
         }
     }
 

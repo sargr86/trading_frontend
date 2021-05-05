@@ -9,6 +9,7 @@ import {AuthService} from '@core/services/auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ToastrService} from 'ngx-toastr';
 import {LoaderService} from '@core/services/loader.service';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -30,7 +31,8 @@ export class ResetPasswordComponent implements OnInit {
         private route: ActivatedRoute,
         private jwtHelper: JwtHelperService,
         private toastr: ToastrService,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private subject: SubjectService
     ) {
 
         this.email = this.route.snapshot?.queryParams?.email;
@@ -58,6 +60,7 @@ export class ResetPasswordComponent implements OnInit {
         if (this.resetPassForm.valid) {
             this.auth.resetPass(this.resetPassForm.value).subscribe(dt => {
                 localStorage.setItem('token', (dt?.hasOwnProperty('token') ? dt.token : ''));
+                this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
                 this.router.navigate(['/']);
             });
         }

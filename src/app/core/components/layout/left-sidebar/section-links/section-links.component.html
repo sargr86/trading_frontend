@@ -6,6 +6,6 @@
         <img *ngIf="section.img" [src]="'assets/img/'+section.img+'.png'" alt="section-icon">
         <p>{{section.name}}</p>
     </div>
-    <div class="line-item" *ngIf="auth.loggedIn() && section.separator" [hidden]="envName==='production'"></div>
+    <div class="line-item" *ngIf="auth.loggedIn() && section.separator"></div>
 </ng-container>
 

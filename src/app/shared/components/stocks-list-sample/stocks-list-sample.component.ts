@@ -144,6 +144,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
             this.selectedSortType = this.sortTypes[0];
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
         });
     }
 
@@ -177,6 +178,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         // console.log(sendData)
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
         });
 
         if (type.name === 'My sort') {

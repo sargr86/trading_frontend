@@ -14,11 +14,11 @@
         <small class="error" [hidden]="dataLoading==='loading'">No stocks added to watchlist</small>
     </ng-template>
     <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
-        {{'OK' + selectedSortType}}
+
         <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"
                                 [followAllowed]="false"
                                 [editPortable]="true"
-                                *ngIf="selectedSortType && userStocks?.length > 0" [sort]="selectedSortType"
+                                *ngIf="authDataLoaded && userStocks?.length > 0" [sort]="selectedSortType"
                                 (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
 
         <p (click)="viewFullWatchlist()" class="see-more"

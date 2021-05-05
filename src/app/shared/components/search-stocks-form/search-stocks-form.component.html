@@ -1,39 +1,29 @@
-<form [formGroup]="searchStocksForm" [class.modal-form]="modal" [class.portable]="portable">
-    <div class="search-wrapper" id="stocks-search">
-        <input [id]="modal ? 'stocks-search-input': 'stocks-search-modal-input'"
-               [class.white]="modal"
-               [placeholder]="(modal? 'Press \'Enter\' key to search stocks':'Search for stocks...')"
-               formControlName="search" #searchInput
-               (keyup)="searchStocks()" #trigger="matAutocompleteTrigger" [formControl]="myControl"
-               (keyup.enter)="openStockPage(searchInput.value, trigger)"
-               [matAutocomplete]="auto">
-
-        <mat-autocomplete #auto="matAutocomplete" [hidden]="modal">
-
-            <ng-container *ngIf="loadingSearch==='finished' && portable then regularList else groupedList">
-            </ng-container>
+<form [formGroup]="searchStocksForm" [class.white-form]="whiteForm">
+    <div class="search-wrapper">
+        <input formControlName="search" (keyup.enter)="searchStocks()" [placeholder]="getPlaceholder()"
+               [matAutocomplete]="auto" #trigger="matAutocompleteTrigger" (keyup)="searchStocks()">
+        <i class="fas fa-search"></i>
+        <mat-autocomplete #auto="matAutocomplete">
+            <ng-container *ngIf="groupResults then groupedList else regularList"></ng-container>
 
             <ng-template #groupedList>
                 <mat-optgroup *ngFor="let group of searchResults" [label]="group.name">
                     <mat-option *ngFor="let stock of group.stocks" [value]="stock.name"
-                                (click)="openStockPage(stock, trigger)">
+                                (click)="handleStockClick(stock, trigger)">
                         <p>{{stock.symbol}}</p>
-                        <p>{{stock.name}}</p>
+                        <small>{{stock.name}}</small>
                     </mat-option>
                 </mat-optgroup>
             </ng-template>
 
             <ng-template #regularList>
-                <mat-option *ngFor="let stock of searchResults" [value]="stock.symbol" [@.disabled]="true"
-                            (click)="sendBack(stock, trigger)">
-                    <span class="stock-symbol">{{stock.symbol}}</span>
-                    <span class="stock-name">{{stock.name}}</span>
+                <mat-option *ngFor="let stock of searchResults" [value]="stock.symbol"
+                            (click)="handleStockClick(stock, trigger)">
+                    <span>{{stock.symbol}}</span>
+                    <small>{{stock.name}}</small>
                 </mat-option>
             </ng-template>
 
-
         </mat-autocomplete>
-        <i class="fas fa-search"></i>
     </div>
-    <mat-spinner [diameter]="25" *ngIf="loadingSearch ==='loading'"></mat-spinner>
 </form>

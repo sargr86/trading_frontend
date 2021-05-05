@@ -21,12 +21,13 @@ import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-value
 import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
-import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
+import {SearchStocksFormOldComponent} from '@shared/components/search-stocks-form-old/search-stocks-form-old.component';
 import {StocksListsModalComponent} from './components/stocks-lists-modal/stocks-lists-modal.component';
 import {StocksListSampleComponent} from './components/stocks-list-sample/stocks-list-sample.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { UpdateUserStocksPipe } from './pipes/update-user-stocks.pipe';
+import {UpdateUserStocksPipe} from './pipes/update-user-stocks.pipe';
+import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
 
 @NgModule({
     declarations: [
@@ -47,10 +48,11 @@ import { UpdateUserStocksPipe } from './pipes/update-user-stocks.pipe';
         CheckForEmptyObjectPipe,
         UserTagsComponent,
         VideosListHolderComponent,
-        SearchStocksFormComponent,
+        SearchStocksFormOldComponent,
         StocksListsModalComponent,
         StocksListSampleComponent,
-        UpdateUserStocksPipe
+        UpdateUserStocksPipe,
+        SearchStocksFormComponent
     ],
     imports: [
         CommonModule,
@@ -91,9 +93,10 @@ import { UpdateUserStocksPipe } from './pipes/update-user-stocks.pipe';
         UserTagsComponent,
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
-        SearchStocksFormComponent,
+        SearchStocksFormOldComponent,
         StocksListsModalComponent,
-        StocksListSampleComponent
+        StocksListSampleComponent,
+        SearchStocksFormComponent
     ]
 
 })

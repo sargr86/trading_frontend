@@ -53,28 +53,27 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
 
-        this.subject.currentUserStocks.subscribe(dt => {
-            this.userStocks = dt;
-            if (dt.length > 0) {
-                this.getBatchStocksList();
-            }
+        this.subject.currentUserStocks.subscribe((dt: any) => {
+            this.getBatchStocksList(dt);
         });
     }
 
 
-    getBatchStocksList() {
+    getBatchStocksList(d) {
         let stocks = '';
-
-        this.userStocks.map((us, index) => {
-            stocks += us.symbol + (index === this.userStocks.length - 1 ? '' : ',');
-        });
-        this.stocksLoading = 'loading';
-        this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
-            this.stocks = dt;
-            this.stocksLoading = 'finished';
-            this.loader.hide();
-            this.cdr.detectChanges();
-        }));
+        this.userStocks = d.stocks;
+        if (!d.empty) {
+            this.userStocks.map((us, index) => {
+                stocks += us.symbol + (index === this.userStocks.length - 1 ? '' : ',');
+            });
+            this.stocksLoading = 'loading';
+            this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
+                this.stocks = dt;
+                this.stocksLoading = 'finished';
+                this.loader.hide();
+                this.cdr.detectChanges();
+            }));
+        }
     }
 
     updateStocksList(stocks) {
@@ -84,7 +83,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-            this.subject.changeUserStocks(this.userStocks);
+            this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksLoading = 'finished';
             this.cdr.detectChanges();
         }));

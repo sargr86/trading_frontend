@@ -46,10 +46,11 @@
             </div>
 
 
+            <div class="center-group">
 
-            <div class="center-group" >
-
-                <app-search-stocks-form [hidden]="stocksLoading.status==='loading' && !searched" [modal]="true" (search)="getSearchResults($event)"></app-search-stocks-form>
+<!--                <app-search-stocks-form [hidden]="stocksLoading.status==='loading' && !searched" [modal]="true"-->
+<!--                                        [autocomplete]="false"-->
+<!--                                        (search)="getSearchResults($event)"></app-search-stocks-form>-->
                 <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
                     <mat-spinner [diameter]="25"></mat-spinner>
                     <span>{{stocksLoading.text}}...</span>

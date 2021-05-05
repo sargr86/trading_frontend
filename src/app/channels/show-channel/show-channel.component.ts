@@ -17,6 +17,8 @@ import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/pl
 import {AuthService} from '@core/services/auth.service';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import {LoaderService} from '@core/services/loader.service';
+import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -48,6 +50,9 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     dataLoading = 'idle';
 
+    userStocks = [];
+    subscriptions = [];
+
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
@@ -67,7 +72,9 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         public auth: AuthService,
         private dialog: MatDialog,
-        private loader: LoaderService
+        private loader: LoaderService,
+        private updateStocks: UpdateUserStocksPipe,
+        private stocksService: StocksService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -81,7 +88,9 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         this.activeTab = PROFILE_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || PROFILE_PAGE_TABS[0];
         this.getUserInfo();
 
-
+        this.subject.currentUserStocks.subscribe((dt: any) => {
+            this.userStocks = dt.stocks;
+        });
     }
 
     toggleFilters() {
@@ -162,8 +171,21 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         });
     }
 
+    updateFollowedStocksList(stock) {
+        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, null);
+        this.dataLoading = 'loading';
+        this.subscriptions.push(this.stocksService.updateFollowedStocks(
+            {user_id: this.authUser.id, ...{stocks: userStocks}})
+            .subscribe(dt => {
+                this.userStocks = dt?.user_stocks || [];
+                this.dataLoading = 'finished';
+                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+            }));
+    }
+
 
     ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

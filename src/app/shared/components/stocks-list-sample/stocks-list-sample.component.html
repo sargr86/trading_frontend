@@ -42,7 +42,7 @@
         <div class="stocks-top-actions">
             <div class="search-stocks">
                 <div class="watchlist-search" *ngIf="editUserStocks">
-                    <app-search-stocks-form [portable]="true"
+                    <app-search-stocks-form [autocomplete]="true" [whiteForm]="true" [returnFoundStock]="true"
                                             (search)="getSearchResults($event)"></app-search-stocks-form>
                 </div>
 

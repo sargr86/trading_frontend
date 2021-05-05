@@ -64,8 +64,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
 
         if (this.authUser) {
-            this.subscriptions.push(this.subject.currentUserStocks.subscribe(dt => {
-                this.userStocks = dt;
+            this.subscriptions.push(this.subject.currentUserStocks.subscribe((dt: any) => {
+                this.userStocks = dt.stocks;
                 // this.getStockTypes();
 
                 this.cdr.detectChanges();
@@ -113,7 +113,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
-            this.subject.changeUserStocks(this.userStocks);
+            this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
 
 
@@ -123,7 +123,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-            this.subject.changeUserStocks(this.userStocks);
+
+            this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
     }
 

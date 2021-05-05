@@ -59,7 +59,7 @@ export class StocksListsModalComponent implements OnInit {
             this.userStocks = dt?.user_stocks || [];
             this.stocksLoading.text = 'Loading stocks of selected category and charts';
             if (params.hasOwnProperty('close')) {
-                this.subject.changeUserStocks(this.userStocks);
+                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             }
         });
     }

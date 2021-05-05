@@ -10,6 +10,16 @@
 }
 
 
+.search-wrapper {
+    display: flex;
+    max-width: 280px;
+
+
+    .right-side {
+        display: flex;
+    }
+}
+
 #search-videos-form {
     display: flex;
 
@@ -25,17 +35,6 @@
         }
     }
 
-    .open-add-stock-modal {
-        display: flex;
-        align-items: center;
-        height: 31px;
-        margin-right: 20px;
-
-        button {
-            background-color: unset;
-            height: 23px
-        }
-    }
 
     .filters-active {
         background-color: $green !important;
@@ -43,6 +42,18 @@
     }
 }
 
+
+.open-add-stock-modal {
+    display: flex;
+    align-items: center;
+    height: 31px;
+    margin-right: 20px;
+
+    button {
+        background-color: unset;
+        height: 23px
+    }
+}
 
 #channel-tabs-list {
     width: 624px;

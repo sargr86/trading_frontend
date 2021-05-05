@@ -15,7 +15,7 @@ export class UpdateUserStocksPipe implements PipeTransform {
                 change: stock.change,
                 changesPercentage: stock.changesPercentage,
                 price: stock.price,
-                type_id: selectedTypeId
+                type_id: selectedTypeId || stock.type_id
             });
             following = true;
         } else {

@@ -56,8 +56,8 @@ export class SummaryTabComponent implements OnInit {
     }
 
     getUserStocks() {
-        this.subject.currentUserStocks.subscribe(dt => {
-            this.userStocks = dt;
+        this.subject.currentUserStocks.subscribe((dt: any) => {
+            this.userStocks = dt.stocks;
             this.addedToWatchlist = !!this.userStocks.find(us => us.symbol === this.selectedStock);
         });
     }
@@ -96,7 +96,7 @@ export class SummaryTabComponent implements OnInit {
             this.userStocks = dt?.user_stocks || [];
             this.stocksUpdatedHere = true;
             this.loader.hide();
-            this.subject.changeUserStocks(this.userStocks);
+            this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
     }
 

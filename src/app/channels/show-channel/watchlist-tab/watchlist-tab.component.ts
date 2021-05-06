@@ -62,8 +62,25 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             )
             .subscribe(dt => {
                 this.userStocks = dt.stocks;
+                this.filterStocks();
                 this.stocksLoading = 'finished';
             });
+    }
+
+
+    loadGraphs(d) {
+        let stocks = '';
+        d.map((us, index) => {
+            stocks += us.symbol + (index === d.length - 1 ? '' : ',');
+        });
+
+        this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
+            this.userStocks = dt;
+            this.filterStocks();
+            console.log(this.filteredStocks)
+            this.loader.hide();
+            this.cdr.detectChanges();
+        }));
     }
 
     updateStocksList(stocks) {
@@ -82,6 +99,19 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
     updateStockDetails(userStocks) {
         return updateStockDetails(userStocks, this.stocks);
+    }
+
+    // Filters routes for floating panel
+    filterStocks() {
+        this.filteredStocks = this.userStocks.slice(this.pageIndex * this.pageSize,
+            this.pageIndex * this.pageSize + this.pageSize);
+    }
+
+    // Handles floating panel routes pagination
+    handle(e?: PageEvent) {
+        this.pageIndex = e.pageIndex;
+        this.pageSize = e.pageSize;
+        this.filterStocks();
     }
 
 

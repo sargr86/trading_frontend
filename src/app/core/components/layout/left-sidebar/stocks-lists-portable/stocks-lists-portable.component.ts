@@ -87,10 +87,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
 
     getIndices() {
-        this.dataLoading = 'loading';
         this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
-            this.dataLoading = 'finished';
             this.subject.changeIndices(dt);
         }));
     }
@@ -107,12 +105,14 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     getUserStocks() {
+        this.dataLoading = 'loading';
         this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             sort_type: this.authUser.stocks_order_type?.name
         }).subscribe(dt => {
             this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
+            this.dataLoading = 'finished';
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
 

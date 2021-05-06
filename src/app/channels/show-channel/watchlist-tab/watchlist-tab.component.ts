@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/c
 import {VideoService} from '@core/services/video.service';
 import {API_URL, STOCK_CATEGORIES} from '@core/constants/global';
 import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {StocksService} from '@core/services/stocks.service';
@@ -10,6 +10,9 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {User} from '@shared/models/user';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {LoaderService} from '@core/services/loader.service';
+import {PageEvent} from '@angular/material/paginator';
+// import 'rxjs/add/operator/filter';
+import {filter, switchMap, take} from 'rxjs/operators';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -25,7 +28,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     stocks = [];
     filteredStocks = [];
 
-    public pageSize = 14;
+    public pageSize = 12;
     public pageIndex = 0;
 
     stockTypes;
@@ -52,37 +55,27 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
-
-        this.subject.currentUserStocks.subscribe((dt: any) => {
-            this.getBatchStocksList(dt);
+        this.stocksLoading = 'loading';
+        this.subject.currentUserStocks.pipe(
+            filter(d => !d.initial),
+            take(1),
+        ).subscribe(dt => {
+            this.userStocks = dt.stocks;
+            this.stocksLoading = 'finished';
         });
-    }
-
-
-    getBatchStocksList(d) {
-        let stocks = '';
-        this.userStocks = d.stocks;
-        if (!d.empty) {
-            this.userStocks.map((us, index) => {
-                stocks += us.symbol + (index === this.userStocks.length - 1 ? '' : ',');
-            });
-            this.stocksLoading = 'loading';
-            this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
-                this.stocks = dt;
-                this.stocksLoading = 'finished';
-                this.loader.hide();
-                this.cdr.detectChanges();
-            }));
-        }
     }
 
     updateStocksList(stocks) {
         this.stocksLoading = 'loading';
+        console.log(this.pageIndex)
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            if (this.filteredStocks.length === 0) {
+                this.pageIndex = 0;
+            }
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksLoading = 'finished';
             this.cdr.detectChanges();

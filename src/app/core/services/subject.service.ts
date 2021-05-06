@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
 export class SubjectService {
     token = localStorage.getItem('token')
     authUserData = this.token ? jwtDecode(this.token) : '';
-    userStocks = {stocks: [], empty: true};
+    userStocks = {stocks: [], empty: true, initial: true};
     indices = [];
     stockTypes = [];
 

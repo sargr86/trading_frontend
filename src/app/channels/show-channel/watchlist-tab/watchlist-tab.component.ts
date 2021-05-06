@@ -74,10 +74,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             stocks += us.symbol + (index === d.length - 1 ? '' : ',');
         });
 
-        this.subscriptions.push(this.stocksService.getBatchStocksList({stocks}).subscribe(dt => {
-            this.userStocks = dt;
-            this.filterStocks();
-            console.log(this.filteredStocks)
+        this.subscriptions.push(this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
+            this.filteredStocks = this.filteredStocks.map((item, i) => Object.assign({}, item, dt[i]));
             this.loader.hide();
             this.cdr.detectChanges();
         }));
@@ -112,6 +110,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.pageIndex = e.pageIndex;
         this.pageSize = e.pageSize;
         this.filterStocks();
+        this.loadGraphs(this.filteredStocks);
     }
 
 

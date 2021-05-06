@@ -63,6 +63,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             .subscribe(dt => {
                 this.userStocks = dt.stocks;
                 this.filterStocks();
+                this.loadGraphs(this.filteredStocks);
                 this.stocksLoading = 'finished';
             });
     }
@@ -88,6 +89,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            this.filterStocks();
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksLoading = 'finished';
             this.cdr.detectChanges();

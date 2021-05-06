@@ -19,6 +19,7 @@ export class StocksListsModalComponent implements OnInit {
     selectedStockType;
     stocksLoading = {status: 'idle', text: 'Loading user stocks list and charts'};
     filteredStocks = [];
+    filteredUserStocks = [];
     userStocks = [];
     authUser;
     search;
@@ -116,9 +117,11 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     // Filters routes for floating panel
-    filterStocks(loadGraphsData = false) {
+    filterStocks() {
         this.filteredStocks = this.stocks.slice(this.pageIndex * this.pageSize,
             this.pageIndex * this.pageSize + this.pageSize);
+        // this.filteredUserStocks = this.userStocks.slice(this.pageIndex * this.pageSize,
+        //     this.pageIndex * this.pageSize + this.pageSize);
 
     }
 

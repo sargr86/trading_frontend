@@ -16,6 +16,29 @@ form {
         }
     }
 
+    &.transparent-form {
+        * {
+            background: transparent !important;
+        }
+
+        input {
+            border-bottom: 1px solid $white;
+        }
+
+        ::placeholder {
+            font-size: 12px;
+            color: $white !important;
+        }
+
+        .search-wrapper {
+            i {
+                top: 8px;
+                color: #ffffff;
+                font-size: 20px;
+            }
+        }
+    }
+
     .search-wrapper {
         margin-right: 0;
     }

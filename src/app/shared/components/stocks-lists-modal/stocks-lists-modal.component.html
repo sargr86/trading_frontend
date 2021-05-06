@@ -27,7 +27,16 @@
         </div>
 
         <div class="user-stocks-list">
-
+            <div class="paginator">
+                <ng-container *ngIf="userStocks.length > 12">
+                    <mat-paginator (page)="handle($event)"
+                                   #paginator
+                                   [length]="userStocks.length" [pageIndex]="pageIndex"
+                                   [pageSize]="pageSize" [hidePageSize]="true"
+                                   [pageSizeOptions]="[2,5,10,25,100]">
+                    </mat-paginator>
+                </ng-container>
+            </div>
             <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" [type]="selectedStockType"
                                     (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"
                                     [userStocks]="updateStockDetails(userStocks)"
@@ -48,9 +57,9 @@
 
             <div class="center-group">
 
-<!--                <app-search-stocks-form [hidden]="stocksLoading.status==='loading' && !searched" [modal]="true"-->
-<!--                                        [autocomplete]="false"-->
-<!--                                        (search)="getSearchResults($event)"></app-search-stocks-form>-->
+                <app-search-stocks-form [hidden]="stocksLoading.status==='loading' && !searched"
+                                        [autocomplete]="false" [transparentForm]="true"
+                                        (search)="getSearchResults($event)"></app-search-stocks-form>
                 <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
                     <mat-spinner [diameter]="25"></mat-spinner>
                     <span>{{stocksLoading.text}}...</span>

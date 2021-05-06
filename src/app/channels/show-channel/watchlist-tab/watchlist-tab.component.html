@@ -13,6 +13,6 @@
         </ng-container>
     </div>
     <app-stocks-list-sample [stocks]="updateStockDetails(filteredStocks)" *ngIf="userStocks.length > 0"
-                            [userStocks]="updateStockDetails(userStocks)"
+                            [userStocks]="updateStockDetails(userStocks)" [pagination]="true"
                             (updatedStocksList)="updateStocksList($event)"></app-stocks-list-sample>
 </div>

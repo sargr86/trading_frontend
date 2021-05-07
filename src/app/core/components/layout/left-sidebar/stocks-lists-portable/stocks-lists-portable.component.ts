@@ -43,12 +43,9 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        this.subject.authUser.subscribe(dt => {
-            this.authUser = dt;
-            this.selectedSortType = this.authUser.stocks_order_type;
-            this.authDataLoaded = true;
-        });
 
+        this.authUser = this.getAuthUser.transform();
+        this.selectedSortType = this.authUser.stocks_order_type;
 
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof RoutesRecognized) {

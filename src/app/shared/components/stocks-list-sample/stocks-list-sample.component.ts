@@ -68,13 +68,13 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         private cdr: ChangeDetectorRef,
         private stocksService: StocksService,
         private updateStocks: UpdateUserStocksPipe,
-        private loader: LoaderService
+        public loader: LoaderService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
-        this.selectedSortType = this.sort;
+        this.selectedSortType = this.sort || this.authUser.stocks_order_type;
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
@@ -96,7 +96,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         } else if (!this.modal) {
             this.passedStocks = userStocks;
         } else {
-            console.log(following)
             if (following) {
                 this.userStocks = userStocks;
             } else {
@@ -104,7 +103,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             }
         }
         // this.loader.show();
-        this.loader.stocksLoading = 'loading';
+        // this.loader.stocksLoading = 'loading';
         this.updatedStocksList.emit(userStocks);
 
     }

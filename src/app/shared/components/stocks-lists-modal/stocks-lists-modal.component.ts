@@ -139,14 +139,11 @@ export class StocksListsModalComponent implements OnInit {
 
     updateFollowedStocks(stocks) {
 
-        console.log(stocks.length)
         this.stocksLoading.status = 'loading';
         if (stocks.length === 15) {
             this.toastr.error('We support not more than 14 tags per user');
             this.stocksLoading.status = 'finished';
         } else {
-            console.log('here')
-
             this.stocksLoading.text = 'Updating stocks lists, details and charts';
             this.stocksService.updateFollowedStocks({
                 user_id: this.authUser.id,

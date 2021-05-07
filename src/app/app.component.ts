@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import IsResponsive from '@core/helpers/is-responsive';
 import {StocksService} from '@core/services/stocks.service';
+import {environment} from '@env';
 
 @Component({
     selector: 'app-root',
@@ -36,6 +37,11 @@ export class AppComponent implements OnInit {
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}
         // });
         // console.log(player)
+
+        if (environment.production) {
+            console.log = () => {
+            };
+        }
 
         this.getStockTypes();
 

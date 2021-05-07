@@ -95,6 +95,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         } else if (!this.modal) {
             this.passedStocks = userStocks;
         } else {
+            console.log(following)
             if (following) {
                 this.userStocks = userStocks;
             } else {

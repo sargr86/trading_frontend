@@ -8,6 +8,7 @@ export class LoaderService {
     formProcessing = false;
     dataLoading = false;
     isLoading = new Subject<boolean>();
+    stocksLoading = 'idle';
 
     private loaderSource = new BehaviorSubject(false);
     currentLoaderState = this.loaderSource.asObservable();

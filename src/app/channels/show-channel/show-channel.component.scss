@@ -12,8 +12,7 @@
 
 .search-wrapper {
     display: flex;
-    max-width: 280px;
-
+    max-width: min-content;
 
     .right-side {
         display: flex;

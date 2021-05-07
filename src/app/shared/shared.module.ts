@@ -28,6 +28,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {UpdateUserStocksPipe} from './pipes/update-user-stocks.pipe';
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
+import {SearchVideosFormComponent} from '@shared/components/search-videos-form/search-videos-form.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/s
         StocksListsModalComponent,
         StocksListSampleComponent,
         UpdateUserStocksPipe,
-        SearchStocksFormComponent
+        SearchStocksFormComponent,
+        SearchVideosFormComponent
     ],
     imports: [
         CommonModule,
@@ -96,7 +98,8 @@ import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/s
         SearchStocksFormOldComponent,
         StocksListsModalComponent,
         StocksListSampleComponent,
-        SearchStocksFormComponent
+        SearchStocksFormComponent,
+        SearchVideosFormComponent
     ]
 
 })

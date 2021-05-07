@@ -19,7 +19,6 @@ import {SecurityComponent} from '@core/components/ungrouped/security/security.co
 import {SharedModule} from '@shared/shared.module';
 import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
-import {SearchVideosFormComponent} from '@core/components/ungrouped/search-videos-form/search-videos-form.component';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {AddVideoToAnotherPlaylistComponent} from '@core/components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
 import {SearchVideosTabComponent} from '@core/components/modals/add-video-to-playlist-dialog/search-videos-tab/search-videos-tab.component';
@@ -45,7 +44,6 @@ import { PageLoadingComponent } from './components/ungrouped/page-loading/page-l
         SecurityComponent,
         AddPlaylistDialogComponent,
         AddVideoToPlaylistDialogComponent,
-        SearchVideosFormComponent,
         ConfirmationDialogComponent,
         AddVideoToAnotherPlaylistComponent,
         SearchVideosTabComponent,
@@ -71,7 +69,7 @@ import { PageLoadingComponent } from './components/ungrouped/page-loading/page-l
     exports: [
         NavbarComponent,
         LeftSidebarComponent,
-        PurchaseBitsComponent
+        PurchaseBitsComponent,
     ],
     entryComponents: [],
     providers: [

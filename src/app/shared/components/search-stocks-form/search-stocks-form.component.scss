@@ -8,7 +8,7 @@ form {
 
     &.white-form {
         & {
-            width: 72%;
+            width: 100%;
         }
 
         input {
@@ -19,6 +19,7 @@ form {
     &.transparent-form {
         * {
             background: transparent !important;
+            color: $white;
         }
 
         input {

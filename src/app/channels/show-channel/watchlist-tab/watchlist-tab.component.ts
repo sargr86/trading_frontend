@@ -11,7 +11,6 @@ import {User} from '@shared/models/user';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {LoaderService} from '@core/services/loader.service';
 import {PageEvent} from '@angular/material/paginator';
-// import 'rxjs/add/operator/filter';
 import {filter, switchMap, take} from 'rxjs/operators';
 
 @Component({
@@ -82,6 +81,15 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         }));
     }
 
+    getSearchResults(s) {
+        this.search = s;
+        if (s.search) {
+            this.filteredStocks = this.userStocks.filter(us => us.name.toLowerCase().includes(s.search));
+        } else {
+            this.filterStocks();
+        }
+    }
+
     updateStocksList(stocks) {
         this.stocksLoading = 'loading';
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
@@ -90,6 +98,9 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
             this.filterStocks();
+            if (this.filteredStocks.length === 0) {
+                this.pageIndex = 0;
+            }
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksLoading = 'finished';
             this.cdr.detectChanges();

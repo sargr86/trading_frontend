@@ -18,24 +18,26 @@
                 </ul>
                 <div class="loader-wrapper">
                     <div class="spinner-container">
-                        <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
+                        <mat-spinner [diameter]="15" *ngIf="this.loader.stocksLoading==='loading'"></mat-spinner>
                     </div>
                 </div>
                 <div class="search-wrapper">
-                    <form [formGroup]="searchVideosForm" id="search-videos-form"
-                          *ngIf="activeTab.name!=='Watchlist'">
-                        <div class="toggle-filters-btn">
-                            <button class="filter-toggle-btn"
-                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
-                                    [class.filters-active]="showFilters"
-                                    (click)="toggleFilters()">
-                                <mat-icon>tune</mat-icon>
-                            </button>
-                        </div>
-                        <input class="watchlist-input" placeholder="Search" formControlName="search"
-                               (keyup.enter)="searchVideos()">
-                        <i class="fas fa-search"></i>
-                    </form>
+                    <!--                    <form [formGroup]="searchVideosForm" id="search-videos-form"-->
+                    <!--                          *ngIf="activeTab.name!=='Watchlist'">-->
+                    <!--                        <div class="toggle-filters-btn">-->
+                    <!--                            <button class="filter-toggle-btn"-->
+                    <!--                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"-->
+                    <!--                                    [class.filters-active]="showFilters"-->
+                    <!--                                    (click)="toggleFilters()">-->
+                    <!--                                <mat-icon>tune</mat-icon>-->
+                    <!--                            </button>-->
+                    <!--                        </div>-->
+                    <!--                        <input class="watchlist-input" placeholder="Search" formControlName="search"-->
+                    <!--                               (keyup.enter)="searchVideos()">-->
+                    <!--                        <i class="fas fa-search"></i>-->
+                    <!--                    </form>-->
+                    <app-search-videos-form
+                        *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
                     <div class="right-side" *ngIf="activeTab.name==='Watchlist'">
 
                         <div class="open-add-stock-modal" *ngIf="activeTab.name==='Watchlist'" (click)="openModal()">
@@ -46,8 +48,8 @@
 
                         <div class="watchlist-search" *ngIf="activeTab.name!=='About'">
                             <app-search-stocks-form *ngIf="activeTab.name==='Watchlist'" [whiteForm]="true"
-                                                    [returnFoundStock]="true"
-                                                    [autocomplete]="true" (search)="updateFollowedStocksList($event)">
+                                                    [returnSearchText]="true"
+                                                    (search)="searchInUserStocks($event)">
                             </app-search-stocks-form>
 
                         </div>

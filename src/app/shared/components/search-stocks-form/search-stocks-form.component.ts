@@ -19,6 +19,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     @Input('groupResults') groupResults = false;
     @Input('returnSearchText') returnSearchText = false;
     @Input('returnFoundStock') returnFoundStock = false;
+    @Input('searchOnEnter') searchOnEnter = false;
     @Input('openStockOnEnter') openStockOnEnter = false;
     @Input('updateStocksOnEnter') updateStocksOnEnter = false;
     @Input('whiteForm') whiteForm = false;
@@ -35,6 +36,20 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.searchStocksForm = this.fb.group({search: ['', Validators.required]});
+    }
+
+    handleRegularKeyup() {
+        if (!this.searchOnEnter && this.autocomplete) {
+            this.searchStocks();
+        }
+    }
+
+    handleEnter() {
+        if (this.searchOnEnter) {
+            this.searchStocks();
+        } else if (this.returnSearchText) {
+            this.search.emit(this.searchStocksForm.value);
+        }
     }
 
     searchStocks() {

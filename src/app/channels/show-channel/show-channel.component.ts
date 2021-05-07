@@ -19,6 +19,7 @@ import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/s
 import {LoaderService} from '@core/services/loader.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {StocksService} from '@core/services/stocks.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-show-channel',
@@ -51,6 +52,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     dataLoading = 'idle';
 
     userStocks = [];
+    filteredStocks = [];
     subscriptions = [];
 
 
@@ -72,9 +74,10 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         public auth: AuthService,
         private dialog: MatDialog,
-        private loader: LoaderService,
+        public loader: LoaderService,
         private updateStocks: UpdateUserStocksPipe,
-        private stocksService: StocksService
+        private stocksService: StocksService,
+        private toastr: ToastrService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -90,6 +93,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
         this.subject.currentUserStocks.subscribe((dt: any) => {
             this.userStocks = dt.stocks;
+            this.filteredStocks = this.userStocks;
         });
     }
 
@@ -119,6 +123,10 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         if (this.activeTab.name === 'Videos') {
             this.getUserInfo();
         }
+    }
+
+    searchInUserStocks(e) {
+        this.watchListTab.getSearchResults(e);
     }
 
     searchVideos() {
@@ -156,6 +164,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         }
     }
 
+
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
@@ -173,14 +182,19 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     updateFollowedStocksList(stock) {
         const {userStocks} = this.updateStocks.transform(this.userStocks, stock, null);
-        this.dataLoading = 'loading';
-        this.subscriptions.push(this.stocksService.updateFollowedStocks(
-            {user_id: this.authUser.id, ...{stocks: userStocks}})
-            .subscribe(dt => {
-                this.userStocks = dt?.user_stocks || [];
-                this.dataLoading = 'finished';
-                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
-            }));
+        if (userStocks.length > 14) {
+            this.toastr.error('We support not more than 14 tags per user');
+        } else {
+            this.loader.stocksLoading = 'loading';
+            this.subscriptions.push(this.stocksService.updateFollowedStocks(
+                {user_id: this.authUser.id, ...{stocks: userStocks}})
+                .subscribe(dt => {
+                    this.userStocks = dt?.user_stocks || [];
+                    this.loader.stocksLoading = 'finished';
+                    this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+                }));
+        }
+
     }
 
 

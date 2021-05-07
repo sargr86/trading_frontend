@@ -3,7 +3,7 @@
     <small class="error" *ngIf="userStocks.length === 0 && stocksLoading==='finished'">No stocks added to
         watchlist</small>
     <div class="paginator">
-        <ng-container *ngIf="stocksLoading==='finished' && userStocks.length > 12">
+        <ng-container *ngIf="stocksLoading==='finished' && userStocks.length > 12 && !search">
             <mat-paginator (page)="handle($event)"
                            #paginator
                            [length]="userStocks.length" [pageIndex]="pageIndex"

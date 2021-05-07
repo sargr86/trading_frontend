@@ -7,6 +7,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-stocks-lists',
@@ -38,7 +39,8 @@ export class StocksListsModalComponent implements OnInit {
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private loader: LoaderService
+        private loader: LoaderService,
+        private toastr: ToastrService
     ) {
     }
 
@@ -135,17 +137,26 @@ export class StocksListsModalComponent implements OnInit {
         this.getStockGraphsDataByType(stockNamesList, this.filteredStocks, true);
     }
 
-    updateFollowedStocks(e) {
+    updateFollowedStocks(stocks) {
+
+        console.log(stocks.length)
         this.stocksLoading.status = 'loading';
-        this.stocksLoading.text = 'Updating stocks lists, details and charts';
-        this.stocksService.updateFollowedStocks({
-            user_id: this.authUser.id,
-            stocks: e,
-            type_id: this.selectedStockType.id
-        }).subscribe(dt => {
-            this.userStocks = dt?.user_stocks || [];
+        if (stocks.length === 15) {
+            this.toastr.error('We support not more than 14 tags per user');
             this.stocksLoading.status = 'finished';
-        });
+        } else {
+            console.log('here')
+
+            this.stocksLoading.text = 'Updating stocks lists, details and charts';
+            this.stocksService.updateFollowedStocks({
+                user_id: this.authUser.id,
+                ...{stocks},
+                type_id: this.selectedStockType.id
+            }).subscribe(dt => {
+                this.userStocks = dt?.user_stocks || [];
+                this.stocksLoading.status = 'finished';
+            });
+        }
     }
 
     isStockFollowed(stock) {

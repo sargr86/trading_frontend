@@ -58,7 +58,8 @@
             <div class="center-group">
 
                 <app-search-stocks-form [hidden]="stocksLoading.status==='loading' && !searched"
-                                        [autocomplete]="false" [transparentForm]="true"
+                                        [returnSearchText]="true"
+                                        [transparentForm]="true"
                                         (search)="getSearchResults($event)"></app-search-stocks-form>
                 <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
                     <mat-spinner [diameter]="25"></mat-spinner>

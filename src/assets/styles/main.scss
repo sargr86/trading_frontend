@@ -730,6 +730,7 @@ select {
         background: #FFFFFF 0 0 no-repeat padding-box;
         box-shadow: 0 0 6px #0000000F;
         margin-bottom: 12px;
+        margin-right: 3px;
 
         i {
             position: absolute;
@@ -880,6 +881,10 @@ mat-optgroup {
 
 .mat-drawer-content {
     overflow: hidden !important;
+}
+
+#portable-stocks-list .white-form {
+    width: 73% !important;
 }
 
 @import "responsive";

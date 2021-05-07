@@ -46,7 +46,7 @@
                                             (search)="getSearchResults($event)"></app-search-stocks-form>
                 </div>
 
-                <div class="sort-types-dropdown dropdown" *ngIf="sort?.name">
+                <div class="sort-types-dropdown dropdown">
                     <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown"
                          aria-haspopup="true"
                          aria-expanded="false">
@@ -58,7 +58,8 @@
                            (click)="sortStocks(sortType)">{{sortType.name}}</a>
                     </div>
                     <div class="spinner-container">
-                        <mat-spinner *ngIf="sortedListLoading" [diameter]="15"></mat-spinner>
+                        <mat-spinner *ngIf="sortedListLoading || loader.stocksLoading === 'loading'"
+                                     [diameter]="15"></mat-spinner>
                     </div>
                 </div>
             </div>

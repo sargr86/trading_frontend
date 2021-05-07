@@ -81,9 +81,10 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             }
         });
 
-        this.subscriptions.push(this.loader.currentLoaderState.subscribe(dt => {
-            this.sortedListLoading = dt;
-        }));
+        // this.subscriptions.push(this.loader.currentLoaderState.subscribe(dt => {
+        //     this.sortedListLoading = dt;
+        // }));
+
     }
 
 
@@ -102,7 +103,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
                 this.passedStocks = userStocks;
             }
         }
-        this.loader.show();
+        // this.loader.show();
+        this.loader.stocksLoading = 'loading';
         this.updatedStocksList.emit(userStocks);
 
     }

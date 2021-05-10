@@ -90,7 +90,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         localStorage.setItem('search', '');
         this.activeTab = PROFILE_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || PROFILE_PAGE_TABS[0];
         this.getUserInfo();
-        console.log('Channel page OK')
 
         this.subject.currentUserStocks.subscribe((dt: any) => {
             this.userStocks = dt.stocks;
@@ -183,8 +182,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     updateFollowedStocksList(stock) {
         const {userStocks} = this.updateStocks.transform(this.userStocks, stock, null);
-        if (userStocks.length > 14) {
-            this.toastr.error('We support not more than 14 tags per user');
+        if (userStocks.length > 25) {
+            this.toastr.error('We support not more than 25 stocks per user');
         } else {
             this.loader.stocksLoading = 'loading';
             this.subscriptions.push(this.stocksService.updateFollowedStocks(

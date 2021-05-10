@@ -140,8 +140,8 @@ export class StocksListsModalComponent implements OnInit {
     updateFollowedStocks(stocks) {
 
         this.stocksLoading.status = 'loading';
-        if (stocks.length === 15) {
-            this.toastr.error('We support not more than 14 tags per user');
+        if (stocks.length === 25) {
+            this.toastr.error('We support not more than 25 stocks per user');
             this.stocksLoading.status = 'finished';
         } else {
             this.stocksLoading.text = 'Updating stocks lists, details and charts';

@@ -15,5 +15,6 @@
     <!--    <app-stocks-list-sample [stocks]="updateStockDetails(filteredStocks)" *ngIf="userStocks.length > 0"-->
     <!--                            [userStocks]="updateStockDetails(userStocks)" [pagination]="false"-->
     <!--                            (updatedStocksList)="updateStocksList($event)"></app-stocks-list-sample>-->
-    <app-stocks-tiles [stocks]="getUpdatedStockDetails(filteredStocks)"></app-stocks-tiles>
+    <app-stocks-tiles [stocks]="userStocks" (updatedStocksList)="updateStocksList($event)"
+                      *ngIf="userStocks.length > 0"></app-stocks-tiles>
 </div>

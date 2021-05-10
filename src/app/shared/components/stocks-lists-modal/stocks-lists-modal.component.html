@@ -37,10 +37,12 @@
                     </mat-paginator>
                 </ng-container>
             </div>
-            <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" [type]="selectedStockType"
-                                    (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"
-                                    [userStocks]="updateStockDetails(userStocks)"
-                                    *ngIf="userStocks.length > 0"></app-stocks-list-sample>
+            <!--            <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" [type]="selectedStockType"-->
+            <!--                                    (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"-->
+            <!--                                    [userStocks]="updateStockDetails(userStocks)"-->
+            <!--                                    *ngIf="userStocks.length > 0"></app-stocks-list-sample>-->
+            <app-stocks-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0"
+                              (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-tiles>
             <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">
                 No user stocks of selected type is found
             </p>
@@ -88,7 +90,7 @@
 
             <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
                                     [type]="selectedStockType" [modal]="true"
-                                    [userStocks]="updateStockDetails(userStocks)"
+                                    [userStocks]="getUpdatedStockDetails(userStocks)"
                                     (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
             <p *ngIf="filteredStocks?.length===0 && stocksLoading.status!=='loading'">No stocks of selected type is
                 found</p>

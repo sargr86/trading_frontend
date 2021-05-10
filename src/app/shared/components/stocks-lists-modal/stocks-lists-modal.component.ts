@@ -160,7 +160,7 @@ export class StocksListsModalComponent implements OnInit {
         return !!this.userStocks.find(s => s.name === stock.name);
     }
 
-    updateStockDetails(userStocks) {
+    getUpdatedStockDetails(userStocks) {
 
         // if (!this.search) {
 

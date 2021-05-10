@@ -7,5 +7,6 @@ export const STOCK_TILE_CHART_SETTINGS = {
     },
     tooltipDisabled: true,
     autoScale: true,
-    timeline:true
+    timeline: true,
+    animations: false
 };

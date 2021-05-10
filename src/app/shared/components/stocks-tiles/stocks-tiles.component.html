@@ -1,13 +1,10 @@
-<div id="stock-tiles-holder">
-    <div class="stock-item" *ngFor="let stock of passedStocks" [class.stock-item-green]="stock.changesPercentage > 0">
+<div id="stock-tiles-holder" cdkDropList>
+    <div class="stock-item" *ngFor="let stock of passedStocks" cdkDrag (cdkDragDropped)="dragDropped($event, stock)"
+         [class.stock-item-green]="stock.changesPercentage > 0">
         <div class="stock-follow">
-            <button (click)="updateFollowedStocksList(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
-
             <button [class.unfollow-btn]="isStockFollowed(stock)" (click)="updateFollowedStocksList(stock)">
                 <mat-icon *ngIf="isStockFollowed(stock) else followTmpl">delete</mat-icon>
-                <ng-template #followTmpl>
-                    <span>Follow</span>
-                </ng-template>
+                <ng-template #followTmpl>Follow</ng-template>
             </button>
         </div>
 
@@ -20,13 +17,11 @@
             </div>
         </div>
 
-        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')">
-            <ng-container *ngIf="stockChartSettings; let sChS;">
-                <ngx-charts-line-chart [scheme]="sChS.colorScheme" [results]="[stock]" [view]="sChS.view"
-                                       [autoScale]="sChS.autoScale" [timeline]="sChS.timeline"
-                                       [tooltipDisabled]="sChS.tooltipDisabled">
-                </ngx-charts-line-chart>
-            </ng-container>
+        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series') && stockChartSettings; let sChS;">
+            <ngx-charts-line-chart [scheme]="sChS.colorScheme" [results]="[stock]" [view]="sChS.view"
+                                   [autoScale]="sChS.autoScale" [timeline]="sChS.timeline"
+                                   [animations]="sChS.animations" [tooltipDisabled]="sChS.tooltipDisabled">
+            </ngx-charts-line-chart>
         </div>
     </div>
 </div>

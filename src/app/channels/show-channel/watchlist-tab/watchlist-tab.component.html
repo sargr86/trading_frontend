@@ -2,17 +2,18 @@
     <mat-spinner *ngIf="stocksLoading==='loading'" [diameter]="20"></mat-spinner>
     <small class="error" *ngIf="userStocks.length === 0 && stocksLoading==='finished'">
         No stocks added to watchlist</small>
-<!--    <div class="paginator">-->
-<!--        <ng-container *ngIf="stocksLoading==='finished' && userStocks.length > 12 && !search">-->
-<!--            <mat-paginator (page)="handle($event)"-->
-<!--                           #paginator-->
-<!--                           [length]="userStocks.length" [pageIndex]="pageIndex"-->
-<!--                           [pageSize]="pageSize" [hidePageSize]="true"-->
-<!--                           [pageSizeOptions]="[2,5,10,25,100]">-->
-<!--            </mat-paginator>-->
-<!--        </ng-container>-->
-<!--    </div>-->
-    <app-stocks-list-sample [stocks]="updateStockDetails(filteredStocks)" *ngIf="userStocks.length > 0"
-                            [userStocks]="updateStockDetails(userStocks)" [pagination]="false"
-                            (updatedStocksList)="updateStocksList($event)"></app-stocks-list-sample>
+    <!--    <div class="paginator">-->
+    <!--        <ng-container *ngIf="stocksLoading==='finished' && userStocks.length > 12 && !search">-->
+    <!--            <mat-paginator (page)="handle($event)"-->
+    <!--                           #paginator-->
+    <!--                           [length]="userStocks.length" [pageIndex]="pageIndex"-->
+    <!--                           [pageSize]="pageSize" [hidePageSize]="true"-->
+    <!--                           [pageSizeOptions]="[2,5,10,25,100]">-->
+    <!--            </mat-paginator>-->
+    <!--        </ng-container>-->
+    <!--    </div>-->
+    <!--    <app-stocks-list-sample [stocks]="updateStockDetails(filteredStocks)" *ngIf="userStocks.length > 0"-->
+    <!--                            [userStocks]="updateStockDetails(userStocks)" [pagination]="false"-->
+    <!--                            (updatedStocksList)="updateStocksList($event)"></app-stocks-list-sample>-->
+    <app-stocks-tiles [stocks]="getUpdatedStockDetails(filteredStocks)"></app-stocks-tiles>
 </div>

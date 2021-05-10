@@ -1,6 +1,4 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {CHART_1, CHART_2, CHART_3, CHART_4} from '@core/constants/charts';
-import {Chart} from 'chart.js';
 import {ActivatedRoute, Router} from '@angular/router';
 import {API_URL} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';

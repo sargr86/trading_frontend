@@ -63,7 +63,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
                 this.userStocks = dt.stocks;
                 this.filterStocks();
                 if (this.filteredStocks.length > 0) {
-                    this.loadGraphs(this.filteredStocks);
+                    // this.loadGraphs(this.filteredStocks);
                 }
                 this.stocksLoading = 'finished';
             });
@@ -110,7 +110,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
 
-    updateStockDetails(userStocks) {
+    getUpdatedStockDetails(userStocks) {
         return updateStockDetails(userStocks, this.stocks);
     }
 

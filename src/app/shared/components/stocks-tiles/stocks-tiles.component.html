@@ -1,0 +1,32 @@
+<div id="stock-tiles-holder">
+    <div class="stock-item" *ngFor="let stock of passedStocks" [class.stock-item-green]="stock.changesPercentage > 0">
+        <div class="stock-follow">
+            <button (click)="updateFollowedStocksList(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
+
+            <button [class.unfollow-btn]="isStockFollowed(stock)" (click)="updateFollowedStocksList(stock)">
+                <mat-icon *ngIf="isStockFollowed(stock) else followTmpl">delete</mat-icon>
+                <ng-template #followTmpl>
+                    <span>Follow</span>
+                </ng-template>
+            </button>
+        </div>
+
+        <div class="stock-details">
+            <p class="stock-name">{{stock.name}}</p>
+            <p class="stock-price"><span class="dollar-sign">$</span>{{stock.price}}</p>
+            <div class="stock-price-details">
+                <p class="stock-price-change">{{stock.change?.toFixed(2)}}</p>
+                <p class="stock-price-change-percent">{{stock.changesPercentage}}%</p>
+            </div>
+        </div>
+
+        <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')">
+            <ng-container *ngIf="stockChartSettings; let sChS;">
+                <ngx-charts-line-chart [scheme]="sChS.colorScheme" [results]="[stock]" [view]="sChS.view"
+                                       [autoScale]="sChS.autoScale" [timeline]="sChS.timeline"
+                                       [tooltipDisabled]="sChS.tooltipDisabled">
+                </ngx-charts-line-chart>
+            </ng-container>
+        </div>
+    </div>
+</div>

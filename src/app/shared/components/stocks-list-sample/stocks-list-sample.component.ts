@@ -38,6 +38,8 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     userStocksOnly = this.passedStocks === this.userStocks;
     routerUrl;
 
+    show = 6;
+
     editUserStocks = false;
     sortTypes = [
         {name: 'My sort', value: 'custom'},
@@ -87,6 +89,13 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
     }
 
+    getPassedStocks() {
+        if (!this.portable && !this.modal) {
+            return this.passedStocks.slice(0, this.show);
+        }
+        return this.passedStocks;
+    }
+
 
     updateFollowedStocksList(stock) {
         const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
@@ -113,7 +122,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
     }
 
     openStockProfile(stock) {
-        if (!this.modal) {
+        if (!this.modal && this.portable) {
             this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () => {
                     await this.router.navigate([`stocks/${stock}/analytics`]);
                 }
@@ -201,6 +210,10 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         return {
             domain: (stock.changesPercentage > 0 ? ['#18B587'] : ['#F53C6F'])
         };
+    }
+
+    increaseShow() {
+        this.show += 6;
     }
 
 

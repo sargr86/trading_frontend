@@ -2,8 +2,8 @@
 </ng-container>
 
 <ng-template #tilesList>
-    <div id="stock-tiles-holder">
-        <div class="stock-item" *ngFor="let stock of passedStocks"
+    <div id="stock-tiles-holder" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="stock-item" cdkDrag (cdkDragDropped)="dragDropped($event, stock)" *ngFor="let stock of getPassedStocks(); let last=last"
              [class.stock-item-green]="stock.changesPercentage > 0">
             <div class="stock-follow" [hidden]="!followAllowed">
                 <button (click)="updateFollowedStocksList(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
@@ -31,6 +31,7 @@
                                        [showGridLines]="true" [showRefLabels]="false">
                 </ngx-charts-line-chart>
             </div>
+            <div *ngIf="last && !portable && !modal" (click)="increaseShow()">See more</div>
             <!--                <img class="crypto-map" src="assets/img/map.png">-->
         </div>
         <mat-error *ngIf="passedStocks?.length ===0">No results found</mat-error>

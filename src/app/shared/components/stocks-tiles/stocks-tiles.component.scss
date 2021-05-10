@@ -1,0 +1,109 @@
+@import 'variables';
+@import 'mixins';
+
+#stock-tiles-holder {
+    padding: 32px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    .stock-item {
+        position: relative;
+        width: 200px;
+        height: 179px;
+        margin-bottom: 32px;
+        background: $red 0 0 no-repeat padding-box;
+        padding: 24px 8px;
+        border: 1px dashed transparent;
+        transition: 0.2s;
+        margin-right: 13px;
+        cursor: pointer;
+        text-align: center;
+
+        &.stock-item-green {
+            background: #18B587;
+        }
+
+        &:hover {
+            border: 1px dashed #FFFFFF;
+        }
+
+        .cryptoRemove, .stock-follow, .stock-unfollow {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            cursor: pointer;
+
+            &:hover {
+                span {
+                    font-size: 20px;
+                }
+            }
+
+            span {
+                color: #FFFFFF;
+                font-size: 16px;
+                transition: 0.1s;
+            }
+
+            button {
+                background: none;
+                color: white;
+                text-transform: uppercase;
+                padding: 3px;
+                font-size: 9px;
+                border: 1px solid white;
+                font-weight: bold;
+                border-radius: 0;
+            }
+        }
+
+
+        .unfollow-btn {
+            border: none !important;
+            margin-top: 5px;
+
+            mat-icon {
+                font-size: 16px;
+            }
+        }
+
+    }
+
+    .stock-name, .stock-price-change, .stock-price-change-percent {
+        color: #FFFFFF;
+        font-size: 14px;
+        font-family: 'Muli-Light';
+        margin-bottom: 4px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .stock-price {
+        color: #FFFFFF;
+        font-size: 26px;
+        line-height: 26px;
+        font-family: 'Muli-Bold';
+        position: relative;
+        max-width: max-content;
+        margin: 0 auto 4px;
+        padding-left: 8px;
+    }
+
+    .dollar-sign {
+        position: absolute;
+        left: -5px;
+        top: -6px;
+        font-size: 16px;
+        font-family: 'Muli-Bold';
+    }
+
+    .stock-price-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 130px;
+        margin: auto;
+    }
+}

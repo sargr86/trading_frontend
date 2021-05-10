@@ -10,6 +10,13 @@
         @include stocksItem;
     }
 
+    .stock-item-placeholder {
+        width: 200px;
+        height: 179px;
+        margin-right: 13px;
+        margin-bottom: 32px;
+    }
+
 }
 
 .cdk-drag-preview {
@@ -33,3 +40,15 @@
 .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.cdk-drop-list-dragging {
+    .placeholder-text {
+        display: inline;
+    }
+}
+
+.cdk-drag-animating {
+    transition: transform 0ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+

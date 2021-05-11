@@ -1,0 +1,31 @@
+<form [formGroup]="searchStocksForm" [class.white-form]="whiteForm" [class.transparent-form]="transparentForm">
+    <div class="search-wrapper">
+        <input formControlName="search" (keyup.enter)="handleEnter()" [placeholder]="getPlaceholder()"
+               [matAutocomplete]="auto" #trigger="matAutocompleteTrigger" (keyup)="handleRegularKeyup()">
+        <i class="fas fa-search"></i>
+        <mat-autocomplete #auto="matAutocomplete">
+            <ng-container *ngIf="autocomplete">
+                <ng-container *ngIf="groupResults then groupedList else regularList"></ng-container>
+            </ng-container>
+
+            <ng-template #groupedList>
+                <mat-optgroup *ngFor="let group of searchResults" [label]="group.name">
+                    <mat-option *ngFor="let stock of group.stocks" [value]="stock.name"
+                                (click)="handleStockClick(stock, trigger)">
+                        <p>{{stock.symbol}}</p>
+                        <small>{{stock.name}}</small>
+                    </mat-option>
+                </mat-optgroup>
+            </ng-template>
+
+            <ng-template #regularList>
+                <mat-option *ngFor="let stock of searchResults" [value]="stock.symbol"
+                            (click)="handleStockClick(stock, trigger)">
+                    <span>{{stock.symbol}}</span>
+                    <small>{{stock.name}}</small>
+                </mat-option>
+            </ng-template>
+
+        </mat-autocomplete>
+    </div>
+</form>

@@ -21,15 +21,15 @@ import {Stock} from '@shared/models/stock';
 })
 export class WatchlistTabComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
+    authUser: User;
     search: string | null;
+
     subscriptions: Subscription[] = [];
-    showFilters = false;
     userStocks: Stock[] = [];
     filteredStocks: Stock[] = [];
 
     stocksLoading = 'idle';
 
-    authUser: User;
 
     @Input('channelUser') channelUser;
 
@@ -49,12 +49,12 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
         this.stocksLoading = 'loading';
-        this.subject.currentUserStocks.pipe(filter(d => !d.initial))
+        this.subscriptions.push(this.subject.currentUserStocks.pipe(filter(d => !d.initial))
             .subscribe(dt => {
                 this.userStocks = dt.stocks;
                 this.filteredStocks = this.userStocks;
                 this.stocksLoading = 'finished';
-            });
+            }));
     }
 
     getSearchResults(s) {

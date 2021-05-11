@@ -87,7 +87,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        localStorage.setItem('search', '');
+        // localStorage.setItem('search', '');
         this.activeTab = PROFILE_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || PROFILE_PAGE_TABS[0];
         this.getUserInfo();
 
@@ -126,6 +126,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInUserStocks(e) {
+        localStorage.setItem('search', e.search);
         this.watchListTab.getSearchResults(e);
     }
 

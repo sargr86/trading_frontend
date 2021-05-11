@@ -15,20 +15,19 @@ import {ToastrService} from 'ngx-toastr';
 export class VideosListHolderComponent implements OnInit {
 
     authUser;
+    videoLoading = 'idle';
 
     @Input('videos') videos = [];
     @Input('title') title = '';
     @Input('removable') removable = false;
     @Input('detailsSource') detailsSource;
 
-    videoLoading = 'idle';
-
     constructor(
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
         public router: Router,
         private dialog: MatDialog,
-        private toastr: ToastrService,
+        private toastr: ToastrService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -52,7 +51,6 @@ export class VideosListHolderComponent implements OnInit {
     }
 
     removeVideo(video) {
-        console.log(this.authUser)
         this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.videoService.removeVideo({
@@ -74,6 +72,20 @@ export class VideosListHolderComponent implements OnInit {
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
+    isChannelPage(){
+        return this.router.url.includes('channel') && this.removable;
+    }
+
+
+    updatePrivacy(video, privacy) {
+        this.videoService.updatePrivacy({
+            video_id: video.id,
+            privacy: privacy === 'Public' ? 'Private' : 'Public'
+        }).subscribe(dt => {
+            video.privacy = dt;
+        });
     }
 
 

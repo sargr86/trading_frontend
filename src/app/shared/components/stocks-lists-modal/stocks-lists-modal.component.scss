@@ -1,0 +1,174 @@
+@import 'variables';
+@import 'mixins';
+
+#stocks-lists-modal {
+    background: #0E1D43 0 0 no-repeat padding-box;
+    width: 100%;
+    padding: 60px 200px;
+    margin: -1.75rem auto;
+    min-height: calc(100vh - 2px);
+
+    .top-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #FFFFFF;
+        font-size: 24px;
+        flex-wrap: wrap;
+
+
+        .left-group {
+            min-width: 190px;
+            flex: 1;
+        }
+
+        .center-group {
+            flex: 1;
+
+            .spinner-container {
+                min-width: max-content;
+            }
+        }
+
+        .right-group {
+            width: 30%;
+            min-width: 190px;
+            flex: 1;
+            @media (max-width: 540px) {
+                width: 100%;
+            }
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        i {
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+
+            &:hover {
+                color: #F53C6F;
+            }
+        }
+
+    }
+
+    @media (max-width: 1400px) {
+        padding: 60px 150px;
+    }
+    @media (max-width: 991px) {
+        padding: 60px 50px;
+        justify-content: space-around;
+    }
+}
+
+.user-stocks {
+    .user-stocks-list {
+        p {
+            color: $white;
+        }
+    }
+
+    .right-group {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.all-stocks {
+    .all-stocks-list {
+        p {
+            color: $white;
+        }
+    }
+}
+
+.addStockWrap {
+    .stock-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0D1B3E;
+        color: #FFFFFF;
+        border: 1px dashed #FFFFFF;
+        transition: 0.2s;
+        cursor: pointer;
+
+        &:hover {
+            background: #2b4380;
+        }
+    }
+}
+
+.crypto-map {
+    width: 100%;
+}
+
+.modal-dialog {
+    margin: 0 !important;
+}
+
+.mat-paginator {
+    background: transparent;
+    color: white;
+    font-family: 'Muli-Regular';
+    font-size: 12px;
+}
+
+app-search-stocks-form {
+    padding-top: 10px !important;
+}
+
+select {
+    background: transparent;
+    //border: none !important;
+    border-bottom: 1px solid $white !important;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-family: 'Muli-Light';
+    font-size: 18px;
+    color: $white !important;
+
+    &:focus {
+        outline: none;
+    }
+
+    option {
+        color: $black !important;
+
+    }
+}
+
+.center-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stock-type-selector {
+    display: flex;
+    justify-content: space-between;
+    max-width: 200px;
+    width: 100%;
+    @media (max-width: 540px) {
+        max-width: 100%;
+    }
+}
+
+.close-modal-btn {
+    @media (max-width: 540px) {
+        position: absolute;
+        top: 20px;
+    }
+
+}
+
+
+@media (max-width: 991px) {
+    .stocks-list-holder {
+        justify-content: space-around;
+    }
+}

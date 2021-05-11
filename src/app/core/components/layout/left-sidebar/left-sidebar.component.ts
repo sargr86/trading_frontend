@@ -2,13 +2,14 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {ChannelsService} from '@core/services/channels.service';
-import {API_URL} from '@core/constants/global';
+import {API_URL, MAIN_SECTIONS} from '@core/constants/global';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {AuthService} from '@core/services/auth.service';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -16,14 +17,13 @@ import {StocksService} from '@core/services/stocks.service';
     styleUrls: ['./left-sidebar.component.scss']
 })
 export class LeftSidebarComponent implements OnInit {
-    channels = [];
+
     apiUrl = API_URL;
     authUser;
     routerUrl;
     envName;
-    userStocks;
-    indices;
-    activeTab = {name: 'watchlist'};
+    isSmallScreen = IsResponsive.isSmallScreen();
+
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
@@ -33,20 +33,9 @@ export class LeftSidebarComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private subject: SubjectService,
-        private stocksService: StocksService
     ) {
         this.envName = environment.envName;
         this.authUser = this.getAuthUser.transform();
-        if (this.authUser) {
-            this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
-                this.channels = dt;
-            });
-        }
-        this.subject.getUserSubscriptions().subscribe(dt => {
-            this.channels = dt;
-        });
-
-        this.getUserStocks();
     }
 
     ngOnInit(): void {
@@ -59,46 +48,6 @@ export class LeftSidebarComponent implements OnInit {
         });
 
 
-        this.stocksService.getIndices({}).subscribe(dt => {
-            this.indices = dt;
-        });
-    }
-
-    getUserStocks() {
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
-            this.userStocks = dt.user_stocks;
-        });
-    }
-
-    drop(event: CdkDragDrop<string[]>) {
-        // this.channels = moveItemInArray(this.channels, event.previousIndex, event.currentIndex);
-
-    }
-
-    dragDropped(e, channel) {
-        // console.log(e)
-        // console.log(channel)
-        this.channels = moveItemInArray(this.channels, e.previousIndex, e.currentIndex);
-        // console.log(this.channels)
-        const sendData = {
-            rows: JSON.stringify(this.channels),
-            channel_id: channel.id,
-            user_id: this.authUser.id
-        };
-        this.channelsService.changeSubscriptionPriority(sendData).subscribe(dt => {
-        });
-    }
-
-    async openChannelPage(channel) {
-        this.closeSidenav.emit(true);
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate(['channels/show'], {queryParams: {username: channel.user.username}})
-        );
-    }
-
-    viewAllSubscriptions() {
-        this.router.navigate(['channels/subscriptions']);
-        this.closeSidenav.emit(true);
     }
 
     changePage(route, params = {}) {
@@ -107,38 +56,4 @@ export class LeftSidebarComponent implements OnInit {
             await this.router.navigate([route], {queryParams: params})
         );
     }
-
-    isSmallScreen() {
-        return window.screen.availWidth < 768;
-    }
-
-    getPercentageDetails(stock) {
-        const value = stock.changesPercentage; //.replace(/[(%)]/g, '')
-        return {
-            ...{value},
-            color: (+value > 0 ? 'green' : 'red'),
-            class: 'analytics-text-' + (+value > 0 ? '4' : '5')
-        };
-    }
-
-    openStockProfile(stock) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock}/analytics`])
-        );
-    }
-
-    async viewFullWatchlist() {
-        await this.router.navigate(['channels/show'], {
-            queryParams: {
-                username: this.authUser.username,
-                tab: 'watchlist'
-            }
-        });
-    }
-
-    changeTab(tab) {
-        this.activeTab.name = tab;
-    }
-
-
 }

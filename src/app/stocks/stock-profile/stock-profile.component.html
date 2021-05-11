@@ -1,32 +1,11 @@
 <div class="stock-content">
     <div class="major-indexes">
         <h2>Major indexes</h2>
-
-        <div class="favorites">
-
-            <div class="crypto-content">
-                <div class="crypto-item" [class.crypto-item-green]="stock.changesPercentage > 0"
-                     *ngFor="let stock of indices" (click)="openStockProfile(stock.symbol)">
-                    <p class="crypto-text-1">{{stock.name}}</p>
-                    <p class="crypto-text-2"><span class="crypto-text-abs">$</span>{{stock.price}}</p>
-                    <div class="crypto-block">
-                        <p class="crypto-text-1">{{stock.change}}</p>
-                        <p class="crypto-text-1">{{stock.changesPercentage}}%</p>
-                    </div>
-<!--                    <div class="small-chart-container">-->
-<!--                        <ngx-charts-line-chart  [scheme]="colorScheme" [legend]="false"-->
-<!--                                               [showXAxisLabel]="false"-->
-<!--                                               [showYAxisLabel]="false" [xAxis]="true" [yAxis]="true"-->
-<!--                                               [results]="multi"-->
-<!--                                               [autoScale]="true"-->
-<!--                                               [yAxisTicks]="[]" [xAxisTicks]="[]" [timeline]="true"-->
-<!--                                               [referenceLines]="referenceLines" [showRefLines]="true"-->
-<!--                                               [showGridLines]="true" [showRefLabels]="false">-->
-<!--                        </ngx-charts-line-chart>-->
-<!--                    </div>-->
-                    <!--                                        <img class="crypto-map" src="assets/img/map.png">-->
-                </div>
+        <div class="stocks-list-container">
+            <div class="spinner-container">
+                <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
             </div>
+            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"></app-stocks-list-sample>
         </div>
     </div>
     <div class="stock-tabs" *ngIf="selectedStock">
@@ -56,6 +35,7 @@
             </div>
         </div>
     </div>
-    <mat-error *ngIf="!selectedStock">Please select a stock to view its information</mat-error>
+    <mat-error *ngIf="!selectedStock && indices?.length !== 0">Please select a stock to view its information
+    </mat-error>
     <!-- <img class="stock-content-img" src="assets/img/stock.jpg"> -->
 </div>

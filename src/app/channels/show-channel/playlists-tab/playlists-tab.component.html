@@ -68,7 +68,7 @@
         </div>
 
     </ng-container>
-    <div id="no-playlists-found">
-        <span *ngIf="playlists.length === 0">No playlists found for this channel</span>
+    <div id="no-playlists-found" *ngIf="playlists.length === 0">
+        <small class="error">No playlists found for this channel</small>
     </div>
 </div>

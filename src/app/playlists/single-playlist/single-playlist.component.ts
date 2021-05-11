@@ -8,6 +8,7 @@ import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AddVideoToAnotherPlaylistComponent} from '@core/components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-single-playlist',
@@ -17,14 +18,16 @@ import {AddVideoToAnotherPlaylistComponent} from '@core/components/modals/add-vi
 export class SinglePlaylistComponent implements OnInit {
     playlist;
     apiUrl = API_URL;
+    authUser;
 
     constructor(
         public router: Router,
         private route: ActivatedRoute,
         private playlistsService: PlaylistsService,
         private dialog: MatDialog,
+        private getAuthUser: GetAuthUserPipe
     ) {
-
+        this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
@@ -39,7 +42,7 @@ export class SinglePlaylistComponent implements OnInit {
         const playlistId = this.route.snapshot?.params?.id;
 
         if (playlistId) {
-            this.playlistsService.getById({playlist_id: playlistId}).subscribe(dt => {
+            this.playlistsService.getById({playlist_id: playlistId, user_id: this.authUser}).subscribe(dt => {
                 this.playlist = dt;
             });
         }

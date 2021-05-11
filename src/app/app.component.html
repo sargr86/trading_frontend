@@ -1,9 +1,10 @@
 <mat-sidenav-container>
     <mat-sidenav [mode]="getMode(sidenav)" #sidenav
                  id="sidenav" [opened]="!router.url.includes('auth')">
-        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)" *ngIf="isSmallScreen()"></app-left-sidebar>
+        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)" *ngIf="isSmallScreen"></app-left-sidebar>
     </mat-sidenav>
-    <mat-sidenav-content>
+
+    <mat-sidenav-content class="ml-0 ml-md-0">
         <app-navbar (search)="getSearch($event)" *ngIf="!router.url.includes('auth')"
                     (closeSidenav)="closeSidenav($event, sidenav)"></app-navbar>
         <!--        <app-navbar (toggleSide)="sidenav.toggle()"></app-navbar>-->
@@ -12,9 +13,9 @@
 
         <section class="body-content" [class.full-width]="router.url.includes('auth')">
             <div class="body-content-left"
-                 *ngIf="!router.url.includes('auth') && !checkIfPolicyPage() && !isSmallScreen()">
+                 *ngIf="!router.url.includes('auth') && !checkIfPolicyPage() && !isSmallScreen">
                 <div class="position-relative">
-                    <div class="close-left-menu" *ngIf="isSmallScreen()">&times;</div>
+                    <div class="close-left-menu">&times;</div>
                     <app-left-sidebar></app-left-sidebar>
                 </div>
             </div>
@@ -27,3 +28,4 @@
         </section>
     </mat-sidenav-content>
 </mat-sidenav-container>
+

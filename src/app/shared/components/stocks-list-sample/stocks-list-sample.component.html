@@ -1,0 +1,118 @@
+<ng-container *ngIf="portable then portableStocksList; else tilesList">
+</ng-container>
+
+<ng-template #tilesList>
+    <div id="stock-tiles-holder" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="stock-item" cdkDrag (cdkDragDropped)="dragDropped($event, stock)" *ngFor="let stock of getPassedStocks(); let last=last"
+             [class.stock-item-green]="stock.changesPercentage > 0">
+            <div class="stock-follow" [hidden]="!followAllowed">
+                <button (click)="updateFollowedStocksList(stock)" *ngIf="!isStockFollowed(stock)">Follow</button>
+
+                <button class="unfollow-btn" (click)="updateFollowedStocksList(stock)" *ngIf="isStockFollowed(stock)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <div (click)="openStockProfile(stock.symbol)">
+                <p class="stock-name">{{stock.name}}</p>
+                <p class="stock-price"><span class="dollar-sign">$</span>{{stock.price}}</p>
+                <div class="stock-price-details">
+                    <p class="stock-price-change">{{stock.change?.toFixed(2)}}</p>
+                    <p class="stock-price-change-percent">{{stock.changesPercentage}}%</p>
+                </div>
+            </div>
+            <div class="small-chart-container" *ngIf="stock.hasOwnProperty('series')"
+                 (click)="openStockProfile(stock.symbol)">
+                <ngx-charts-line-chart [scheme]="colorScheme" [legend]="false"
+                                       [tooltipDisabled]="true"
+                                       [xAxis]="true" [yAxis]="true"
+                                       [results]="[stock]" [rotateXAxisTicks]="false"
+                                       [autoScale]="true" [xAxisTicks]="[]" [animations]="false"
+                                       [timeline]="true" [yAxisTicks]="[]" [view]="view"
+                                       [showGridLines]="true" [showRefLabels]="false">
+                </ngx-charts-line-chart>
+            </div>
+            <div *ngIf="last && !portable && !modal" (click)="increaseShow()">See more</div>
+            <!--                <img class="crypto-map" src="assets/img/map.png">-->
+        </div>
+        <mat-error *ngIf="passedStocks?.length ===0">No results found</mat-error>
+    </div>
+</ng-template>
+
+<ng-template #portableStocksList>
+    <div id="portable-stocks-list">
+        <div class="stocks-top-actions">
+            <div class="search-stocks">
+                <div class="watchlist-search" *ngIf="editUserStocks">
+                    <app-search-stocks-form [autocomplete]="true" [whiteForm]="true" [returnFoundStock]="true"
+                                            (search)="getSearchResults($event)"></app-search-stocks-form>
+                </div>
+
+                <div class="sort-types-dropdown dropdown">
+                    <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown"
+                         aria-haspopup="true"
+                         aria-expanded="false">
+                        Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" *ngFor="let sortType of sortTypes;let ind = index"
+                           [class.red]="selectedSortType?.name === sortType.name"
+                           (click)="sortStocks(sortType)">{{sortType.name}}</a>
+                    </div>
+                    <div class="spinner-container">
+                        <mat-spinner *ngIf="sortedListLoading || loader.stocksLoading.status === 'loading'"
+                                     [diameter]="15"></mat-spinner>
+                    </div>
+                </div>
+            </div>
+            <div class="context-actions" *ngIf="editPortable">
+                <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>
+                <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editUserStocks = !editUserStocks">
+                        Edit Watchlist
+                    </button>
+                </mat-menu>
+            </div>
+
+
+        </div>
+        <div id="portable-stocks" cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="passedStocks?.length > 0">
+            <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks); let ind = index">
+                <div class="portable-stock-item" cdkDrag
+                     (cdkDragDropped)="dragDropped($event, stock)">
+                    <div class="remove-stock" *ngIf="editUserStocks" (click)="updateFollowedStocksList(stock)">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="stock-details" (click)="openStockProfile(stock.symbol)">
+                        <div class="stock-name-symbol">
+                            <p class="stock-symbol">{{stock.symbol.replace('^', '')}}</p>
+                            <p class="stock-name">{{stock.name}}</p>
+                        </div>
+
+                        <ng-container
+                            [ngTemplateOutlet]="itemTemplate"
+                            [ngTemplateOutletContext]="{details: getPercentageDetails(stock)}">
+                        </ng-container>
+
+                        <ng-template let-d="details" #itemTemplate>
+                            <div class="indices-small-chart-container" *ngIf="stock.hasOwnProperty('series')">
+                                <ngx-charts-line-chart [scheme]="getPortableColorScheme(stock)" [animations]="false"
+                                                       [results]="[stock]" [tooltipDisabled]="true"
+                                                       [autoScale]="true" [view]="portableView"
+                                                       [timeline]="true" [xAxisTicks]="[]" [yAxisTicks]="[]"
+                                                       [showGridLines]="false" [showRefLabels]="false">
+                                </ngx-charts-line-chart>
+                            </div>
+                            <div class="stock-price-change">
+                                <p class="stock-price">{{stock.price?.toFixed(2)}}</p>
+                                <p [ngClass]="d?.class" class="stock-change-details">
+                                    {{stock.change?.toFixed(2)}}({{d?.value?.toFixed(2)}}%)</p>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
+</ng-template>

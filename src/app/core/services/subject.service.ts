@@ -1,10 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SubjectService {
+    token = localStorage.getItem('token')
+    authUserData = this.token ? jwtDecode(this.token) : '';
+    userStocks = {stocks: [], empty: true, initial: true};
+    indices = [];
+    stockTypes = [];
+
     public messageData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
     public videoSearchData = new Subject<any>();
@@ -12,6 +19,19 @@ export class SubjectService {
     public streamSessionData = new Subject<any>();
     public toggleFiltersData = new Subject<any>();
     private stocksData = new Subject<any>();
+    private indicesData = new Subject<any>();
+    private userStocksData = new Subject<any>();
+
+    private userStocksSource = new BehaviorSubject(this.userStocks);
+    private authUserSource = new BehaviorSubject(this.authUserData);
+    private indicesSource = new BehaviorSubject(this.indices);
+    private stockTypesSource = new BehaviorSubject(this.stockTypes);
+
+    authUser = this.authUserSource.asObservable();
+    currentUserStocks = this.userStocksSource.asObservable();
+    currentStockTypes = this.stockTypesSource.asObservable();
+    currentIndices = this.indicesSource.asObservable();
+
 
     constructor() {
     }
@@ -70,5 +90,37 @@ export class SubjectService {
 
     getStocksData(): Observable<any> {
         return this.stocksData.asObservable();
+    }
+
+    setIndicesData(value) {
+        this.indicesData.next(value);
+    }
+
+    getIndicesData(): Observable<any> {
+        return this.indicesData.asObservable();
+    }
+
+    setUserStocksData(value) {
+        this.userStocksData.next(value);
+    }
+
+    getUserStocksData(): Observable<any> {
+        return this.userStocksData.asObservable();
+    }
+
+    changeUserStocks(stocks) {
+        this.userStocksSource.next(stocks);
+    }
+
+    changeAuthUser(data) {
+        this.authUserSource.next(data);
+    }
+
+    changeIndices(stocks) {
+        this.indicesSource.next(stocks);
+    }
+
+    changeStockTypes(stocks) {
+        this.stockTypesSource.next(stocks);
     }
 }

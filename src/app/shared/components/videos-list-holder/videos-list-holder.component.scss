@@ -1,68 +1,52 @@
 @import 'variables';
 @import 'mixins';
 
-
-.placeholder-list-container {
-    min-height: 1020px;
+.trending-text {
+    color: $red;
+    font-size: 18px;
+    font-family: "Muli-Bold";
+    margin-bottom: 24px;
 }
 
-.ph-item {
-    height: 323px;
-}
 
 .item {
     position: relative;
-    width: 30%;
+    width: 100%;
     max-width: 400px;
     min-width: 320px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     .thumbnail-image {
         width: 100%;
         height: 225px;
+        max-width: 400px;
+        cursor: pointer;
     }
 
-    @media (max-width: 1439px) {
-        width: 45%;
-    }
     @media (max-width: 992px) {
-        width: 70%;
+
         min-width: 300px;
     }
 }
 
-.ph-item {
-    padding: 0;
-    border: 0;
-
-    & > div {
-        padding: 0;
-
-        .ph-picture {
-            height: 225px;
-        }
-
-        .ph-avatar {
-            min-width: 42px;
-            width: 42px !important;
-            height: 42px;
-            margin: 0;
-        }
-    }
-}
-
 .video-info {
+    display: flex;
+    margin-top: 12px;
+    flex-direction: column;
 
     .left-side {
-        width: 50%;
+        width: 100%;
         display: flex;
+        @media (max-width: 992px) {
+            width: 100%;
+        }
     }
 
     .right-side {
-        width: 50%;
+        width: 100%;
+        margin-left: 56px;
 
         ul {
-            text-align: right;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -76,6 +60,14 @@
                     @include tagItem;
                 }
             }
+
+            @media (max-width: 992px) {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 992px) {
+            width: 100%;
         }
     }
 }
@@ -85,6 +77,14 @@
     top: 16px;
     left: 16px;
     color: $red;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.update-privacy {
+    position: absolute;
+    top: 16px;
+    right: 16px;
     transition: 0.3s;
     cursor: pointer;
 }
@@ -123,10 +123,6 @@
 
 .thumbnail {
     position: relative;
-
-    .thumbnail-image {
-        cursor: pointer;
-    }
 
 
     .duration {

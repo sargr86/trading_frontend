@@ -1,13 +1,14 @@
 <div class="profile-list">
     <!--    <app-categories></app-categories>-->
     <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
+    <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
     <ng-container *ngIf="channelUser">
         <app-channel-profile [channelUser]="channelUser" [authUser]="authUser"></app-channel-profile>
 
 
-        <div class="watchlist pWatchlist">
+        <div class="stocks-watchlist pWatchlist">
             <div class="profile-list user-profile-block">
-                <ul class="nav nav-tabs" id="profileList" role="tablist">
+                <ul class="nav nav-tabs" id="channel-tabs-list" role="tablist">
                     <li class="nav-item" *ngFor="let tab of allTabs">
                         <a class="nav-link" [class.active]="tab === activeTab" id="{{tab.link}}-tab"
                            (click)="changeActiveTab(tab)" data-toggle="tab" [href]="'#'+tab.link" role="tab"
@@ -15,38 +16,58 @@
                            aria-selected="true">{{tab.name}}</a>
                     </li>
                 </ul>
-                <form [formGroup]="searchVideosForm" id="search-videos-form">
-                    <div class="toggle-filters-btn">
-                        <button class="filter-toggle-btn" *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
-                                [class.filters-active]="showFilters"
-                                (click)="toggleFilters()">
-                            <mat-icon>tune</mat-icon>
-                        </button>
+                <div class="loader-wrapper">
+                    <div class="spinner-container">
+                        <mat-spinner [diameter]="15" *ngIf="this.loader.stocksLoading.status==='loading'"></mat-spinner>
                     </div>
-                    <div class="open-add-stock-modal" *ngIf="activeTab.name==='Watchlist'" (click)="openModal()">
-                        <button>
-                            <mat-icon>add_circle_outline</mat-icon>
-                        </button>
-                    </div>
-                    <div class="watchlist-search" *ngIf="activeTab.name!=='About'">
-                        <input class="watchlist-input" placeholder="Search" formControlName="search"
-                               (keyup.enter)="searchVideos()">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="search-wrapper">
+                    <!--                    <form [formGroup]="searchVideosForm" id="search-videos-form"-->
+                    <!--                          *ngIf="activeTab.name!=='Watchlist'">-->
+                    <!--                        <div class="toggle-filters-btn">-->
+                    <!--                            <button class="filter-toggle-btn"-->
+                    <!--                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"-->
+                    <!--                                    [class.filters-active]="showFilters"-->
+                    <!--                                    (click)="toggleFilters()">-->
+                    <!--                                <mat-icon>tune</mat-icon>-->
+                    <!--                            </button>-->
+                    <!--                        </div>-->
+                    <!--                        <input class="watchlist-input" placeholder="Search" formControlName="search"-->
+                    <!--                               (keyup.enter)="searchVideos()">-->
+                    <!--                        <i class="fas fa-search"></i>-->
+                    <!--                    </form>-->
+                    <app-search-videos-form
+                        *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
+                    <div class="right-side" *ngIf="activeTab.name==='Watchlist'">
 
-            <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'"></app-watchlist-tab>
+                        <div class="open-add-stock-modal" *ngIf="activeTab.name==='Watchlist'" (click)="openModal()">
+                            <button type="button">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="watchlist-search" *ngIf="activeTab.name!=='About'">
+                            <app-search-stocks-form *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
+                                                    [whiteForm]="true"
+                                                    [returnSearchText]="true"
+                                                    (search)="searchInUserStocks($event)">
+                            </app-search-stocks-form>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'" [channelUser]="channelUser"></app-watchlist-tab>
             <app-videos-tab *ngIf="activeTab.name === 'Videos'" [channelUser]="channelUser"
                             [authUser]="authUser"></app-videos-tab>
             <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser"
                                [authUser]="authUser"></app-playlists-tab>
             <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>
-
-
         </div>
     </ng-container>
-    <div class="channel-not-found" *ngIf="!channelUser">
+    <div class="channel-not-found" *ngIf="!channelUser && dataLoading==='finished'">
         <p>Channel with such name is not found</p>
     </div>
 </div>

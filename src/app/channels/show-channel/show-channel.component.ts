@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
 import {VideoService} from '@core/services/video.service';
@@ -11,14 +10,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
 import {MatDialog} from '@angular/material/dialog';
-import {AddPlaylistDialogComponent} from '@core/components/modals/add-playlist-dialog/add-playlist-dialog.component';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {WatchlistTabComponent} from '@app/channels/show-channel/watchlist-tab/watchlist-tab.component';
 import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-tab.component';
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
-import {search} from '@ctrl/ngx-emoji-mart/svgs';
 import {AuthService} from '@core/services/auth.service';
-import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
+import {LoaderService} from '@core/services/loader.service';
+import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
+import {StocksService} from '@core/services/stocks.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-show-channel',
@@ -27,8 +28,6 @@ import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists
 })
 export class ShowChannelComponent implements OnInit, OnDestroy {
 
-    owlOptions: OwlOptions = OWL_OPTIONS;
-    watchlistVideos = [];
     authUser;
 
     activeTab;
@@ -50,6 +49,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     showFilters = false;
     filters = null;
 
+    dataLoading = 'idle';
+
+    userStocks = [];
+    filteredStocks = [];
+    subscriptions = [];
+
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
@@ -68,7 +73,11 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private playlistsService: PlaylistsService,
         private subject: SubjectService,
         public auth: AuthService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        public loader: LoaderService,
+        private updateStocks: UpdateUserStocksPipe,
+        private stocksService: StocksService,
+        private toastr: ToastrService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -78,11 +87,14 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        localStorage.setItem('search', '');
+        // localStorage.setItem('search', '');
         this.activeTab = PROFILE_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || PROFILE_PAGE_TABS[0];
         this.getUserInfo();
 
-
+        this.subject.currentUserStocks.subscribe((dt: any) => {
+            this.userStocks = dt.stocks;
+            this.filteredStocks = this.userStocks;
+        });
     }
 
     toggleFilters() {
@@ -91,11 +103,13 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     getUserInfo() {
+        this.dataLoading = 'loading';
         if (this.passedUsername) {
             this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
                 if (dt) {
                     this.channelUser = dt;
                 }
+                this.dataLoading = 'finished';
             });
         }
     }
@@ -109,6 +123,11 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         if (this.activeTab.name === 'Videos') {
             this.getUserInfo();
         }
+    }
+
+    searchInUserStocks(e) {
+        localStorage.setItem('search', e.search);
+        this.watchListTab.getSearchResults(e);
     }
 
     searchVideos() {
@@ -146,21 +165,42 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         }
     }
 
+
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
     openModal() {
-        this.dialog.open(StocksListsComponent, { maxWidth: '100vw',
+        this.dialog.open(StocksListsModalComponent, {
+            maxWidth: '100vw',
             maxHeight: '100vh',
             height: '100%',
-            width: '100%'}).afterClosed().subscribe(dt => {
-
+            width: '100%',
+            panelClass: 'stocks-lists-modal'
+        }).afterClosed().subscribe(dt => {
         });
+    }
+
+    updateFollowedStocksList(stock) {
+        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, null);
+        if (userStocks.length > 25) {
+            this.toastr.error('We support not more than 25 stocks per user');
+        } else {
+            this.loader.stocksLoading.status = 'loading';
+            this.subscriptions.push(this.stocksService.updateFollowedStocks(
+                {user_id: this.authUser.id, ...{stocks: userStocks}})
+                .subscribe(dt => {
+                    this.userStocks = dt?.user_stocks || [];
+                    this.loader.stocksLoading.status = 'finished';
+                    this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+                }));
+        }
+
     }
 
 
     ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

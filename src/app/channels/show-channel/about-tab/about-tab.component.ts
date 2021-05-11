@@ -44,7 +44,7 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
     }
 
     getDesc(d) {
-        return d.replace('<br>', '');
+        return d?.replace('<br>', '');
     }
 
     saveChannelDescription() {

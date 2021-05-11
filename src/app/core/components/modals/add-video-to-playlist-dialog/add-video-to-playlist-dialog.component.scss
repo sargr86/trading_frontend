@@ -41,6 +41,7 @@
                             color: #545454;
                             text-align: center;
                             transition: all 0.2s ease;
+                            white-space: nowrap;
 
                             &:hover, &.active {
                                 background: #F53C6F;

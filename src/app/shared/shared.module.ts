@@ -21,9 +21,15 @@ import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-value
 import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
-import {LazyloadDirective} from './directives/lazyload.directive';
-import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import {SearchStocksFormOldComponent} from '@shared/components/search-stocks-form-old/search-stocks-form-old.component';
+import {StocksListsModalComponent} from './components/stocks-lists-modal/stocks-lists-modal.component';
+import {StocksListSampleComponent} from './components/stocks-list-sample/stocks-list-sample.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {UpdateUserStocksPipe} from './pipes/update-user-stocks.pipe';
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
+import {SearchVideosFormComponent} from '@shared/components/search-videos-form/search-videos-form.component';
+import { StocksTilesComponent } from './components/stocks-tiles/stocks-tiles.component';
 
 @NgModule({
     declarations: [
@@ -44,9 +50,13 @@ import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/s
         CheckForEmptyObjectPipe,
         UserTagsComponent,
         VideosListHolderComponent,
-        LazyloadDirective,
-        StocksListsComponent,
-        SearchStocksFormComponent
+        SearchStocksFormOldComponent,
+        StocksListsModalComponent,
+        StocksListSampleComponent,
+        UpdateUserStocksPipe,
+        SearchStocksFormComponent,
+        SearchVideosFormComponent,
+        StocksTilesComponent
     ],
     imports: [
         CommonModule,
@@ -54,7 +64,9 @@ import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/s
         FormsModule,
         ReactiveFormsModule,
         PickerModule,
-        MaterialModule
+        MaterialModule,
+        DragDropModule,
+        NgxChartsModule
     ],
     providers: [
         GetAuthUserPipe,
@@ -64,7 +76,7 @@ import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/s
         GetSelectedVideosToBeAddedToPlaylistPipe,
         FilterOutFalsyValuesFromObjectPipe,
         CheckForEmptyObjectPipe,
-        GetThumbPathPipe
+        UpdateUserStocksPipe
 
     ],
     exports: [
@@ -85,8 +97,12 @@ import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/s
         UserTagsComponent,
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
-        StocksListsComponent,
-        SearchStocksFormComponent
+        SearchStocksFormOldComponent,
+        StocksListsModalComponent,
+        StocksListSampleComponent,
+        SearchStocksFormComponent,
+        SearchVideosFormComponent,
+        StocksTilesComponent
     ]
 
 })

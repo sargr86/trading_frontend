@@ -1,22 +1,12 @@
 @import 'variables';
+@import 'mixins';
 
 #my-subscriptions {
     text-align: center;
     color: $green;
 }
 
-.subscribe-to-channel-btn {
-    padding: 12px 28px;
-    font-size: 16px;
-    color: #FFFFFF;
-    background: $red;
-    border-radius: 0;
-    box-shadow: 0 0 6px #006dcc2e;
 
-    &.subscribed {
-        background-color: #D6D6D6 !important;
-    }
-}
 
 .channel-item {
     display: flex;
@@ -55,10 +45,6 @@
         .watchers-count, .videos-count {
             font-size: 14px;
             color: #818181;
-        }
-
-        .videos-count {
-            //margin-left: 26px;
         }
 
     }

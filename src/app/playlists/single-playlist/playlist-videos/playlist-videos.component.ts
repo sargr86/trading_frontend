@@ -7,6 +7,7 @@ import {PlaylistsService} from '@core/services/playlists.service';
 import {MatDialog} from '@angular/material/dialog';
 import {API_URL} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {VideoService} from '@core/services/video.service';
 
 @Component({
     selector: 'app-playlist-videos',
@@ -26,6 +27,7 @@ export class PlaylistVideosComponent implements OnInit {
         public router: Router,
         private route: ActivatedRoute,
         private playlistsService: PlaylistsService,
+        private videoService: VideoService,
         private dialog: MatDialog,
         private getAuthUser: GetAuthUserPipe
     ) {
@@ -40,7 +42,7 @@ export class PlaylistVideosComponent implements OnInit {
     }
 
     dragDropped(e, video) {
-        console.log(e)
+        // console.log(e)
         // console.log(channel)
         this.playlist.videos = moveItemInArray(this.playlist.videos, e.previousIndex, e.currentIndex);
         // console.log(this.playlist)
@@ -84,6 +86,15 @@ export class PlaylistVideosComponent implements OnInit {
             }).afterClosed().subscribe(result => {
                 this.refreshPlaylist.emit();
             });
+        });
+    }
+
+    updatePrivacy(video, privacy) {
+        this.videoService.updatePrivacy({
+            video_id: video.id,
+            privacy: privacy === 'Public' ? 'Private' : 'Public'
+        }).subscribe(dt => {
+            video.privacy = dt;
         });
     }
 

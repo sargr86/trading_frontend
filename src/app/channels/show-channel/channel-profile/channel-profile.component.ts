@@ -154,6 +154,7 @@ export class ChannelProfileComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;
         this.changingImage = false;
+        this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
         // this.loader.dataLoading = false;
         // console.log(this.channelUser)
     }

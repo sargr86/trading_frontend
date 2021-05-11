@@ -1,0 +1,49 @@
+<div id="search-results-container">
+    <ng-container *ngFor="let channel of channelsVideos">
+        <div class="channel-item">
+            <div class="thumbnail">
+                <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'"
+                     (click)="openChannelPage(channel,channel.user?.username)">
+            </div>
+            <div class="info">
+                <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                <div class="shortened-details">
+                    <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+                </div>
+                <p>{{getDesc(channel.description)}}</p>
+                <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
+                        [class.subscribed]="checkIfSubscribed(channel)"
+                        (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
+                </button>
+            </div>
+        </div>
+        <div class="video-container" *ngFor="let video of channel.videos">
+            <div class="thumbnail">
+                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, channel.user.username)">
+                <span class="duration">{{video.duration}}</span>
+            </div>
+            <div class="details">
+                <h4 class="title">{{video.name}}</h4>
+                <div class="shortened-details">
+                    <span class="channel-name">{{channel.name}}</span>
+                    <span class="dot">&middot;</span>
+                    <span class="watchers-count">
+                    {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                </span>
+                    <span class="dot">&middot;</span>
+                    <span class="upload-time">{{video.created_at | dateFromNow}}</span>
+                </div>
+                <p class="shortened-description">
+                    {{video.description}}
+                </p>
+                <div class="tags">
+                    <ul>
+                        <li *ngFor="let tag of video?.tags">
+                            <span>{{tag.name}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

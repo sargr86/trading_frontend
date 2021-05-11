@@ -9,7 +9,8 @@ import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
-import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists.component';
+import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-navbar',
@@ -17,9 +18,9 @@ import {StocksListsComponent} from '@shared/components/stocks-lists/stocks-lists
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-    modalRef: BsModalRef;
     authUser;
     routerUrl;
+    isSmallScreen = IsResponsive.isSmallScreen();
 
     envName = environment.envName;
 
@@ -60,16 +61,17 @@ export class NavbarComponent implements OnInit {
 
     }
 
-    openModal(template: TemplateRef<any>) {
-        // this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-        this.dialog.open(StocksListsComponent, {
-            maxWidth: '100vw',
-            maxHeight: '100vh',
-            height: '100%',
-            width: '100%'
-        }).afterClosed().subscribe(dt => {
-
-        });
+    openModal() {
+        if (this.auth.loggedIn()) {
+            this.dialog.open(StocksListsModalComponent, {
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                height: '100%',
+                width: '100%',
+                panelClass: 'stocks-lists-modal'
+            }).afterClosed().subscribe(dt => {
+            });
+        }
     }
 
     logout() {
@@ -107,22 +109,20 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    isSmallScreen() {
-        return window.screen.availWidth < 992;
-    }
-
     getPercentageValue(stock) {
         return stock.changesPercentage.replace(/[(%)]/g, '');
-    }
-
-    getPercentageColor(stock) {
-        return 'black-percent-' + (+this.getPercentageValue(stock) > 0 ? 'green' : 'red');
     }
 
     getPercentageDetails(stock) {
         const value = stock.changesPercentage.replace(/[(%)]/g, '');
         return {...{value}, color: 'black-percent-' + (+value > 0 ? 'green' : 'red')};
 
+    }
+
+    goToChannelPage() {
+        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
+            this.router.navigate(['channels/show'], {queryParams: {username: this.authUser.username}})
+        );
     }
 
 }

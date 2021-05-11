@@ -1,6 +1,6 @@
 <form [formGroup]="searchVideosForm">
-    <div class="home-search">
-        <input class="home-search-input" placeholder="Search for videos..." formControlName="search"
+    <div class="search-wrapper" id="videos-search">
+        <input placeholder="Search for videos..." formControlName="search"
                (keyup.enter)="searchVideos()">
         <i class="fas fa-search" (click)="searchVideos()"></i>
     </div>

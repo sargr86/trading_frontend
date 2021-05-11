@@ -1,26 +1,28 @@
-.chatrooms-list{
-    h1{
+@import 'categories';
+.chatrooms-list {
+    h1 {
         font-size: 32px;
         color: #18B587;
         font-weight: bold;
     }
 
-    .create-post{
+    .create-post {
         margin: 32px 0;
         padding: 16px 24px 24px;
         background: #F5F5F5;
 
-        .img{
+        .img {
             display: flex;
             align-items: center;
-            img{
+
+            img {
                 width: 32px;
                 height: 32px;
                 border-radius: 50%;
                 object-fit: cover;
             }
 
-            span{
+            span {
                 margin-left: 16px;
                 font-size: 16px;
                 font-weight: bold;
@@ -28,9 +30,10 @@
             }
         }
 
-        .select{
+        .select {
             margin-top: 12px;
-            select{
+
+            select {
                 min-width: 240px;
                 padding: 8px 12px;
                 border: 0;
@@ -39,9 +42,10 @@
             }
         }
 
-        .input{
+        .input {
             margin-top: 12px;
-            input{
+
+            input {
                 width: 100%;
                 padding: 8px 14px;
                 border: 0;
@@ -50,7 +54,7 @@
             }
         }
 
-        .add-photo{
+        .add-photo {
             margin-top: 24px;
             margin-bottom: 0;
             width: 100%;
@@ -61,46 +65,51 @@
             font-weight: bold;
             transition: all 0.1s ease;
             cursor: pointer;
+
             &:hover {
                 color: #18B587;
             }
-            span{
+
+            span {
                 margin-right: 8px;
             }
-            input{
+
+            input {
                 display: none;
             }
         }
 
-        .btn{
+        .btn {
             display: flex;
             justify-content: flex-end;
             margin-top: 12px;
             padding: 0;
             cursor: auto;
-            button{
+
+            button {
                 padding: 6px 24px;
                 background: #C9C9C9;
                 color: #ffffff;
 
-                &.active{
+                &.active {
                     background: #18B587;
                 }
             }
         }
     }
 
-    .search{
+    .search {
         position: relative;
         margin-bottom: 24px;
-        input{
+
+        input {
             width: 100%;
             padding: 12px 48px 12px 16px;
             border: 0;
             background: #81818121;
         }
 
-        span{
+        span {
             position: absolute;
             right: 14px;
             top: 50%;
@@ -110,68 +119,79 @@
         }
     }
 
-    .categories{
+    .categories {
         margin-bottom: 16px;
         padding: 0;
         border: 0;
-        a{
+
+        a {
             text-decoration: none;
         }
-        span{
+
+        span {
             font-size: 16px;
             margin-right: 8px;
         }
     }
 
-    .chatrooms-items{
-        .item{
+    .chatrooms-items {
+        .item {
             margin-bottom: 32px;
             padding: 12px;
             background: #F5F5F5;
-            .posted{
+
+            .posted {
                 display: flex;
                 justify-content: space-between;
-                p{
+
+                p {
                     margin: 0;
                     font-size: 12px;
                     color: #545454;
-                    span{
+
+                    span {
                         margin-left: 12px;
                         color: #18B587;
                     }
                 }
             }
 
-            .info{
+            .info {
                 display: flex;
                 margin-top: 16px;
-                .left-wrap{
-                    .voting-container{
+
+                .left-wrap {
+                    .voting-container {
                         display: flex;
                         flex-direction: column;
-                        button{
+
+                        button {
                             display: flex;
                             background: transparent;
                             color: #c9c9c9;
-                            &.vote-up-btn{
-                                span{
+
+                            &.vote-up-btn {
+                                span {
                                     transform: rotate(-90deg);
                                 }
                             }
-                            &.vote-down-btn{
-                                span{
+
+                            &.vote-down-btn {
+                                span {
                                     transform: rotate(90deg);
                                 }
                             }
-                            &.active{
+
+                            &.active {
                                 color: #18B587;
                             }
-                            span{
+
+                            span {
                                 font-size: 24px;
                             }
                         }
 
-                        .vote-count{
+                        .vote-count {
                             margin: 8px 0;
                             text-align: center;
                             font-size: 12px;
@@ -180,48 +200,53 @@
                     }
                 }
 
-                .right-wrap{
+                .right-wrap {
                     flex: 1;
                     padding: 0 36px 4px 12px;
-                    p{
+
+                    p {
                         margin: 0;
                         font-size: 12px;
                         color: #545454;
                     }
 
-                    img{
+                    img {
                         width: 100%;
                         margin-top: 16px;
                     }
 
-                    .post-menu{ 
+                    .post-menu {
                         display: flex;
                         justify-content: space-between;
                         margin-top: 16px;
                         color: #545454;
-                        .menu{
+
+                        .menu {
                             display: flex;
-                            a{
+
+                            a {
                                 margin-right: 40px;
                                 display: flex;
                                 text-decoration: none;
                                 color: #545454;
                                 transition: all 0.1s ease;
-                                &:hover{
+
+                                &:hover {
                                     color: #18B587;
                                 }
-                                span{
+
+                                span {
                                     margin-right: 12px;
                                 }
                             }
                         }
 
-                        .dotes{
+                        .dotes {
                             display: flex;
                             cursor: pointer;
                         }
                     }
-                }   
+                }
             }
         }
     }

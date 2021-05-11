@@ -11,6 +11,7 @@ import {PrivacyPolicyComponent} from '@core/components/ungrouped/privacy-policy/
 import {SecurityComponent} from '@core/components/ungrouped/security/security.component';
 import {HelpComponent} from '@core/components/ungrouped/help/help.component';
 import {ContactUsComponent} from '@core/components/ungrouped/contact-us/contact-us.component';
+import {PageLoadingComponent} from '@core/components/ungrouped/page-loading/page-loading.component';
 
 
 const routes: Routes = [
@@ -106,7 +107,13 @@ const routes: Routes = [
             title: 'Security',
         }
     },
-
+    {
+        path: 'test',
+        component: PageLoadingComponent,
+        data: {
+            title: 'Security',
+        }
+    },
 
     {path: '**', component: NotFoundComponent},
 ];

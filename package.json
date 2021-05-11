@@ -5,13 +5,12 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
-        "prod": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --prod",
-        "staging": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --configuration staging",
+        "prod": "ng build --prod && gzipper compress ../backend/dist --verbose",
+        "staging": "ng build --configuration staging",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
     },
-    "sideEffects": false,
     "private": true,
     "dependencies": {
         "@angular/animations": "~9.1.12",
@@ -36,12 +35,10 @@
         "chart.js": "^2.9.3",
         "jquery": "^3.5.1",
         "jwt-decode": "^3.0.0",
-        "lazysizes": "^5.3.0",
         "material-design-icons": "^3.0.1",
         "moment": "^2.29.1",
         "ngx-bootstrap": "^6.1.0",
         "ngx-dropzone-wrapper": "^10.0.1",
-        "ngx-lazy-load-images": "^2.0.0",
         "ngx-owl-carousel-o": "^3.0.0",
         "ngx-photo-editor": "^0.3.2",
         "ngx-toastr": "^12.1.0",
@@ -63,10 +60,12 @@
         "@angular-devkit/build-angular": "~0.901.11",
         "@angular/cli": "~9.1.11",
         "@angular/compiler-cli": "~9.1.12",
-        "@types/node": "^12.11.1",
+        "@ngx-builders/analyze": "^2.1.0",
         "@types/jasmine": "~3.5.0",
         "@types/jasminewd2": "~2.0.3",
+        "@types/node": "^12.11.1",
         "codelyzer": "^5.1.2",
+        "gzipper": "^4.5.0",
         "jasmine-core": "~3.5.0",
         "jasmine-spec-reporter": "~4.2.1",
         "karma": "~5.0.0",
@@ -77,6 +76,7 @@
         "protractor": "~7.0.0",
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
-        "typescript": "~3.8.3"
+        "typescript": "~3.8.3",
+        "webpack-bundle-analyzer": "^4.4.0"
     }
 }

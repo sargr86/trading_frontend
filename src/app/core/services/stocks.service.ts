@@ -16,12 +16,24 @@ export class StocksService {
         return this.httpClient.get<any>(`${API_URL}stocks/get-daily`, {params});
     }
 
+    getStockTypes(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-types`, {params});
+    }
+
     getIndices(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-indices`, {params});
     }
 
     getStocksByType(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-by-type`, {params});
+    }
+
+    getStockGraphsDataByType(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-graphs-data`, {params});
+    }
+
+    getBatchStocksList(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-batch-results`, {params});
     }
 
     getHistoricalPrices(params) {
@@ -40,8 +52,21 @@ export class StocksService {
         return this.httpClient.get<any>(`${API_URL}stocks/search`, {params});
     }
 
+    searchStocksBySymbol(params) {
+        console.log('OK')
+        return this.httpClient.get<any>(`${API_URL}stocks/search-in-symbols-only`, {params});
+    }
+
     getUserStocks(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-user-stocks`, {params});
+    }
+
+    updateUserStocksPriority(params) {
+        return this.httpClient.put<any>(`${API_URL}stocks/update-user-stocks-priority`, params);
+    }
+
+    getStocksSorted(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-by-sort-type`, {params});
     }
 
 
@@ -50,6 +75,6 @@ export class StocksService {
     }
 
     searchInStockTypeData(params) {
-        return this.httpClient.get<any>(`${API_URL}stocks/search-in-stock-type-data`, {params});
+        return this.httpClient.get<any>(`${API_URL}stocks/search-in-typed-stocks-data`, {params});
     }
 }

@@ -6,39 +6,24 @@
 }
 
 #left-sidebar {
-    width: 200px;
-    //padding-top: 550px;
+    width: 100%;
 }
 
-.analytics-item{
-    cursor: pointer;
+#left-menu {
+    margin-bottom: 40px;
 }
+
+
 
 .subscription {
     cursor: pointer;
 }
 
-.see-more {
-    color: #18B587;
-    font-size: 16px;
-    font-family: 'Muli-Regular';
-    margin-top: 32px;
-    cursor: pointer;
-}
 
-.analytics-text-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-}
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     #left-sidebar {
         width: 300px;
     }
-    .see-more {
-        max-width: 200px;
-        margin: 0 auto;
-    }
+
 }

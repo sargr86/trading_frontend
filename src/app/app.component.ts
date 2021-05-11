@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
-import * as Plyr from 'plyr';
 import {LoaderService} from '@core/services/loader.service';
 import {Title} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import IsResponsive from '@core/helpers/is-responsive';
+import {StocksService} from '@core/services/stocks.service';
+import {environment} from '@env';
 
 @Component({
     selector: 'app-root',
@@ -16,13 +18,15 @@ export class AppComponent implements OnInit {
     title = '';
     subscriptions: Subscription[] = [];
     pageTitle;
+    isSmallScreen = IsResponsive.isSmallScreen();
 
     constructor(
         public router: Router,
         private subject: SubjectService,
         public loader: LoaderService,
         private titleService: Title,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private stocksService: StocksService
     ) {
 
     }
@@ -33,6 +37,13 @@ export class AppComponent implements OnInit {
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}
         // });
         // console.log(player)
+
+        if (environment.production) {
+            console.log = () => {
+            };
+        }
+
+        this.getStockTypes();
 
         // Getting current page title
         this.subscriptions.push(this.router.events.pipe(map(() => {
@@ -56,7 +67,6 @@ export class AppComponent implements OnInit {
     }
 
     async getSearch(e) {
-        console.log(e.searchType)
         if (e.searchType === 'videos') {
             const queryParams = e.search ? {queryParams: e} : {};
             await this.router.navigate(['videos/'], queryParams);
@@ -71,7 +81,7 @@ export class AppComponent implements OnInit {
     getMode(sidenav) {
 
         // sidenav.toggle();
-        if (screen.width < 767 && !this.router.url.includes('auth')) {
+        if (screen.width <= 991 && !this.router.url.includes('auth')) {
             return 'over';
         } else {
             return 'side';
@@ -88,7 +98,10 @@ export class AppComponent implements OnInit {
         // }
     }
 
-    isSmallScreen() {
-        return window.screen.availWidth < 768;
+    getStockTypes() {
+        this.stocksService.getStockTypes({}).subscribe(dt => {
+            this.subject.changeStockTypes(dt);
+            // this.selectedStockType = dt[0];
+        });
     }
 }

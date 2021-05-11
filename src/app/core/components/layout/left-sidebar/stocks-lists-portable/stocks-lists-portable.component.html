@@ -1,0 +1,44 @@
+<div class="stocks-watchlist" id="sidebar-watchlist" *ngIf="auth.loggedIn() && !isSmallScreen">
+    <ul class="nav nav-tabs" id="watchlist">
+        <li class="nav-item" (click)="changeTab('watchlist')">
+            <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
+        </li>
+        <li class="nav-item" (click)="changeTab('today')">
+            <a class="nav-link active" [class.active]="activeTab.name==='today'" id="today-tab">Today</a>
+        </li>
+    </ul>
+    <div class="spinner-container">
+        <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
+    </div>
+    <ng-template #noStocks>
+        <small class="error" [hidden]="dataLoading==='loading'">No stocks added to watchlist</small>
+    </ng-template>
+    <div class="tab-content" id="watchlistContent" [hidden]="activeTab.name!=='watchlist'">
+
+        <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"
+                                [followAllowed]="false"
+                                [editPortable]="true"
+                                *ngIf="userStocks?.length > 0" [sort]="selectedSortType"
+                                (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
+
+        <p (click)="viewFullWatchlist()" class="see-more"
+           *ngIf="(dataLoading!=='loading' && userStocks?.length > 0) else noStocks">
+            See more
+        </p>
+
+
+    </div>
+    <div class="tab-content" id="todayContent" [hidden]="activeTab.name!=='today'">
+
+        <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"
+                                (updatedStocksList)="updateFollowedLists($event)" *ngIf="dataLoading==='finished'"
+                                [portable]="true"></app-stocks-list-sample>
+        <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('analytics') && dataLoading==='finished'"
+           class="see-more">
+            See more
+        </p>
+
+    </div>
+</div>
+<img class="ads" [hidden]="true" src="assets/img/ads.png">
+<img class="ads" [hidden]="true" src="assets/img/ads.png">

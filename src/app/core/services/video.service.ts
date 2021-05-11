@@ -81,6 +81,10 @@ export class VideoService {
         return this.httpClient.put<any>(`${API_URL}videos/update-views`, params);
     }
 
+    updatePrivacy(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/update-privacy`, params);
+    }
+
     indexUserTags(params) {
         return this.httpClient.put<any>(`${API_URL}videos/index-user-tags`, params);
     }

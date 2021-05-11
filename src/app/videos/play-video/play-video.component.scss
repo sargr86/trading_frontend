@@ -1,4 +1,5 @@
 @import "variables";
+@import "plyr-custom";
 
 .saved {
     i, p {
@@ -44,6 +45,60 @@
     .editable-details {
         display: flex;
         justify-content: space-between;
+    }
+
+}
+
+
+.main-tags {
+    display: flex;
+    margin-bottom: 16px;
+    margin-top: 24px;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .main-tags-text {
+        display: flex;
+        flex-wrap: wrap;
+        flex: 1;
+        margin-right: 24px;
+        align-items: center;
+    }
+
+    p {
+        color: #0035C6;
+        font-size: 16px;
+        font-family: "Muli-Bold";
+        margin-right: 16px;
+        margin-bottom: 8px;
+    }
+
+    .main-tags-like {
+        display: flex;
+        color: #545454;
+    }
+
+    .main-tags-share {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        p {
+            margin-left: 5px;
+            color: #545454;
+            font-size: 12px;
+            font-family: "Muli-Light";
+            margin-bottom: 0 !important;
+
+        }
+    }
+
+    .liked {
+        color: #18B587 !important;
+    }
+
+    .disliked {
+        color: $red !important;
     }
 
 }

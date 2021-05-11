@@ -1,81 +1,79 @@
-<div class="placeholder-list-container d-flex justify-content-center justify-content-lg-start flex-wrap"
-     *ngIf="videos?.length === 0 && videoLoading!='finished'">
-    <div class="ph-item item mx-2 ml-lg-0  mr-lg-4" *ngFor="let placeholder of [1,2,3,4,5,6,7,8,9]">
-        <div class="ph-col-12">
-            <div class="ph-picture"></div>
-            <div class="d-flex">
-                <div class="ph-avatar mr-3"></div>
-                <div class="ph-col-10">
-                    <div class="ph-row align-items-start">
-                        <div class="ph-col-2"> </div>
-                        <div class="ph-col-8 empty"></div>
-                        <div class="ph-col-2"></div>
+<!--<ng-container *ngIf="videos?.length > 0">-->
+<p class="trending-text">{{title}}</p>
+<!--    <div class="ph-item item">-->
+<!--        <div class="ph-col-12">-->
+<!--            <div class="ph-picture"></div>-->
+
+<!--            <div class="d-flex">-->
+<!--                <div class="ph-avatar mr-3"></div>-->
+
+<!--                <div class="ph-col-10">-->
+<!--                    <div class="ph-row align-items-start">-->
+<!--                        <div class="ph-col-2"></div>-->
+<!--                        <div class="ph-col-8 empty"></div>-->
+<!--                        <div class="ph-col-2"></div>-->
+<!--                    </div>-->
+<!--                    <div class="ph-row align-items-start">-->
+<!--                        <div class="ph-col-4"></div>-->
+<!--                    </div>-->
+<!--                    <div class="ph-row align-items-start">-->
+<!--                        <div class="ph-col-6"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+<!--        </div>-->
+<!--    </div>-->
+<div class="list-container d-flex flex-wrap justify-content-center justify-content-lg-start">
+    <ng-container *ngFor="let video of videos">
+        <div class="item mx-2 ml-lg-0  mr-lg-4">
+
+            <ng-container
+                [ngTemplateOutlet]="itemTemplate"
+                [ngTemplateOutletContext]="{details: detailsSource || video.user}">
+            </ng-container>
+
+            <ng-template let-d="details" #itemTemplate>
+                <div class="thumbnail" (click)="openVideoPage(video, d?.username)">
+                    <img class="thumbnail-image" [src]="video.thumbnail|getImgPath">
+                    <span class="live-now" *ngIf="video.status==='live'">Live now</span>
+                    <span class="duration">{{video.duration}}</span>
+                </div>
+                <div class="video-info">
+                    <div class="left-side">
+                        <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
+                        <div>
+                            <p class="video-name">{{video.name}}</p>
+                            <p class="channel-sub-name" (click)="openChannelPage(d.username)">{{d?.channel.name}}</p>
+                            <div class="shortened-details">
+                                    <span class="watchers-count">
+                                        {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                                    </span>
+                                <span class="dot">&middot;</span>
+                                <span class="upload-time">{{video.created_at| dateFromNow}}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="ph-row align-items-start">
-                        <div class="ph-col-4"> </div>
-                    </div>
-                    <div class="ph-row align-items-start">
-                        <div class="ph-col-6"></div>
+                    <div class="right-side">
+                        <ul>
+                            <li *ngFor="let tag of video?.tags" (click)="getVideosByTag(tag.name)">
+                                <span>{{tag.name}}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+                <div class="remove-video" *ngIf="removable">
+                    <mat-icon (click)="removeVideo(video)">delete</mat-icon>
+                </div>
+                <div class="update-privacy" *ngIf="isChannelPage()" (click)="updatePrivacy(video, video.privacy?.name)"
+                     [ngClass]="video.privacy?.name !== 'Public'  ? 'red':'green'">
+                    <mat-icon>visibility_{{video.privacy?.name !== 'Public' ? 'off' : 'on'}}</mat-icon>
+                </div>
+            </ng-template>
 
 
         </div>
-    </div>
+    </ng-container>
 </div>
-<ng-container *ngIf="videos?.length > 0">
-    <p class="trending-text">{{title}}</p>
-
-    <div class="list-container d-flex justify-content-center justify-content-lg-start flex-wrap">
-        <ng-container *ngFor="let video of videos">
-            <div class="item mx-2 ml-lg-0  mr-lg-4" [class.one-item]="isSmallScreen(videos.length)">
-
-                <ng-container
-                    [ngTemplateOutlet]="itemTemplate"
-                    [ngTemplateOutletContext]="{details: detailsSource || video.user}">
-                </ng-container>
-
-                <ng-template let-d="details" #itemTemplate>
-                    <div class="thumbnail" (click)="openVideoPage(video, d.username)">
-                        <!--                        <img class="thumbnail-image" [lazyload]="video.thumbnail|getImgPath">-->
-                        <img class="thumbnail-image" [src]="video.thumbnail|getImgPath">
-                        <span class="live-now" *ngIf="video.status==='live'">Live now</span>
-                        <span class="duration">{{video.duration}}</span>
-                    </div>
-                    <div class="main-item-block video-info">
-
-                        <div class="left-side">
-
-                            <!--                            <img class="avatar" [lazyload]="d?.channel?.avatar|getImgPath: 'avatars'">-->
-                            <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
-                            <div>
-                                <p class="main-text-1">{{video.name}}</p>
-                                <p class="main-text-2" (click)="openChannelPage(d.username)">{{d?.channel.name}}</p>
-                                <div class="shortened-details">
-                                    <span class="watchers-count main-text-3">
-                                        {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
-                                    </span>
-                                    <span class="dot">&middot;</span>
-                                    <span class="upload-time">{{video.created_at| dateFromNow}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="right-side">
-                            <ul>
-                                <li *ngFor="let tag of video?.tags" (click)="getVideosByTag(tag.name)">
-                                    <span>{{tag.name}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="remove-video" *ngIf="removable">
-                        <mat-icon (click)="removeVideo(video)">delete</mat-icon>
-                    </div>
-                </ng-template>
-
-
-            </div>
-        </ng-container>
-    </div>
-</ng-container>
+<!--</ng-container>-->

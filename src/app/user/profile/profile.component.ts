@@ -1,12 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
-import {
-    API_URL,
-    OWL_OPTIONS,
-    PASSWORD_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
-    PROFILE_PAGE_TABS
-} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -28,6 +20,7 @@ import {DROPZONE_CONFIG} from 'ngx-dropzone-wrapper';
 import {AuthService} from '@core/services/auth.service';
 import * as  moment from 'moment';
 import {ToastrService} from 'ngx-toastr';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-profile',
@@ -54,6 +47,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private getAuthUser: GetAuthUserPipe,
         private toastr: ToastrService,
+        private subject: SubjectService,
         public router: Router
     ) {
         this.initForm();
@@ -131,6 +125,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         const formData = this.buildFormData();
         this.usersService.saveProfileChanges(formData).subscribe(async (dt) => {
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
             this.toastr.success('The changes are saved successfully');
             await this.router.navigateByUrl('');
         });

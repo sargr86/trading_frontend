@@ -9,6 +9,9 @@ import {PlayVideoComponent} from '../videos/play-video/play-video.component';
 import {ShowSavedVideosComponent} from './show-saved-videos/show-saved-videos.component';
 import {VideoSuggestionsComponent} from './play-video/video-suggestions/video-suggestions.component';
 import { VideoDetailsFormComponent } from './play-video/video-details-form/video-details-form.component';
+import { ShowRegularListComponent } from './show-videos/show-regular-list/show-regular-list.component';
+import { ShowSearchResultsComponent } from './show-videos/show-search-results/show-search-results.component';
+import { ShowPlaylistsListComponent } from './show-videos/show-playlists-list/show-playlists-list.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +19,10 @@ import { VideoDetailsFormComponent } from './play-video/video-details-form/video
         PlayVideoComponent,
         ShowSavedVideosComponent,
         VideoSuggestionsComponent,
-        VideoDetailsFormComponent
+        VideoDetailsFormComponent,
+        ShowRegularListComponent,
+        ShowSearchResultsComponent,
+        ShowPlaylistsListComponent
     ],
     imports: [
         CommonModule,

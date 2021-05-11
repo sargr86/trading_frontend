@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';

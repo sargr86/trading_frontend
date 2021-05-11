@@ -61,6 +61,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.search = s;
         if (s.search) {
             this.filteredStocks = this.userStocks.filter(us => us.name.toLowerCase().includes(s.search));
+        } else {
+            this.filteredStocks = this.userStocks;
         }
     }
 

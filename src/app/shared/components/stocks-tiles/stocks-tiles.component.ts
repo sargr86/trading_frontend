@@ -41,7 +41,7 @@ export class StocksTilesComponent implements OnInit {
     }
 
     updateFollowedStocksList(stock) {
-        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
         if (!this.stocksGeneralList) {
             this.passedStocks = userStocks;
         }

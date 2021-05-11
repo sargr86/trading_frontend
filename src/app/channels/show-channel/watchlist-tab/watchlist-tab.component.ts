@@ -56,10 +56,11 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.search = localStorage.getItem('search');
         this.stocksLoading = 'loading';
         this.subject.currentUserStocks
-            .pipe(
-                filter(d => !d.initial),
-            )
+            // .pipe(
+            //     filter(d => !d.initial),
+            // )
             .subscribe(dt => {
+                console.log(this.userStocks)
                 this.userStocks = dt.stocks;
                 this.filterStocks();
                 if (this.filteredStocks.length > 0) {
@@ -99,13 +100,13 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-            this.filterStocks();
-            if (this.filteredStocks.length === 0) {
-                this.pageIndex = 0;
-            }
+            // this.filterStocks();
+            // if (this.filteredStocks.length === 0) {
+            //     this.pageIndex = 0;
+            // }
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksLoading = 'finished';
-            this.cdr.detectChanges();
+            // this.cdr.detectChanges();
         }));
     }
 

@@ -41,7 +41,7 @@
             <!--                                    (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"-->
             <!--                                    [userStocks]="updateStockDetails(userStocks)"-->
             <!--                                    *ngIf="userStocks.length > 0"></app-stocks-list-sample>-->
-            <app-stocks-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0"
+            <app-stocks-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0" [dragDropDisabled]="true"
                               (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-tiles>
             <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">
                 No user stocks of selected type is found

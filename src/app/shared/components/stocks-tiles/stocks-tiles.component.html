@@ -1,10 +1,10 @@
-<div id="stock-tiles-holder" cdkDropListGroup>
+<div id="stock-tiles-holder" cdkDropListGroup [class.no-moving]="dragDropDisabled">
     <ng-container *ngFor="let stock of passedStocks;let ind = index">
         <div cdkDropList class="stock-item-placeholder"
              cdkDropListOrientation="horizontal"
              [cdkDropListData]="{item:stock,index:ind}" (cdkDropListDropped)="drop($event)">
 
-            <div class="stock-item" cdkDrag
+            <div class="stock-item" cdkDrag [cdkDragDisabled]="dragDropDisabled"
                  [ngClass]="'stock-item-'+(stock.changesPercentage > 0? 'green':'red')">
                 <div *cdkDragPlaceholder>
                 </div>

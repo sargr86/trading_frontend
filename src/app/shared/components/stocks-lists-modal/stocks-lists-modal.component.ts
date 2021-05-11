@@ -55,15 +55,18 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     getUserStocks(params = {}) {
-        this.stocksService.getUserStocks({
-            user_id: this.authUser.id,
-            ...params
-        }).subscribe(dt => {
-            this.userStocks = dt?.user_stocks || [];
-            this.stocksLoading.text = 'Loading stocks of selected category and charts';
-            if (params.hasOwnProperty('close')) {
-                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
-            }
+        // this.stocksService.getUserStocks({
+        //     user_id: this.authUser.id,
+        //     ...params
+        // }).subscribe(dt => {
+        //     this.userStocks = dt?.user_stocks || [];
+        //     this.stocksLoading.text = 'Loading stocks of selected category and charts';
+        //     if (params.hasOwnProperty('close')) {
+        //         this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+        //     }
+        // });
+        this.subject.currentUserStocks.subscribe(dt => {
+            this.userStocks = dt.stocks;
         });
     }
 
@@ -152,6 +155,7 @@ export class StocksListsModalComponent implements OnInit {
             }).subscribe(dt => {
                 this.userStocks = dt?.user_stocks || [];
                 this.stocksLoading.status = 'finished';
+                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             });
         }
     }

@@ -6,6 +6,12 @@
     display: flex;
     flex-wrap: wrap;
 
+    &.no-moving {
+        .stock-item {
+            cursor: pointer;
+        }
+    }
+
     .stock-item {
         @include stocksItem;
     }

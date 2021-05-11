@@ -1,6 +1,6 @@
 <div *ngIf="filteredStocks && channelUser.username === authUser.username">
     <mat-spinner *ngIf="stocksLoading==='loading'" [diameter]="20"></mat-spinner>
-    <small class="error" *ngIf="userStocks.length === 0 && stocksLoading==='finished'">
+    <small class="error" *ngIf="userStocks?.length === 0 && stocksLoading==='finished'">
         No stocks added to watchlist</small>
     <!--    <div class="paginator">-->
     <!--        <ng-container *ngIf="stocksLoading==='finished' && userStocks.length > 12 && !search">-->
@@ -15,6 +15,6 @@
     <!--    <app-stocks-list-sample [stocks]="updateStockDetails(filteredStocks)" *ngIf="userStocks.length > 0"-->
     <!--                            [userStocks]="updateStockDetails(userStocks)" [pagination]="false"-->
     <!--                            (updatedStocksList)="updateStocksList($event)"></app-stocks-list-sample>-->
-    <app-stocks-tiles [stocks]="userStocks" (updatedStocksList)="updateStocksList($event)"
-                      *ngIf="userStocks.length > 0"></app-stocks-tiles>
+    <app-stocks-tiles [stocks]="filteredStocks" (updatedStocksList)="updateStocksList($event)"
+                      *ngIf="userStocks?.length > 0"></app-stocks-tiles>
 </div>

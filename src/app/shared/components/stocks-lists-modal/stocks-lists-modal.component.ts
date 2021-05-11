@@ -138,22 +138,18 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     updateFollowedStocks(stocks) {
-        console.log(stocks.length)
         this.loader.stocksLoading.status = 'loading';
-        if (stocks.length >= 25) {
-            this.toastr.error('We support not more than 25 stocks per user');
+
+        this.loader.stocksLoading.text = 'Updating stocks lists, details and charts';
+        this.stocksService.updateFollowedStocks({
+            user_id: this.authUser.id,
+            ...{stocks},
+            // type_id: this.selectedStockType.id
+        }).subscribe(dt => {
+            this.userStocks = dt?.user_stocks || [];
             this.loader.stocksLoading.status = 'finished';
-        } else {
-            this.loader.stocksLoading.text = 'Updating stocks lists, details and charts';
-            this.stocksService.updateFollowedStocks({
-                user_id: this.authUser.id,
-                ...{stocks},
-                // type_id: this.selectedStockType.id
-            }).subscribe(dt => {
-                this.userStocks = dt?.user_stocks || [];
-                this.loader.stocksLoading.status = 'finished';
-            });
-        }
+        });
+
     }
 
     isStockFollowed(stock) {

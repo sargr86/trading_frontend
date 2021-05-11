@@ -43,15 +43,26 @@ export class StocksTilesComponent implements OnInit {
     }
 
     updateFollowedStocksList(stock) {
-        if (this.userStocks.length < 25) {
+        const removing = this.isStockFollowed(stock);
+        console.log('removing:' + removing, 'length:' + this.userStocks.length)
+        if (!removing) {
+            if (this.userStocks.length === 25) {
+                this.toastr.error('We support not more than 25 stocks per user');
+            } else {
+                const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+                this.updatedStocksList.emit(userStocks);
+                if (!this.stocksGeneralList) {
+                    this.passedStocks = userStocks;
+                }
+            }
+        } else {
             const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
             if (!this.stocksGeneralList) {
                 this.passedStocks = userStocks;
             }
             this.updatedStocksList.emit(userStocks);
-        } else {
-            this.toastr.error('We support not more than 25 stocks per user');
         }
+
     }
 
     drop(event: CdkDragDrop<any>) {

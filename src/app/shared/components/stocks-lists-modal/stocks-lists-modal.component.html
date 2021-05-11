@@ -27,16 +27,16 @@
         </div>
 
         <div class="user-stocks-list">
-            <div class="paginator">
-                <ng-container *ngIf="userStocks.length > 12">
-                    <mat-paginator (page)="handle($event)"
-                                   #paginator
-                                   [length]="userStocks.length" [pageIndex]="pageIndex"
-                                   [pageSize]="pageSize" [hidePageSize]="true"
-                                   [pageSizeOptions]="[2,5,10,25,100]">
-                    </mat-paginator>
-                </ng-container>
-            </div>
+<!--            <div class="paginator">-->
+            <!--                <ng-container *ngIf="userStocks.length > 12">-->
+            <!--                    <mat-paginator (page)="handle($event)"-->
+            <!--                                   #paginator-->
+            <!--                                   [length]="userStocks.length" [pageIndex]="pageIndex"-->
+            <!--                                   [pageSize]="pageSize" [hidePageSize]="true"-->
+            <!--                                   [pageSizeOptions]="[2,5,10,25,100]">-->
+            <!--                    </mat-paginator>-->
+            <!--                </ng-container>-->
+            <!--            </div>-->
             <!--            <app-stocks-list-sample [stocks]="updateStockDetails(userStocks)" [type]="selectedStockType"-->
             <!--                                    (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"-->
             <!--                                    [userStocks]="updateStockDetails(userStocks)"-->
@@ -44,7 +44,7 @@
             <app-stocks-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0" [dragDropDisabled]="true"
                               [userStocks]="getUpdatedStockDetails(userStocks)"
                               (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-tiles>
-            <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">
+            <p *ngIf="userStocks?.length===0 && loader.stocksLoading.status!=='loading'">
                 No user stocks of selected type is found
             </p>
         </div>
@@ -60,20 +60,20 @@
 
             <div class="center-group">
 
-                <app-search-stocks-form [hidden]="stocksLoading.status==='loading' && !searched"
+                <app-search-stocks-form [hidden]="loader.stocksLoading.status==='loading' && !searched"
                                         [returnSearchText]="true"
                                         [transparentForm]="true"
                                         (search)="getSearchResults($event)"></app-search-stocks-form>
-                <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">
+                <div class="spinner-container" *ngIf="loader.stocksLoading.status==='loading'">
                     <mat-spinner [diameter]="25"></mat-spinner>
-                    <span>{{stocksLoading.text}}...</span>
+                    <span>{{loader.stocksLoading.text}}...</span>
                 </div>
             </div>
 
             <div class="right-group">
 
                 <div class="paginator">
-                    <ng-container *ngIf="stocksLoading.status==='finished'">
+                    <ng-container *ngIf="loader.stocksLoading.status==='finished'">
                         <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
                                        #paginator
                                        [length]="stocks.length" [pageIndex]="pageIndex"
@@ -97,7 +97,7 @@
                               [userStocks]="getUpdatedStockDetails(userStocks)" [stocksGeneralList]="true"
                               (updatedStocksList)="updateFollowedStocks($event)"
                               [type]="selectedStockType"></app-stocks-tiles>
-            <p *ngIf="filteredStocks?.length===0 && stocksLoading.status!=='loading'">No stocks of selected type is
+            <p *ngIf="filteredStocks?.length===0 && loader.stocksLoading.status!=='loading'">No stocks of selected type is
                 found</p>
         </div>
 

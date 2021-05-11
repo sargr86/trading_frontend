@@ -59,7 +59,7 @@
                            (click)="sortStocks(sortType)">{{sortType.name}}</a>
                     </div>
                     <div class="spinner-container">
-                        <mat-spinner *ngIf="sortedListLoading || loader.stocksLoading === 'loading'"
+                        <mat-spinner *ngIf="sortedListLoading || loader.stocksLoading.status === 'loading'"
                                      [diameter]="15"></mat-spinner>
                     </div>
                 </div>

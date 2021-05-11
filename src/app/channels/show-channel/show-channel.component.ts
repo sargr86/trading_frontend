@@ -186,12 +186,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         if (userStocks.length > 25) {
             this.toastr.error('We support not more than 25 stocks per user');
         } else {
-            this.loader.stocksLoading = 'loading';
+            this.loader.stocksLoading.status = 'loading';
             this.subscriptions.push(this.stocksService.updateFollowedStocks(
                 {user_id: this.authUser.id, ...{stocks: userStocks}})
                 .subscribe(dt => {
                     this.userStocks = dt?.user_stocks || [];
-                    this.loader.stocksLoading = 'finished';
+                    this.loader.stocksLoading.status = 'finished';
                     this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
                 }));
         }

@@ -18,7 +18,6 @@ export class StocksListsModalComponent implements OnInit {
     stockTypes;
     stocks = [];
     selectedStockType;
-    stocksLoading = {status: 'idle', text: 'Loading user stocks list and charts'};
     filteredStocks = [];
     filteredUserStocks = [];
     userStocks = [];
@@ -39,7 +38,7 @@ export class StocksListsModalComponent implements OnInit {
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private loader: LoaderService,
+        public loader: LoaderService,
         private toastr: ToastrService
     ) {
     }
@@ -55,12 +54,13 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     getUserStocks(params = {}) {
+        this.loader.stocksLoading.text =  'Loading user stocks list and charts';
         this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             ...params
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-            this.stocksLoading.text = 'Loading stocks of selected category and charts';
+            this.loader.stocksLoading.text = 'Loading stocks of selected category and charts';
             if (params.hasOwnProperty('close')) {
                 this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             }
@@ -86,21 +86,21 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     getStocksByType(type) {
-        this.stocksLoading.status = 'loading';
+        this.loader.stocksLoading.status = 'loading';
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
 
             this.pageSize = 14;
             this.pageIndex = 0;
             this.filterStocks();
-            this.stocksLoading.status = 'finished';
+            this.loader.stocksLoading.status = 'finished';
             // const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
             // this.getStockGraphsDataByType(stockNamesList, dt);
         });
     }
 
     getStockGraphsDataByType(stocks, allStocks, filter = false) {
-        this.stocksLoading = {status: 'loading', text: 'Loading charts data'};
+        this.loader.stocksLoading = {status: 'loading', text: 'Loading charts data'};
         if (stocks) {
             this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
                 const st = allStocks.map((item, i) => Object.assign({}, item, dt[i]));
@@ -110,10 +110,10 @@ export class StocksListsModalComponent implements OnInit {
                     this.stocks = st;
                     this.filterStocks();
                 }
-                this.stocksLoading.status = 'finished';
+                this.loader.stocksLoading.status = 'finished';
             });
         } else {
-            this.stocksLoading.status = 'finished';
+            this.loader.stocksLoading.status = 'finished';
         }
 
     }
@@ -139,20 +139,19 @@ export class StocksListsModalComponent implements OnInit {
 
     updateFollowedStocks(stocks) {
 
-        this.stocksLoading.status = 'loading';
+        this.loader.stocksLoading.status = 'loading';
         if (stocks.length === 25) {
             this.toastr.error('We support not more than 25 stocks per user');
-            this.stocksLoading.status = 'finished';
+            this.loader.stocksLoading.status = 'finished';
         } else {
-            this.stocksLoading.text = 'Updating stocks lists, details and charts';
+            this.loader.stocksLoading.text = 'Updating stocks lists, details and charts';
             this.stocksService.updateFollowedStocks({
                 user_id: this.authUser.id,
                 ...{stocks},
                 type_id: this.selectedStockType.id
             }).subscribe(dt => {
                 this.userStocks = dt?.user_stocks || [];
-                this.stocksLoading.status = 'finished';
-                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+                this.loader.stocksLoading.status = 'finished';
             });
         }
     }
@@ -174,8 +173,8 @@ export class StocksListsModalComponent implements OnInit {
         this.search = e?.search;
         this.searched = true;
         if (this.search) {
-            this.stocksLoading.status = 'loading';
-            this.stocksLoading.text = 'Searching in the selected category of stocks';
+            this.loader.stocksLoading.status = 'loading';
+            this.loader.stocksLoading.text = 'Searching in the selected category of stocks';
             this.searchInStockType();
         } else {
             this.getStocksByType(this.selectedStockType.value);

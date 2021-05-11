@@ -14,13 +14,13 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 })
 export class StocksTilesComponent implements OnInit {
 
-
-    userStocks = [];
     stockChartSettings = STOCK_TILE_CHART_SETTINGS;
     authUser;
 
     @Input('stocks') passedStocks: Stock[] = [];
-    @Input('onlyUserStocks') onlyUserStocks = false;
+    @Input('userStocks') userStocks: Stock[] = [];
+    @Input('type') selectedStockType: Stock | null = null;
+    @Input('stocksGeneralList') stocksGeneralList = false;
     @Input('dragDropDisabled') dragDropDisabled = false;
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
@@ -34,9 +34,6 @@ export class StocksTilesComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.subject.currentUserStocks.subscribe((dt: any) => {
-            this.userStocks = dt.stocks;
-        });
     }
 
     isStockFollowed(stock) {
@@ -44,8 +41,10 @@ export class StocksTilesComponent implements OnInit {
     }
 
     updateFollowedStocksList(stock) {
-        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, null);
-        this.passedStocks = userStocks;
+        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+        if (!this.stocksGeneralList) {
+            this.passedStocks = userStocks;
+        }
         this.updatedStocksList.emit(userStocks);
     }
 

@@ -42,6 +42,7 @@
             <!--                                    [userStocks]="updateStockDetails(userStocks)"-->
             <!--                                    *ngIf="userStocks.length > 0"></app-stocks-list-sample>-->
             <app-stocks-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0" [dragDropDisabled]="true"
+                              [userStocks]="getUpdatedStockDetails(userStocks)"
                               (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-tiles>
             <p *ngIf="userStocks?.length===0 && stocksLoading.status!=='loading'">
                 No user stocks of selected type is found
@@ -88,10 +89,14 @@
 
         <div class="all-stocks-list">
 
-            <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"
-                                    [type]="selectedStockType" [modal]="true"
-                                    [userStocks]="getUpdatedStockDetails(userStocks)"
-                                    (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>
+            <!--            <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"-->
+            <!--                                    [type]="selectedStockType" [modal]="true"-->
+            <!--                                    [userStocks]="getUpdatedStockDetails(userStocks)"-->
+            <!--                                    (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>-->
+            <app-stocks-tiles [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [dragDropDisabled]="true"
+                              [userStocks]="getUpdatedStockDetails(userStocks)" [stocksGeneralList]="true"
+                              (updatedStocksList)="updateFollowedStocks($event)"
+                              [type]="selectedStockType"></app-stocks-tiles>
             <p *ngIf="filteredStocks?.length===0 && stocksLoading.status!=='loading'">No stocks of selected type is
                 found</p>
         </div>

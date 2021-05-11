@@ -12,6 +12,7 @@ import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {LoaderService} from '@core/services/loader.service';
 import {PageEvent} from '@angular/material/paginator';
 import {filter} from 'rxjs/operators';
+import {Stock} from '@shared/models/stock';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -23,15 +24,9 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     search: string | null;
     subscriptions: Subscription[] = [];
     showFilters = false;
-    userStocks = [];
-    stocks = [];
-    filteredStocks = [];
+    userStocks: Stock[] = [];
+    filteredStocks: Stock[] = [];
 
-    public pageSize = 12;
-    public pageIndex = 0;
-
-    stockTypes;
-    selectedStockType;
     stocksLoading = 'idle';
 
     authUser: User;
@@ -47,7 +42,6 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private cdr: ChangeDetectorRef,
-        private loader: LoaderService
     ) {
     }
 
@@ -55,80 +49,33 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
         this.stocksLoading = 'loading';
-        this.subject.currentUserStocks
-            .pipe(
-                filter(d => !d.initial),
-            )
+        this.subject.currentUserStocks.pipe(filter(d => !d.initial))
             .subscribe(dt => {
-                console.log(this.userStocks)
                 this.userStocks = dt.stocks;
-                this.filterStocks();
-                if (this.filteredStocks.length > 0) {
-                    // this.loadGraphs(this.filteredStocks);
-                }
+                this.filteredStocks = this.userStocks;
                 this.stocksLoading = 'finished';
             });
-    }
-
-
-    loadGraphs(d) {
-        let stocks = '';
-        d.map((us, index) => {
-            stocks += us.symbol + (index === d.length - 1 ? '' : ',');
-        });
-
-        this.subscriptions.push(this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
-            this.filteredStocks = this.filteredStocks.map((item, i) => Object.assign({}, item, dt[i]));
-            this.loader.hide();
-            this.cdr.detectChanges();
-        }));
     }
 
     getSearchResults(s) {
         this.search = s;
         if (s.search) {
             this.filteredStocks = this.userStocks.filter(us => us.name.toLowerCase().includes(s.search));
-        } else {
-            this.filterStocks();
         }
     }
 
-    updateStocksList(stocks) {
+    saveUpdatedStocksList(stocks) {
         this.stocksLoading = 'loading';
         this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks}
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-            // this.filterStocks();
-            // if (this.filteredStocks.length === 0) {
-            //     this.pageIndex = 0;
-            // }
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksLoading = 'finished';
-            // this.cdr.detectChanges();
+            this.cdr.detectChanges();
         }));
     }
-
-
-    getUpdatedStockDetails(userStocks) {
-        return updateStockDetails(userStocks, this.stocks);
-    }
-
-    // Filters routes for floating panel
-    filterStocks() {
-        this.filteredStocks = this.userStocks.slice(this.pageIndex * this.pageSize,
-            this.pageIndex * this.pageSize + this.pageSize);
-    }
-
-    // Handles floating panel routes pagination
-    handle(e?: PageEvent) {
-        this.pageIndex = e.pageIndex;
-        this.pageSize = e.pageSize;
-        this.filterStocks();
-        this.loadGraphs(this.filteredStocks);
-    }
-
 
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());

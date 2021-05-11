@@ -155,7 +155,7 @@ export class StocksListsModalComponent implements OnInit {
             }).subscribe(dt => {
                 this.userStocks = dt?.user_stocks || [];
                 this.stocksLoading.status = 'finished';
-                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+                // this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             });
         }
     }

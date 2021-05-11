@@ -49,12 +49,12 @@ export class StocksListsModalComponent implements OnInit {
         this.subscriptions.push(this.subject.currentStockTypes.subscribe(dt => {
             this.stockTypes = dt;
             this.selectedStockType = dt[0];
-            this.getUserStocks({type_id: this.selectedStockType?.id});
+            this.getUserStocks();
         }));
     }
 
     getUserStocks(params = {}) {
-        this.loader.stocksLoading.text =  'Loading user stocks list and charts';
+        this.loader.stocksLoading.text = 'Loading user stocks list and charts';
         this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             ...params
@@ -80,7 +80,7 @@ export class StocksListsModalComponent implements OnInit {
         if (this.search) {
             this.searchInStockType();
         } else {
-            this.getUserStocks({type_id: this.selectedStockType.id});
+            // this.getUserStocks({type_id: this.selectedStockType.id});
             this.getStocksByType(this.selectedStockType.value);
         }
     }
@@ -138,9 +138,9 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     updateFollowedStocks(stocks) {
-
+        console.log(stocks.length)
         this.loader.stocksLoading.status = 'loading';
-        if (stocks.length === 25) {
+        if (stocks.length >= 25) {
             this.toastr.error('We support not more than 25 stocks per user');
             this.loader.stocksLoading.status = 'finished';
         } else {
@@ -148,7 +148,7 @@ export class StocksListsModalComponent implements OnInit {
             this.stocksService.updateFollowedStocks({
                 user_id: this.authUser.id,
                 ...{stocks},
-                type_id: this.selectedStockType.id
+                // type_id: this.selectedStockType.id
             }).subscribe(dt => {
                 this.userStocks = dt?.user_stocks || [];
                 this.loader.stocksLoading.status = 'finished';

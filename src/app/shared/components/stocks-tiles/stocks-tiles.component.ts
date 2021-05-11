@@ -6,6 +6,7 @@ import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {StocksService} from '@core/services/stocks.service';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-stocks-tiles',
@@ -28,7 +29,8 @@ export class StocksTilesComponent implements OnInit {
         private subject: SubjectService,
         private updateStocks: UpdateUserStocksPipe,
         private getAuthUser: GetAuthUserPipe,
-        private stocksService: StocksService
+        private stocksService: StocksService,
+        private toastr: ToastrService
     ) {
     }
 
@@ -41,11 +43,15 @@ export class StocksTilesComponent implements OnInit {
     }
 
     updateFollowedStocksList(stock) {
-        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
-        if (!this.stocksGeneralList) {
-            this.passedStocks = userStocks;
+        if (this.userStocks.length < 25) {
+            const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+            if (!this.stocksGeneralList) {
+                this.passedStocks = userStocks;
+            }
+            this.updatedStocksList.emit(userStocks);
+        } else {
+            this.toastr.error('We support not more than 25 stocks per user');
         }
-        this.updatedStocksList.emit(userStocks);
     }
 
     drop(event: CdkDragDrop<any>) {

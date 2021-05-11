@@ -83,6 +83,11 @@
             color: $white;
         }
     }
+
+    .right-group {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .addStockWrap {

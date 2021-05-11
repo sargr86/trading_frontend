@@ -1,17 +1,15 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
 
 @Pipe({
     name: 'updateUserStocks'
 })
 export class UpdateUserStocksPipe implements PipeTransform {
 
-    constructor(private toastr: ToastrService) {
+    constructor() {
     }
 
     transform(userStocks: any[], stock: any, selectedTypeId: any): any {
         let following = !!userStocks.find(f => f.name === stock.name);
-
 
         if (!following) {
             userStocks.push({

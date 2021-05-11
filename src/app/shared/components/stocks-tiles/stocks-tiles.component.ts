@@ -58,7 +58,7 @@ export class StocksTilesComponent implements OnInit {
             user_id: this.authUser.id
         };
 
-        this.subject.changeUserStocks({stocks: this.passedStocks});
+        this.subject.changeUserStocks({stocks: this.passedStocks, dragdrop: true});
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
         });

@@ -46,13 +46,13 @@
 
     <div class="all-stocks">
         <div class="top-wrap">
-            <div class="left-group">
-                <h2>Tilez</h2>
-            </div>
+<!--            <div class="left-group">-->
+<!--                <h2>Tilez</h2>-->
+<!--            </div>-->
 
 
-            <div class="center-group">
-
+            <div class="center-group justify-content-between mr-3">
+                <h2 class="mr-3">Tilez</h2>
                 <app-search-stocks-form [hidden]="loader.stocksLoading.status==='loading' && !searched"
                                         [returnSearchText]="true"
                                         [transparentForm]="true"
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="right-group">
+            <div class="right-group justify-content-center">
                 <div class="stock-type-selector" *ngIf="loader.stocksLoading.status==='finished'">
                     <select (change)="stockTypeChanged($event)">
                         <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType?.value"

@@ -2,11 +2,11 @@
 @import 'mixins';
 
 #stocks-lists-modal {
-    background: #0E1D43 0 0 no-repeat padding-box;
     width: 100%;
-    padding: 60px 200px;
     margin: -1.75rem auto;
     min-height: calc(100vh - 2px);
+    max-width: 1550px;
+    padding: 60px 15px;
 
     .top-wrap {
         display: flex;
@@ -14,35 +14,40 @@
         justify-content: space-between;
         color: #FFFFFF;
         font-size: 24px;
-        flex-wrap: wrap;
-
-
         .left-group {
             min-width: 190px;
             flex: 1;
         }
-
         .center-group {
             flex: 1;
-
+            margin: 0 10px;
+            min-width: 200px;
             .spinner-container {
                 min-width: max-content;
             }
-        }
-
-        .right-group {
-            width: 30%;
-            min-width: 190px;
-            flex: 1;
-            @media (max-width: 540px) {
+            @media (max-width: 992px) {
+                flex-direction: column;
                 width: 100%;
+                align-items: flex-start;
             }
         }
-
+        .right-group {
+            //width: 30%;
+            min-width: 190px;
+            flex: 1;
+            justify-content: flex-end;
+            @media (max-width: 992px) {
+                flex-direction: column;
+                width: 100%;
+            }
+            @media (max-width: 768px) {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+        }
         h2 {
             margin: 0;
         }
-
         i {
             font-size: 20px;
             cursor: pointer;
@@ -52,7 +57,9 @@
                 color: #F53C6F;
             }
         }
-
+        @media (max-width: 540px) {
+            flex-direction: column;
+        }
     }
 
     @media (max-width: 1400px) {
@@ -156,10 +163,12 @@ select {
 .stock-type-selector {
     display: flex;
     justify-content: space-between;
-    max-width: 200px;
+    max-width: 127px;
     width: 100%;
-    @media (max-width: 540px) {
-        max-width: 100%;
+    height: 36px;
+    margin-top: 8px;
+    @media (max-width: 992px) {
+        margin: 0 auto;
     }
 }
 

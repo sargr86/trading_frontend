@@ -24,6 +24,7 @@ export class StocksTilesComponent implements OnInit {
     @Input('stocksGeneralList') stocksGeneralList = false;
     @Input('dragDropDisabled') dragDropDisabled = false;
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
+    @Output('updatedStocksPriority') updatedStocksPriority = new EventEmitter();
 
     constructor(
         private subject: SubjectService,
@@ -69,15 +70,6 @@ export class StocksTilesComponent implements OnInit {
         this.passedStocks[event.previousContainer.data.index] = event.container.data.item;
         this.passedStocks[event.container.data.index] = event.previousContainer.data.item;
 
-        const sendData = {
-            order_type: 'custom',
-            rows: JSON.stringify(this.passedStocks),
-            user_id: this.authUser.id
-        };
-
-        this.subject.changeUserStocks({stocks: this.passedStocks, dragdrop: true});
-        this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
-            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-        });
+        this.updatedStocksPriority.emit(this.passedStocks);
     }
 }

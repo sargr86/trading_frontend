@@ -92,7 +92,7 @@
             <!--                                    [userStocks]="getUpdatedStockDetails(userStocks)"-->
             <!--                                    (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>-->
             <app-stocks-tiles [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [dragDropDisabled]="true"
-                              [userStocks]="getUpdatedStockDetails(userStocks)" [stocksGeneralList]="true"
+                              [userStocks]="getUpdatedStockDetails(userStocks)" [allStocksList]="true"
                               (updatedStocksList)="updateFollowedStocks($event)"
                               [type]="selectedStockType"></app-stocks-tiles>
             <p *ngIf="filteredStocks?.length===0 && loader.stocksLoading.status!=='loading'">No stocks of selected type

@@ -21,7 +21,7 @@ export class StocksTilesComponent implements OnInit {
     @Input('stocks') passedStocks: Stock[] = [];
     @Input('userStocks') userStocks: Stock[] = [];
     @Input('type') selectedStockType: Stock | null = null;
-    @Input('stocksGeneralList') stocksGeneralList = false;
+    @Input('allStocksList') allStocksList = false;
     @Input('dragDropDisabled') dragDropDisabled = false;
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
     @Output('updatedStocksPriority') updatedStocksPriority = new EventEmitter();
@@ -30,8 +30,6 @@ export class StocksTilesComponent implements OnInit {
         private subject: SubjectService,
         private updateStocks: UpdateUserStocksPipe,
         private getAuthUser: GetAuthUserPipe,
-        private stocksService: StocksService,
-        private toastr: ToastrService
     ) {
     }
 
@@ -44,26 +42,13 @@ export class StocksTilesComponent implements OnInit {
     }
 
     updateFollowedStocksList(stock) {
-        const removing = this.isStockFollowed(stock);
-        console.log('removing:' + removing, 'length:' + this.userStocks.length)
-        if (!removing) {
-            if (this.userStocks.length === 25) {
-                this.toastr.error('We support not more than 25 stocks per user');
-            } else {
-                const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
-                this.updatedStocksList.emit(userStocks);
-                if (!this.stocksGeneralList) {
-                    this.passedStocks = userStocks;
-                }
+        const result = this.updateStocks.transform(this.userStocks, stock, this.isStockFollowed(stock));
+        if (result) {
+            if (!this.allStocksList) {
+                this.passedStocks = result;
             }
-        } else {
-            const {userStocks} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
-            if (!this.stocksGeneralList) {
-                this.passedStocks = userStocks;
-            }
-            this.updatedStocksList.emit(userStocks);
+            this.updatedStocksList.emit(result);
         }
-
     }
 
     drop(event: CdkDragDrop<any>) {

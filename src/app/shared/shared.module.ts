@@ -29,8 +29,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {UpdateUserStocksPipe} from './pipes/update-user-stocks.pipe';
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
 import {SearchVideosFormComponent} from '@shared/components/search-videos-form/search-videos-form.component';
-import { StockTilesComponent } from './components/stocks-tiles/stock-tiles.component';
-import { StocksListComponent } from './components/stocks-list/stocks-list.component';
+import {StockTilesComponent} from './components/stocks-tiles/stock-tiles.component';
+import {StocksListComponent} from './components/stocks-list/stocks-list.component';
 
 @NgModule({
     declarations: [
@@ -104,7 +104,8 @@ import { StocksListComponent } from './components/stocks-list/stocks-list.compon
         StocksListSampleComponent,
         SearchStocksFormComponent,
         SearchVideosFormComponent,
-        StockTilesComponent
+        StockTilesComponent,
+        StocksListComponent
     ]
 
 })

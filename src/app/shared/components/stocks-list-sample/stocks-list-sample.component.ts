@@ -100,7 +100,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         const removal = this.isStockFollowed(stock);
         const result = this.updateStocks.transform(this.userStocks, stock, removal);
 
-        if(result){
+        if (result) {
             if (this.pagination) {
 
             } else if (!this.modal) {
@@ -116,7 +116,6 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
             // this.loader.stocksLoading = 'loading';
             this.updatedStocksList.emit(result);
         }
-
 
 
     }

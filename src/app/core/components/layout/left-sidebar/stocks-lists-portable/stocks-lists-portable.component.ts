@@ -22,6 +22,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     userStocks;
 
     selectedSortType;
+    stocksSortTypes = [];
 
     stocks;
     indices;
@@ -66,6 +67,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         }));
 
 
+
+
         if (this.authUser) {
             this.subscriptions.push(this.subject.currentUserStocks.subscribe((dt: any) => {
                 this.userStocks = dt.stocks;
@@ -75,6 +78,10 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                 this.loader.hide();
             }));
 
+            this.subscriptions.push(this.subject.currentStockSortTypes.subscribe(dt => {
+                this.stocksSortTypes = dt;
+                this.selectedSortType = dt[0];
+            }));
 
             this.getUserStocks();
             this.getIndices(); // @todo remove if refreshing implemented
@@ -130,6 +137,19 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                 username: this.authUser.username,
                 tab: 'watchlist'
             }
+        });
+    }
+
+    updateUserStocksPriority(e) {
+        const sendData = {
+            order_type: 'custom',
+            rows: JSON.stringify(e),
+            user_id: this.authUser.id
+        };
+        this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
+            this.selectedSortType = this.stocksSortTypes[0];
+            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
         });
     }
 

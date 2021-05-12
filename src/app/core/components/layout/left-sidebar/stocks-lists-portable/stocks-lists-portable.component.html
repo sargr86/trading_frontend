@@ -7,29 +7,31 @@
             <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
         </div>
 
-        <div class="tab-content" id="watchlist-content" [hidden]="activeTab.value!=='watchlist'">
+        <div class="tabs-contents">
+            <div class="tab-content" id="watchlist-content" [hidden]="activeTab.value!=='watchlist'">
 
-            <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"
-                                    [followAllowed]="false"
-                                    [editPortable]="true"
-                                    *ngIf="userStocks?.length > 0" [sort]="selectedSortType"
-                                    (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>
+                <app-stocks-list [stocks]="userStocks"></app-stocks-list>
+                <!--                <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"-->
+                <!--                                        [followAllowed]="false"-->
+                <!--                                        [editPortable]="true"-->
+                <!--                                        *ngIf="userStocks?.length > 0" [sort]="selectedSortType"-->
+                <!--                                        (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>-->
 
-            <p (click)="viewFullWatchlist()" class="see-more"
-               *ngIf="(dataLoading!=='loading' && userStocks?.length > 0) else noStocks">
-                See more
-            </p>
-            <ng-template #noStocks>
-                <small class="error" [hidden]="dataLoading==='loading'">No stocks added to watchlist</small>
-            </ng-template>
+                <p (click)="viewFullWatchlist()" class="see-more"
+                   *ngIf="(dataLoading!=='loading' && userStocks?.length > 0) else noStocks">
+                    See more
+                </p>
+                <ng-template #noStocks>
+                    <small class="error" [hidden]="dataLoading==='loading'">No stocks added to watchlist</small>
+                </ng-template>
+            </div>
+            <div class="tab-content" id="today-content" [hidden]="activeTab.value!=='today'">
+
+                <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"
+                                        *ngIf="dataLoading==='finished'"
+                                        [portable]="true"></app-stocks-list-sample>
+            </div>
         </div>
-        <div class="tab-content" id="today-content" [hidden]="activeTab.value!=='today'">
-
-            <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"
-                                    *ngIf="dataLoading==='finished'"
-                                    [portable]="true"></app-stocks-list-sample>
-        </div>
-
     </div>
 </ng-container>
 

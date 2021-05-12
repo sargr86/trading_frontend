@@ -64,7 +64,7 @@
             </div>
 
             <div class="right-group">
-                <div class="stock-type-selector">
+                <div class="stock-type-selector" *ngIf="loader.stocksLoading.status==='finished'">
                     <select (change)="stockTypeChanged($event)">
                         <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType?.value"
                                 [value]="type.value">{{type.name}}</option>

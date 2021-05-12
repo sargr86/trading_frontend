@@ -34,9 +34,9 @@
             <!--                                    (updatedStocksList)="updateFollowedStocks($event)" [modal]="true"-->
             <!--                                    [userStocks]="updateStockDetails(userStocks)"-->
             <!--                                    *ngIf="userStocks.length > 0"></app-stocks-list-sample>-->
-            <app-stocks-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0" [dragDropDisabled]="true"
+            <app-stock-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0" [dragDropDisabled]="true"
                               [userStocks]="getUpdatedStockDetails(userStocks)"
-                              (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-tiles>
+                              (updatedStocksList)="updateFollowedStocks($event)"></app-stock-tiles>
             <p *ngIf="userStocks?.length===0 && loader.stocksLoading.status!=='loading'">
                 No user stocks of selected type is found
             </p>
@@ -91,10 +91,10 @@
             <!--                                    [type]="selectedStockType" [modal]="true"-->
             <!--                                    [userStocks]="getUpdatedStockDetails(userStocks)"-->
             <!--                                    (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>-->
-            <app-stocks-tiles [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [dragDropDisabled]="true"
+            <app-stock-tiles [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [dragDropDisabled]="true"
                               [userStocks]="getUpdatedStockDetails(userStocks)" [allStocksList]="true"
                               (updatedStocksList)="updateFollowedStocks($event)"
-                              [type]="selectedStockType"></app-stocks-tiles>
+                              [type]="selectedStockType"></app-stock-tiles>
             <p *ngIf="filteredStocks?.length===0 && loader.stocksLoading.status!=='loading'">No stocks of selected type
                 is found</p>
         </div>

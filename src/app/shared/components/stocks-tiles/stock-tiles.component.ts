@@ -7,11 +7,11 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 
 @Component({
-    selector: 'app-stocks-tiles',
-    templateUrl: './stocks-tiles.component.html',
-    styleUrls: ['./stocks-tiles.component.scss']
+    selector: 'app-stock-tiles',
+    templateUrl: './stock-tiles.component.html',
+    styleUrls: ['./stock-tiles.component.scss']
 })
-export class StocksTilesComponent implements OnInit {
+export class StockTilesComponent implements OnInit {
 
     stockChartSettings = STOCK_TILE_CHART_SETTINGS;
     authUser;

@@ -19,23 +19,17 @@
                *ngIf="(dataLoading!=='loading' && userStocks?.length > 0) else noStocks">
                 See more
             </p>
-
-
+            <ng-template #noStocks>
+                <small class="error" [hidden]="dataLoading==='loading'">No stocks added to watchlist</small>
+            </ng-template>
         </div>
         <div class="tab-content" id="today-content" [hidden]="activeTab.value!=='today'">
 
             <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"
-                                    (updatedStocksList)="updateFollowedLists($event)" *ngIf="dataLoading==='finished'"
+                                    *ngIf="dataLoading==='finished'"
                                     [portable]="true"></app-stocks-list-sample>
-            <p (click)="viewFullWatchlist()" *ngIf="!routerUrl?.includes('analytics') && dataLoading==='finished'"
-               class="see-more">
-                See more
-            </p>
-
         </div>
-        <ng-template #noStocks>
-            <small class="error" [hidden]="dataLoading==='loading'">No stocks added to watchlist</small>
-        </ng-template>
+
     </div>
 </ng-container>
 

@@ -73,8 +73,6 @@
                     </button>
                 </mat-menu>
             </div>
-
-
         </div>
         <div id="portable-stocks" cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="passedStocks?.length > 0">
             <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks); let ind = index">

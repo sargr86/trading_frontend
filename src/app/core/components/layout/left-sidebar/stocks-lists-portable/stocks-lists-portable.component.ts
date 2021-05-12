@@ -101,13 +101,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
 
-    openStockProfile(stock) {
-        this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate([`stocks/${stock}/analytics`])
-        );
-    }
-
-
     getUserStocks() {
         this.dataLoading = 'loading';
         this.subscriptions.push(this.stocksService.getUserStocks({
@@ -127,7 +120,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
     }

@@ -4,9 +4,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {STOCK_TILE_CHART_SETTINGS} from '@core/constants/charts';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {StocksService} from '@core/services/stocks.service';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-stocks-tiles',

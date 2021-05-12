@@ -80,14 +80,11 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     updateStocksPriority(e) {
-
         const sendData = {
             order_type: 'custom',
             rows: JSON.stringify(e),
             user_id: this.authUser.id
         };
-
-
 
         this.subject.changeUserStocks({stocks: e, dragdrop: true});
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {

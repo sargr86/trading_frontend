@@ -8,6 +8,7 @@ import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {Tab} from '@shared/models/tab';
+import {MINI_GRAPHS_TABS} from '@core/constants/global';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -31,7 +32,9 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     authDataLoaded = false;
 
-    activeTab: Tab = {name: 'watchlist'};
+    tabsList: Tab[] = MINI_GRAPHS_TABS;
+    activeTab: Tab = MINI_GRAPHS_TABS[0];
+
 
     constructor(
         public router: Router,

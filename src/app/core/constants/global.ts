@@ -127,3 +127,8 @@ export const MAIN_SECTIONS = [
     {name: 'Videos', img: 'item-11', icon: '', link: '/videos', auth: true, separator: true, production: true},
     {name: 'Analytics', img: 'item-9', icon: '', link: '/stocks/analytics', auth: true, production: true},
 ];
+
+export const MINI_GRAPHS_TABS = [
+    {name: 'My Watchlist', value: 'watchlist'},
+    {name: 'Today', value: 'today'},
+];

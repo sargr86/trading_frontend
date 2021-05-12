@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'app-stocks-lists-tabs',
@@ -6,19 +6,22 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
     styleUrls: ['./stocks-lists-tabs.component.scss']
 })
 export class StocksListsTabsComponent implements OnInit {
-    activeTab = {name: 'watchlist'};
+    activeTab;
 
+    @Input('defaultTab') defaultTab;
+    @Input('tabsList') tabsList;
     @Output('tabChanged') tabChanged = new EventEmitter();
 
     constructor() {
     }
 
     ngOnInit(): void {
+        this.activeTab = this.defaultTab;
     }
 
     changeTab(tab) {
-        this.activeTab.name = tab;
-        this.tabChanged.emit(this.activeTab);
+        this.activeTab = tab;
+        this.tabChanged.emit(tab);
     }
 
 }

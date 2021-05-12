@@ -29,6 +29,7 @@ import {SectionLinksComponent} from '@core/components/layout/left-sidebar/sectio
 import { ChannelSubscriptionsComponent } from './components/layout/left-sidebar/channel-subscriptions/channel-subscriptions.component';
 import { StocksListsPortableComponent } from './components/layout/left-sidebar/stocks-lists-portable/stocks-lists-portable.component';
 import { PageLoadingComponent } from './components/ungrouped/page-loading/page-loading.component';
+import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/stocks-lists-portable/stocks-lists-tabs/stocks-lists-tabs.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { PageLoadingComponent } from './components/ungrouped/page-loading/page-l
         ChannelSubscriptionsComponent,
         StocksListsPortableComponent,
         PageLoadingComponent,
+        StocksListsTabsComponent,
     ],
     imports: [
         CommonModule,

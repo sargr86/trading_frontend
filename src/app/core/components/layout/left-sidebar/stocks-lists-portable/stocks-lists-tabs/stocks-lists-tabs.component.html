@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+    <li class="nav-item" (click)="changeTab('watchlist')">
+        <a class="nav-link" [class.active]="activeTab.name==='watchlist'" id="watchlist-tab">My Watchlist</a>
+    </li>
+    <li class="nav-item" (click)="changeTab('today')">
+        <a class="nav-link active" [class.active]="activeTab.name==='today'" id="today-tab">Today</a>
+    </li>
+</ul>

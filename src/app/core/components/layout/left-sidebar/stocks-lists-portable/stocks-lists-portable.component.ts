@@ -7,6 +7,7 @@ import {NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
+import {Tab} from '@shared/models/tab';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -18,7 +19,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     @Input('authUser') authUser;
     routerUrl;
     userStocks;
-    activeTab = {name: 'watchlist'};
+
     selectedSortType;
 
     stocks;
@@ -29,6 +30,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
     authDataLoaded = false;
+
+    activeTab: Tab = {name: 'watchlist'};
 
     constructor(
         public router: Router,
@@ -82,6 +85,10 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     }
 
+    getActiveTab(e) {
+        this.activeTab = e;
+    }
+
 
     getIndices() {
         this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
@@ -97,9 +104,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         );
     }
 
-    changeTab(tab) {
-        this.activeTab.name = tab;
-    }
 
     getUserStocks() {
         this.dataLoading = 'loading';

@@ -10,7 +10,8 @@
         <div class="tabs-contents">
             <div class="tab-content" id="watchlist-content" [hidden]="activeTab.value!=='watchlist'">
 
-                <app-stocks-list [stocks]="userStocks"></app-stocks-list>
+                <app-stocks-list [stocks]="userStocks"
+                                 (updatedStocksPriority)="updateUserStocksPriority($event)"></app-stocks-list>
                 <!--                <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"-->
                 <!--                                        [followAllowed]="false"-->
                 <!--                                        [editPortable]="true"-->

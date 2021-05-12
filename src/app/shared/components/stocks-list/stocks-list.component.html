@@ -12,6 +12,28 @@
                         <p class="stock-symbol">{{stock.symbol.replace('^', '')}}</p>
                         <p class="stock-name">{{stock.name}}</p>
                     </div>
+
+
+                    <ng-container
+                        [ngTemplateOutlet]="itemTemplate"
+                        [ngTemplateOutletContext]="{details: getPercentageDetails(stock)}">
+                    </ng-container>
+
+                    <ng-template let-d="details" #itemTemplate>
+                        <div class="indices-small-chart-container" *ngIf="stock.hasOwnProperty('series')">
+                            <ngx-charts-line-chart [scheme]="getColorScheme(stock)" [animations]="false"
+                                                   [results]="[stock]" [autoScale]="true"
+                                                   [view]="stockChartSettings.view"
+                                                   [tooltipDisabled]="stockChartSettings.tooltipDisabled"
+                                                   [timeline]="true">
+                            </ngx-charts-line-chart>
+                        </div>
+                        <div class="stock-price-change">
+                            <p class="stock-price">{{stock.price?.toFixed(2)}}</p>
+                            <p [ngClass]="d?.class" class="stock-change-details">
+                                {{stock.change?.toFixed(2)}}({{d?.value?.toFixed(2)}}%)</p>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </ng-container>

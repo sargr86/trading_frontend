@@ -82,22 +82,29 @@ export class SummaryTabComponent implements OnInit {
         return normalizeColName(col);
     }
 
+    isStockFollowed(stock) {
+        return !!this.userStocks.find(s => s.name === stock.name);
+    }
+
 
     updateUserStocks(stock) {
         this.processingStock = true;
-        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, stock.type_id);
-        this.addedToWatchlist = following;
+        const removal = this.isStockFollowed(stock);
+        const result = this.updateStocks.transform(this.userStocks, stock, removal);
+        this.addedToWatchlist = !removal;
         this.loader.show();
-        this.subscriptions.push(this.stocksService.updateFollowedStocks({
-            user_id: this.authUser.id,
-            stocks: userStocks
-        }).subscribe(dt => {
-            this.processingStock = false;
-            this.userStocks = dt?.user_stocks || [];
-            this.stocksUpdatedHere = true;
-            this.loader.hide();
-            this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
-        }));
+        if (result) {
+            this.subscriptions.push(this.stocksService.updateFollowedStocks({
+                user_id: this.authUser.id,
+                stocks: result
+            }).subscribe(dt => {
+                this.processingStock = false;
+                this.userStocks = dt?.user_stocks || [];
+                this.stocksUpdatedHere = true;
+                this.loader.hide();
+                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+            }));
+        }
     }
 
 }

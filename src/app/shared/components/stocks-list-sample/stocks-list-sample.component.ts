@@ -96,24 +96,28 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
         return this.passedStocks;
     }
 
-
     updateFollowedStocksList(stock) {
-        const {userStocks, following} = this.updateStocks.transform(this.userStocks, stock, this.selectedStockType?.id);
+        const removal = this.isStockFollowed(stock);
+        const result = this.updateStocks.transform(this.userStocks, stock, removal);
 
-        if (this.pagination) {
+        if(result){
+            if (this.pagination) {
 
-        } else if (!this.modal) {
-            this.passedStocks = userStocks;
-        } else {
-            if (following) {
-                this.userStocks = userStocks;
+            } else if (!this.modal) {
+                this.passedStocks = result;
             } else {
-                this.passedStocks = userStocks;
+                if (removal) {
+                    this.userStocks = result;
+                } else {
+                    this.passedStocks = result;
+                }
             }
+            // this.loader.show();
+            // this.loader.stocksLoading = 'loading';
+            this.updatedStocksList.emit(result);
         }
-        // this.loader.show();
-        // this.loader.stocksLoading = 'loading';
-        this.updatedStocksList.emit(userStocks);
+
+
 
     }
 

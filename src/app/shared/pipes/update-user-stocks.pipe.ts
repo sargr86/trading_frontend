@@ -12,7 +12,7 @@ export class UpdateUserStocksPipe implements PipeTransform {
     ) {
     }
 
-    transform(userStocks: Stock[], stock: Stock, isRemoval: boolean): any {
+    transform(userStocks: Stock[], stock: Stock, isRemoval: boolean): Stock[] | null {
 
 
         if (!isRemoval) {

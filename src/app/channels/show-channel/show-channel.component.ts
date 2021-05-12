@@ -181,14 +181,16 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         });
     }
 
+    isStockFollowed(stock) {
+        return !!this.userStocks.find(s => s.name === stock.name);
+    }
+
     updateFollowedStocksList(stock) {
-        const {userStocks} = this.updateStocks.transform(this.userStocks, stock, null);
-        if (userStocks.length > 25) {
-            this.toastr.error('We support not more than 25 stocks per user');
-        } else {
+        const result = this.updateStocks.transform(this.userStocks, stock, this.isStockFollowed(stock));
+        if (result) {
             this.loader.stocksLoading.status = 'loading';
             this.subscriptions.push(this.stocksService.updateFollowedStocks(
-                {user_id: this.authUser.id, ...{stocks: userStocks}})
+                {user_id: this.authUser.id, ...{stocks: result}})
                 .subscribe(dt => {
                     this.userStocks = dt?.user_stocks || [];
                     this.loader.stocksLoading.status = 'finished';

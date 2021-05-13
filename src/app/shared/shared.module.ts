@@ -21,7 +21,6 @@ import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-value
 import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
-import {SearchStocksFormOldComponent} from '@shared/components/search-stocks-form-old/search-stocks-form-old.component';
 import {StocksListsModalComponent} from './components/stocks-lists-modal/stocks-lists-modal.component';
 import {StocksListSampleComponent} from './components/stocks-list-sample/stocks-list-sample.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -51,7 +50,6 @@ import {StocksListComponent} from './components/stocks-list/stocks-list.componen
         CheckForEmptyObjectPipe,
         UserTagsComponent,
         VideosListHolderComponent,
-        SearchStocksFormOldComponent,
         StocksListsModalComponent,
         StocksListSampleComponent,
         UpdateUserStocksPipe,
@@ -99,7 +97,6 @@ import {StocksListComponent} from './components/stocks-list/stocks-list.componen
         UserTagsComponent,
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
-        SearchStocksFormOldComponent,
         StocksListsModalComponent,
         StocksListSampleComponent,
         SearchStocksFormComponent,

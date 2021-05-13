@@ -120,6 +120,7 @@ export class StocksListComponent implements OnInit {
         const result = this.updateStocks.transform(this.passedStocks, stock, this.isStockFollowed(stock));
         if (result) {
             this.updatedStocksList.emit(result);
+            this.loader.stocksLoading.status = 'loading';
         }
     }
 

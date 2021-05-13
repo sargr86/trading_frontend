@@ -37,9 +37,9 @@
         <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks)">
             <div class="stock-item" cdkDrag
                  (cdkDragDropped)="dragDropped($event)">
-                <!--                <div class="remove-stock" *ngIf="editUserStocks" (click)="updateFollowedStocksList(stock)">-->
-                <!--                    <i class="fas fa-trash"></i>-->
-                <!--                </div>-->
+                <div class="remove-stock" *ngIf="editStocksList" (click)="updateFollowedStocksList(stock)">
+                    <i class="fas fa-trash"></i>
+                </div>
                 <div class="stock-details" (click)="openStockProfile(stock.symbol)">
                     <div class="stock-name-symbol">
                         <p class="stock-symbol">{{stock.symbol.replace('^', '')}}</p>

@@ -121,9 +121,9 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     updateFollowedLists(stocks) {
-
         this.subscriptions.push(this.stocksService.updateFollowedStocks({user_id: this.authUser.id, ...{stocks}}).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            this.loader.stocksLoading.status = 'finished';
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
     }

@@ -24,20 +24,23 @@
                 <div class="search-wrapper">
                     <!--                    <form [formGroup]="searchVideosForm" id="search-videos-form"-->
                     <!--                          *ngIf="activeTab.name!=='Watchlist'">-->
-                    <!--                        <div class="toggle-filters-btn">-->
-                    <!--                            <button class="filter-toggle-btn"-->
-                    <!--                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"-->
-                    <!--                                    [class.filters-active]="showFilters"-->
-                    <!--                                    (click)="toggleFilters()">-->
-                    <!--                                <mat-icon>tune</mat-icon>-->
-                    <!--                            </button>-->
-                    <!--                        </div>-->
+                    <div class="toggle-filters-btn">
+                        <button class="filter-toggle-btn"
+                                *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
+                                [class.filters-active]="showFilters"
+                                (click)="toggleFilters()">
+                            <mat-icon>tune</mat-icon>
+                        </button>
+                    </div>
                     <!--                        <input class="watchlist-input" placeholder="Search" formControlName="search"-->
                     <!--                               (keyup.enter)="searchVideos()">-->
                     <!--                        <i class="fas fa-search"></i>-->
                     <!--                    </form>-->
-                    <app-search-videos-form
-                        *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
+                    <div>
+
+                        <app-search-videos-form (search)="searchVideos($event)"
+                                                *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
+                    </div>
                     <div class="right-side" *ngIf="activeTab.name==='Watchlist'">
 
                         <div class="open-add-stock-modal" *ngIf="activeTab.name==='Watchlist'" (click)="openModal()">

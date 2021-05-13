@@ -8,6 +8,7 @@ import {STOCK_ITEM_CHART_SETTINGS} from '@core/constants/charts';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
 import {StocksService} from '@core/services/stocks.service';
+import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 
 @Component({
     selector: 'app-stocks-list',
@@ -21,6 +22,8 @@ export class StocksListComponent implements OnInit {
 
     stockChartSettings = STOCK_ITEM_CHART_SETTINGS;
     stocksSortTypes = [];
+    editStocksList = false;
+
 
     @Output('updatedStocksPriority') updatedStocksPriority = new EventEmitter();
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
@@ -29,8 +32,9 @@ export class StocksListComponent implements OnInit {
         public router: Router,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private loader: LoaderService,
-        private stocksService: StocksService
+        public loader: LoaderService,
+        private stocksService: StocksService,
+        private updateStocks: UpdateUserStocksPipe
     ) {
 
     }
@@ -38,8 +42,6 @@ export class StocksListComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.selectedSortType = this.authUser.stocks_order_type;
-
-        console.log(this.passedStocks)
 
         this.subject.currentStockSortTypes.subscribe(dt => {
             this.stocksSortTypes = dt;
@@ -58,6 +60,10 @@ export class StocksListComponent implements OnInit {
             color: (+value > 0 ? 'green' : 'red'),
             class: 'stock-' + (+value > 0 ? 'green' : 'red')
         };
+    }
+
+    getAutocompleteResults(e) {
+        this.updateFollowedStocksList(e);
     }
 
     getColorScheme(stock) {
@@ -102,6 +108,17 @@ export class StocksListComponent implements OnInit {
                 this.loader.stocksLoading.status = 'finished';
                 this.updatedStocksPriority.emit({stocks: this.passedStocks, orderType: this.selectedSortType.value});
             });
+        }
+    }
+
+    isStockFollowed(stock) {
+        return !!this.passedStocks.find(s => s.name === stock.name);
+    }
+
+    updateFollowedStocksList(stock) {
+        const result = this.updateStocks.transform(this.passedStocks, stock, this.isStockFollowed(stock));
+        if (result) {
+            this.updatedStocksList.emit(result);
         }
     }
 

@@ -138,6 +138,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     updateUserStocksPriority(e) {
+
         const sendData = {
             order_type: e.orderType,
             rows: JSON.stringify(e.stocks),
@@ -148,6 +149,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
             this.selectedSortType = this.stocksSortTypes[0];
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
             this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
+            this.subject.changeUserStocks({stocks: e.stocks});
         });
     }
 

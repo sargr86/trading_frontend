@@ -1,4 +1,5 @@
-<form [formGroup]="searchStocksForm" [class.white-form]="whiteForm" [class.transparent-form]="transparentForm">
+<form [formGroup]="searchStocksForm" [class.white-form]="whiteForm" [style.width]="formWidth+'%'"
+      [class.transparent-form]="transparentForm">
     <div class="search-wrapper">
         <input formControlName="search" (keyup.enter)="handleEnter()" [placeholder]="getPlaceholder()"
                [matAutocomplete]="auto" #trigger="matAutocompleteTrigger" (keyup)="handleRegularKeyup()">

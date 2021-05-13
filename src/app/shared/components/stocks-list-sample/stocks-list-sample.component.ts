@@ -176,7 +176,7 @@ export class StocksListSampleComponent implements OnInit, OnChanges {
 
             this.passedStocks.sort((a, b) => {
                 if (type.name === 'A-Z') {
-                    return a.name.localeCompare(b.symbol);
+                    return a.name.localeCompare(b.name);
                 } else {
                     return a.change > b.change ? -1 : 1;
                 }

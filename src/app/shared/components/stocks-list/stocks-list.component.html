@@ -1,6 +1,37 @@
 <div id="stocks-list-holder">
     <div class="stocks-list" cdkDropList>
+        <div class="stocks-top-actions">
+            <div class="search-stocks">
+                <!--                        <div class="watchlist-search" *ngIf="editUserStocks">-->
+                <!--                            <app-search-stocks-form [autocomplete]="true" [whiteForm]="true" [returnFoundStock]="true"-->
+                <!--                                                    (search)="getSearchResults($event)"></app-search-stocks-form>-->
+                <!--                        </div>-->
 
+                <div class="sort-types-dropdown dropdown">
+                    <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown">
+                        Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" *ngFor="let sortType of stocksSortTypes;let ind = index"
+                           [class.red]="selectedSortType?.name === sortType.name"
+                           (click)="sortStocks(sortType)">{{sortType.name}}</a>
+                    </div>
+                    <div class="spinner-container">
+                        <!--                        <mat-spinner *ngIf="loader.stocksLoading.status === 'loading'"-->
+                        <!--                                     [diameter]="15"></mat-spinner>-->
+                    </div>
+                </div>
+            </div>
+            <!--                    <div class="context-actions" *ngIf="editPortable">-->
+            <!--                        <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>-->
+            <!--                        <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>-->
+            <!--                        <mat-menu #menu="matMenu">-->
+            <!--                            <button mat-menu-item (click)="editUserStocks = !editUserStocks">-->
+            <!--                                Edit Watchlist-->
+            <!--                            </button>-->
+            <!--                        </mat-menu>-->
+            <!--                    </div>-->
+        </div>
         <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks)">
             <div class="stock-item" cdkDrag
                  (cdkDragDropped)="dragDropped($event)">

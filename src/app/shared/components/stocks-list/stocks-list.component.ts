@@ -5,6 +5,9 @@ import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {User} from '@shared/models/user';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {STOCK_ITEM_CHART_SETTINGS} from '@core/constants/charts';
+import {SubjectService} from '@core/services/subject.service';
+import {LoaderService} from '@core/services/loader.service';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-stocks-list',
@@ -17,19 +20,31 @@ export class StocksListComponent implements OnInit {
     selectedSortType;
 
     stockChartSettings = STOCK_ITEM_CHART_SETTINGS;
-
+    stocksSortTypes = [];
 
     @Output('updatedStocksPriority') updatedStocksPriority = new EventEmitter();
+    @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 
     constructor(
         public router: Router,
         private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService,
+        private loader: LoaderService,
+        private stocksService: StocksService
     ) {
 
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        this.selectedSortType = this.authUser.stocks_order_type;
+
+        console.log(this.passedStocks)
+
+        this.subject.currentStockSortTypes.subscribe(dt => {
+            this.stocksSortTypes = dt;
+            // this.selectedSortType = dt[0];
+        });
     }
 
     onlyFirst10Stocks(stocks) {
@@ -59,7 +74,35 @@ export class StocksListComponent implements OnInit {
 
     dragDropped(e) {
         this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
-        this.updatedStocksPriority.emit(this.passedStocks);
+        this.selectedSortType = this.stocksSortTypes.find(st => st.value === 'custom');
+        this.updatedStocksPriority.emit({stocks: this.passedStocks, orderType: this.selectedSortType.value});
+    }
+
+    sortStocks(type) {
+        this.selectedSortType = type;
+        if (type.name !== 'My sort') {
+
+            this.passedStocks.sort((a, b) => {
+                if (type.name === 'A-Z') {
+                    return a.name.localeCompare(b.name);
+                } else {
+                    return a.change > b.change ? -1 : 1;
+                }
+            });
+
+            if (type.name === 'Loss') {
+                this.passedStocks.reverse();
+            }
+            this.updatedStocksPriority.emit({stocks: this.passedStocks, orderType: type.value});
+
+        } else {
+            this.loader.stocksLoading.status = 'loading';
+            this.stocksService.getUserStocks({sort_type: type.value, user_id: this.authUser.id}).subscribe(dt => {
+                this.passedStocks = dt?.user_stocks || [];
+                this.loader.stocksLoading.status = 'finished';
+                this.updatedStocksPriority.emit({stocks: this.passedStocks, orderType: this.selectedSortType.value});
+            });
+        }
     }
 
 }

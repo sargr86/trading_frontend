@@ -49,8 +49,11 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.search = localStorage.getItem('search');
         this.stocksLoading = 'loading';
-        this.subscriptions.push(this.subject.currentUserStocks.pipe(filter(d => !d.initial))
+        this.subscriptions.push(
+            this.subject.currentUserStocks
+                // .pipe(filter(d => !d.initial))
             .subscribe(dt => {
+                console.log(dt)
                 this.userStocks = dt.stocks;
                 this.filteredStocks = this.userStocks;
                 this.stocksLoading = 'finished';

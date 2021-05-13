@@ -5,7 +5,10 @@
             <div class="spinner-container">
                 <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
             </div>
-            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"></app-stocks-list-sample>
+            <app-stock-tiles [stocks]="indices" [dragDropDisabled]="true"
+                             [stockProfileAllowed]="true"></app-stock-tiles>
+            <!--            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"-->
+            <!--                                    *ngIf="indices?.length > 0"></app-stocks-list-sample>-->
         </div>
     </div>
     <div class="stock-tabs" *ngIf="selectedStock">
@@ -25,9 +28,7 @@
 
 
             <div id="summary">
-
                 <app-summary-tab [selectedStock]="selectedStock" [hidden]="activeTab!=='summary'"></app-summary-tab>
-
             </div>
             <div id="historical">
                 <app-historical-tab [selectedStock]="selectedStock"

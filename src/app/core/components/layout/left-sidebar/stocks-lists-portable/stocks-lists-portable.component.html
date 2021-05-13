@@ -9,45 +9,46 @@
 
         <div class="tabs-contents">
             <div class="tab-content" id="watchlist-content" [hidden]="activeTab.value!=='watchlist'">
-<!--                <div class="stocks-top-actions">-->
-<!--                    <div class="search-stocks">-->
-<!--&lt;!&ndash;                        <div class="watchlist-search" *ngIf="editUserStocks">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <app-search-stocks-form [autocomplete]="true" [whiteForm]="true" [returnFoundStock]="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    (search)="getSearchResults($event)"></app-search-stocks-form>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--                <div class="stocks-top-actions">-->
+                <!--                    <div class="search-stocks">-->
+                <!--&lt;!&ndash;                        <div class="watchlist-search" *ngIf="editUserStocks">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <app-search-stocks-form [autocomplete]="true" [whiteForm]="true" [returnFoundStock]="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;                                                    (search)="getSearchResults($event)"></app-search-stocks-form>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
 
-<!--                        <div class="sort-types-dropdown dropdown">-->
-<!--                            <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown">-->
-<!--                                Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>-->
-<!--                            </div>-->
-<!--                            <div class="dropdown-menu">-->
-<!--                                <a class="dropdown-item" *ngFor="let sortType of stocksSortTypes;let ind = index"-->
-<!--                                   [class.red]="selectedSortType?.name === sortType.name"-->
-<!--                                   (click)="sortStocks(sortType)">{{sortType.name}}</a>-->
-<!--                            </div>-->
-<!--                            <div class="spinner-container">-->
-<!--                                <mat-spinner *ngIf="loader.stocksLoading.status === 'loading'"-->
-<!--                                             [diameter]="15"></mat-spinner>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--&lt;!&ndash;                    <div class="context-actions" *ngIf="editPortable">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <mat-menu #menu="matMenu">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button mat-menu-item (click)="editUserStocks = !editUserStocks">&ndash;&gt;-->
-<!--&lt;!&ndash;                                Edit Watchlist&ndash;&gt;-->
-<!--&lt;!&ndash;                            </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </mat-menu>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--                </div>-->
-                <app-stocks-list [stocks]="userStocks" *ngIf="userStocks?.length > 0" (updatedStocksList)="updateFollowedLists($event)"
+                <!--                        <div class="sort-types-dropdown dropdown">-->
+                <!--                            <div class="dropdown-toggle" id="dropdown-menu-btn" data-toggle="dropdown">-->
+                <!--                                Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>-->
+                <!--                            </div>-->
+                <!--                            <div class="dropdown-menu">-->
+                <!--                                <a class="dropdown-item" *ngFor="let sortType of stocksSortTypes;let ind = index"-->
+                <!--                                   [class.red]="selectedSortType?.name === sortType.name"-->
+                <!--                                   (click)="sortStocks(sortType)">{{sortType.name}}</a>-->
+                <!--                            </div>-->
+                <!--                            <div class="spinner-container">-->
+                <!--                                <mat-spinner *ngIf="loader.stocksLoading.status === 'loading'"-->
+                <!--                                             [diameter]="15"></mat-spinner>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--&lt;!&ndash;                    <div class="context-actions" *ngIf="editPortable">&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editUserStocks">more_horiz</mat-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <mat-icon *ngIf="editUserStocks" (click)="editUserStocks = !editUserStocks">done</mat-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        <mat-menu #menu="matMenu">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <button mat-menu-item (click)="editUserStocks = !editUserStocks">&ndash;&gt;-->
+                <!--&lt;!&ndash;                                Edit Watchlist&ndash;&gt;-->
+                <!--&lt;!&ndash;                            </button>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </mat-menu>&ndash;&gt;-->
+                <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+                <!--                </div>-->
+                <app-stocks-list [stocks]="userStocks" *ngIf="userStocks?.length > 0"
+                                 (updatedStocksList)="updateFollowedLists($event)"
                                  (updatedStocksPriority)="updateUserStocksPriority($event)"></app-stocks-list>
-<!--                                <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"-->
-<!--                                                        [followAllowed]="false"-->
-<!--                                                        [editPortable]="true"-->
-<!--                                                        *ngIf="userStocks?.length > 0" [sort]="selectedSortType"-->
-<!--                                                        (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>-->
+                <!--                                <app-stocks-list-sample [stocks]="userStocks" [userStocks]="userStocks" [portable]="true"-->
+                <!--                                                        [followAllowed]="false"-->
+                <!--                                                        [editPortable]="true"-->
+                <!--                                                        *ngIf="userStocks?.length > 0" [sort]="selectedSortType"-->
+                <!--                                                        (updatedStocksList)="updateFollowedLists($event)"></app-stocks-list-sample>-->
 
                 <p (click)="viewFullWatchlist()" class="see-more"
                    *ngIf="(dataLoading!=='loading' && userStocks?.length > 0) else noStocks">
@@ -59,9 +60,12 @@
             </div>
             <div class="tab-content" id="today-content" [hidden]="activeTab.value!=='today'">
 
-                <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"
-                                        *ngIf="dataLoading==='finished'"
-                                        [portable]="true"></app-stocks-list-sample>
+                <app-stocks-list [stocks]="indices" [sorting]="false" [searching]="false" *ngIf="userStocks?.length > 0"
+                                 (updatedStocksList)="updateFollowedLists($event)"
+                                 (updatedStocksPriority)="updateUserStocksPriority($event)"></app-stocks-list>
+                <!--                <app-stocks-list-sample [stocks]="indices" [userStocks]="userStocks" [followAllowed]="false"-->
+                <!--                                        *ngIf="dataLoading==='finished'"-->
+                <!--                                        [portable]="true"></app-stocks-list-sample>-->
             </div>
         </div>
     </div>

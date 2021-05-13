@@ -24,7 +24,8 @@ export class StocksListComponent implements OnInit {
     stocksSortTypes = [];
     editStocksList = false;
 
-
+    @Input('sorting') sorting = true;
+    @Input('searching') searching = true;
     @Output('updatedStocksPriority') updatedStocksPriority = new EventEmitter();
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
 

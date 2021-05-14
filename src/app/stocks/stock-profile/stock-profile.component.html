@@ -3,12 +3,11 @@
         <h2>Major indexes</h2>
         <div class="stocks-list-container">
             <div class="spinner-container">
-                <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
+                <mat-spinner [diameter]="25" *ngIf="dataLoading ==='loading'"></mat-spinner>
             </div>
             <app-stock-tiles [stocks]="indices" [dragDropDisabled]="true" *ngIf="indices?.length > 0"
+                             [followingAllowed]="false"
                              [stockProfileAllowed]="true"></app-stock-tiles>
-            <!--            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"-->
-            <!--                                    *ngIf="indices?.length > 0"></app-stocks-list-sample>-->
         </div>
     </div>
     <div class="stock-tabs" *ngIf="selectedStock">

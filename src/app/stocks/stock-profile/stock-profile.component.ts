@@ -30,6 +30,7 @@ export class StockProfileComponent implements OnInit {
             if (dt.length > 0) {
                 this.dataLoading = 'finished';
                 this.indices = dt;
+                console.log(this.indices)
             }
         });
         this.selectedStock = this.route.snapshot?.params?.symbol?.toUpperCase();

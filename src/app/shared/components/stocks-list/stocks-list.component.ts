@@ -114,7 +114,7 @@ export class StocksListComponent implements OnInit {
                 if (type.name === 'A-Z') {
                     return a.name.localeCompare(b.name);
                 } else {
-                    return a.change > b.change ? -1 : 1;
+                    return +a.changesPercentage > +b.changesPercentage ? -1 : 1;
                 }
             });
 

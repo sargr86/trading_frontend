@@ -109,7 +109,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         this.dataLoading = 'loading';
         this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
-            sort_type: this.authUser.stocks_order_type?.name
+            sort_type: this.authUser.stocks_order_type?.value.toLowerCase()
         }).subscribe(dt => {
             this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
@@ -140,7 +140,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     updateUserStocksPriority(e) {
 
         const sendData = {
-            order_type: e.orderType,
+            order_type: e.orderType.toLowerCase(),
             rows: JSON.stringify(e.stocks),
             user_id: this.authUser.id,
             changeSortTypeOnly: e.orderType !== 'custom'

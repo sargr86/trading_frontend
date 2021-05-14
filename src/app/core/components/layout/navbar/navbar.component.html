@@ -24,7 +24,7 @@
             <app-search-stocks-form class="d-none d-lg-block" [autocomplete]="true" [openStockOnEnter]="true"
                                     *ngIf="routerUrl?.includes('analytics')" [groupResults]="true"
                                     (search)="searchStocks($event)"></app-search-stocks-form>
-            <marquee class="home-black-block marquee" direction="left" height="40px" (click)="openModal()"
+            <marquee class="feeder-bar marquee" direction="left" height="40px" (click)="openModal()"
                      *ngIf="stocks">
                 <div class="marquee-content">
                     <div class="home-black-item" *ngFor="let stock of stocks">

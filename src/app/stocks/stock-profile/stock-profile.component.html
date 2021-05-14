@@ -24,8 +24,6 @@
         </ul>
 
         <div class="tab-content">
-
-
             <div id="summary">
                 <app-summary-tab [selectedStock]="selectedStock" [hidden]="activeTab!=='summary'"></app-summary-tab>
             </div>
@@ -35,7 +33,6 @@
             </div>
         </div>
     </div>
-    <mat-error *ngIf="!selectedStock && indices?.length !== 0">Please select a stock to view its information
+    <mat-error *ngIf="!selectedStock && dataLoading==='finished'">Please select a tile to view its information
     </mat-error>
-    <!-- <img class="stock-content-img" src="assets/img/stock.jpg"> -->
 </div>

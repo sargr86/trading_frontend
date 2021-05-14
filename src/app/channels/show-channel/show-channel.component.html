@@ -4,8 +4,6 @@
     <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
     <ng-container *ngIf="channelUser">
         <app-channel-profile [channelUser]="channelUser" [authUser]="authUser"></app-channel-profile>
-
-
         <div class="stocks-watchlist pWatchlist">
             <div class="profile-list user-profile-block">
                 <ul class="nav nav-tabs" id="channel-tabs-list" role="tablist">
@@ -22,8 +20,6 @@
                     </div>
                 </div>
                 <div class="search-wrapper">
-                    <!--                    <form [formGroup]="searchVideosForm" id="search-videos-form"-->
-                    <!--                          *ngIf="activeTab.name!=='Watchlist'">-->
                     <div class="toggle-filters-btn">
                         <button class="filter-toggle-btn"
                                 *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
@@ -32,12 +28,7 @@
                             <mat-icon>tune</mat-icon>
                         </button>
                     </div>
-                    <!--                        <input class="watchlist-input" placeholder="Search" formControlName="search"-->
-                    <!--                               (keyup.enter)="searchVideos()">-->
-                    <!--                        <i class="fas fa-search"></i>-->
-                    <!--                    </form>-->
                     <div>
-
                         <app-search-videos-form (search)="searchVideos($event)"
                                                 *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
                     </div>
@@ -51,8 +42,7 @@
 
                         <div class="watchlist-search" *ngIf="activeTab.name!=='About'">
                             <app-search-stocks-form *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
-                                                    [whiteForm]="true"
-                                                    [returnSearchText]="true"
+                                                    [whiteForm]="true" [returnSearchText]="true"
                                                     (search)="searchInUserStocks($event)">
                             </app-search-stocks-form>
 

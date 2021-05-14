@@ -8,10 +8,12 @@
                  [ngClass]="'stock-item-'+(stock.changesPercentage > 0? 'green':'red')">
                 <div *cdkDragPlaceholder>
                 </div>
-                <div class="stock-follow" *ngIf="!followingAllowed">
+                <div class="stock-follow">
                     <button [class.unfollow-btn]="isStockFollowed(stock)" (click)="updateFollowedStocksList(stock)">
                         <mat-icon *ngIf="isStockFollowed(stock) else followTmpl">delete</mat-icon>
-                        <ng-template #followTmpl>Follow</ng-template>
+                        <ng-template #followTmpl>
+                            <span *ngIf="!followingAllowed">Follow</span>
+                        </ng-template>
                     </button>
                 </div>
 

@@ -5,7 +5,7 @@
             <div class="spinner-container">
                 <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
             </div>
-            <app-stock-tiles [stocks]="indices" [dragDropDisabled]="true"
+            <app-stock-tiles [stocks]="indices" [dragDropDisabled]="true" *ngIf="indices?.length > 0"
                              [stockProfileAllowed]="true"></app-stock-tiles>
             <!--            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"-->
             <!--                                    *ngIf="indices?.length > 0"></app-stocks-list-sample>-->

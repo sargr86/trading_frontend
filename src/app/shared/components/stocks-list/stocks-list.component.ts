@@ -46,7 +46,6 @@ export class StocksListComponent implements OnInit {
 
         this.subject.currentStockSortTypes.subscribe(dt => {
             this.stocksSortTypes = dt;
-            // this.selectedSortType = dt[0];
         });
     }
 
@@ -119,6 +118,7 @@ export class StocksListComponent implements OnInit {
     updateFollowedStocksList(stock) {
         const result = this.updateStocks.transform(this.passedStocks, stock, this.isStockFollowed(stock));
         if (result) {
+            this.passedStocks = result;
             this.updatedStocksList.emit(result);
             this.loader.stocksLoading.status = 'loading';
         }

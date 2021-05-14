@@ -35,8 +35,8 @@
         </div>
 
         <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks)">
-            <div class="stock-item" cdkDrag
-                 (cdkDragDropped)="dragDropped($event)">
+            <div class="stock-item" cdkDrag (cdkDragDropped)="dragDropped($event)"
+                 [cdkDragDisabled]="selectedSortType.value!=='custom'">
                 <div class="remove-stock" *ngIf="editStocksList" (click)="updateFollowedStocksList(stock)">
                     <i class="fas fa-trash"></i>
                 </div>

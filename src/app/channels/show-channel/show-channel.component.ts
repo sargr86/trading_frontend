@@ -125,12 +125,11 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInUserStocks(e) {
-        localStorage.setItem('search', e.search);
+        localStorage.setItem('searchStock', e.search);
         this.watchListTab.getSearchResults(e);
     }
 
     searchVideos(e?) {
-        console.log('search videos')
         localStorage.setItem('search', e.search);
         this.showFilters = false;
         this.subject.setToggleFiltersData(this.showFilters);

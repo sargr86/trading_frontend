@@ -10,6 +10,8 @@ import {LoaderService} from '@core/services/loader.service';
 import {StocksService} from '@core/services/stocks.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-stocks-list',
@@ -37,7 +39,8 @@ export class StocksListComponent implements OnInit {
         public loader: LoaderService,
         private stocksService: StocksService,
         private updateStocks: UpdateUserStocksPipe,
-        private isStockFollowed: IsStockFollowedPipe
+        private isStockFollowed: IsStockFollowedPipe,
+        private dialog: MatDialog
     ) {
 
     }
@@ -81,9 +84,26 @@ export class StocksListComponent implements OnInit {
     }
 
     dragDropped(e) {
-        this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
-        this.selectedSortType = this.stocksSortTypes.find(st => st.value === 'custom');
-        this.updatedStocksPriority.emit({stocks: this.passedStocks, orderType: this.selectedSortType.value});
+
+        if (this.selectedSortType.value !== 'custom') {
+            this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+                if (confirmed) {
+                    this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
+                    this.selectedSortType = this.stocksSortTypes.find(st => st.value === 'custom');
+                    this.updatedStocksPriority.emit({
+                        stocks: this.passedStocks,
+                        orderType: this.selectedSortType.value
+                    });
+                }
+            });
+        } else {
+            this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
+            this.updatedStocksPriority.emit({
+                stocks: this.passedStocks,
+                orderType: this.selectedSortType.value
+            });
+        }
+
     }
 
     sortStocks(type) {

@@ -153,11 +153,6 @@ export class StocksListsModalComponent implements OnInit {
     }
 
     getUpdatedStockDetails(userStocks) {
-
-        // if (!this.search) {
-
-
-        // }
         return updateStockDetails(userStocks, this.stocks);
     }
 

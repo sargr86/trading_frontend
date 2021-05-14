@@ -197,7 +197,7 @@
         border: 1px dashed #FFFFFF;
     }
 
-    .cryptoRemove, .stock-follow, .stock-unfollow {
+    .stock-follow, .stock-unfollow {
         position: absolute;
         top: 0;
         right: 5px;
@@ -211,7 +211,6 @@
 
         span {
             color: #FFFFFF;
-            font-size: 16px;
             transition: 0.1s;
         }
 

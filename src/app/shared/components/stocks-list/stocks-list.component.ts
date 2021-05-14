@@ -9,6 +9,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
 import {StocksService} from '@core/services/stocks.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
+import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
 
 @Component({
     selector: 'app-stocks-list',
@@ -35,7 +36,8 @@ export class StocksListComponent implements OnInit {
         private subject: SubjectService,
         public loader: LoaderService,
         private stocksService: StocksService,
-        private updateStocks: UpdateUserStocksPipe
+        private updateStocks: UpdateUserStocksPipe,
+        private isStockFollowed: IsStockFollowedPipe
     ) {
 
     }
@@ -111,12 +113,8 @@ export class StocksListComponent implements OnInit {
         }
     }
 
-    isStockFollowed(stock) {
-        return !!this.passedStocks.find(s => s.name === stock.name);
-    }
-
     updateFollowedStocksList(stock) {
-        const result = this.updateStocks.transform(this.passedStocks, stock, this.isStockFollowed(stock));
+        const result = this.updateStocks.transform(this.passedStocks, stock, this.isStockFollowed.transform(this.passedStocks, stock));
         if (result) {
             this.passedStocks = result;
             this.updatedStocksList.emit(result);

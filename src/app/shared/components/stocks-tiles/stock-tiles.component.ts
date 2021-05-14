@@ -6,6 +6,7 @@ import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {Router} from '@angular/router';
+import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
 
 @Component({
     selector: 'app-stock-tiles',
@@ -31,6 +32,7 @@ export class StockTilesComponent implements OnInit {
         private subject: SubjectService,
         private updateStocks: UpdateUserStocksPipe,
         private getAuthUser: GetAuthUserPipe,
+        private isStockFollowed: IsStockFollowedPipe,
         public router: Router
     ) {
     }
@@ -39,12 +41,8 @@ export class StockTilesComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
     }
 
-    isStockFollowed(stock) {
-        return !!this.userStocks.find(s => s.name === stock.name);
-    }
-
     updateFollowedStocksList(stock) {
-        const result = this.updateStocks.transform(this.userStocks, stock, this.isStockFollowed(stock));
+        const result = this.updateStocks.transform(this.userStocks, stock, this.isStockFollowed.transform(this.userStocks, stock));
         if (result) {
             if (!this.allStocksList) {
                 this.passedStocks = result;

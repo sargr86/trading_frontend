@@ -9,8 +9,9 @@
                 <div *cdkDragPlaceholder>
                 </div>
                 <div class="stock-follow">
-                    <button [class.unfollow-btn]="isStockFollowed(stock)" (click)="updateFollowedStocksList(stock)">
-                        <mat-icon *ngIf="isStockFollowed(stock) else followTmpl">delete</mat-icon>
+                    <button [class.unfollow-btn]="passedStocks|isStockFollowed:stock"
+                            (click)="updateFollowedStocksList(stock)">
+                        <mat-icon *ngIf="passedStocks|isStockFollowed:stock else followTmpl">delete</mat-icon>
                         <ng-template #followTmpl>
                             <span *ngIf="!followingAllowed">Follow</span>
                         </ng-template>

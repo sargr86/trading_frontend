@@ -16,18 +16,22 @@ export class SearchVideosFormComponent implements OnInit {
         private fb: FormBuilder,
         public router: Router
     ) {
+
+
+    }
+
+    ngOnInit(): void {
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
-        router.events.subscribe((val) => {
+        this.router.events.subscribe((val) => {
             if (val instanceof ActivationEnd) {
-                this.passedSearch = val.snapshot.queryParams?.search;
+                this.passedSearch = val.snapshot.queryParams?.search || localStorage.getItem('search');
                 this.searchVideosForm.patchValue({search: this.passedSearch});
             }
 
         });
+
     }
 
-    ngOnInit(): void {
-    }
 
     searchVideos() {
         // this.subject.setVideosSearch(this.searchVideosForm.value);

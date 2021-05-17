@@ -11,6 +11,7 @@ export class SubjectService {
     userStocks = {stocks: [], empty: true, initial: true};
     indices = [];
     stockTypes = [];
+    stockSortTypes = [];
 
     public messageData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
@@ -26,10 +27,12 @@ export class SubjectService {
     private authUserSource = new BehaviorSubject(this.authUserData);
     private indicesSource = new BehaviorSubject(this.indices);
     private stockTypesSource = new BehaviorSubject(this.stockTypes);
+    private stockSortTypesSource = new BehaviorSubject(this.stockSortTypes);
 
     authUser = this.authUserSource.asObservable();
     currentUserStocks = this.userStocksSource.asObservable();
     currentStockTypes = this.stockTypesSource.asObservable();
+    currentStockSortTypes = this.stockSortTypesSource.asObservable();
     currentIndices = this.indicesSource.asObservable();
 
 
@@ -122,5 +125,9 @@ export class SubjectService {
 
     changeStockTypes(stocks) {
         this.stockTypesSource.next(stocks);
+    }
+
+    changeStockSortTypes(stocks) {
+        this.stockSortTypesSource.next(stocks);
     }
 }

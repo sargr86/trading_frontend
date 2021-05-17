@@ -47,14 +47,16 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.search = localStorage.getItem('search');
+        this.search = localStorage.getItem('searchStock');
         this.stocksLoading = 'loading';
-        this.subscriptions.push(this.subject.currentUserStocks.pipe(filter(d => !d.initial))
-            .subscribe(dt => {
-                this.userStocks = dt.stocks;
-                this.filteredStocks = this.userStocks;
-                this.stocksLoading = 'finished';
-            }));
+        this.subscriptions.push(
+            this.subject.currentUserStocks
+                .pipe(filter(d => !d.initial))
+                .subscribe(dt => {
+                    this.userStocks = dt.stocks;
+                    this.filteredStocks = this.userStocks;
+                    this.stocksLoading = 'finished';
+                }));
     }
 
     getSearchResults(s) {

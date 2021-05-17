@@ -85,7 +85,7 @@ export const VIDEO_FILTERS = [
 
     {
         group: {name: 'Duration', value: 'duration'}, items: [
-            {name: 'Short (<= 30 seconds)', value: 'short'},
+            {name: 'Clipz (<= 30 seconds)', value: 'short'},
             {name: 'Long (>30 seconds and <1 hour)', value: 'long'},
         ]
     },

@@ -3,9 +3,11 @@
         <h2>Major indexes</h2>
         <div class="stocks-list-container">
             <div class="spinner-container">
-                <mat-spinner [diameter]="25" *ngIf="indices?.length === 0"></mat-spinner>
+                <mat-spinner [diameter]="25" *ngIf="dataLoading ==='loading'"></mat-spinner>
             </div>
-            <app-stocks-list-sample [stocks]="indices" [followAllowed]="false"></app-stocks-list-sample>
+            <app-stock-tiles [stocks]="indices" [dragDropDisabled]="true" *ngIf="indices?.length > 0"
+                             [followingAllowed]="false"
+                             [stockProfileAllowed]="true"></app-stock-tiles>
         </div>
     </div>
     <div class="stock-tabs" *ngIf="selectedStock">
@@ -22,12 +24,8 @@
         </ul>
 
         <div class="tab-content">
-
-
             <div id="summary">
-
                 <app-summary-tab [selectedStock]="selectedStock" [hidden]="activeTab!=='summary'"></app-summary-tab>
-
             </div>
             <div id="historical">
                 <app-historical-tab [selectedStock]="selectedStock"
@@ -35,7 +33,6 @@
             </div>
         </div>
     </div>
-    <mat-error *ngIf="!selectedStock && indices?.length !== 0">Please select a stock to view its information
+    <mat-error *ngIf="!selectedStock && dataLoading==='finished'">Please select a tile to view its information
     </mat-error>
-    <!-- <img class="stock-content-img" src="assets/img/stock.jpg"> -->
 </div>

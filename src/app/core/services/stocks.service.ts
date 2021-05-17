@@ -20,6 +20,11 @@ export class StocksService {
         return this.httpClient.get<any>(`${API_URL}stocks/get-types`, {params});
     }
 
+    getStocksSortTypes(params) {
+        return this.httpClient.get<any>(`${API_URL}stocks/get-sort-types`, {params});
+    }
+
+
     getIndices(params) {
         return this.httpClient.get<any>(`${API_URL}stocks/get-indices`, {params});
     }

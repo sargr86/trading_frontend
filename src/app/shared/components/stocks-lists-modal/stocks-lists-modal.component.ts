@@ -152,16 +152,7 @@ export class StocksListsModalComponent implements OnInit {
 
     }
 
-    isStockFollowed(stock) {
-        return !!this.userStocks.find(s => s.name === stock.name);
-    }
-
     getUpdatedStockDetails(userStocks) {
-
-        // if (!this.search) {
-
-
-        // }
         return updateStockDetails(userStocks, this.stocks);
     }
 

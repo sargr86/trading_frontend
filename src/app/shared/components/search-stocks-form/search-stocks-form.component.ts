@@ -23,6 +23,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     @Input('openStockOnEnter') openStockOnEnter = false;
     @Input('updateStocksOnEnter') updateStocksOnEnter = false;
     @Input('whiteForm') whiteForm = false;
+    @Input('formWidth') formWidth = 100;
     @Input('transparentForm') transparentForm = false;
 
     @Output('search') search = new EventEmitter();

@@ -11,7 +11,6 @@ import {StocksService} from '@core/services/stocks.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
 import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-stocks-list',

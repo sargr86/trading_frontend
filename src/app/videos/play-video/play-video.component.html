@@ -62,6 +62,12 @@
                     <p class="main-text-4">{{videoData.channel.subscribers_count + ' subscriber' + (videoData.channel.subscribers_count === 1 ? '' : 's')}}</p>
                 </div>
             </div>
+            <div class="comments-block">
+                <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                <mat-form-field>
+                    <textarea matInput></textarea>
+                </mat-form-field>
+            </div>
             <p class="ads-text-2"></p>
         </ng-container>
         <app-video-suggestions *ngIf="isSmallSize()"></app-video-suggestions>

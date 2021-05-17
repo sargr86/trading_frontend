@@ -106,14 +106,14 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
 
     getUserStocks() {
-        this.dataLoading = 'loading';
+        this.loader.stocksLoading.status = 'loading';
         this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             sort_type: this.authUser.stocks_order_type?.value.toLowerCase()
         }).subscribe(dt => {
             this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
-            this.dataLoading = 'finished';
+            this.loader.stocksLoading.status = 'finished';
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
 

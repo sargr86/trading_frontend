@@ -84,25 +84,11 @@ export class StocksListComponent implements OnInit {
     }
 
     dragDropped(e) {
-
-        if (this.selectedSortType.value !== 'custom') {
-            this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
-                if (confirmed) {
-                    this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
-                    this.selectedSortType = this.stocksSortTypes.find(st => st.value === 'custom');
-                    this.updatedStocksPriority.emit({
-                        stocks: this.passedStocks,
-                        orderType: this.selectedSortType.value
-                    });
-                }
-            });
-        } else {
-            this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
-            this.updatedStocksPriority.emit({
-                stocks: this.passedStocks,
-                orderType: this.selectedSortType.value
-            });
-        }
+        this.passedStocks = moveItemInArray(this.passedStocks, e.previousIndex, e.currentIndex);
+        this.updatedStocksPriority.emit({
+            stocks: this.passedStocks,
+            orderType: this.selectedSortType.value
+        });
 
     }
 

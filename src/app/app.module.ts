@@ -37,8 +37,8 @@ export function tokenGetter() {
         JwtModule.forRoot({
             config: {
                 tokenGetter,
-                whitelistedDomains: ['localhost:3001', 'metl.tv'],
-                blacklistedRoutes: ['localhost:3001/auth/', 'metl.tv/auth/']
+                whitelistedDomains: ['localhost:3000', 'localhost:3001', 'metl.tv'],
+                blacklistedRoutes: ['localhost:3000/auth/', 'localhost:3001/auth/', 'metl.tv/auth/']
             }
         }),
         NgbModule,

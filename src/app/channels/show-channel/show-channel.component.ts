@@ -117,7 +117,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     changeActiveTab(tab) {
         this.activeTab = tab;
-        this.searchVideos();
         this.showFilters = false;
         this.subject.setToggleFiltersData(this.showFilters);
         if (this.activeTab.name === 'Videos') {
@@ -126,22 +125,18 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     searchInUserStocks(e) {
-        localStorage.setItem('search', e.search);
+        localStorage.setItem('searchStock', e.search);
         this.watchListTab.getSearchResults(e);
     }
 
-    searchVideos() {
-
-        const s = this.searchVideosForm.value;
-        localStorage.setItem('search', s.search);
+    searchVideos(e?) {
+        localStorage.setItem('search', e.search);
         this.showFilters = false;
         this.subject.setToggleFiltersData(this.showFilters);
-        if (this.activeTab.name === 'Watchlist') {
-            this.searchInVideosByAuthor(s.search);
-        } else if (this.activeTab.name === 'Videos') {
-            this.searchInUserVideos(s.search);
+        if (this.activeTab.name === 'Videos') {
+            this.searchInUserVideos(e.search);
         } else if (this.activeTab.name === 'Playlists') {
-            this.searchInPlaylists(s.search);
+            this.searchInPlaylists(e.search);
         }
 
     }

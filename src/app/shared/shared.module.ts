@@ -21,16 +21,15 @@ import {FilterOutFalsyValuesFromObjectPipe} from './pipes/filter-out-falsy-value
 import {CheckForEmptyObjectPipe} from './pipes/check-for-empty-object.pipe';
 import {UserTagsComponent} from './components/user-tags/user-tags.component';
 import {VideosListHolderComponent} from './components/videos-list-holder/videos-list-holder.component';
-import {SearchStocksFormOldComponent} from '@shared/components/search-stocks-form-old/search-stocks-form-old.component';
 import {StocksListsModalComponent} from './components/stocks-lists-modal/stocks-lists-modal.component';
-import {StocksListSampleComponent} from './components/stocks-list-sample/stocks-list-sample.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {UpdateUserStocksPipe} from './pipes/update-user-stocks.pipe';
 import {SearchStocksFormComponent} from '@shared/components/search-stocks-form/search-stocks-form.component';
 import {SearchVideosFormComponent} from '@shared/components/search-videos-form/search-videos-form.component';
-import { StockTilesComponent } from './components/stocks-tiles/stock-tiles.component';
-import { StocksListComponent } from './components/stocks-list/stocks-list.component';
+import {StockTilesComponent} from './components/stocks-tiles/stock-tiles.component';
+import {StocksListComponent} from './components/stocks-list/stocks-list.component';
+import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
 
 @NgModule({
     declarations: [
@@ -51,14 +50,13 @@ import { StocksListComponent } from './components/stocks-list/stocks-list.compon
         CheckForEmptyObjectPipe,
         UserTagsComponent,
         VideosListHolderComponent,
-        SearchStocksFormOldComponent,
         StocksListsModalComponent,
-        StocksListSampleComponent,
         UpdateUserStocksPipe,
         SearchStocksFormComponent,
         SearchVideosFormComponent,
         StockTilesComponent,
-        StocksListComponent
+        StocksListComponent,
+        IsStockFollowedPipe
     ],
     imports: [
         CommonModule,
@@ -78,7 +76,8 @@ import { StocksListComponent } from './components/stocks-list/stocks-list.compon
         GetSelectedVideosToBeAddedToPlaylistPipe,
         FilterOutFalsyValuesFromObjectPipe,
         CheckForEmptyObjectPipe,
-        UpdateUserStocksPipe
+        UpdateUserStocksPipe,
+        IsStockFollowedPipe
 
     ],
     exports: [
@@ -99,12 +98,12 @@ import { StocksListComponent } from './components/stocks-list/stocks-list.compon
         UserTagsComponent,
         CheckForEmptyObjectPipe,
         VideosListHolderComponent,
-        SearchStocksFormOldComponent,
         StocksListsModalComponent,
-        StocksListSampleComponent,
         SearchStocksFormComponent,
         SearchVideosFormComponent,
-        StockTilesComponent
+        StockTilesComponent,
+        StocksListComponent,
+        IsStockFollowedPipe
     ]
 
 })

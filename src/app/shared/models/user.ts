@@ -1,5 +1,6 @@
 export class User {
     id?: number;
+    stocks_order_type?: number;
     first_name?: string;
     last_name?: string;
     username?: string;

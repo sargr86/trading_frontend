@@ -4,13 +4,17 @@
              [cdkDropListData]="{item:stock,index:ind}" (cdkDropListDropped)="drop($event)">
 
             <div class="stock-item" cdkDrag [cdkDragDisabled]="dragDropDisabled"
+                 (click)="openStockProfile(stock.symbol)"
                  [ngClass]="'stock-item-'+(stock.changesPercentage > 0? 'green':'red')">
                 <div *cdkDragPlaceholder>
                 </div>
-                <div class="stock-follow">
-                    <button [class.unfollow-btn]="isStockFollowed(stock)" (click)="updateFollowedStocksList(stock)">
-                        <mat-icon *ngIf="isStockFollowed(stock) else followTmpl">delete</mat-icon>
-                        <ng-template #followTmpl>Follow</ng-template>
+                <div class="stock-follow" *ngIf="followingAllowed">
+                    <button [class.unfollow-btn]="userStocks|isStockFollowed:stock"
+                            (click)="updateFollowedStocksList(stock)">
+                        <mat-icon *ngIf="(userStocks|isStockFollowed:stock) else followTmpl">delete</mat-icon>
+                        <ng-template #followTmpl>
+                            <span>Follow</span>
+                        </ng-template>
                     </button>
                 </div>
 

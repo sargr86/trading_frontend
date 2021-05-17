@@ -101,7 +101,10 @@ export class AppComponent implements OnInit {
     getStockTypes() {
         this.stocksService.getStockTypes({}).subscribe(dt => {
             this.subject.changeStockTypes(dt);
-            // this.selectedStockType = dt[0];
+        });
+
+        this.stocksService.getStocksSortTypes({}).subscribe(dt => {
+            this.subject.changeStockSortTypes(dt);
         });
     }
 }

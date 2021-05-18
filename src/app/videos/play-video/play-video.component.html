@@ -62,6 +62,9 @@
                     <p class="main-text-4">{{videoData.channel.subscribers_count + ' subscriber' + (videoData.channel.subscribers_count === 1 ? '' : 's')}}</p>
                 </div>
             </div>
+            <div class="comments-block">
+                <app-video-comments-form *ngIf="auth.loggedIn()" [videoData]="videoData"></app-video-comments-form>
+            </div>
             <p class="ads-text-2"></p>
         </ng-container>
         <app-video-suggestions *ngIf="isSmallSize()"></app-video-suggestions>

@@ -5,8 +5,6 @@ import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
-import {PlaylistsService} from '@core/services/playlists.service';
-import {environment} from '@env';
 import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({

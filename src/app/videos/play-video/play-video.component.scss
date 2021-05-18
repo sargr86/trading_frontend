@@ -102,3 +102,12 @@
     }
 
 }
+
+.comments-block {
+    display: flex;
+    align-items: center;
+
+    textarea {
+        resize: none;
+    }
+}

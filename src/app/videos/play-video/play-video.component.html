@@ -55,7 +55,7 @@
                 <span class="dot">&middot;</span>
                 <span class="ads-text-2">{{videoData.created_at|dateFromNow}}</span>
             </div>
-            <div class="main-item-block channel-block" (click)="openChannelPage(videoData)" *ngIf="videoData?.channel">
+            <div class="channel-block" (click)="openChannelPage(videoData)" *ngIf="videoData?.channel">
                 <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
                 <div>
                     <p class="channel-name">{{videoData.channel.name}}</p>

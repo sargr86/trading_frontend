@@ -1,12 +1,13 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {API_URL} from '@core/constants/global';
+import {API_URL, VIDEOJS_PLAYER_OPTIONS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {environment} from '@env';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-play-video',
@@ -14,40 +15,15 @@ import {environment} from '@env';
     styleUrls: ['./play-video.component.scss']
 })
 export class PlayVideoComponent implements OnInit, AfterViewInit {
-
-    canvas: any;
-    ctx: any;
-    lineChart;
-
-    videoUrl;
     videoData;
     apiUrl = API_URL;
 
     authUser;
     userVideoConnection = {liked: 0, disliked: 0, saved: '', viewed: false};
-    isProduction = environment.production;
-
-    videoJSPlayerOptions = {
-        autoplay: true,
-        controls: true,
-        bigPlayButton: false,
-        progressControl: true,
-        fluid: false,
-        preload: 'auto',
-        html5: {
-            vhs: {
-                withCredentials: true,
-                overrideNative: true,
-            },
-            nativeAudioTracks: false,
-            nativeVideoTracks: false
-        },
-        sources: []
-    };
-
-    viewsCount = 0;
+    videoJSPlayerOptions = VIDEOJS_PLAYER_OPTIONS;
 
     showTagsForm = false;
+    isSmallScreen = IsResponsive.isSmallScreen();
 
     constructor(
         private route: ActivatedRoute,
@@ -56,7 +32,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private toastr: ToastrService,
-        private playlistsService: PlaylistsService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -179,10 +154,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
-    }
-
-    isSmallSize() {
-        return window.screen.availWidth < 992;
     }
 
     ngAfterViewInit() {

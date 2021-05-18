@@ -1,6 +1,6 @@
 <form [formGroup]="videoCommentsForm">
 
-    <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+    <img class="avatar" alt="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
     <mat-form-field>
         <textarea matInput formControlName="comment" placeholder="Add a public comment"></textarea>
     </mat-form-field>

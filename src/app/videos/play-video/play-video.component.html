@@ -67,10 +67,10 @@
             </div>
             <p class="ads-text-2"></p>
         </ng-container>
-        <app-video-suggestions *ngIf="isSmallSize()"></app-video-suggestions>
+        <app-video-suggestions *ngIf="isSmallScreen"></app-video-suggestions>
     </div>
     <div class="ads-block-right">
-        <app-video-suggestions *ngIf="!isSmallSize()"></app-video-suggestions>
+        <app-video-suggestions *ngIf="!isSmallScreen"></app-video-suggestions>
     </div>
 </div>
 

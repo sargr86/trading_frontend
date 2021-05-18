@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-video-details-form',
@@ -17,7 +18,8 @@ export class VideoDetailsFormComponent implements OnInit {
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private toastr: ToastrService
     ) {
         this.videoDetailsForm = this.fb.group({
             name: ['', Validators.required],
@@ -34,8 +36,12 @@ export class VideoDetailsFormComponent implements OnInit {
         const value = event.value;
 
         if ((value || '').trim()) {
-            this.videoData.tags.push({name: value.trim()});
-            this.videoDetailsForm.patchValue({tags: this.videoData.tags});
+            if (this.videoData.tags.length === 3) {
+                this.toastr.error('We don\'t support more than 3 tags per video');
+            } else {
+                this.videoData.tags.push({name: value.trim()});
+                this.videoDetailsForm.patchValue({tags: this.videoData.tags});
+            }
 
             // this.saveTags();
         }

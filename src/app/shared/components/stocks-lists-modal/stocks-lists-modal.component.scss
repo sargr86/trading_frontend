@@ -121,7 +121,13 @@
 .modal-dialog {
     margin: 0 !important;
 }
+.paginator {
+    @media (max-width: 768px) {
+        margin-right: auto;
+        margin-left: 0;
 
+    }
+}
 .mat-paginator {
     background: transparent;
     color: white;
@@ -170,14 +176,18 @@ select {
     @media (max-width: 992px) {
         margin: 0 auto;
     }
+    @media (max-width: 768px) {
+        margin-right: auto;
+        margin-left: 0;
+    }
 }
 
 .close-modal-btn {
     @media (max-width: 540px) {
         position: absolute;
         top: 20px;
+        right: 30px;
     }
-
 }
 
 

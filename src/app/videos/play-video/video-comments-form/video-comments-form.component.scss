@@ -30,8 +30,14 @@ form {
     &:focus {
         outline: none;
     }
-    &[placeholder]:empty:before {
-        content: attr(placeholder);
-        color: #555;
-    }
+}
+.btn.enter {
+    background-color: #ccc;
+    color: white;
+    text-transform: uppercase;
+}
+.btn.text-btn{
+    color: #777;
+    text-transform: uppercase;
+    font-weight: bold;
 }

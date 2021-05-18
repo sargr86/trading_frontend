@@ -3,3 +3,35 @@ form {
         resize: none;
     }
 }
+.avatar-author-name {
+    min-width: 120px;
+    height: 26px;
+    background-color: #ccc;
+    color: #ffffff;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.comments-like {
+    color: #ccc;
+    .fa {
+        cursor: pointer;
+    }
+}
+.comments-title {
+    color: #0e9d6a;
+    cursor: pointer;
+}
+.contenteditable-textarea {
+    flex: 1;
+    &:focus {
+        outline: none;
+    }
+    &[placeholder]:empty:before {
+        content: attr(placeholder);
+        color: #555;
+    }
+}

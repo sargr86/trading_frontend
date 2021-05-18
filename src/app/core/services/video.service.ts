@@ -100,4 +100,8 @@ export class VideoService {
     getUserTags(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-user-tags`, {params});
     }
+
+    addVideoComment(params) {
+        return this.httpClient.post<any>(`${API_URL}videos/add-comment`, params);
+    }
 }

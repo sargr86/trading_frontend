@@ -3,6 +3,7 @@ form {
         resize: none;
     }
 }
+
 .avatar-author-name {
     min-width: 120px;
     height: 26px;
@@ -13,30 +14,41 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
+
 .comments-like {
-    color: #ccc;
+    color: #777;
+
     .fa {
         cursor: pointer;
     }
 }
+
 .comments-title {
     color: #0e9d6a;
     cursor: pointer;
 }
-.contenteditable-textarea {
+
+.content-editable-textarea {
     flex: 1;
+
     &:focus {
         outline: none;
     }
+
+    &.focused-border {
+        border-bottom: 2px solid #18B587 !important;
+    }
 }
+
 .btn.enter {
-    background-color: #ccc;
+    background-color: #777;
     color: white;
     text-transform: uppercase;
 }
-.btn.text-btn{
+
+.btn.text-btn {
+    outline: none;
     color: #777;
     text-transform: uppercase;
     font-weight: bold;

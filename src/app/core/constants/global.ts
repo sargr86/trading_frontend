@@ -132,3 +132,21 @@ export const MINI_GRAPHS_TABS = [
     {name: 'My Watchlist', value: 'watchlist'},
     {name: 'Today', value: 'today'},
 ];
+
+export const VIDEOJS_PLAYER_OPTIONS = {
+    autoplay: true,
+    controls: true,
+    bigPlayButton: false,
+    progressControl: true,
+    fluid: false,
+    preload: 'auto',
+    html5: {
+        vhs: {
+            withCredentials: true,
+            overrideNative: true,
+        },
+        nativeAudioTracks: false,
+        nativeVideoTracks: false
+    },
+    sources: []
+};

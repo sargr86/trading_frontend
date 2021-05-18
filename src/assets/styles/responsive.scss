@@ -60,27 +60,6 @@
 
     }
 
-    // .body-content-left{
-    //     .subscriptions-text{
-    //         display: none;
-    //     }
-    //     .left-menu{
-    //         .left-menu-top , .left-menu-main{
-    //             p{
-    //                 display: none;
-    //             }
-    //         }
-    //     }
-
-    //     .cdk-drop-list{
-    //         .main-item-block{
-    //             p{
-    //                 display: none;
-    //             }
-    //         }
-    //     }
-    // }
-
     .black-text {
         font-size: 10px;
     }
@@ -217,14 +196,14 @@
         max-width: 200px;
         margin: 0 auto;
     }
-    .main-item-block {
+    .channel-block {
         justify-content: left;
         margin: 10px auto;
     }
-    .main-item-block.channel-block {
+    .channel-block {
         max-width: 100%;
     }
-    .owl-item .main-item-block {
+    .owl-item .channel-block {
         justify-content: left;
         max-width: 100%;
         margin: 10px 0;

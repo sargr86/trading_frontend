@@ -1,5 +1,5 @@
 <form [formGroup]="videoCommentsForm" class="w-100">
-    <div class="d-flex align-items-start my-3">
+    <div class="d-flex align-items-start mt-3">
         <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
         <input type="hidden" formControlName="comment">
         <div contenteditable="true" aria-label="Enter your comment..." (input)="onCommentChange($event.target.innerHTML)"

@@ -31,7 +31,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
+        console.log(this.videoData)
 
     }
 
@@ -53,6 +53,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.selectedComment = c;
         this.editComment = !this.editComment;
     }
+
 
     removeComment(c) {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {

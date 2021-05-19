@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StocksService} from '@core/services/stocks.service';
@@ -39,7 +39,8 @@ export class StocksListsModalComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         public loader: LoaderService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -87,6 +88,7 @@ export class StocksListsModalComponent implements OnInit {
 
     getStocksByType(type) {
         this.loader.stocksLoading.status = 'loading';
+        this.cdr.detectChanges();
         this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
 

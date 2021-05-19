@@ -1,7 +1,8 @@
-import {Component, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-video-comments-form',
@@ -17,12 +18,14 @@ export class VideoCommentsFormComponent implements OnInit {
     isSubmitted = false;
 
     @ViewChild('cEditable') cEditable;
+    @Output('added') commentAdded = new EventEmitter();
 
     constructor(
         private fb: FormBuilder,
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private subject: SubjectService
     ) {
         this.renderer.listen('window', 'click', (e: Event) => {
             this.inputFocused = e.target === this.cEditable.nativeElement;
@@ -46,6 +49,8 @@ export class VideoCommentsFormComponent implements OnInit {
                 this.videoCommentsForm.patchValue({comment: ''});
                 cEditable.innerHTML = '';
                 this.inputFocused = false;
+                this.commentAdded.emit(dt)
+                // this.subject.changeVideoComments(dt);
             });
         }
     }
@@ -57,7 +62,6 @@ export class VideoCommentsFormComponent implements OnInit {
 
     onCommentChange(val) {
         this.videoCommentsForm.patchValue({comment: val})
-        console.log(this.videoCommentsForm.value)
     }
 
 }

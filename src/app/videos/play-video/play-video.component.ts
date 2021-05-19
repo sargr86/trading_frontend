@@ -23,6 +23,10 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     showTagsForm = false;
     isSmallScreen = IsResponsive.isSmallScreen();
 
+    commentsRefreshed = false;
+    formValue;
+    videoComments = [];
+
     constructor(
         private route: ActivatedRoute,
         private videoService: VideoService,
@@ -45,6 +49,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
                 this.updateViewsCount(dt);
                 this.indexUserTags(dt);
+                this.getComments();
             }
         });
 
@@ -148,6 +153,17 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
             this.videoData = dt;
             this.showTagsForm = false;
         });
+    }
+
+    getComments() {
+        this.videoService.getVideoComments({video_id: this.videoData.id}).subscribe(dt => {
+            this.videoComments = dt;
+        });
+    }
+
+    commentAdded(e) {
+        this.commentsRefreshed = true;
+        this.videoComments = e;
     }
 
     async getVideosByTag(name) {

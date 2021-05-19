@@ -13,6 +13,7 @@ import { ShowRegularListComponent } from './show-videos/show-regular-list/show-r
 import { ShowSearchResultsComponent } from './show-videos/show-search-results/show-search-results.component';
 import { ShowPlaylistsListComponent } from './show-videos/show-playlists-list/show-playlists-list.component';
 import { VideoCommentsFormComponent } from './play-video/video-comments-form/video-comments-form.component';
+import { VideoCommentsListComponent } from './play-video/video-comments-list/video-comments-list.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { VideoCommentsFormComponent } from './play-video/video-comments-form/vid
         ShowRegularListComponent,
         ShowSearchResultsComponent,
         ShowPlaylistsListComponent,
-        VideoCommentsFormComponent
+        VideoCommentsFormComponent,
+        VideoCommentsListComponent
     ],
     imports: [
         CommonModule,

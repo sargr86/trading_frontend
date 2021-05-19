@@ -101,7 +101,16 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/get-user-tags`, {params});
     }
 
+    getVideoComments(params) {
+        return this.httpClient.get<any>(`${API_URL}videos/get-comments`, {params});
+    }
+
     addVideoComment(params) {
         return this.httpClient.post<any>(`${API_URL}videos/add-comment`, params);
+    }
+
+    removeVideoComment(params) {
+
+        return this.httpClient.delete<any>(`${API_URL}videos/remove-comment`, {params});
     }
 }

@@ -1,0 +1,108 @@
+<div class="comments-container" *ngIf="videoComments.length > 0">
+    <ng-container *ngFor="let c of videoComments">
+        <div class="comment d-flex mt-4">
+            <div class="left-group">
+                <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                <div class="details">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="mr-3 user-name" [class.author.px-2]="isAuthor(c)">
+                            {{c?.user?.full_name}} <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(c)"></i>
+                        </div>
+                        <div class="comment-date">{{c.created_at | dateFromNow}}</div>
+                    </div>
+                    <div class="comment-text mb-2">
+                        {{c.comment}}
+                    </div>
+                    <div class="comments-like mb-2">
+                        <i class="fa fa-thumbs-up mr-3"></i>
+                        <span> 22k </span>
+                        <i class="fa fa-thumbs-down ml-3"></i>
+                    </div>
+                    <div class="replies" [hidden]="true">
+                        <div class="comment-title mt-3">View More...</div>
+                        <div class="d-flex mt-4">
+                            <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                            <div class="">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="avatar-author-name mr-3 px-2">Lorem Ipsum <i
+                                        class="fas fa-check-circle ml-1"></i>
+                                    </div>
+                                    <div class="comments-date">6 years ago</div>
+                                </div>
+                                <div class="comment-text mb-2">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at beatae
+                                    cupiditate
+                                    fugiat.
+                                </div>
+                                <div class="comments-like mb-2">
+                                    <i class="fa fa-thumbs-up mr-3"></i>
+                                    <span> 22k </span>
+                                    <i class="fa fa-thumbs-down ml-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-4">
+                            <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                            <div class="">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="avatar-author-name mr-3 px-2">Lorem Ipsum <i
+                                        class="fas fa-check-circle ml-1"></i>
+                                    </div>
+                                    <div class="comments-date">6 years ago</div>
+                                </div>
+                                <div class="comment-text mb-2">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at beatae
+                                    cupiditate
+                                    fugiat.
+                                </div>
+                                <div class="comments-like mb-2">
+                                    <i class="fa fa-thumbs-up mr-3"></i>
+                                    <span> 22k </span>
+                                    <i class="fa fa-thumbs-down ml-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-4">
+                            <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                            <div class="">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="avatar-author-name mr-3 px-2">Lorem Ipsum <i
+                                        class="fas fa-check-circle ml-1"></i>
+                                    </div>
+                                    <div class="comments-date">6 years ago</div>
+                                </div>
+                                <div class="comment-text mb-2">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at beatae
+                                    cupiditate
+                                    fugiat.
+                                </div>
+                                <div class="comments-like mb-2">
+                                    <i class="fa fa-thumbs-up mr-3"></i>
+                                    <span> 22k </span>
+                                    <i class="fa fa-thumbs-down ml-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-group">
+                <div class="more-actions" *ngIf="isMyComment(c)">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                        <button mat-menu-item (click)="removeComment(c)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

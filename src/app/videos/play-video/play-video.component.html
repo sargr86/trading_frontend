@@ -63,7 +63,10 @@
                 </div>
             </div>
             <div class="comments-block">
-                <app-video-comments-form *ngIf="auth.loggedIn()" [videoData]="videoData" class="w-100"></app-video-comments-form>
+                <app-video-comments-form *ngIf="auth.loggedIn()" (added)="commentAdded($event)" [videoData]="videoData"
+                                         class="w-100"></app-video-comments-form>
+                <app-video-comments-list [videoData]="videoData"
+                                         [videoComments]="videoComments"></app-video-comments-list>
             </div>
             <p class="ads-text-2"></p>
         </ng-container>

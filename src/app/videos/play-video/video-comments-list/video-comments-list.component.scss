@@ -1,0 +1,53 @@
+.comment {
+    justify-content: space-between;
+
+    .left-group {
+        display: flex;
+
+        .author {
+            min-width: 120px;
+            height: 26px;
+            background-color: #777;
+            color: #ffffff;
+            border-radius: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: unset !important;
+            padding: 0 4px;
+            font-family: 'Muli-Regular', serif;
+        }
+
+        .comment-title {
+            color: #0e9d6a;
+            cursor: pointer;
+        }
+
+        .comment-date {
+            font-size: 12px;
+            color: #818181;
+            font-family: "Muli-Light";
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .comments-like {
+            color: #777;
+
+            .fa {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .right-group{
+
+    }
+}
+
+
+
+

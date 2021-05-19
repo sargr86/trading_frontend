@@ -12,8 +12,10 @@ export class SubjectService {
     indices = [];
     stockTypes = [];
     stockSortTypes = [];
+    videoComments = [];
 
     public messageData = new Subject<any>();
+    public videoCommentsData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
     public videoSearchData = new Subject<any>();
     public subscriptionsData = new Subject<any>();
@@ -24,6 +26,7 @@ export class SubjectService {
     private userStocksData = new Subject<any>();
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
+    private videoCommentsSource = new BehaviorSubject(this.videoComments);
     private authUserSource = new BehaviorSubject(this.authUserData);
     private indicesSource = new BehaviorSubject(this.indices);
     private stockTypesSource = new BehaviorSubject(this.stockTypes);
@@ -34,6 +37,7 @@ export class SubjectService {
     currentStockTypes = this.stockTypesSource.asObservable();
     currentStockSortTypes = this.stockSortTypesSource.asObservable();
     currentIndices = this.indicesSource.asObservable();
+    currentVideoComments = this.videoCommentsSource.asObservable();
 
 
     constructor() {
@@ -129,5 +133,9 @@ export class SubjectService {
 
     changeStockSortTypes(stocks) {
         this.stockSortTypesSource.next(stocks);
+    }
+
+    changeVideoComments(stocks) {
+        this.videoCommentsSource.next(stocks);
     }
 }

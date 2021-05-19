@@ -40,7 +40,7 @@
             </div>
             <div class="tags-container">
                 <div class="editable-details" *ngIf="!showTagsForm">
-                    <p class="ads-text-1">{{videoData?.name}}</p>
+                    <p class="video-title">{{videoData?.name}}</p>
                     <button id="add-tags" *ngIf="!showTagsForm && authUser?.id === videoData.author_id"
                             (click)="showTagsForm = !showTagsForm">
                         <mat-icon>edit</mat-icon>
@@ -51,9 +51,9 @@
                                         (formReady)="saveVideoDetails($event)"></app-video-details-form>
             </div>
             <div class="details-row">
-                <span class="ads-text-2">{{videoData?.views + ' view' + (videoData?.views === 1 ? '' : 's')}}</span>
+                <span class="views-count">{{videoData?.views + ' view' + (videoData?.views === 1 ? '' : 's')}}</span>
                 <span class="dot">&middot;</span>
-                <span class="ads-text-2">{{videoData.created_at|dateFromNow}}</span>
+                <span class="date">{{videoData.created_at|dateFromNow}}</span>
             </div>
             <div class="channel-block" (click)="openChannelPage(videoData)" *ngIf="videoData?.channel">
                 <img alt="avatar" class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
@@ -68,7 +68,6 @@
                 <app-video-comments-list [videoData]="videoData"
                                          [videoComments]="videoComments"></app-video-comments-list>
             </div>
-            <p class="ads-text-2"></p>
         </ng-container>
         <app-video-suggestions *ngIf="isSmallScreen"></app-video-suggestions>
     </div>

@@ -2,7 +2,9 @@
     <div class="d-flex align-items-start mt-3">
         <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
         <input type="hidden" formControlName="comment">
-        <div contenteditable="true" aria-label="Enter your comment..." [class.focused-border]="inputFocused"
+        <div contenteditable="true"
+             [innerHTML]="inputFocused && !editComment? commentCtrl.value: '<span class=\'c-placeholder\'>Enter your comment...</span>'"
+             [class.focused-border]="inputFocused"
              #cEditable
              (input)="onCommentChange($event.target.innerHTML)"
              class="border-bottom ml-3 py-1 content-editable-textarea"></div>
@@ -10,7 +12,9 @@
     <div class="d-flex justify-content-end">
         <div [ngClass]="inputFocused ? 'd-flex':'d-none'">
             <button class="btn text-btn" (click)="onCancel(cEditable)">Cancel</button>
-            <button (click)="addComment(cEditable)" type="button" class="ml-3 px-2 btn enter">Comment</button>
+            <button (click)="saveComment(cEditable)" type="button" [class.green-bg]="videoCommentsForm.valid"
+                    class="ml-3 px-2 btn enter">Comment
+            </button>
         </div>
     </div>
 </form>

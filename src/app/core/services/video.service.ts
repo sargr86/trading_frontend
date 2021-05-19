@@ -109,6 +109,10 @@ export class VideoService {
         return this.httpClient.post<any>(`${API_URL}videos/add-comment`, params);
     }
 
+    updateVideoComment(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/update-comment`, params);
+    }
+
     removeVideoComment(params) {
 
         return this.httpClient.delete<any>(`${API_URL}videos/remove-comment`, {params});

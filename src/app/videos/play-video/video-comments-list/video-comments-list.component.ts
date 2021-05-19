@@ -1,20 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SubjectService} from '@core/services/subject.service';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-video-comments-list',
     templateUrl: './video-comments-list.component.html',
     styleUrls: ['./video-comments-list.component.scss']
 })
-export class VideoCommentsListComponent implements OnInit {
+export class VideoCommentsListComponent implements OnInit, OnDestroy {
 
     authUser;
+    selectedComment;
+    subscriptions: Subscription[] = [];
+
     @Input() videoData;
     @Input() videoComments = [];
+    @Input() editComment = false;
 
     constructor(
         private subject: SubjectService,
@@ -26,10 +31,7 @@ export class VideoCommentsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.videoComments)
-        // this.subject.currentVideoComments.subscribe(dt => {
-        //     console.log(dt);
-        // });
+
 
     }
 
@@ -42,8 +44,18 @@ export class VideoCommentsListComponent implements OnInit {
         return c.user.id === this.authUser.id;
     }
 
+    getUpdatedComments(e) {
+        this.videoComments = e;
+        this.editComment = false;
+    }
+
+    selectComment(c) {
+        this.selectedComment = c;
+        this.editComment = !this.editComment;
+    }
+
     removeComment(c) {
-        this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.videoService.removeVideoComment({
                     user_id: this.authUser.id,
@@ -51,9 +63,13 @@ export class VideoCommentsListComponent implements OnInit {
                     video_id: c.video_id
                 }).subscribe(dt => {
                     this.videoComments = dt;
-                })
+                });
             }
-        });
+        }));
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

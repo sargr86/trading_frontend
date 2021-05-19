@@ -1,32 +1,31 @@
 form {
-    textarea {
-        resize: none;
+    .content-editable-textarea {
+        flex: 1;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.focused-border {
+            border-bottom: 2px solid #18B587 !important;
+        }
+
+
     }
-}
 
+    .btn.enter {
+        background-color: #777;
+        color: white;
+        text-transform: uppercase;
+    }
 
-
-.content-editable-textarea {
-    flex: 1;
-
-    &:focus {
+    .btn.text-btn {
         outline: none;
+        color: #777;
+        text-transform: uppercase;
+        font-weight: bold;
     }
-
-    &.focused-border {
-        border-bottom: 2px solid #18B587 !important;
-    }
 }
 
-.btn.enter {
-    background-color: #777;
-    color: white;
-    text-transform: uppercase;
-}
 
-.btn.text-btn {
-    outline: none;
-    color: #777;
-    text-transform: uppercase;
-    font-weight: bold;
-}
+

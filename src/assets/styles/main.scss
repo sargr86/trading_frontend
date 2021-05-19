@@ -196,14 +196,14 @@ li {
     width: 100%;
 }
 
-.ads-text-1 {
+.video-title {
     color: #545454;
     font-size: 20px;
     font-family: "Muli-Bold";
     margin-bottom: 8px;
 }
 
-.ads-text-2 {
+.date, .views-count {
     color: #818181;
     font-family: "Muli-Light";
     font-size: 10px;
@@ -887,6 +887,10 @@ mat-optgroup {
 
 #portable-stocks-list .white-form {
     width: 73% !important;
+}
+
+.c-placeholder {
+    color: #818181 !important;
 }
 
 @import "responsive";

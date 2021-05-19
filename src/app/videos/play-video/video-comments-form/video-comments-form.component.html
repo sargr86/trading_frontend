@@ -11,7 +11,7 @@
     </div>
     <div class="d-flex justify-content-end">
         <div [ngClass]="inputFocused || cEditable.innerHTML === ''? 'd-flex':'d-none'">
-            <button class="btn text-btn" (click)="onCancel(cEditable)">Cancel</button>
+            <button class="btn text-btn" type="button" (click)="onCancel(cEditable)">Cancel</button>
             <button (click)="saveComment(cEditable)" type="button" [class.green-bg]="videoCommentsForm.valid"
                     class="ml-3 px-2 btn enter">Comment
             </button>

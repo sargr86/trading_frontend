@@ -33,6 +33,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     @ViewChild('cEditable') cEditable;
     @Output('added') commentAdded = new EventEmitter();
     @Output('updated') commentUpdated = new EventEmitter();
+    @Output('cancelled') editingCancelled = new EventEmitter();
 
     constructor(
         private fb: FormBuilder,
@@ -43,7 +44,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         private cdr: ChangeDetectorRef
     ) {
         this.renderer.listen('window', 'click', (e: Event) => {
-            this.inputFocused = e.target === this.cEditable.nativeElement;
+            this.inputFocused = e.target === this.cEditable.nativeElement || this.editComment;
             this.cdr.detectChanges();
         });
     }
@@ -51,6 +52,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+
         this.videoCommentsForm = this.fb.group({
             id: [''],
             from_id: [this.authUser.id],
@@ -74,14 +76,20 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
                     cEditable.innerHTML = '';
                     this.inputFocused = false;
                     this.commentAdded.emit(dt);
+                    this.cdr.detectChanges();
                 });
             }
         }
     }
 
     onCancel(cEditable) {
-        this.inputFocused = false;
-        cEditable.innerHTML = '';
+        if (!this.editComment) {
+            cEditable.innerHTML = '';
+            // this.cdr.detectChanges();
+        } else {
+            this.inputFocused = false;
+            this.editingCancelled.emit();
+        }
     }
 
     onCommentChange(val) {
@@ -106,6 +114,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
             this.cEditable.nativeElement.innerHTML = this.selectedComment.comment;
             this.cEditable.nativeElement.focus();
             this.inputFocused = true;
+            this.cdr.detectChanges();
+        } else {
             this.cdr.detectChanges();
         }
     }

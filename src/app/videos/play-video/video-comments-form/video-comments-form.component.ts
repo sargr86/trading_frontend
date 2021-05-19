@@ -25,6 +25,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     inputFocused = false;
     authUser;
     isSubmitted = false;
+    comment = null;
+    placeholderText = '<span class="c-placeholder">Enter your comment...</span>';
 
     @Input() editComment = false;
     @Input() selectedComment = null;
@@ -60,6 +62,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     saveComment(cEditable) {
         this.isSubmitted = true;
+        this.comment = cEditable.innerHTML.trim();
         if (this.videoCommentsForm.valid) {
             if (this.editComment) {
                 this.videoService.updateVideoComment(this.videoCommentsForm.value).subscribe(dt => {
@@ -82,7 +85,15 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     }
 
     onCommentChange(val) {
-        this.videoCommentsForm.patchValue({comment: val})
+        this.videoCommentsForm.patchValue({comment: val});
+        this.inputFocused = true;
+    }
+
+    inputContentClicked(cEditable) {
+        if (cEditable.innerHTML.trim() === this.placeholderText) {
+            cEditable.innerHTML = '';
+            this.cdr.detectChanges();
+        }
     }
 
     get commentCtrl() {

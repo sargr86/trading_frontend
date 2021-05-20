@@ -890,7 +890,16 @@ mat-optgroup {
 }
 
 .c-placeholder {
+    position: absolute;
+    bottom: -10px;
+    left: 76px;
     color: #818181 !important;
+}
+
+.comments-block {
+    .mat-form-field.mat-focused .mat-form-field-label, input.ng-valid + span.mat-form-field-label-wrapper .mat-form-field-label {
+        display: none !important;
+    }
 }
 
 @import "responsive";

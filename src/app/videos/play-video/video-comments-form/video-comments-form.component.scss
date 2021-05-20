@@ -1,4 +1,16 @@
 form {
+    mat-form-field{
+        width: 100%!important;
+    }
+    textarea {
+        overflow: hidden;
+        resize: none;
+    }
+
+    .comment-input-container {
+        position: relative;
+    }
+
     .content-editable-textarea {
         flex: 1;
 

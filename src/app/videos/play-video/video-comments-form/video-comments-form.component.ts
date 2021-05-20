@@ -25,7 +25,9 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     inputFocused = false;
     authUser;
     isSubmitted = false;
+    placeholderClicked = false;
     comment = null;
+    cancelled = 'idle';
 
 
     @Input() editComment = false;
@@ -47,15 +49,15 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         private cdr: ChangeDetectorRef
     ) {
         this.renderer.listen('window', 'click', (e: Event) => {
-            this.inputFocused = e.target === this.cEditable.nativeElement || this.editComment;
-            this.cdr.detectChanges();
+            // this.inputFocused = e.target === this.cEditable.nativeElement || this.editComment;
+            // this.cdr.detectChanges();
         });
     }
 
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.placeholderText = '<span class="c-placeholder">Add a public ' + (this.reply ? 'reply' : 'comment') + '...</span>';
+        this.placeholderText = this.getPlaceholderText();
 
         this.videoCommentsForm = this.fb.group({
             id: [''],
@@ -66,46 +68,35 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     }
 
-    saveComment(cEditable) {
+    saveComment() {
         this.isSubmitted = true;
-        this.comment = cEditable.innerHTML.trim();
         if (this.videoCommentsForm.valid) {
             if (this.editComment) {
                 this.videoService.updateVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.commentUpdated.emit(dt);
+                    this.videoCommentsForm.get('comment').reset();
                 });
             } else {
                 this.videoService.addVideoComment(this.videoCommentsForm.value).subscribe(dt => {
-                    this.videoCommentsForm.patchValue({comment: ''});
-                    cEditable.innerHTML = '';
                     this.inputFocused = false;
                     this.commentAdded.emit(dt);
-                    this.cdr.detectChanges();
+                    this.videoCommentsForm.get('comment').reset();
                 });
             }
         }
     }
 
-    onCancel(cEditable) {
-        if (!this.editComment) {
-            cEditable.innerHTML = '';
-            this.cdr.detectChanges();
-        } else {
-            this.inputFocused = false;
+    onCancel() {
+        this.inputFocused = false;
+        this.videoCommentsForm.get('comment').reset();
+        if (this.editComment) {
             this.editingCancelled.emit();
         }
     }
 
-    onCommentChange(val) {
-        this.videoCommentsForm.patchValue({comment: val});
-        this.inputFocused = true;
-    }
 
-    inputContentClicked(cEditable) {
-        if (cEditable.innerHTML.trim() === this.placeholderText) {
-            cEditable.innerHTML = '';
-            this.cdr.detectChanges();
-        }
+    getPlaceholderText() {
+        return 'Add a public ' + (this.reply ? 'reply' : 'comment') + '...';
     }
 
     get commentCtrl() {

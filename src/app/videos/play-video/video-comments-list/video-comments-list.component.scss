@@ -8,7 +8,11 @@
 
         .left-group {
             display: flex;
+            width: 70%;
 
+            .details{
+                width: 70%;
+            }
             .author {
                 //min-width: 120px;
                 height: 26px;
@@ -39,10 +43,30 @@
                 font-family: "Muli-Bold", serif;
             }
 
-            .comments-like {
-                color: #777;
+            .likes-reply {
+                display: flex;
+                width: 100%;
 
-                .fa {
+                .comments-like {
+                    color: #777;
+
+                    .fa {
+                        cursor: pointer;
+                    }
+
+
+                }
+
+                .reply-container {
+                    width: 80%
+                }
+
+                .reply {
+                    text-transform: uppercase;
+                    color: #777;
+                    margin-left: 15px;
+                    font-family: "Muli-Bold", serif;
+                    font-size: 14px;
                     cursor: pointer;
                 }
             }

@@ -2,13 +2,12 @@
     <ng-container *ngFor="let c of videoComments">
         <div class="comment d-flex mt-4">
             <div class="left-group" [class.w-100]="editComment">
-                <ng-container *ngIf="c.id!==selectedComment?.id || !editComment">
+                <ng-container *ngIf="(c.id!==selectedComment?.id && !showReplyForm)|| showReplyForm || !editComment">
                     <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
                     <div class="details">
                         <div class="d-flex align-items-center mb-2">
                             <div class="mr-3 user-name" [class.author.px-2]="isAuthor(c)">
                                 {{c?.user?.full_name}} <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(c)"></i>
-
                             </div>
                             <div class="comment-date">{{c.created_at | dateFromNow}}</div>
                         </div>
@@ -16,10 +15,19 @@
                         <div class="comment-text mb-2">
                             {{c.comment}}
                         </div>
-                        <div class="comments-like mb-2">
-                            <i class="fa fa-thumbs-up mr-3"></i>
-                            <span> 22k </span>
-                            <i class="fa fa-thumbs-down ml-3"></i>
+                        <div class="likes-reply">
+                            <div class="comments-like mb-2">
+                                <i class="fa fa-thumbs-up mr-3"></i>
+                                <span> 22k </span>
+                                <i class="fa fa-thumbs-down ml-3"></i>
+                            </div>
+                            <div class="reply-container">
+                                <span class="reply" (click)="selectComment(c, true)">Reply</span>
+                                <div class="add-reply" *ngIf="showReplyForm && c.id===selectedComment.id">
+                                    <app-video-comments-form [videoData]="videoData" [reply]="true"
+                                                             class="w-100"></app-video-comments-form>
+                                </div>
+                            </div>
                         </div>
                         <div class="replies" [hidden]="true">
                             <div class="comment-title mt-3">View More...</div>
@@ -93,6 +101,7 @@
                                          *ngIf="editComment && c.id===selectedComment.id"
                                          (updated)="getUpdatedComments($event)" (cancelled)="editComment = false"
                                          [videoData]="videoData"></app-video-comments-form>
+
 
             </div>
             <div class="right-group">

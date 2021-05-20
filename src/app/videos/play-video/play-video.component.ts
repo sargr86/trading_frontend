@@ -170,6 +170,11 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
+    buildSubscribersCountText(videoData) {
+        const count = videoData.channel.subscribers_count;
+        return count + ' subscriber' + (count === 1 ? '' : 's');
+    }
+
     ngAfterViewInit() {
     }
 

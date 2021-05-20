@@ -16,6 +16,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     authUser;
     selectedComment;
     subscriptions: Subscription[] = [];
+    showReplyForm = false;
 
     @Input() videoData;
     @Input() videoComments = [];
@@ -49,9 +50,14 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.editComment = false;
     }
 
-    selectComment(c) {
+    selectComment(c, reply = false) {
+        if (!reply) {
+            this.editComment = !this.editComment;
+            this.showReplyForm = !this.editComment;
+        } else {
+            this.showReplyForm = this.selectedComment !== c || !this.showReplyForm;
+        }
         this.selectedComment = c;
-        this.editComment = !this.editComment;
     }
 
 

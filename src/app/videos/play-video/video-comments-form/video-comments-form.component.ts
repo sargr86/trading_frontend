@@ -26,14 +26,17 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     authUser;
     isSubmitted = false;
     comment = null;
-    placeholderText = '<span class="c-placeholder">Enter your comment...</span>';
+
 
     @Input() editComment = false;
     @Input() selectedComment = null;
+    @Input() reply = false;
     @ViewChild('cEditable') cEditable;
     @Output('added') commentAdded = new EventEmitter();
     @Output('updated') commentUpdated = new EventEmitter();
     @Output('cancelled') editingCancelled = new EventEmitter();
+
+    placeholderText;
 
     constructor(
         private fb: FormBuilder,
@@ -52,6 +55,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        this.placeholderText = '<span class="c-placeholder">Add a public ' + (this.reply ? 'reply' : 'comment') + '...</span>';
 
         this.videoCommentsForm = this.fb.group({
             id: [''],
@@ -85,7 +89,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     onCancel(cEditable) {
         if (!this.editComment) {
             cEditable.innerHTML = '';
-            // this.cdr.detectChanges();
+            this.cdr.detectChanges();
         } else {
             this.inputFocused = false;
             this.editingCancelled.emit();

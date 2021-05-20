@@ -59,7 +59,7 @@
                 <img alt="avatar" class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
                 <div>
                     <p class="channel-name">{{videoData.channel.name}}</p>
-                    <p class="subscribers-count">{{videoData.channel.subscribers_count + ' subscriber' + (videoData.channel.subscribers_count === 1 ? '' : 's')}}</p>
+                    <p class="subscribers-count">{{buildSubscribersCountText(videoData)}}</p>
                 </div>
             </div>
             <div class="comments-block">

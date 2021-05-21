@@ -25,34 +25,54 @@
                                 <div class="add-reply" *ngIf="showReplyForm && c.id===selectedComment.id">
                                     <app-video-comments-form [videoData]="videoData" [reply]="true"
                                                              [selectedComment]="selectedComment"
+                                                             (added)="commentAdded($event)"
                                                              class="w-100"></app-video-comments-form>
                                 </div>
                             </div>
                         </div>
                         <p class="replies-toggler mt-3" *ngIf="c.replies.length > 0"
                            (click)="showReplies = !showReplies;selectedComment = c">
-                            <mat-icon>expand_{{showReplies ? 'more' : 'less'}}</mat-icon>
+                            <mat-icon>expand_{{showReplies && selectedComment === c ? 'more' : 'less'}}</mat-icon>
                             <span>{{getRepliesTogglerText(c)}}</span>
                         </p>
                         <div class="replies" *ngIf="showReplies && selectedComment === c">
-                            <div class="d-flex mt-4" *ngFor="let reply of c.replies">
-                                <img class="avatar" [src]="reply.user?.channel.avatar|getImgPath:'avatars'">
-                                <div class="">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="mr-3 user-name" [class.author.px-2]="isAuthor(reply)">
-                                            {{reply?.user?.full_name}} <i class="fas fa-check-circle ml-1"
-                                                                          *ngIf="isAuthor(reply)"></i>
+                            <div class="d-flex mt-4 reply" *ngFor="let reply of c.replies">
+                                <div class="left-group">
+                                    <img class="avatar" [src]="reply.user?.channel.avatar|getImgPath:'avatars'">
+                                    <div class="details">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="mr-3 user-name" [class.author.px-2]="isAuthor(reply)">
+                                                <span>{{reply?.user?.full_name}}</span>
+                                                <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(reply)"></i>
+                                            </div>
+                                            <div class="comment-date">{{reply.created_at | dateFromNow}}</div>
                                         </div>
-                                        <div class="comment-date">{{reply.created_at | dateFromNow}}</div>
-                                    </div>
-                                    <div class="comment-text mb-2" [innerHTML]="reply.comment">
-                                    </div>
-                                    <div class="likes-reply">
-                                        <div class="comments-like mb-2">
-                                            <i class="fa fa-thumbs-up mr-3"></i>
-                                            <span> 22k </span>
-                                            <i class="fa fa-thumbs-down ml-3"></i>
+                                        <div class="comment-text mb-2" [innerHTML]="reply.comment">
                                         </div>
+                                        <div class="likes-reply">
+                                            <div class="comments-like mb-2">
+                                                <i class="fa fa-thumbs-up mr-3"></i>
+                                                <span> 22k </span>
+                                                <i class="fa fa-thumbs-down ml-3"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right-group">
+                                    <div class="more-actions" *ngIf="isMyComment(reply) && !editComment">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item (click)="selectComment(reply)">
+                                                <mat-icon>edit</mat-icon>
+                                                <span>Edit</span>
+                                            </button>
+                                            <button mat-menu-item (click)="removeComment(reply)">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>Delete</span>
+                                            </button>
+                                        </mat-menu>
                                     </div>
                                 </div>
                             </div>

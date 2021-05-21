@@ -76,9 +76,17 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
                     video_id: c.video_id
                 }).subscribe(dt => {
                     this.videoComments = dt;
+                    console.log(this.selectedComment)
                 });
             }
         }));
+    }
+
+    commentAdded(e) {
+        this.videoComments = e;
+        this.showReplyForm = false;
+        this.showReplies = true;
+        console.log(this.selectedComment)
     }
 
     ngOnDestroy() {

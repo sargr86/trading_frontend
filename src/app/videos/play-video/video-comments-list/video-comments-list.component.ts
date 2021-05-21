@@ -18,6 +18,8 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     showReplyForm = false;
     showReplies = false;
+    editReply = false;
+    selectedReply;
 
     @Input() videoData;
     @Input() videoComments = [];
@@ -47,6 +49,9 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     getUpdatedComments(e) {
         this.videoComments = e;
         this.editComment = false;
+        this.editReply = false;
+        this.selectedComment = e.find(cm => cm.id === this.selectedComment?.id);
+        this.selectedReply = e.find(c => c.id === this.selectedReply?.id);
     }
 
     getRepliesTogglerText(c) {
@@ -54,14 +59,22 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         return `View ${len + (len > 1 ? ' replies' : ' reply')}`;
     }
 
-    selectComment(c, reply = false) {
-        if (!reply) {
+    selectComment(c, replyBtnClicked = false, replyCommentSelected = false) {
+        if (!replyBtnClicked && !replyCommentSelected) {
             this.editComment = !this.editComment;
             this.showReplyForm = !this.editComment;
+            this.selectedComment = c;
+        } else if (replyCommentSelected) {
+            this.editReply = true;
+            // this.showReplies = true;
+            // console.log(c)
+            // console.log(this.selectedComment)
+            // console.log('OK')
+            this.selectedReply = c;
         } else {
             this.showReplyForm = this.selectedComment !== c || !this.showReplyForm;
+            this.selectedComment = c;
         }
-        this.selectedComment = c;
     }
 
 

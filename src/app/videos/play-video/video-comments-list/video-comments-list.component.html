@@ -36,34 +36,48 @@
                             <span>{{getRepliesTogglerText(c)}}</span>
                         </p>
                         <div class="replies" *ngIf="showReplies && selectedComment === c">
-                            <div class="d-flex mt-4 reply" *ngFor="let reply of c.replies">
-                                <div class="left-group">
-                                    <img class="avatar" [src]="reply.user?.channel.avatar|getImgPath:'avatars'">
-                                    <div class="details">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <div class="mr-3 user-name" [class.author.px-2]="isAuthor(reply)">
-                                                <span>{{reply?.user?.full_name}}</span>
-                                                <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(reply)"></i>
+                            <ng-container *ngFor="let reply of c.replies">
+                                <div class="d-flex mt-4 reply">
+                                    <div class="left-group">
+                                        <ng-container *ngIf="(reply.id!==selectedReply?.id) || !editReply">
+                                            <img class="avatar" [src]="reply.user?.channel.avatar|getImgPath:'avatars'">
+                                            <div class="details">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="mr-3 user-name" [class.author.px-2]="isAuthor(reply)">
+                                                        <span>{{reply?.user?.full_name}}</span>
+                                                        <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(reply)"></i>
+                                                    </div>
+                                                    <div class="comment-date">{{reply.created_at | dateFromNow}}</div>
+                                                </div>
+                                                <div class="comment-text mb-2" [innerHTML]="reply.comment">
+                                                </div>
+                                                <div class="likes-reply">
+                                                    <div class="comments-like mb-2">
+                                                        <i class="fa fa-thumbs-up mr-3"></i>
+                                                        <span> 22k </span>
+                                                        <i class="fa fa-thumbs-down ml-3"></i>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="comment-date">{{reply.created_at | dateFromNow}}</div>
-                                        </div>
-                                        <div class="comment-text mb-2" [innerHTML]="reply.comment">
-                                        </div>
-                                        <div class="likes-reply">
-                                            <div class="comments-like mb-2">
-                                                <i class="fa fa-thumbs-up mr-3"></i>
-                                                <span> 22k </span>
-                                                <i class="fa fa-thumbs-down ml-3"></i>
-                                            </div>
-                                        </div>
+                                        </ng-container>
                                     </div>
+                                    <div class="right-group">
+                                        <app-comment-actions [comment]="reply"
+                                                             *ngIf="isMyComment(reply) && !editReply"
+                                                             (remove)="removeComment($event)"
+                                                             (commentSelected)="selectComment($event, false,true)">
+                                        </app-comment-actions>
+                                    </div>
+
                                 </div>
-                                <div class="right-group">
-                                    <app-comment-actions [comment]="reply" *ngIf="isMyComment(reply) && !editComment"
-                                                         (remove)="removeComment($event)"
-                                                         (commentSelected)="selectedComment($event)"></app-comment-actions>
-                                </div>
-                            </div>
+
+                                <app-video-comments-form [editComment]="true" [selectedComment]="selectedReply"
+                                                         class="w-100" [isReplyComment]="true" [parentComment]="c"
+                                                         *ngIf="editReply && reply.id===selectedReply.id"
+                                                         (updated)="getUpdatedComments($event)"
+                                                         (cancelled)="editReply = false"
+                                                         [videoData]="videoData"></app-video-comments-form>
+                            </ng-container>
                         </div>
                     </div>
                 </ng-container>
@@ -76,7 +90,8 @@
             </div>
             <div class="right-group">
                 <app-comment-actions [comment]="c" *ngIf="isMyComment(c) && !editComment"
-                                     (remove)="removeComment($event)" (commentSelected)="selectedComment($event)">
+                                     (remove)="removeComment($event)"
+                                     (commentSelected)="selectComment($event)">
                 </app-comment-actions>
             </div>
         </div>

@@ -30,6 +30,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     @Input() editComment = false;
     @Input() selectedComment = null;
     @Input() reply = false;
+    @Input() isReplyComment = false;
+    @Input() parentComment = null;
     @ViewChild('cEditable') cEditable;
     @Output('added') commentAdded = new EventEmitter();
     @Output('updated') commentUpdated = new EventEmitter();
@@ -71,6 +73,12 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
                 this.videoCommentsForm.patchValue({
                     to_comment_id: this.selectedComment.id,
                     to_user_id: this.selectedComment.user.id,
+                    is_reply: 1
+                });
+            } else if (this.isReplyComment) {
+                this.videoCommentsForm.patchValue({
+                    to_comment_id: this.parentComment.id,
+                    to_user_id: this.parentComment.user.id,
                     is_reply: 1
                 });
             }

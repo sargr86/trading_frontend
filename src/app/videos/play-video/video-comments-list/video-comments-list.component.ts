@@ -33,8 +33,6 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        console.log(this.videoComments)
-
     }
 
 
@@ -76,7 +74,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
                     video_id: c.video_id
                 }).subscribe(dt => {
                     this.videoComments = dt;
-                    console.log(this.selectedComment)
+                    this.selectedComment = dt.find(cm => cm.id === this.selectedComment.id);
                 });
             }
         }));
@@ -86,7 +84,12 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.videoComments = e;
         this.showReplyForm = false;
         this.showReplies = true;
-        console.log(this.selectedComment)
+        this.selectedComment = e.find(c => c.id === this.selectedComment.id);
+    }
+
+    toggleReplies(c) {
+        this.showReplies = !this.showReplies;
+        this.selectedComment = c;
     }
 
     ngOnDestroy() {

@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <p class="replies-toggler mt-3" *ngIf="c.replies.length > 0"
-                           (click)="showReplies = !showReplies;selectedComment = c">
+                           (click)="toggleReplies(c)">
                             <mat-icon>expand_{{showReplies && selectedComment === c ? 'more' : 'less'}}</mat-icon>
                             <span>{{getRepliesTogglerText(c)}}</span>
                         </p>
@@ -87,6 +87,7 @@
 
             </div>
             <div class="right-group">
+                <ng-template #commentActions></ng-template>
                 <div class="more-actions" *ngIf="isMyComment(c) && !editComment">
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>

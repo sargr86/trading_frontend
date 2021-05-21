@@ -32,7 +32,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        console.log(this.videoData)
+        console.log(this.videoComments)
 
     }
 

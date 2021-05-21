@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {DESCRIPTION_CHARACTERS_LIMIT} from '@core/constants/global';
+import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 
 @Component({
     selector: 'app-about-tab',
@@ -18,7 +19,8 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
     constructor(
         private fb: FormBuilder,
         private channelService: ChannelsService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private fixLineBreaks: FixTextLineBreaksPipe
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -33,7 +35,7 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
         this.aboutForm.patchValue({
             username: this.channelUser.username,
             id: this.channelUser.channel.id,
-            description: this.channelUser.channel.description?.replace(/<br\s*[\/]?>/gi, '\n')
+            description: this.fixLineBreaks.transform(this.channelUser.channel.description)
             // ...this.channelUser.channel
         });
 
@@ -41,10 +43,6 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
 
     editModeOn() {
         this.editMode = true;
-    }
-
-    getDesc(d) {
-        return d?.replace('<br>', '');
     }
 
     saveChannelDescription() {

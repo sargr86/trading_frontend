@@ -25,9 +25,6 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     inputFocused = false;
     authUser;
     isSubmitted = false;
-    placeholderClicked = false;
-    comment = null;
-    cancelled = 'idle';
 
 
     @Input() editComment = false;
@@ -44,14 +41,9 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         private fb: FormBuilder,
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
-        private renderer: Renderer2,
         private subject: SubjectService,
         private cdr: ChangeDetectorRef
     ) {
-        this.renderer.listen('window', 'click', (e: Event) => {
-            // this.inputFocused = e.target === this.cEditable.nativeElement || this.editComment;
-            // this.cdr.detectChanges();
-        });
     }
 
 
@@ -63,7 +55,9 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
             id: [''],
             from_id: [this.authUser.id],
             comment: ['', Validators.required],
-            video_id: [this.videoData.id]
+            video_id: [this.videoData.id],
+            to_user_id: [''],
+            to_comment_id: ['']
         });
 
     }
@@ -77,6 +71,13 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
                     this.videoCommentsForm.get('comment').reset();
                 });
             } else {
+                if (this.reply) {
+                    this.videoCommentsForm.patchValue({
+                        to_comment_id: this.selectedComment.id,
+                        to_user_id: this.selectedComment.user.id
+                    });
+                }
+
                 this.videoService.addVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.inputFocused = false;
                     this.commentAdded.emit(dt);
@@ -106,11 +107,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         if (this.editComment) {
             this.videoCommentsForm.patchValue({comment: this.selectedComment.comment, id: this.selectedComment.id});
-            this.cEditable.nativeElement.innerHTML = this.selectedComment.comment;
-            this.cEditable.nativeElement.focus();
             this.inputFocused = true;
-            this.cdr.detectChanges();
-        } else {
             this.cdr.detectChanges();
         }
     }

@@ -30,6 +30,7 @@ import {SearchVideosFormComponent} from '@shared/components/search-videos-form/s
 import {StockTilesComponent} from './components/stocks-tiles/stock-tiles.component';
 import {StocksListComponent} from './components/stocks-list/stocks-list.component';
 import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
+import {FixTextLineBreaksPipe} from './pipes/fix-text-line-breaks.pipe';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
         SearchVideosFormComponent,
         StockTilesComponent,
         StocksListComponent,
-        IsStockFollowedPipe
+        IsStockFollowedPipe,
+        FixTextLineBreaksPipe
     ],
     imports: [
         CommonModule,
@@ -77,7 +79,8 @@ import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
         FilterOutFalsyValuesFromObjectPipe,
         CheckForEmptyObjectPipe,
         UpdateUserStocksPipe,
-        IsStockFollowedPipe
+        IsStockFollowedPipe,
+        FixTextLineBreaksPipe
 
     ],
     exports: [
@@ -103,7 +106,8 @@ import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
         SearchVideosFormComponent,
         StockTilesComponent,
         StocksListComponent,
-        IsStockFollowedPipe
+        IsStockFollowedPipe,
+        FixTextLineBreaksPipe
     ]
 
 })

@@ -3,7 +3,7 @@
         <div class="comment d-flex mt-4">
             <div class="left-group" [class.w-100]="editComment">
                 <ng-container *ngIf="(c.id!==selectedComment?.id && !showReplyForm)|| showReplyForm || !editComment">
-                    <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                    <img class="avatar" [src]="c.user?.channel.avatar|getImgPath:'avatars'">
                     <div class="details">
                         <div class="d-flex align-items-center mb-2">
                             <div class="mr-3 user-name" [class.author.px-2]="isAuthor(c)">
@@ -12,8 +12,7 @@
                             <div class="comment-date">{{c.created_at | dateFromNow}}</div>
                         </div>
 
-                        <div class="comment-text mb-2">
-                            {{c.comment}}
+                        <div class="comment-text mb-2" [innerHTML]="c.comment">
                         </div>
                         <div class="likes-reply">
                             <div class="comments-like mb-2">
@@ -25,6 +24,7 @@
                                 <span class="reply" (click)="selectComment(c, true)">Reply</span>
                                 <div class="add-reply" *ngIf="showReplyForm && c.id===selectedComment.id">
                                     <app-video-comments-form [videoData]="videoData" [reply]="true"
+                                                             [selectedComment]="selectedComment"
                                                              class="w-100"></app-video-comments-form>
                                 </div>
                             </div>

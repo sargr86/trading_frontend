@@ -58,8 +58,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
             from_id: [this.authUser.id],
             comment: ['', Validators.required],
             video_id: [this.videoData.id],
-            to_user_id: [''],
-            to_comment_id: [''],
+            to_user_id: [0],
+            to_comment_id: [0],
             is_reply: [0]
         });
 

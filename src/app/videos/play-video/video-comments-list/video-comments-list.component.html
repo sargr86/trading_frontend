@@ -59,21 +59,9 @@
                                     </div>
                                 </div>
                                 <div class="right-group">
-                                    <div class="more-actions" *ngIf="isMyComment(reply) && !editComment">
-                                        <button mat-icon-button [matMenuTriggerFor]="menu">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #menu="matMenu">
-                                            <button mat-menu-item (click)="selectComment(reply)">
-                                                <mat-icon>edit</mat-icon>
-                                                <span>Edit</span>
-                                            </button>
-                                            <button mat-menu-item (click)="removeComment(reply)">
-                                                <mat-icon>delete</mat-icon>
-                                                <span>Delete</span>
-                                            </button>
-                                        </mat-menu>
-                                    </div>
+                                    <app-comment-actions [comment]="reply" *ngIf="isMyComment(reply) && !editComment"
+                                                         (remove)="removeComment($event)"
+                                                         (commentSelected)="selectedComment($event)"></app-comment-actions>
                                 </div>
                             </div>
                         </div>
@@ -87,22 +75,9 @@
 
             </div>
             <div class="right-group">
-                <ng-template #commentActions></ng-template>
-                <div class="more-actions" *ngIf="isMyComment(c) && !editComment">
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="selectComment(c)">
-                            <mat-icon>edit</mat-icon>
-                            <span>Edit</span>
-                        </button>
-                        <button mat-menu-item (click)="removeComment(c)">
-                            <mat-icon>delete</mat-icon>
-                            <span>Delete</span>
-                        </button>
-                    </mat-menu>
-                </div>
+                <app-comment-actions [comment]="c" *ngIf="isMyComment(c) && !editComment"
+                                     (remove)="removeComment($event)" (commentSelected)="selectedComment($event)">
+                </app-comment-actions>
             </div>
         </div>
     </ng-container>

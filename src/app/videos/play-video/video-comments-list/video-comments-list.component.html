@@ -29,68 +29,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="replies" [hidden]="true">
-                            <div class="comment-title mt-3">View More...</div>
-                            <div class="d-flex mt-4">
-                                <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                        <p class="replies-toggler mt-3" *ngIf="c.replies.length > 0"
+                           (click)="showReplies = !showReplies;selectedComment = c">
+                            <mat-icon>expand_{{showReplies ? 'more' : 'less'}}</mat-icon>
+                            <span>{{getRepliesTogglerText(c)}}</span>
+                        </p>
+                        <div class="replies" *ngIf="showReplies && selectedComment === c">
+                            <div class="d-flex mt-4" *ngFor="let reply of c.replies">
+                                <img class="avatar" [src]="reply.user?.channel.avatar|getImgPath:'avatars'">
                                 <div class="">
                                     <div class="d-flex align-items-center mb-2">
-                                        <div class="avatar-author-name mr-3 px-2">Lorem Ipsum <i
-                                            class="fas fa-check-circle ml-1"></i>
+                                        <div class="mr-3 user-name" [class.author.px-2]="isAuthor(reply)">
+                                            {{reply?.user?.full_name}} <i class="fas fa-check-circle ml-1"
+                                                                          *ngIf="isAuthor(reply)"></i>
                                         </div>
-                                        <div class="comments-date">6 years ago</div>
+                                        <div class="comment-date">{{reply.created_at | dateFromNow}}</div>
                                     </div>
-                                    <div class="comment-text mb-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at beatae
-                                        cupiditate
-                                        fugiat.
+                                    <div class="comment-text mb-2" [innerHTML]="reply.comment">
                                     </div>
-                                    <div class="comments-like mb-2">
-                                        <i class="fa fa-thumbs-up mr-3"></i>
-                                        <span> 22k </span>
-                                        <i class="fa fa-thumbs-down ml-3"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
-                                <div class="">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="avatar-author-name mr-3 px-2">Lorem Ipsum <i
-                                            class="fas fa-check-circle ml-1"></i>
+                                    <div class="likes-reply">
+                                        <div class="comments-like mb-2">
+                                            <i class="fa fa-thumbs-up mr-3"></i>
+                                            <span> 22k </span>
+                                            <i class="fa fa-thumbs-down ml-3"></i>
                                         </div>
-                                        <div class="comments-date">6 years ago</div>
-                                    </div>
-                                    <div class="comment-text mb-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at beatae
-                                        cupiditate
-                                        fugiat.
-                                    </div>
-                                    <div class="comments-like mb-2">
-                                        <i class="fa fa-thumbs-up mr-3"></i>
-                                        <span> 22k </span>
-                                        <i class="fa fa-thumbs-down ml-3"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <img class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
-                                <div class="">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="avatar-author-name mr-3 px-2">Lorem Ipsum <i
-                                            class="fas fa-check-circle ml-1"></i>
-                                        </div>
-                                        <div class="comments-date">6 years ago</div>
-                                    </div>
-                                    <div class="comment-text mb-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at beatae
-                                        cupiditate
-                                        fugiat.
-                                    </div>
-                                    <div class="comments-like mb-2">
-                                        <i class="fa fa-thumbs-up mr-3"></i>
-                                        <span> 22k </span>
-                                        <i class="fa fa-thumbs-down ml-3"></i>
                                     </div>
                                 </div>
                             </div>

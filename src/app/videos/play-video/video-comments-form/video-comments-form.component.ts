@@ -57,7 +57,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
             comment: ['', Validators.required],
             video_id: [this.videoData.id],
             to_user_id: [''],
-            to_comment_id: ['']
+            to_comment_id: [''],
+            is_reply: [0]
         });
 
     }
@@ -65,18 +66,22 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     saveComment() {
         this.isSubmitted = true;
         if (this.videoCommentsForm.valid) {
+
+            if (this.reply) {
+                this.videoCommentsForm.patchValue({
+                    to_comment_id: this.selectedComment.id,
+                    to_user_id: this.selectedComment.user.id,
+                    is_reply: 1
+                });
+            }
+
+
             if (this.editComment) {
                 this.videoService.updateVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.commentUpdated.emit(dt);
                     this.videoCommentsForm.get('comment').reset();
                 });
             } else {
-                if (this.reply) {
-                    this.videoCommentsForm.patchValue({
-                        to_comment_id: this.selectedComment.id,
-                        to_user_id: this.selectedComment.user.id
-                    });
-                }
 
                 this.videoService.addVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.inputFocused = false;

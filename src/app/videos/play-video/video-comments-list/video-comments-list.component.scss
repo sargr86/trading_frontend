@@ -10,9 +10,10 @@
             display: flex;
             width: 70%;
 
-            .details{
+            .details {
                 width: 70%;
             }
+
             .author {
                 //min-width: 120px;
                 height: 26px;
@@ -27,9 +28,13 @@
                 font-family: 'Muli-Regular', serif !important;
             }
 
-            .comment-title {
+            .replies-toggler {
+                display: flex;
+                align-items: center;
                 color: #0e9d6a;
                 cursor: pointer;
+                font-family: 'Muli-Bold', serif;
+                font-size: 14px;
             }
 
             .comment-date {

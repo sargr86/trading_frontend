@@ -17,6 +17,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     selectedComment;
     subscriptions: Subscription[] = [];
     showReplyForm = false;
+    showReplies = false;
 
     @Input() videoData;
     @Input() videoComments = [];
@@ -48,6 +49,11 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     getUpdatedComments(e) {
         this.videoComments = e;
         this.editComment = false;
+    }
+
+    getRepliesTogglerText(c) {
+        const len = c.replies.length;
+        return `View ${len + (len > 1 ? ' replies' : ' reply')}`;
     }
 
     selectComment(c, reply = false) {

@@ -1,15 +1,17 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SubjectService} from '@core/services/subject.service';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {Subscription} from 'rxjs';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-video-comments-list',
     templateUrl: './video-comments-list.component.html',
-    styleUrls: ['./video-comments-list.component.scss']
+    styleUrls: ['./video-comments-list.component.scss'],
+    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoCommentsListComponent implements OnInit, OnDestroy {
 
@@ -20,6 +22,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     showReplies = false;
     editReply = false;
     selectedReply;
+    trackByElement = trackByElement;
 
     @Input() videoData;
     @Input() videoComments = [];
@@ -66,10 +69,6 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
             this.selectedComment = c;
         } else if (replyCommentSelected) {
             this.editReply = true;
-            // this.showReplies = true;
-            // console.log(c)
-            // console.log(this.selectedComment)
-            // console.log('OK')
             this.selectedReply = c;
         } else {
             this.showReplyForm = this.selectedComment !== c || !this.showReplyForm;
@@ -86,8 +85,10 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
                     id: c.id,
                     video_id: c.video_id
                 }).subscribe(dt => {
+
                     this.videoComments = dt;
-                    this.selectedComment = dt.find(cm => cm.id === this.selectedComment.id);
+                    console.log(this.videoComments)
+                    this.selectedComment = dt.find(cm => cm.id === this.selectedComment?.id);
                 });
             }
         }));

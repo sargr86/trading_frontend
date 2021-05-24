@@ -46,11 +46,6 @@
 
     <div class="all-stocks">
         <div class="top-wrap">
-<!--            <div class="left-group">-->
-<!--                <h2>Tilez</h2>-->
-<!--            </div>-->
-
-
             <div class="center-group justify-content-between mr-3">
                 <h2 class="mr-3">Tilez</h2>
                 <app-search-stocks-form [hidden]="loader.stocksLoading.status==='loading' && !searched"
@@ -86,11 +81,6 @@
 
 
         <div class="all-stocks-list">
-
-            <!--            <app-stocks-list-sample [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0"-->
-            <!--                                    [type]="selectedStockType" [modal]="true"-->
-            <!--                                    [userStocks]="getUpdatedStockDetails(userStocks)"-->
-            <!--                                    (updatedStocksList)="updateFollowedStocks($event)"></app-stocks-list-sample>-->
             <app-stock-tiles [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [dragDropDisabled]="true"
                              [userStocks]="getUpdatedStockDetails(userStocks)" [allStocksList]="true"
                              [followingAllowed]="true" (updatedStocksList)="updateFollowedStocks($event)"

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {getFirstNItems} from '@core/helpers/get-first-n-items';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
@@ -17,7 +17,8 @@ import {Subscription} from 'rxjs';
 @Component({
     selector: 'app-stocks-list',
     templateUrl: './stocks-list.component.html',
-    styleUrls: ['./stocks-list.component.scss']
+    styleUrls: ['./stocks-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StocksListComponent implements OnInit, OnDestroy {
     @Input('stocks') passedStocks = [];
@@ -61,7 +62,6 @@ export class StocksListComponent implements OnInit, OnDestroy {
     onlyFirst10Stocks(stocks) {
         return getFirstNItems(stocks, 10);
     }
-
 
 
     getPercentageDetails(stock) {
@@ -139,6 +139,7 @@ export class StocksListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
+        this.loader.stocksLoading.status = 'finished';
     }
 
 

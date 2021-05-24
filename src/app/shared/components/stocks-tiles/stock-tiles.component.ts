@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Stock} from '@shared/models/stock';
 import {SubjectService} from '@core/services/subject.service';
 import {STOCK_TILE_CHART_SETTINGS} from '@core/constants/charts';
@@ -12,7 +12,8 @@ import trackByElement from '@core/helpers/track-by-element';
 @Component({
     selector: 'app-stock-tiles',
     templateUrl: './stock-tiles.component.html',
-    styleUrls: ['./stock-tiles.component.scss']
+    styleUrls: ['./stock-tiles.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockTilesComponent implements OnInit {
 

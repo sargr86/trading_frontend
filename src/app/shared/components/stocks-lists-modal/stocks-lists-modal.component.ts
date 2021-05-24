@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StocksService} from '@core/services/stocks.service';
@@ -14,7 +14,7 @@ import {ToastrService} from 'ngx-toastr';
     templateUrl: './stocks-lists-modal.component.html',
     styleUrls: ['./stocks-lists-modal.component.scss']
 })
-export class StocksListsModalComponent implements OnInit {
+export class StocksListsModalComponent implements OnInit, OnDestroy {
     stockTypes;
     stocks = [];
     selectedStockType;
@@ -56,23 +56,20 @@ export class StocksListsModalComponent implements OnInit {
 
     getUserStocks(params = {}) {
         this.loader.stocksLoading.text = 'Loading user stocks list and charts';
-        this.stocksService.getUserStocks({
+        this.subscriptions.push(this.stocksService.getUserStocks({
             user_id: this.authUser.id,
             ...params
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
             this.loader.stocksLoading.text = 'Loading stocks of selected category and charts';
-            if (params.hasOwnProperty('close')) {
-                this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
-            }
-        });
+        }));
     }
 
     closeModal() {
         this.modalService.hide();
         this.matDialogRef.close();
         this.selectedStockType = null;
-        this.getUserStocks({close: true});
+        this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
     }
 
     stockTypeChanged(e) {
@@ -89,7 +86,7 @@ export class StocksListsModalComponent implements OnInit {
     getStocksByType(type) {
         this.loader.stocksLoading.status = 'loading';
         this.cdr.detectChanges();
-        this.stocksService.getStocksByType({type}).subscribe(dt => {
+        this.subscriptions.push(this.stocksService.getStocksByType({type}).subscribe(dt => {
             this.stocks = dt;
 
             this.pageSize = 14;
@@ -98,13 +95,13 @@ export class StocksListsModalComponent implements OnInit {
             this.loader.stocksLoading.status = 'finished';
             // const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
             // this.getStockGraphsDataByType(stockNamesList, dt);
-        });
+        }));
     }
 
     getStockGraphsDataByType(stocks, allStocks, filter = false) {
         this.loader.stocksLoading = {status: 'loading', text: 'Loading charts data'};
         if (stocks) {
-            this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
+            this.subscriptions.push(this.stocksService.getStockGraphsDataByType({stocks}).subscribe(dt => {
                 const st = allStocks.map((item, i) => Object.assign({}, item, dt[i]));
                 if (filter) {
                     this.filteredStocks = st;
@@ -113,7 +110,7 @@ export class StocksListsModalComponent implements OnInit {
                     this.filterStocks();
                 }
                 this.loader.stocksLoading.status = 'finished';
-            });
+            }));
         } else {
             this.loader.stocksLoading.status = 'finished';
         }
@@ -143,14 +140,14 @@ export class StocksListsModalComponent implements OnInit {
         this.loader.stocksLoading.status = 'loading';
 
         this.loader.stocksLoading.text = 'Updating stocks lists, details and charts';
-        this.stocksService.updateFollowedStocks({
+        this.subscriptions.push(this.stocksService.updateFollowedStocks({
             user_id: this.authUser.id,
             ...{stocks},
             // type_id: this.selectedStockType.id
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
             this.loader.stocksLoading.status = 'finished';
-        });
+        }));
 
     }
 
@@ -173,7 +170,7 @@ export class StocksListsModalComponent implements OnInit {
 
     searchInStockType() {
         if (this.search) {
-            this.stocksService.searchInStockTypeData({
+            this.subscriptions.push(this.stocksService.searchInStockTypeData({
                 search: this.search,
                 stockType: this.selectedStockType.value
             }).subscribe((dt: any) => {
@@ -182,8 +179,13 @@ export class StocksListsModalComponent implements OnInit {
                 this.filterStocks();
                 const stockNamesList = this.filteredStocks.map(f => f.symbol).join(',');
                 this.getStockGraphsDataByType(stockNamesList, this.filteredStocks, true);
-            });
+            }));
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+        this.loader.stocksLoading.status = 'finished';
     }
 
 }

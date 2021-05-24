@@ -167,7 +167,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.commentsLoading = 'loading';
         this.subscriptions.push(this.videoService.getVideoComments({video_id: this.videoData.id}).subscribe(dt => {
             this.videoComments = dt;
-            // this.loader.dataLoading = false;
             this.commentsLoading = 'finished';
         }));
     }

@@ -13,6 +13,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
+import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 
 @Component({
     selector: 'app-video-comments-form',
@@ -44,7 +45,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         private videoService: VideoService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private fixLineBreaks: FixTextLineBreaksPipe
     ) {
     }
 
@@ -119,7 +121,10 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         if (this.editComment) {
-            this.videoCommentsForm.patchValue({comment: this.selectedComment.comment, id: this.selectedComment.id});
+            this.videoCommentsForm.patchValue({
+                comment: this.fixLineBreaks.transform(this.selectedComment.comment),
+                id: this.selectedComment.id
+            });
             this.inputFocused = true;
             this.cdr.detectChanges();
         }

@@ -65,6 +65,7 @@
             <div class="comments-block">
                 <app-video-comments-form *ngIf="auth.loggedIn()" (added)="commentAdded($event)" [videoData]="videoData"
                                          class="w-100"></app-video-comments-form>
+                <mat-spinner [diameter]="15" [hidden]="commentsLoading === 'finished'"></mat-spinner>
                 <app-video-comments-list [videoData]="videoData"
                                          [videoComments]="videoComments"></app-video-comments-list>
             </div>

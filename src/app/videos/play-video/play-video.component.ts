@@ -7,6 +7,7 @@ import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-play-video',
@@ -27,6 +28,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
     commentsRefreshed = false;
     formValue;
     videoComments = [];
+    commentsLoading = 'idle';
     subscriptions: Subscription[] = [];
 
     constructor(
@@ -36,6 +38,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private toastr: ToastrService,
+        private loader: LoaderService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -151,15 +154,21 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     saveVideoDetails(e) {
         this.videoData.tags = e.tags;
-        this.subscriptions.push(this.videoService.saveVideoDetails({...e, video_id: this.videoData.id}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.saveVideoDetails({
+            ...e,
+            video_id: this.videoData.id
+        }).subscribe(dt => {
             this.videoData = dt;
             this.showTagsForm = false;
         }));
     }
 
     getComments() {
+        this.commentsLoading = 'loading';
         this.subscriptions.push(this.videoService.getVideoComments({video_id: this.videoData.id}).subscribe(dt => {
             this.videoComments = dt;
+            // this.loader.dataLoading = false;
+            this.commentsLoading = 'finished';
         }));
     }
 

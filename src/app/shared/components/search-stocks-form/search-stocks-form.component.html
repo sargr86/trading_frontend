@@ -1,9 +1,10 @@
 <form [formGroup]="searchStocksForm" [class.white-form]="whiteForm" [style.width]="formWidth+'%'"
       [class.transparent-form]="transparentForm">
     <div class="search-wrapper">
-        <input formControlName="search" (keyup.enter)="handleEnter()" [placeholder]="getPlaceholder()"
-               [matAutocomplete]="auto" #trigger="matAutocompleteTrigger" (keyup)="handleRegularKeyup()">
+        <input formControlName="search" (keyup.enter)="handleEnter()" [placeholder]="getPlaceholder()" #searchInput
+               [matAutocomplete]="auto" #trigger="matAutocompleteTrigger">
         <i class="fas fa-search"></i>
+<!--        <mat-spinner [diameter]="15" [hidden]="loadingSearch!=='loading'"></mat-spinner>-->
         <mat-autocomplete #auto="matAutocomplete">
             <ng-container *ngIf="autocomplete">
                 <ng-container *ngIf="groupResults then groupedList else regularList"></ng-container>
@@ -30,3 +31,4 @@
         </mat-autocomplete>
     </div>
 </form>
+

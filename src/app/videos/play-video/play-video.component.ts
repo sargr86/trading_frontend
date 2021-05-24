@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {API_URL, VIDEOJS_PLAYER_OPTIONS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
@@ -6,13 +6,14 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import IsResponsive from '@core/helpers/is-responsive';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-play-video',
     templateUrl: './play-video.component.html',
     styleUrls: ['./play-video.component.scss']
 })
-export class PlayVideoComponent implements OnInit, AfterViewInit {
+export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
     videoData;
     apiUrl = API_URL;
 
@@ -26,6 +27,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     commentsRefreshed = false;
     formValue;
     videoComments = [];
+    subscriptions: Subscription[] = [];
 
     constructor(
         private route: ActivatedRoute,
@@ -43,7 +45,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
         const videoId = this.route.snapshot.queryParams.id;
         const params = {id: videoId};
 
-        this.videoService.getVideoById(params).subscribe(dt => {
+        this.subscriptions.push(this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
@@ -51,7 +53,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
                 this.indexUserTags(dt);
                 this.getComments();
             }
-        });
+        }));
 
 
     }
@@ -73,9 +75,9 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     updateViewsCount(dt) {
         const params = {user_id: this.authUser.id, video_id: dt.id};
         if (!this.userVideoConnection.viewed) {
-            this.videoService.updateViews(params).subscribe((d) => {
+            this.subscriptions.push(this.videoService.updateViews(params).subscribe((d) => {
                 this.videoData = d;
-            });
+            }));
         }
     }
 
@@ -122,9 +124,9 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     indexUserTags(dt) {
         const params = {user_id: this.authUser.id, video_id: dt.id, tags: this.videoData?.tags};
-        this.videoService.indexUserTags(params).subscribe(d => {
+        this.subscriptions.push(this.videoService.indexUserTags(params).subscribe(d => {
 
-        });
+        }));
     }
 
 
@@ -138,27 +140,27 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
 
     saveVideo(videoData) {
 
-        this.videoService.saveVideo({
+        this.subscriptions.push(this.videoService.saveVideo({
             video_id: videoData.id,
             user_id: this.authUser.id,
             saved: this.userVideoConnection.saved === 'saved' ? 0 : 1
         }).subscribe(dt => {
             this.userVideoConnection.saved = dt.saved ? 'saved' : '';
-        });
+        }));
     }
 
     saveVideoDetails(e) {
         this.videoData.tags = e.tags;
-        this.videoService.saveVideoDetails({...e, video_id: this.videoData.id}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.saveVideoDetails({...e, video_id: this.videoData.id}).subscribe(dt => {
             this.videoData = dt;
             this.showTagsForm = false;
-        });
+        }));
     }
 
     getComments() {
-        this.videoService.getVideoComments({video_id: this.videoData.id}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.getVideoComments({video_id: this.videoData.id}).subscribe(dt => {
             this.videoComments = dt;
-        });
+        }));
     }
 
     commentAdded(e) {
@@ -176,6 +178,10 @@ export class PlayVideoComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

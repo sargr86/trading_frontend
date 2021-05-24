@@ -183,7 +183,7 @@ export class StocksListsModalComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
         this.loader.stocksLoading.status = 'finished';
     }

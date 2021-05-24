@@ -13,7 +13,7 @@ import trackByElement from '@core/helpers/track-by-element';
     selector: 'app-stock-tiles',
     templateUrl: './stock-tiles.component.html',
     styleUrls: ['./stock-tiles.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockTilesComponent implements OnInit {
 

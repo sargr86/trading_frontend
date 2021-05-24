@@ -104,7 +104,7 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         // this.player.src({type: 'video/x-matroska', src: this.videoUrl});
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         // destroy player
         if (this.player) {
             this.player.dispose();

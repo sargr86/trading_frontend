@@ -18,7 +18,7 @@ import {Subscription} from 'rxjs';
     selector: 'app-stocks-list',
     templateUrl: './stocks-list.component.html',
     styleUrls: ['./stocks-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StocksListComponent implements OnInit, OnDestroy {
     @Input('stocks') passedStocks = [];
@@ -137,7 +137,7 @@ export class StocksListComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
         this.loader.stocksLoading.status = 'finished';
     }

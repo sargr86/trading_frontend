@@ -198,7 +198,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

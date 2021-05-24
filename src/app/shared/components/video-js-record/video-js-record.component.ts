@@ -271,7 +271,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
     // use ngOnDestroy to detach event handlers and remove the player
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.player) {
             this.player.dispose();
             this.player = false;

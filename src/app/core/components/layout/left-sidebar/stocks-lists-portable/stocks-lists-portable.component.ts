@@ -191,7 +191,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

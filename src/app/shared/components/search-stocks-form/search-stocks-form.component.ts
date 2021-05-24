@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import {fromEvent, Subscription} from 'rxjs';
 import {StocksService} from '@core/services/stocks.service';
 import {Router} from '@angular/router';
+import {debounceTime, distinctUntilChanged, filter, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-search-stocks-form',
@@ -27,6 +28,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
     @Input('transparentForm') transparentForm = false;
 
     @Output('search') search = new EventEmitter();
+    @ViewChild('searchInput', {static: true}) input: ElementRef;
 
     constructor(
         private fb: FormBuilder,
@@ -37,6 +39,16 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.searchStocksForm = this.fb.group({search: ['', Validators.required]});
+        fromEvent(this.input.nativeElement, 'keyup')
+            .pipe(
+                filter(Boolean),
+                debounceTime(500),
+                distinctUntilChanged(),
+                tap((event: KeyboardEvent) => {
+                    this.handleRegularKeyup();
+                })
+            )
+            .subscribe();
     }
 
     handleRegularKeyup() {
@@ -83,7 +95,7 @@ export class SearchStocksFormComponent implements OnInit, OnDestroy {
         return this.autocomplete ? 'Search for stocks...' : 'Press \'Enter\' key to search stocks';
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

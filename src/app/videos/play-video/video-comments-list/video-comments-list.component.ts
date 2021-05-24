@@ -106,7 +106,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.selectedComment = c;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

@@ -50,7 +50,7 @@ export class YourVideosTabComponent implements OnInit, OnDestroy {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

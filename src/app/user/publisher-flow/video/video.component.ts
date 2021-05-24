@@ -348,7 +348,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         location.reload();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
 
         if (this.recordingState === 'started') {
             this.removeLiveVideoByToken();

@@ -159,7 +159,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         return this.authUser ? this.authUser.avatar : false;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

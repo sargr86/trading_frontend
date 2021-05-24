@@ -235,7 +235,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         // On component destroyed leave session
         this.leaveSession();
     }

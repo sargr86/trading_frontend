@@ -123,7 +123,7 @@ export class VideoLibraryComponent implements OnInit {
     this.ovLayoutOptions = this.ovSessionComponent.getOpenviduLayoutOptions();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     // On component destroyed leave session
     this.leaveSession();
   }

@@ -129,7 +129,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return this.registerForm.get('birthday');
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

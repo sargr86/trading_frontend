@@ -1,5 +1,5 @@
 <div id="stock-tiles-holder" cdkDropListGroup [class.no-moving]="dragDropDisabled">
-    <ng-container *ngFor="let stock of passedStocks;let ind = index">
+    <ng-container *ngFor="let stock of passedStocks;let ind = index;trackBy:trackByElement">
         <div cdkDropList class="stock-item-placeholder" cdkDropListOrientation="horizontal"
              [cdkDropListData]="{item:stock,index:ind}" (cdkDropListDropped)="drop($event)">
 

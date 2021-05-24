@@ -1,21 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
+import trackByElement from '@core/helpers/track-by-element';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-videos-list-holder',
     templateUrl: './videos-list-holder.component.html',
     styleUrls: ['./videos-list-holder.component.scss']
 })
-export class VideosListHolderComponent implements OnInit {
+export class VideosListHolderComponent implements OnInit, OnDestroy {
 
     authUser;
     videoLoading = 'idle';
+    trackByElement = trackByElement;
+    subscriptions: Subscription[] = [];
 
     @Input('videos') videos = [];
     @Input('title') title = '';
@@ -51,7 +55,7 @@ export class VideosListHolderComponent implements OnInit {
     }
 
     removeVideo(video) {
-        this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.videoService.removeVideo({
                     id: video.id,
@@ -62,30 +66,30 @@ export class VideosListHolderComponent implements OnInit {
                     this.videos = dt.videos;
                 });
             }
-        });
+        }));
 
-    }
-
-    isSmallScreen(videoLen) {
-        return window.screen.availWidth > 568 && videoLen === 1;
     }
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
-    isChannelPage(){
+    isChannelPage() {
         return this.router.url.includes('channel') && this.removable;
     }
 
 
     updatePrivacy(video, privacy) {
-        this.videoService.updatePrivacy({
+        this.subscriptions.push(this.videoService.updatePrivacy({
             video_id: video.id,
             privacy: privacy === 'Public' ? 'Private' : 'Public'
         }).subscribe(dt => {
             video.privacy = dt;
-        });
+        }));
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

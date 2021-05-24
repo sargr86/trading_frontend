@@ -1,5 +1,5 @@
 <div id="regular-video-list-container">
-    <div class="video-container flex-wrap" *ngFor="let video of items.videos">
+    <div class="video-container flex-wrap" *ngFor="let video of items.videos; trackBy: trackByElement">
         <div class="thumbnail">
             <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, video.user.username)">
             <span class="live-now" *ngIf="video.status==='live'">Live now</span>

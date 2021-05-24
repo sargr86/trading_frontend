@@ -7,6 +7,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {Router} from '@angular/router';
 import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-stock-tiles',
@@ -17,6 +18,7 @@ export class StockTilesComponent implements OnInit {
 
     stockChartSettings = STOCK_TILE_CHART_SETTINGS;
     authUser;
+    trackByElement = trackByElement;
 
     @Input('stocks') passedStocks: Stock[] = [];
     @Input('userStocks') userStocks: Stock[] = [];

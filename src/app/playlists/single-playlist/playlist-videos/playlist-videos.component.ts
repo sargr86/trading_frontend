@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
+import trackByElement from '@core/helpers/track-by-element';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {AddVideoToAnotherPlaylistComponent} from '@core/components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -18,7 +19,7 @@ export class PlaylistVideosComponent implements OnInit {
 
     apiUrl = API_URL;
     authUser;
-
+    trackByElement = trackByElement;
 
     @Input('playlist') playlist;
     @Output('refreshPlaylist') refreshPlaylist = new EventEmitter();

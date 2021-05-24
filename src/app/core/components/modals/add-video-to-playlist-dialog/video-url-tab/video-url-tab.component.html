@@ -14,7 +14,7 @@
     <ng-container *ngIf="searchedVideos.length > 0">
         <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
              [class.added]="getSelectedVideos.checkIfVideoAddedToPlaylist(video, playlist)"
-             *ngFor="let video of searchedVideos" (click)="selectVideo(video)">
+             *ngFor="let video of searchedVideos; trackBy: trackByElement" (click)="selectVideo(video)">
             <div class="video-container">
                 <div class="img">
                     <span class="added-placeholder"></span>

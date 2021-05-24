@@ -13,13 +13,13 @@
                         Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>
                     </div>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" *ngFor="let sortType of stocksSortTypes;let ind = index"
+                        <a class="dropdown-item" *ngFor="let sortType of stocksSortTypes;trackBy: trackByElement"
                            [class.red]="selectedSortType?.name === sortType.name"
                            (click)="sortStocks(sortType)">{{sortType.name}}</a>
                     </div>
                     <div class="spinner-container">
-<!--                        <mat-spinner *ngIf="loader.stocksLoading.status === 'loading'"-->
-<!--                                     [diameter]="15"></mat-spinner>-->
+                        <!--                        <mat-spinner *ngIf="loader.stocksLoading.status === 'loading'"-->
+                        <!--                                     [diameter]="15"></mat-spinner>-->
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks)">
+        <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks);trackBy: trackByElement">
             <div class="stock-item" cdkDrag (cdkDragDropped)="dragDropped($event)"
                  [cdkDragDisabled]="selectedSortType.value!=='custom'">
                 <div class="remove-stock" *ngIf="editStocksList" (click)="updateFollowedStocksList(stock)">

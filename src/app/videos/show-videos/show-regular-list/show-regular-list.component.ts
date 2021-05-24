@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
+import trackByElement from '@core/helpers/track-by-element';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 
@@ -12,6 +13,7 @@ export class ShowRegularListComponent implements OnInit {
 
     @Input('items') items;
     @Input('authUser') authUser;
+    trackByElement = trackByElement;
 
     constructor(
         public router: Router

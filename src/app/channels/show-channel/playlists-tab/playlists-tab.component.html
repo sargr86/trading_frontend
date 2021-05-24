@@ -11,7 +11,7 @@
                 <th>Video count</th>
                 <th></th>
             </tr>
-            <tr *ngFor="let playlist of playlists">
+            <tr *ngFor="let playlist of playlists; trackBy:trackByElement">
                 <td>
                     <div class="img-info">
                         <img class="thumbnail" [src]="playlist.thumbnail|getImgPath" (click)="goToEditPage(playlist)">

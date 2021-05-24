@@ -48,18 +48,18 @@ export class VideoCarouselHolderComponent implements OnInit {
     }
 
     removeVideo(video) {
-        this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
-            if (confirmed) {
-                this.videoService.removeVideo({
-                    id: video.id,
-                    filename: video.filename,
-                    username: this.authUser.username
-                }).subscribe(dt => {
-                    this.toastr.success('The video was removed successfully');
-                    this.videos = dt.videos;
-                });
-            }
-        });
+        // this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+        //     if (confirmed) {
+        //         this.videoService.removeVideo({
+        //             id: video.id,
+        //             filename: video.filename,
+        //             username: this.authUser.username
+        //         }).subscribe(dt => {
+        //             this.toastr.success('The video was removed successfully');
+        //             this.videos = dt.videos;
+        //         });
+        //     }
+        // });
 
     }
 

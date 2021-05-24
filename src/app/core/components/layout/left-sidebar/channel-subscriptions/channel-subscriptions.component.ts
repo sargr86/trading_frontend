@@ -5,6 +5,7 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
 import {ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-channel-subscriptions',
@@ -15,6 +16,7 @@ export class ChannelSubscriptionsComponent implements OnInit {
 
     channels = [];
     routerUrl;
+    trackByElement = trackByElement;
 
     @Input('authUser') authUser;
     @Output('closeSidenav') closeSidenav = new EventEmitter();

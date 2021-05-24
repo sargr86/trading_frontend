@@ -20,6 +20,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {StocksService} from '@core/services/stocks.service';
 import {ToastrService} from 'ngx-toastr';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-show-channel',
@@ -54,6 +55,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     userStocks = [];
     filteredStocks = [];
     subscriptions = [];
+    trackByElement = trackByElement;
 
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;

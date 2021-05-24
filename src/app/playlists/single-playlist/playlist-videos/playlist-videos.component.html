@@ -1,7 +1,7 @@
 <div class="playlist" cdkDropList>
     <div class="playlist-item" cdkDrag [cdkDragPreviewClass]="'video-container'"
          (cdkDragDropped)="dragDropped($event, video)"
-         *ngFor="let video of playlist.videos">
+         *ngFor="let video of playlist.videos; trackBy:trackByElement">
         <div class="video-container">
             <div class="img">
                 <img [src]="video.thumbnail|getImgPath"

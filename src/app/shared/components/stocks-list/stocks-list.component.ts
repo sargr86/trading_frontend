@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {getFirstNItems} from '@core/helpers/get-first-n-items';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
+import trackByElement from '@core/helpers/track-by-element';
 import {User} from '@shared/models/user';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {STOCK_ITEM_CHART_SETTINGS} from '@core/constants/charts';
@@ -11,13 +12,14 @@ import {StocksService} from '@core/services/stocks.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
 import {MatDialog} from '@angular/material/dialog';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-stocks-list',
     templateUrl: './stocks-list.component.html',
     styleUrls: ['./stocks-list.component.scss']
 })
-export class StocksListComponent implements OnInit {
+export class StocksListComponent implements OnInit, OnDestroy {
     @Input('stocks') passedStocks = [];
     authUser: User;
     selectedSortType;
@@ -25,6 +27,9 @@ export class StocksListComponent implements OnInit {
     stockChartSettings = STOCK_ITEM_CHART_SETTINGS;
     stocksSortTypes = [];
     editStocksList = false;
+    subscriptions: Subscription[] = [];
+    trackByElement = trackByElement;
+
 
     @Input('sorting') sorting = true;
     @Input('searching') searching = true;
@@ -48,14 +53,16 @@ export class StocksListComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.selectedSortType = this.authUser.stocks_order_type;
 
-        this.subject.currentStockSortTypes.subscribe(dt => {
+        this.subscriptions.push(this.subject.currentStockSortTypes.subscribe(dt => {
             this.stocksSortTypes = dt;
-        });
+        }));
     }
 
     onlyFirst10Stocks(stocks) {
         return getFirstNItems(stocks, 10);
     }
+
+
 
     getPercentageDetails(stock) {
         const value = +stock.changesPercentage; // .replace(/[(%)]/g, '')
@@ -110,11 +117,14 @@ export class StocksListComponent implements OnInit {
 
         } else {
             this.loader.stocksLoading.status = 'loading';
-            this.stocksService.getUserStocks({sort_type: type.value, user_id: this.authUser.id}).subscribe(dt => {
+            this.subscriptions.push(this.stocksService.getUserStocks({
+                sort_type: type.value,
+                user_id: this.authUser.id
+            }).subscribe(dt => {
                 this.passedStocks = dt?.user_stocks || [];
                 this.loader.stocksLoading.status = 'finished';
                 this.updatedStocksPriority.emit({stocks: this.passedStocks, orderType: this.selectedSortType.value});
-            });
+            }));
         }
     }
 
@@ -126,5 +136,10 @@ export class StocksListComponent implements OnInit {
             this.loader.stocksLoading.status = 'loading';
         }
     }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
+
 
 }

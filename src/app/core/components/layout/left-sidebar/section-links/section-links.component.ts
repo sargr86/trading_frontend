@@ -3,6 +3,7 @@ import {MAIN_SECTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {environment} from '@env';
 import {AuthService} from '@core/services/auth.service';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-section-links',
@@ -12,6 +13,7 @@ import {AuthService} from '@core/services/auth.service';
 export class SectionLinksComponent implements OnInit {
     mainSections = MAIN_SECTIONS;
     envName;
+    trackByElement = trackByElement;
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 

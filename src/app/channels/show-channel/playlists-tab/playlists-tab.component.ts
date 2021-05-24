@@ -8,6 +8,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {Subscription} from 'rxjs';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-playlists-tab',
@@ -21,7 +22,7 @@ export class PlaylistsTabComponent implements OnInit {
     search = '';
     filters = null;
     subscriptions: Subscription[] = [];
-
+    trackByElement = trackByElement;
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
 

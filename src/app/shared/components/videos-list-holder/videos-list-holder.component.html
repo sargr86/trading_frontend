@@ -26,7 +26,7 @@
 <!--        </div>-->
 <!--    </div>-->
 <div class="list-container d-flex flex-wrap justify-content-center justify-content-lg-start">
-    <ng-container *ngFor="let video of videos">
+    <ng-container *ngFor="let video of videos; trackBy: trackByElement">
         <div class="item mx-2 ml-lg-0  mr-lg-4">
 
             <ng-container

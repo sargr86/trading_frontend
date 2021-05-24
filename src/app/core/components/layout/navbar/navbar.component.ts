@@ -1,16 +1,15 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef} from '@angular/core';
 import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import IsResponsive from '@core/helpers/is-responsive';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-navbar',
@@ -21,6 +20,7 @@ export class NavbarComponent implements OnInit {
     authUser;
     routerUrl;
     isSmallScreen = IsResponsive.isSmallScreen();
+    trackByElement = trackByElement;
 
     envName = environment.envName;
 
@@ -36,7 +36,6 @@ export class NavbarComponent implements OnInit {
     constructor(
         public router: Router,
         public auth: AuthService,
-        private modalService: BsModalService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private stocksService: StocksService,

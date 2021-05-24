@@ -1,22 +1,26 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {patternValidator} from '@core/helpers/pattern-validator';
+import trackByElement from '@core/helpers/track-by-element';
 import {METL_URL_PATTERN} from '@core/constants/patterns';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-video-url-tab',
     templateUrl: './video-url-tab.component.html',
     styleUrls: ['./video-url-tab.component.scss']
 })
-export class VideoUrlTabComponent implements OnInit {
+export class VideoUrlTabComponent implements OnInit, OnDestroy {
     searchVideoByUrlForm: FormGroup;
     validUrl = true;
     searchedVideos = [];
     selectedVideos = [];
+    trackByElement = trackByElement;
+    subscriptions: Subscription[] = [];
 
     apiUrl = API_URL;
 
@@ -76,6 +80,10 @@ export class VideoUrlTabComponent implements OnInit {
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

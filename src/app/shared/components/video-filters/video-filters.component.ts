@@ -4,6 +4,7 @@ import {VideoService} from '@core/services/video.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
     selector: 'app-video-filters',
@@ -14,6 +15,7 @@ export class VideoFiltersComponent implements OnInit {
     filters = VIDEO_FILTERS;
     selectedFilters = {};
     subscriptions: Subscription[] = [];
+    trackByElement = trackByElement;
 
     @Output('filter') filterAction = new EventEmitter();
 

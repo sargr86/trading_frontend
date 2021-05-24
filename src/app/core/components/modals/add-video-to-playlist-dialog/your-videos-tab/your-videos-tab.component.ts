@@ -1,17 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from '@shared/pipes/get-selected-videos-to-be-added-to-playlist.pipe';
+import trackByElement from '@core/helpers/track-by-element';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-your-videos-tab',
     templateUrl: './your-videos-tab.component.html',
     styleUrls: ['./your-videos-tab.component.scss']
 })
-export class YourVideosTabComponent implements OnInit {
+export class YourVideosTabComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
     selectedVideos = [];
+    trackByElement = trackByElement;
+    subscriptions: Subscription[] = [];
 
     @Input('currentUser') currentUser;
     @Input('authUser') authUser;
@@ -27,9 +31,9 @@ export class YourVideosTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.getUserVideos({user_id: this.authUser.id}).subscribe(dt => {
             this.currentUser = dt;
-        });
+        }));
 
     }
 
@@ -46,5 +50,8 @@ export class YourVideosTabComponent implements OnInit {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
 }

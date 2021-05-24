@@ -1,6 +1,6 @@
 <h1 id="my-subscriptions">My Subscriptions</h1>
 <ul *ngIf="userChannels">
-    <li *ngFor="let channel of userChannels.subscriptions" class="channel-item">
+    <li *ngFor="let channel of userChannels.subscriptions;trackBy:trackByElement" class="channel-item">
         <div class="thumbnail">
             <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'">
         </div>

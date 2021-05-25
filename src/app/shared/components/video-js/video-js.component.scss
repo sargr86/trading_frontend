@@ -1,11 +1,14 @@
 //
-//.container {
-//    margin: 50px auto;
-//    max-width: 500px;
-//}
+.container {
+    margin: 50px auto;
+    max-width: 500px;
+    width: 100%;
+    height: 480px;
+}
+
 // Plyr custom styles
 .plyr {
-    height: 400px!important;
+    height: 400px !important;
     width: 100%;
 
     .plyr__control--overlaid {

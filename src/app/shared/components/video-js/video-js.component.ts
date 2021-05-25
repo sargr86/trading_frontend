@@ -66,11 +66,11 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         await video.play();
 
         //
-        const player = new Plyr('video', {
-            captions: {active: true},
-            quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]},
-            // controls: ['captions']
-        });
+        // const player = new Plyr('video', {
+        //     captions: {active: true},
+        //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]},
+        //     // controls: ['captions']
+        // });
         // console.log(player)
 
         // instantiate Video.js

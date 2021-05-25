@@ -4,9 +4,14 @@ import {ShowVideosComponent} from '@app/videos/show-videos/show-videos.component
 import {PlayVideoComponent} from '@app/videos/play-video/play-video.component';
 import {ShowSavedVideosComponent} from '@app/videos/show-saved-videos/show-saved-videos.component';
 import {AuthGuard} from '@core/guards/auth.guard';
+import {VideojsTestComponent} from '@app/videos/videojs-test/videojs-test.component';
 
 
 const routes: Routes = [
+    {
+      path: 'test',
+      component: VideojsTestComponent
+    },
     {
         path: '',
         component: ShowVideosComponent,

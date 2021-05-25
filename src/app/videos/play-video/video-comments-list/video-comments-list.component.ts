@@ -127,14 +127,14 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         const conn = this.checkUserCommentConnection(c);
 
         // Avoiding negative values here
-        params.likes = Math.max(0, conn.liked ? --c.likes : +c.likes);
-        params.dislikes = Math.max(0, conn.disliked ? --c.dislikes : +c.dislikes);
+        params.likes = Math.max(0, conn?.liked ? --c.likes : +c.likes);
+        params.dislikes = Math.max(0, conn?.disliked ? --c.dislikes : +c.dislikes);
 
 
         if (liked) {
-            params.liked = +!conn.liked;
+            params.liked = +!conn?.liked;
         } else {
-            params.disliked = +!conn.disliked;
+            params.disliked = +!conn?.disliked;
         }
 
         return params;

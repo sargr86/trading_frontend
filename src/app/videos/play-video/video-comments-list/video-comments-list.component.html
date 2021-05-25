@@ -84,9 +84,9 @@
                 <app-video-comments-form [editComment]="true" [selectedComment]="selectedComment" class="w-100"
                                          *ngIf="editComment && c.id===selectedComment.id"
                                          (updated)="getUpdatedComments($event)" (cancelled)="editComment = false"
-                                         [videoData]="videoData"></app-video-comments-form>
+                                         [videoData]="videoData">
 
-
+                </app-video-comments-form>
             </div>
             <div class="right-group">
                 <app-comment-actions [comment]="c" *ngIf="isMyComment(c) && !editComment"

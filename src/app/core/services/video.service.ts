@@ -117,4 +117,8 @@ export class VideoService {
 
         return this.httpClient.delete<any>(`${API_URL}videos/remove-comment`, {params});
     }
+
+    updateCommentLikes(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/update-comment-likes`, params);
+    }
 }

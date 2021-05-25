@@ -51,6 +51,11 @@ export class VideoJsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.initPlayer();
+
+    }
+
+    async initPlayer() {
         const video = document.getElementsByTagName('video')[0];
         this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
         video.setAttribute('src', this.videoUrl);
@@ -58,7 +63,7 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         video.poster = API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail;
         video.muted = true;
         video.load();
-        video.play();
+        await video.play();
 
         //
         const player = new Plyr('video', {

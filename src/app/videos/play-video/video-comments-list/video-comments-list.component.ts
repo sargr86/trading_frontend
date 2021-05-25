@@ -23,7 +23,6 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     editReply = false;
     selectedReply;
     trackByElement = trackByElement;
-    userCommentConnection = {liked: 0, video_id: null, comment_id: null}
 
     @Input() videoData;
     @Input() videoComments = [];
@@ -39,7 +38,6 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.checkUserCommentConnection(this.videoData);
     }
 
 
@@ -108,21 +106,31 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.selectedComment = c;
     }
 
-    likeDislikeComment(c) {
+    likeDislikeComment(c, liked = true) {
+        const params = {
+            liked: +liked,
+            disliked: +!liked,
+            video_id: c.video_id,
+            comment_id: c.id,
+            user_id: this.authUser.id,
+            likes: liked ? ++c.likes : this.checkUserCommentConnection(c) ? --c.likes : c.likes,
+            dislikes: liked ? (this.checkUserCommentConnection(c) ? --c.dislikes : c.dislikes) : ++c.dislikes
+        };
 
+
+        // return this.checkUserCommentConnection(c);
+        this.videoService.updateCommentLikes(params).subscribe(dt => {
+            this.videoComments = dt;
+        });
     }
 
-    // current comment instead of videoData here!!!
-    checkUserCommentConnection(videoData) {
-        console.log(this.videoComments)
-        const userCommentConnection = videoData?.users_vids.find(u => u.id === this.authUser.id);
-        if (!userCommentConnection) {
-            return this.userCommentConnection;
-        } else {
-            const liked = userCommentConnection.users_videos?.liked;
-            const disliked = userCommentConnection.users_videos?.disliked;
-            return {liked, disliked};
-        }
+    getLikersCount(reactors) {
+        return reactors.filter(r => r?.users_comments.liked).length;
+    }
+
+    checkUserCommentConnection(comment) {
+        const foundInReactors = comment.reactors.find(r => r.id === this.authUser.id);
+        return foundInReactors?.users_comments;
     }
 
     ngOnDestroy(): void {

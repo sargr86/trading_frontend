@@ -114,7 +114,6 @@ export class VideoService {
     }
 
     removeVideoComment(params) {
-
         return this.httpClient.delete<any>(`${API_URL}videos/remove-comment`, {params});
     }
 

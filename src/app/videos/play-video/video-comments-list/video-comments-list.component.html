@@ -55,9 +55,11 @@
                                                 </div>
                                                 <div class="likes-reply">
                                                     <div class="comments-like mb-2">
-                                                        <i class="fa fa-thumbs-up mr-3"></i>
-                                                        <span> 22k </span>
-                                                        <i class="fa fa-thumbs-down ml-3"></i>
+                                                        <i class="fa fa-thumbs-up mr-1" (click)="likeDislikeComment(reply, true, c)"
+                                                           [class.liked]="checkUserCommentConnection(reply)?.liked"></i>
+                                                        <span class="likes-count"> {{getLikersCount(reply.reactors) }} </span>
+                                                        <i class="fa fa-thumbs-down ml-3" (click)="likeDislikeComment(reply, false, c)"
+                                                           [class.disliked]="checkUserCommentConnection(reply)?.disliked"></i>
                                                     </div>
                                                 </div>
                                             </div>

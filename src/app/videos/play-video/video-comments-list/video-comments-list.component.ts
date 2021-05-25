@@ -107,26 +107,43 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     likeDislikeComment(c, liked = true) {
-        const params = {
-            liked: +liked,
-            disliked: +!liked,
-            video_id: c.video_id,
-            comment_id: c.id,
-            user_id: this.authUser.id,
-            likes: liked ? ++c.likes : this.checkUserCommentConnection(c) ? --c.likes : c.likes,
-            dislikes: liked ? (this.checkUserCommentConnection(c) ? --c.dislikes : c.dislikes) : ++c.dislikes
-        };
+        const params = this.buildParams(c, liked);
 
-
-        // return this.checkUserCommentConnection(c);
         this.videoService.updateCommentLikes(params).subscribe(dt => {
             this.videoComments = dt;
         });
     }
 
+    buildParams(c, liked) {
+        const params = {
+            video_id: c.video_id,
+            comment_id: c.id,
+            user_id: this.authUser.id,
+            liked: 0,
+            disliked: 0,
+            likes: c.likes,
+            dislikes: c.dislikes
+        };
+        const conn = this.checkUserCommentConnection(c);
+
+        // Avoiding negative values here
+        params.likes = Math.max(0, conn.liked ? --c.likes : +c.likes);
+        params.dislikes = Math.max(0, conn.disliked ? --c.dislikes : +c.dislikes);
+
+
+        if (liked) {
+            params.liked = +!conn.liked;
+        } else {
+            params.disliked = +!conn.disliked;
+        }
+
+        return params;
+    }
+
     getLikersCount(reactors) {
         return reactors.filter(r => r?.users_comments.liked).length;
     }
+
 
     checkUserCommentConnection(comment) {
         const foundInReactors = comment.reactors.find(r => r.id === this.authUser.id);

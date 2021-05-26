@@ -32,6 +32,7 @@ import {StocksListComponent} from './components/stocks-list/stocks-list.componen
 import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
 import {FixTextLineBreaksPipe} from './pipes/fix-text-line-breaks.pipe';
 import { VideoRegularPlayerComponent } from './components/video-regular-player/video-regular-player.component';
+import { StocksMarqueeComponent } from './components/stocks-marquee/stocks-marquee.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import { VideoRegularPlayerComponent } from './components/video-regular-player/v
         StocksListComponent,
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
-        VideoRegularPlayerComponent
+        VideoRegularPlayerComponent,
+        StocksMarqueeComponent
     ],
     imports: [
         CommonModule,
@@ -110,7 +112,8 @@ import { VideoRegularPlayerComponent } from './components/video-regular-player/v
         StocksListComponent,
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
-        VideoRegularPlayerComponent
+        VideoRegularPlayerComponent,
+        StocksMarqueeComponent
     ]
 
 })

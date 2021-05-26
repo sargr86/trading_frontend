@@ -24,17 +24,7 @@
             <app-search-stocks-form class="d-none d-lg-block" [autocomplete]="true" [openStockOnEnter]="true"
                                     *ngIf="routerUrl?.includes('analytics')" [groupResults]="true"
                                     (search)="searchStocks($event)"></app-search-stocks-form>
-            <marquee class="feeder-bar marquee" direction="left" height="40px" (click)="openModal()"
-                     *ngIf="stocks">
-                <div class="marquee-content">
-                    <div class="home-black-item" *ngFor="let stock of stocks;trackBy: trackByElement">
-                        <p class="black-text">{{stock.symbol}}</p>
-                        <p class="black-percent"
-                           [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
-                    </div>
-                </div>
-                <!--            <i class="down-white fa fa-chevron-down"></i>-->
-            </marquee>
+            <app-stocks-marquee [stocks]="stocks" *ngIf="stocks"></app-stocks-marquee>
             <div class="notification-block">
                 <div class="nav-item dropdown" [hidden]="envName==='production'">
                     <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>

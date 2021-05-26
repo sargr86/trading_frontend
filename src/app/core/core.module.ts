@@ -72,6 +72,7 @@ import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/sto
         NavbarComponent,
         LeftSidebarComponent,
         PurchaseBitsComponent,
+        StocksListsPortableComponent,
     ],
     entryComponents: [],
     providers: [

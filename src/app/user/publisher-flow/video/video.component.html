@@ -24,11 +24,12 @@
                 <li *ngFor="let participant of participants">{{participant}}</li>
             </ul>
         </div>
+        <app-stocks-marquee [stocks]="userStocks" *ngIf="userStocks"></app-stocks-marquee>
     </ng-container>
     <div class="no-stored-session-data" *ngIf="!sessionData && !videoSettings">
         <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
 
-            <img src="../../assets/img/errorPage.svg" alt="no-stored-session-data-img" width="500" height="370">
+            <img src="assets/img/errorPage.svg" alt="no-stored-session-data-img" width="500" height="370">
             <p class="text-center"><b>There is no session data defined.</b> <br> Please return to the <a
                 routerLink="/user/video/start-live-video">'Start
                 live video' page</a></p>

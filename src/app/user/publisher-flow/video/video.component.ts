@@ -20,6 +20,7 @@ import {API_URL} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
 import {LoaderService} from '@core/services/loader.service';
 import {ChatService} from '@core/services/chat.service';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-video',
@@ -76,6 +77,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     sessionData = {sessionName: '', myUserName: ''};
 
     sessionName;
+    userStocks = [];
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -86,6 +88,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
         private chatService: ChatService,
+        private stocksService: StocksService,
         public router: Router,
         private route: ActivatedRoute,
         private dialog: MatDialog,
@@ -112,6 +115,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             if (!data.viaSocket) {
                 this.sendRecordingState(data.recording);
             }
+        });
+
+        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+            this.userStocks = dt?.user_stocks || [];
         });
 
 

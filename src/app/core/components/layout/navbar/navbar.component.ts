@@ -60,18 +60,7 @@ export class NavbarComponent implements OnInit {
 
     }
 
-    openModal() {
-        if (this.auth.loggedIn()) {
-            this.dialog.open(StocksListsModalComponent, {
-                maxWidth: '100vw',
-                maxHeight: '100vh',
-                height: '100%',
-                width: '100%',
-                panelClass: 'stocks-lists-modal'
-            }).afterClosed().subscribe(dt => {
-            });
-        }
-    }
+
 
     logout() {
         this.auth.logout().subscribe(async () => {
@@ -112,11 +101,7 @@ export class NavbarComponent implements OnInit {
         return stock.changesPercentage.replace(/[(%)]/g, '');
     }
 
-    getPercentageDetails(stock) {
-        const value = stock.changesPercentage.replace(/[(%)]/g, '');
-        return {...{value}, color: 'black-percent-' + (+value > 0 ? 'green' : 'red')};
 
-    }
 
     goToChannelPage() {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>

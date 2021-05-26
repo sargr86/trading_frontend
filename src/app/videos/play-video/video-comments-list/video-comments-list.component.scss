@@ -8,10 +8,10 @@
 
         .left-group {
             display: flex;
-            width: 70%;
+            width: 100%;
 
             .details {
-                width: 70%;
+                flex: 1;
             }
 
             .author {

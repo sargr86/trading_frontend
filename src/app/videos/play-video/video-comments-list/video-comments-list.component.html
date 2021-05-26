@@ -5,7 +5,7 @@
                 <ng-container *ngIf="(c.id!==selectedComment?.id && !showReplyForm)|| showReplyForm || !editComment">
                     <img class="avatar" [src]="c.user?.channel.avatar|getImgPath:'avatars'">
                     <div class="details">
-                        <div class="d-flex align-items-center mb-2">
+                        <div class="d-flex align-items-center flex-wrap mb-2">
                             <div class="mr-3 user-name" [class.author.px-2]="isAuthor(c)">
                                 {{c?.user?.full_name}} <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(c)"></i>
                             </div>
@@ -42,7 +42,7 @@
                                         <ng-container *ngIf="(reply.id!==selectedReply?.id) || !editReply">
                                             <img class="avatar" [src]="reply.user?.channel.avatar|getImgPath:'avatars'">
                                             <div class="details">
-                                                <div class="d-flex align-items-center mb-2">
+                                                <div class="d-flex align-items-center flex-wrap mb-2">
                                                     <div class="mr-3 user-name" [class.author.px-2]="isAuthor(reply)">
                                                         <span>{{reply?.user?.full_name}}</span>
                                                         <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(reply)"></i>
@@ -76,7 +76,8 @@
                                                          *ngIf="editReply && reply.id===selectedReply.id"
                                                          (updated)="getUpdatedComments($event)"
                                                          (cancelled)="editReply = false"
-                                                         [videoData]="videoData"></app-video-comments-form>
+                                                         [videoData]="videoData">
+                                </app-video-comments-form>
                             </ng-container>
                         </div>
                     </div>

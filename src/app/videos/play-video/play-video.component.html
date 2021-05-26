@@ -3,7 +3,8 @@
     <div class="ads-block-left">
         <ng-container *ngIf="videoData">
             <div class="videoWrap">
-                <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>
+<!--                <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>-->
+                <app-video-regular-player [videoData]="videoData"></app-video-regular-player>
             </div>
 
             <div class="main-tags">

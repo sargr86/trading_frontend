@@ -59,9 +59,9 @@ export class VideoJsComponent implements OnInit, OnDestroy {
         const video = document.getElementsByTagName('video')[0];
         this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
         video.setAttribute('src', this.videoUrl);
-        video.setAttribute('poster', API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail);
-        video.poster = API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail;
-        video.muted = true;
+        // video.setAttribute('poster', API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail);
+        // video.poster = API_URL + 'uploads/thumbnails/' + this.videoData.thumbnail;
+        // video.muted = true;
         video.load();
         await video.play();
 

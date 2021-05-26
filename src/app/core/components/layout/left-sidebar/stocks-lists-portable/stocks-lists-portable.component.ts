@@ -36,6 +36,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     tabsList: Tab[] = MINI_GRAPHS_TABS;
     activeTab: Tab = MINI_GRAPHS_TABS[0];
 
+    disallowedStocks = false;
 
     constructor(
         public router: Router,
@@ -60,29 +61,30 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                     // if (!this.routerUrl?.includes('analytics')) {
                     // this.getIndices();  //@todo responsible for indices refresh on every page change
                     // }
+                    this.disallowedStocks = this.routerUrl?.includes('publish') || this.routerUrl?.includes('videos/test');
+                    console.log(this.disallowedStocks)
+                    if (this.authUser && !this.disallowedStocks) {
+                        this.subscriptions.push(this.subject.currentUserStocks.subscribe((dt: any) => {
+                            this.userStocks = dt.stocks;
+                            // this.getStockTypes();
+
+                            this.cdr.detectChanges();
+                            this.loader.hide();
+                        }));
+
+                        this.subscriptions.push(this.subject.currentStockSortTypes.subscribe(dt => {
+                            this.stocksSortTypes = dt;
+                            this.selectedSortType = dt[0];
+                        }));
+
+                        this.getUserStocks();
+                        this.getIndices(); // @todo remove if refreshing implemented
+                    }
                 }
 
             }
         }));
 
-
-        if (this.authUser) {
-            this.subscriptions.push(this.subject.currentUserStocks.subscribe((dt: any) => {
-                this.userStocks = dt.stocks;
-                // this.getStockTypes();
-
-                this.cdr.detectChanges();
-                this.loader.hide();
-            }));
-
-            this.subscriptions.push(this.subject.currentStockSortTypes.subscribe(dt => {
-                this.stocksSortTypes = dt;
-                this.selectedSortType = dt[0];
-            }));
-
-            this.getUserStocks();
-            this.getIndices(); // @todo remove if refreshing implemented
-        }
 
         this.subscriptions.push(this.subject.getStocksData().subscribe(dt => {
             this.stocks = dt;

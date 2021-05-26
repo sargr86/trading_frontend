@@ -1,4 +1,4 @@
-<ng-container *ngIf="auth.loggedIn() && !isSmallScreen">
+<ng-container *ngIf="auth.loggedIn() && !disallowedStocks && !isSmallScreen">
     <div class="stocks-watchlist" id="sidebar-watchlist">
         <app-stocks-lists-tabs [defaultTab]="activeTab" [tabsList]="tabsList"
                                (tabChanged)="getActiveTab($event)"></app-stocks-lists-tabs>

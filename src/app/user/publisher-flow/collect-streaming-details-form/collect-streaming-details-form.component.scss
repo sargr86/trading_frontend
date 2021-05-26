@@ -36,6 +36,10 @@
             font: normal normal normal 16px/20px 'Muli-Regular';
             color: #8c8888;
             outline: none;
+
+            option:disabled {
+                color: silver;
+            }
         }
     }
 

@@ -36,7 +36,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     tabsList: Tab[] = MINI_GRAPHS_TABS;
     activeTab: Tab = MINI_GRAPHS_TABS[0];
 
-    disallowedStocks = false;
+    disallowedStocksPages = false;
 
     constructor(
         public router: Router,
@@ -61,9 +61,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                     // if (!this.routerUrl?.includes('analytics')) {
                     // this.getIndices();  //@todo responsible for indices refresh on every page change
                     // }
-                    this.disallowedStocks = this.routerUrl?.includes('publish') || this.routerUrl?.includes('videos/test');
-                    console.log(this.disallowedStocks)
-                    if (this.authUser && !this.disallowedStocks) {
+                    this.disallowedStocksPages = this.routerUrl?.includes('publish') || this.routerUrl?.includes('videos/test');
+                    if (this.authUser && !this.disallowedStocksPages) {
                         this.subscriptions.push(this.subject.currentUserStocks.subscribe((dt: any) => {
                             this.userStocks = dt.stocks;
                             // this.getStockTypes();

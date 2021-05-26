@@ -38,7 +38,7 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.videoLoading = 'loading';
-        if (this.videos.length > 0) {
+        if (this.videos?.length > 0) {
             this.videoLoading = 'finished';
         }
     }

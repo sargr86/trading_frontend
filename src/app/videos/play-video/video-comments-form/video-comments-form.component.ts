@@ -70,7 +70,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         });
 
         if (this.reply2Reply) {
-            this.videoCommentsForm.patchValue({comment: '@' + this.selectedReply?.user.username});
+            this.replyUsername = '@' + this.selectedReply?.user.username + ' ';
+            this.videoCommentsForm.patchValue({comment: this.replyUsername});
         }
 
     }
@@ -78,7 +79,6 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     saveComment() {
         this.isSubmitted = true;
         if (this.videoCommentsForm.valid) {
-            console.log(this.reply, this.isReplyComment)
             // Reply add
             if (this.reply) {
                 this.videoCommentsForm.patchValue({
@@ -94,16 +94,18 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
                     is_reply: 1
                 });
             } else if (this.reply2Reply) {
-                console.log(this.parentComment)
+                const updatedUsername = '<strong class="reply-username">' + this.replyUsername + '</strong>';
+                const reply2Reply = this.commentCtrl.value.replace(this.replyUsername, updatedUsername);
                 this.videoCommentsForm.patchValue({
                     to_comment_id: this.selectedComment.id,
                     to_reply_id: this.selectedReply.id,
                     to_user_id: this.selectedComment.user.id,
+                    comment: reply2Reply,
                     is_reply: 1
                 });
             }
 
-            // Comment actions
+            // Comment & reply actions
             if (this.editComment) {
                 this.videoService.updateVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.commentUpdated.emit(dt);

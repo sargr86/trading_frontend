@@ -102,6 +102,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     commentAdded(e) {
         this.videoComments = e;
         this.showReplyForm = false;
+        this.showReplyToReplyForm = false;
         this.showReplies = true;
         this.selectedComment = e.find(c => c.id === this.selectedComment.id);
     }

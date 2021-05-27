@@ -11,7 +11,10 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class StocksMarqueeComponent implements OnInit {
     @Input() stocks;
+    @Input() videoStreaming = false;
+
     trackByElement = trackByElement;
+
 
     constructor(
         public auth: AuthService,

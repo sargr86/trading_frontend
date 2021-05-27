@@ -65,7 +65,7 @@
                                                            [class.disliked]="checkUserCommentConnection(reply)?.disliked"></i>
                                                     </div>
                                                     <div class="reply-container">
-                                                        <span class="reply" (click)="replyToReply(reply)">Reply</span>
+                                                        <span class="reply" (click)="replyToReply(c, reply)">Reply</span>
                                                         <div class="add-reply"
                                                              *ngIf="showReplyToReplyForm && reply.id===selectedReply?.id">
                                                             <app-video-comments-form [videoData]="videoData"

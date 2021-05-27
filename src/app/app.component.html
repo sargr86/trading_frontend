@@ -12,8 +12,7 @@
         <!--        <mat-spinner [diameter]="30" *ngIf="loader.dataLoading"></mat-spinner>-->
 
         <section class="body-content" [class.full-width]="router.url.includes('auth')">
-            <div class="body-content-left" [class.disabled]="router.url.includes('publish')"
-                 *ngIf="isSidebarShown()">
+            <div class="body-content-left" *ngIf="isSidebarShown()">
                 <div class="position-relative">
                     <div class="close-left-menu">&times;</div>
                     <app-left-sidebar></app-left-sidebar>

@@ -1,7 +1,7 @@
 <div class="logo-container" *ngIf="isSmallScreen">
     <img class="header-left-logo navbar-brand" src="assets/img/logo.png" (click)="changePage('/')">
 </div>
-<div id="left-sidebar">
+<div id="left-sidebar" [class.disabled]="router.url.includes('publish')">
     <div id="left-menu">
         <app-section-links (closeSidenav)="closeSidenav.emit($event)"></app-section-links>
     </div>

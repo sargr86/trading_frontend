@@ -30,8 +30,10 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     @Input() editComment = false;
     @Input() selectedComment = null;
+    @Input() selectedReply = null;
     @Input() reply = false;
     @Input() isReplyComment = false;
+    @Input() reply2Reply = false;
     @Input() parentComment = null;
     @ViewChild('cEditable') cEditable;
     @Output('added') commentAdded = new EventEmitter();
@@ -70,22 +72,31 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     saveComment() {
         this.isSubmitted = true;
         if (this.videoCommentsForm.valid) {
-
+            console.log(this.reply, this.isReplyComment)
+            // Reply add
             if (this.reply) {
                 this.videoCommentsForm.patchValue({
                     to_comment_id: this.selectedComment.id,
                     to_user_id: this.selectedComment.user.id,
                     is_reply: 1
                 });
+                // Reply edit
             } else if (this.isReplyComment) {
                 this.videoCommentsForm.patchValue({
                     to_comment_id: this.parentComment.id,
                     to_user_id: this.parentComment.user.id,
                     is_reply: 1
                 });
+            } else if (this.reply2Reply) {
+                this.videoCommentsForm.patchValue({
+                    to_comment_id: this.parentComment.id,
+                    to_reply_id: this.selectedComment.id,
+                    to_user_id: this.parentComment.user.id,
+                    is_reply: 1
+                });
             }
 
-
+            // Comment actions
             if (this.editComment) {
                 this.videoService.updateVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.commentUpdated.emit(dt);

@@ -19,6 +19,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     selectedComment;
     subscriptions: Subscription[] = [];
     showReplyForm = false;
+    showReplyToReplyForm = false;
     showReplies = false;
     editReply = false;
     selectedReply;
@@ -74,6 +75,11 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
             this.showReplyForm = this.selectedComment !== c || !this.showReplyForm;
             this.selectedComment = c;
         }
+    }
+
+    replyToReply(r) {
+        this.showReplyToReplyForm =  this.selectedReply !== r || !this.showReplyToReplyForm;
+        this.selectedReply = r;
     }
 
 

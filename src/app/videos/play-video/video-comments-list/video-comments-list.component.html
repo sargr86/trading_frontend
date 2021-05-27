@@ -55,11 +55,26 @@
                                                 </div>
                                                 <div class="likes-reply">
                                                     <div class="comments-like mb-2">
-                                                        <i class="fa fa-thumbs-up mr-1" (click)="likeDislikeComment(reply, true, c)"
+                                                        <i class="fa fa-thumbs-up mr-1"
+                                                           (click)="likeDislikeComment(reply, true, c)"
                                                            [class.liked]="checkUserCommentConnection(reply)?.liked"></i>
-                                                        <span class="likes-count"> {{getLikersCount(reply.reactors) }} </span>
-                                                        <i class="fa fa-thumbs-down ml-3" (click)="likeDislikeComment(reply, false, c)"
+                                                        <span
+                                                            class="likes-count"> {{getLikersCount(reply.reactors) }} </span>
+                                                        <i class="fa fa-thumbs-down ml-3"
+                                                           (click)="likeDislikeComment(reply, false, c)"
                                                            [class.disliked]="checkUserCommentConnection(reply)?.disliked"></i>
+                                                    </div>
+                                                    <div class="reply-container">
+                                                        <span class="reply" (click)="replyToReply(reply)">Reply</span>
+                                                        <div class="add-reply"
+                                                             *ngIf="showReplyToReplyForm && reply.id===selectedReply?.id">
+                                                            <app-video-comments-form [videoData]="videoData"
+                                                                                     [selectedReply]="selectedReply"
+                                                                                     [selectedComment]="selectedComment"
+                                                                                     [reply2Reply]="true"
+                                                                                     (added)="commentAdded($event)"
+                                                                                     class="w-100"></app-video-comments-form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,7 +105,6 @@
                                          *ngIf="editComment && c.id===selectedComment.id"
                                          (updated)="getUpdatedComments($event)" (cancelled)="editComment = false"
                                          [videoData]="videoData">
-
                 </app-video-comments-form>
             </div>
             <div class="right-group">

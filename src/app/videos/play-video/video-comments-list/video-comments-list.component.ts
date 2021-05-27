@@ -85,9 +85,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
                     id: c.id,
                     video_id: c.video_id
                 }).subscribe(dt => {
-
                     this.videoComments = dt;
-                    console.log(this.videoComments)
                     this.selectedComment = dt.find(cm => cm.id === this.selectedComment?.id);
                 });
             }

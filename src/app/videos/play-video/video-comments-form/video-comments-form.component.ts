@@ -64,6 +64,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
             video_id: [this.videoData.id],
             to_user_id: [0],
             to_comment_id: [0],
+            to_reply_id: [0],
             is_reply: [0]
         });
 
@@ -88,10 +89,11 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
                     is_reply: 1
                 });
             } else if (this.reply2Reply) {
+                console.log(this.parentComment)
                 this.videoCommentsForm.patchValue({
-                    to_comment_id: this.parentComment.id,
-                    to_reply_id: this.selectedComment.id,
-                    to_user_id: this.parentComment.user.id,
+                    to_comment_id: this.selectedComment.id,
+                    to_reply_id: this.selectedReply.id,
+                    to_user_id: this.selectedComment.user.id,
                     is_reply: 1
                 });
             }

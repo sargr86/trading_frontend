@@ -26,6 +26,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     inputFocused = false;
     authUser;
     isSubmitted = false;
+    replyUsername;
 
 
     @Input() editComment = false;
@@ -38,7 +39,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     @ViewChild('cEditable') cEditable;
     @Output('added') commentAdded = new EventEmitter();
     @Output('updated') commentUpdated = new EventEmitter();
-    @Output('cancelled') editingCancelled = new EventEmitter();
+    @Output('cancelled') cancelled = new EventEmitter();
 
     placeholderText;
 
@@ -67,6 +68,10 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
             to_reply_id: [0],
             is_reply: [0]
         });
+
+        if (this.reply2Reply) {
+            this.videoCommentsForm.patchValue({comment: '@' + this.selectedReply?.user.username});
+        }
 
     }
 
@@ -118,8 +123,8 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     onCancel() {
         this.inputFocused = false;
         this.videoCommentsForm.get('comment').reset();
-        if (this.editComment) {
-            this.editingCancelled.emit();
+        if (this.editComment || this.reply || this.reply2Reply) {
+            this.cancelled.emit();
         }
     }
 

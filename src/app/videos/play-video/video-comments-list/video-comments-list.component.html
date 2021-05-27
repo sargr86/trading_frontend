@@ -28,6 +28,7 @@
                                     <app-video-comments-form [videoData]="videoData" [reply]="true"
                                                              [selectedComment]="selectedComment"
                                                              (added)="commentAdded($event)"
+                                                             (cancelled)="showReplyForm = false"
                                                              class="w-100"></app-video-comments-form>
                                 </div>
                             </div>
@@ -65,7 +66,8 @@
                                                            [class.disliked]="checkUserCommentConnection(reply)?.disliked"></i>
                                                     </div>
                                                     <div class="reply-container">
-                                                        <span class="reply" (click)="replyToReply(c, reply)">Reply</span>
+                                                        <span class="reply"
+                                                              (click)="replyToReply(c, reply)">Reply</span>
                                                         <div class="add-reply"
                                                              *ngIf="showReplyToReplyForm && reply.id===selectedReply?.id">
                                                             <app-video-comments-form [videoData]="videoData"
@@ -73,6 +75,7 @@
                                                                                      [selectedComment]="selectedComment"
                                                                                      [reply2Reply]="true"
                                                                                      (added)="commentAdded($event)"
+                                                                                     (cancelled)="showReplyToReplyForm = false"
                                                                                      class="w-100"></app-video-comments-form>
                                                         </div>
                                                     </div>

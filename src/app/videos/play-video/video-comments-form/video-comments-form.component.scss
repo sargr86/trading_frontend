@@ -6,9 +6,25 @@ form {
         overflow: hidden;
         resize: none;
     }
-
-    .comment-input-container {
-        position: relative;
+}
+.avatar-author-name {
+    min-width: 120px;
+    height: 26px;
+    background-color: #777;
+    color: #ffffff;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.comments-like {
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    .fa {
+        cursor: pointer;
     }
 
     .content-editable-textarea {
@@ -38,6 +54,3 @@ form {
         font-weight: bold;
     }
 }
-
-
-

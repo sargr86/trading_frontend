@@ -8,10 +8,10 @@
 
         .left-group {
             display: flex;
-            width: 70%;
+            width: 100%;
 
             .details {
-                width: 70%;
+                flex: 1;
             }
 
             .author {
@@ -54,7 +54,8 @@
 
                 .comments-like {
                     color: #777;
-
+                    display: flex;
+                    align-items: center;
                     .fa {
                         cursor: pointer;
                     }

@@ -112,10 +112,8 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
 
         this.videoService.updateCommentLikes(params).subscribe(dt => {
             this.videoComments = dt;
-            if (parentComment) {
-                this.showReplies = true;
-                this.selectedComment = this.videoComments.find(comm => comm.id === this.selectedComment.id);
-            }
+            this.showReplies = true;
+            this.selectedComment = this.videoComments.find(comm => comm.id === this.selectedComment.id);
         });
     }
 

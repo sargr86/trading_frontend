@@ -73,6 +73,10 @@ export class AppComponent implements OnInit {
         }
     }
 
+    isSidebarShown() {
+        return !this.router.url.includes('auth') && !this.checkIfPolicyPage() && !this.isSmallScreen;
+    }
+
     checkIfPolicyPage() {
         return /accessibility-assessment|security|help|privacy-policy|cookie-policy|about/.test(this.router.url);
     }

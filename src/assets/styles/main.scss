@@ -915,4 +915,9 @@ mat-optgroup {
     color: $red !important;
 }
 
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 @import "responsive";

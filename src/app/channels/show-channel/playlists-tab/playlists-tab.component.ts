@@ -41,6 +41,7 @@ export class PlaylistsTabComponent implements OnInit {
         this.search = localStorage.getItem('search');
         this.getPlaylists({search: this.search, filters: this.filters});
         this.getFiltersToggleState();
+        console.log(this.channelUser, this.authUser)
     }
 
     getFiltersToggleState() {

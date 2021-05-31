@@ -27,6 +27,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     authUser;
     isSubmitted = false;
     replyUsername;
+    originalFormattedComment = '';
 
 
     @Input() editComment = false;
@@ -107,6 +108,14 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
             // Comment & reply actions
             if (this.editComment) {
+
+                if (this.parentComment) {
+                    const updatedUsername = '<strong class="reply-username">' + this.replyUsername + '</strong>';
+                    const reply2Reply = this.commentCtrl.value.replace(this.replyUsername, updatedUsername);
+                    this.videoCommentsForm.patchValue({comment: reply2Reply});
+                }
+
+
                 this.videoService.updateVideoComment(this.videoCommentsForm.value).subscribe(dt => {
                     this.commentUpdated.emit(dt);
                     this.videoCommentsForm.get('comment').reset();
@@ -141,8 +150,15 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         if (this.editComment) {
+            const comment = this.selectedComment.comment;
+            if (this.parentComment) {
+                this.replyUsername = comment.substring(
+                    comment.lastIndexOf('@'),
+                    comment.lastIndexOf(' ')
+                );
+            }
             this.videoCommentsForm.patchValue({
-                comment: this.fixLineBreaks.transform(this.selectedComment.comment),
+                comment: this.fixLineBreaks.transform(comment.replace(/<[^>]*>?/gm, '')),
                 id: this.selectedComment.id
             });
             this.inputFocused = true;

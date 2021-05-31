@@ -149,8 +149,8 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         return params;
     }
 
-    getLikersCount(reactors) {
-        return reactors.filter(r => r?.users_comments.liked).length;
+    getReactorsCount(reactors, reaction) {
+        return reactors.filter(r => r?.users_comments[reaction]).length;
     }
 
 

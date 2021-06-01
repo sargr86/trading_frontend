@@ -159,6 +159,14 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         return foundInReactors?.users_comments;
     }
 
+    isCommentShown(c) {
+        return (c.id !== this.selectedComment?.id && !this.showReplyForm) || this.showReplyForm || !this.editComment;
+    }
+
+    isReplyShown(c) {
+        return this.showReplies && this.selectedComment === c;
+    }
+
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }

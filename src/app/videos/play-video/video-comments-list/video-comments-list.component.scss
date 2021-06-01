@@ -4,6 +4,14 @@
     width: 100%;
 }
 
+.replies {
+    margin-left: 70px;
+}
+
+.comment > .left-group {
+    flex-direction: column;
+}
+
 .comments-container {
     margin-top: 50px;
 
@@ -16,6 +24,7 @@
 
             .details {
                 flex: 1;
+
                 .comment-text {
                     color: #545454 !important;
                 }

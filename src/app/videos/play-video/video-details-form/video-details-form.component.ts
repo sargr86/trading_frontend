@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {ToastrService} from 'ngx-toastr';
+import {TAG_CHARACTERS_LIMIT} from '@core/constants/global';
 
 @Component({
     selector: 'app-video-details-form',
@@ -22,7 +23,7 @@ export class VideoDetailsFormComponent implements OnInit {
         private toastr: ToastrService
     ) {
         this.videoDetailsForm = this.fb.group({
-            name: ['', Validators.required],
+            name: ['', [Validators.required, Validators.maxLength(TAG_CHARACTERS_LIMIT)]],
             tags: [[], Validators.required],
         });
     }

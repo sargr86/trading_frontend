@@ -8,6 +8,9 @@
             <mat-error *ngIf="isSubmitted && videoDetailsForm.get('name').hasError('required')">
                 The video name is required
             </mat-error>
+            <mat-error *ngIf="videoDetailsForm.get('name').hasError('maxlength')">
+                Not more than 12 characters please
+            </mat-error>
         </div>
     </div>
     <div class="right-group">

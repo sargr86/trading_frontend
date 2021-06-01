@@ -7,8 +7,9 @@
                     <div class="details-replies">
                         <app-single-comment [comment]="c" [videoData]="videoData" [showReplyForm]="showReplyForm"
                                             [showReplies]="showReplies" [selectedComment]="selectedComment"
-                                            (toggleReplies)="toggleReplies($event)" class="w-100"
-                                            (commentAdded)="commentAdded($event)" (likeDislikeComment)="likeDislikeComment($event)"
+                                            (toggleReplies)="toggleReplies($event)" class="w-100" [reply]="true"
+                                            (commentAdded)="commentAdded($event)"
+                                            (likeDislikeComment)="likeDislikeComment($event)"
                                             (selectComment)="selectComment($event, true)"></app-single-comment>
                         <!--                        <div class="details">-->
                         <!--                            <div class="d-flex align-items-center flex-wrap mb-2">-->

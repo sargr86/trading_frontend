@@ -14,6 +14,7 @@ export class SingleCommentComponent implements OnInit {
     @Input() selectedComment;
     @Input() selectedReply;
     @Input() showReplies;
+    @Input() reply;
     @Input() reply2Reply;
 
     @Output() toggleReplies = new EventEmitter();

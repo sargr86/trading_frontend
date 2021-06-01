@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-single-comment',
@@ -25,7 +26,8 @@ export class SingleCommentComponent implements OnInit {
     authUser;
 
     constructor(
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        public router: Router
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -65,5 +67,11 @@ export class SingleCommentComponent implements OnInit {
 
     getReactorsCount(reactors, reaction) {
         return reactors.filter(r => r?.users_comments[reaction]).length;
+    }
+
+    async openChannelPage(username) {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate(['channels/show'], {queryParams: {username}})
+        );
     }
 }

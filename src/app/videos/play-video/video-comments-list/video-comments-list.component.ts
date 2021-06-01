@@ -78,7 +78,6 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     replyToReply(c, r) {
-        console.log('aaa')
         this.showReplyToReplyForm = this.selectedReply !== r || !this.showReplyToReplyForm;
         this.selectedComment = c;
         this.selectedReply = r;

@@ -20,7 +20,7 @@
         <div class="reply-container">
             <span class="reply" (click)="selectCommentFn(comment)">Reply</span>
             <app-video-comments-form [videoData]="videoData"
-                                     *ngIf="showReplyForm && (comment.id===selectedComment.id ||comment.id == selectedReply.id)"
+                                     *ngIf="showReplyForm && (comment.id===selectedComment?.id ||comment.id == selectedReply?.id)"
                                      [selectedComment]="selectedComment" [reply2Reply]="reply2Reply"
                                      [selectedReply]="selectedReply"
                                      (added)="commentAddedFn($event)"

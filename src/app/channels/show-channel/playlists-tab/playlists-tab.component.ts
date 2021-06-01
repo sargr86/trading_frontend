@@ -59,6 +59,7 @@ export class PlaylistsTabComponent implements OnInit {
             user_id: this.authUser.id, ...params
         }).subscribe(dt => {
             this.playlists = dt;
+            console.log(this.authUser, this.channelUser)
         });
     }
 

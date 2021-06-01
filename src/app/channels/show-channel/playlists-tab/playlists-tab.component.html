@@ -50,7 +50,7 @@
     <ng-container *ngIf="authUser.username !== channelUser.username">
         <div class="playlists-items">
             <ng-container *ngFor="let playlist of playlists">
-                <div class="item" *ngIf="playlist?.videos?.length > 0">
+                <div class="item" >
                     <div class="top-wrap" (click)="openPlaylistPage(playlist, playlist.videos[0]?.id)">
                         <img class="thumbnail" [src]="playlist.thumbnail|getImgPath">
                         <div class="overlay-info">

@@ -78,6 +78,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     }
 
     replyToReply(c, r) {
+        console.log('aaa')
         this.showReplyToReplyForm = this.selectedReply !== r || !this.showReplyToReplyForm;
         this.selectedComment = c;
         this.selectedReply = r;
@@ -112,14 +113,14 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.selectedComment = c;
     }
 
-    likeDislikeComment(c, liked = true, parentComment = null) {
-        const params = this.buildParams(c, liked);
+    likeDislikeComment(e) {
+        const params = this.buildParams(e.c, e.liked);
 
 
         this.videoService.updateCommentLikes(params).subscribe(dt => {
             this.videoComments = dt;
             this.showReplies = true;
-            this.selectedComment = this.videoComments.find(comm => comm.id === this.selectedComment.id);
+            this.selectedComment = this.videoComments.find(comm => comm.id === this.selectedComment?.id);
         });
     }
 
@@ -155,7 +156,7 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
 
 
     checkUserCommentConnection(comment) {
-        const foundInReactors = comment.reactors.find(r => r.id === this.authUser.id);
+        const foundInReactors = comment.reactors?.find(r => r.id === this.authUser.id);
         return foundInReactors?.users_comments;
     }
 

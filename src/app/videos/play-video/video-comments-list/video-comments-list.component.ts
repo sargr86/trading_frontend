@@ -58,11 +58,6 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         this.selectedReply = e.find(c => c.id === this.selectedReply?.id);
     }
 
-    getRepliesTogglerText(c) {
-        const len = c.replies.length;
-        return `View ${len + (len > 1 ? ' replies' : ' reply')}`;
-    }
-
     selectComment(c, replyBtnClicked = false, replyCommentSelected = false) {
         if (!replyBtnClicked && !replyCommentSelected) {
             this.editComment = !this.editComment;
@@ -116,11 +111,11 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
         const params = this.buildParams(e.c, e.liked);
 
 
-        this.videoService.updateCommentLikes(params).subscribe(dt => {
+        this.subscriptions.push(this.videoService.updateCommentLikes(params).subscribe(dt => {
             this.videoComments = dt;
             this.showReplies = true;
             this.selectedComment = this.videoComments.find(comm => comm.id === this.selectedComment?.id);
-        });
+        }));
     }
 
     buildParams(c, liked) {

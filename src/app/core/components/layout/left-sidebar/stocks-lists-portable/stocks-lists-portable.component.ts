@@ -13,11 +13,14 @@ import {MINI_GRAPHS_TABS} from '@core/constants/global';
 @Component({
     selector: 'app-stocks-lists-portable',
     templateUrl: './stocks-lists-portable.component.html',
-    styleUrls: ['./stocks-lists-portable.component.scss']
+    styleUrls: ['./stocks-lists-portable.component.scss'],
+    providers: [
+        LoaderService
+    ]
 })
 export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
-    @Input('authUser') authUser;
+    @Input() authUser;
     routerUrl;
     userStocks;
 
@@ -170,26 +173,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                 this.userStocks.reverse();
             }
         }
-        //
-        // const sendData = {
-        //     rows: JSON.stringify(this.userStocks),
-        //     user_id: this.authUser.id,
-        //     order_type: type.value,
-        //     changeSortTypeOnly: true
-        // };
-        // this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
-        //     // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-        //     // this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
-        // });
-        //
-        // if (type.name === 'My sort') {
-        //     // this.sortedListLoading = true;
-        //     this.stocksService.getUserStocks({sort_type: type.value, user_id: this.authUser.id}).subscribe(dt => {
-        //         this.userStocks = dt?.user_stocks || [];
-        //         // this.sortedListLoading = false;
-        //     });
-        // }
-
     }
 
     ngOnDestroy(): void {

@@ -25,17 +25,23 @@
             .spinner-container {
                 min-width: max-content;
             }
+            @media (max-width: 1200px) {
+                min-width: auto;
+            }
             @media (max-width: 992px) {
                 flex-direction: column;
                 width: 100%;
                 align-items: flex-start;
+                min-width: auto;
             }
         }
         .right-group {
-            //width: 30%;
             min-width: 190px;
             flex: 1;
             justify-content: flex-end;
+            @media (max-width: 1200px) {
+                min-width: auto;
+            }
             @media (max-width: 992px) {
                 flex-direction: column;
                 width: 100%;

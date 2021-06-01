@@ -1,4 +1,3 @@
-<!--<button (click)="disallowedStocksPages = false;this.getUserStocks();">Show</button>-->
 <ng-container *ngIf="auth.loggedIn() && !disallowedStocksPages && !isSmallScreen">
     <div class="stocks-watchlist" id="sidebar-watchlist">
         <app-stocks-lists-tabs [defaultTab]="activeTab" [tabsList]="tabsList"
@@ -25,7 +24,7 @@
             </div>
             <div class="tab-content" id="today-content" [hidden]="activeTab.value!=='today'">
 
-                <app-stocks-list [stocks]="indices" [sorting]="false" [searching]="false" *ngIf="userStocks?.length > 0"
+                <app-stocks-list [stocks]="indices" [sorting]="false" [searching]="false" *ngIf="indices?.length > 0"
                                  (updatedStocksList)="updateFollowedLists($event)"
                                  (updatedStocksPriority)="updateUserStocksPriority($event)"></app-stocks-list>
             </div>

@@ -59,6 +59,11 @@ const routes: Routes = [
         loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule),
     },
     {
+        path: 'wallet',
+        loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'about',
         component: AboutComponent,
         data: {

@@ -29,6 +29,14 @@ nav {
             padding: 5px 15px;
         }
     }
+
+    .nav-item {
+        img {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+    }
 }
 
 .header-login-btn {
@@ -102,7 +110,6 @@ nav {
         }
     }
 }
-
 
 
 .header-right {

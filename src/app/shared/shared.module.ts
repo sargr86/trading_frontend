@@ -31,8 +31,9 @@ import {StockTilesComponent} from './components/stocks-tiles/stock-tiles.compone
 import {StocksListComponent} from './components/stocks-list/stocks-list.component';
 import {IsStockFollowedPipe} from './pipes/is-stock-followed.pipe';
 import {FixTextLineBreaksPipe} from './pipes/fix-text-line-breaks.pipe';
-import { VideoRegularPlayerComponent } from './components/video-regular-player/video-regular-player.component';
-import { StocksMarqueeComponent } from './components/stocks-marquee/stocks-marquee.component';
+import {VideoRegularPlayerComponent} from './components/video-regular-player/video-regular-player.component';
+import {StocksMarqueeComponent} from './components/stocks-marquee/stocks-marquee.component';
+import {CompletePurchaseModalComponent} from './components/complete-purchase-modal/complete-purchase-modal.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { StocksMarqueeComponent } from './components/stocks-marquee/stocks-marqu
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
         VideoRegularPlayerComponent,
-        StocksMarqueeComponent
+        StocksMarqueeComponent,
+        CompletePurchaseModalComponent
     ],
     imports: [
         CommonModule,
@@ -113,7 +115,8 @@ import { StocksMarqueeComponent } from './components/stocks-marquee/stocks-marqu
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
         VideoRegularPlayerComponent,
-        StocksMarqueeComponent
+        StocksMarqueeComponent,
+        CompletePurchaseModalComponent
     ]
 
 })

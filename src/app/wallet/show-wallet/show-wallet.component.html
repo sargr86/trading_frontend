@@ -1,1 +1,25 @@
-<p>show-wallet works!</p>
+<div class="">
+    <div class="bg-light wallet-content">
+        <h3 class="mb-4 title">Wallet <img src="assets/img/wallet-main-page-icon.svg" alt="" width="30" height="25">
+        </h3>
+        <div>
+            <mat-tab-group [disableRipple]="true">
+                <mat-tab label="Wallet">
+                    <app-wallet-content-tab></app-wallet-content-tab>
+                </mat-tab>
+                <mat-tab label="Payments Purchase History">
+                    <app-payments-purchase-history-tab></app-payments-purchase-history-tab>
+                </mat-tab>
+                <mat-tab label="Payments Received History">
+                    <app-payments-received-history-tab></app-payments-received-history-tab>
+                </mat-tab>
+                <mat-tab label="Metl Coins Payout Schedule">
+                    <app-metl-coins-payout-schedule-tab></app-metl-coins-payout-schedule-tab>
+                </mat-tab>
+            </mat-tab-group>
+
+            <!-- Modal -->
+            <button type="button" class="btn btn-primary" (click)="openModal()">Complete purchase</button>
+        </div>
+    </div>
+</div>

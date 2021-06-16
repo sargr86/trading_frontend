@@ -1,0 +1,67 @@
+<hr>
+<div class="d-flex align-items-end justify-content-between">
+    <div class="d-flex align-items-center">
+        <div class="mr-3 form-group m-0">
+            <label for="start1">Start</label>
+            <input type="datetime-local" id="start1" class="form-control">
+        </div>
+        <div class="mr-3 form-group m-0">
+            <label for="end1">End</label>
+            <input type="datetime-local" id="end1" class="form-control ">
+        </div>
+    </div>
+    <div class="d-flex align-items-center">
+        <div role="button" class="gray-btn px-3 ml-2">View Your Amazon Order History</div>
+        <div role="button" class="gray-btn px-3 ml-2">View Your PayPal Order History</div>
+    </div>
+</div>
+<table class="table border my-4">
+    <thead class="thead-light">
+    <tr>
+        <th class="color-red">
+            <div class="d-flex align-items-center">
+                <span>Date</span>
+                <div class="d-flex flex-column ml-5">
+                    <i class="fas fa-angle-up lh-10"></i>
+                    <i class="fas fa-angle-down lh-10"></i>
+                </div>
+            </div>
+        </th>
+        <th>Product Name</th>
+        <th>Product Description</th>
+        <th class="color-red">Amount <i class="fa fa-angle-down ml-5"></i></th>
+        <th>Payment Method</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Nov 29, 2018</td>
+        <td>Metl Coins</td>
+        <td>300 Coins</td>
+        <td>$3.99</td>
+        <td>**** **** **** 56 56</td>
+    </tr>
+    <tr>
+        <td>Nov 29, 2018</td>
+        <td>Metl Coins</td>
+        <td>Enjoy Metl.tv AdFree</td>
+        <td>$14.99</td>
+        <td>**** **** **** 25 65</td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active">
+            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
+        </li>
+    </ul>
+</nav>

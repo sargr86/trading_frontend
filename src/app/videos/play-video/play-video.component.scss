@@ -75,7 +75,7 @@
     p {
         color: #0035C6;
         font-size: 16px;
-        font-family: "Muli-Bold";
+        font-family: "Muli-Bold", sans-serif;
         margin-right: 16px;
         margin-bottom: 8px;
     }
@@ -94,10 +94,18 @@
             margin-left: 5px;
             color: #545454;
             font-size: 12px;
-            font-family: "Muli-Light";
+            font-family: "Muli-Light", sans-serif;
             margin-bottom: 0 !important;
 
         }
+    }
+
+    .liked {
+        color: #18B587 !important;
+    }
+
+    .disliked {
+        color: $red !important;
     }
 
 }

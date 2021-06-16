@@ -31,28 +31,28 @@
 .purchase-text {
     color: #545454;
     font-size: 12px;
-    font-family: "Muli-Bold";
+    font-family: "Muli-Bold", sans-serif;
     margin-bottom: 4px;
 }
 
 .purchase-text-2 {
     color: #545454;
     font-size: 10px;
-    font-family: "Muli-Light";
+    font-family: "Muli-Light", sans-serif;
     margin-bottom: 4px;
 }
 
 .purchase-text-3 {
     color: $green;
     font-size: 10px;
-    font-family: "Muli-Bold";
+    font-family: "Muli-Bold", sans-serif;
     margin-left: 8px;
 }
 
 .purchase-text-4 {
     color: $green;
     font-size: 10px;
-    font-family: "Muli-Bold";
+    font-family: "Muli-Bold", sans-serif;
     margin-bottom: 8px;
 }
 
@@ -63,7 +63,7 @@
     width: 142px;
     height: 28px;
     font-size: 12px;
-    font-family: "Muli-Light";
+    font-family: "Muli-Light, sans-serif";
     color: white !important;
     margin-bottom: 8px;
     background: $red;
@@ -86,14 +86,14 @@
 .bits-text-1 {
     color: #545454;
     font-size: 10px;
-    font-family: "Muli-Light";
+    font-family: "Muli-Light", sans-serif;
     width: 55px;
 }
 
 .bits-text-2 {
     color: #545454;
     font-size: 10px;
-    font-family: "Muli-Light";
+    font-family: "Muli-Light", sans-serif;
     width: 65px;
 }
 
@@ -106,5 +106,5 @@
     align-items: center;
     color: white !important;
     font-size: 10px;
-    font-family: "Muli-Light";
+    font-family: "Muli-Light", sans-serif;
 }

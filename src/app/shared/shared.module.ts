@@ -34,6 +34,7 @@ import {FixTextLineBreaksPipe} from './pipes/fix-text-line-breaks.pipe';
 import {VideoRegularPlayerComponent} from './components/video-regular-player/video-regular-player.component';
 import {StocksMarqueeComponent} from './components/stocks-marquee/stocks-marquee.component';
 import {CompletePurchaseModalComponent} from './components/complete-purchase-modal/complete-purchase-modal.component';
+import {NgxPayPalModule} from 'ngx-paypal';
 
 @NgModule({
     declarations: [
@@ -74,7 +75,8 @@ import {CompletePurchaseModalComponent} from './components/complete-purchase-mod
         PickerModule,
         MaterialModule,
         DragDropModule,
-        NgxChartsModule
+        NgxChartsModule,
+        NgxPayPalModule,
     ],
     providers: [
         GetAuthUserPipe,

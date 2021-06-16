@@ -40,6 +40,7 @@
         "ngx-bootstrap": "^6.1.0",
         "ngx-dropzone-wrapper": "^10.0.1",
         "ngx-owl-carousel-o": "^3.0.0",
+        "ngx-paypal": "^7.0.0",
         "ngx-photo-editor": "^0.3.2",
         "ngx-toastr": "^12.1.0",
         "openvidu-angular": "^2.15.0",

@@ -37,19 +37,23 @@
                     <div class="d-flex align-items-center mb-3">
                         <div class="black-title">Pay With</div>
                         <div class="ml-auto">
-                            <img src="assets/img/modalsImg/lock%20(2).svg" alt="" class="mr-1">Secure
+                            <img src="assets/img/purchase-icons/lock%20(2).svg" alt="" class="mr-1">Secure
                         </div>
                     </div>
                     <div class="d-flex flex-wrap">
                         <div role="button"
-                             class="w-300 br-10 bg-blue d-flex align-items-center justify-content-center mr-3"><img
-                            src="assets/img/modalsImg/Group%201372.svg" alt=""></div>
+                             class="w-300 br-10 d-flex align-items-center justify-content-center mr-3">
+                            <!--                            <img src="assets/img/purchase-icons/paypal.svg" alt="">-->
+                            <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                        </div>
                         <div role="button"
-                             class="w-300 br-10 bg-yellow d-flex align-items-center justify-content-center mr-3"><img
-                            src="assets/img/modalsImg/Group%201434.png" alt=""></div>
+                             class="w-300 br-10 bg-yellow d-flex align-items-center justify-content-center mr-3">
+                            <img src="assets/img/purchase-icons/amazon-pay.png" alt="">
+                        </div>
                         <div role="button"
-                             class="w-300 br-10 bg-gray d-flex align-items-center justify-content-center mr-3"><img
-                            src="assets/img/modalsImg/stripe-226458.png" alt=""></div>
+                             class="w-300 br-10 bg-gray d-flex align-items-center justify-content-center mr-3">
+                            <img src="assets/img/purchase-icons/stripe.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div class="px-4">
@@ -61,12 +65,12 @@
                     <div class="d-flex">
                         <div class="black-title mr-5">Pay With Credit Card</div>
                         <div>
-                            <img class="mr-2" src="assets/img/modalsImg/download%20(3).png" alt="">
+                            <img class="mr-2" src="assets/img/purchase-icons/visa-card.png" alt="">
                             <img class="mr-2"
-                                 src="assets/img/modalsImg/png-transparent-mastercard-logo-mastercard-credit-card-payment-visa-nyse-ma-mastercard-logo-text-logo-sign.png"
+                                 src="assets/img/purchase-icons/master-card.png"
                                  alt="">
-                            <img class="mr-2" src="assets/img/modalsImg/954912.png" alt="">
-                            <img class="mr-2" src="assets/img/modalsImg/discover-credit-card-icon-22.png" alt="">
+                            <img class="mr-2" src="assets/img/purchase-icons/954912.png" alt="">
+                            <img class="mr-2" src="assets/img/purchase-icons/discover-credit-card-icon.png" alt="">
                         </div>
                     </div>
                     <form action="#">

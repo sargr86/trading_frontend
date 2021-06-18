@@ -83,7 +83,7 @@ li {
     left: 0;
     top: 0;
     color: #FFFFFF;
-    font-family: "Muli-Bold";
+    font-family: "Muli-Bold", sans-serif;
     font-size: 16px;
     background: #C90000;
     display: flex;
@@ -919,34 +919,41 @@ mat-optgroup {
     pointer-events: none;
     opacity: 0.4;
 }
-.wallet-content{
+
+.wallet-content {
     background-color: red;
     padding: 30px 24px;
+
     .title {
         font: normal normal 600 29px/43px "Muli-Bold";
         color: #000000;
     }
+
     .sub-titles {
         font: normal normal 600 18px/26px "Muli-Bold";
         color: #000000;
     }
+
     .nav-pills .nav-link {
         color: #545454;
         font: normal normal 600 18px/40px "Muli-Bold";
         padding: 0;
         margin-right: 24px;
     }
+
     .nav-pills .nav-link.active,
-    .nav-pills .show>.nav-link {
+    .nav-pills .show > .nav-link {
         color: #545454;
         border-bottom: 4px solid #18B587;
         background-color: transparent;
         border-radius: 0;
     }
+
     .total-class {
         font: normal normal 600 25px/36px "Muli-Bold";
         color: #545454;
     }
+
     .red-link-btn {
         font: normal normal 600 16px/24px "Muli-Bold";
         color: #F53C6F;
@@ -956,22 +963,28 @@ mat-optgroup {
         font: normal normal 400 11px/13px "Muli-Regular";
         color: #F53C6F;
     }
+
     .color-red {
-        color: #F53C6F!important;
+        color: #F53C6F !important;
     }
+
     table {
         background: #FFFFFF 0 0 no-repeat padding-box;
         box-shadow: 0 3px 6px #00000029;
     }
+
     .lh-10 {
         line-height: 10px;
     }
+
     .page-item {
         margin: 0 5px;
+
         .page-link {
             background-color: #E1E1E1;
             color: #545454;
         }
+
         &.active {
             .page-link {
                 z-index: 3;
@@ -981,28 +994,34 @@ mat-optgroup {
             }
         }
     }
+
     label {
         font: normal normal 600 16px/24px "Muli-Bold";
         color: #000000;
     }
+
     input[type="datetime-local"] {
         background-color: #81818112;
         border: 0;
     }
+
     .mat-tab-label {
         min-width: min-content;
         padding: 0;
         margin-right: 40px;
     }
+
     .mat-tab-nav-bar, .mat-tab-header {
-        border-bottom: 0!important;
+        border-bottom: 0 !important;
         margin-bottom: 40px;
     }
 }
+
 .green-title {
     font: normal normal 600 20px/30px "Muli-Bold";
     color: #18B587;
 }
+
 .btn-green {
     min-width: 200px;
     height: 36px;
@@ -1012,6 +1031,7 @@ mat-optgroup {
     align-items: center;
     justify-content: center;
 }
+
 .btn-red {
     min-width: 200px;
     height: 36px;
@@ -1021,6 +1041,7 @@ mat-optgroup {
     align-items: center;
     justify-content: center;
 }
+
 .gray-btn {
     box-shadow: 0 3px 6px #00000029;
     background-color: #00000029;
@@ -1032,8 +1053,19 @@ mat-optgroup {
     align-items: center;
     justify-content: center;
 }
+
 .mat-dialog-container {
-    padding: 0!important;
+    padding: 0 !important;
+}
+
+.mat-tab-label-content {
+    font: normal normal 600 16px/24px "Muli-Bold";
+}
+
+.mat-tab-label-active {
+    .mat-tab-label-content {
+        color: #000000 !important;
+    }
 }
 
 

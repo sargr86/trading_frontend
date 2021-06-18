@@ -151,3 +151,5 @@ export const VIDEOJS_PLAYER_OPTIONS = {
     },
     sources: []
 };
+
+export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51J3b7QFvFgYFSjubLTCwTMKA4dHW9Q1FKVIlevGL9LBNVc2nZzpR67kngYqR9QxziNlmyiD3pNVHDj2FkRfcnbPa00Ee3l0Fx9';

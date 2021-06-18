@@ -35,11 +35,11 @@ export class CompletePurchaseModalComponent implements OnInit {
                     {
                         amount: {
                             currency_code: this.selectedCurrency.code,
-                            value:  this.purchase.currencyPrice,
+                            value: this.purchase.currencyPrice,
                             breakdown: {
                                 item_total: {
                                     currency_code: this.selectedCurrency.code,
-                                    value:  this.purchase.currencyPrice,
+                                    value: this.purchase.currencyPrice,
                                 }
                             }
                         },
@@ -50,7 +50,7 @@ export class CompletePurchaseModalComponent implements OnInit {
                                 category: 'DIGITAL_GOODS',
                                 unit_amount: {
                                     currency_code: this.selectedCurrency.code,
-                                    value:  this.purchase.currencyPrice,
+                                    value: this.purchase.currencyPrice,
                                 },
                             }
                         ]
@@ -72,7 +72,8 @@ export class CompletePurchaseModalComponent implements OnInit {
                 });
             },
             onClientAuthorization: (data) => {
-                console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+                console.log('onClientAuthorization -' +
+                    ' you should probably inform your server about completed transaction at this point', data);
                 // this.showSuccess = true;
             },
             onCancel: (data, actions) => {
@@ -85,6 +86,10 @@ export class CompletePurchaseModalComponent implements OnInit {
                 console.log('onClick', data, actions);
             },
         };
+    }
+
+    stripeCheckout() {
+
     }
 
 

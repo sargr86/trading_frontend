@@ -971,6 +971,8 @@ mat-optgroup {
     table {
         background: #FFFFFF 0 0 no-repeat padding-box;
         box-shadow: 0 3px 6px #00000029;
+        font-family: 'Muli-Light', sans-serif;
+        font-size: 14px;
     }
 
     .lh-10 {
@@ -983,6 +985,8 @@ mat-optgroup {
         .page-link {
             background-color: #E1E1E1;
             color: #545454;
+            font-family: 'Muli-Light', sans-serif;
+            font-size: 14px;
         }
 
         &.active {
@@ -1030,6 +1034,8 @@ mat-optgroup {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Muli-Light', sans-serif;
+    font-size: 14px;
 }
 
 .btn-red {
@@ -1040,6 +1046,8 @@ mat-optgroup {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Muli-Light', sans-serif;
+    font-size: 14px;
 }
 
 .gray-btn {

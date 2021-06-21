@@ -32,6 +32,7 @@ import { PageLoadingComponent } from './components/ungrouped/page-loading/page-l
 import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/stocks-lists-portable/stocks-lists-tabs/stocks-lists-tabs.component';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {CreditCardDirectivesModule} from 'angular-cc-library';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
         MaterialModule,
         SharedModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
+        CreditCardDirectivesModule
     ],
     exports: [
         NavbarComponent,

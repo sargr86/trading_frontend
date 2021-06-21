@@ -73,7 +73,7 @@
                             <img class="mr-2" src="assets/img/purchase-icons/discover-credit-card-icon.png" alt="">
                         </div>
                     </div>
-                    <form action="#">
+                    <form id="credit-card-form">
                         <div class="green-title text-uppercase my-3">BILLING INFORMATION</div>
                         <div class="d-flex justify-content-lg-between">
                             <div class="form-group col-lg-6 pl-lg-0 mb-4">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-group col-lg-6 pl-lg-0">
                             <select class="form-control" id="exampleFormControlSelect1">
-                                <option disabled selected>Category</option>
+                                <option disabled selected>Country</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
@@ -95,31 +95,17 @@
                         <div class="green-title text-uppercase my-3">CREDIT CARD INFORMATION</div>
                         <div class="d-flex">
                             <div class="form-group col-lg-4 pl-lg-0">
-                                <label for="creditCart">Credit Card Number</label>
-                                <input type="number" class="form-control" id="creditCart">
+                                <label for="cc-number">Credit Card Number</label>
+                                <input id="cc-number" class="form-control" type="tel" autocomplete="cc-number" ccNumber>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Expiry Date</label>
-                                <div class="d-flex">
-                                    <select class="form-control mr-2">
-                                        <option disabled selected>Month</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                    <select class="form-control ml-2">
-                                        <option disabled selected>Year</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
+                                <input id="cc-exp-date" class="form-control" type="tel" autocomplete="cc-exp" ccExp>
                             </div>
                             <div class="form-group col-lg-4 pr-lg-0">
-                                <label for="creditCart">CVV</label>
-                                <input type="number" class="form-control" placeholder="CVV">
+                                <label for="cc-cvc">CVV</label>
+                                <input id="cc-cvc" type="tel" class="form-control" autocomplete="off" ccCVC>
+
                             </div>
                         </div>
                     </form>

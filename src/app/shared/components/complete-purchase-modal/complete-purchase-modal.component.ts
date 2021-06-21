@@ -94,20 +94,20 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
     stripeCheckout() {
-        // this.purchasesService.stripeCheckout({})
-        //     .pipe(
-        //         switchMap(session => {
-        //             return this.stripeService.redirectToCheckout({sessionId: session.id})
-        //         })
-        //     )
-        //     .subscribe(result => {
-        //         // If `redirectToCheckout` fails due to a browser or network
-        //         // error, you should display the localized error message to your
-        //         // customer using `error.message`.
-        //         if (result.error) {
-        //             alert(result.error.message);
-        //         }
-        //     });
+        this.purchasesService.stripeCheckout({})
+            .pipe(
+                switchMap(session => {
+                    return this.stripeService.redirectToCheckout({sessionId: session.id})
+                })
+            )
+            .subscribe(result => {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
     }
 
 

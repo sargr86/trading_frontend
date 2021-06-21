@@ -35,6 +35,7 @@ import {VideoRegularPlayerComponent} from './components/video-regular-player/vid
 import {StocksMarqueeComponent} from './components/stocks-marquee/stocks-marquee.component';
 import {CompletePurchaseModalComponent} from './components/complete-purchase-modal/complete-purchase-modal.component';
 import {NgxPayPalModule} from 'ngx-paypal';
+import {CreditCardDirectivesModule} from 'angular-cc-library';
 
 @NgModule({
     declarations: [
@@ -77,6 +78,7 @@ import {NgxPayPalModule} from 'ngx-paypal';
         DragDropModule,
         NgxChartsModule,
         NgxPayPalModule,
+        CreditCardDirectivesModule
     ],
     providers: [
         GetAuthUserPipe,

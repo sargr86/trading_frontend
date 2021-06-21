@@ -26,7 +26,7 @@ html, body, p, h1, h2, h3, h4, ul {
 }
 
 
-input, button {
+input:not(#credit-card-form input), button {
     outline: none;
     border: none;
     margin: 0;

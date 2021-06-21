@@ -32,6 +32,7 @@
         "@swimlane/ngx-charts": "^17.0.1",
         "@videojs/http-streaming": "^2.6.0",
         "@videojs/themes": "^1.0.0",
+        "angular-cc-library": "^2.1.2",
         "bootstrap": "^4.5.2",
         "chart.js": "^2.9.3",
         "jquery": "^3.5.1",

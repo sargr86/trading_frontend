@@ -1,6 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
+import {PurchasesService} from '@core/services/purchases.service';
+import {switchMap} from 'rxjs/operators';
+import {StripeService} from 'ngx-stripe';
 
 @Component({
     selector: 'app-complete-purchase-modal',
@@ -14,7 +17,9 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private matDialogRef: MatDialogRef<CompletePurchaseModalComponent>
+        private matDialogRef: MatDialogRef<CompletePurchaseModalComponent>,
+        private purchasesService: PurchasesService,
+        private stripeService: StripeService
     ) {
         this.purchase = data;
     }
@@ -35,11 +40,11 @@ export class CompletePurchaseModalComponent implements OnInit {
                     {
                         amount: {
                             currency_code: this.selectedCurrency.code,
-                            value:  this.purchase.currencyPrice,
+                            value: this.purchase.currencyPrice,
                             breakdown: {
                                 item_total: {
                                     currency_code: this.selectedCurrency.code,
-                                    value:  this.purchase.currencyPrice,
+                                    value: this.purchase.currencyPrice,
                                 }
                             }
                         },
@@ -50,7 +55,7 @@ export class CompletePurchaseModalComponent implements OnInit {
                                 category: 'DIGITAL_GOODS',
                                 unit_amount: {
                                     currency_code: this.selectedCurrency.code,
-                                    value:  this.purchase.currencyPrice,
+                                    value: this.purchase.currencyPrice,
                                 },
                             }
                         ]
@@ -72,7 +77,8 @@ export class CompletePurchaseModalComponent implements OnInit {
                 });
             },
             onClientAuthorization: (data) => {
-                console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+                console.log('onClientAuthorization -' +
+                    ' you should probably inform your server about completed transaction at this point', data);
                 // this.showSuccess = true;
             },
             onCancel: (data, actions) => {
@@ -85,6 +91,23 @@ export class CompletePurchaseModalComponent implements OnInit {
                 console.log('onClick', data, actions);
             },
         };
+    }
+
+    stripeCheckout() {
+        this.purchasesService.stripeCheckout({})
+            .pipe(
+                switchMap(session => {
+                    return this.stripeService.redirectToCheckout({sessionId: session.id})
+                })
+            )
+            .subscribe(result => {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
     }
 
 

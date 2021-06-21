@@ -27,7 +27,7 @@
                                     (search)="searchStocks($event)"></app-search-stocks-form>
             <app-stocks-marquee [stocks]="stocks"></app-stocks-marquee>
             <div class="notification-block">
-                <div class="nav-item dropdown" [hidden]="envName==='production'">
+                <div class="nav-item dropdown">
                     <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>
                     <div class="dropdown-menu">
                         <app-purchase-bits></app-purchase-bits>

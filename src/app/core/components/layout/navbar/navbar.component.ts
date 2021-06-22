@@ -61,7 +61,6 @@ export class NavbarComponent implements OnInit {
     }
 
 
-
     logout() {
         this.auth.logout().subscribe(async () => {
             localStorage.removeItem('token');
@@ -100,7 +99,6 @@ export class NavbarComponent implements OnInit {
     getPercentageValue(stock) {
         return stock.changesPercentage.replace(/[(%)]/g, '');
     }
-
 
 
     goToChannelPage() {

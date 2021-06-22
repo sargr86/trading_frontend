@@ -22,6 +22,7 @@ import {JoinVideoStreamingComponent} from './subscriber-flow/join-video-streamin
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { ShowCardsComponent } from './show-cards/show-cards.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -48,6 +49,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         SubscriberFlowComponent,
         CollectStreamingDetailsFormComponent,
         JoinVideoStreamingComponent,
+        ShowCardsComponent,
     ],
     imports: [
         CommonModule,

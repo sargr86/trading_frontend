@@ -92,15 +92,17 @@
                         </div>
                         <div class="green-title text-uppercase my-3">CREDIT CARD INFORMATION</div>
                         <div class="d-flex credit-card-fields-container form-group">
-                            <input type="text" class="form-control" style="width: 200px" formControlName="name"
-                                   placeholder="Jane Doe">
-                            <ngx-stripe-card
-                                [options]="cardOptions"
-                                [elementsOptions]="elementsOptions"
-                            ></ngx-stripe-card>
-                            <button (click)="createToken()">
-                                CREATE TOKEN
-                            </button>
+                            <ng-container *ngIf="!creditCardAdded && authUser?.users_cards?.length === 0">
+                                <!--                            <input type="text" class="form-control" style="width: 200px" formControlName="name"-->
+                                <!--                                   placeholder="Full name">-->
+                                <ngx-stripe-card
+                                    [options]="cardOptions"
+                                    [elementsOptions]="elementsOptions"
+                                ></ngx-stripe-card>
+                                <button (click)="addCard()">
+                                    ADD CARD
+                                </button>
+                            </ng-container>
                         </div>
                     </form>
                     <div class="d-flex justify-content-end">

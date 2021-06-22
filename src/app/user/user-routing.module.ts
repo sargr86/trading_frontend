@@ -10,6 +10,7 @@ import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
+import {ShowCardsComponent} from '@app/user/show-cards/show-cards.component';
 
 const routes: Routes = [
     {
@@ -79,6 +80,10 @@ const routes: Routes = [
     {
         path: 'video-library',
         component: VideoLibraryComponent
+    },
+    {
+        path: 'cards',
+        component: ShowCardsComponent
     }
 ];
 

@@ -21,10 +21,6 @@ export class AppComponent implements OnInit {
     pageTitle;
     isSmallScreen = IsResponsive.isSmallScreen();
 
-
-    cardOptions = STRIPE_CARD_OPTIONS;
-    elementsOptions = {locale: 'en'};
-
     constructor(
         public router: Router,
         private subject: SubjectService,

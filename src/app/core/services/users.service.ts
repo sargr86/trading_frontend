@@ -27,4 +27,8 @@ export class UsersService {
     saveProfileChanges(params) {
         return this.httpClient.put<any>(`${API_URL}users/save-profile-changes`, params);
     }
+
+    createStripeCard(params) {
+        return this.httpClient.post(`${API_URL}users/create-stripe-user-card`, params);
+    }
 }

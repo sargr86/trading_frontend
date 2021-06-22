@@ -7,6 +7,8 @@ import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {StripeCardElementOptions, StripeElementsOptions} from '@stripe/stripe-js';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {UsersService} from '@core/services/users.service';
 
 @Component({
     selector: 'app-complete-purchase-modal',
@@ -14,13 +16,15 @@ import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
     styleUrls: ['./complete-purchase-modal.component.scss']
 })
 export class CompletePurchaseModalComponent implements OnInit {
+
+    authUser;
+
     purchase;
     selectedCurrency = {name: 'USD', code: 'USD'};
     currentDate = new Date();
 
     creditCardForm: FormGroup;
-
-
+    creditCardAdded = false;
 
 
     // Stripe
@@ -35,7 +39,9 @@ export class CompletePurchaseModalComponent implements OnInit {
         private matDialogRef: MatDialogRef<CompletePurchaseModalComponent>,
         private purchasesService: PurchasesService,
         private stripeService: StripeService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private getAuthUser: GetAuthUserPipe,
+        private usersService: UsersService
     ) {
         this.purchase = data;
         this.creditCardForm = fb.group({
@@ -46,6 +52,8 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     ngOnInit(): void {
         this.initConfig();
+        this.authUser = this.getAuthUser.transform();
+        console.log(this.authUser)
     }
 
     private initConfig(): void {
@@ -115,7 +123,7 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.purchasesService.stripeCheckout({})
             .pipe(
                 switchMap(session => {
-                    return this.stripeService.redirectToCheckout({sessionId: session.id})
+                    return this.stripeService.redirectToCheckout({sessionId: session.id});
                 })
             )
             .subscribe(result => {
@@ -128,19 +136,37 @@ export class CompletePurchaseModalComponent implements OnInit {
             });
     }
 
-    createToken(): void {
-        const name = this.creditCardForm.get('name').value;
+    addCard(): void {
+        // const name = this.creditCardForm.get('name').value;
+
+        const fullName = this.authUser.full_name;
         this.stripeService
-            .createToken(this.card.element, {name})
-            .subscribe((result) => {
+            .createToken(this.card.element, {name: fullName})
+            .subscribe(result => {
+                console.log(result)
                 if (result.token) {
-                    // Use the token
+                    const cardData = result.token.card;
                     console.log(result.token.id);
+                    this.usersService.createStripeCard({
+                        stripeToken: result.token.id,
+                        stripeEmail: this.authUser.email,
+                        holderName: fullName,
+                        user_id: this.authUser.id,
+                        exp_month: cardData.exp_month,
+                        exp_year: cardData.exp_year,
+                        last4: cardData.last4,
+                        brand: cardData.brand,
+                        country: cardData.country
+                    }).subscribe(dt => {
+                        this.creditCardAdded = true;
+                    });
                 } else if (result.error) {
                     // Error creating the token
                     console.log(result.error.message);
                 }
             });
+
+
     }
 
 

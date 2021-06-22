@@ -1,6 +1,7 @@
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {environment} from '@env';
 import * as moment from 'moment';
+import {StripeCardElementOptions} from "@stripe/stripe-js";
 
 
 export const API_URL = environment.apiUrl;
@@ -153,3 +154,17 @@ export const VIDEOJS_PLAYER_OPTIONS = {
 };
 
 export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51J3b7QFvFgYFSjubLTCwTMKA4dHW9Q1FKVIlevGL9LBNVc2nZzpR67kngYqR9QxziNlmyiD3pNVHDj2FkRfcnbPa00Ee3l0Fx9';
+export const STRIPE_CARD_OPTIONS: StripeCardElementOptions = {
+    style: {
+        base: {
+            iconColor: '#666EE8',
+            color: '#31325F',
+            fontWeight: '300',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSize: '18px',
+            '::placeholder': {
+                color: '#CFD7E0'
+            }
+        }
+    }
+}

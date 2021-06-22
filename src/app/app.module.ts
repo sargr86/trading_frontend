@@ -15,6 +15,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from '@core/modules/material.module';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {UserModule} from '@app/user/user.module';
+import {NgxStripeModule} from 'ngx-stripe';
+import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -43,6 +45,7 @@ export function tokenGetter() {
         }),
         NgbModule,
         UserModule,
+        NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY)
     ],
     providers: [
         DatePipe,

@@ -30,8 +30,6 @@ import { ChannelSubscriptionsComponent } from './components/layout/left-sidebar/
 import { StocksListsPortableComponent } from './components/layout/left-sidebar/stocks-lists-portable/stocks-lists-portable.component';
 import { PageLoadingComponent } from './components/ungrouped/page-loading/page-loading.component';
 import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/stocks-lists-portable/stocks-lists-tabs/stocks-lists-tabs.component';
-import {NgxStripeModule} from 'ngx-stripe';
-import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
 
 
@@ -70,7 +68,7 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
         ReactiveFormsModule,
         MaterialModule,
         SharedModule,
-        NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
+
         CreditCardDirectivesModule
     ],
     exports: [

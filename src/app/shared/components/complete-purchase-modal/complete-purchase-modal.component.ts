@@ -1,9 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
 import {PurchasesService} from '@core/services/purchases.service';
 import {switchMap} from 'rxjs/operators';
-import {StripeService} from 'ngx-stripe';
+import {StripeCardComponent, StripeService} from 'ngx-stripe';
+import {StripeCardElementOptions, StripeElementsOptions} from '@stripe/stripe-js';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 
 @Component({
     selector: 'app-complete-purchase-modal',
@@ -15,16 +18,31 @@ export class CompletePurchaseModalComponent implements OnInit {
     selectedCurrency = {name: 'USD', code: 'USD'};
     currentDate = new Date();
 
+    creditCardForm: FormGroup;
+
+
+
+
+    // Stripe
+    cardOptions = STRIPE_CARD_OPTIONS;
+    elementsOptions: StripeElementsOptions = {locale: 'en'};
+    payPalConfig?: IPayPalConfig;
+
+    @ViewChild(StripeCardComponent) card: StripeCardComponent;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private matDialogRef: MatDialogRef<CompletePurchaseModalComponent>,
         private purchasesService: PurchasesService,
-        private stripeService: StripeService
+        private stripeService: StripeService,
+        private fb: FormBuilder
     ) {
         this.purchase = data;
+        this.creditCardForm = fb.group({
+            name: ['', [Validators.required]]
+        });
     }
 
-    public payPalConfig?: IPayPalConfig;
 
     ngOnInit(): void {
         this.initConfig();
@@ -106,6 +124,21 @@ export class CompletePurchaseModalComponent implements OnInit {
                 // customer using `error.message`.
                 if (result.error) {
                     alert(result.error.message);
+                }
+            });
+    }
+
+    createToken(): void {
+        const name = this.creditCardForm.get('name').value;
+        this.stripeService
+            .createToken(this.card.element, {name})
+            .subscribe((result) => {
+                if (result.token) {
+                    // Use the token
+                    console.log(result.token.id);
+                } else if (result.error) {
+                    // Error creating the token
+                    console.log(result.error.message);
                 }
             });
     }

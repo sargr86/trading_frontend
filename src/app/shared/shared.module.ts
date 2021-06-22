@@ -36,6 +36,8 @@ import {StocksMarqueeComponent} from './components/stocks-marquee/stocks-marquee
 import {CompletePurchaseModalComponent} from './components/complete-purchase-modal/complete-purchase-modal.component';
 import {NgxPayPalModule} from 'ngx-paypal';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
+import {NgxStripeModule} from 'ngx-stripe';
+import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 
 @NgModule({
     declarations: [
@@ -78,7 +80,8 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
         DragDropModule,
         NgxChartsModule,
         NgxPayPalModule,
-        CreditCardDirectivesModule
+        CreditCardDirectivesModule,
+        NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
     ],
     providers: [
         GetAuthUserPipe,

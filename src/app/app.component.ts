@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 import IsResponsive from '@core/helpers/is-responsive';
 import {StocksService} from '@core/services/stocks.service';
 import {environment} from '@env';
+import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 
 @Component({
     selector: 'app-root',
@@ -19,6 +20,10 @@ export class AppComponent implements OnInit {
     subscriptions: Subscription[] = [];
     pageTitle;
     isSmallScreen = IsResponsive.isSmallScreen();
+
+
+    cardOptions = STRIPE_CARD_OPTIONS;
+    elementsOptions = {locale: 'en'};
 
     constructor(
         public router: Router,

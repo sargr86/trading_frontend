@@ -45,7 +45,7 @@
     .form-control {
         height: 44px;
         background: #FFFFFF 0 0 no-repeat padding-box;
-        box-shadow: 0 0 6px #F53C6F24;
+        box-shadow: 0 0 6px #b8cbe5;
     }
 
 
@@ -54,3 +54,14 @@
 ngx-paypal {
     width: 100%;
 }
+
+ngx-stripe-card {
+    width: 44%;
+}
+
+.credit-card-fields-container {
+    align-items: center;
+    justify-content: space-between;
+}
+
+

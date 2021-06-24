@@ -1,6 +1,6 @@
 function generateStripeCardData(tokenData, authUser) {
     const cardData = tokenData.token.card;
-    const fullName = this.authUser.full_name;
+    const fullName = authUser.full_name;
     return {
         stripeToken: tokenData.token.id,
         stripeEmail: authUser.email,

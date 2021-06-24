@@ -102,6 +102,7 @@ import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
         CarouselModule,
         PickerModule,
         MaterialModule,
+        NgxStripeModule,
         VideoJsComponent,
         VideoJsRecordComponent,
         ChatBoxComponent,

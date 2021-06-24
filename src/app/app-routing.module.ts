@@ -64,6 +64,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'cards',
+        loadChildren: () => import('./cards/cards.module').then(m => m.CardsModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'about',
         component: AboutComponent,
         data: {

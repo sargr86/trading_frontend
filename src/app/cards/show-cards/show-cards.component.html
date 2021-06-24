@@ -1,0 +1,20 @@
+<div id="user-cards-list">
+    <div class="card" *ngFor="let card of userCards">
+        <div class="details">
+            <div class="card-number">
+                <p>Card number</p>
+                <p>**** **** **** {{card.last4}}</p>
+            </div>
+            <div class="expiration-date">
+                <p>Expiration date</p>
+                <p>{{formatExpiryDate(card.exp_month + '/' + card.exp_year)}}</p>
+            </div>
+        </div>
+        <div class="brand">
+            <img src="assets/img/purchase-icons/{{card.brand.toLowerCase()}}-card.png" class="brand-img">
+        </div>
+    </div>
+    <div class="card" id="add-new-card" [hidden]="userCards.length ===0">
+        <mat-icon (click)="router.navigate(['/user/cards/add'])">add</mat-icon>
+    </div>
+</div>

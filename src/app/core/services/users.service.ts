@@ -31,4 +31,8 @@ export class UsersService {
     createStripeCard(params) {
         return this.httpClient.post(`${API_URL}users/create-stripe-user-card`, params);
     }
+
+    getUserCards(params) {
+        return this.httpClient.get(`${API_URL}users/get-customer-cards`, {params});
+    }
 }

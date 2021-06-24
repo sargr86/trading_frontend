@@ -4,11 +4,13 @@ import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
 import {PurchasesService} from '@core/services/purchases.service';
 import {switchMap} from 'rxjs/operators';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
-import {StripeCardElementOptions, StripeElementsOptions} from '@stripe/stripe-js';
+import {StripeElementsOptions} from '@stripe/stripe-js';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
+import {CardService} from '@core/services/card.service';
+import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 
 @Component({
     selector: 'app-complete-purchase-modal',
@@ -41,7 +43,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         private stripeService: StripeService,
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private cardService: CardService
     ) {
         this.purchase = data;
         this.creditCardForm = fb.group({
@@ -127,9 +130,7 @@ export class CompletePurchaseModalComponent implements OnInit {
                 })
             )
             .subscribe(result => {
-                // If `redirectToCheckout` fails due to a browser or network
-                // error, you should display the localized error message to your
-                // customer using `error.message`.
+
                 if (result.error) {
                     alert(result.error.message);
                 }
@@ -137,27 +138,11 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
     addCard(): void {
-        // const name = this.creditCardForm.get('name').value;
-
-        const fullName = this.authUser.full_name;
         this.stripeService
-            .createToken(this.card.element, {name: fullName})
+            .createToken(this.card.element, {name: this.authUser.full_name})
             .subscribe(result => {
-                console.log(result)
                 if (result.token) {
-                    const cardData = result.token.card;
-                    console.log(result.token.id);
-                    this.usersService.createStripeCard({
-                        stripeToken: result.token.id,
-                        stripeEmail: this.authUser.email,
-                        holderName: fullName,
-                        user_id: this.authUser.id,
-                        exp_month: cardData.exp_month,
-                        exp_year: cardData.exp_year,
-                        last4: cardData.last4,
-                        brand: cardData.brand,
-                        country: cardData.country
-                    }).subscribe(dt => {
+                    this.usersService.createStripeCard(generateStripeCardData(result, this.authUser)).subscribe(dt => {
                         this.creditCardAdded = true;
                     });
                 } else if (result.error) {

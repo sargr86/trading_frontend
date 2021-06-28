@@ -142,7 +142,7 @@ export class CompletePurchaseModalComponent implements OnInit {
             .createToken(this.card.element, {name: this.authUser.full_name})
             .subscribe(result => {
                 if (result.token) {
-                    this.usersService.createStripeCard(generateStripeCardData(result, this.authUser)).subscribe(dt => {
+                    this.usersService.createStripeCard(generateStripeCardData(result, this.authUser,'')).subscribe(dt => {
                         this.creditCardAdded = true;
                     });
                 } else if (result.error) {

@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}
         // });
         // console.log(player)
-
         if (environment.production) {
             console.log = () => {
             };

@@ -1,7 +1,15 @@
 <div class="stripe-card-container">
-    <ngx-stripe-card
-        [options]="cardOptions"
-        [elementsOptions]="elementsOptions"
-    ></ngx-stripe-card>
-    <button>Add card</button>
+    <form [formGroup]="saveCardForm">
+        <div class="field-row">
+            <input formControlName="name" class="form-control">
+        </div>
+        <ngx-stripe-card [hidden]="editCase"
+            [options]="cardOptions"
+            [elementsOptions]="elementsOptions"
+        ></ngx-stripe-card>
+
+        <div class="field-row">
+            <button (click)="saveCard()">{{editCase ? 'Update' : 'Add'}} card</button>
+        </div>
+    </form>
 </div>

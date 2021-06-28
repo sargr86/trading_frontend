@@ -12,6 +12,10 @@ const routes: Routes = [
     {
         path: 'add',
         component: SaveCardComponent
+    },
+    {
+        path: 'edit/:id',
+        component: SaveCardComponent
     }
 ];
 

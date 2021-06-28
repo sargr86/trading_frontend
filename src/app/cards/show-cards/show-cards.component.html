@@ -1,5 +1,6 @@
 <div id="user-cards-list">
-    <div class="card" *ngFor="let card of userCards">
+    <div class="card" [class.darken]="showActions" *ngFor="let card of userCards" (mouseover)="toggleActions(true)"
+         (mouseleave)="toggleActions(false)">
         <div class="details">
             <div class="card-number">
                 <p>Card number</p>
@@ -13,8 +14,14 @@
         <div class="brand">
             <img src="assets/img/purchase-icons/{{card.brand.toLowerCase()}}-card.png" class="brand-img">
         </div>
+        <div class="actions" [hidden]="!showActions">
+            <mat-icon (click)="editCard(card)">settings</mat-icon>
+            <mat-icon (click)="removeCard(card)">delete</mat-icon>
+        </div>
     </div>
-    <div class="card" id="add-new-card" [hidden]="userCards.length ===0">
+    <div class="card" id="add-new-card">
         <mat-icon (click)="router.navigate(['/user/cards/add'])">add</mat-icon>
     </div>
 </div>
+
+

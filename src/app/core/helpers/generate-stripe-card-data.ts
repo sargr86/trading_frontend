@@ -1,4 +1,4 @@
-function generateStripeCardData(tokenData, authUser) {
+function generateStripeCardData(tokenData, authUser, cardName) {
     const cardData = tokenData.token.card;
     const fullName = authUser.full_name;
     return {
@@ -10,7 +10,8 @@ function generateStripeCardData(tokenData, authUser) {
         exp_year: cardData.exp_year,
         last4: cardData.last4,
         brand: cardData.brand,
-        country: cardData.country
+        country: cardData.country,
+        name: cardName
     };
 }
 

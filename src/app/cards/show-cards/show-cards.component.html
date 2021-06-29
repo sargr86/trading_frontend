@@ -1,21 +1,22 @@
 <div id="user-cards-list">
     <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
-    <div class="card" [class.darken]="showActions && selectedCard === card" *ngFor="let card of userCards"
+    <div class="card p-4" [ngClass]="getBgClass(ind)" [class.darken]="showActions && selectedCard === card" *ngFor="let card of userCards;let ind = index"
          (mouseover)="toggleActions(card,true)"
          (mouseleave)="toggleActions(card,false)">
-        <div class="details">
-            <div class="card-number">
-                <p>Card number</p>
-                <p>**** **** **** {{card.last4}}</p>
+        <div class="details w-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="bank-name">{{card.name}}</div>
+                <div class="brand">
+                    <img src="assets/img/purchase-icons/{{card.brand.toLowerCase()}}-card.png" class="brand-img">
+                </div>
             </div>
-            <div class="expiration-date">
-                <p>Expiration date</p>
-                <p>{{formatExpiryDate(card.exp_month + '/' + card.exp_year)}}</p>
+            <div class="card-number my-4">**** **** **** {{card.last4}} </div>
+            <div class="expiration-date ml-auto">
+                <p>exp.date</p>
+                <p class="numbers">{{formatExpiryDate(card.exp_month + '/' + card.exp_year)}}</p>
             </div>
         </div>
-        <div class="brand">
-            <img src="assets/img/purchase-icons/{{card.brand.toLowerCase()}}-card.png" class="brand-img">
-        </div>
+
         <div class="actions" *ngIf="showActions  && selectedCard === card">
             <mat-icon (click)="makePrimary(card)" *ngIf="!card.is_primary">check</mat-icon>
             <mat-icon (click)="editCard(card)">settings</mat-icon>

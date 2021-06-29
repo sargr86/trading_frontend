@@ -5,8 +5,8 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Card} from '@shared/models/card';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
-import {Subscription} from "rxjs";
-import {LoaderService} from "@core/services/loader.service";
+import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-show-cards',
@@ -14,7 +14,24 @@ import {LoaderService} from "@core/services/loader.service";
     styleUrls: ['./show-cards.component.scss']
 })
 export class ShowCardsComponent implements OnInit, OnDestroy {
-    userCards: Card[] = [];
+    userCards: Card[] = [
+        {
+            brand: 'visa',
+            last4: 1111,
+            exp_month: 4,
+            exp_year: 2024,
+            is_primary: 1,
+            name: 'test Name'
+        },
+        {
+            brand: 'master',
+            last4: 1111,
+            exp_month: 4,
+            exp_year: 2024,
+            is_primary: 1,
+            name: 'test'
+        }
+    ];
     authUser: User;
 
     subscriptions: Subscription[] = [];
@@ -32,7 +49,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getUserCards();
+        // this.getUserCards();
     }
 
     getUserCards() {
@@ -76,6 +93,10 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.userCards = dt;
         }));
+    }
+
+    getBgClass(i) {
+        return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
     }
 
     ngOnDestroy(): void {

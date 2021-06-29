@@ -38,7 +38,6 @@ export class UsersService {
     }
 
     getCardDetails(params) {
-        console.log(params)
         return this.httpClient.get<Card>(`${API_URL}users/get-card-details`, {params});
     }
 

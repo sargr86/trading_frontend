@@ -67,10 +67,6 @@ export class SaveCardComponent implements OnInit, OnDestroy {
         });
     }
 
-    togglePrimary(e) {
-        this.saveCardForm.patchValue({primary: +e.checked});
-    }
-
     saveCard(): void {
         this.loader.dataLoading = true;
         if (this.editCase) {
@@ -96,6 +92,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
 
                         });
                     } else if (result.error) {
+                        this.loader.dataLoading = false;
                         this.toastr.error(result.error.message);
                     }
                 }));
@@ -103,6 +100,10 @@ export class SaveCardComponent implements OnInit, OnDestroy {
 
         }
 
+    }
+
+    async goToCardsList() {
+        await this.router.navigate(['/user/cards']);
     }
 
     ngOnDestroy(): void {

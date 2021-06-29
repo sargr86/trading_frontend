@@ -44,12 +44,12 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     formatExpiryDate(date) {
-        return moment(date, 'MM/YY').format('MM/YY');
+        return moment(date, 'MM/YYYY').format('MM/YY');
     }
 
     toggleActions(card, showActions) {
         this.showActions = showActions;
-        if(showActions){
+        if (showActions) {
             this.selectedCard = card;
         }
     }
@@ -74,7 +74,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
             stripe_customer_id: c.customer,
             user_id: this.authUser.id
         }).subscribe(dt => {
-
+            this.userCards = dt;
         }));
     }
 

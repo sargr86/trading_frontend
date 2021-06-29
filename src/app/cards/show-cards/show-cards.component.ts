@@ -5,9 +5,9 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Card} from '@shared/models/card';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
-import {Subscription} from "rxjs";
-import {LoaderService} from "@core/services/loader.service";
-import {CardsService} from "@core/services/cards.service";
+import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
+import {CardsService} from '@core/services/cards.service';
 
 @Component({
     selector: 'app-show-cards',
@@ -78,6 +78,10 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.userCards = dt;
         }));
+    }
+
+    getBgClass(i) {
+        return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
     }
 
     ngOnDestroy(): void {

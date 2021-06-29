@@ -71,43 +71,50 @@
                             <img class="mr-2" src="assets/img/purchase-icons/discover-credit-card-icon.png" alt="">
                         </div>
                     </div>
-                    <form id="credit-card-form" [formGroup]="creditCardForm">
-                        <ng-container *ngIf="!creditCardAdded && authUser?.users_cards?.length === 0">
-                            <div class="green-title text-uppercase my-3">BILLING INFORMATION</div>
-                            <div class="d-flex justify-content-lg-between">
-                                <div class="form-group col-lg-6 pl-lg-0 mb-4">
-                                    <input type="text" class="form-control" placeholder="First Name">
-                                </div>
-                                <div class="form-group col-lg-6 pr-lg-0 mb-4">
-                                    <input type="text" class="form-control" placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6 pl-lg-0">
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option disabled selected>Country</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="green-title text-uppercase my-3">CREDIT CARD INFORMATION</div>
-                            <div class="d-flex credit-card-fields-container form-group">
-                                <!--                            <input type="text" class="form-control" style="width: 200px" formControlName="name"-->
-                                <!--                                   placeholder="Full name">-->
-                                <ngx-stripe-card
-                                    [options]="cardOptions"
-                                    [elementsOptions]="elementsOptions"
-                                ></ngx-stripe-card>
-                                <button (click)="addCard()">
-                                    ADD CARD
-                                </button>
-                            </div>
-                        </ng-container>
-                    </form>
-                    <div class="d-flex justify-content-end">
-                        <div role="button" class="btn-green">Review Purchase</div>
+                    <div class="user-cards-list">
+                        <select>
+                            <option *ngFor="let card of authUser?.users_cards">
+                                {{card.name}}
+                            </option>
+                        </select>
                     </div>
+                </div>
+                <!--                    <form id="credit-card-form" [formGroup]="creditCardForm">-->
+                <!--                        <ng-container *ngIf="!creditCardAdded && authUser?.users_cards?.length === 0">-->
+                <!--                            <div class="green-title text-uppercase my-3">BILLING INFORMATION</div>-->
+                <!--                            <div class="d-flex justify-content-lg-between">-->
+                <!--                                <div class="form-group col-lg-6 pl-lg-0 mb-4">-->
+                <!--                                    <input type="text" class="form-control" placeholder="First Name">-->
+                <!--                                </div>-->
+                <!--                                <div class="form-group col-lg-6 pr-lg-0 mb-4">-->
+                <!--                                    <input type="text" class="form-control" placeholder="Last Name">-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group col-lg-6 pl-lg-0">-->
+                <!--                                <select class="form-control" id="exampleFormControlSelect1">-->
+                <!--                                    <option disabled selected>Country</option>-->
+                <!--                                    <option>2</option>-->
+                <!--                                    <option>3</option>-->
+                <!--                                    <option>4</option>-->
+                <!--                                    <option>5</option>-->
+                <!--                                </select>-->
+                <!--                            </div>-->
+                <!--                            <div class="green-title text-uppercase my-3">CREDIT CARD INFORMATION</div>-->
+                <!--                            <div class="d-flex credit-card-fields-container form-group">-->
+                <!--                                &lt;!&ndash;                            <input type="text" class="form-control" style="width: 200px" formControlName="name"&ndash;&gt;-->
+                <!--                                &lt;!&ndash;                                   placeholder="Full name">&ndash;&gt;-->
+                <!--                                <ngx-stripe-card-->
+                <!--                                    [options]="cardOptions"-->
+                <!--                                    [elementsOptions]="elementsOptions"-->
+                <!--                                ></ngx-stripe-card>-->
+                <!--                                <button (click)="addCard()">-->
+                <!--                                    ADD CARD-->
+                <!--                                </button>-->
+                <!--                            </div>-->
+                <!--                        </ng-container>-->
+                <!--                    </form>-->
+                <div class="d-flex justify-content-end">
+                    <div role="button" class="btn-green">Review Purchase</div>
                 </div>
             </div>
         </div>

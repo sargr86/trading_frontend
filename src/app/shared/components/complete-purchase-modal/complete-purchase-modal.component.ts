@@ -9,8 +9,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
-import {CardService} from '@core/services/card.service';
+import {CardsService} from '@core/services/cards.service';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
+import * as moment from "moment";
 
 @Component({
     selector: 'app-complete-purchase-modal',
@@ -28,7 +29,6 @@ export class CompletePurchaseModalComponent implements OnInit {
     creditCardForm: FormGroup;
     creditCardAdded = false;
 
-
     // Stripe
     cardOptions = STRIPE_CARD_OPTIONS;
     elementsOptions: StripeElementsOptions = {locale: 'en'};
@@ -44,7 +44,7 @@ export class CompletePurchaseModalComponent implements OnInit {
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
         private usersService: UsersService,
-        private cardService: CardService
+        private cardsService: CardsService
     ) {
         this.purchase = data;
         this.creditCardForm = fb.group({
@@ -142,7 +142,7 @@ export class CompletePurchaseModalComponent implements OnInit {
             .createToken(this.card.element, {name: this.authUser.full_name})
             .subscribe(result => {
                 if (result.token) {
-                    this.usersService.createStripeCard(generateStripeCardData(result, this.authUser,'')).subscribe(dt => {
+                    this.cardsService.createStripeCard(generateStripeCardData(result, this.authUser, '')).subscribe(dt => {
                         this.creditCardAdded = true;
                     });
                 } else if (result.error) {
@@ -152,6 +152,10 @@ export class CompletePurchaseModalComponent implements OnInit {
             });
 
 
+    }
+
+    formatExpiryDate(date) {
+        return moment(date, 'MM/YYYY').format('MM/YY');
     }
 
 

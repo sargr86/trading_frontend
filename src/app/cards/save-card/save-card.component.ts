@@ -12,6 +12,7 @@ import {User} from '@shared/models/user';
 import {Card} from '@shared/models/card';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
+import {CardsService} from '@core/services/cards.service';
 
 @Component({
     selector: 'app-save-card',
@@ -38,6 +39,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     constructor(
         private stripeService: StripeService,
         private usersService: UsersService,
+        private cardsService: CardsService,
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private toastr: ToastrService,
@@ -61,7 +63,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     }
 
     getCardDetails() {
-        this.usersService.getCardDetails({card_id: this.cardId}).subscribe((dt: Card) => {
+        this.cardsService.getCardDetails({card_id: this.cardId}).subscribe((dt: Card) => {
             this.cardDetails = dt;
             this.saveCardForm.patchValue({name: dt.name});
         });
@@ -70,7 +72,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     saveCard(): void {
         this.loader.dataLoading = true;
         if (this.editCase) {
-            this.subscriptions.push(this.usersService.updateStripeCard({
+            this.subscriptions.push(this.cardsService.updateStripeCard({
                 card_id: this.cardId,
                 ...this.saveCardForm.value
             }).subscribe(async (dt) => {
@@ -85,7 +87,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     if (result.token) {
                         const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
-                        this.usersService.createStripeCard(cardData).subscribe(async (dt) => {
+                        this.cardsService.createStripeCard(cardData).subscribe(async (dt) => {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
                             await this.router.navigate(['/user/cards']);

@@ -1,4 +1,4 @@
-<div id="user-cards-list">
+<div class="user-cards-list">
     <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
     <div class="card" [class.darken]="showActions && selectedCard === card" *ngFor="let card of userCards"
          (mouseover)="toggleActions(card,true)"

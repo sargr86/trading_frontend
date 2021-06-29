@@ -1,6 +1,8 @@
 <div id="user-cards-list">
-    <div class="card" [class.darken]="showActions" *ngFor="let card of userCards" (mouseover)="toggleActions(true)"
-         (mouseleave)="toggleActions(false)">
+    <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
+    <div class="card" [class.darken]="showActions && selectedCard === card" *ngFor="let card of userCards"
+         (mouseover)="toggleActions(card,true)"
+         (mouseleave)="toggleActions(card,false)">
         <div class="details">
             <div class="card-number">
                 <p>Card number</p>
@@ -14,12 +16,13 @@
         <div class="brand">
             <img src="assets/img/purchase-icons/{{card.brand.toLowerCase()}}-card.png" class="brand-img">
         </div>
-        <div class="actions" [hidden]="!showActions">
+        <div class="actions" *ngIf="showActions  && selectedCard === card">
+            <mat-icon (click)="makePrimary(card)" *ngIf="!card.is_primary">check</mat-icon>
             <mat-icon (click)="editCard(card)">settings</mat-icon>
             <mat-icon (click)="removeCard(card)">delete</mat-icon>
         </div>
     </div>
-    <div class="card" id="add-new-card">
+    <div class="card" id="add-new-card" [hidden]="loader.dataLoading">
         <mat-icon (click)="router.navigate(['/user/cards/add'])">add</mat-icon>
     </div>
 </div>

@@ -46,7 +46,8 @@ export class SaveCardComponent implements OnInit, OnDestroy {
         public loader: LoaderService
     ) {
         this.saveCardForm = this.fb.group({
-            name: ['', Validators.required]
+            name: ['', Validators.required],
+            primary: [0]
         });
     }
 
@@ -64,6 +65,10 @@ export class SaveCardComponent implements OnInit, OnDestroy {
             this.cardDetails = dt;
             this.saveCardForm.patchValue({name: dt.name});
         });
+    }
+
+    togglePrimary(e) {
+        this.saveCardForm.patchValue({primary: +e.checked});
     }
 
     saveCard(): void {

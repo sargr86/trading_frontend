@@ -5,8 +5,12 @@
         </div>
         <ngx-stripe-card [hidden]="editCase"
                          [options]="cardOptions"
-                         [elementsOptions]="elementsOptions"
-        ></ngx-stripe-card>
+                         [elementsOptions]="elementsOptions">
+        </ngx-stripe-card>
+
+        <div id="make-primary" [hidden]="!editCase">
+            <mat-slide-toggle (change)="togglePrimary($event)">Make primary</mat-slide-toggle>
+        </div>
 
         <div class="field-row">
             <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>

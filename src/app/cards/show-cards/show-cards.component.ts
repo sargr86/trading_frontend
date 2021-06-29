@@ -6,6 +6,7 @@ import {Card} from '@shared/models/card';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
 import {Subscription} from "rxjs";
+import {LoaderService} from "@core/services/loader.service";
 
 @Component({
     selector: 'app-show-cards',
@@ -19,11 +20,13 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     showActions = false;
+    selectedCard: Card;
 
     constructor(
         private usersService: UsersService,
         private getAuthUser: GetAuthUserPipe,
-        public router: Router
+        public router: Router,
+        public loader: LoaderService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -33,8 +36,10 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     getUserCards() {
+        this.loader.dataLoading = true;
         this.subscriptions.push(this.usersService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
             this.userCards = dt;
+            this.loader.dataLoading = false;
         }));
     }
 
@@ -42,8 +47,11 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         return moment(date, 'MM/YY').format('MM/YY');
     }
 
-    toggleActions(showActions) {
+    toggleActions(card, showActions) {
         this.showActions = showActions;
+        if(showActions){
+            this.selectedCard = card;
+        }
     }
 
     async editCard(c) {
@@ -57,6 +65,16 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id
         }).subscribe((dt: Card[]) => {
             this.userCards = dt;
+        }));
+    }
+
+    makePrimary(c) {
+        this.subscriptions.push(this.usersService.makePrimary({
+            card_id: c.id,
+            stripe_customer_id: c.customer,
+            user_id: this.authUser.id
+        }).subscribe(dt => {
+
         }));
     }
 

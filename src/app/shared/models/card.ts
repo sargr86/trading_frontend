@@ -5,4 +5,5 @@ export class Card {
     name?: string;
     exp_month?: number;
     exp_year?: number;
+    is_primary?: number;
 }

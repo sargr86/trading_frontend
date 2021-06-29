@@ -50,4 +50,8 @@ export class UsersService {
     updateStripeCard(params) {
         return this.httpClient.put<Card[]>(`${API_URL}users/update-stripe-user-card-info`, params);
     }
+
+    makePrimary(params) {
+        return this.httpClient.put<Card[]>(`${API_URL}users/set-customer-card-as-default`, params);
+    }
 }

@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '@shared/models/user';
 import {Card} from '@shared/models/card';
 import {Subscription} from 'rxjs';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-save-card',
@@ -41,7 +42,8 @@ export class SaveCardComponent implements OnInit, OnDestroy {
         public router: Router,
         private toastr: ToastrService,
         private fb: FormBuilder,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        public loader: LoaderService
     ) {
         this.saveCardForm = this.fb.group({
             name: ['', Validators.required]
@@ -65,11 +67,13 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     }
 
     saveCard(): void {
+        this.loader.dataLoading = true;
         if (this.editCase) {
             this.subscriptions.push(this.usersService.updateStripeCard({
                 card_id: this.cardId,
                 ...this.saveCardForm.value
             }).subscribe(async (dt) => {
+                this.loader.dataLoading = false;
                 this.toastr.success('The card info has been updated successfully');
                 await this.router.navigate(['/user/cards']);
             }));
@@ -81,13 +85,13 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                     if (result.token) {
                         const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
                         this.usersService.createStripeCard(cardData).subscribe(async (dt) => {
+                            this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
                             await this.router.navigate(['/user/cards']);
 
                         });
                     } else if (result.error) {
-                        // Error creating the token
-                        console.log(result.error.message);
+                        this.toastr.error(result.error.message);
                     }
                 }));
 

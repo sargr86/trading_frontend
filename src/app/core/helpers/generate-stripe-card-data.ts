@@ -1,5 +1,6 @@
 function generateStripeCardData(tokenData, authUser, cardName) {
     const cardData = tokenData.token.card;
+    console.log(cardData)
     const fullName = authUser.full_name;
     return {
         stripeToken: tokenData.token.id,
@@ -11,6 +12,7 @@ function generateStripeCardData(tokenData, authUser, cardName) {
         last4: cardData.last4,
         brand: cardData.brand,
         country: cardData.country,
+        fingerprint: cardData.fingerprint,
         name: cardName
     };
 }

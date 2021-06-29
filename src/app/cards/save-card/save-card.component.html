@@ -4,11 +4,12 @@
             <input formControlName="name" class="form-control">
         </div>
         <ngx-stripe-card [hidden]="editCase"
-            [options]="cardOptions"
-            [elementsOptions]="elementsOptions"
+                         [options]="cardOptions"
+                         [elementsOptions]="elementsOptions"
         ></ngx-stripe-card>
 
         <div class="field-row">
+            <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
             <button (click)="saveCard()">{{editCase ? 'Update' : 'Add'}} card</button>
         </div>
     </form>

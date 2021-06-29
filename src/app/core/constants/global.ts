@@ -166,7 +166,8 @@ export const STRIPE_CARD_OPTIONS: StripeCardElementOptions = {
                 color: '#CFD7E0'
             }
         }
-    }
+    },
+    hidePostalCode: true
 };
 
 

@@ -34,6 +34,8 @@ export class CompletePurchaseModalComponent implements OnInit {
     elementsOptions: StripeElementsOptions = {locale: 'en'};
     payPalConfig?: IPayPalConfig;
 
+    reviewedPurchase = false;
+
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
     constructor(
@@ -156,6 +158,10 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     formatExpiryDate(date) {
         return moment(date, 'MM/YYYY').format('MM/YY');
+    }
+
+    reviewPurchase() {
+        this.reviewedPurchase = !this.reviewedPurchase;
     }
 
 

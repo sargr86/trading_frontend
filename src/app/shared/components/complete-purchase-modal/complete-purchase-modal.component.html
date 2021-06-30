@@ -74,7 +74,7 @@
                         </div>
                         <div class="user-cards-list">
                             <form id="credit-card-form" [formGroup]="creditCardForm">
-                                <select class="form-control">
+                                <select class="form-control" (change)="selectCard($event)">
                                     <option *ngFor="let card of authUser?.users_cards">
                                         {{card.name}}
                                     </option>
@@ -88,19 +88,24 @@
                 </div>
                 <div class="purchase-review" [hidden]="!reviewedPurchase">
                     <div class="card p-4">
-<!--                        <div class="details w-100">-->
-<!--                            <div class="d-flex justify-content-between align-items-center">-->
-<!--                                <div class="bank-name">{{authUser?.user_cardscard.name}}</div>-->
-<!--                                <div class="brand">-->
-<!--                                    <img src="assets/img/purchase-icons/{{card.brand.toLowerCase()}}-card.png" class="brand-img">-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="card-number my-4">**** **** **** {{card.last4}} </div>-->
-<!--                            <div class="expiration-date ml-auto">-->
-<!--                                <p>exp.date</p>-->
-<!--                                <p class="numbers">{{formatExpiryDate(card.exp_month + '/' + card.exp_year)}}</p>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div class="details w-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="bank-name">{{selectedCard?.name}}</div>
+                                <div class="brand">
+                                    <img src="assets/img/purchase-icons/{{selectedCard?.brand.toLowerCase()}}-card.png"
+                                         class="brand-img">
+                                </div>
+                            </div>
+                            <div class="card-number my-4">**** **** **** {{selectedCard?.number_part}} </div>
+                            <div class="expiration-date ml-auto">
+                                <p>exp.date</p>
+                                <p class="numbers">{{formatExpiryDate(selectedCard?.expiry_date)}}</p>
+                            </div>
+                            <div class="actions">
+                                <button (click)="reviewPurchase()">Back</button>
+                                <button (click)="doPurchase()">Purchase</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

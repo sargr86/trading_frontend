@@ -35,6 +35,7 @@ export class CompletePurchaseModalComponent implements OnInit {
     payPalConfig?: IPayPalConfig;
 
     reviewedPurchase = false;
+    selectedCard;
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -58,7 +59,7 @@ export class CompletePurchaseModalComponent implements OnInit {
     ngOnInit(): void {
         this.initConfig();
         this.authUser = this.getAuthUser.transform();
-        console.log(this.authUser)
+        this.selectedCard = this.authUser?.users_cards.find(t => t.primary) || this.authUser?.users_cards[0];
     }
 
     private initConfig(): void {
@@ -162,6 +163,15 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     reviewPurchase() {
         this.reviewedPurchase = !this.reviewedPurchase;
+    }
+
+    selectCard(e) {
+        this.selectedCard = this.authUser?.users_cards.find(t => t.name === e.target.value);
+        console.log(this.selectedCard)
+    }
+
+    doPurchase() {
+
     }
 
 

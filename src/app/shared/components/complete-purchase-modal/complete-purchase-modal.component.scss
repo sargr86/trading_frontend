@@ -1,4 +1,8 @@
 #complete-purchase-modal {
+    .user-cards {
+        display: flex;
+    }
+
     .bg-gray {
         background-color: #F5F5F5;
     }
@@ -64,4 +68,7 @@ ngx-stripe-card {
     justify-content: space-between;
 }
 
+
+
+@import "cards";
 

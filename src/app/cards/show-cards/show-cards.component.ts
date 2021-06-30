@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
+import {CardsService} from '@core/services/cards.service';
 
 @Component({
     selector: 'app-show-cards',
@@ -14,24 +15,7 @@ import {LoaderService} from '@core/services/loader.service';
     styleUrls: ['./show-cards.component.scss']
 })
 export class ShowCardsComponent implements OnInit, OnDestroy {
-    userCards: Card[] = [
-        {
-            brand: 'visa',
-            last4: 1111,
-            exp_month: 4,
-            exp_year: 2024,
-            is_primary: 1,
-            name: 'test Name'
-        },
-        {
-            brand: 'master',
-            last4: 1111,
-            exp_month: 4,
-            exp_year: 2024,
-            is_primary: 1,
-            name: 'test'
-        }
-    ];
+    userCards: Card[] = [];
     authUser: User;
 
     subscriptions: Subscription[] = [];
@@ -41,6 +25,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     constructor(
         private usersService: UsersService,
+        private cardsService: CardsService,
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         public loader: LoaderService
@@ -49,12 +34,12 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.getUserCards();
+        this.getUserCards();
     }
 
     getUserCards() {
         this.loader.dataLoading = true;
-        this.subscriptions.push(this.usersService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
+        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
             this.userCards = dt;
             this.loader.dataLoading = false;
         }));
@@ -76,7 +61,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     removeCard(c) {
-        this.subscriptions.push(this.usersService.removeStripeCard({
+        this.subscriptions.push(this.cardsService.removeStripeCard({
             card_id: c.id,
             stripe_customer_id: c.customer,
             user_id: this.authUser.id
@@ -86,7 +71,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     makePrimary(c) {
-        this.subscriptions.push(this.usersService.makePrimary({
+        this.subscriptions.push(this.cardsService.makePrimary({
             card_id: c.id,
             stripe_customer_id: c.customer,
             user_id: this.authUser.id

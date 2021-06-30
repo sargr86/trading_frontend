@@ -1,0 +1,130 @@
+#user-cards-list {
+    display: flex;
+
+    .card {
+        width: 320px;
+        height: 180px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: unset;
+        box-shadow: 2px 2px 1px #000;
+        margin: 25px;
+        position: relative;
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .brand {
+            display: flex;
+            align-items: flex-end;
+
+            .brand-img {
+                width: 43px;
+            }
+        }
+
+        &#add-new-card {
+            align-items: center;
+            justify-content: center;
+
+            mat-icon {
+                font-size: 40px;
+                cursor: pointer;
+            }
+        }
+
+        .actions {
+            position: absolute;
+            width: calc(100% - 50px);
+            top: 50%;
+            display: flex;
+            justify-content: center;
+
+            mat-icon{
+                cursor: pointer;
+            }
+        }
+
+        &.darken {
+            background-color: rgba(0, 0, 0, 0.26);
+        }
+        .expiration-date {
+            font-size: 12px;
+            line-height: 18px;
+            font-family: "Muli-Regular", sans-serif;
+            color: #FFFFFF;
+            .numbers {
+                font-size: 17px;
+                line-height: 25px;
+                font-family: "Muli-Regular", sans-serif;
+                color: #FFFFFF;
+            }
+        }
+        .bank-name {
+            font-family: "Muli-Regular", sans-serif;
+            font-size: 22px;
+            line-height: 33px;
+            color: #FFFFFF;
+            text-shadow: -1px 1px black;
+            text-transform: capitalize;
+        }
+        .card-number {
+            font-family: "Muli-Regular", sans-serif;
+            font-size: 26px;
+            line-height: 33px;
+            color: #FFFFFF;
+        }
+    }
+}
+.card-tile {
+    position: absolute;
+    top: 45px;
+    left: -14px;
+    width: 100px;
+    height: 25px;
+    background-color: #3791E6;
+    z-index: 1;
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -20px;
+        width: 20px;
+        height: 25px;
+        border-left: solid 11px #3791E6;
+        border-bottom: solid 12px transparent;
+        border-top: solid 12px transparent;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 4px;
+        width: 20px;
+        height: 18px;
+        border-right: solid 9px #064F84;
+        border-bottom: solid 9px transparent;
+        border-top: solid 9px transparent;
+        transform: rotate(
+                135deg
+        );
+        z-index: 1;
+    }
+
+}
+.bg-green {
+    background-color: #0e9d6a;
+    border-radius: 7px;
+}
+.bg-gray {
+    background: transparent radial-gradient(closest-side at 2% -5%, #D8D8D8 0%, #9D9D9D 25%, #9D9D9D 36%, #9D9D9D 86%, #9D9D9D 95%, #8A8888 100%) 0 0 no-repeat padding-box;
+    border-radius: 7px;
+}
+.bg-gold {
+    background: transparent radial-gradient(closest-side at 2% -5%, rgba(238, 181, 88, 0.49) 0%, #e0ad7c 25%, #c48f24 36%, #f1a843 86%, #FFD28924 95%, #FFD289 100%) 0 0 no-repeat padding-box;
+    border-radius: 7px;
+}
+

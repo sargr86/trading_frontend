@@ -1,3 +1,5 @@
+@import "variables";
+
 .stripe-card-container {
     width: 50%;
 
@@ -7,5 +9,28 @@
 
     .field-row {
         margin: 20px 0;
+        display: flex;
+
+        button {
+            width: 88px;
+            height: 36px;
+            font-family: Muli-Light;
+            font-size: 16px;
+            color: #fff !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 16px;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+
+        .save-card {
+            background-color: $metl-green;
+        }
+
+        .back {
+            background-color: #C9C9C9;
+        }
     }
 }

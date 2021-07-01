@@ -80,8 +80,12 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getBgClass(i) {
-        return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
+    getBgClass(i, card) {
+        if (this.showActions && this.selectedCard === card) {
+            return '';
+        } else {
+            return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
+        }
     }
 
     ngOnDestroy(): void {

@@ -4,7 +4,7 @@
          *ngFor="let card of userCards;let ind = index"
          (mouseover)="toggleActions(card,true)"
          (mouseleave)="toggleActions(card,false)">
-        <div class="card-tile text-center"><small class="text-white ">Primary</small></div>
+        <div class="card-tile text-center" *ngIf="card.is_primary"><small class="text-white ">Primary</small></div>
         <div class="details w-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="bank-name">{{card.name}}</div>

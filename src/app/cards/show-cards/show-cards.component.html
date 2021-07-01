@@ -1,8 +1,9 @@
 <div class="user-cards-list">
     <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
-    <div class="card p-4" [ngClass]="getBgClass(ind)" [class.darken]="showActions && selectedCard === card" *ngFor="let card of userCards;let ind = index"
+    <div class="card p-4 " [ngClass]="getBgClass(ind)" [class.darken]="showActions && selectedCard === card" *ngFor="let card of userCards;let ind = index"
          (mouseover)="toggleActions(card,true)"
          (mouseleave)="toggleActions(card,false)">
+        <div class="card-tile text-center"><small class="text-white ">Primary</small></div>
         <div class="details w-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="bank-name">{{card.name}}</div>

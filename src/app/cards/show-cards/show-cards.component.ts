@@ -15,7 +15,25 @@ import {CardsService} from '@core/services/cards.service';
     styleUrls: ['./show-cards.component.scss']
 })
 export class ShowCardsComponent implements OnInit, OnDestroy {
-    userCards: Card[] = [];
+    // userCards: Card[] = [];
+    userCards: Card[] = [
+        {
+            brand: 'visa',
+            last4: 1111,
+            exp_month: 4,
+            exp_year: 2024,
+            is_primary: 1,
+            name: 'test Name'
+        },
+        {
+            brand: 'master',
+            last4: 1111,
+            exp_month: 4,
+            exp_year: 2024,
+            is_primary: 1,
+            name: 'test'
+        }
+    ];
     authUser: User;
 
     subscriptions: Subscription[] = [];
@@ -34,7 +52,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getUserCards();
+        // this.getUserCards();
     }
 
     getUserCards() {

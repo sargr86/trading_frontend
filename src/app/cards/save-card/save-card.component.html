@@ -9,6 +9,7 @@
         </ngx-stripe-card>
 
         <div class="field-row">
+
             <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
             <button type="button" class="back" (click)="goToCardsList()">Back</button>
             <button type="button" class="save-card"

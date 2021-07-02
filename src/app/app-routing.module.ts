@@ -12,6 +12,8 @@ import {SecurityComponent} from '@core/components/ungrouped/security/security.co
 import {HelpComponent} from '@core/components/ungrouped/help/help.component';
 import {ContactUsComponent} from '@core/components/ungrouped/contact-us/contact-us.component';
 import {PageLoadingComponent} from '@core/components/ungrouped/page-loading/page-loading.component';
+import {PaymentSuccessComponent} from "@app/user/payment-success/payment-success.component";
+import {PaymentCancelComponent} from "@app/user/payment-cancel/payment-cancel.component";
 
 
 const routes: Routes = [
@@ -123,6 +125,14 @@ const routes: Routes = [
         data: {
             title: 'Security',
         }
+    },
+    {
+        path: 'payment-success',
+        component: PaymentSuccessComponent
+    },
+    {
+        path: 'payment-cancel',
+        component: PaymentCancelComponent
     },
 
     {path: '**', component: NotFoundComponent},

@@ -126,7 +126,11 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
     stripeCheckout() {
-        this.purchasesService.stripeCheckout({})
+
+        this.purchasesService.stripeCheckout({
+            card: this.selectedCard,
+            purchase: this.purchase
+        })
             .pipe(
                 switchMap(session => {
                     return this.stripeService.redirectToCheckout({sessionId: session.id});

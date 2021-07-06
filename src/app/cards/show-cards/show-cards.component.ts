@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {CardsService} from '@core/services/cards.service';
+import {MAX_CARDS_PER_USER} from "@core/constants/global";
 
 @Component({
     selector: 'app-show-cards',
@@ -23,6 +24,8 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     showActions = false;
     selectedCard: Card;
+    maxCardsPerUser = MAX_CARDS_PER_USER;
+
 
     constructor(
         private usersService: UsersService,
@@ -40,10 +43,10 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     getUserCards() {
         this.loader.dataLoading = true;
-        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
-            this.userCards = dt;
-            this.loader.dataLoading = false;
-        }));
+        // this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
+        //     this.userCards = dt;
+        //     this.loader.dataLoading = false;
+        // }));
     }
 
     formatExpiryDate(date) {

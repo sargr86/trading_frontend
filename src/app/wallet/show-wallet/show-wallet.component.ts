@@ -18,7 +18,7 @@ export class ShowWalletComponent implements OnInit {
     }
 
     openModal() {
-        this.dialog.open(CompletePurchaseModalComponent).afterClosed().subscribe(dt => {
+        this.dialog.open(CompletePurchaseModalComponent, {width: '800px'}).afterClosed().subscribe(dt => {
 
         });
     }

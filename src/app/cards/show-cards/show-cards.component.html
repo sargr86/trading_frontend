@@ -18,7 +18,6 @@
                 <p class="numbers">{{formatExpiryDate(card.exp_month + '/' + card.exp_year)}}</p>
             </div>
         </div>
-
         <div class="actions" *ngIf="showActions  && selectedCard === card">
             <mat-icon (click)="makePrimary(card)" *ngIf="!card.is_primary">check</mat-icon>
             <mat-icon (click)="editCard(card)">settings</mat-icon>

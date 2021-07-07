@@ -68,7 +68,12 @@ ngx-stripe-card {
     justify-content: space-between;
 }
 
-
+.bg-yellow {
+    background-color: #fbc754;
+}
+.br-5 {
+    border-radius: 5px;
+}
 
 @import "cards";
 

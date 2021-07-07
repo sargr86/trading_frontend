@@ -29,7 +29,7 @@ export class PurchaseBitsComponent implements OnInit {
     }
 
     openPurchaseModal(purchase) {
-        this.dialog.open(CompletePurchaseModalComponent, {data: purchase}).afterClosed().subscribe(dt => {
+        this.dialog.open(CompletePurchaseModalComponent, {data: purchase, width: '800px'}).afterClosed().subscribe(dt => {
 
         });
     }

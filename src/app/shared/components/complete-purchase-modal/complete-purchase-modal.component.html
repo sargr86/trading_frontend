@@ -52,7 +52,7 @@
                                 <img src="assets/img/purchase-icons/amazon-pay.png" alt="">
                             </div>
                             <div role="button" (click)="stripeCheckout()"
-                                 class="w-300 br-10 d-flex align-items-center justify-content-center mr-3">
+                                 class="w-300 br-10 d-flex align-items-center justify-content-center mr-3 bg-yellow">
                                 <img src="assets/img/purchase-icons/stripe.png" alt="">
                             </div>
                         </div>
@@ -72,8 +72,8 @@
                                 <img class="mr-2" src="assets/img/purchase-icons/discover-credit-card-icon.png" alt="">
                             </div>
                         </div>
-                        <div id="user-cards-list">
-                            <form id="credit-card-form" [formGroup]="creditCardForm">
+                        <div id="user-cards-list mt-3">
+                            <form id="credit-card-form" [formGroup]="creditCardForm" class="w-50 mt-3">
                                 <select class="form-control" (change)="selectCard($event)">
                                     <option *ngFor="let card of authUser?.users_cards">
                                         {{card.name}}
@@ -82,7 +82,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end p-5">
                         <div role="button" class="btn-green" (click)="reviewPurchase()">Review Purchase</div>
                     </div>
                 </div>
@@ -101,9 +101,9 @@
                                 <p>exp.date</p>
                                 <p class="numbers">{{formatExpiryDate(selectedCard?.expiry_date)}}</p>
                             </div>
-                            <div class="actions">
-                                <button (click)="reviewPurchase()">Back</button>
-                                <button (click)="doPurchase()">Purchase</button>
+                            <div class="actions d-flex my-3">
+                                <button (click)="reviewPurchase()" class="btn-light px-4 py-1 br-5 mr-3">Back</button>
+                                <button (click)="doPurchase()" class="btn-red px-4 py-2 br-5 text-white">Purchase</button>
                             </div>
                         </div>
                     </div>

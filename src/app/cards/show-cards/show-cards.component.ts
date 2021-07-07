@@ -43,10 +43,10 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     getUserCards() {
         this.loader.dataLoading = true;
-        // this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
-        //     this.userCards = dt;
-        //     this.loader.dataLoading = false;
-        // }));
+        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
+            this.userCards = dt;
+            this.loader.dataLoading = false;
+        }));
     }
 
     formatExpiryDate(date) {

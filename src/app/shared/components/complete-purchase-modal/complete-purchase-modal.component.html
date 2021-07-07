@@ -13,12 +13,12 @@
                     <div class="d-flex align-items-center border-bottom pb-3">
                         <img src="assets/img/coin/gold.svg" alt="" width="16" height="16">
                         <div class="d-flex flex-column ml-3">
-                            <span>{{purchase?.bitPrice}} Metl Coins Bundle</span>
+                            <span>{{purchase?.name}}</span>
                             <span>One-time charge on {{currentDate| date: 'dd MMM, yyyy'}}.</span>
                         </div>
                         <div class="d-flex flex-column ml-auto">
                             <span>Price</span>
-                            <span>${{purchase?.currencyPrice.toFixed(2)}}</span>
+                            <span>${{purchase?.unit_amount.toFixed(2)}}</span>
 
                         </div>
                     </div>

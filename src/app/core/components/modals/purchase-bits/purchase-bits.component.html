@@ -24,8 +24,9 @@
                     <!--                    <img src="assets/img/coin/blue.svg" alt=""  width="16" height="16" class="mr-1">-->
                 </div>
             </div>
-<!--            <p class="bits-text-2">{{purchase.discount}}% discount</p>-->
-            <a class="bits-text-3" (click)="openPurchaseModal(purchase)">${{purchase.unit_amount.toFixed(2)}}</a>
+            <!--            <p class="bits-text-2">{{purchase.discount}}% discount</p>-->
+            <a class="bits-text-3"
+               (click)="openPurchaseModal(purchase)">${{(purchase.unit_amount / 100).toFixed(2)}}</a>
         </div>
     </div>
 </div>

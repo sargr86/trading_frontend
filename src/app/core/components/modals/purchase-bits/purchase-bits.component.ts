@@ -39,7 +39,6 @@ export class PurchaseBitsComponent implements OnInit {
     }
 
     createArray(len) {
-        console.log(len)
         return new Array(len);
     }
 

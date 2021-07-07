@@ -6,17 +6,17 @@
     <p class="purchase-text-4 mb-2 pb-2 border-bottom w-100 text-center">29% off for first-time Bits buyers!</p>
     <div class="mb-2">
         <img src="assets/img/coin/gold.svg" alt="" width="20" height="20" class="mx-1">
-        <img src="../../../../../assets/img/coin/silver.svg" alt="" width="20" height="20" class="mx-1">
+        <img src="assets/img/coin/silver.svg" alt="" width="20" height="20" class="mx-1">
     </div>
     <a class="purchase-text-5">Buy 300 Bits for $3,00</a>
     <p class="purchase-text-2">Prices are shown in USD</p>
     <div class="bits-block">
         <div class="bits-block-item" *ngFor="let purchase of bitPurchases">
             <div>
-                <p class="bits-text-1 mb-0">{{purchase.bitPrice}} Bits</p>
+                <p class="bits-text-1 mb-0">{{purchase.name}}</p>
                 <div>
                     <img src="assets/img/coin/{{coinImages[ind]}}.svg"
-                         *ngFor="let coin of createArray(purchase.coinsLen);let ind = index" alt="" width="16"
+                         *ngFor="let coin of createArray(purchase.unit_amount/1000);let ind = index" alt="" width="16"
                          height="16" class="mr-1">
                     <!--                    <img src="assets/img/coin/silver.svg" alt=""  width="16" height="16" class="mr-1">-->
                     <!--                    <img src="assets/img/coin/pink.svg" alt=""  width="16" height="16" class="mr-1">-->
@@ -24,8 +24,8 @@
                     <!--                    <img src="assets/img/coin/blue.svg" alt=""  width="16" height="16" class="mr-1">-->
                 </div>
             </div>
-            <p class="bits-text-2">{{purchase.discount}}% discount</p>
-            <a class="bits-text-3" (click)="openPurchaseModal(purchase)">${{purchase.currencyPrice.toFixed(2)}}</a>
+<!--            <p class="bits-text-2">{{purchase.discount}}% discount</p>-->
+            <a class="bits-text-3" (click)="openPurchaseModal(purchase)">${{purchase.unit_amount.toFixed(2)}}</a>
         </div>
     </div>
 </div>

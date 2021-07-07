@@ -60,6 +60,7 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.initConfig();
         this.authUser = this.getAuthUser.transform();
         this.selectedCard = this.authUser?.users_cards.find(t => t.primary) || this.authUser?.users_cards[0];
+        console.log(this.selectedCard)
     }
 
     private initConfig(): void {
@@ -126,7 +127,11 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
     stripeCheckout() {
-        this.purchasesService.stripeCheckout({})
+
+        this.purchasesService.stripeCheckout({
+            card: this.selectedCard,
+            purchase: this.purchase
+        })
             .pipe(
                 switchMap(session => {
                     return this.stripeService.redirectToCheckout({sessionId: session.id});

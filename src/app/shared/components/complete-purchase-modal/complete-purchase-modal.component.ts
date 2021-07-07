@@ -60,6 +60,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.initConfig();
         this.authUser = this.getAuthUser.transform();
         this.selectedCard = this.authUser?.users_cards.find(t => t.primary) || this.authUser?.users_cards[0];
+        console.log(this.authUser.users_cards)
+        console.log(this.selectedCard)
         console.log(this.purchase)
     }
 

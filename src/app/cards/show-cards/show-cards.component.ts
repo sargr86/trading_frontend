@@ -39,6 +39,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getUserCards();
+        console.log(this.authUser.users_cards)
     }
 
     getUserCards() {
@@ -69,8 +70,9 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
             card_id: c.id,
             stripe_customer_id: c.customer,
             user_id: this.authUser.id
-        }).subscribe((dt: Card[]) => {
-            this.userCards = dt;
+        }).subscribe((dt: any) => {
+            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.userCards = dt.cards;
         }));
     }
 

@@ -87,9 +87,10 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     if (result.token) {
                         const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
-                        this.cardsService.createStripeCard(cardData).subscribe(async (dt) => {
+                        this.cardsService.createStripeCard(cardData).subscribe(async (dt: any) => {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
+                            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
                             await this.router.navigate(['/user/cards']);
 
                         });

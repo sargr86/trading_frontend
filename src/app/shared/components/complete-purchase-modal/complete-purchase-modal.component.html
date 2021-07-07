@@ -1,5 +1,5 @@
 <div id="complete-purchase-modal">
-    <div class="" role="document">
+    <div class="" [hidden]="authUser?.users_cards?.length === 0" role="document">
         <div class="modal-content modal-lg">
             <div class="modal-header border-0">
                 <h5 class="modal-title" id="CompletePurchaseLongTitle">Complete Purchase</h5>
@@ -110,5 +110,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div [hidden]="authUser?.users_cards?.length > 0">
+        <h1>Please add at least one card first</h1>
     </div>
 </div>

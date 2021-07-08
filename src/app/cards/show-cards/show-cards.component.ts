@@ -8,8 +8,8 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {CardsService} from '@core/services/cards.service';
-import {MAX_CARDS_PER_USER} from "@core/constants/global";
-import {SubjectService} from "@core/services/subject.service";
+import {MAX_CARDS_PER_USER} from '@core/constants/global';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-show-cards',
@@ -41,7 +41,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getUserCards();
-        console.log(this.authUser.users_cards)
+        console.log(this.authUser.users_cards);
     }
 
     getUserCards() {
@@ -90,11 +90,11 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     getBgClass(i, card) {
-        if (this.showActions && this.selectedCard === card) {
-            return '';
-        } else {
+        // if (this.selectedCard === card) {
+        //     return '';
+        // } else {
             return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
-        }
+        // }
     }
 
     ngOnDestroy(): void {

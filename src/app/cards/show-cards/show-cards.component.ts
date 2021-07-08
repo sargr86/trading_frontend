@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {CardsService} from '@core/services/cards.service';
 import {MAX_CARDS_PER_USER} from "@core/constants/global";
+import {SubjectService} from "@core/services/subject.service";
 
 @Component({
     selector: 'app-show-cards',
@@ -32,7 +33,8 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         private cardsService: CardsService,
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private subject: SubjectService
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -72,6 +74,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id
         }).subscribe((dt: any) => {
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            this.subject.changeAuthUser(this.getAuthUser.transform());
             this.userCards = dt.cards;
         }));
     }

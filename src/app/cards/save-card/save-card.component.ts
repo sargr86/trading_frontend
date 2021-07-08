@@ -13,6 +13,7 @@ import {Card} from '@shared/models/card';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {CardsService} from '@core/services/cards.service';
+import {SubjectService} from "@core/services/subject.service";
 
 @Component({
     selector: 'app-save-card',
@@ -45,7 +46,8 @@ export class SaveCardComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private fb: FormBuilder,
         private route: ActivatedRoute,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private subject: SubjectService
     ) {
         this.saveCardForm = this.fb.group({
             name: ['', Validators.required],
@@ -91,6 +93,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
                             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+                            this.subject.changeAuthUser(this.getAuthUser.transform());
                             await this.router.navigate(['/user/cards']);
 
                         });

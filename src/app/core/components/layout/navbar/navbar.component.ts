@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -10,13 +10,15 @@ import {MatDialog} from '@angular/material/dialog';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import IsResponsive from '@core/helpers/is-responsive';
 import trackByElement from '@core/helpers/track-by-element';
+import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
     authUser;
     routerUrl;
     isSmallScreen = IsResponsive.isSmallScreen();
@@ -32,6 +34,9 @@ export class NavbarComponent implements OnInit {
     passedUsername;
 
     stocks;
+    subscriptions: Subscription[] = [];
+
+    showPurchaseBits = false;
 
     constructor(
         public router: Router,
@@ -40,7 +45,8 @@ export class NavbarComponent implements OnInit {
         private subject: SubjectService,
         private stocksService: StocksService,
         private route: ActivatedRoute,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private toastr: ToastrService
     ) {
 
     }
@@ -48,12 +54,17 @@ export class NavbarComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
 
-        this.router.events.subscribe(ev => {
+        this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
             } else if (ev instanceof ActivationEnd) {
                 this.passedUsername = ev.snapshot.queryParams.username;
             }
+        }));
+
+        this.subject.authUser.subscribe(dt => {
+            this.authUser = dt;
+            this.showPurchaseBits = false;
         });
 
         this.getDailyStocks();
@@ -62,10 +73,10 @@ export class NavbarComponent implements OnInit {
 
 
     logout() {
-        this.auth.logout().subscribe(async () => {
+        this.subscriptions.push(this.auth.logout().subscribe(async () => {
             localStorage.removeItem('token');
             await this.router.navigate(['/']);
-        });
+        }));
     }
 
     searchVideos(e) {
@@ -90,10 +101,10 @@ export class NavbarComponent implements OnInit {
     }
 
     getDailyStocks() {
-        this.stocksService.getDailyStocks({}).subscribe(dt => {
+        this.subscriptions.push(this.stocksService.getDailyStocks({}).subscribe(dt => {
             this.stocks = dt;
             this.subject.setStocksData(dt);
-        });
+        }));
     }
 
     getPercentageValue(stock) {
@@ -105,6 +116,18 @@ export class NavbarComponent implements OnInit {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             this.router.navigate(['channels/show'], {queryParams: {username: this.authUser.username}})
         );
+    }
+
+    checkIfUserHasCard() {
+        if (this.authUser?.users_cards?.length > 0) {
+            this.showPurchaseBits = true;
+        } else {
+            this.toastr.error('Please add at least one card first', 'No cards');
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

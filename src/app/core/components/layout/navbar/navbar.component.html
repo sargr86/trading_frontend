@@ -28,8 +28,8 @@
             <app-stocks-marquee [stocks]="stocks"></app-stocks-marquee>
             <div class="notification-block">
                 <div class="nav-item dropdown">
-                    <a class="header-bit-btn nav-lin" data-toggle="dropdown">Buy Bits</a>
-                    <div class="dropdown-menu">
+                    <a class="header-bit-btn nav-lin" data-toggle="dropdown" (click)="checkIfUserHasCard()">Buy Bits</a>
+                    <div class="dropdown-menu" [hidden]="!showPurchaseBits">
                         <app-purchase-bits></app-purchase-bits>
                     </div>
                 </div>

@@ -11,7 +11,8 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
 import {CardsService} from '@core/services/cards.service';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
-import * as moment from "moment";
+import * as moment from 'moment';
+
 
 @Component({
     selector: 'app-complete-purchase-modal',
@@ -64,6 +65,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         console.log(this.selectedCard)
         console.log(this.purchase)
     }
+
+
 
     private initConfig(): void {
         this.payPalConfig = {
@@ -175,10 +178,6 @@ export class CompletePurchaseModalComponent implements OnInit {
     selectCard(e) {
         this.selectedCard = this.authUser?.users_cards.find(t => t.name === e.target.value);
         console.log(this.selectedCard)
-    }
-
-    doPurchase() {
-
     }
 
 

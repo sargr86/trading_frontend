@@ -18,7 +18,7 @@
                         </div>
                         <div class="d-flex flex-column ml-auto">
                             <span>Price</span>
-                            <span>${{purchase?.unit_amount.toFixed(2)}}</span>
+                            <span>${{(purchase?.unit_amount / 100).toFixed(2)}}</span>
 
                         </div>
                     </div>
@@ -103,7 +103,8 @@
                             </div>
                             <div class="actions d-flex my-3">
                                 <button (click)="reviewPurchase()" class="btn-light px-4 py-1 br-5 mr-3">Back</button>
-                                <button (click)="doPurchase()" class="btn-red px-4 py-2 br-5 text-white">Purchase</button>
+                                <button (click)="stripeCheckout()" class="btn-red px-4 py-2 br-5 text-white">Purchase
+                                </button>
                             </div>
                         </div>
                     </div>

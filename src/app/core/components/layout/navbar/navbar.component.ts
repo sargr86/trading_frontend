@@ -12,6 +12,8 @@ import IsResponsive from '@core/helpers/is-responsive';
 import trackByElement from '@core/helpers/track-by-element';
 import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+import {Card} from "@shared/models/card";
+import {CardsService} from "@core/services/cards.service";
 
 @Component({
     selector: 'app-navbar',
@@ -38,6 +40,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     showPurchaseBits = false;
 
+    userCards = [];
+
     constructor(
         public router: Router,
         public auth: AuthService,
@@ -46,7 +50,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private stocksService: StocksService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private cardsService: CardsService
     ) {
 
     }
@@ -63,12 +68,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }));
 
         this.subject.authUser.subscribe(dt => {
-            this.authUser = dt;
+            this.getUserCards();
             this.showPurchaseBits = false;
         });
 
         this.getDailyStocks();
+        this.getUserCards();
 
+    }
+
+    getUserCards() {
+        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
+            this.userCards = dt;
+        }));
     }
 
 
@@ -119,7 +131,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     checkIfUserHasCard() {
-        if (this.authUser?.users_cards?.length > 0) {
+        if (this.userCards?.length > 0) {
             this.showPurchaseBits = true;
         } else {
             this.toastr.error('Please add at least one card first', 'No cards');

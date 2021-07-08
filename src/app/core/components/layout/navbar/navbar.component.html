@@ -48,7 +48,7 @@
                     <div class="dropdown-menu">
                     <span class="dropdown-item" *ngIf="toggleMyProfileLink()"
                           (click)="router.navigate(['user/profile'])">My Profile</span>
-                        <span class="dropdown-item" *ngIf="toggleMyChannelLink()"
+                        <span class="dropdown-item" *ngIf="toggleMyChannelLink() && !routerUrl?.includes('cards')"
                               (click)="router.navigate(['user/cards'])">My Cards</span>
                         <span class="dropdown-item" *ngIf="toggleMyChannelLink()"
                               (click)="goToChannelPage()">My Channel</span>

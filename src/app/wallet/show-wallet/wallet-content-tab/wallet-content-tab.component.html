@@ -1,9 +1,13 @@
 <div class="sub-titles mb-3">Saved Payment Methods</div>
 <div class="d-flex">
-    <img src="assets/img/credit-card%20(7).svg" alt="" width="22" height="15">
-    <span class="ml-2">**** **** **** 56 56</span>
+    <ul>
+        <li *ngFor="let card of userCards">
+            <img src="assets/img/credit-card%20(7).svg" alt="" width="22" height="15">
+            <span class="ml-2">**** **** **** {{card.last4}}</span>
+        </li>
+    </ul>
 </div>
-<div role="button" class="red-link-btn">+ Add New Card</div>
+<div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">+ Add New Card</div>
 <hr>
 <div class="sub-titles mb-3">Purchased Metl Coins</div>
 <div class="d-flex align-items-center">

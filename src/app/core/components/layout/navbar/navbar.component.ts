@@ -84,6 +84,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getUserCards() {
         this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
             this.userCards = dt;
+            this.subject.changeUserCards(dt);
         }));
     }
 

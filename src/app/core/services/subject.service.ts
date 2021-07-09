@@ -9,6 +9,7 @@ export class SubjectService {
     token = localStorage.getItem('token')
     authUserData = this.token ? jwtDecode(this.token) : '';
     userStocks = {stocks: [], empty: true, initial: true};
+    userCards = [];
     indices = [];
     stockTypes = [];
     stockSortTypes = [];
@@ -24,8 +25,10 @@ export class SubjectService {
     private stocksData = new Subject<any>();
     private indicesData = new Subject<any>();
     private userStocksData = new Subject<any>();
+    private userCardsData = new Subject<any>();
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
+    private userCardsSource = new BehaviorSubject(this.userCards);
     private videoCommentsSource = new BehaviorSubject(this.videoComments);
     private authUserSource = new BehaviorSubject(this.authUserData);
     private indicesSource = new BehaviorSubject(this.indices);
@@ -34,6 +37,7 @@ export class SubjectService {
 
     authUser = this.authUserSource.asObservable();
     currentUserStocks = this.userStocksSource.asObservable();
+    currentUserCards = this.userCardsSource.asObservable();
     currentStockTypes = this.stockTypesSource.asObservable();
     currentStockSortTypes = this.stockSortTypesSource.asObservable();
     currentIndices = this.indicesSource.asObservable();
@@ -137,5 +141,9 @@ export class SubjectService {
 
     changeVideoComments(stocks) {
         this.videoCommentsSource.next(stocks);
+    }
+
+    changeUserCards(cards) {
+        this.userCardsSource.next(cards);
     }
 }

@@ -10,7 +10,7 @@ import {CompletePurchaseModalComponent} from '@shared/components/complete-purcha
 export class ShowWalletComponent implements OnInit {
 
     constructor(
-        private dialog: MatDialog
+        private dialog: MatDialog,
     ) {
     }
 

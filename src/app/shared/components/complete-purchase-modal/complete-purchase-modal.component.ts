@@ -6,7 +6,7 @@ import {switchMap} from 'rxjs/operators';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {StripeElementsOptions} from '@stripe/stripe-js';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
+import {API_URL, STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
 import {CardsService} from '@core/services/cards.service';
@@ -65,7 +65,6 @@ export class CompletePurchaseModalComponent implements OnInit {
         console.log(this.selectedCard)
         console.log(this.purchase)
     }
-
 
 
     private initConfig(): void {
@@ -139,7 +138,19 @@ export class CompletePurchaseModalComponent implements OnInit {
         })
             .pipe(
                 switchMap(session => {
-                    return this.stripeService.redirectToCheckout({sessionId: session.id});
+                    return this.stripeService.redirectToCheckout({
+                        // sessionId: session.id,
+                        clientReferenceId: this.selectedCard.id.toString(),
+                        successUrl: API_URL + '/payment-success',
+                        cancelUrl: API_URL + '/payment-cancel',
+                        mode: 'payment',
+                        lineItems: [
+                            {
+                                price: this.purchase.id,
+                                quantity: 1
+                            }
+                        ]
+                    });
                 })
             )
             .subscribe(result => {

@@ -68,12 +68,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }));
 
         this.subject.authUser.subscribe(dt => {
-            this.getUserCards();
+            if (this.auth.loggedIn()) {
+                this.getUserCards();
+            }
             this.showPurchaseBits = false;
         });
 
         this.getDailyStocks();
-        this.getUserCards();
+        if (this.auth.loggedIn()) {
+            this.getUserCards();
+        }
 
     }
 

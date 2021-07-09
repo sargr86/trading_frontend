@@ -12,6 +12,7 @@ import {UsersService} from '@core/services/users.service';
 import {CardsService} from '@core/services/cards.service';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import * as moment from 'moment';
+import {SubjectService} from "@core/services/subject.service";
 
 
 @Component({
@@ -37,6 +38,7 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     reviewedPurchase = false;
     selectedCard;
+    userCards = [];
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -48,7 +50,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
         private usersService: UsersService,
-        private cardsService: CardsService
+        private cardsService: CardsService,
+        private subject: SubjectService
     ) {
         this.purchase = data;
         this.creditCardForm = fb.group({
@@ -61,9 +64,14 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.initConfig();
         this.authUser = this.getAuthUser.transform();
         this.selectedCard = this.authUser?.users_cards.find(t => t.primary) || this.authUser?.users_cards[0];
-        console.log(this.authUser.users_cards)
-        console.log(this.selectedCard)
-        console.log(this.purchase)
+
+        this.subject.currentUserCards.subscribe(dt => {
+            this.userCards = dt;
+            this.selectedCard = dt.find(t => t.primary) || dt[0];
+            console.log(this.authUser.users_cards)
+            console.log(this.selectedCard)
+            console.log(this.purchase)
+        });
     }
 
 

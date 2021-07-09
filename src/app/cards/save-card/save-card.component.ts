@@ -92,8 +92,9 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                         this.cardsService.createStripeCard(cardData).subscribe(async (dt: any) => {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
-                            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-                            this.subject.changeAuthUser(this.getAuthUser.transform());
+                            // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+                            // this.subject.changeAuthUser(this.getAuthUser.transform());
+                            this.subject.changeUserCards(dt.cards);
                             await this.router.navigate(['/user/cards']);
 
                         });

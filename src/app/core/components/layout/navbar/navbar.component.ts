@@ -12,8 +12,8 @@ import IsResponsive from '@core/helpers/is-responsive';
 import trackByElement from '@core/helpers/track-by-element';
 import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
-import {Card} from "@shared/models/card";
-import {CardsService} from "@core/services/cards.service";
+import {Card} from '@shared/models/card';
+import {CardsService} from '@core/services/cards.service';
 
 @Component({
     selector: 'app-navbar',
@@ -67,10 +67,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             }
         }));
 
-        this.subject.authUser.subscribe(dt => {
-            if (this.auth.loggedIn()) {
-                this.getUserCards();
-            }
+        this.subject.currentUserCards.subscribe(dt => {
+            this.userCards = dt;
             this.showPurchaseBits = false;
         });
 

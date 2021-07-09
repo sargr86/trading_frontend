@@ -40,16 +40,9 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getUserCards();
-        console.log(this.authUser.users_cards);
-    }
-
-    getUserCards() {
-        this.loader.dataLoading = true;
-        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
+        this.subject.currentUserCards.subscribe(dt => {
             this.userCards = dt;
-            this.loader.dataLoading = false;
-        }));
+        });
     }
 
     formatExpiryDate(date) {
@@ -73,8 +66,9 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
             stripe_customer_id: c.customer,
             user_id: this.authUser.id
         }).subscribe((dt: any) => {
-            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-            this.subject.changeAuthUser(this.getAuthUser.transform());
+            // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
+            // this.subject.changeAuthUser(this.getAuthUser.transform());
+            this.subject.changeUserCards(dt.cards);
             this.userCards = dt.cards;
         }));
     }
@@ -93,7 +87,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         // if (this.selectedCard === card) {
         //     return '';
         // } else {
-            return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
+        return i === 0 ? 'bg-green' : (i === 1 ? 'bg-gold' : 'bg-gray');
         // }
     }
 

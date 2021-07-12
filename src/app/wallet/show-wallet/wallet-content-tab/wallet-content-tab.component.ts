@@ -7,8 +7,8 @@ import {Router} from '@angular/router';
 import {PurchasesService} from '@core/services/purchases.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from "@angular/material/table";
-import {DatePipe} from "@angular/common";
+import {MatTableDataSource} from '@angular/material/table';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -66,7 +66,6 @@ export class WalletContentTabComponent implements OnInit {
                 break;
             case 'payment_method':
                 const card = element?.charges?.data?.[0]?.payment_method_details?.card;
-                console.log(card)
                 if (card) {
                     content = `**** **** **** ${card.last4}`;
                 }

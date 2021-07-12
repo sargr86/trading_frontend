@@ -9,7 +9,7 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
 import {JwtModule} from '@auth0/angular-jwt';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RequestInterceptor} from '@core/helpers/http.interceptor';
-import {DatePipe} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from '@core/modules/material.module';
@@ -54,6 +54,7 @@ export function tokenGetter() {
             useClass: RequestInterceptor,
             multi: true
         },
+        CurrencyPipe
     ],
     bootstrap: [AppComponent]
 })

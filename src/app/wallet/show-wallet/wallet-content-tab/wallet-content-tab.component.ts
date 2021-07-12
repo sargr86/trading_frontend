@@ -8,7 +8,7 @@ import {PurchasesService} from '@core/services/purchases.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {DatePipe} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -31,7 +31,8 @@ export class WalletContentTabComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         public router: Router,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private currencyPipe: CurrencyPipe
     ) {
     }
 
@@ -59,7 +60,7 @@ export class WalletContentTabComponent implements OnInit {
                 content = this.datePipe.transform(element.created * 1000);
                 break;
             case 'amount_submitted':
-                content = `${element.currency.toUpperCase()} ${element.amount / 100}`;
+                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
                 break;
             case 'status':
                 content = normalizeColName(element.status);

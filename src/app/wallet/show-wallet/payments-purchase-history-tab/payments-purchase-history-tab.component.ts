@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PurchasesService} from '@core/services/purchases.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
-import {DatePipe} from "@angular/common";
+import {CurrencyPipe, DatePipe} from "@angular/common";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 
@@ -19,7 +19,8 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
 
     constructor(
         private purchasesService: PurchasesService,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private currencyPipe: CurrencyPipe
     ) {
     }
 
@@ -39,7 +40,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
                 content = this.datePipe.transform(element.created * 1000);
                 break;
             case 'amount':
-                content = `${element.currency.toUpperCase()} ${element.amount / 100}`;
+                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
                 break;
             case 'status':
                 content = normalizeColName(element.status);

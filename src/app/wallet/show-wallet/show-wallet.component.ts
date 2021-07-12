@@ -9,23 +9,14 @@ import {PurchasesService} from "@core/services/purchases.service";
     styleUrls: ['./show-wallet.component.scss']
 })
 export class ShowWalletComponent implements OnInit {
-    payments = [];
-    purchases = [];
 
     constructor(
         private dialog: MatDialog,
-        private purchasesService: PurchasesService
     ) {
     }
 
     ngOnInit(): void {
-        this.purchasesService.getAllPaymentsHistory().subscribe(dt => {
-            this.payments = dt;
-        });
 
-        this.purchasesService.getPurchasesHistory().subscribe(dt => {
-            this.purchases = dt;
-        });
     }
 
     openModal() {

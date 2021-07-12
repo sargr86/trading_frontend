@@ -113,6 +113,24 @@
     </tr>
     </tbody>
 </table>
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4">
+
+    <ng-container *ngFor="let col of displayedColumns">
+        <ng-container [matColumnDef]="col">
+            <th mat-header-cell *matHeaderCellDef> {{normalizeColName(col)}}</th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="col!=='action'">{{getColumnContentByItsName(col, element)}}</span>
+                <div *ngIf="col==='action'" class="action-column">
+
+                </div>
+            </td>
+        </ng-container>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 <nav aria-label="...">
     <ul class="pagination">
         <li class="page-item disabled">

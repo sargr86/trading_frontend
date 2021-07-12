@@ -19,4 +19,12 @@ export class PurchasesService {
     stripeCheckout(params) {
         return this.httpClient.post<any>(`${API_URL}purchases/stripe-checkout`, params);
     }
+
+    getAllPaymentsHistory() {
+        return this.httpClient.get<any>(`${API_URL}purchases/get-all-payments-history`);
+    }
+
+    getPurchasesHistory() {
+        return this.httpClient.get<any>(`${API_URL}purchases/get-purchases-history`);
+    }
 }

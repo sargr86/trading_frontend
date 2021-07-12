@@ -142,22 +142,13 @@ export class CompletePurchaseModalComponent implements OnInit {
 
         this.purchasesService.stripeCheckout({
             card: this.selectedCard,
-            purchase: this.purchase
+            purchase: this.purchase,
+            email: this.authUser.email
         })
             .pipe(
                 switchMap(session => {
                     return this.stripeService.redirectToCheckout({
-                        // sessionId: session.id,
-                        clientReferenceId: this.selectedCard.id.toString(),
-                        successUrl: API_URL + '/payment-success',
-                        cancelUrl: API_URL + '/payment-cancel',
-                        mode: 'payment',
-                        lineItems: [
-                            {
-                                price: this.purchase.id,
-                                quantity: 1
-                            }
-                        ]
+                        sessionId: session.id
                     });
                 })
             )

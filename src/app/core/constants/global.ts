@@ -154,7 +154,7 @@ export const VIDEOJS_PLAYER_OPTIONS = {
     sources: []
 };
 
-export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51J3b7QFvFgYFSjubLTCwTMKA4dHW9Q1FKVIlevGL9LBNVc2nZzpR67kngYqR9QxziNlmyiD3pNVHDj2FkRfcnbPa00Ee3l0Fx9';
+export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51HdPckKqYIKd5fEInH0pL35DSdkG9JfxAiuT7K3JutO3zFseApoTCjdj72fK82tORdAjDIUOPQzSm62DIeUUmdpw00OhdcsU0p';
 export const STRIPE_CARD_OPTIONS: StripeCardElementOptions = {
     style: {
         base: {

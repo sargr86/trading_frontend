@@ -20,9 +20,13 @@ export class WalletContentTabComponent implements OnInit {
     userCards = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
     payments = [];
+    filteredPayments = [];
     tableData;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    pageSize = 5;
+    pageIndex = 0;
 
     constructor(
         public auth: AuthService,
@@ -44,7 +48,8 @@ export class WalletContentTabComponent implements OnInit {
 
         this.purchasesService.getAllPaymentsHistory().subscribe(dt => {
             this.payments = dt;
-            this.tableData = new MatTableDataSource(dt);
+            this.filteredPayments = dt;
+            this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
         });
     }
@@ -73,6 +78,17 @@ export class WalletContentTabComponent implements OnInit {
                 break;
         }
         return content;
+    }
+
+    handle(e) {
+        this.pageIndex = e.pageIndex;
+        this.pageSize = e.pageSize;
+        this.filterPayments();
+    }
+
+    filterPayments() {
+        this.filteredPayments = this.payments.slice(this.pageIndex * this.pageSize,
+            this.pageIndex * this.pageSize + this.pageSize);
     }
 
 

@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PurchasesService} from '@core/services/purchases.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
-import {CurrencyPipe, DatePipe} from "@angular/common";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {CurrencyPipe, DatePipe} from '@angular/common';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
@@ -13,7 +13,7 @@ import {MatPaginator} from "@angular/material/paginator";
 export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     purchases = [];
     tableData;
-    displayedColumns = ['date', 'product_name', 'product_description', 'amount', 'payment_method'];
+    displayedColumns = ['date', 'product_name', 'product_description', 'amount', 'payment_method', 'status'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -50,6 +50,12 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
                 if (card) {
                     content = `**** **** **** ${card.last4}`;
                 }
+                break;
+            case 'product_description':
+                content = element.description;
+                break;
+            case 'product_name':
+                content = element.metadata.name;
                 break;
             default:
                 content = element[col];

@@ -19,6 +19,10 @@ export class ShowWalletComponent implements OnInit {
 
     }
 
+    tabChange(e) {
+        console.log(e)
+    }
+
     openModal() {
         this.dialog.open(CompletePurchaseModalComponent, {width: '800px'}).afterClosed().subscribe(dt => {
 

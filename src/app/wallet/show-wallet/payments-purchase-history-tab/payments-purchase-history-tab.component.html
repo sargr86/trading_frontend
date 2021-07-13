@@ -10,10 +10,6 @@
             <input type="datetime-local" id="end1" class="form-control ">
         </div>
     </div>
-    <div class="d-flex align-items-center">
-        <div role="button" class="gray-btn px-3 ml-2">View Your Amazon Order History</div>
-        <div role="button" class="gray-btn px-3 ml-2">View Your PayPal Order History</div>
-    </div>
 </div>
 
 <table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4">
@@ -38,18 +34,24 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<nav aria-label="...">
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
-        </li>
-    </ul>
-</nav>
+
+<div>
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]"
+                   showFirstLastButtons></mat-paginator>
+</div>
+
+<!--<nav aria-label="...">-->
+<!--    <ul class="pagination">-->
+<!--        <li class="page-item disabled">-->
+<!--            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>-->
+<!--        </li>-->
+<!--        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--        <li class="page-item active">-->
+<!--            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>-->
+<!--        </li>-->
+<!--        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--        <li class="page-item">-->
+<!--            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->

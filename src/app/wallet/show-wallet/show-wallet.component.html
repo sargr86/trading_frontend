@@ -3,7 +3,7 @@
         <h3 class="mb-4 title">Wallet <img src="assets/img/wallet-main-page-icon.svg" alt="" width="30" height="25">
         </h3>
         <div>
-            <mat-tab-group [disableRipple]="true">
+            <mat-tab-group [disableRipple]="true" (selectedTabChange)="tabChange($event)">
                 <mat-tab label="Wallet">
                     <app-wallet-content-tab></app-wallet-content-tab>
                 </mat-tab>
@@ -18,8 +18,8 @@
                 </mat-tab>
             </mat-tab-group>
 
-            <!-- Modal -->
-            <button type="button" class="btn btn-primary complete-purchase" (click)="openModal()">Complete purchase</button>
+<!--            &lt;!&ndash; Modal &ndash;&gt;-->
+<!--            <button type="button" class="btn btn-primary complete-purchase" (click)="openModal()">Complete purchase</button>-->
         </div>
     </div>
 </div>

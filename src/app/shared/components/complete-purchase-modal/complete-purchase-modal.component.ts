@@ -12,7 +12,8 @@ import {UsersService} from '@core/services/users.service';
 import {CardsService} from '@core/services/cards.service';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import * as moment from 'moment';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -51,7 +52,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private usersService: UsersService,
         private cardsService: CardsService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private toastr: ToastrService
     ) {
         this.purchase = data;
         this.creditCardForm = fb.group({
@@ -160,20 +162,16 @@ export class CompletePurchaseModalComponent implements OnInit {
             });
     }
 
-    addCard(): void {
-        this.stripeService
-            .createToken(this.card.element, {name: this.authUser.full_name})
-            .subscribe(result => {
-                if (result.token) {
-                    this.cardsService.createStripeCard(generateStripeCardData(result, this.authUser, '')).subscribe(dt => {
-                        this.creditCardAdded = true;
-                    });
-                } else if (result.error) {
-                    // Error creating the token
-                    console.log(result.error.message);
-                }
-            });
 
+    stripeCharge() {
+        this.purchasesService.stripeCharge({
+            card: this.selectedCard,
+            purchase: this.purchase,
+            email: this.authUser.email
+        }).subscribe(dt => {
+            this.toastr.success('The purchase completed successfully', 'Done!');
+            this.closeModal();
+        });
 
     }
 
@@ -186,7 +184,7 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
     selectCard(e) {
-        this.selectedCard = this.authUser?.users_cards.find(t => t.name === e.target.value);
+        this.selectedCard = this.userCards.find(t => t.name === e.target.value);
         console.log(this.selectedCard)
     }
 

@@ -177,7 +177,8 @@ export class CompletePurchaseModalComponent implements OnInit {
             }).catch(e => {
                 console.log(e)
             }).then((r) => {
-                console.log(r)
+                this.toastr.success('The purchase has been completed successfully', 'Done!');
+                this.closeModal();
                 // this.purchasesService.stripeCharge({
                 //     card: this.selectedCard,
                 //     purchase: this.purchase,

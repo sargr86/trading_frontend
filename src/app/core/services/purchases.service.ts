@@ -20,6 +20,10 @@ export class PurchasesService {
         return this.httpClient.post<any>(`${API_URL}purchases/stripe-checkout`, params);
     }
 
+    createPaymentIntent(params) {
+        return this.httpClient.post<any>(`${API_URL}purchases/create-payment-intent`, params);
+    }
+
     stripeCharge(params) {
         return this.httpClient.post<any>(`${API_URL}purchases/stripe-charge`, params);
     }

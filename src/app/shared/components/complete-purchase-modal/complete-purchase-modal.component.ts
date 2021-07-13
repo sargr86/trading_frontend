@@ -4,16 +4,16 @@ import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
 import {PurchasesService} from '@core/services/purchases.service';
 import {switchMap} from 'rxjs/operators';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
-import {StripeElementsOptions} from '@stripe/stripe-js';
+import {StripeElementsOptions, loadStripe} from '@stripe/stripe-js';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {API_URL, STRIPE_CARD_OPTIONS} from '@core/constants/global';
+import {API_URL, STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
 import {CardsService} from '@core/services/cards.service';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -22,7 +22,6 @@ import {ToastrService} from "ngx-toastr";
     styleUrls: ['./complete-purchase-modal.component.scss']
 })
 export class CompletePurchaseModalComponent implements OnInit {
-
     authUser;
 
     purchase;
@@ -40,6 +39,7 @@ export class CompletePurchaseModalComponent implements OnInit {
     reviewedPurchase = false;
     selectedCard;
     userCards = [];
+    stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -164,14 +164,36 @@ export class CompletePurchaseModalComponent implements OnInit {
 
 
     stripeCharge() {
-        this.purchasesService.stripeCharge({
+        this.purchasesService.createPaymentIntent({
+            customer_id: this.selectedCard.stripe_customer_id,
+            currency: this.purchase.currency,
             card: this.selectedCard,
-            purchase: this.purchase,
-            email: this.authUser.email
-        }).subscribe(dt => {
-            this.toastr.success('The purchase completed successfully', 'Done!');
-            this.closeModal();
+            purchase: this.purchase
+        }).subscribe(async (clientSecret) => {
+            const stripe = await this.stripePromise;
+            // const stripe = Stripe('<<YOUR-PUBLISHABLE-API-KEY>>');
+            await stripe.confirmCardPayment(clientSecret, {
+                payment_method: this.selectedCard.id
+            }).catch(e => {
+                console.log(e)
+            }).then((r) => {
+                console.log(r)
+                // this.purchasesService.stripeCharge({
+                //     card: this.selectedCard,
+                //     purchase: this.purchase,
+                //     email: this.authUser.email
+                // }).subscribe(dt => {
+                //     this.toastr.success('The purchase completed successfully', 'Done!');
+                //     this.closeModal();
+                // });
+            });
+
+
         });
+
+    }
+
+    createPaymentIntent() {
 
     }
 

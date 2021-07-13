@@ -20,7 +20,7 @@ export class ShowWalletComponent implements OnInit {
     }
 
     tabChange(e) {
-        console.log(e)
+        // console.log(e)
     }
 
     openModal() {

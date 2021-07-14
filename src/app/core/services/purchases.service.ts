@@ -28,11 +28,11 @@ export class PurchasesService {
         return this.httpClient.post<any>(`${API_URL}purchases/stripe-charge`, params);
     }
 
-    getAllPaymentsHistory() {
-        return this.httpClient.get<any>(`${API_URL}purchases/get-all-payments-history`);
+    getAllPaymentsHistory(params) {
+        return this.httpClient.get<any>(`${API_URL}purchases/get-all-payments-history`, {params});
     }
 
-    getPurchasesHistory() {
-        return this.httpClient.get<any>(`${API_URL}purchases/get-purchases-history`);
+    getPurchasesHistory(params) {
+        return this.httpClient.get<any>(`${API_URL}purchases/get-purchases-history`, {params});
     }
 }

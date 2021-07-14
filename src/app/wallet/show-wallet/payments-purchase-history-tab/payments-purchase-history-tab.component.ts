@@ -4,6 +4,8 @@ import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
@@ -15,21 +17,19 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     tableData;
     displayedColumns = ['date', 'product_name', 'product_description', 'amount', 'payment_method', 'status'];
 
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
         private purchasesService: PurchasesService,
         private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe
+        private currencyPipe: CurrencyPipe,
     ) {
+
     }
 
     ngOnInit(): void {
-        this.purchasesService.getPurchasesHistory().subscribe(dt => {
-            this.purchases = dt;
-            this.tableData = new MatTableDataSource(dt);
-            this.tableData.paginator = this.paginator;
-        });
+        this.getPurchasesHistory();
     }
 
     getColumnContentByItsName(col, element) {
@@ -67,5 +67,18 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     normalizeColName(col): string {
         return normalizeColName(col);
     }
+
+    getFilters(e) {
+        this.getPurchasesHistory(e);
+    }
+
+    getPurchasesHistory(filters = {}){
+        this.purchasesService.getPurchasesHistory(filters).subscribe(dt => {
+            this.purchases = dt;
+            this.tableData = new MatTableDataSource(dt);
+            this.tableData.paginator = this.paginator;
+        });
+    }
+
 
 }

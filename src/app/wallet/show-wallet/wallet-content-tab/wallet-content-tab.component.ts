@@ -46,12 +46,7 @@ export class WalletContentTabComponent implements OnInit {
             this.userCards = dt;
         });
 
-        this.purchasesService.getAllPaymentsHistory().subscribe(dt => {
-            this.payments = dt;
-            this.filteredPayments = dt;
-            this.tableData = new MatTableDataSource(this.filteredPayments);
-            this.tableData.paginator = this.paginator;
-        });
+        this.getPaymentsHistory({});
     }
 
     normalizeColName(col): string {
@@ -89,6 +84,19 @@ export class WalletContentTabComponent implements OnInit {
     filterPayments() {
         this.filteredPayments = this.payments.slice(this.pageIndex * this.pageSize,
             this.pageIndex * this.pageSize + this.pageSize);
+    }
+
+    getFilters(e) {
+        this.getPaymentsHistory(e);
+    }
+
+    getPaymentsHistory(filters) {
+        this.purchasesService.getAllPaymentsHistory(filters).subscribe(dt => {
+            this.payments = dt;
+            this.filteredPayments = dt;
+            this.tableData = new MatTableDataSource(this.filteredPayments);
+            this.tableData.paginator = this.paginator;
+        });
     }
 
 

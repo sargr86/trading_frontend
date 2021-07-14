@@ -1,15 +1,6 @@
 <hr>
 <div class="d-flex align-items-end justify-content-between">
-    <div class="d-flex align-items-center">
-        <div class="mr-3 form-group m-0">
-            <label for="start1">Start</label>
-            <input type="datetime-local" id="start1" class="form-control">
-        </div>
-        <div class="mr-3 form-group m-0">
-            <label for="end1">End</label>
-            <input type="datetime-local" id="end1" class="form-control ">
-        </div>
-    </div>
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
 </div>
 
 <table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4">

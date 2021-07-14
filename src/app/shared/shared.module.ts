@@ -38,6 +38,7 @@ import {NgxPayPalModule} from 'ngx-paypal';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {PaymentsFilterFormComponent} from './components/payments-filter-form/payments-filter-form.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
         FixTextLineBreaksPipe,
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
-        CompletePurchaseModalComponent
+        CompletePurchaseModalComponent,
+        PaymentsFilterFormComponent
     ],
     imports: [
         CommonModule,
@@ -124,7 +126,8 @@ import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
         FixTextLineBreaksPipe,
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
-        CompletePurchaseModalComponent
+        CompletePurchaseModalComponent,
+        PaymentsFilterFormComponent
     ]
 
 })

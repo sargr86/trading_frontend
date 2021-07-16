@@ -64,6 +64,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.cardsService.removeStripeCard({
             card_id: c.id,
             stripe_customer_id: c.customer,
+            stripe_account_id: c.stripe_account_id,
             user_id: this.authUser.id
         }).subscribe((dt: any) => {
             // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));

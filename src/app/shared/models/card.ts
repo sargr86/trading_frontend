@@ -6,4 +6,5 @@ export class Card {
     exp_month?: number;
     exp_year?: number;
     is_primary?: number;
+    stripe_account_id?: string
 }

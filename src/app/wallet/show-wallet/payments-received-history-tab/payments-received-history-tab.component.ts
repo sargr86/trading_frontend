@@ -1,15 +1,89 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {WalletService} from '@core/services/wallet.service';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {SubjectService} from '@core/services/subject.service';
+import {Card} from '@shared/models/card';
+import {CardsService} from '@core/services/cards.service';
+import {Subscription} from 'rxjs';
+import {MatPaginator} from '@angular/material/paginator';
+import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
+import {CurrencyPipe, DatePipe} from '@angular/common';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'app-payments-received-history-tab',
-  templateUrl: './payments-received-history-tab.component.html',
-  styleUrls: ['./payments-received-history-tab.component.scss']
+    selector: 'app-payments-received-history-tab',
+    templateUrl: './payments-received-history-tab.component.html',
+    styleUrls: ['./payments-received-history-tab.component.scss']
 })
 export class PaymentsReceivedHistoryTabComponent implements OnInit {
+    authUser;
+    userCards: Card[] = [];
+    subscriptions: Subscription[] = [];
+    accountTransfers = [];
+    tableData;
+    displayedColumns = ['date', 'channel', 'type', 'amount'];
 
-  constructor() { }
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private walletService: WalletService,
+        private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService,
+        private cardsService: CardsService,
+        private datePipe: DatePipe,
+        private currencyPipe: CurrencyPipe,
+    ) {
+    }
+
+    ngOnInit(): void {
+        this.authUser = this.getAuthUser.transform();
+
+
+        this.subject.currentUserCards.subscribe(dt => {
+            this.userCards = dt;
+        });
+
+        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe(dt => {
+            this.userCards = dt;
+            this.getTransfersHistory();
+        }));
+
+    }
+
+    getTransfersHistory() {
+        const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory({stripe_account_id: stripeAccountId}).subscribe(dt => {
+            this.accountTransfers = dt.data;
+            this.tableData = new MatTableDataSource(dt.data);
+            this.tableData.paginator = this.paginator;
+        }));
+    }
+
+    normalizeColName(col): string {
+        return normalizeColName(col);
+    }
+
+    getColumnContentByItsName(col, element) {
+        let content;
+
+        switch (col) {
+            case 'date':
+                content = this.datePipe.transform(element.created * 1000);
+                break;
+            case 'amount':
+                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
+                break;
+            case 'channel':
+                content = normalizeColName(element.metadata?.channel);
+                break;
+            case 'type':
+                content = element.description;
+                break;
+            default:
+                content = element[col];
+                break;
+        }
+        return content;
+    }
 
 }

@@ -9,85 +9,111 @@
         <input type="datetime-local" id="end2" class="form-control">
     </div>
 </div>
-<table class="table border my-4">
-    <thead class="thead-light">
-    <tr>
-        <th class="color-red">
-            <div class="d-flex align-items-center">
-                <span>Date</span>
-                <div class="d-flex flex-column ml-5">
-                    <i class="fas fa-angle-up lh-10"></i>
-                    <i class="fas fa-angle-down lh-10"></i>
+
+
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4">
+
+    <ng-container *ngFor="let col of displayedColumns">
+        <ng-container [matColumnDef]="col">
+            <th mat-header-cell *matHeaderCellDef>
+                <div class="table-item d-flex align-items-center">{{normalizeColName(col)}}</div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="table-item">
+                    <span *ngIf="col!=='action'">{{getColumnContentByItsName(col, element)}}</span>
+                    <div *ngIf="col==='action'" class="action-column">
+
+                    </div>
                 </div>
-            </div>
-        </th>
-        <th>Amount Submitted</th>
-        <th>Payment Method</th>
-        <th class="color-red">Status</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>USD 109.04</td>
-        <td>**** **** **** 56 56</td>
-        <td>Rejected</td>
-        <td></td>
-        <td><i class="fas fa-angle-right color-red"></i></td>
-    </tr>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>USD 109.04</td>
-        <td>**** **** **** 56 56</td>
-        <td>Rejected</td>
-        <td></td>
-        <td><i class="fas fa-angle-right color-red"></i></td>
-    </tr>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>USD 109.04</td>
-        <td>**** **** **** 56 56</td>
-        <td>Rejected</td>
-        <td></td>
-        <td><i class="fas fa-angle-right color-red"></i></td>
-    </tr>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>USD 109.04</td>
-        <td>**** **** **** 56 56</td>
-        <td>Rejected</td>
-        <td></td>
-        <td><i class="fas fa-angle-right color-red"></i></td>
-    </tr>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>USD 109.04</td>
-        <td>**** **** **** 56 56</td>
-        <td>Rejected</td>
-        <td>
-            <a href="" class="red-small-text d-flex align-items-center">
-                <img src="assets/img/pdf%20(1).svg" alt="">
-                <small class="ml-2">Download <br> confirmation </small>
-            </a>
-        </td>
-        <td><i class="fas fa-angle-right color-red"></i></td>
-    </tr>
-    </tbody>
+            </td>
+        </ng-container>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<nav aria-label="...">
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
-        </li>
-    </ul>
-</nav>
+
+
+<!--<table class="table border my-4">-->
+<!--    <thead class="thead-light">-->
+<!--    <tr>-->
+<!--        <th class="color-red">-->
+<!--            <div class="d-flex align-items-center">-->
+<!--                <span>Date</span>-->
+<!--                <div class="d-flex flex-column ml-5">-->
+<!--                    <i class="fas fa-angle-up lh-10"></i>-->
+<!--                    <i class="fas fa-angle-down lh-10"></i>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </th>-->
+<!--        <th>Amount Submitted</th>-->
+<!--        <th>Payment Method</th>-->
+<!--        <th class="color-red">Status</th>-->
+<!--        <th></th>-->
+<!--        <th></th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--        <td>Nov 29, 2018</td>-->
+<!--        <td>USD 109.04</td>-->
+<!--        <td>**** **** **** 56 56</td>-->
+<!--        <td>Rejected</td>-->
+<!--        <td></td>-->
+<!--        <td><i class="fas fa-angle-right color-red"></i></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>Nov 29, 2018</td>-->
+<!--        <td>USD 109.04</td>-->
+<!--        <td>**** **** **** 56 56</td>-->
+<!--        <td>Rejected</td>-->
+<!--        <td></td>-->
+<!--        <td><i class="fas fa-angle-right color-red"></i></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>Nov 29, 2018</td>-->
+<!--        <td>USD 109.04</td>-->
+<!--        <td>**** **** **** 56 56</td>-->
+<!--        <td>Rejected</td>-->
+<!--        <td></td>-->
+<!--        <td><i class="fas fa-angle-right color-red"></i></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>Nov 29, 2018</td>-->
+<!--        <td>USD 109.04</td>-->
+<!--        <td>**** **** **** 56 56</td>-->
+<!--        <td>Rejected</td>-->
+<!--        <td></td>-->
+<!--        <td><i class="fas fa-angle-right color-red"></i></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>Nov 29, 2018</td>-->
+<!--        <td>USD 109.04</td>-->
+<!--        <td>**** **** **** 56 56</td>-->
+<!--        <td>Rejected</td>-->
+<!--        <td>-->
+<!--            <a href="" class="red-small-text d-flex align-items-center">-->
+<!--                <img src="assets/img/pdf%20(1).svg" alt="">-->
+<!--                <small class="ml-2">Download <br> confirmation </small>-->
+<!--            </a>-->
+<!--        </td>-->
+<!--        <td><i class="fas fa-angle-right color-red"></i></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--<nav aria-label="...">-->
+<!--    <ul class="pagination">-->
+<!--        <li class="page-item disabled">-->
+<!--            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>-->
+<!--        </li>-->
+<!--        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--        <li class="page-item active">-->
+<!--            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>-->
+<!--        </li>-->
+<!--        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--        <li class="page-item">-->
+<!--            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->

@@ -39,20 +39,22 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
 
 
-        this.subject.currentUserCards.subscribe(dt => {
-            this.userCards = dt;
-        });
+        // this.subject.currentUserCards.subscribe(dt => {
+        //     this.userCards = dt;
+        // });
 
         this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe(dt => {
             this.userCards = dt;
-            this.getTransfersHistory();
+            this.getTransfersHistory({});
         }));
 
     }
 
-    getTransfersHistory() {
+    getTransfersHistory(filters) {
+        console.log(this.userCards)
         const stripeAccountId = this.userCards?.[0].stripe_account_id;
-        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory({stripe_account_id: stripeAccountId}).subscribe(dt => {
+        const params = {stripe_account_id: stripeAccountId, ...filters};
+        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
             this.accountTransfers = dt.data;
             this.tableData = new MatTableDataSource(dt.data);
             this.tableData.paginator = this.paginator;
@@ -84,6 +86,10 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit {
                 break;
         }
         return content;
+    }
+
+    getFilters(e) {
+        this.getTransfersHistory(e);
     }
 
 }

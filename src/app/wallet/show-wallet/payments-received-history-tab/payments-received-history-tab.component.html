@@ -1,13 +1,6 @@
 <hr>
 <div class="d-flex align-items-center">
-    <div class="mr-3 form-group">
-        <label for="start2">Start</label>
-        <input type="datetime-local" id="start2" class="form-control">
-    </div>
-    <div class="mr-3 form-group">
-        <label for="end2">End</label>
-        <input type="datetime-local" id="end2" class="form-control">
-    </div>
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
 </div>
 
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -9,14 +9,16 @@ import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {CurrencyPipe, DatePipe} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-wallet-content-tab',
     templateUrl: './wallet-content-tab.component.html',
     styleUrls: ['./wallet-content-tab.component.scss']
 })
-export class WalletContentTabComponent implements OnInit {
+export class WalletContentTabComponent implements OnInit, OnDestroy {
     authUser;
+    subscriptions: Subscription[] = [];
     userCards = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
     payments = [];
@@ -42,9 +44,9 @@ export class WalletContentTabComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.subject.currentUserCards.subscribe(dt => {
+        this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
             this.userCards = dt;
-        });
+        }));
 
         this.getPaymentsHistory({});
     }
@@ -91,12 +93,16 @@ export class WalletContentTabComponent implements OnInit {
     }
 
     getPaymentsHistory(filters) {
-        this.purchasesService.getAllPaymentsHistory(filters).subscribe(dt => {
+        this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(filters).subscribe(dt => {
             this.payments = dt;
             this.filteredPayments = dt;
             this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
-        });
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

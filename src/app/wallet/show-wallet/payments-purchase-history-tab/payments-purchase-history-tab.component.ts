@@ -14,6 +14,7 @@ import * as moment from 'moment';
 })
 export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     purchases = [];
+    filteredPurchases = [];
     tableData;
     displayedColumns = ['date', 'product_name', 'product_description', 'amount', 'payment_method', 'status'];
 
@@ -75,6 +76,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     getPurchasesHistory(filters = {}){
         this.purchasesService.getPurchasesHistory(filters).subscribe(dt => {
             this.purchases = dt;
+            this.filteredPurchases = dt;
             this.tableData = new MatTableDataSource(dt);
             this.tableData.paginator = this.paginator;
         });

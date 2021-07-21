@@ -1,9 +1,9 @@
 <hr>
-<div class="d-flex align-items-end justify-content-between">
-    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
+<div class="d-flex align-items-end justify-content-between" >
+    <app-payments-filter-form (formReady)="getFilters($event)" [hidden]="filteredPurchases.length===0"></app-payments-filter-form>
 </div>
 
-<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4">
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4" [hidden]="filteredPurchases.length===0">
 
     <ng-container *ngFor="let col of displayedColumns">
         <ng-container [matColumnDef]="col">
@@ -27,22 +27,8 @@
 </table>
 
 <div>
-    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]"
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" [hidden]="filteredPurchases.length===0"
                    showFirstLastButtons></mat-paginator>
+    <h3 [hidden]="filteredPurchases.length>0">No purchases found</h3>
 </div>
 
-<!--<nav aria-label="...">-->
-<!--    <ul class="pagination">-->
-<!--        <li class="page-item disabled">-->
-<!--            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>-->
-<!--        </li>-->
-<!--        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--        <li class="page-item active">-->
-<!--            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>-->
-<!--        </li>-->
-<!--        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--        <li class="page-item">-->
-<!--            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--</nav>-->

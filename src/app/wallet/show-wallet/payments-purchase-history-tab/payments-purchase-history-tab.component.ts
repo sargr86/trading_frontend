@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {PurchasesService} from '@core/services/purchases.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {CurrencyPipe, DatePipe} from '@angular/common';
@@ -18,7 +18,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     tableData;
     displayedColumns = ['date', 'product_name', 'product_description', 'amount', 'payment_method', 'status'];
 
-
+    @Input() userCards = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
@@ -30,6 +30,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.userCards)
         this.getPurchasesHistory();
     }
 
@@ -74,7 +75,8 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     }
 
     getPurchasesHistory(filters = {}){
-        this.purchasesService.getPurchasesHistory(filters).subscribe(dt => {
+        const params = {customer: this.userCards?.[0].stripe_customer_id, ...filters};
+        this.purchasesService.getPurchasesHistory(params).subscribe(dt => {
             this.purchases = dt;
             this.filteredPurchases = dt;
             this.tableData = new MatTableDataSource(dt);

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -10,6 +10,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Subscription} from 'rxjs';
+import {Card} from '@shared/models/card';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -19,12 +20,12 @@ import {Subscription} from 'rxjs';
 export class WalletContentTabComponent implements OnInit, OnDestroy {
     authUser;
     subscriptions: Subscription[] = [];
-    userCards = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
     payments = [];
     filteredPayments = [];
     tableData;
 
+    @Input() userCards = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     pageSize = 5;
@@ -54,6 +55,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     normalizeColName(col): string {
         return normalizeColName(col);
     }
+
 
     getColumnContentByItsName(col, element) {
         let content;
@@ -93,7 +95,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     getPaymentsHistory(filters) {
-        this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(filters).subscribe(dt => {
+        const params = {customer: this.userCards?.[0].stripe_customer_id, ...filters};
+        this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(params).subscribe(dt => {
             this.payments = dt;
             this.filteredPayments = dt;
             this.tableData = new MatTableDataSource(this.filteredPayments);

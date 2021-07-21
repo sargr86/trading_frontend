@@ -2,13 +2,13 @@
     <div class="bg-light wallet-content">
         <h3 class="mb-4 title">Wallet <img src="assets/img/wallet-main-page-icon.svg" alt="" width="30" height="25">
         </h3>
-        <div>
+        <div *ngIf="userCards.length > 0">
             <mat-tab-group [disableRipple]="true" (selectedTabChange)="tabChange($event)">
                 <mat-tab label="Wallet">
-                    <app-wallet-content-tab></app-wallet-content-tab>
+                    <app-wallet-content-tab [userCards]="userCards"></app-wallet-content-tab>
                 </mat-tab>
                 <mat-tab label="Payments Purchase History">
-                    <app-payments-purchase-history-tab></app-payments-purchase-history-tab>
+                    <app-payments-purchase-history-tab [userCards]="userCards"></app-payments-purchase-history-tab>
                 </mat-tab>
                 <mat-tab label="Payments Received History">
                     <app-payments-received-history-tab></app-payments-received-history-tab>
@@ -18,8 +18,8 @@
                 </mat-tab>
             </mat-tab-group>
 
-<!--            &lt;!&ndash; Modal &ndash;&gt;-->
-<!--            <button type="button" class="btn btn-primary complete-purchase" (click)="openModal()">Complete purchase</button>-->
+            <!--            &lt;!&ndash; Modal &ndash;&gt;-->
+            <!--            <button type="button" class="btn btn-primary complete-purchase" (click)="openModal()">Complete purchase</button>-->
         </div>
     </div>
 </div>

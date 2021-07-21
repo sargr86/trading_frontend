@@ -1,6 +1,6 @@
 <hr>
 <div class="d-flex align-items-end justify-content-between" >
-    <app-payments-filter-form (formReady)="getFilters($event)" [hidden]="filteredPurchases.length===0"></app-payments-filter-form>
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
 </div>
 
 <table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4" [hidden]="filteredPurchases.length===0">

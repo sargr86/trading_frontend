@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {WalletService} from '@core/services/wallet.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
@@ -17,13 +17,14 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class PaymentsReceivedHistoryTabComponent implements OnInit {
     authUser;
-    userCards: Card[] = [];
+
     subscriptions: Subscription[] = [];
     accountTransfers = [];
     filteredTransfers = [];
     tableData;
     displayedColumns = ['date', 'channel', 'type', 'amount'];
 
+    @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
@@ -48,11 +49,10 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit {
             this.userCards = dt;
             this.getTransfersHistory({});
         }));
-
+        console.log(this.userCards)
     }
 
     getTransfersHistory(filters) {
-        console.log(this.userCards)
         const stripeAccountId = this.userCards?.[0].stripe_account_id;
         const params = {stripe_account_id: stripeAccountId, ...filters};
         this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {

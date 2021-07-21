@@ -17,8 +17,10 @@ export class PaymentsFilterFormComponent implements OnInit {
         private fb: FormBuilder
     ) {
         this.paymentsFilterForm = this.fb.group({
-            gte: [],
-            lte: []
+            created: this.fb.group({
+                gte: [],
+                lte: []
+            })
         });
     }
 
@@ -27,9 +29,14 @@ export class PaymentsFilterFormComponent implements OnInit {
 
 
     dateChanged(e, control) {
-        this.paymentsFilterForm.controls[control].patchValue(e.value);
+        console.log(this.createdCtrl.controls)
+        this.createdCtrl.controls[control].patchValue(e.value);
         this.datesRange[control] = moment(e.value).format('X');
         this.formReady.emit(this.datesRange);
+    }
+
+    get createdCtrl(){
+        return this.paymentsFilterForm.controls.created as any;
     }
 
 }

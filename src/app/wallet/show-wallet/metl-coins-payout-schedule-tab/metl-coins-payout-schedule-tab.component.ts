@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {PurchasesService} from '@core/services/purchases.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {CurrencyPipe, DatePipe} from '@angular/common';
+import {Card} from '@shared/models/card';
 
 @Component({
     selector: 'app-metl-coins-payout-schedule-tab',
@@ -18,6 +19,7 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
     tableData;
     displayedColumns = ['date', 'payout_for', 'type', 'amount'];
 
+    @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
@@ -25,16 +27,18 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe,
     ) {
-        this.getPayoutsHistory({});
     }
 
     ngOnInit(): void {
+        this.getPayoutsHistory({});
     }
 
     getPayoutsHistory(filters) {
-        this.purchasesService.getPayoutsHistory(filters).subscribe(dt => {
-            this.accountPayouts = dt.data;
-            this.filteredPayouts = dt.data;
+        const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        const params = {stripe_account_id: stripeAccountId, ...filters};
+        this.purchasesService.getPayoutsHistory(params).subscribe(dt => {
+            this.accountPayouts = dt;
+            this.filteredPayouts = dt;
             this.tableData = new MatTableDataSource(this.filteredPayouts);
             this.tableData.paginator = this.paginator;
         });

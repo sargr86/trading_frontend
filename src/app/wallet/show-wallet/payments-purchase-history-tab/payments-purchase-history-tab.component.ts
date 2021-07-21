@@ -30,7 +30,6 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.userCards)
         this.getPurchasesHistory();
     }
 

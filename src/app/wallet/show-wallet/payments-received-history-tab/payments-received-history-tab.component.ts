@@ -20,6 +20,7 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit {
     userCards: Card[] = [];
     subscriptions: Subscription[] = [];
     accountTransfers = [];
+    filteredTransfers = [];
     tableData;
     displayedColumns = ['date', 'channel', 'type', 'amount'];
 
@@ -56,6 +57,7 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit {
         const params = {stripe_account_id: stripeAccountId, ...filters};
         this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
             this.accountTransfers = dt.data;
+            this.filteredTransfers = dt.data;
             this.tableData = new MatTableDataSource(dt.data);
             this.tableData.paginator = this.paginator;
         }));

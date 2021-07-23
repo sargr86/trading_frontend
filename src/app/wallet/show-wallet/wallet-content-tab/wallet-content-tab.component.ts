@@ -11,6 +11,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Subscription} from 'rxjs';
 import {Card} from '@shared/models/card';
+import {UsersService} from '@core/services/users.service';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -35,6 +36,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         private cardsService: CardsService,
         private purchasesService: PurchasesService,
+        private usersService: UsersService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         public router: Router,
@@ -95,13 +97,20 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     getPaymentsHistory(filters) {
-        const params = {customer: this.userCards?.[0].stripe_customer_id, ...filters};
+        const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
         this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(params).subscribe(dt => {
             this.payments = dt;
             this.filteredPayments = dt;
             this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
         }));
+    }
+
+    addBankAccount() {
+        console.log({user_id: this.authUser.id})
+        this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
+            location.href = dt?.url;
+        });
     }
 
     ngOnDestroy(): void {

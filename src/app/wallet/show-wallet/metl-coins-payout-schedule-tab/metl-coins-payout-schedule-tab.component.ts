@@ -35,6 +35,7 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
 
     getPayoutsHistory(filters) {
         const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        console.log(stripeAccountId)
         const params = {stripe_account_id: stripeAccountId, ...filters};
         this.purchasesService.getPayoutsHistory(params).subscribe(dt => {
             this.accountPayouts = dt;

@@ -38,7 +38,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private purchasesService: PurchasesService,
         private usersService: UsersService,
         private getAuthUser: GetAuthUserPipe,
-        private subject: SubjectService,
         public router: Router,
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe
@@ -47,9 +46,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
-            this.userCards = dt;
-        }));
+
 
         this.getPaymentsHistory({});
     }
@@ -107,7 +104,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     addBankAccount() {
-        console.log({user_id: this.authUser.id})
         this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
             location.href = dt?.url;
         });

@@ -57,8 +57,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        this.getAuthenticatedUser();
+        this.getRouterUrlParams();
+    }
 
+    getAuthenticatedUser(){
+        this.subscriptions.push(this.subject.authUser.subscribe(dt => {
+            this.authUser = dt;
+            this.getUserCards();
+            this.getDailyStocks();
+        }));
+    }
+
+    getRouterUrlParams(){
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
@@ -66,22 +77,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.passedUsername = ev.snapshot.queryParams.username;
             }
         }));
+    }
 
+    getUserCards() {
+
+        // Get user cards from saved storage in case of changes in the below components
         this.subject.currentUserCards.subscribe(dt => {
             this.userCards = dt;
             this.showPurchaseBits = false;
         });
 
-        this.getDailyStocks();
-        if (this.auth.loggedIn()) {
-            this.getUserCards();
-        }
-
-    }
-
-    getUserCards() {
+        // Getting user cards from the server
         this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
             this.userCards = dt;
+            console.log(this.userCards)
             this.subject.changeUserCards(dt);
         }));
     }
@@ -95,7 +104,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     searchVideos(e) {
-        // this.subject.setVideosSearch(this.searchVideosForm.value);
         this.search.emit({...e, searchType: 'videos'});
     }
 

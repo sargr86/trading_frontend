@@ -39,7 +39,7 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {PaymentsFilterFormComponent} from './components/payments-filter-form/payments-filter-form.component';
-import { LowercaseUnderscored2CapitalizedSpacedPipe } from './pipes/lowercase-underscored-2-capitalized-spaced.pipe';
+import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
 
 @NgModule({
     declarations: [
@@ -72,7 +72,7 @@ import { LowercaseUnderscored2CapitalizedSpacedPipe } from './pipes/lowercase-un
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,
         PaymentsFilterFormComponent,
-        LowercaseUnderscored2CapitalizedSpacedPipe
+        CapitalizeAddSpacesPipe
     ],
     imports: [
         CommonModule,
@@ -98,7 +98,7 @@ import { LowercaseUnderscored2CapitalizedSpacedPipe } from './pipes/lowercase-un
         UpdateUserStocksPipe,
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
-        LowercaseUnderscored2CapitalizedSpacedPipe
+        CapitalizeAddSpacesPipe
     ],
     exports: [
         FormsModule,
@@ -118,7 +118,7 @@ import { LowercaseUnderscored2CapitalizedSpacedPipe } from './pipes/lowercase-un
         DateFromNowPipe,
         UserTagsComponent,
         CheckForEmptyObjectPipe,
-        LowercaseUnderscored2CapitalizedSpacedPipe,
+        CapitalizeAddSpacesPipe,
         VideosListHolderComponent,
         StocksListsModalComponent,
         SearchStocksFormComponent,

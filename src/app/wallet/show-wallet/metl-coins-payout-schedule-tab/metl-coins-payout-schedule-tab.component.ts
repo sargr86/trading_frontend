@@ -3,7 +3,6 @@ import {Subscription} from 'rxjs';
 import {PurchasesService} from '@core/services/purchases.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Card} from '@shared/models/card';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';

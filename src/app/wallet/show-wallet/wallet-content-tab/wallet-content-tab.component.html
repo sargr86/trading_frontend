@@ -59,7 +59,7 @@
     <ng-container *ngFor="let col of displayedColumns">
         <ng-container [matColumnDef]="col">
             <th mat-header-cell *matHeaderCellDef>
-                <div class="table-item d-flex align-items-center">{{col|remove_Capitalize}}</div>
+                <div class="table-item d-flex align-items-center">{{col|capitalizeAddSpaces}}</div>
             </th>
             <td mat-cell *matCellDef="let element">
                 <div class="table-item">

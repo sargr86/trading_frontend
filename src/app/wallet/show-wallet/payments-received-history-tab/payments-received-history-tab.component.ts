@@ -9,7 +9,7 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatTableDataSource} from '@angular/material/table';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {User} from '@shared/models/user';
-import {LowercaseUnderscored2CapitalizedSpacedPipe} from '@shared/pipes/lowercase-underscored-2-capitalized-spaced.pipe';
+import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-payments-received-history-tab',
@@ -35,7 +35,7 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
-        private removeUndCapitalize: LowercaseUnderscored2CapitalizedSpacedPipe
+        private removeUndCapitalize: CapitalizeAddSpacesPipe
     ) {
     }
 

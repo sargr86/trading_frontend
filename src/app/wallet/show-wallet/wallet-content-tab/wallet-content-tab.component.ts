@@ -4,9 +4,6 @@ import {CardsService} from '@core/services/cards.service';
 import {PurchasesService} from '@core/services/purchases.service';
 import {UsersService} from '@core/services/users.service';
 
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {CurrencyPipe, DatePipe} from '@angular/common';
-
 import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -14,7 +11,6 @@ import {Subscription} from 'rxjs';
 
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
-import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -41,7 +37,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private purchasesService: PurchasesService,
         private usersService: UsersService,
         public router: Router,
-
     ) {
     }
 
@@ -68,7 +63,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
         this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(params).subscribe(dt => {
             this.payments = dt;
-            this.filteredPayments = dt;
+            this.filterPayments();
+            // this.filteredPayments = dt;
             this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
         }));

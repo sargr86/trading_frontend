@@ -10,10 +10,10 @@
 
         <div class="field-row">
 
-            <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
             <button type="button" class="back" (click)="goToCardsList()">Back</button>
             <button type="button" class="save-card"
                     (click)="saveCard()">{{editCase ? 'Update' : 'Add card'}} </button>
+            <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
         </div>
     </form>
 </div>

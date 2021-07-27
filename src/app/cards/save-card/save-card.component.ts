@@ -13,7 +13,7 @@ import {Card} from '@shared/models/card';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {CardsService} from '@core/services/cards.service';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-save-card',

@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
         private videoService: VideoService,
         public router: Router,
         public auth: AuthService,
-        private getAuthUSer: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe
     ) {
     }
 
@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
         this.videoService.get({}).subscribe(dt => {
             this.videos = dt.videos;
         });
-        console.log(this.getAuthUSer.transform())
     }
 
     async getVideosByTag(name) {

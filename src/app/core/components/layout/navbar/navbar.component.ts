@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.getRouterUrlParams();
     }
 
-    getAuthenticatedUser(){
+    getAuthenticatedUser() {
         this.subscriptions.push(this.subject.authUser.subscribe(dt => {
             this.authUser = dt;
             this.getUserCards();
@@ -69,7 +69,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getRouterUrlParams(){
+    getRouterUrlParams() {
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
@@ -144,6 +144,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     checkIfUserHasCard() {
         if (this.userCards?.length > 0) {
             this.showPurchaseBits = true;
+        } else {
+            this.toastr.error('Please add at least one card first', 'No cards');
+        }
+    }
+
+    async openWalletPage() {
+        if (this.userCards?.length > 0) {
+            await this.router.navigate(['wallet/show']);
         } else {
             this.toastr.error('Please add at least one card first', 'No cards');
         }

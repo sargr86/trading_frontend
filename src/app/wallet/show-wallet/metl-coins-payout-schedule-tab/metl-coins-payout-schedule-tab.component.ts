@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {PurchasesService} from '@core/services/purchases.service';
 import {MatTableDataSource} from '@angular/material/table';
@@ -6,13 +6,14 @@ import {MatPaginator} from '@angular/material/paginator';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Card} from '@shared/models/card';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 
 @Component({
     selector: 'app-metl-coins-payout-schedule-tab',
     templateUrl: './metl-coins-payout-schedule-tab.component.html',
     styleUrls: ['./metl-coins-payout-schedule-tab.component.scss']
 })
-export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
+export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     accountPayouts = [];
     filteredPayouts = [];
@@ -26,6 +27,7 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
         private purchasesService: PurchasesService,
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
     }
 
@@ -35,23 +37,19 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
 
     getPayoutsHistory(filters) {
         const stripeAccountId = this.userCards?.[0].stripe_account_id;
-        console.log(stripeAccountId)
-        const params = {stripe_account_id: stripeAccountId, ...filters};
-        this.purchasesService.getPayoutsHistory(params).subscribe(dt => {
+        const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
+        this.subscriptions.push(this.purchasesService.getPayoutsHistory(params).subscribe(dt => {
             this.accountPayouts = dt;
             this.filteredPayouts = dt;
             this.tableData = new MatTableDataSource(this.filteredPayouts);
             this.tableData.paginator = this.paginator;
-        });
+        }));
     }
 
     getFilters(e) {
         this.getPayoutsHistory(e);
     }
 
-    normalizeColName(col): string {
-        return normalizeColName(col);
-    }
 
     getColumnContentByItsName(col, element) {
         let content;
@@ -74,6 +72,10 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit {
                 break;
         }
         return content;
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

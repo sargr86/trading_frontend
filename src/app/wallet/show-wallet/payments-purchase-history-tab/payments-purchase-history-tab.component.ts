@@ -1,18 +1,18 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PurchasesService} from '@core/services/purchases.service';
-import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import * as moment from 'moment';
+import {Subscription} from 'rxjs';
+import {LowercaseUnderscored2CapitalizedSpacedPipe} from '@shared/pipes/lowercase-underscored-2-capitalized-spaced.pipe';
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
     templateUrl: './payments-purchase-history-tab.component.html',
     styleUrls: ['./payments-purchase-history-tab.component.scss']
 })
-export class PaymentsPurchaseHistoryTabComponent implements OnInit {
+export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
+    subscriptions: Subscription[] = [];
     purchases = [];
     filteredPurchases = [];
     tableData;
@@ -25,6 +25,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
         private purchasesService: PurchasesService,
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe,
+        private removeUndCapitalize: LowercaseUnderscored2CapitalizedSpacedPipe
     ) {
 
     }
@@ -44,7 +45,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
                 content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
                 break;
             case 'status':
-                content = normalizeColName(element.status);
+                content = this.removeUndCapitalize.transform(element.status);
                 break;
             case 'payment_method':
                 const card = element?.payment_method_details?.card;
@@ -65,23 +66,22 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit {
         return content;
     }
 
-    normalizeColName(col): string {
-        return normalizeColName(col);
-    }
-
     getFilters(e) {
         this.getPurchasesHistory(e);
     }
 
-    getPurchasesHistory(filters = {}){
+    getPurchasesHistory(filters = {}) {
         const params = {customer: this.userCards?.[0].stripe_customer_id, ...filters};
-        this.purchasesService.getPurchasesHistory(params).subscribe(dt => {
+        this.subscriptions.push(this.purchasesService.getPurchasesHistory(params).subscribe(dt => {
             this.purchases = dt;
             this.filteredPurchases = dt;
             this.tableData = new MatTableDataSource(dt);
             this.tableData.paginator = this.paginator;
-        });
+        }));
     }
 
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
 }

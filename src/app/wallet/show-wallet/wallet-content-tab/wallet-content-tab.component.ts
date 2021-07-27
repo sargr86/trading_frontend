@@ -1,17 +1,20 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {SubjectService} from '@core/services/subject.service';
-import {Router} from '@angular/router';
 import {PurchasesService} from '@core/services/purchases.service';
-import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
+import {UsersService} from '@core/services/users.service';
+
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {LowercaseUnderscored2CapitalizedSpacedPipe} from '@shared/pipes/lowercase-underscored-2-capitalized-spaced.pipe';
+import {CurrencyPipe, DatePipe} from '@angular/common';
+
+import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Subscription} from 'rxjs';
+
 import {Card} from '@shared/models/card';
-import {UsersService} from '@core/services/users.service';
+import {User} from '@shared/models/user';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -19,14 +22,14 @@ import {UsersService} from '@core/services/users.service';
     styleUrls: ['./wallet-content-tab.component.scss']
 })
 export class WalletContentTabComponent implements OnInit, OnDestroy {
-    authUser;
     subscriptions: Subscription[] = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
     payments = [];
     filteredPayments = [];
     tableData;
 
-    @Input() userCards = [];
+    @Input() authUser: User;
+    @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     pageSize = 5;
@@ -40,21 +43,14 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe
+        private currencyPipe: CurrencyPipe,
+        private removeUndCapitalize: LowercaseUnderscored2CapitalizedSpacedPipe
     ) {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
-
-
         this.getPaymentsHistory({});
     }
-
-    normalizeColName(col): string {
-        return normalizeColName(col);
-    }
-
 
     getColumnContentByItsName(col, element) {
         let content;
@@ -66,7 +62,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
                 content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
                 break;
             case 'status':
-                content = normalizeColName(element.status);
+                content = this.removeUndCapitalize.transform(element.status);
                 break;
             case 'payment_method':
                 const card = element?.charges?.data?.[0]?.payment_method_details?.card;

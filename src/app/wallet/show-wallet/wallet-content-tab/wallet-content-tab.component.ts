@@ -5,7 +5,6 @@ import {PurchasesService} from '@core/services/purchases.service';
 import {UsersService} from '@core/services/users.service';
 
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {LowercaseUnderscored2CapitalizedSpacedPipe} from '@shared/pipes/lowercase-underscored-2-capitalized-spaced.pipe';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 
 import {Router} from '@angular/router';
@@ -15,6 +14,7 @@ import {Subscription} from 'rxjs';
 
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
+import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -44,7 +44,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         public router: Router,
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe,
-        private removeUndCapitalize: LowercaseUnderscored2CapitalizedSpacedPipe
+        private removeUndCapitalize: CapitalizeAddSpacesPipe
     ) {
     }
 

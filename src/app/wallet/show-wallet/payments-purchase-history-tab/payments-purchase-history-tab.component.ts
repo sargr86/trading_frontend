@@ -4,7 +4,7 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
-import {LowercaseUnderscored2CapitalizedSpacedPipe} from '@shared/pipes/lowercase-underscored-2-capitalized-spaced.pipe';
+import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
@@ -25,7 +25,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
         private purchasesService: PurchasesService,
         private datePipe: DatePipe,
         private currencyPipe: CurrencyPipe,
-        private removeUndCapitalize: LowercaseUnderscored2CapitalizedSpacedPipe
+        private removeUndCapitalize: CapitalizeAddSpacesPipe
     ) {
 
     }

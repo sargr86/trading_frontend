@@ -23,47 +23,12 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
 
     constructor(
         private purchasesService: PurchasesService,
-        private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe,
-        private removeUndCapitalize: CapitalizeAddSpacesPipe
     ) {
 
     }
 
     ngOnInit(): void {
         this.getPurchasesHistory();
-    }
-
-    getColumnContentByItsName(col, element) {
-        let content;
-
-        switch (col) {
-            case 'date':
-                content = this.datePipe.transform(element.created * 1000);
-                break;
-            case 'amount':
-                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
-                break;
-            case 'status':
-                content = this.removeUndCapitalize.transform(element.status);
-                break;
-            case 'payment_method':
-                const card = element?.payment_method_details?.card;
-                if (card) {
-                    content = `**** **** **** ${card.last4}`;
-                }
-                break;
-            case 'product_description':
-                content = element.description;
-                break;
-            case 'product_name':
-                content = element.metadata.name;
-                break;
-            default:
-                content = element[col];
-                break;
-        }
-        return content;
     }
 
     getFilters(e) {

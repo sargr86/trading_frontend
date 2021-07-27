@@ -40,6 +40,7 @@ import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {PaymentsFilterFormComponent} from './components/payments-filter-form/payments-filter-form.component';
 import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
+import { GetWalletTablesColumnContentsPipe } from './pipes/get-wallet-tables-column-contents.pipe';
 
 @NgModule({
     declarations: [
@@ -72,7 +73,8 @@ import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,
         PaymentsFilterFormComponent,
-        CapitalizeAddSpacesPipe
+        CapitalizeAddSpacesPipe,
+        GetWalletTablesColumnContentsPipe
     ],
     imports: [
         CommonModule,
@@ -98,7 +100,8 @@ import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
         UpdateUserStocksPipe,
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
-        CapitalizeAddSpacesPipe
+        CapitalizeAddSpacesPipe,
+        GetWalletTablesColumnContentsPipe
     ],
     exports: [
         FormsModule,
@@ -127,6 +130,7 @@ import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
         StocksListComponent,
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
+        GetWalletTablesColumnContentsPipe,
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,

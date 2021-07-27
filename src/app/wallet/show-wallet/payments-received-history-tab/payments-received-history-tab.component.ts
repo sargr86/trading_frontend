@@ -5,11 +5,9 @@ import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
 import {Subscription} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
-import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatTableDataSource} from '@angular/material/table';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {User} from '@shared/models/user';
-import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-payments-received-history-tab',
@@ -32,10 +30,7 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
         private walletService: WalletService,
         private subject: SubjectService,
         private cardsService: CardsService,
-        private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
-        private removeUndCapitalize: CapitalizeAddSpacesPipe
     ) {
     }
 
@@ -52,29 +47,6 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
             this.tableData = new MatTableDataSource(dt);
             this.tableData.paginator = this.paginator;
         }));
-    }
-
-    getColumnContentByItsName(col, element) {
-        let content;
-
-        switch (col) {
-            case 'date':
-                content = this.datePipe.transform(element.created * 1000);
-                break;
-            case 'amount':
-                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
-                break;
-            case 'channel':
-                content = this.removeUndCapitalize.transform(element.metadata?.channel);
-                break;
-            case 'type':
-                content = element.description;
-                break;
-            default:
-                content = element[col];
-                break;
-        }
-        return content;
     }
 
     getFilters(e) {

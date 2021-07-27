@@ -3,7 +3,6 @@ import {Subscription} from 'rxjs';
 import {PurchasesService} from '@core/services/purchases.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {CurrencyPipe, DatePipe} from '@angular/common';
 import {Card} from '@shared/models/card';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 
@@ -24,8 +23,6 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
 
     constructor(
         private purchasesService: PurchasesService,
-        private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
     }
@@ -47,30 +44,6 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
 
     getFilters(e) {
         this.getPayoutsHistory(e);
-    }
-
-
-    getColumnContentByItsName(col, element) {
-        let content;
-
-        switch (col) {
-            case 'date':
-                content = this.datePipe.transform(element.created * 1000);
-                break;
-            case 'amount':
-                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
-                break;
-            case 'payout_for':
-                content = element.metadata?.channel;
-                break;
-            case 'type':
-                content = element.description;
-                break;
-            default:
-                content = element[col];
-                break;
-        }
-        return content;
     }
 
     ngOnDestroy(): void {

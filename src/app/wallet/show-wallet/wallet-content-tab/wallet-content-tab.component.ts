@@ -40,38 +40,13 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private cardsService: CardsService,
         private purchasesService: PurchasesService,
         private usersService: UsersService,
-        private getAuthUser: GetAuthUserPipe,
         public router: Router,
-        private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe,
-        private removeUndCapitalize: CapitalizeAddSpacesPipe
+
     ) {
     }
 
     ngOnInit(): void {
         this.getPaymentsHistory({});
-    }
-
-    getColumnContentByItsName(col, element) {
-        let content;
-        switch (col) {
-            case 'date':
-                content = this.datePipe.transform(element.created * 1000);
-                break;
-            case 'amount_submitted':
-                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
-                break;
-            case 'status':
-                content = this.removeUndCapitalize.transform(element.status);
-                break;
-            case 'payment_method':
-                const card = element?.charges?.data?.[0]?.payment_method_details?.card;
-                if (card) {
-                    content = `**** **** **** ${card.last4}`;
-                }
-                break;
-        }
-        return content;
     }
 
     handle(e) {

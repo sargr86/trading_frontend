@@ -63,7 +63,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
                 <div class="table-item">
-                    <span *ngIf="col!=='action'">{{getColumnContentByItsName(col, element)}}</span>
+                    <span *ngIf="col!=='action'">{{col|getColumnContent:element}}</span>
                     <div *ngIf="col==='action'" class="action-column">
 
                     </div>

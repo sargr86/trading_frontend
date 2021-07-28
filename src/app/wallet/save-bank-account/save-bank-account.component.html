@@ -1,0 +1,66 @@
+<form [formGroup]="stripeBankAccountForm">
+    <mat-horizontal-stepper linear [disableRipple]="true" #stepper>
+        <mat-step formGroupName="individual">
+            <ng-template matStepLabel>Personal Details</ng-template>
+            <input formControlName="first_name">
+            <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+            <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
+                    First name should contain only alphabetical characters
+                </span>
+            <input formControlName="last_name">
+            <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+            <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
+                    Last name should contain only alphabetical characters
+                </span>
+
+            <input formControlName="email">
+            <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
+            <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
+                    E-mail is <strong>invalid</strong>
+                </span>
+            <input formControlName="dob">
+            <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
+            <input formControlName="phone">
+            <input formControlName="id_number">
+            <div formGroupName="address">
+                <input formControlName="country">
+                <input formControlName="line1">
+                <input formControlName="line2">
+                <input formControlName="city">
+                <input formControlName="state">
+                <input formControlName="postal_code">
+            </div>
+
+            <div>
+                <button mat-button matStepperNext type="button">Next</button>
+            </div>
+        </mat-step>
+        <mat-step formGroupName="business_profile">
+            <ng-template matStepLabel>Business details</ng-template>
+
+            <input formControlName="mcc">
+            <input formControlName="url">
+            <div>
+                <button mat-button matStepperPrevious type="button">Back</button>
+                <button mat-button matStepperNext type="button">Next</button>
+            </div>
+        </mat-step>
+        <mat-step formGroupName="external_account">
+            <ng-template matStepLabel>Account for payouts</ng-template>
+            <input formControlName="routing_number">
+            <input formControlName="account_number">
+            <div>
+                <button mat-button matStepperPrevious type="button">Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+                <button mat-button (click)="saveBankAccount()">Submit</button>
+            </div>
+        </mat-step>
+        ...
+    </mat-horizontal-stepper>
+
+
+
+</form>
+
+
+

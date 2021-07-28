@@ -9,6 +9,7 @@ import { PaymentsPurchaseHistoryTabComponent } from './show-wallet/payments-purc
 import { PaymentsReceivedHistoryTabComponent } from './show-wallet/payments-received-history-tab/payments-received-history-tab.component';
 import { MetlCoinsPayoutScheduleTabComponent } from './show-wallet/metl-coins-payout-schedule-tab/metl-coins-payout-schedule-tab.component';
 import {SharedModule} from '@shared/shared.module';
+import { SaveBankAccountComponent } from './save-bank-account/save-bank-account.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {SharedModule} from '@shared/shared.module';
         WalletContentTabComponent,
         PaymentsPurchaseHistoryTabComponent,
         PaymentsReceivedHistoryTabComponent,
-        MetlCoinsPayoutScheduleTabComponent
+        MetlCoinsPayoutScheduleTabComponent,
+        SaveBankAccountComponent
     ],
     imports: [
         CommonModule,

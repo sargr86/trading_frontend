@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
 
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -23,6 +24,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     payments = [];
     filteredPayments = [];
     tableData;
+    bankAccount;
 
     @Input() authUser: User;
     @Input() userCards: Card[] = [];
@@ -36,12 +38,14 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private cardsService: CardsService,
         private purchasesService: PurchasesService,
         private usersService: UsersService,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         public router: Router,
     ) {
     }
 
     ngOnInit(): void {
         this.getPaymentsHistory({});
+        this.getBankAccount();
     }
 
     handle(e) {
@@ -70,9 +74,18 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         }));
     }
 
-    addBankAccount() {
-        this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
-            location.href = dt?.url;
+    async addBankAccount() {
+        await this.router.navigate(['wallet/save-bank-account']);
+        // this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
+        //     location.href = dt?.url;
+        // });
+    }
+
+    getBankAccount() {
+        const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
+        this.usersService.getBankAccount(params).subscribe(dt => {
+            this.bankAccount = dt?.external_accounts?.data;
+            console.log(this.bankAccount)
         });
     }
 

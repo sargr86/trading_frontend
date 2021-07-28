@@ -2,23 +2,27 @@
     <mat-horizontal-stepper linear [disableRipple]="true" #stepper>
         <mat-step formGroupName="individual">
             <ng-template matStepLabel>Personal Details</ng-template>
-            <input formControlName="first_name">
+            <input formControlName="first_name" placeholder="First name">
             <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
             <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
                     First name should contain only alphabetical characters
                 </span>
-            <input formControlName="last_name">
+            <input formControlName="last_name" placeholder="Last name">
             <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
             <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
                     Last name should contain only alphabetical characters
                 </span>
 
-            <input formControlName="email">
+            <input formControlName="email" placeholder="E-mail">
             <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
             <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
                     E-mail is <strong>invalid</strong>
                 </span>
-            <input formControlName="dob">
+            <input type="text" formControlName="dob"
+                   class="login-input"
+                   placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"
+                   [maxDate]="maxBirthDate"
+                   bsDatepicker>
             <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
             <input formControlName="phone">
             <input formControlName="id_number">
@@ -27,6 +31,12 @@
                 <input formControlName="line1">
                 <input formControlName="line2">
                 <input formControlName="city">
+                <select>
+                    <option [value]="''">State</option>
+                    <option *ngFor="let state of UsStates">
+                        {{state.name}}
+                    </option>
+                </select>
                 <input formControlName="state">
                 <input formControlName="postal_code">
             </div>
@@ -57,7 +67,6 @@
         </mat-step>
         ...
     </mat-horizontal-stepper>
-
 
 
 </form>

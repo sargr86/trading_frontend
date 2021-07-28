@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {patternValidator} from '@core/helpers/pattern-validator';
-import {EMAIL_PATTERN, NUMBER_AFTER_TEXT_PATTERN, TEXT_ONLY_PATTERN_WITHOUT_SPECIALS} from '@core/constants/patterns';
+import {EMAIL_PATTERN, TEXT_ONLY_PATTERN_WITHOUT_SPECIALS} from '@core/constants/patterns';
 import {Subscription} from 'rxjs';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import UsStates from '@core/constants/us_states.json';
 
 @Component({
     selector: 'app-save-bank-account',
@@ -19,6 +20,9 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     isSubmitted = false;
     subscriptions: Subscription[] = [];
     authUser;
+    UsStates = UsStates;
+    maxBirthDate: Date;
+    currentDate = new Date();
 
     constructor(
         private fb: FormBuilder,
@@ -28,6 +32,20 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         public router: Router
     ) {
         this.authUser = this.getAuthUser.transform();
+
+        // Age-restriction of 18
+        this.maxBirthDate = new Date(this.currentDate.setFullYear(this.currentDate.getFullYear() - 18));
+
+        this.initForm();
+
+
+        // this.stripeBankAccountForm.patchValue({individual: this.authUser, email: this.authUser.email});
+    }
+
+    ngOnInit(): void {
+    }
+
+    initForm(){
         this.stripeBankAccountForm = this.fb.group({
             user_id: this.authUser.id,
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
@@ -58,11 +76,6 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 account_number: ['000123456789', Validators.required],
             })
         });
-
-        this.stripeBankAccountForm.patchValue({individual: this.authUser, email: this.authUser.email});
-    }
-
-    ngOnInit(): void {
     }
 
     saveBankAccount() {

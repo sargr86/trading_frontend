@@ -35,6 +35,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
 
+
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
     constructor(
@@ -53,6 +54,8 @@ export class SaveCardComponent implements OnInit, OnDestroy {
             name: ['', Validators.required],
             primary: [0]
         });
+
+
     }
 
     ngOnInit(): void {
@@ -85,7 +88,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
         } else {
 
             this.subscriptions.push(this.stripeService
-                .createToken(this.card.element, {name: this.authUser.full_name})
+                .createToken(this.card.element, {name: this.authUser.first_name + ' ' + this.authUser.last_name})
                 .subscribe(result => {
                     if (result.token) {
                         const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);

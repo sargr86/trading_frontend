@@ -59,7 +59,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     initForm() {
         this.profileForm = this.fb.group({
             id: [''],
-            full_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
+            first_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
+            last_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
             username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
             // password: ['',
@@ -131,8 +132,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-    get fullName(): AbstractControl {
-        return this.profileForm.get('full_name');
+     get firstName(): AbstractControl {
+        return this.profileForm.get('first_name');
+    }
+
+    get lastName(): AbstractControl {
+        return this.profileForm.get('last_name');
     }
 
     get email(): AbstractControl {

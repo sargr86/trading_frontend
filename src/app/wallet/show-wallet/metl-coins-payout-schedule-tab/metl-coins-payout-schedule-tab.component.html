@@ -1,58 +1,34 @@
 <hr>
 <div class="d-flex align-items-center">
-    <div class="mr-3 form-group">
-        <label for="start3">Start</label>
-        <input type="datetime-local" id="start3" class="form-control">
-    </div>
-    <div class="mr-3 form-group">
-        <label for="end3">End</label>
-        <input type="datetime-local" id="end3" class="form-control">
-    </div>
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
 </div>
-<table class="table border my-4">
-    <thead class="thead-light">
-    <tr>
-        <th class="color-red">
-            <div class="d-flex align-items-center">
-                <span>Date</span>
-                <div class="d-flex flex-column ml-5">
-                    <i class="fas fa-angle-up lh-10"></i>
-                    <i class="fas fa-angle-down lh-10"></i>
+
+
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4" [hidden]="filteredPayouts.length===0">
+
+    <ng-container *ngFor="let col of displayedColumns">
+        <ng-container [matColumnDef]="col">
+            <th mat-header-cell *matHeaderCellDef>
+                <div class="table-item d-flex align-items-center">{{col|capitalizeAddSpaces}}</div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="table-item">
+                    <span *ngIf="col!=='action'">{{col|getColumnContent:element}}</span>
+                    <div *ngIf="col==='action'" class="action-column">
+
+                    </div>
                 </div>
-            </div>
-        </th>
-        <th>Payout for</th>
-        <th>Type</th>
-        <th class="color-red">Amount</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>Channel Name</td>
-        <td>Metl Coins</td>
-        <td>3500 Metl Coins</td>
-    </tr>
-    <tr>
-        <td>Nov 29, 2018</td>
-        <td>Channel Name</td>
-        <td>Metl Coins</td>
-        <td>3500 Metl Coins</td>
-    </tr>
-    </tbody>
+            </td>
+        </ng-container>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<nav aria-label="...">
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1"><i class="fas fa-angle-left"></i></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
-        </li>
-    </ul>
-</nav>
+
+<div>
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" [hidden]="filteredPayouts.length===0"
+                   showFirstLastButtons></mat-paginator>
+    <h3 [hidden]="filteredPayouts.length>0">No payouts found</h3>
+</div>

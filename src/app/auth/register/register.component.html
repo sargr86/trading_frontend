@@ -10,11 +10,19 @@
         <div class="login-block">
             <p class="login-title">Sign Up</p>
             <form [formGroup]="registerForm">
-                <input class="login-input" placeholder="Full Name" formControlName="full_name">
-                <span class="error" *ngIf="isSubmitted && fullName.hasError('required')">Full name is required</span>
-                <span class="error" *ngIf="isSubmitted && fullName.hasError('patternInvalid')">
-                    Full name should contain only alphabetical characters
+                <input class="login-input" placeholder="First Name" formControlName="first_name">
+                <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+                <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
+                    First name should contain only alphabetical characters
                 </span>
+
+                <input class="login-input" placeholder="Last Name" formControlName="last_name">
+                <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+                <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
+                    Last name should contain only alphabetical characters
+                </span>
+
+
                 <input class="login-input" placeholder="User name" formControlName="username">
                 <span class="error" *ngIf="isSubmitted && username.hasError('required')">User name is required</span>
                 <span class="error" *ngIf="isSubmitted && username.hasError('patternInvalid')">
@@ -28,7 +36,7 @@
                            [maxDate]="maxDate"
                            bsDatepicker>
                 </div>
-                
+
                 <input class="login-input" placeholder="Email" formControlName="email">
                 <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
                 <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">

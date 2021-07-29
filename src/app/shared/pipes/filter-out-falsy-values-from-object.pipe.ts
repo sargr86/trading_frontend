@@ -5,7 +5,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class FilterOutFalsyValuesFromObjectPipe implements PipeTransform {
 
-    transform(params, projectSpecific = true): unknown {
+    transform(params, projectSpecific = true, aaa = false): unknown {
         // console.log(params.filters)
         if (projectSpecific) {
             params = {
@@ -14,7 +14,10 @@ export class FilterOutFalsyValuesFromObjectPipe implements PipeTransform {
                 tag: params.tag
             };
         }
-// console.log(params)
+        if (aaa) {
+
+            console.log(params)
+        }
 
         return Object.entries(params).reduce((a, [k, v]) => (v ? (a[k] = v, a) : a), {});
     }

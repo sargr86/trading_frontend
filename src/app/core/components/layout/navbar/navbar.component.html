@@ -41,14 +41,14 @@
 
                 <div class="nav-item" [hidden]="routerUrl?.includes('wallet')">
                     <img src="assets/img/wallet-nav-icon.svg" class="wallet-icon"
-                         (click)="router.navigate(['wallet/show'])">
+                         (click)="openWalletPage()">
                 </div>
                 <div class="nav-item dropdown" *ngIf="auth.loggedIn()">
                     <img src="assets/img/user.svg" data-toggle="dropdown" class="user-icon dropdown-toggle">
                     <div class="dropdown-menu">
                     <span class="dropdown-item" *ngIf="toggleMyProfileLink()"
                           (click)="router.navigate(['user/profile'])">My Profile</span>
-                        <span class="dropdown-item" *ngIf="toggleMyChannelLink() && !routerUrl?.includes('cards')"
+                        <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"
                               (click)="router.navigate(['user/cards'])">My Cards</span>
                         <span class="dropdown-item" *ngIf="toggleMyChannelLink()"
                               (click)="goToChannelPage()">My Channel</span>

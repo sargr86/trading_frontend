@@ -2,10 +2,16 @@
     <div class="left-side pr-lg-2">
 
 
-        <input class="login-input" placeholder="Full Name" formControlName="full_name">
-        <span class="error" *ngIf="isSubmitted && fullName.hasError('required')">Full name is required</span>
-        <span class="error" *ngIf="isSubmitted && fullName.hasError('patternInvalid')">
-                    Full name should contain only alphabetical characters
+        <input class="login-input" placeholder="First Name" formControlName="first_name">
+        <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+        <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
+                    First name should contain only alphabetical characters
+                </span>
+
+        <input class="login-input" placeholder="Last Name" formControlName="last_name">
+        <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+        <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
+                    Last name should contain only alphabetical characters
                 </span>
         <input class="login-input" placeholder="User name" formControlName="username">
         <span class="error" *ngIf="isSubmitted && username.hasError('required')">User name is required</span>

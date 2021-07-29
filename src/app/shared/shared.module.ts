@@ -39,6 +39,8 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {PaymentsFilterFormComponent} from './components/payments-filter-form/payments-filter-form.component';
+import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
+import { GetWalletTablesColumnContentsPipe } from './pipes/get-wallet-tables-column-contents.pipe';
 
 @NgModule({
     declarations: [
@@ -70,7 +72,9 @@ import {PaymentsFilterFormComponent} from './components/payments-filter-form/pay
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,
-        PaymentsFilterFormComponent
+        PaymentsFilterFormComponent,
+        CapitalizeAddSpacesPipe,
+        GetWalletTablesColumnContentsPipe
     ],
     imports: [
         CommonModule,
@@ -95,8 +99,9 @@ import {PaymentsFilterFormComponent} from './components/payments-filter-form/pay
         CheckForEmptyObjectPipe,
         UpdateUserStocksPipe,
         IsStockFollowedPipe,
-        FixTextLineBreaksPipe
-
+        FixTextLineBreaksPipe,
+        CapitalizeAddSpacesPipe,
+        GetWalletTablesColumnContentsPipe
     ],
     exports: [
         FormsModule,
@@ -116,6 +121,7 @@ import {PaymentsFilterFormComponent} from './components/payments-filter-form/pay
         DateFromNowPipe,
         UserTagsComponent,
         CheckForEmptyObjectPipe,
+        CapitalizeAddSpacesPipe,
         VideosListHolderComponent,
         StocksListsModalComponent,
         SearchStocksFormComponent,
@@ -124,6 +130,7 @@ import {PaymentsFilterFormComponent} from './components/payments-filter-form/pay
         StocksListComponent,
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
+        GetWalletTablesColumnContentsPipe,
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,

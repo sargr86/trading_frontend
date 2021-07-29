@@ -1,78 +1,117 @@
-<form [formGroup]="stripeBankAccountForm">
+<form [formGroup]="stripeBankAccountForm" class="col-8">
+
     <mat-horizontal-stepper linear [disableRipple]="true" #stepper>
         <mat-step formGroupName="individual">
             <ng-template matStepLabel>Personal Details</ng-template>
-            <input formControlName="first_name" placeholder="First name">
-            <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
-            <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
+            <div class="py-5">
+                <h2>Personal Details</h2>
+                <div class="text-green">Tell us a few details about yourself.</div>
+            </div>
+            <div  class="d-flex">
+                <div  class="col-6 pl-0">
+                    <label>Legal name of person</label>
+                    <input formControlName="first_name" placeholder="First name" class="form-control">
+                    <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+                    <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
                     First name should contain only alphabetical characters
                 </span>
-            <input formControlName="last_name" placeholder="Last name">
-            <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
-            <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
+                    <input formControlName="last_name" placeholder="Last name" class="form-control">
+                    <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+                    <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
                     Last name should contain only alphabetical characters
                 </span>
-
-            <input formControlName="email" placeholder="E-mail">
-            <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
-            <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
+                    <label>Email Address</label>
+                    <input formControlName="email" placeholder="E-mail"  class="form-control">
+                    <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
+                    <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
                     E-mail is <strong>invalid</strong>
                 </span>
-            <input type="text" formControlName="dob"
-                   class="login-input"
-                   placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"
-                   [maxDate]="maxBirthDate"
-                   bsDatepicker>
-            <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
-            <input formControlName="phone" placeholder="Phone">
-            <input formControlName="id_number" placeholder="Phone">
-            <div formGroupName="address">
-                <input formControlName="country">
-                <input formControlName="line1">
-                <input formControlName="line2">
-                <input formControlName="city">
-                <select formControlName="state">
-                    <option [value]="''">State</option>
-                    <option *ngFor="let state of UsStates">
-                        {{state.name}}
-                    </option>
-                </select>
-                <input formControlName="postal_code">
+                    <label>Date of birdth</label>
+                    <input type="text" formControlName="dob"
+                           class="login-input form-control"
+                           placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"
+                           [maxDate]="maxBirthDate"
+                           bsDatepicker>
+                    <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
+                    <label>Home Address</label>
+                    <div formGroupName="address">
+                        <input formControlName="country"  class="form-control">
+                        <input formControlName="line1"  class="form-control">
+                    </div>
+                </div>
+                <div  class="col-6" style="padding-top: 30px">
+                    <div formGroupName="address">
+                        <input formControlName="line2"  class="form-control">
+                        <input formControlName="city"  class="form-control">
+                        <select formControlName="state"  class="form-control">
+                            <option [value]="''">State</option>
+                            <option *ngFor="let state of UsStates">
+                                {{state.name}}
+                            </option>
+                        </select>
+                        <input formControlName="postal_code"  class="form-control">
+                    </div>
+                    <label>Phone Number</label>
+                    <input formControlName="phone" placeholder="Phone"  class="form-control">
+                    <label>Social Security Number</label>
+                    <input formControlName="id_number" placeholder="Phone"  class="form-control">
+                    <label>
+                        To verify your identity,we'llneed to know your full Social Security number.
+                    </label>
+                </div>
             </div>
-
-            <div>
-                <button mat-button matStepperNext type="button">Next</button>
-            </div>
+            <button mat-button matStepperNext type="button" class="green-bg border-0 text-white">Next</button>
         </mat-step>
         <mat-step formGroupName="business_profile">
             <ng-template matStepLabel>Business details</ng-template>
-
-            <select formControlName="mcc">
-                <option selected disabled [value]="''">Industry</option>
-                <option *ngFor="let code of MccCodes" [value]="code.mcc">
-                    {{code.irs_description}}
-                </option>
-            </select>
-            <input formControlName="url">
-            <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
+            <div class="py-5">
+                <h2>Business details</h2>
+                <div class="text-green">Tell us a few details about yourself.</div>
+            </div>
+            <div class="col-6 pl-0">
+                <label>Industry</label>
+                <select formControlName="mcc"  class="form-control">
+                    <option selected disabled [value]="''">Industry</option>
+                    <option *ngFor="let code of MccCodes" [value]="code.mcc">
+                        {{code.irs_description}}
+                    </option>
+                </select>
+                <label>Business website</label>
+                <input formControlName="url"  class="form-control">
+            </div>
+            <div class="py-5">
+                <button mat-button matStepperPrevious type="button" class="bg-light text-white mr-3">Back</button>
+                <button mat-button matStepperNext type="button" class="green-bg text-white mr-3">Next</button>
             </div>
         </mat-step>
         <mat-step formGroupName="external_account">
             <ng-template matStepLabel>Account for payouts</ng-template>
-            <input formControlName="routing_number">
-            <input formControlName="account_number">
-            <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button (click)="saveBankAccount()">Submit</button>
+            <div class="py-5">
+                <h2>Select an account for payouts</h2>
+                <div class="text-green">A payout is the transfer of funds from Stripe to your bank account .</div>
+            </div>
+            <div class="col-6 pl-0">
+                <div class="d-flex">
+                    <div role="button" class="form-control mr-3 radio-btn active">Bank account</div>
+                    <div role="button" class="form-control ml-3 radio-btn">Debit card</div>
+                </div>
+
+                <label>Routing number</label>
+                <input formControlName="routing_number"  class="form-control">
+                <label>Account number</label>
+                <input formControlName="account_number"  class="form-control">
+                <label>Confirm account number</label>
+                <input formControlName="confirm_account_number"  class="form-control">
+            </div>
+            <div class="d-flex py-5">
+                <button mat-button matStepperPrevious type="button" class="bg-light text-white mr-3">Back</button>
+                <button mat-button (click)="stepper.reset()" class="bg-danger text-white mr-3">Reset</button>
+                <button mat-button (click)="saveBankAccount()" class="bg-success text-white mr-3">Submit</button>
             </div>
         </mat-step>
+
         ...
     </mat-horizontal-stepper>
-
-
 </form>
 
 

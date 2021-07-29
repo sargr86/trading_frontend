@@ -26,6 +26,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     showActions = false;
     selectedCard: Card;
     maxCardsPerUser = MAX_CARDS_PER_USER;
+    dataProcessing = false;
 
 
     constructor(
@@ -61,16 +62,19 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     }
 
     removeCard(c) {
-        this.subscriptions.push(this.cardsService.removeStripeCard({
+        this.loader.dataLoading = true;
+        const params = {
             card_id: c.id,
             stripe_customer_id: c.customer,
-            stripe_account_id: c.stripe_account_id,
+            stripe_account_id: c.stripe_account_id || '',
             user_id: this.authUser.id
-        }).subscribe((dt: any) => {
+        };
+        this.subscriptions.push(this.cardsService.removeStripeCard(params).subscribe((dt: any) => {
             // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
             // this.subject.changeAuthUser(this.getAuthUser.transform());
             this.subject.changeUserCards(dt.cards);
             this.userCards = dt.cards;
+            this.loader.dataLoading = false;
         }));
     }
 

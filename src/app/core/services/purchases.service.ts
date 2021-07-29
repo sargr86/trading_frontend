@@ -35,4 +35,8 @@ export class PurchasesService {
     getPurchasesHistory(params) {
         return this.httpClient.get<any>(`${API_URL}purchases/get-purchases-history`, {params});
     }
+
+    getPayoutsHistory(params) {
+        return this.httpClient.get<any>(`${API_URL}purchases/get-payouts-history`, {params});
+    }
 }

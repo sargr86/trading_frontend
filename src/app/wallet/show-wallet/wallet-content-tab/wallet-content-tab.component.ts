@@ -1,28 +1,33 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {SubjectService} from '@core/services/subject.service';
-import {Router} from '@angular/router';
 import {PurchasesService} from '@core/services/purchases.service';
-import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
+import {UsersService} from '@core/services/users.service';
+
+import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import {Subscription} from 'rxjs';
+
+import {Card} from '@shared/models/card';
+import {User} from '@shared/models/user';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 
 @Component({
     selector: 'app-wallet-content-tab',
     templateUrl: './wallet-content-tab.component.html',
     styleUrls: ['./wallet-content-tab.component.scss']
 })
-export class WalletContentTabComponent implements OnInit {
-    authUser;
-    userCards = [];
+export class WalletContentTabComponent implements OnInit, OnDestroy {
+    subscriptions: Subscription[] = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
     payments = [];
     filteredPayments = [];
     tableData;
+    bankAccount;
 
+    @Input() authUser: User;
+    @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     pageSize = 5;
@@ -32,47 +37,15 @@ export class WalletContentTabComponent implements OnInit {
         public auth: AuthService,
         private cardsService: CardsService,
         private purchasesService: PurchasesService,
-        private getAuthUser: GetAuthUserPipe,
-        private subject: SubjectService,
+        private usersService: UsersService,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         public router: Router,
-        private datePipe: DatePipe,
-        private currencyPipe: CurrencyPipe
     ) {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
-        this.subject.currentUserCards.subscribe(dt => {
-            this.userCards = dt;
-        });
-
         this.getPaymentsHistory({});
-    }
-
-    normalizeColName(col): string {
-        return normalizeColName(col);
-    }
-
-    getColumnContentByItsName(col, element) {
-        let content;
-        switch (col) {
-            case 'date':
-                content = this.datePipe.transform(element.created * 1000);
-                break;
-            case 'amount_submitted':
-                content = this.currencyPipe.transform(element.amount / 100, element.currency.toUpperCase());
-                break;
-            case 'status':
-                content = normalizeColName(element.status);
-                break;
-            case 'payment_method':
-                const card = element?.charges?.data?.[0]?.payment_method_details?.card;
-                if (card) {
-                    content = `**** **** **** ${card.last4}`;
-                }
-                break;
-        }
-        return content;
+        this.getBankAccount();
     }
 
     handle(e) {
@@ -91,12 +64,33 @@ export class WalletContentTabComponent implements OnInit {
     }
 
     getPaymentsHistory(filters) {
-        this.purchasesService.getAllPaymentsHistory(filters).subscribe(dt => {
+        const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
+        this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(params).subscribe(dt => {
             this.payments = dt;
-            this.filteredPayments = dt;
+            this.filterPayments();
+            // this.filteredPayments = dt;
             this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
+        }));
+    }
+
+    async addBankAccount() {
+        await this.router.navigate(['wallet/save-bank-account']);
+        // this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
+        //     location.href = dt?.url;
+        // });
+    }
+
+    getBankAccount() {
+        const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
+        this.usersService.getBankAccount(params).subscribe(dt => {
+            this.bankAccount = dt?.external_accounts?.data;
+            console.log(this.bankAccount)
         });
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

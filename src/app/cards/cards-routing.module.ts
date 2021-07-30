@@ -7,7 +7,10 @@ import {SaveCardComponent} from '@app/cards/save-card/save-card.component';
 const routes: Routes = [
     {
         path: '',
-        component: ShowCardsComponent
+        component: ShowCardsComponent,
+        data: {
+            title: 'User Cards'
+        }
     },
     {
         path: 'add',

@@ -8,6 +8,9 @@ const routes: Routes = [
     {
         path: 'show',
         component: ShowWalletComponent,
+        data: {
+            title: 'Wallet'
+        }
     },
     {
         path: 'save-bank-account',

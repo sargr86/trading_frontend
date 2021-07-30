@@ -12,7 +12,6 @@ import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 import {ShowCardsComponent} from '@app/cards/show-cards/show-cards.component';
 import {AuthGuard} from '@core/guards/auth.guard';
-import {TurboPlanComponent} from '@app/user/turbo-plan/turbo-plan.component';
 
 const routes: Routes = [
     {
@@ -87,10 +86,6 @@ const routes: Routes = [
         path: 'cards',
         loadChildren: () => import('../cards/cards.module').then(m => m.CardsModule),
         canActivate: [AuthGuard]
-    },
-    {
-        path: 'turbo-plan',
-        component: TurboPlanComponent
     }
 ];
 

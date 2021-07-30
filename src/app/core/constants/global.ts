@@ -49,6 +49,7 @@ export const NAVBAR_ADDITIONAL_LINKS = [
     {name: 'METL.TV security', link: 'security'},
     {name: 'Privacy policy', link: 'privacy-policy'},
     {name: 'Cookie policy', link: 'cookie-policy'},
+    {name: 'Metl Pro', link: 'turbo-plan'}
 ];
 
 export const VIDEO_CATEGORIES = ['Stock', 'Etf', 'Cryptocurrency'];

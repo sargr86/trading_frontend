@@ -31,6 +31,7 @@ import { StocksListsPortableComponent } from './components/layout/left-sidebar/s
 import { PageLoadingComponent } from './components/ungrouped/page-loading/page-loading.component';
 import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/stocks-lists-portable/stocks-lists-tabs/stocks-lists-tabs.component';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
+import {TurboPlanComponent} from "@core/components/ungrouped/turbo-plan/turbo-plan.component";
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
         StocksListsPortableComponent,
         PageLoadingComponent,
         StocksListsTabsComponent,
+        TurboPlanComponent
     ],
     imports: [
         CommonModule,

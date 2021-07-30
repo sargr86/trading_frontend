@@ -33,14 +33,16 @@
                            [maxDate]="maxBirthDate"
                            bsDatepicker>
                     <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
+                    <label>Phone Number</label>
+                    <input formControlName="phone" placeholder="Phone"  class="form-control">
+                    <label>Social Security Number</label>
+                    <input formControlName="id_number" placeholder="Phone"  class="form-control">
+                </div>
+                <div  class="col-6">
                     <label>Home Address</label>
                     <div formGroupName="address">
                         <input formControlName="country"  class="form-control">
                         <input formControlName="line1"  class="form-control">
-                    </div>
-                </div>
-                <div  class="col-6" style="padding-top: 30px">
-                    <div formGroupName="address">
                         <input formControlName="line2"  class="form-control">
                         <input formControlName="city"  class="form-control">
                         <select formControlName="state"  class="form-control">
@@ -51,10 +53,7 @@
                         </select>
                         <input formControlName="postal_code"  class="form-control">
                     </div>
-                    <label>Phone Number</label>
-                    <input formControlName="phone" placeholder="Phone"  class="form-control">
-                    <label>Social Security Number</label>
-                    <input formControlName="id_number" placeholder="Phone"  class="form-control">
+
                     <label>
                         To verify your identity,we'llneed to know your full Social Security number.
                     </label>

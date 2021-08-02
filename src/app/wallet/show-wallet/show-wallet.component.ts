@@ -57,7 +57,7 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
     }
 
     getTransfersHistory(filters) {
-        const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        const stripeAccountId = this.userCards?.[0]?.stripe_account_id;
         const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
         this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
             this.transfers = dt;
@@ -65,9 +65,6 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getSavedActiveTab() {
-        this.activeTab = localStorage.getItem('active_wallet_tab') || 'wallet';
-    }
 
     async tabChange(e) {
         const tab = e?.tab.textLabel.toLowerCase().replace(/ /g, '_');
@@ -85,6 +82,10 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
             const t = tab.textLabel.toLowerCase().replace(/ /g, '_');
             return t === this.activeTab ? index : 0;
         }).find(t => t) || 0;
+    }
+
+    getSavedActiveTab() {
+        this.activeTab = localStorage.getItem('active_wallet_tab') || 'wallet';
     }
 
     ngOnDestroy(): void {

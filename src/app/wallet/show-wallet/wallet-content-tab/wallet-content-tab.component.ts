@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-wallet-content-tab',

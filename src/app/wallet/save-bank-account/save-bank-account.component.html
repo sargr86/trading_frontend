@@ -1,13 +1,11 @@
 <form [formGroup]="stripeBankAccountForm" class="col-8">
-
-    <mat-horizontal-stepper linear [disableRipple]="true" #stepper>
-        <mat-step formGroupName="individual">
-            <ng-template matStepLabel>Personal Details</ng-template>
+    <mat-tab-group>
+        <mat-tab label="Personal details">
             <div class="py-5">
                 <h2>Personal Details</h2>
                 <div class="text-green">Tell us a few details about yourself.</div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex" formGroupName="individual">
                 <div class="col-6 pl-0">
                     <label>Legal name of person</label>
                     <input formControlName="first_name" placeholder="First name" class="form-control">
@@ -65,41 +63,17 @@
                     <label>Social Security Number</label>
                     <input formControlName="id_number" placeholder="Phone" class="form-control">
                     <label>
-                        To verify your identity,we'llneed to know your full Social Security number.
+                        To verify your identity,we'll need to know your full Social Security number.
                     </label>
                 </div>
             </div>
-            <button mat-button matStepperNext type="button" class="green-bg border-0 text-white">Next</button>
-        </mat-step>
-        <mat-step formGroupName="business_profile">
-            <ng-template matStepLabel>Business details</ng-template>
-            <div class="py-5">
-                <h2>Business details</h2>
-                <div class="text-green">Tell us a few details about yourself.</div>
-            </div>
-            <div class="col-6 pl-0">
-                <label>Industry</label>
-                <select formControlName="mcc" class="form-control">
-                    <option selected disabled [value]="''">Industry</option>
-                    <option *ngFor="let code of MccCodes" [value]="code.mcc">
-                        {{code.irs_description}}
-                    </option>
-                </select>
-                <label>Business website</label>
-                <input formControlName="url" class="form-control">
-            </div>
-            <div class="py-5">
-                <button mat-button matStepperPrevious type="button" class="bg-light text-white mr-3">Back</button>
-                <button mat-button matStepperNext type="button" class="green-bg text-white mr-3">Next</button>
-            </div>
-        </mat-step>
-        <mat-step formGroupName="external_account">
-            <ng-template matStepLabel>Account for payouts</ng-template>
+        </mat-tab>
+        <mat-tab label="Account for payouts">
             <div class="py-5">
                 <h2>Select an account for payouts</h2>
                 <div class="text-green">A payout is the transfer of funds from Stripe to your bank account .</div>
             </div>
-            <div class="col-6 pl-0">
+            <div class="col-6 pl-0" formGroupName="external_account">
                 <div class="d-flex">
                     <div role="button" class="form-control mr-3 radio-btn active">Bank account</div>
                     <div role="button" class="form-control ml-3 radio-btn">Debit card</div>
@@ -113,15 +87,10 @@
                 <input formControlName="confirm_account_number" class="form-control">
             </div>
             <div class="d-flex py-5">
-                <button mat-button matStepperPrevious type="button" class="bg-light text-white mr-3">Back</button>
-                <button mat-button (click)="stepper.reset()" class="text-white mr-3 reset-btn">Reset</button>
+<!--                <button mat-button type="button" class="bg-light text-white mr-3">Back</button>-->
+                <!--            <button mat-button (click)="stepper.reset()" class="text-white mr-3 reset-btn">Reset</button>-->
                 <button mat-button (click)="saveBankAccount()" class=" text-white mr-3 submit-btn">Submit</button>
             </div>
-        </mat-step>
-
-        ...
-    </mat-horizontal-stepper>
+        </mat-tab>
+    </mat-tab-group>
 </form>
-
-
-

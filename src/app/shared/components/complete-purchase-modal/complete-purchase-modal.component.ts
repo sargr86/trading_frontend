@@ -56,8 +56,10 @@ export class CompletePurchaseModalComponent implements OnInit {
         private toastr: ToastrService
     ) {
         this.purchase = data;
+        console.log(data.unit_amount)
         this.creditCardForm = fb.group({
-            name: ['', [Validators.required]]
+            name: ['', [Validators.required]],
+            price: data.unit_amount
         });
     }
 
@@ -70,9 +72,9 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.subject.currentUserCards.subscribe(dt => {
             this.userCards = dt;
             this.selectedCard = dt.find(t => t.primary) || dt[0];
-            console.log(this.authUser.users_cards)
-            console.log(this.selectedCard)
-            console.log(this.purchase)
+            // console.log(this.authUser.users_cards)
+            // console.log(this.selectedCard)
+            // console.log(this.purchase)
         });
     }
 

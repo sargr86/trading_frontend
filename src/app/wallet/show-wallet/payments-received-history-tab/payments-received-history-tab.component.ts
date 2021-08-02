@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {WalletService} from '@core/services/wallet.service';
 import {SubjectService} from '@core/services/subject.service';
 import {Card} from '@shared/models/card';
@@ -17,14 +17,16 @@ import {User} from '@shared/models/user';
 export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
-    accountTransfers = [];
+    // accountTransfers = [];
     filteredTransfers = [];
     tableData;
     displayedColumns = ['date', 'channel', 'type', 'amount'];
 
     @Input() authUser: User;
     @Input() userCards: Card[] = [];
+    @Input() accountTransfers = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @Output() transfersLoaded = new EventEmitter();
 
     constructor(
         private walletService: WalletService,
@@ -39,14 +41,15 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
     }
 
     getTransfersHistory(filters) {
-        const stripeAccountId = this.userCards?.[0].stripe_account_id;
-        const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
-        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
-            this.accountTransfers = dt;
-            this.filteredTransfers = dt;
-            this.tableData = new MatTableDataSource(dt);
+        // const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        // const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
+        // this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
+        //     this.accountTransfers = dt;
+            this.filteredTransfers = this.accountTransfers;
+            this.tableData = new MatTableDataSource(this.accountTransfers);
             this.tableData.paginator = this.paginator;
-        }));
+            // this.transfersLoaded.emit(dt);
+        // }));
     }
 
     getFilters(e) {

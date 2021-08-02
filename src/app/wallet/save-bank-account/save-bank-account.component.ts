@@ -41,7 +41,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         this.initForm();
 
 
-        // this.stripeBankAccountForm.patchValue({individual: this.authUser, email: this.authUser.email});
+        this.stripeBankAccountForm.patchValue({individual: this.authUser, email: this.authUser.email});
     }
 
     ngOnInit(): void {
@@ -63,7 +63,11 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 first_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
                 last_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
                 email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
-                dob: ['', Validators.required],
+                dob: this.fb.group({
+                    day: ['', Validators.required],
+                    month: ['', Validators.required],
+                    year: ['', Validators.required],
+                }),
                 phone: ['000 000 0000', Validators.required],
                 id_number: ['000000000', Validators.required],
                 address: this.fb.group({
@@ -89,6 +93,13 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         });
     }
 
+    dateChanged(e) {
+        const year = e.getFullYear();
+        const month = e.getMonth();
+        const day = e.getDay();
+        this.individual.controls.dob.patchValue({year, month, day});
+    }
+
     saveBankAccount() {
         this.usersService.addStripeBankAccount(this.stripeBankAccountForm.value).subscribe(async (dt) => {
             await this.router.navigate(['wallet/show']);
@@ -110,6 +121,10 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
 
     get birthday(): AbstractControl {
         return this.stripeBankAccountForm.get('birthday');
+    }
+
+    get individual(): any {
+        return this.stripeBankAccountForm.controls.individual as any;
     }
 
     ngOnDestroy(): void {

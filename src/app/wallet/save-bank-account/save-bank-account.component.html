@@ -7,54 +7,63 @@
                 <h2>Personal Details</h2>
                 <div class="text-green">Tell us a few details about yourself.</div>
             </div>
-            <div  class="d-flex">
-                <div  class="col-6 pl-0">
+            <div class="d-flex">
+                <div class="col-6 pl-0">
                     <label>Legal name of person</label>
                     <input formControlName="first_name" placeholder="First name" class="form-control">
-                    <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+                    <span class="error"
+                          *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
                     <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
                     First name should contain only alphabetical characters
                 </span>
                     <input formControlName="last_name" placeholder="Last name" class="form-control">
-                    <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+                    <span class="error"
+                          *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
                     <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
                     Last name should contain only alphabetical characters
                 </span>
                     <label>Email Address</label>
-                    <input formControlName="email" placeholder="E-mail"  class="form-control">
+                    <input formControlName="email" placeholder="E-mail" class="form-control">
                     <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
                     <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
                     E-mail is <strong>invalid</strong>
                 </span>
-                    <label>Date of birdth</label>
-                    <input type="text" formControlName="dob"
+                    <label>Date of birth</label>
+                    <input type="text"
                            class="login-input form-control"
                            placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"
-                           [maxDate]="maxBirthDate"
-                           bsDatepicker>
-                    <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
+                           [maxDate]="maxBirthDate" (bsValueChange)="dateChanged($event)"
+                           bsDatepicker
+                    >
+                    <div formGroupName="dob">
+                        <input type="hidden" formControlName="day">
+                        <input type="hidden" formControlName="month">
+                        <input type="hidden" formControlName="year">
+                    </div>
+                    <span class="error"
+                          *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
                     <label>Home Address</label>
                     <div formGroupName="address">
-                        <input formControlName="country"  class="form-control">
-                        <input formControlName="line1"  class="form-control">
+                        <input formControlName="country" class="form-control">
+                        <input formControlName="line1" class="form-control">
                     </div>
                 </div>
-                <div  class="col-6" style="padding-top: 32px">
+                <div class="col-6" style="padding-top: 32px">
                     <div formGroupName="address">
-                        <input formControlName="line2"  class="form-control">
-                        <input formControlName="city"  class="form-control">
-                        <select formControlName="state"  class="form-control">
+                        <input formControlName="line2" class="form-control">
+                        <input formControlName="city" class="form-control">
+                        <select formControlName="state" class="form-control">
                             <option [value]="''">State</option>
                             <option *ngFor="let state of UsStates">
                                 {{state.name}}
                             </option>
                         </select>
-                        <input formControlName="postal_code"  class="form-control">
+                        <input formControlName="postal_code" class="form-control">
                     </div>
                     <label>Phone Number</label>
-                    <input formControlName="phone" placeholder="Phone"  class="form-control">
+                    <input formControlName="phone" placeholder="Phone" class="form-control">
                     <label>Social Security Number</label>
-                    <input formControlName="id_number" placeholder="Phone"  class="form-control">
+                    <input formControlName="id_number" placeholder="Phone" class="form-control">
                     <label>
                         To verify your identity,we'llneed to know your full Social Security number.
                     </label>
@@ -70,14 +79,14 @@
             </div>
             <div class="col-6 pl-0">
                 <label>Industry</label>
-                <select formControlName="mcc"  class="form-control">
+                <select formControlName="mcc" class="form-control">
                     <option selected disabled [value]="''">Industry</option>
                     <option *ngFor="let code of MccCodes" [value]="code.mcc">
                         {{code.irs_description}}
                     </option>
                 </select>
                 <label>Business website</label>
-                <input formControlName="url"  class="form-control">
+                <input formControlName="url" class="form-control">
             </div>
             <div class="py-5">
                 <button mat-button matStepperPrevious type="button" class="bg-light text-white mr-3">Back</button>
@@ -97,11 +106,11 @@
                 </div>
 
                 <label>Routing number</label>
-                <input formControlName="routing_number"  class="form-control">
+                <input formControlName="routing_number" class="form-control">
                 <label>Account number</label>
-                <input formControlName="account_number"  class="form-control">
+                <input formControlName="account_number" class="form-control">
                 <label>Confirm account number</label>
-                <input formControlName="confirm_account_number"  class="form-control">
+                <input formControlName="confirm_account_number" class="form-control">
             </div>
             <div class="d-flex py-5">
                 <button mat-button matStepperPrevious type="button" class="bg-light text-white mr-3">Back</button>

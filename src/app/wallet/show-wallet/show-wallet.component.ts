@@ -9,6 +9,9 @@ import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {filter} from 'rxjs/operators';
+import {MatTableDataSource} from "@angular/material/table";
+import {FilterOutFalsyValuesFromObjectPipe} from "@shared/pipes/filter-out-falsy-values-from-object.pipe";
+import {WalletService} from "@core/services/wallet.service";
 
 @Component({
     selector: 'app-show-wallet',
@@ -20,6 +23,8 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
     userCards = [];
     authUser;
     activeTab;
+    transfers = [];
+    transfersLoaded = false;
 
     @ViewChild('tabGroup', {static: false}) tabGroup;
 
@@ -29,12 +34,15 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private subject: SubjectService,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe,
+        private walletService: WalletService
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.getUserCards();
+        this.getTransfersHistory({});
         this.getSavedActiveTab();
     }
 
@@ -46,6 +54,15 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
                     this.userCards = dt;
                 })
         );
+    }
+
+    getTransfersHistory(filters) {
+        const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
+        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
+            this.transfers = dt;
+            this.transfersLoaded = true;
+        }));
     }
 
     getSavedActiveTab() {

@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
 import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
+import {SubjectService} from "@core/services/subject.service";
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
@@ -23,12 +24,16 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
 
     constructor(
         private purchasesService: PurchasesService,
+        private subject: SubjectService
     ) {
 
     }
 
     ngOnInit(): void {
         this.getPurchasesHistory();
+        this.subject.getPurchasedBitsData().subscribe(dt => {
+            this.getPurchasesHistory({});
+        });
     }
 
     getFilters(e) {

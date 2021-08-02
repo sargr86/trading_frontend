@@ -6,13 +6,13 @@
             <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="getActiveTab(tabGroup)"
                            (selectedTabChange)="tabChange($event)">
                 <mat-tab label="Wallet">
-                    <app-wallet-content-tab [userCards]="userCards" [authUser]="authUser"></app-wallet-content-tab>
+                    <app-wallet-content-tab [userCards]="userCards" [authUser]="authUser" [accountTransfers]="transfers" *ngIf="transfersLoaded"></app-wallet-content-tab>
                 </mat-tab>
                 <mat-tab label="Payments Purchase History">
                     <app-payments-purchase-history-tab [userCards]="userCards"></app-payments-purchase-history-tab>
                 </mat-tab>
                 <mat-tab label="Payments Received History">
-                    <app-payments-received-history-tab [userCards]="userCards"
+                    <app-payments-received-history-tab [userCards]="userCards" [accountTransfers]="transfers" *ngIf="transfersLoaded"
                                                        [authUser]="authUser"></app-payments-received-history-tab>
                 </mat-tab>
                 <mat-tab label="Metl Coins Payout Schedule">

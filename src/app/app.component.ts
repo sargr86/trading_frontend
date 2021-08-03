@@ -9,6 +9,7 @@ import IsResponsive from '@core/helpers/is-responsive';
 import {StocksService} from '@core/services/stocks.service';
 import {environment} from '@env';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
+import {GetAuthUserPipe} from "@shared/pipes/get-auth-user.pipe";
 
 @Component({
     selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
     subscriptions: Subscription[] = [];
     pageTitle;
     isSmallScreen = IsResponsive.isSmallScreen();
+    authUser;
 
     constructor(
         public router: Router,
@@ -27,12 +29,14 @@ export class AppComponent implements OnInit {
         public loader: LoaderService,
         private titleService: Title,
         private route: ActivatedRoute,
-        private stocksService: StocksService
+        private stocksService: StocksService,
+        private getAuthUser: GetAuthUserPipe
     ) {
 
     }
 
     ngOnInit() {
+        console.log(this.getAuthUser.transform())
         // const player = new Plyr('video', {
         //     captions: {active: true},
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}

@@ -12,6 +12,9 @@ import {SharedModule} from '@shared/shared.module';
         SaveCardComponent,
         ShowCardsComponent
     ],
+    exports: [
+        SaveCardComponent
+    ],
     imports: [
         CommonModule,
         CardsRoutingModule,

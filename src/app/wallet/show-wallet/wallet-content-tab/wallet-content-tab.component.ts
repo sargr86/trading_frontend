@@ -91,14 +91,13 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
             this.totals[key].coins += d.amount;
             this.totals[key].dollars += d.amount / 100;
         });
-        console.log(this.totals)
     }
 
     async addBankAccount() {
-        await this.router.navigate(['wallet/save-bank-account']);
-        // this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
-        //     location.href = dt?.url;
-        // });
+        // await this.router.navigate(['wallet/save-bank-account']);
+        this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
+            location.href = dt?.url;
+        });
     }
 
     getBankAccount() {

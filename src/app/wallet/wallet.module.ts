@@ -11,6 +11,7 @@ import {MetlCoinsPayoutScheduleTabComponent} from './show-wallet/metl-coins-payo
 import {SharedModule} from '@shared/shared.module';
 import {SaveBankAccountComponent} from './save-bank-account/save-bank-account.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {CardsModule} from "@app/cards/cards.module";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
         MaterialModule,
         SharedModule,
         BsDatepickerModule.forRoot(),
+        CardsModule,
 
 
     ]

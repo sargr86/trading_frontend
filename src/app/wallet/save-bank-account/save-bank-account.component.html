@@ -1,5 +1,5 @@
 <form [formGroup]="stripeBankAccountForm" class="col-8">
-    <mat-tab-group>
+    <mat-tab-group #tabGroup>
         <mat-tab label="Personal details">
             <div class="py-5">
                 <h2>Personal Details</h2>
@@ -31,7 +31,7 @@
                            class="login-input form-control"
                            placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"
                            [maxDate]="maxBirthDate" (bsValueChange)="dateChanged($event)"
-                           bsDatepicker
+                           bsDatepicker [value]="this.authUser.birthday| date: 'MM/dd/yyyy'"
                     >
                     <div formGroupName="dob">
                         <input type="hidden" formControlName="day">
@@ -63,10 +63,13 @@
                     <label>Social Security Number</label>
                     <input formControlName="id_number" placeholder="Phone" class="form-control">
                     <label>
-                        To verify your identity,we'll need to know your full Social Security number.
+                        To verify your identity, we'll need to know your full Social Security number.
                     </label>
                 </div>
             </div>
+            <button mat-button type="button" class="bg-light text-white mr-3" (click)="tabGroup.selectedIndex = 1">
+                Next
+            </button>
         </mat-tab>
         <mat-tab label="Account for payouts">
             <div class="py-5">
@@ -75,19 +78,35 @@
             </div>
             <div class="col-6 pl-0" formGroupName="external_account">
                 <div class="d-flex">
-                    <div role="button" class="form-control mr-3 radio-btn active">Bank account</div>
-                    <div role="button" class="form-control ml-3 radio-btn">Debit card</div>
+                    <div role="button" class="form-control mr-3 radio-btn" [class.active]="externalAccountType==='bank_account'"
+                         (click)="externalAccountType='bank_account'">Bank account
+                    </div>
+                    <div role="button" class="form-control ml-3 radio-btn"
+                         [class.active]="externalAccountType==='debit_card'" (click)="externalAccountType='debit_card'">
+                        Debit card
+                    </div>
                 </div>
 
-                <label>Routing number</label>
-                <input formControlName="routing_number" class="form-control">
-                <label>Account number</label>
-                <input formControlName="account_number" class="form-control">
-                <label>Confirm account number</label>
-                <input formControlName="confirm_account_number" class="form-control">
+                <div [hidden]="externalAccountType==='debit_card'">
+
+                    <label>Routing number</label>
+                    <input formControlName="routing_number" class="form-control">
+                    <label>Account number</label>
+                    <input formControlName="account_number" class="form-control">
+                    <label>Confirm account number</label>
+                    <input formControlName="confirm_account_number" class="form-control">
+                </div>
+                <div id="card-element" [hidden]="externalAccountType==='bank_account'">
+                    <ngx-stripe-card
+                        [options]="cardOptions"
+                        [elementsOptions]="elementsOptions">
+                    </ngx-stripe-card>
+                </div>
             </div>
             <div class="d-flex py-5">
-<!--                <button mat-button type="button" class="bg-light text-white mr-3">Back</button>-->
+                <button mat-button type="button" class="bg-light text-white mr-3" (click)="tabGroup.selectedIndex = 0">
+                    Back
+                </button>
                 <!--            <button mat-button (click)="stepper.reset()" class="text-white mr-3 reset-btn">Reset</button>-->
                 <button mat-button (click)="saveBankAccount()" class=" text-white mr-3 submit-btn">Submit</button>
             </div>

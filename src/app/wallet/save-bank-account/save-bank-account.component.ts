@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN, TEXT_ONLY_PATTERN_WITHOUT_SPECIALS} from '@core/constants/patterns';
@@ -9,6 +9,10 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import UsStates from '@core/constants/us_states.json';
 import MccCodes from '@core/constants/mcc_codes.json';
+import * as moment from 'moment';
+import {STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {loadStripe, StripeElementsOptions} from '@stripe/stripe-js';
+import {StripeCardComponent, StripeService} from 'ngx-stripe';
 
 @Component({
     selector: 'app-save-bank-account',
@@ -26,11 +30,23 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     maxBirthDate: Date;
     currentDate = new Date();
 
+    // Stripe
+    cardOptions = STRIPE_CARD_OPTIONS;
+    elementsOptions: StripeElementsOptions = {locale: 'en'};
+
+    externalAccountType = 'bank_account';
+
+    stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
+
+
+    @ViewChild(StripeCardComponent, {static: true}) card: StripeCardComponent;
+
     constructor(
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
         private usersService: UsersService,
         private toastr: ToastrService,
+        private stripeService: StripeService,
         public router: Router
     ) {
         this.authUser = this.getAuthUser.transform();
@@ -38,13 +54,13 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         // Age-restriction of 18
         this.maxBirthDate = new Date(this.currentDate.setFullYear(this.currentDate.getFullYear() - 18));
 
-        this.initForm();
 
-
-        this.stripeBankAccountForm.patchValue({individual: this.authUser, email: this.authUser.email});
     }
 
     ngOnInit(): void {
+
+        this.initForm();
+        console.log(this.card)
     }
 
     initForm() {
@@ -83,6 +99,25 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 confirm_account_number: ['', Validators.required]
             })
         });
+
+        this.stripeBankAccountForm.patchValue({individual: this.authUser, email: this.authUser.email});
+
+        const year = moment(this.authUser.birthday).format('Y');
+        const month = moment(this.authUser.birthday).format('MM');
+        const day = moment(this.authUser.birthday).format('DD');
+        this.individual.controls.dob.patchValue({year, month, day});
+    }
+
+    async getExternalAccountData(type) {
+
+        // // if (type === 'bank_account') {
+        // return this.fb.group({
+        //     object: [type],
+        //     country: ['US', Validators.required],
+        //     routing_number: ['110000000', Validators.required],
+        //     account_number: ['000123456789', Validators.required],
+        //     confirm_account_number: ['', Validators.required]
+        // });
     }
 
     dateChanged(e) {
@@ -92,8 +127,25 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         this.individual.controls.dob.patchValue({year, month, day});
     }
 
-    saveBankAccount() {
-        this.usersService.addStripeBankAccount(this.stripeBankAccountForm.value).subscribe(async (dt) => {
+    async saveBankAccount() {
+        let formValue = this.stripeBankAccountForm.value;
+        if (this.externalAccountType === 'debit_card') {
+            this.stripeService.createToken(this.card.element, {
+                name: this.authUser.first_name + ' ' + this.authUser.last_name,
+                currency: 'usd'
+            }).subscribe(result => {
+                const {external_account, ...restData} = this.stripeBankAccountForm.value;
+                formValue = {...restData, external_account: result.token.id};
+                this.addSource(formValue);
+            });
+        } else {
+            this.addSource(formValue);
+        }
+    }
+
+    addSource(formValue) {
+        console.log(this.externalAccountType, formValue)
+        this.usersService.addStripeBankAccount(formValue).subscribe(async (dt) => {
             await this.router.navigate(['wallet/show']);
             this.toastr.success('The bank account has been added successfully');
         });

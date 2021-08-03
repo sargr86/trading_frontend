@@ -186,7 +186,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // this.thumbnailFile = this.videoSettings.thumbnail;
             // console.log(this.videoSettings.thumbnail)
 
-
+            console.log(this.authUser)
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
                 author_id: this.authUser.id,

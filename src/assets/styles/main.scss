@@ -1085,4 +1085,9 @@ mat-optgroup {
     }
 }
 
+#user-cards-list{
+    .mat-progress-spinner circle, .mat-spinner circle{
+        stroke: $white!important;
+    }
+}
 @import "responsive";

@@ -100,7 +100,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                             // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
                             // this.subject.changeAuthUser(this.getAuthUser.transform());
                             this.subject.changeUserCards(dt.cards);
-                            await this.router.navigate(['/wallet/cards']);
+                            await this.router.navigate(['/user/cards']);
 
                         });
                     } else if (result.error) {

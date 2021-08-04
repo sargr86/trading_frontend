@@ -46,6 +46,7 @@ export class RequestInterceptor implements HttpInterceptor {
                 } else if(err.error.hasOwnProperty('msg')){
                     this.toastr.error(message.replace(/<(.|\n)*?>/g, ''));
                 }
+                // Stripe errors
                 else {
                     this.toastr.error(err.error?.raw?.message);
                 }

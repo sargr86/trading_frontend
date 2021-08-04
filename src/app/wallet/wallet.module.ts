@@ -13,6 +13,7 @@ import {SaveBankAccountComponent} from './save-bank-account/save-bank-account.co
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {CardsModule} from "@app/cards/cards.module";
 import {InternationalPhoneNumberModule} from "ng-phone-number";
+import { ShowCardsComponent } from './cards/show-cards/show-cards.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {InternationalPhoneNumberModule} from "ng-phone-number";
         PaymentsPurchaseHistoryTabComponent,
         PaymentsReceivedHistoryTabComponent,
         MetlCoinsPayoutScheduleTabComponent,
-        SaveBankAccountComponent
+        SaveBankAccountComponent,
+        ShowCardsComponent
     ],
     imports: [
         CommonModule,

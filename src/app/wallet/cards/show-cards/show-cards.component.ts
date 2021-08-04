@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
@@ -7,19 +7,22 @@ import {SubjectService} from '@core/services/subject.service';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {CustomersService} from '@core/services/wallet/customers.service';
+import {MAX_CARDS_PER_USER} from '@core/constants/global';
 
 @Component({
     selector: 'app-show-cards',
     templateUrl: './show-cards.component.html',
     styleUrls: ['./show-cards.component.scss']
 })
-export class ShowCardsComponent implements OnInit {
+export class ShowCardsComponent implements OnInit, OnDestroy {
     userCards: Card[] = [];
     selectedCard: Card;
     authUser: User;
     subscriptions: Subscription[] = [];
 
     showActions = false;
+
+    maxCardsPerUser = MAX_CARDS_PER_USER;
 
     constructor(
         public loader: LoaderService,
@@ -34,8 +37,6 @@ export class ShowCardsComponent implements OnInit {
             this.userCards = dt;
         }));
     }
-
-
 
     formatExpiryDate(date) {
         return moment(date, 'MM/YYYY').format('MM/YY');
@@ -60,6 +61,25 @@ export class ShowCardsComponent implements OnInit {
         if (showActions) {
             this.selectedCard = card;
         }
+    }
+
+    async editCard(c) {
+        await this.router.navigate([`/wallet/cards/edit/${c.id}`]);
+    }
+
+    removeCard(card) {
+        this.loader.dataLoading = true;
+        const params = {
+            card_id: card.id,
+            stripe_customer_id: card.customer,
+            stripe_account_id: card.stripe_account_id || '',
+            user_id: this.authUser.id
+        };
+        this.subscriptions.push(this.customersService.removeStripeCard(params).subscribe((dt: any) => {
+            this.subject.changeUserCards(dt.cards);
+            this.userCards = dt.cards;
+            this.loader.dataLoading = false;
+        }));
     }
 
     ngOnDestroy(): void {

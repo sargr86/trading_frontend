@@ -24,4 +24,8 @@ export class CustomersService {
     makePrimary(params) {
         return this.httpClient.put<Card[]>(`${API_URL}stripe/customers/set-customer-card-as-default`, params);
     }
+
+    removeStripeCard(params) {
+        return this.httpClient.delete<Card[]>(`${API_URL}stripe/customers/remove-customer-card`, {params});
+    }
 }

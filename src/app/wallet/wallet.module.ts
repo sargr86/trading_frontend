@@ -14,6 +14,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {CardsModule} from "@app/cards/cards.module";
 import {InternationalPhoneNumberModule} from "ng-phone-number";
 import { ShowCardsComponent } from './cards/show-cards/show-cards.component';
+import { SaveCardComponent } from './cards/save-card/save-card.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ShowCardsComponent } from './cards/show-cards/show-cards.component';
         PaymentsReceivedHistoryTabComponent,
         MetlCoinsPayoutScheduleTabComponent,
         SaveBankAccountComponent,
-        ShowCardsComponent
+        ShowCardsComponent,
+        SaveCardComponent
     ],
     imports: [
         CommonModule,

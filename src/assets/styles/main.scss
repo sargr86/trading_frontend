@@ -1075,5 +1075,14 @@ mat-optgroup {
     box-shadow: 0 1px 3px 0 #b8cbe5;
 }
 
+.flagInput {
+    button {
+        pointer-events: none;
+    }
+
+    .arrow-down, .defaultCountry {
+        display: none!important;
+    }
+}
 
 @import "responsive";

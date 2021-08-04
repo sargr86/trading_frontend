@@ -10,7 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import UsStates from '@core/constants/us_states.json';
 import MccCodes from '@core/constants/mcc_codes.json';
 import * as moment from 'moment';
-import {STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {ALLOWED_COUNTRIES, DEFAULT_COUNTRY, STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {loadStripe, StripeElementsOptions} from '@stripe/stripe-js';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 
@@ -40,6 +40,9 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
 
 
     @ViewChild(StripeCardComponent, {static: true}) card: StripeCardComponent;
+
+    allowedCountries = ALLOWED_COUNTRIES;
+    defaultCountry = DEFAULT_COUNTRY;
 
     constructor(
         private fb: FormBuilder,
@@ -149,6 +152,10 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
             await this.router.navigate(['wallet/show']);
             this.toastr.success('The bank account has been added successfully');
         });
+    }
+
+    phoneChanged(e) {
+        this.stripeBankAccountForm.patchValue({phone: e.target.value});
     }
 
     get firstName(): AbstractControl {

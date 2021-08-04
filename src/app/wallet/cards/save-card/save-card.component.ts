@@ -76,7 +76,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
             }).subscribe(async (dt) => {
                 this.loader.dataLoading = false;
                 this.toastr.success('The card info has been updated successfully');
-                await this.router.navigate(['/wallet/cards']);
+                await this.router.navigate(['/wallet/show']);
             }));
         } else {
             this.subscriptions.push(this.stripeService
@@ -88,7 +88,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
                             this.subject.changeUserCards(dt.cards);
-                            await this.router.navigate(['/wallet/cards']);
+                            await this.router.navigate(['/wallet/show']);
 
                         });
                     } else if (result.error) {

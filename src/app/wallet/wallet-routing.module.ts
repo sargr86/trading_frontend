@@ -8,7 +8,10 @@ import {ShowCardsComponent} from '@app/wallet/cards/show-cards/show-cards.compon
 const routes: Routes = [
     {
         path: 'cards',
-        component: ShowCardsComponent
+        component: ShowCardsComponent,
+        data: {
+            title: 'User Cards'
+        }
     },
     {
         path: 'show',

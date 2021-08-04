@@ -16,4 +16,12 @@ export class CustomersService {
     getUserCards(params) {
         return this.httpClient.get<Card[]>(`${API_URL}stripe/customers/get-customer-cards`, {params});
     }
+
+    createStripeCustomerCard(params) {
+        return this.httpClient.post(`${API_URL}stripe/customers/create-customer-card`, params);
+    }
+
+    makePrimary(params) {
+        return this.httpClient.put<Card[]>(`${API_URL}stripe/customers/set-customer-card-as-default`, params);
+    }
 }

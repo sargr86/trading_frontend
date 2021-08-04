@@ -5,7 +5,7 @@ function generateStripeCardData(tokenData, authUser, cardName) {
 
     return {
         stripeToken: tokenData.token.id,
-        stripeEmail: authUser.email,
+        email: authUser.email,
         holderName: fullName,
         user_id: authUser.id,
         exp_month: cardData.exp_month,

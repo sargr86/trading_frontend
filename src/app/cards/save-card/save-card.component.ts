@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {CardsService} from '@core/services/cards.service';
 import {SubjectService} from '@core/services/subject.service';
+import {CustomersService} from '@core/services/wallet/customers.service';
 
 @Component({
     selector: 'app-save-card',
@@ -40,6 +41,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
 
     constructor(
         private stripeService: StripeService,
+        private customersService: CustomersService,
         private usersService: UsersService,
         private cardsService: CardsService,
         private getAuthUser: GetAuthUserPipe,
@@ -92,13 +94,13 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                 .subscribe(result => {
                     if (result.token) {
                         const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
-                        this.cardsService.createStripeCard(cardData).subscribe(async (dt: any) => {
+                        this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
                             // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
                             // this.subject.changeAuthUser(this.getAuthUser.transform());
                             this.subject.changeUserCards(dt.cards);
-                            await this.router.navigate(['/user/cards']);
+                            await this.router.navigate(['/wallet/cards']);
 
                         });
                     } else if (result.error) {

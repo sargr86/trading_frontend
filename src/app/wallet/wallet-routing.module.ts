@@ -23,12 +23,22 @@ const routes: Routes = [
         path: 'cards',
         component: ShowCardsComponent,
         data: {
-            title: 'User Cards'
+            title: 'User cards'
+        }
+    },
+    {
+        path: 'cards/add',
+        component: SaveCardComponent,
+        data: {
+            title: 'Add card'
         }
     },
     {
         path: 'cards/edit/:id',
-        component: SaveCardComponent
+        component: SaveCardComponent,
+        data: {
+            title: 'Edit card info'
+        }
     },
 ];
 

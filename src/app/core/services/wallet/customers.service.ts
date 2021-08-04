@@ -25,6 +25,14 @@ export class CustomersService {
         return this.httpClient.put<Card[]>(`${API_URL}stripe/customers/set-customer-card-as-default`, params);
     }
 
+    getCardDetails(params) {
+        return this.httpClient.get<Card>(`${API_URL}stripe/customers/get-card-details`, {params});
+    }
+
+    updateStripeCard(params) {
+        return this.httpClient.put<Card[]>(`${API_URL}stripe/customers/update-customer-card-info`, params);
+    }
+
     removeStripeCard(params) {
         return this.httpClient.delete<Card[]>(`${API_URL}stripe/customers/remove-customer-card`, {params});
     }

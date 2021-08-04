@@ -59,7 +59,10 @@
                         <input formControlName="postal_code" class="form-control">
                     </div>
                     <label>Phone Number</label>
-                    <input formControlName="phone" placeholder="Phone" class="form-control">
+<!--                    <input formControlName="phone" placeholder="Phone" class="form-control">-->
+                    <international-phone-number placeholder="Phone number" formControlName="phone" [maxlength]="20"
+                                                [defaultCountry]="defaultCountry" [required]="true" (change)="phoneChanged($event)"
+                                                [allowedCountries]="allowedCountries"></international-phone-number>
                     <label>Social Security Number</label>
                     <input formControlName="id_number" placeholder="Phone" class="form-control">
                     <label>

@@ -198,3 +198,5 @@ export const ALL_COUNTRIES = [
     'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
 ];
 
+export const ALLOWED_COUNTRIES = ['us'];
+export const DEFAULT_COUNTRY = 'us';

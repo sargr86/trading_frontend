@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.getAuthUser.transform())
+        // console.log(this.getAuthUser.transform())
         // const player = new Plyr('video', {
         //     captions: {active: true},
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}

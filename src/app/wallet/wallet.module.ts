@@ -12,6 +12,7 @@ import {SharedModule} from '@shared/shared.module';
 import {SaveBankAccountComponent} from './save-bank-account/save-bank-account.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {CardsModule} from "@app/cards/cards.module";
+import {InternationalPhoneNumberModule} from "ng-phone-number";
 
 
 @NgModule({
@@ -30,6 +31,8 @@ import {CardsModule} from "@app/cards/cards.module";
         SharedModule,
         BsDatepickerModule.forRoot(),
         CardsModule,
+        InternationalPhoneNumberModule
+
 
 
     ]

@@ -25,7 +25,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     payments = [];
     filteredPayments = [];
     tableData;
-    bankAccount;
+    bankAccount = [];
+    debitCardAccount = [];
     totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
 
     @Input() authUser: User;
@@ -94,16 +95,19 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     async addBankAccount() {
-        // await this.router.navigate(['wallet/save-bank-account']);
-        this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
-            location.href = dt?.url;
-        });
+        await this.router.navigate(['wallet/save-bank-account']);
+        // this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
+        //     location.href = dt?.url;
+        // });
     }
+
 
     getBankAccount() {
         const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
         this.usersService.getBankAccount(params).subscribe(dt => {
-            this.bankAccount = dt?.external_accounts?.data;
+            const externalAccounts = dt?.external_accounts?.data;
+            this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account');
+            this.debitCardAccount = externalAccounts.filter(t => t.object === 'card');
             console.log(this.bankAccount)
         });
     }

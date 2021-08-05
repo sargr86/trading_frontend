@@ -32,8 +32,12 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
     }
 
     getPayoutsHistory(filters) {
+        const params = {...filters};
         const stripeAccountId = this.userCards?.[0].stripe_account_id;
-        const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
+        if (stripeAccountId) {
+            params.stripe_account_id = stripeAccountId;
+        }
+
         this.subscriptions.push(this.purchasesService.getPayoutsHistory(params).subscribe(dt => {
             this.accountPayouts = dt;
             this.filteredPayouts = dt;

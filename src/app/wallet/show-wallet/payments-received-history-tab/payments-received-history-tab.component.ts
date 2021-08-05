@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {WalletService} from '@core/services/wallet.service';
 import {SubjectService} from '@core/services/subject.service';
 import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
@@ -29,7 +28,6 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
     @Output() transfersLoaded = new EventEmitter();
 
     constructor(
-        private walletService: WalletService,
         private subject: SubjectService,
         private cardsService: CardsService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,

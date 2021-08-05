@@ -9,9 +9,8 @@ import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {filter} from 'rxjs/operators';
-import {MatTableDataSource} from "@angular/material/table";
-import {FilterOutFalsyValuesFromObjectPipe} from "@shared/pipes/filter-out-falsy-values-from-object.pipe";
-import {WalletService} from "@core/services/wallet.service";
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 @Component({
     selector: 'app-show-wallet',
@@ -31,11 +30,11 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
     constructor(
         private dialog: MatDialog,
         private cardsService: CardsService,
+        private paymentsService: PaymentsService,
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private subject: SubjectService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
-        private walletService: WalletService
     ) {
     }
 
@@ -59,7 +58,7 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
     getTransfersHistory(filters) {
         const stripeAccountId = this.userCards?.[0]?.stripe_account_id;
         const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
-        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
+        this.subscriptions.push(this.paymentsService.getReceivedPaymentsHistory(params).subscribe(dt => {
             this.transfers = dt;
             this.transfersLoaded = true;
         }));

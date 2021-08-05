@@ -13,6 +13,7 @@ import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {SubjectService} from '@core/services/subject.service';
+import {AccountsService} from '@core/services/wallet/accounts.service';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -42,6 +43,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         private cardsService: CardsService,
         private purchasesService: PurchasesService,
+        private accountsService: AccountsService,
         private usersService: UsersService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         public router: Router,
@@ -96,20 +98,19 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     async addBankAccount() {
         await this.router.navigate(['wallet/save-bank-account']);
-        // this.usersService.addBankAccount({user_id: this.authUser.id}).subscribe(dt => {
-        //     location.href = dt?.url;
-        // });
     }
 
 
     getBankAccount() {
         const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
-        this.usersService.getBankAccount(params).subscribe(dt => {
-            const externalAccounts = dt?.external_accounts?.data;
-            this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account');
-            this.debitCardAccount = externalAccounts.filter(t => t.object === 'card');
-            console.log(this.bankAccount)
-        });
+        if (params.stripe_account_id) {
+            this.accountsService.getBankAccount(params).subscribe(dt => {
+                const externalAccounts = dt?.external_accounts?.data;
+                this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account');
+                this.debitCardAccount = externalAccounts.filter(t => t.object === 'card');
+            });
+        }
+
     }
 
     ngOnDestroy(): void {

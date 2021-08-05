@@ -38,10 +38,11 @@ export class GetWalletTablesColumnContentsPipe implements PipeTransform {
                 content = this.removeUndCapitalize.transform(element.status);
                 break;
             case 'payment_method':
-                const card = element?.payment_method_details?.card;
-                if (card) {
-                    content = `**** **** **** ${card.last4}`;
+                let card = element?.payment_method_details?.card;
+                if (element.object === 'payment_intent') {
+                    card = element.charges.data[0].payment_method_details?.card;
                 }
+                content = card ? `**** **** **** ${card.last4}` : '';
                 break;
             case 'product_description':
                 content = element.description;

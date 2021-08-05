@@ -42,12 +42,14 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
 
     getPurchasesHistory(filters = {}) {
         const params = {customer: this.userCards?.[0].stripe_customer_id, ...filters};
-        this.subscriptions.push(this.paymentsService.getPurchasesHistory(params).subscribe(dt => {
-            this.purchases = dt;
-            this.filteredPurchases = dt;
-            this.tableData = new MatTableDataSource(dt);
-            this.tableData.paginator = this.paginator;
-        }));
+        if (params.customer) {
+            this.subscriptions.push(this.paymentsService.getPurchasesHistory(params).subscribe(dt => {
+                this.purchases = dt;
+                this.filteredPurchases = dt;
+                this.tableData = new MatTableDataSource(dt);
+                this.tableData.paginator = this.paginator;
+            }));
+        }
     }
 
     ngOnDestroy(): void {

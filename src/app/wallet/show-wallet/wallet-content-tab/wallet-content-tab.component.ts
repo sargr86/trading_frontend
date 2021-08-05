@@ -79,14 +79,16 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     getPaymentsHistory(filters) {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
-        this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
-            this.payments = dt;
-            this.countTotals(dt, 'purchased');
-            // this.filterPayments();
-            this.filteredPayments = dt;
-            this.tableData = new MatTableDataSource(this.filteredPayments);
-            this.tableData.paginator = this.paginator;
-        }));
+        if (params.customer) {
+            this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
+                this.payments = dt;
+                this.countTotals(dt, 'purchased');
+                // this.filterPayments();
+                this.filteredPayments = dt;
+                this.tableData = new MatTableDataSource(this.filteredPayments);
+                this.tableData.paginator = this.paginator;
+            }));
+        }
     }
 
     countTotals(dt, key) {

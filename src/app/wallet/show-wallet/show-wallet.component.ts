@@ -67,7 +67,6 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
 
     }
 
-
     async tabChange(e) {
         const tab = e?.tab.textLabel.toLowerCase().replace(/ /g, '_');
         localStorage.setItem('active_wallet_tab', tab);

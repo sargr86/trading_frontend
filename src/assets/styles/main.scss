@@ -1075,5 +1075,19 @@ mat-optgroup {
     box-shadow: 0 1px 3px 0 #b8cbe5;
 }
 
+.flagInput {
+    button {
+        pointer-events: none;
+    }
 
+    .arrow-down, .defaultCountry {
+        display: none!important;
+    }
+}
+
+#user-cards-list{
+    .mat-progress-spinner circle, .mat-spinner circle{
+        stroke: $white!important;
+    }
+}
 @import "responsive";

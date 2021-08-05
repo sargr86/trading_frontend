@@ -23,7 +23,6 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
-import { TurboPlanComponent } from './turbo-plan/turbo-plan.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -52,7 +51,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         JoinVideoStreamingComponent,
         PaymentSuccessComponent,
         PaymentCancelComponent,
-        TurboPlanComponent,
     ],
     imports: [
         CommonModule,

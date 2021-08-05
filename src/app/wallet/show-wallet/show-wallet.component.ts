@@ -9,6 +9,9 @@ import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {filter} from 'rxjs/operators';
+import {MatTableDataSource} from "@angular/material/table";
+import {FilterOutFalsyValuesFromObjectPipe} from "@shared/pipes/filter-out-falsy-values-from-object.pipe";
+import {WalletService} from "@core/services/wallet.service";
 
 @Component({
     selector: 'app-show-wallet',
@@ -20,6 +23,8 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
     userCards = [];
     authUser;
     activeTab;
+    transfers = [];
+    transfersLoaded = false;
 
     @ViewChild('tabGroup', {static: false}) tabGroup;
 
@@ -29,28 +34,37 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private subject: SubjectService,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe,
+        private walletService: WalletService
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.getUserCards();
+        this.getTransfersHistory({});
         this.getSavedActiveTab();
     }
 
     getUserCards() {
         this.subscriptions.push(
             this.subject.currentUserCards
-                .pipe(filter(uc => uc.length > 0))
+                .pipe(filter(uc => uc?.length > 0))
                 .subscribe(dt => {
                     this.userCards = dt;
                 })
         );
     }
 
-    getSavedActiveTab() {
-        this.activeTab = localStorage.getItem('active_wallet_tab') || 'wallet';
+    getTransfersHistory(filters) {
+        const stripeAccountId = this.userCards?.[0]?.stripe_account_id;
+        const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
+        this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
+            this.transfers = dt;
+            this.transfersLoaded = true;
+        }));
     }
+
 
     async tabChange(e) {
         const tab = e?.tab.textLabel.toLowerCase().replace(/ /g, '_');
@@ -68,6 +82,10 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
             const t = tab.textLabel.toLowerCase().replace(/ /g, '_');
             return t === this.activeTab ? index : 0;
         }).find(t => t) || 0;
+    }
+
+    getSavedActiveTab() {
+        this.activeTab = localStorage.getItem('active_wallet_tab') || 'wallet';
     }
 
     ngOnDestroy(): void {

@@ -1,18 +1,17 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoaderService} from '@core/services/loader.service';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {StripeElementsOptions} from '@stripe/stripe-js';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Card} from '@shared/models/card';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {User} from '@shared/models/user';
+import {CustomersService} from '@core/services/wallet/customers.service';
+import {ToastrService} from 'ngx-toastr';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
-import {UsersService} from '@core/services/users.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '@shared/models/user';
-import {Card} from '@shared/models/card';
-import {Subscription} from 'rxjs';
-import {LoaderService} from '@core/services/loader.service';
-import {CardsService} from '@core/services/cards.service';
 import {SubjectService} from '@core/services/subject.service';
 
 @Component({
@@ -21,41 +20,35 @@ import {SubjectService} from '@core/services/subject.service';
     styleUrls: ['./save-card.component.scss']
 })
 export class SaveCardComponent implements OnInit, OnDestroy {
-
-    // Stripe
-    cardOptions = STRIPE_CARD_OPTIONS;
-    elementsOptions: StripeElementsOptions = {locale: 'en'};
-
+    subscriptions: Subscription[] = [];
     authUser: User;
-    saveCardForm: FormGroup;
 
     cardId;
-    editCase = false;
     cardDetails;
+    editCase = false;
+    saveCardForm: FormGroup;
 
-    subscriptions: Subscription[] = [];
-
+    // Stripe card
+    cardOptions = STRIPE_CARD_OPTIONS;
+    elementsOptions: StripeElementsOptions = {locale: 'en'};
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
     constructor(
-        private stripeService: StripeService,
-        private usersService: UsersService,
-        private cardsService: CardsService,
-        private getAuthUser: GetAuthUserPipe,
         public router: Router,
-        private toastr: ToastrService,
-        private fb: FormBuilder,
         private route: ActivatedRoute,
         public loader: LoaderService,
+        private fb: FormBuilder,
+        private getAuthUser: GetAuthUserPipe,
+        private customersService: CustomersService,
+        private stripeService: StripeService,
+        private toastr: ToastrService,
         private subject: SubjectService
     ) {
         this.saveCardForm = this.fb.group({
             name: ['', Validators.required],
             primary: [0]
         });
-
-
     }
 
     ngOnInit(): void {
@@ -68,37 +61,34 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     }
 
     getCardDetails() {
-        this.cardsService.getCardDetails({card_id: this.cardId}).subscribe((dt: Card) => {
+        this.customersService.getCardDetails({card_id: this.cardId}).subscribe((dt: Card) => {
             this.cardDetails = dt;
             this.saveCardForm.patchValue({name: dt.name});
         });
     }
 
-    saveCard(): void {
+    saveCard() {
         this.loader.dataLoading = true;
         if (this.editCase) {
-            this.subscriptions.push(this.cardsService.updateStripeCard({
+            this.subscriptions.push(this.customersService.updateStripeCard({
                 card_id: this.cardId,
                 ...this.saveCardForm.value
             }).subscribe(async (dt) => {
                 this.loader.dataLoading = false;
                 this.toastr.success('The card info has been updated successfully');
-                await this.router.navigate(['/user/cards']);
+                await this.router.navigate(['/wallet/show']);
             }));
         } else {
-
             this.subscriptions.push(this.stripeService
                 .createToken(this.card.element, {name: this.authUser.first_name + ' ' + this.authUser.last_name})
                 .subscribe(result => {
                     if (result.token) {
                         const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
-                        this.cardsService.createStripeCard(cardData).subscribe(async (dt: any) => {
+                        this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
                             this.loader.dataLoading = false;
                             this.toastr.success('The card has been added successfully');
-                            // localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-                            // this.subject.changeAuthUser(this.getAuthUser.transform());
                             this.subject.changeUserCards(dt.cards);
-                            await this.router.navigate(['/user/cards']);
+                            await this.router.navigate(['/wallet/show']);
 
                         });
                     } else if (result.error) {
@@ -106,17 +96,15 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                         this.toastr.error(result.error.message);
                     }
                 }));
-
-
         }
-
     }
 
     async goToCardsList() {
-        await this.router.navigate(['/user/cards']);
+        await this.router.navigate(['/wallet/cards']);
     }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
+
 }

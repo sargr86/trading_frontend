@@ -63,6 +63,8 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
                 this.transfers = dt;
                 this.transfersLoaded = true;
             }));
+        } else {
+            this.transfersLoaded = true;
         }
 
     }

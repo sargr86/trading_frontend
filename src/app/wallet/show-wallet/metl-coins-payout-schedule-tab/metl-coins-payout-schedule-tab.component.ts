@@ -1,10 +1,10 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {PurchasesService} from '@core/services/purchases.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Card} from '@shared/models/card';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 @Component({
     selector: 'app-metl-coins-payout-schedule-tab',
@@ -22,7 +22,7 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
-        private purchasesService: PurchasesService,
+        private paymentsService: PaymentsService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
     }
@@ -38,7 +38,7 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
             params.stripe_account_id = stripeAccountId;
         }
 
-        this.subscriptions.push(this.purchasesService.getPayoutsHistory(params).subscribe(dt => {
+        this.subscriptions.push(this.paymentsService.getPayoutsHistory(params).subscribe(dt => {
             this.accountPayouts = dt;
             this.filteredPayouts = dt;
             this.tableData = new MatTableDataSource(this.filteredPayouts);

@@ -15,4 +15,24 @@ export class PaymentsService {
         return this.httpClient.get<any>(`${API_URL}stripe/payments/get-account-transfers`, {params});
     }
 
+    createPaymentIntent(params) {
+        return this.httpClient.post<any>(`${API_URL}stripe/payments/create-payment-intent`, params);
+    }
+
+    stripeCharge(params) {
+        return this.httpClient.post<any>(`${API_URL}stripe/payments/stripe-charge`, params);
+    }
+
+    getAllPaymentsHistory(params) {
+        return this.httpClient.get<any>(`${API_URL}stripe/payments/get-all-payments-history`, {params});
+    }
+
+    getPurchasesHistory(params) {
+        return this.httpClient.get<any>(`${API_URL}stripe/payments/get-purchases-history`, {params});
+    }
+
+    getPayoutsHistory(params) {
+        return this.httpClient.get<any>(`${API_URL}stripe/payments/get-payouts-history`, {params});
+    }
+
 }

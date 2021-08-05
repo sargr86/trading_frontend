@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
-import {PurchasesService} from '@core/services/purchases.service';
 import {switchMap} from 'rxjs/operators';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {StripeElementsOptions, loadStripe} from '@stripe/stripe-js';
@@ -14,6 +13,7 @@ import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
 import {ToastrService} from 'ngx-toastr';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 
 @Component({
@@ -46,7 +46,7 @@ export class CompletePurchaseModalComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private matDialogRef: MatDialogRef<CompletePurchaseModalComponent>,
-        private purchasesService: PurchasesService,
+        private paymentsService: PaymentsService,
         private stripeService: StripeService,
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
@@ -141,31 +141,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         };
     }
 
-    stripeCheckout() {
-
-        this.purchasesService.stripeCheckout({
-            card: this.selectedCard,
-            purchase: this.purchase,
-            email: this.authUser.email
-        })
-            .pipe(
-                switchMap(session => {
-                    return this.stripeService.redirectToCheckout({
-                        sessionId: session.id
-                    });
-                })
-            )
-            .subscribe(result => {
-
-                if (result.error) {
-                    alert(result.error.message);
-                }
-            });
-    }
-
-
-    stripeCharge() {
-        this.purchasesService.createPaymentIntent({
+    createPaymentIntent() {
+        this.paymentsService.createPaymentIntent({
             customer_id: this.selectedCard.stripe_customer_id,
             currency: this.purchase.currency,
             card: this.selectedCard,
@@ -192,11 +169,6 @@ export class CompletePurchaseModalComponent implements OnInit {
 
 
         });
-
-    }
-
-    createPaymentIntent() {
-
     }
 
     formatExpiryDate(date) {

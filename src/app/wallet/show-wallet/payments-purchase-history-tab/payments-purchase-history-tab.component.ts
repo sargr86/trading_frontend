@@ -1,11 +1,11 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {PurchasesService} from '@core/services/purchases.service';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
 import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
@@ -23,7 +23,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
-        private purchasesService: PurchasesService,
+        private paymentsService: PaymentsService,
         private subject: SubjectService
     ) {
 
@@ -42,7 +42,7 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
 
     getPurchasesHistory(filters = {}) {
         const params = {customer: this.userCards?.[0].stripe_customer_id, ...filters};
-        this.subscriptions.push(this.purchasesService.getPurchasesHistory(params).subscribe(dt => {
+        this.subscriptions.push(this.paymentsService.getPurchasesHistory(params).subscribe(dt => {
             this.purchases = dt;
             this.filteredPurchases = dt;
             this.tableData = new MatTableDataSource(dt);

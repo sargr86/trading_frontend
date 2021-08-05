@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {CompletePurchaseModalComponent} from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
-import {PurchasesService} from '@core/services/purchases.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
+import {PaymentsService} from '@core/services/wallet/payments.service';
+import {ProductsService} from '@core/services/wallet/products.service';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -19,7 +20,7 @@ export class PurchaseBitsComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
-        private purchasesService: PurchasesService,
+        private productsService: ProductsService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService
     ) {
@@ -27,7 +28,7 @@ export class PurchaseBitsComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.purchasesService.getStripeProducts().subscribe(dt => {
+        this.productsService.getStripeProducts().subscribe(dt => {
             this.bitPurchases = dt;
         });
     }

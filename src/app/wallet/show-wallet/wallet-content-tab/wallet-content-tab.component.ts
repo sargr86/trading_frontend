@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
-import {PurchasesService} from '@core/services/purchases.service';
 import {UsersService} from '@core/services/users.service';
 
 import {Router} from '@angular/router';
@@ -14,6 +13,7 @@ import {User} from '@shared/models/user';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {AccountsService} from '@core/services/wallet/accounts.service';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -42,7 +42,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     constructor(
         public auth: AuthService,
         private cardsService: CardsService,
-        private purchasesService: PurchasesService,
+        private paymentsService: PaymentsService,
         private accountsService: AccountsService,
         private usersService: UsersService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
@@ -79,7 +79,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     getPaymentsHistory(filters) {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
-        this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(params).subscribe(dt => {
+        this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
             this.payments = dt;
             this.countTotals(dt, 'purchased');
             // this.filterPayments();

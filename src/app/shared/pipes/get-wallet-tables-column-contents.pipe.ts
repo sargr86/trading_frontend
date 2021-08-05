@@ -21,7 +21,7 @@ export class GetWalletTablesColumnContentsPipe implements PipeTransform {
 
         switch (col) {
             case 'date':
-                content = this.datePipe.transform(element.created * 1000);
+                content = this.datePipe.transform(element.created * 1000, 'MMM dd yyyy HH:mm:ss');
                 break;
             case 'amount':
             case 'amount_submitted':

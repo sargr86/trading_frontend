@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import {ALLOWED_COUNTRIES, DEFAULT_COUNTRY, STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {loadStripe, StripeElementsOptions} from '@stripe/stripe-js';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
+import {AccountsService} from '@core/services/wallet/accounts.service';
 
 @Component({
     selector: 'app-save-bank-account',
@@ -48,6 +49,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
         private usersService: UsersService,
+        private accountsService: AccountsService,
         private toastr: ToastrService,
         private stripeService: StripeService,
         public router: Router
@@ -147,8 +149,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     }
 
     addSource(formValue) {
-        console.log(this.externalAccountType, formValue)
-        this.usersService.addStripeBankAccount(formValue).subscribe(async (dt) => {
+        this.accountsService.addStripeBankAccount(formValue).subscribe(async (dt) => {
             await this.router.navigate(['wallet/show']);
             this.toastr.success('The bank account has been added successfully');
         });

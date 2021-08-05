@@ -11,8 +11,7 @@ import {MetlCoinsPayoutScheduleTabComponent} from './show-wallet/metl-coins-payo
 import {SharedModule} from '@shared/shared.module';
 import {SaveBankAccountComponent} from './save-bank-account/save-bank-account.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {CardsModule} from "@app/cards/cards.module";
-import {InternationalPhoneNumberModule} from "ng-phone-number";
+import {InternationalPhoneNumberModule} from 'ng-phone-number';
 import { ShowCardsComponent } from './cards/show-cards/show-cards.component';
 import { SaveCardComponent } from './cards/save-card/save-card.component';
 
@@ -34,11 +33,7 @@ import { SaveCardComponent } from './cards/save-card/save-card.component';
         MaterialModule,
         SharedModule,
         BsDatepickerModule.forRoot(),
-        CardsModule,
         InternationalPhoneNumberModule
-
-
-
     ]
 })
 export class WalletModule {

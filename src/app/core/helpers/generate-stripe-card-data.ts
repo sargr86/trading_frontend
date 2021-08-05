@@ -1,6 +1,5 @@
 function generateStripeCardData(tokenData, authUser, cardName) {
     const cardData = tokenData.token.card;
-    console.log(cardData)
     const fullName = authUser.first_name + ' ' + authUser.last_name;
 
     return {

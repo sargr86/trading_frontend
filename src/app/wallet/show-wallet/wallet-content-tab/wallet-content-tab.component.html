@@ -1,49 +1,56 @@
-<div class="sub-titles mb-3">Saved Payment Methods</div>
 <div class="d-flex">
-    <ul>
-        <li *ngFor="let card of userCards">
-            <img src="assets/img/credit-card%20(7).svg" alt="" width="22" height="15">
-            <span class="ml-2">**** **** **** {{card.last4}}</span>
-        </li>
-    </ul>
-</div>
-<div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">+ Add New Card</div>
-<hr>
-<div class="sub-titles mb-3">Purchased Metl Coins</div>
-<div class="d-flex align-items-center">
-    <div class="mr-5">
-        <small>5000 Bits</small>
+    <div class="mr-lg-5 mr-4">
+        <div class="sub-titles mb-3">Saved Payment Methods</div>
         <div class="d-flex">
-            <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
-            <img src="assets/img/coin/light_blue.svg" alt="" width="16" height="16">
+            <ul>
+                <li *ngFor="let card of userCards">
+                    <img src="assets/img/credit-card%20(7).svg" alt="" width="22" height="15">
+                    <span class="ml-2">**** **** **** {{card.last4}}</span>
+                </li>
+            </ul>
+        </div>
+        <div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">+ Add New Card</div>
+    </div>
+    <div class="mr-lg-5 mr-4">
+        <div class="sub-titles mb-3">Purchased Metl Coins</div>
+        <div class="d-flex align-items-center">
+            <div class="mr-5">
+                <small>5000 Bits</small>
+                <div class="d-flex">
+                    <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
+                    <img src="assets/img/coin/light_blue.svg" alt="" width="16" height="16">
+                </div>
+            </div>
+            <div class="total-class">
+                $0.00 USD
+            </div>
         </div>
     </div>
-    <div class="total-class">
-        $0.00 USD
-    </div>
-</div>
-<hr>
-<div class="sub-titles mb-3">Received Metl Coins</div>
-<div class="d-flex align-items-center">
-    <div class="mr-5">
-        <small>5000 Bits</small>
-        <div class="d-flex">
-            <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
-            <img src="assets/img/coin/light_blue.svg" alt="" height="16" width="16" class="mr-1">
-            <img src="assets/img/coin/green.svg" alt="" height="16" width="16" class="mr-1">
-            <img src="assets/img/coin/blue.svg" alt="" width="16" height="16">
+    <div class="mr-lg-5 mr-4">
+        <div class="sub-titles mb-3">Received Metl Coins</div>
+        <div class="d-flex align-items-center">
+            <div class="mr-5">
+                <small>5000 Bits</small>
+                <div class="d-flex">
+                    <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
+                    <img src="assets/img/coin/light_blue.svg" alt="" height="16" width="16" class="mr-1">
+                    <img src="assets/img/coin/green.svg" alt="" height="16" width="16" class="mr-1">
+                    <img src="assets/img/coin/blue.svg" alt="" width="16" height="16">
+                </div>
+            </div>
+            <div class="total-class">
+                $0.00 USD
+            </div>
         </div>
     </div>
-    <div class="total-class">
-        $0.00 USD
-    </div>
 </div>
-
-<div class="d-flex align-items-end justify-content-between">
-    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
-</div>
-
 <hr>
+
+<!--<div class="d-flex align-items-end justify-content-between">-->
+<!--    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>-->
+<!--</div>-->
+
+<!--<hr>-->
 <div class="d-flex justify-content-between">
     <div class="sub-titles mb-3">Payment History</div>
     <div class="d-flex">

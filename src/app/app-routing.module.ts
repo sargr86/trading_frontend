@@ -14,7 +14,7 @@ import {ContactUsComponent} from '@core/components/ungrouped/contact-us/contact-
 import {PageLoadingComponent} from '@core/components/ungrouped/page-loading/page-loading.component';
 import {PaymentSuccessComponent} from '@app/user/payment-success/payment-success.component';
 import {PaymentCancelComponent} from '@app/user/payment-cancel/payment-cancel.component';
-import {TurboPlanComponent} from "@core/components/ungrouped/turbo-plan/turbo-plan.component";
+import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-plan.component';
 
 
 const routes: Routes = [
@@ -64,11 +64,6 @@ const routes: Routes = [
     {
         path: 'wallet',
         loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'cards',
-        loadChildren: () => import('./cards/cards.module').then(m => m.CardsModule),
         canActivate: [AuthGuard]
     },
     {

@@ -57,11 +57,14 @@ export class ShowWalletComponent implements OnInit, OnDestroy {
 
     getTransfersHistory(filters) {
         const stripeAccountId = this.userCards?.[0]?.stripe_account_id;
-        const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
-        this.subscriptions.push(this.paymentsService.getReceivedPaymentsHistory(params).subscribe(dt => {
-            this.transfers = dt;
-            this.transfersLoaded = true;
-        }));
+        if (stripeAccountId) {
+            const params = {stripe_account_id: stripeAccountId, ...filters};
+            this.subscriptions.push(this.paymentsService.getReceivedPaymentsHistory(params).subscribe(dt => {
+                this.transfers = dt;
+                this.transfersLoaded = true;
+            }));
+        }
+
     }
 
 

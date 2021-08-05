@@ -12,6 +12,7 @@ import {Subscription} from 'rxjs';
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -24,14 +25,18 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     payments = [];
     filteredPayments = [];
     tableData;
-    bankAccount;
+    bankAccount = [];
+    debitCardAccount = [];
+    totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
 
     @Input() authUser: User;
+    @Input() accountTransfers = [];
     @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     pageSize = 5;
     pageIndex = 0;
+
 
     constructor(
         public auth: AuthService,
@@ -40,12 +45,19 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         public router: Router,
+        private subject: SubjectService
     ) {
     }
 
     ngOnInit(): void {
         this.getPaymentsHistory({});
         this.getBankAccount();
+
+        this.subject.getPurchasedBitsData().subscribe(dt => {
+            this.getPaymentsHistory({});
+        });
+
+        this.countTotals(this.accountTransfers, 'transferred');
     }
 
     handle(e) {
@@ -67,11 +79,19 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
         this.subscriptions.push(this.purchasesService.getAllPaymentsHistory(params).subscribe(dt => {
             this.payments = dt;
-            this.filterPayments();
-            // this.filteredPayments = dt;
+            this.countTotals(dt, 'purchased');
+            // this.filterPayments();
+            this.filteredPayments = dt;
             this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
         }));
+    }
+
+    countTotals(dt, key) {
+        dt.map(d => {
+            this.totals[key].coins += d.amount;
+            this.totals[key].dollars += d.amount / 100;
+        });
     }
 
     async addBankAccount() {
@@ -81,10 +101,13 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         // });
     }
 
+
     getBankAccount() {
         const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
         this.usersService.getBankAccount(params).subscribe(dt => {
-            this.bankAccount = dt?.external_accounts?.data;
+            const externalAccounts = dt?.external_accounts?.data;
+            this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account');
+            this.debitCardAccount = externalAccounts.filter(t => t.object === 'card');
             console.log(this.bankAccount)
         });
     }

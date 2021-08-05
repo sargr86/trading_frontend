@@ -1,11 +1,10 @@
 function generateStripeCardData(tokenData, authUser, cardName) {
     const cardData = tokenData.token.card;
-    console.log(cardData)
     const fullName = authUser.first_name + ' ' + authUser.last_name;
 
     return {
         stripeToken: tokenData.token.id,
-        stripeEmail: authUser.email,
+        email: authUser.email,
         holderName: fullName,
         user_id: authUser.id,
         exp_month: cardData.exp_month,

@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CompletePurchaseModalComponent} from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
 import {PurchasesService} from '@core/services/purchases.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -11,13 +12,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 })
 export class PurchaseBitsComponent implements OnInit {
 
-    bitPurchases = [
-        // {bitPrice: 100, discount: 29, currencyPrice: 10, coinsLen: 1},
-        // {bitPrice: 200, discount: 30, currencyPrice: 20, coinsLen: 2},
-        // {bitPrice: 300, discount: 2, currencyPrice: 30, coinsLen: 3},
-        // {bitPrice: 400, discount: 29, currencyPrice: 40, coinsLen: 4},
-        // {bitPrice: 500, discount: 29, currencyPrice: 50, coinsLen: 5},
-    ];
+    bitPurchases = [];
 
     coinImages = ['gold', 'silver', 'pink', 'green', 'blue'];
     authUser;
@@ -25,7 +20,8 @@ export class PurchaseBitsComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         private purchasesService: PurchasesService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private subject: SubjectService
     ) {
     }
 
@@ -41,7 +37,7 @@ export class PurchaseBitsComponent implements OnInit {
             data: purchase,
             width: '800px'
         }).afterClosed().subscribe(dt => {
-
+            this.subject.setPurchasedBitsData(dt);
         });
     }
 

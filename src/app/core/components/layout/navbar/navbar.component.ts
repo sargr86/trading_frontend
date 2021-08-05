@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
+import {CustomersService} from '@core/services/wallet/customers.service';
 
 @Component({
     selector: 'app-navbar',
@@ -51,7 +52,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private dialog: MatDialog,
         private toastr: ToastrService,
-        private cardsService: CardsService
+        private cardsService: CardsService,
+        private stripeCustomersService: CustomersService
     ) {
 
     }
@@ -88,9 +90,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         });
 
         // Getting user cards from the server
-        this.subscriptions.push(this.cardsService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
+        this.subscriptions.push(this.stripeCustomersService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {
             this.userCards = dt;
-            console.log(this.userCards)
+            // console.log(this.userCards)
             this.subject.changeUserCards(dt);
         }));
     }

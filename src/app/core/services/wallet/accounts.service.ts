@@ -18,7 +18,6 @@ export class AccountsService {
     }
 
     getBankAccount(params) {
-        console.log('OK')
         return this.httpClient.get<any>(`${API_URL}stripe/accounts/get-stripe-account`, {params});
     }
 

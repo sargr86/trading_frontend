@@ -93,7 +93,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 })
             }),
             business_profile: this.fb.group({
-                mcc: ['5734', Validators.required],
+                mcc: ['7929', Validators.required],
                 url: ['https://metl.tv/', Validators.required],
             }),
             external_account: this.fb.group({

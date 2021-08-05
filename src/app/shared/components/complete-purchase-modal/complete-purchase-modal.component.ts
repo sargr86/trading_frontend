@@ -56,7 +56,6 @@ export class CompletePurchaseModalComponent implements OnInit {
         private toastr: ToastrService
     ) {
         this.purchase = data;
-        console.log(data.unit_amount)
         this.creditCardForm = fb.group({
             name: ['', [Validators.required]],
             price: data.unit_amount

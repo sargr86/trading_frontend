@@ -89,17 +89,27 @@
                 <div class="purchase-review" [hidden]="!reviewedPurchase">
                     <div class="card p-4">
                         <div class="details w-100">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="bank-name">{{selectedCard?.name}}</div>
-                                <div class="brand">
-                                    <img src="assets/img/purchase-icons/{{selectedCard?.brand.toLowerCase()}}-card.png"
-                                         class="brand-img">
+                            <div class="d-flex">
+                                <div class="card-front-part">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="bank-name label-text">{{selectedCard?.name}}</div>
+                                    </div>
+                                    <div class="card-number my-2">**** **** **** {{selectedCard?.number_part}} </div>
+                                    <div>
+                                        <p class="label-text">exp. date</p>
+                                        <p class="numbers">{{formatExpiryDate(selectedCard?.expiry_date)}}</p>
+                                    </div>
+                                    <div class="brand mt-2 d-flex w-100 justify-content-end">
+                                        <img src="assets/img/purchase-icons/{{selectedCard?.brand.toLowerCase()}}-card.png"
+                                             class="brand-img mx-2">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-number my-4">**** **** **** {{selectedCard?.number_part}} </div>
-                            <div class="expiration-date ml-auto">
-                                <p>exp.date</p>
-                                <p class="numbers">{{formatExpiryDate(selectedCard?.expiry_date)}}</p>
+                                <div class="expiration-date card-back-part">
+                                    <div class="cvc-part">
+                                        <p class="label-text">CVV2/CVC2</p>
+                                        <input type="number" class="numbers" value="454">
+                                    </div>
+                                </div>
                             </div>
                             <div class="actions d-flex my-3">
                                 <button (click)="reviewPurchase()" class="btn-light px-4 py-1 br-5 mr-3">Back</button>

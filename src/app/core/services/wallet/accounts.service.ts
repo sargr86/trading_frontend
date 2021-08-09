@@ -12,6 +12,9 @@ export class AccountsService {
     ) {
     }
 
+    checkIfUserHasStripeAccount(params) {
+        return this.httpClient.get<any>(`${API_URL}stripe/accounts/check-if-stripe-account-exists`, {params});
+    }
 
     addStripeBankAccount(params) {
         return this.httpClient.post<any>(`${API_URL}stripe/accounts/create-stripe-bank-account`, params);
@@ -19,6 +22,15 @@ export class AccountsService {
 
     getBankAccount(params) {
         return this.httpClient.get<any>(`${API_URL}stripe/accounts/get-stripe-account`, {params});
+    }
+
+
+    removeBankAccount(params) {
+        return this.httpClient.delete<any>(`${API_URL}stripe/accounts/remove-bank-account`, {params});
+    }
+
+    removeDebitCard(params) {
+        return this.httpClient.delete<any>(`${API_URL}stripe/accounts/remove-debit-card`, {params});
     }
 
 }

@@ -14,6 +14,8 @@ import {ALLOWED_COUNTRIES, DEFAULT_COUNTRY, STRIPE_CARD_OPTIONS, STRIPE_PUBLISHA
 import {loadStripe, StripeElementsOptions} from '@stripe/stripe-js';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {AccountsService} from '@core/services/wallet/accounts.service';
+import {LoaderService} from '@core/services/loader.service';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-save-bank-account',
@@ -45,6 +47,8 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     allowedCountries = ALLOWED_COUNTRIES;
     defaultCountry = DEFAULT_COUNTRY;
 
+    stripeAccountExists = false;
+
     constructor(
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
@@ -52,6 +56,8 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         private accountsService: AccountsService,
         private toastr: ToastrService,
         private stripeService: StripeService,
+        private subject: SubjectService,
+        public loader: LoaderService,
         public router: Router
     ) {
         this.authUser = this.getAuthUser.transform();
@@ -65,7 +71,14 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.initForm();
-        console.log(this.card)
+        this.checkIfUserHasStripeAccount();
+
+    }
+
+    checkIfUserHasStripeAccount() {
+        this.accountsService.checkIfUserHasStripeAccount({user_id: this.authUser.id}).subscribe(exists => {
+            this.stripeAccountExists = exists;
+        });
     }
 
     initForm() {
@@ -144,12 +157,17 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 this.addSource(formValue);
             });
         } else {
-            this.addSource(formValue);
+            this.stripeService.createToken('bank_account', formValue.external_account).subscribe(result => {
+                this.addSource({external_account: result.token.id, ...this.stripeBankAccountForm.value});
+            });
         }
     }
 
     addSource(formValue) {
+        this.loader.formProcessing = true;
         this.accountsService.addStripeBankAccount(formValue).subscribe(async (dt) => {
+            this.loader.formProcessing = false;
+            this.subject.changeUserCards(dt);
             await this.router.navigate(['wallet/show']);
             this.toastr.success('The bank account has been added successfully');
         });

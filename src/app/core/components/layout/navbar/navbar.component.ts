@@ -152,11 +152,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     async openWalletPage() {
-        if (this.userCards?.length > 0) {
-            await this.router.navigate(['wallet/show']);
-        } else {
-            this.toastr.error('Please add at least one card first', 'No cards');
-        }
+        await this.router.navigate(['wallet/show']);
     }
 
     ngOnDestroy(): void {

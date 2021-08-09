@@ -1,6 +1,6 @@
 <form [formGroup]="stripeBankAccountForm" class="col-8">
-    <mat-tab-group #tabGroup>
-        <mat-tab label="Personal details">
+    <mat-tab-group #tabGroup [selectedIndex]="stripeAccountExists">
+        <mat-tab label="Personal details" [disabled]="!!stripeAccountExists">
             <div class="py-5">
                 <h2>Personal Details</h2>
                 <div class="text-green">Tell us a few details about yourself.</div>
@@ -59,9 +59,10 @@
                         <input formControlName="postal_code" class="form-control">
                     </div>
                     <label>Phone Number</label>
-<!--                    <input formControlName="phone" placeholder="Phone" class="form-control">-->
+                    <!--                    <input formControlName="phone" placeholder="Phone" class="form-control">-->
                     <international-phone-number placeholder="Phone number" formControlName="phone" [maxlength]="20"
-                                                [defaultCountry]="defaultCountry" [required]="true" (change)="phoneChanged($event)"
+                                                [defaultCountry]="defaultCountry" [required]="true"
+                                                (change)="phoneChanged($event)"
                                                 [allowedCountries]="allowedCountries"></international-phone-number>
                     <label>Social Security Number</label>
                     <input formControlName="id_number" placeholder="Phone" class="form-control">
@@ -81,7 +82,8 @@
             </div>
             <div class="col-6 pl-0" formGroupName="external_account">
                 <div class="d-flex">
-                    <div role="button" class="form-control mr-3 radio-btn" [class.active]="externalAccountType==='bank_account'"
+                    <div role="button" class="form-control mr-3 radio-btn"
+                         [class.active]="externalAccountType==='bank_account'"
                          (click)="externalAccountType='bank_account'">Bank account
                     </div>
                     <div role="button" class="form-control ml-3 radio-btn"
@@ -111,7 +113,8 @@
                     Back
                 </button>
                 <!--            <button mat-button (click)="stepper.reset()" class="text-white mr-3 reset-btn">Reset</button>-->
-                <button mat-button (click)="saveBankAccount()" class=" text-white mr-3 submit-btn">Submit</button>
+                <button mat-button (click)="saveBankAccount()" class="text-white mr-3 submit-btn">Submit</button>
+                <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
             </div>
         </mat-tab>
     </mat-tab-group>

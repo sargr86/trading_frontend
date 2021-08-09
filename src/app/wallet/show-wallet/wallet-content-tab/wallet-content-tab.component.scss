@@ -60,6 +60,8 @@
 }
 
 .bank {
+    display: flex;
+    align-items: center;
     margin-right: 20px;
 
     .name {
@@ -74,12 +76,15 @@
 
 
     mat-icon {
-        color: $metl-green;
+        color: $red;
+        cursor: pointer;
     }
 }
 
 .debit-card {
     margin-right: 20px;
+    display: flex;
+    align-items: center;
 
     .brand {
         font-weight: bold;
@@ -88,5 +93,10 @@
 
     .card-number {
         font-size: 12px;
+    }
+
+    mat-icon {
+        color: $red;
+        cursor: pointer;
     }
 }

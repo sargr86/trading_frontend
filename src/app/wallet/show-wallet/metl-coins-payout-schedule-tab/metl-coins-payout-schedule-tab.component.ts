@@ -16,7 +16,7 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
     accountPayouts = [];
     filteredPayouts = [];
     tableData;
-    displayedColumns = ['date', 'payout_for', 'type', 'amount'];
+    displayedColumns = ['date', 'payout_for', 'description', 'type', 'amount'];
 
     @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;

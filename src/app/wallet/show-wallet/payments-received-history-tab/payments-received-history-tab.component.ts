@@ -19,7 +19,7 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
     // accountTransfers = [];
     filteredTransfers = [];
     tableData;
-    displayedColumns = ['date', 'channel', 'type', 'amount'];
+    displayedColumns = ['date', 'channel', 'description', 'amount'];
 
     @Input() authUser: User;
     @Input() userCards: Card[] = [];

@@ -14,6 +14,7 @@ import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy
 import {SubjectService} from '@core/services/subject.service';
 import {AccountsService} from '@core/services/wallet/accounts.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -26,8 +27,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     payments = [];
     filteredPayments = [];
     tableData;
-    bankAccount = [];
-    debitCardAccount = [];
+    bankAccount;
+    debitCardAccount;
     totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
 
     @Input() authUser: User;
@@ -47,13 +48,14 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         public router: Router,
-        private subject: SubjectService
+        private subject: SubjectService,
+        public loader: LoaderService
     ) {
     }
 
     ngOnInit(): void {
         this.getPaymentsHistory({});
-        this.getBankAccount();
+        this.getStripeAccount();
 
         this.subject.getPurchasedBitsData().subscribe(dt => {
             this.getPaymentsHistory({});
@@ -103,29 +105,46 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
 
-    getBankAccount() {
+    getStripeAccount() {
         const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
         if (params.stripe_account_id) {
-            this.accountsService.getBankAccount(params).subscribe(dt => {
+            this.accountsService.getStripeAccount(params).subscribe(dt => {
                 const externalAccounts = dt?.external_accounts?.data;
-                this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account');
-                this.debitCardAccount = externalAccounts.filter(t => t.object === 'card');
+                this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account')[0];
+                this.debitCardAccount = externalAccounts.filter(t => t.object === 'card')[0];
             });
         }
 
     }
 
     removeBankAccount(bankAccount) {
+        this.loader.dataLoading = true;
         const params = {account_id: bankAccount.account, bank_id: bankAccount.id};
         this.accountsService.removeBankAccount(params).subscribe(dt => {
             this.bankAccount = null;
+            this.loader.dataLoading = false;
         });
     }
 
-    removeDebitCard(debitCard){
+    removeDebitCard(debitCard) {
+        this.loader.dataLoading = true;
         const params = {account_id: debitCard.account, card_id: debitCard.id};
         this.accountsService.removeDebitCard(params).subscribe(dt => {
             this.debitCardAccount = null;
+            this.loader.dataLoading = false;
+        });
+    }
+
+    setAsDefaultExtAccount(acc) {
+        this.loader.dataLoading = true;
+        this.accountsService.setAsDefaultExternalAccount({
+            stripe_account_id: acc.account,
+            ext_account_id: acc.id
+        }).subscribe(dt => {
+            const externalAccounts = dt?.external_accounts?.data;
+            this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account')[0];
+            this.debitCardAccount = externalAccounts.filter(t => t.object === 'card')[0];
+            this.loader.dataLoading = false;
         });
     }
 

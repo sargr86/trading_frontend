@@ -32,7 +32,7 @@ export class GetWalletTablesColumnContentsPipe implements PipeTransform {
                 content = this.removeUndCapitalize.transform(element.metadata?.channel);
                 break;
             case 'type':
-                content = element.description;
+                content = this.removeUndCapitalize.transform(element.type);
                 break;
             case 'status':
                 content = this.removeUndCapitalize.transform(element.status);

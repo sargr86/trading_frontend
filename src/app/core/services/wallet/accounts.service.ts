@@ -20,8 +20,12 @@ export class AccountsService {
         return this.httpClient.post<any>(`${API_URL}stripe/accounts/create-stripe-external-account`, params);
     }
 
-    getBankAccount(params) {
+    getStripeAccount(params) {
         return this.httpClient.get<any>(`${API_URL}stripe/accounts/get-stripe-account`, {params});
+    }
+
+    setAsDefaultExternalAccount(params) {
+        return this.httpClient.put<any>(`${API_URL}stripe/accounts/set-as-default-external-account`, params);
     }
 
 

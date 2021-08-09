@@ -146,6 +146,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
 
     async saveBankAccount() {
         let formValue = this.stripeBankAccountForm.value;
+        this.loader.formProcessing = true;
         if (this.externalAccountType === 'debit_card') {
             this.stripeService.createToken(this.card.element, {
                 name: this.authUser.first_name + ' ' + this.authUser.last_name,
@@ -163,7 +164,6 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     }
 
     addExternalAccount(formValue) {
-        this.loader.formProcessing = true;
         this.accountsService.addStripeExternalAccount(formValue).subscribe(async (dt) => {
             this.loader.formProcessing = false;
             this.subject.changeUserCards(dt);

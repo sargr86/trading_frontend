@@ -114,7 +114,6 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 country: ['US', Validators.required],
                 routing_number: ['110000000', Validators.required],
                 account_number: ['000123456789', Validators.required],
-                confirm_account_number: ['', Validators.required]
             })
         });
 
@@ -152,20 +151,20 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 name: this.authUser.first_name + ' ' + this.authUser.last_name,
                 currency: 'usd'
             }).subscribe(result => {
-                const {external_account, ...restData} = this.stripeBankAccountForm.value;
+                const {external_account, ...restData} = this.stripeBankAccountForm.getRawValue();
                 formValue = {...restData, external_account: result.token.id};
-                this.addSource(formValue);
+                this.addExternalAccount(formValue);
             });
         } else {
             this.stripeService.createToken('bank_account', formValue.external_account).subscribe(result => {
-                this.addSource({external_account: result.token.id, ...this.stripeBankAccountForm.value});
+                this.addExternalAccount({external_account: result.token.id, ...this.stripeBankAccountForm.getRawValue()});
             });
         }
     }
 
-    addSource(formValue) {
+    addExternalAccount(formValue) {
         this.loader.formProcessing = true;
-        this.accountsService.addStripeBankAccount(formValue).subscribe(async (dt) => {
+        this.accountsService.addStripeExternalAccount(formValue).subscribe(async (dt) => {
             this.loader.formProcessing = false;
             this.subject.changeUserCards(dt);
             await this.router.navigate(['wallet/show']);

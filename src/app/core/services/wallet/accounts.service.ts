@@ -16,8 +16,8 @@ export class AccountsService {
         return this.httpClient.get<any>(`${API_URL}stripe/accounts/check-if-stripe-account-exists`, {params});
     }
 
-    addStripeBankAccount(params) {
-        return this.httpClient.post<any>(`${API_URL}stripe/accounts/create-stripe-bank-account`, params);
+    addStripeExternalAccount(params) {
+        return this.httpClient.post<any>(`${API_URL}stripe/accounts/create-stripe-external-account`, params);
     }
 
     getBankAccount(params) {

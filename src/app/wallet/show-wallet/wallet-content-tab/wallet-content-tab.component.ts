@@ -115,6 +115,20 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     }
 
+    removeBankAccount(bankAccount) {
+        const params = {account_id: bankAccount.account, bank_id: bankAccount.id};
+        this.accountsService.removeBankAccount(params).subscribe(dt => {
+            this.bankAccount = null;
+        });
+    }
+
+    removeDebitCard(debitCard){
+        const params = {account_id: debitCard.account, card_id: debitCard.id};
+        this.accountsService.removeDebitCard(params).subscribe(dt => {
+            this.debitCardAccount = null;
+        });
+    }
+
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }

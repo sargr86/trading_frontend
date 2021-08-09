@@ -52,17 +52,27 @@
 <div class="d-flex justify-content-between">
     <div class="sub-titles mb-3">Payment History</div>
     <div class="d-flex">
-        <div *ngIf="bankAccount.length >0" class="bank">
-            <p class="name">{{bankAccount[0]?.bank_name}}</p>
-            <p class="numbers">
-                <span class="routing-number">{{bankAccount[0]?.routing_number}}</span>
-                <span>****{{bankAccount[0]?.last4}}</span>
+        <div *ngIf="bankAccount?.length >0" class="bank">
+            <div>
+                <p class="name">{{bankAccount[0]?.bank_name}}</p>
+                <p class="numbers">
+                    <span class="routing-number">{{bankAccount[0]?.routing_number}}</span>
+                    <span>****{{bankAccount[0]?.last4}}</span>
+                </p>
+            </div>
+            <p>
+                <mat-icon (click)="removeBankAccount(bankAccount[0])">clear</mat-icon>
             </p>
         </div>
-        <div *ngIf="debitCardAccount.length >0" class="debit-card">
-            <p class="brand">{{debitCardAccount[0].brand}}</p>
-            <p class="card-number">
-                **** **** **** {{debitCardAccount[0].last4}}
+        <div *ngIf="debitCardAccount?.length >0" class="debit-card">
+            <div>
+                <p class="brand">{{debitCardAccount[0].brand}}</p>
+                <p class="card-number">
+                    **** **** **** {{debitCardAccount[0].last4}}
+                </p>
+            </div>
+            <p>
+                <mat-icon (click)="removeDebitCard(debitCardAccount[0])">clear</mat-icon>
             </p>
         </div>
         <div role="button" class="btn-green mr-2" (click)="addBankAccount()">Link bank/ debit card account</div>

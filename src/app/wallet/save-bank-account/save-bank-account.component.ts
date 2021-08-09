@@ -47,7 +47,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     allowedCountries = ALLOWED_COUNTRIES;
     defaultCountry = DEFAULT_COUNTRY;
 
-    stripeAccountExists = false;
+    stripeAccountExists = 0;
 
     constructor(
         private fb: FormBuilder,

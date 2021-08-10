@@ -5,6 +5,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {Card} from '@shared/models/card';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {SubjectService} from '@core/services/subject.service';
+import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-metl-coins-payout-schedule-tab',
@@ -16,18 +18,25 @@ export class MetlCoinsPayoutScheduleTabComponent implements OnInit, OnDestroy {
     accountPayouts = [];
     filteredPayouts = [];
     tableData;
-    displayedColumns = ['date', 'payout_for', 'description', 'type', 'amount'];
+    displayedColumns = ['initiated', 'est._arrival', 'payout_for', 'description', 'type', 'amount'];
+    defaultExtAccount;
 
     @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
         private paymentsService: PaymentsService,
-        private getExactParams: FilterOutFalsyValuesFromObjectPipe
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe,
+        private removeUndCapitalize: CapitalizeAddSpacesPipe
     ) {
     }
 
     ngOnInit(): void {
+        this.getPayoutsHistory({});
+    }
+
+    getExtAccountType(e) {
+        console.log(e)
         this.getPayoutsHistory({});
     }
 

@@ -3,11 +3,11 @@
     <h3 class="mb-4 title">Wallet <img src="assets/img/wallet-main-page-icon.svg" alt="" width="30" height="25">
     </h3>
     <div *ngIf="userCards.length > 0">
-        <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="getActiveTab(tabGroup)"
-                       (selectedTabChange)="tabChange($event)">
+        <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex"
+                       (selectedTabChange)="tabChange($event)" >
             <mat-tab label="Wallet">
                 <app-wallet-content-tab [userCards]="userCards" [authUser]="authUser" [accountTransfers]="transfers"
-                                        *ngIf="transfersLoaded"></app-wallet-content-tab>
+                                        *ngIf="transfersLoaded" (changeTab)="getDefaultExtAccount($event)"></app-wallet-content-tab>
             </mat-tab>
             <mat-tab label="Payments Purchase History">
                 <app-payments-purchase-history-tab [userCards]="userCards"></app-payments-purchase-history-tab>

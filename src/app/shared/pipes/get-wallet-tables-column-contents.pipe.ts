@@ -35,6 +35,9 @@ export class GetWalletTablesColumnContentsPipe implements PipeTransform {
             case 'payout_for':
                 content = this.removeUndCapitalize.transform(element.metadata?.channel);
                 break;
+            case 'payment_group':
+                content = this.removeUndCapitalize.transform(element.transfer_group);
+                break;
             case 'type':
                 content = this.removeUndCapitalize.transform(element.type);
                 break;

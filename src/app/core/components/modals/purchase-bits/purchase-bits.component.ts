@@ -3,7 +3,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {CompletePurchaseModalComponent} from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
-import {PaymentsService} from '@core/services/wallet/payments.service';
 import {ProductsService} from '@core/services/wallet/products.service';
 
 @Component({
@@ -13,7 +12,7 @@ import {ProductsService} from '@core/services/wallet/products.service';
 })
 export class PurchaseBitsComponent implements OnInit {
 
-    bitPurchases = [];
+    bitProducts = [];
 
     coinImages = ['gold', 'silver', 'pink', 'green', 'blue'];
     authUser;
@@ -29,7 +28,7 @@ export class PurchaseBitsComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.productsService.getStripeProducts().subscribe(dt => {
-            this.bitPurchases = dt;
+            this.bitProducts = dt;
         });
     }
 

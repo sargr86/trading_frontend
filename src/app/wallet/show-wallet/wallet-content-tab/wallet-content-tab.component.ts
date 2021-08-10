@@ -23,7 +23,7 @@ import {LoaderService} from '@core/services/loader.service';
 })
 export class WalletContentTabComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
-    displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
+    displayedColumns = ['date', 'amount_submitted', 'payment_method', 'payment_group', 'status'];
     payments = [];
     filteredPayments = [];
     tableData;
@@ -60,8 +60,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         this.subject.getPurchasedBitsData().subscribe(dt => {
             this.getPaymentsHistory({});
         });
-
-        this.countTotals(this.accountTransfers, 'transferred');
     }
 
     handle(e) {
@@ -84,7 +82,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt;
-                this.countTotals(dt, 'purchased');
+                this.countTotals(dt.filter(d => d.transfer_group === 'purchases'), 'purchased');
+                this.countTotals(dt.filter(d => d.transfer_group === 'transfers'), 'transferred');
                 // this.filterPayments();
                 this.filteredPayments = dt;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
@@ -95,9 +94,13 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     countTotals(dt, key) {
         dt.map(d => {
-            this.totals[key].coins += d.amount;
+            this.totals[key].coins += d.amount / 100 * 250;
             this.totals[key].dollars += d.amount / 100;
         });
+    }
+
+    changeTabToPayouts() {
+        this.changeTab.emit(3);
     }
 
     ngOnDestroy(): void {

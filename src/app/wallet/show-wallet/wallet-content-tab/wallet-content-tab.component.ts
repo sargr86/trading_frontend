@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
 import {UsersService} from '@core/services/users.service';
@@ -27,14 +27,14 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     payments = [];
     filteredPayments = [];
     tableData;
-    bankAccount;
-    debitCardAccount;
+
     totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
 
     @Input() authUser: User;
     @Input() accountTransfers = [];
     @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @Output() changeTab = new EventEmitter();
 
     pageSize = 5;
     pageIndex = 0;
@@ -55,7 +55,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getPaymentsHistory({});
-        this.getStripeAccount();
+
 
         this.subject.getPurchasedBitsData().subscribe(dt => {
             this.getPaymentsHistory({});
@@ -97,54 +97,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         dt.map(d => {
             this.totals[key].coins += d.amount;
             this.totals[key].dollars += d.amount / 100;
-        });
-    }
-
-    async addBankAccount() {
-        await this.router.navigate(['wallet/save-bank-account']);
-    }
-
-
-    getStripeAccount() {
-        const params = {stripe_account_id: this.userCards?.[0]?.stripe_account_id};
-        if (params.stripe_account_id) {
-            this.accountsService.getStripeAccount(params).subscribe(dt => {
-                const externalAccounts = dt?.external_accounts?.data;
-                this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account')[0];
-                this.debitCardAccount = externalAccounts.filter(t => t.object === 'card')[0];
-            });
-        }
-
-    }
-
-    removeBankAccount(bankAccount) {
-        this.loader.dataLoading = true;
-        const params = {account_id: bankAccount.account, bank_id: bankAccount.id};
-        this.accountsService.removeBankAccount(params).subscribe(dt => {
-            this.bankAccount = null;
-            this.loader.dataLoading = false;
-        });
-    }
-
-    removeDebitCard(debitCard) {
-        this.loader.dataLoading = true;
-        const params = {account_id: debitCard.account, card_id: debitCard.id};
-        this.accountsService.removeDebitCard(params).subscribe(dt => {
-            this.debitCardAccount = null;
-            this.loader.dataLoading = false;
-        });
-    }
-
-    setAsDefaultExtAccount(acc) {
-        this.loader.dataLoading = true;
-        this.accountsService.setAsDefaultExternalAccount({
-            stripe_account_id: acc.account,
-            ext_account_id: acc.id
-        }).subscribe(dt => {
-            const externalAccounts = dt?.external_accounts?.data;
-            this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account')[0];
-            this.debitCardAccount = externalAccounts.filter(t => t.object === 'card')[0];
-            this.loader.dataLoading = false;
         });
     }
 

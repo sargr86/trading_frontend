@@ -52,45 +52,8 @@
 <div class="d-flex justify-content-between">
     <div class="sub-titles mb-3">Payment History</div>
     <div id="external-accounts">
-        <div>
-            <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
-        </div>
-        <div *ngIf="bankAccount" class="bank">
-            <div>
-                <p class="name">{{bankAccount.bank_name}}</p>
-                <p class="numbers">
-                    <span class="routing-number">{{bankAccount.routing_number}}</span>
-                    <span>****{{bankAccount.last4}}</span>
-                </p>
-            </div>
-            <p>
-                <mat-icon (click)="setAsDefaultExtAccount(bankAccount)"
-                          [hidden]="bankAccount.default_for_currency"
-                          class="set-as-default-account">
-                    done
-                </mat-icon>
-                <mat-icon (click)="removeBankAccount(bankAccount)">clear</mat-icon>
-            </p>
-        </div>
-        <div *ngIf="debitCardAccount" class="debit-card">
-            <div>
-                <p class="brand">{{debitCardAccount.brand}}</p>
-                <p class="card-number">
-                    **** **** **** {{debitCardAccount.last4}}
-                </p>
-            </div>
-            <p>
-                <mat-icon (click)="setAsDefaultExtAccount(debitCardAccount)"
-                          [hidden]="debitCardAccount.default_for_currency"
-                          class="set-as-default-account">
-                    done
-                </mat-icon>
-                <mat-icon (click)="removeDebitCard(debitCardAccount)">clear</mat-icon>
-            </p>
-        </div>
-        <div role="button" class="btn-green mr-2" [hidden]="bankAccount && debitCardAccount"
-             (click)="addBankAccount()">Link bank/ debit card account
-        </div>
+        <!--        <app-external-accounts-handler [userCards]="userCards"></app-external-accounts-handler>-->
+        <div role="button" class="btn-green mr-2 p-3" (click)="changeTab.emit(3)">Manage Account(s) for Payouts</div>
         <div role="button" class="btn-red">Export to Excel</div>
     </div>
 </div>

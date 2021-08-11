@@ -71,7 +71,11 @@
                     </label>
                 </div>
             </div>
-            <button mat-button type="button" class="bg-light text-white mr-3" (click)="tabGroup.selectedIndex = 1">
+            <button mat-button type="button" class="bg-light text-white mr-3"
+                    (click)="router.navigate(['wallet/show'])">
+                Back to Wallet
+            </button>
+            <button mat-button type="button" class="text-white mr-3 submit-btn" (click)="tabGroup.selectedIndex = 1">
                 Next
             </button>
         </mat-tab>
@@ -106,10 +110,14 @@
                     </ngx-stripe-card>
                 </div>
             </div>
-            <div class="d-flex py-5">
+            <div class="d-flex py-5 align-items-center">
                 <button mat-button type="button" class="bg-light text-white mr-3" [hidden]="stripeAccountExists"
                         (click)="tabGroup.selectedIndex = 0">
                     Back
+                </button>
+                <button mat-button type="button" class="bg-light text-white mr-3" [hidden]="!stripeAccountExists"
+                        (click)="router.navigate(['wallet/show'])">
+                    Back to Wallet
                 </button>
                 <!--            <button mat-button (click)="stepper.reset()" class="text-white mr-3 reset-btn">Reset</button>-->
                 <button mat-button (click)="saveBankAccount()" class="text-white mr-3 submit-btn">Submit</button>

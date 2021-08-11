@@ -26,6 +26,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'payment_group', 'status'];
     payments = [];
     filteredPayments = [];
+    filterApplied = false;
     tableData;
 
     totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
@@ -74,6 +75,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     getFilters(e) {
+        this.filterApplied = true;
         this.getPaymentsHistory(e);
     }
 

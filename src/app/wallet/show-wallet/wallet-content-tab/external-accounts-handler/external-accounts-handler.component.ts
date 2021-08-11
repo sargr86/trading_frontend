@@ -25,7 +25,8 @@ export class ExternalAccountsHandlerComponent implements OnInit, OnDestroy {
     constructor(
         private accountsService: AccountsService,
         public router: Router,
-        private subject: SubjectService
+        private subject: SubjectService,
+        public loader: LoaderService
     ) {
     }
 
@@ -53,25 +54,25 @@ export class ExternalAccountsHandlerComponent implements OnInit, OnDestroy {
 
 
     removeBankAccount(bankAccount) {
-        this.dataLoading = true;
+        this.loader.dataLoading = true;
         const params = {account_id: bankAccount.account, bank_id: bankAccount.id};
         this.subscriptions.push(this.accountsService.removeBankAccount(params).subscribe(dt => {
             this.bankAccount = null;
-            this.dataLoading = false;
+            this.loader.dataLoading = false;
         }));
     }
 
     removeDebitCard(debitCard) {
-        this.dataLoading = true;
+        this.loader.dataLoading = true;
         const params = {account_id: debitCard.account, card_id: debitCard.id};
         this.subscriptions.push(this.accountsService.removeDebitCard(params).subscribe(dt => {
             this.debitCardAccount = null;
-            this.dataLoading = false;
+            this.loader.dataLoading = false;
         }));
     }
 
     setAsDefaultExtAccount(acc) {
-        this.dataLoading = true;
+        this.loader.dataLoading = true;
         this.subscriptions.push(this.accountsService.setAsDefaultExternalAccount({
             stripe_account_id: acc.account,
             ext_account_id: acc.id
@@ -79,7 +80,7 @@ export class ExternalAccountsHandlerComponent implements OnInit, OnDestroy {
             const externalAccounts = dt?.external_accounts?.data;
             this.bankAccount = externalAccounts.filter(t => t.object === 'bank_account')[0];
             this.debitCardAccount = externalAccounts.filter(t => t.object === 'card')[0];
-            this.dataLoading = false;
+            this.loader.dataLoading = false;
             this.defaultExtAccount = externalAccounts.find(t => t.default_for_currency).object;
             this.extAccountChanged.emit(this.defaultExtAccount);
             this.subject.changeDefaultExtAccount(this.defaultExtAccount);

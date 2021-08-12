@@ -54,12 +54,12 @@
     <div id="external-accounts">
         <!--        <app-external-accounts-handler [userCards]="userCards"></app-external-accounts-handler>-->
         <div role="button" class="btn-green mr-2 p-3" (click)="changeTabToPayouts()">Manage Account(s) for Payouts</div>
-        <div role="button" class="btn-red">Export to Excel</div>
+        <div role="button" class="btn-red" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name'})">Export to Excel</div>
     </div>
 </div>
 
 
-<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4"
+<table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="tableData" class="mat-elevation-z8 table border my-4"
        [hidden]="filteredPayments.length===0">
 
     <ng-container *ngFor="let col of displayedColumns">

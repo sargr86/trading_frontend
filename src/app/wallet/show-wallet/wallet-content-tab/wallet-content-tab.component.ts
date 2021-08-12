@@ -81,9 +81,11 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     getPaymentsHistory(filters) {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
+        this.totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt;
+                // this.subject.setPurchasedBitsData( dt);
                 this.countTotals(dt.filter(d => d.transfer_group === 'purchases'), 'purchased');
                 this.countTotals(dt.filter(d => d.transfer_group === 'transfers'), 'transferred');
                 // this.filterPayments();
@@ -96,9 +98,11 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     countTotals(dt, key) {
         dt.map(d => {
-            this.totals[key].coins += d.amount / 100 * 250;
+            this.totals[key].coins += (d.amount / (100 * 0.0199));
             this.totals[key].dollars += d.amount / 100;
         });
+
+
     }
 
     changeTabToPayouts() {
@@ -108,6 +112,4 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
-
-
 }

@@ -38,6 +38,7 @@
         "google-libphonenumber": "^3.2.22",
         "jquery": "^3.5.1",
         "jwt-decode": "^3.0.0",
+        "mat-table-exporter": "^10.2.3",
         "material-design-icons": "^3.0.1",
         "moment": "^2.29.1",
         "ng-phone-number": "^1.0.15",

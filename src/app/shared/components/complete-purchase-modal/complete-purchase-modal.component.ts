@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
 import {ToastrService} from 'ngx-toastr';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {LoaderService} from '@core/services/loader.service';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class CompletePurchaseModalComponent implements OnInit {
         private usersService: UsersService,
         private cardsService: CardsService,
         private subject: SubjectService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        public loader: LoaderService
     ) {
         this.purchase = data;
         this.creditCardForm = fb.group({
@@ -142,6 +144,7 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
     createPaymentIntent() {
+        this.loader.formProcessing = true;
         this.paymentsService.createPaymentIntent({
             customer_id: this.selectedCard.stripe_customer_id,
             currency: this.purchase.currency,
@@ -155,16 +158,9 @@ export class CompletePurchaseModalComponent implements OnInit {
             }).catch(e => {
                 console.log(e)
             }).then((r) => {
+                this.loader.formProcessing = false;
                 this.toastr.success('The purchase has been completed successfully', 'Done!');
-                this.closeModal();
-                // this.purchasesService.stripeCharge({
-                //     card: this.selectedCard,
-                //     purchase: this.purchase,
-                //     email: this.authUser.email
-                // }).subscribe(dt => {
-                //     this.toastr.success('The purchase completed successfully', 'Done!');
-                //     this.closeModal();
-                // });
+                this.closeModal({customer: this.selectedCard.stripe_customer_id});
             });
 
 
@@ -185,8 +181,8 @@ export class CompletePurchaseModalComponent implements OnInit {
     }
 
 
-    closeModal() {
-        this.matDialogRef.close();
+    closeModal(dt) {
+        this.matDialogRef.close(dt);
     }
 
 }

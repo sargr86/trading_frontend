@@ -15,6 +15,7 @@ import {InternationalPhoneNumberModule} from 'ng-phone-number';
 import { ShowCardsComponent } from './cards/show-cards/show-cards.component';
 import { SaveCardComponent } from './cards/save-card/save-card.component';
 import { ExternalAccountsHandlerComponent } from './show-wallet/wallet-content-tab/external-accounts-handler/external-accounts-handler.component';
+import {MatTableExporterModule} from 'mat-table-exporter';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ExternalAccountsHandlerComponent } from './show-wallet/wallet-content-t
         MaterialModule,
         SharedModule,
         BsDatepickerModule.forRoot(),
-        InternationalPhoneNumberModule
+        InternationalPhoneNumberModule,
+        MatTableExporterModule
     ]
 })
 export class WalletModule {

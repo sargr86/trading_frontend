@@ -15,6 +15,8 @@ import {ToastrService} from 'ngx-toastr';
 import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
 import {CustomersService} from '@core/services/wallet/customers.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 @Component({
     selector: 'app-navbar',
@@ -42,6 +44,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     showPurchaseBits = false;
 
     userCards = [];
+    totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
 
     constructor(
         public router: Router,
@@ -49,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private stocksService: StocksService,
+        private paymentsService: PaymentsService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
         private toastr: ToastrService,
@@ -61,6 +65,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
+
     }
 
     getAuthenticatedUser() {
@@ -94,7 +99,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.userCards = dt;
             // console.log(this.userCards)
             this.subject.changeUserCards(dt);
+            this.getPaymentsHistory();
         }));
+    }
+
+    getPaymentsHistory() {
+        const params = {customer: this.userCards?.[0]?.stripe_customer_id};
+        if (params.customer) {
+            this.subscriptions.push(this.paymentsService.getPurchasesHistory(params).subscribe(dt => {
+                // this.payments = dt;
+                // this.subject.setPurchasedBitsData( dt);
+                this.countTotals(dt.filter(d => d.transfer_group === 'purchases'), 'purchased');
+
+            }));
+        }
+    }
+
+    countTotals(dt, key) {
+        dt.map(d => {
+            this.totals[key].coins += (d.amount / 0.0199) / 100;
+            this.totals[key].dollars += d.amount / 100;
+        });
+
+
     }
 
 

@@ -6,7 +6,7 @@ import {COIN_WORTH} from '@core/constants/global';
 })
 export class ConvertToCurrencyPipe implements PipeTransform {
 
-    transform(value: number, currency = 'dollars'): unknown {
+    transform(value: number, currency = 'dollars') {
         if (currency === 'dollars') {
             return COIN_WORTH * value;
         }

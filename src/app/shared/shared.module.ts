@@ -42,6 +42,7 @@ import {PaymentsFilterFormComponent} from './components/payments-filter-form/pay
 import {CapitalizeAddSpacesPipe} from './pipes/capitalize-add-spaces.pipe';
 import {GetWalletTablesColumnContentsPipe} from './pipes/get-wallet-tables-column-contents.pipe';
 import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-transfered-totals.pipe';
+import { ConvertToCurrencyPipe } from './pipes/convert-to-currency.pipe';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-trans
         PaymentsFilterFormComponent,
         CapitalizeAddSpacesPipe,
         GetWalletTablesColumnContentsPipe,
-        CountPurchasedTransferredTotalsPipe
+        CountPurchasedTransferredTotalsPipe,
+        ConvertToCurrencyPipe
     ],
     imports: [
         CommonModule,
@@ -138,7 +140,8 @@ import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-trans
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,
-        PaymentsFilterFormComponent
+        PaymentsFilterFormComponent,
+        ConvertToCurrencyPipe
     ]
 
 })

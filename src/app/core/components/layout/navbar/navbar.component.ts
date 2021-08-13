@@ -101,22 +101,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.userCards = dt;
             // console.log(this.userCards)
             this.subject.changeUserCards(dt);
-            this.getPurchasesHistory();
+            this.getAllPaymentsHistory();
         }));
     }
 
-    getPurchasesHistory() {
-        const params = {customer: this.userCards?.[0]?.stripe_customer_id};
+    getAllPaymentsHistory() {
+        const params = {customer: this.userCards?.[0]?.stripe_customer_id, user_id: this.authUser.id};
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 // this.payments = dt;
-                this.totals = this.countTotals.transform(dt);
-                this.subject.setAllPaymentsData({data: dt, totals: this.totals});
-                console.log(this.totals.purchases.dollars)
+                this.totals = dt.user_coins;
+                this.subject.setAllPaymentsData(dt);
+                // console.log(this.totals.purchases.dollars)
             }));
         }
     }
-
 
 
     logout() {

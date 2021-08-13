@@ -146,7 +146,9 @@ export class CompletePurchaseModalComponent implements OnInit {
     createPaymentIntent() {
         this.loader.formProcessing = true;
         this.paymentsService.createPaymentIntent({
+            user_id: this.authUser.id,
             customer_id: this.selectedCard.stripe_customer_id,
+            account_id: this.selectedCard.stripe_account_id,
             currency: this.purchase.currency,
             card: this.selectedCard,
             purchase: this.purchase

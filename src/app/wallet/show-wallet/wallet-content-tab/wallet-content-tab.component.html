@@ -11,26 +11,26 @@
         </div>
         <div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">+ Add New Card</div>
     </div>
-    <div class="mr-lg-5 mr-4">
+    <div class="mr-lg-5 mr-4" *ngIf="totals?.purchased">
         <div class="sub-titles mb-3">Purchased Metl Coins</div>
         <div class="d-flex align-items-center">
             <div class="mr-5">
-                <small>{{totals.purchases.coins.toFixed(2)}}</small>
+                <small>{{totals.purchased.toFixed(2)}}</small>
                 <div class="d-flex">
                     <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
                     <img src="assets/img/coin/light_blue.svg" alt="" width="16" height="16">
                 </div>
             </div>
             <div class="total-class">
-                ${{totals.purchases.dollars.toFixed(2)}}
+                ${{(totals?.purchased|convertToCurrency).toFixed(2)}}
             </div>
         </div>
     </div>
-    <div class="mr-lg-5 mr-4">
+    <div class="mr-lg-5 mr-4" *ngIf="totals">
         <div class="sub-titles mb-3">Received Metl Coins</div>
         <div class="d-flex align-items-center">
             <div class="mr-5">
-                <small>{{totals.transfers.coins.toFixed(2)}}</small>
+                <small>{{totals?.received.toFixed(2)}}</small>
                 <div class="d-flex">
                     <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
                     <img src="assets/img/coin/light_blue.svg" alt="" height="16" width="16" class="mr-1">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="total-class">
-                ${{totals.transfers.dollars.toFixed(2)}}
+                ${{(totals?.received|convertToCurrency).toFixed(2)}}
             </div>
         </div>
     </div>
@@ -54,12 +54,15 @@
     <div id="external-accounts">
         <!--        <app-external-accounts-handler [userCards]="userCards"></app-external-accounts-handler>-->
         <div role="button" class="btn-green mr-2 p-3" (click)="changeTabToPayouts()">Manage Account(s) for Payouts</div>
-        <div role="button" class="btn-red" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name'})">Export to Excel</div>
+        <div role="button" class="btn-red"
+             (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name'})">Export to Excel
+        </div>
     </div>
 </div>
 
 
-<table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="tableData" class="mat-elevation-z8 table border my-4"
+<table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="tableData"
+       class="mat-elevation-z8 table border my-4"
        [hidden]="filteredPayments.length===0">
 
     <ng-container *ngFor="let col of displayedColumns">

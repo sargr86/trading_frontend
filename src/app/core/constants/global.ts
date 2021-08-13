@@ -200,3 +200,5 @@ export const ALL_COUNTRIES = [
 
 export const ALLOWED_COUNTRIES = ['us'];
 export const DEFAULT_COUNTRY = 'us';
+
+export const COIN_WORTH = 0.0199;

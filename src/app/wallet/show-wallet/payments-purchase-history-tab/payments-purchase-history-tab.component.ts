@@ -31,9 +31,9 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getPurchasesHistory();
-        this.subject.getPurchasedBitsData().subscribe(dt => {
-            this.getPurchasesHistory({});
-        });
+        // this.subject.getAllPaymentsData().subscribe(dt => {
+        //     this.getPurchasesHistory({});
+        // });
     }
 
     getFilters(e) {

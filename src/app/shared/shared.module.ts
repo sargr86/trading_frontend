@@ -39,8 +39,9 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {PaymentsFilterFormComponent} from './components/payments-filter-form/payments-filter-form.component';
-import { CapitalizeAddSpacesPipe } from './pipes/capitalize-add-spaces.pipe';
-import { GetWalletTablesColumnContentsPipe } from './pipes/get-wallet-tables-column-contents.pipe';
+import {CapitalizeAddSpacesPipe} from './pipes/capitalize-add-spaces.pipe';
+import {GetWalletTablesColumnContentsPipe} from './pipes/get-wallet-tables-column-contents.pipe';
+import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-transfered-totals.pipe';
 
 @NgModule({
     declarations: [
@@ -74,7 +75,8 @@ import { GetWalletTablesColumnContentsPipe } from './pipes/get-wallet-tables-col
         CompletePurchaseModalComponent,
         PaymentsFilterFormComponent,
         CapitalizeAddSpacesPipe,
-        GetWalletTablesColumnContentsPipe
+        GetWalletTablesColumnContentsPipe,
+        CountPurchasedTransferredTotalsPipe
     ],
     imports: [
         CommonModule,
@@ -101,7 +103,8 @@ import { GetWalletTablesColumnContentsPipe } from './pipes/get-wallet-tables-col
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
         CapitalizeAddSpacesPipe,
-        GetWalletTablesColumnContentsPipe
+        GetWalletTablesColumnContentsPipe,
+        CountPurchasedTransferredTotalsPipe
     ],
     exports: [
         FormsModule,
@@ -131,6 +134,7 @@ import { GetWalletTablesColumnContentsPipe } from './pipes/get-wallet-tables-col
         IsStockFollowedPipe,
         FixTextLineBreaksPipe,
         GetWalletTablesColumnContentsPipe,
+        CountPurchasedTransferredTotalsPipe,
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,

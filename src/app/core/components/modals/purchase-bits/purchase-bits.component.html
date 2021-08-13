@@ -1,14 +1,15 @@
 <div class="purchase-bits">
-    <p class="purchase-text">Purchase Bits</p>
-    <p class="purchase-text-2 d-flex align-items-center">You have<img src="assets/img/coin/gold.svg" alt="" width="12"
-                                                                      height="12" class="ml-2"> <span
-        class="purchase-text-3">{{totals.purchased.coins.toFixed(2)}} coins</span></p>
-    <p class="purchase-text-4 mb-2 pb-2 border-bottom w-100 text-center">29% off for first-time Bits buyers!</p>
+    <p class="purchase-text">Purchase coins</p>
+    <p class="purchase-text-2 d-flex align-items-center">
+        You have<img src="assets/img/coin/gold.svg" alt="" width="12" height="12" class="ml-2">
+        <span class="purchase-text-3">{{totals?.purchases.coins.toFixed(2)}} coins</span>
+    </p>
+    <p class="purchase-text-4 mb-2 pb-2 border-bottom w-100 text-center">29% off for first-time coins buyers!</p>
     <div class="mb-2">
         <img src="assets/img/coin/gold.svg" alt="" width="20" height="20" class="mx-1">
         <img src="assets/img/coin/silver.svg" alt="" width="20" height="20" class="mx-1">
     </div>
-    <a class="purchase-text-5">Buy 300 Bits for $3,00</a>
+    <a class="purchase-text-5">Buy 300 coins for $3,00</a>
     <p class="purchase-text-2">Prices are shown in USD</p>
     <div class="bits-block">
         <div class="bits-block-item" *ngFor="let product of bitProducts">

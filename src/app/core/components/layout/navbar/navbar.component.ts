@@ -17,6 +17,7 @@ import {CardsService} from '@core/services/cards.service';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 
 @Component({
     selector: 'app-navbar',
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     showPurchaseBits = false;
 
     userCards = [];
-    totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
+    totals;
 
     constructor(
         public router: Router,
@@ -57,7 +58,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private toastr: ToastrService,
         private cardsService: CardsService,
-        private stripeCustomersService: CustomersService
+        private stripeCustomersService: CustomersService,
+        private countTotals: CountPurchasedTransferredTotalsPipe
     ) {
 
     }
@@ -99,30 +101,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.userCards = dt;
             // console.log(this.userCards)
             this.subject.changeUserCards(dt);
-            this.getPaymentsHistory();
+            this.getPurchasesHistory();
         }));
     }
 
-    getPaymentsHistory() {
+    getPurchasesHistory() {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id};
         if (params.customer) {
-            this.subscriptions.push(this.paymentsService.getPurchasesHistory(params).subscribe(dt => {
+            this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 // this.payments = dt;
-                // this.subject.setPurchasedBitsData( dt);
-                this.countTotals(dt.filter(d => d.transfer_group === 'purchases'), 'purchased');
-
+                this.totals = this.countTotals.transform(dt);
+                this.subject.setAllPaymentsData({data: dt, totals: this.totals});
+                console.log(this.totals.purchases.dollars)
             }));
         }
     }
 
-    countTotals(dt, key) {
-        dt.map(d => {
-            this.totals[key].coins += (d.amount / 0.0199) / 100;
-            this.totals[key].dollars += d.amount / 100;
-        });
-
-
-    }
 
 
     logout() {

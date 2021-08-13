@@ -5,6 +5,8 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {ProductsService} from '@core/services/wallet/products.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {COIN_WORTH} from '@core/constants/global';
+import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -25,7 +27,8 @@ export class PurchaseBitsComponent implements OnInit {
         private productsService: ProductsService,
         private paymentsService: PaymentsService,
         private getAuthUser: GetAuthUserPipe,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private countTotals: CountPurchasedTransferredTotalsPipe
     ) {
     }
 
@@ -35,7 +38,7 @@ export class PurchaseBitsComponent implements OnInit {
             this.bitProducts = dt;
         });
 
-        this.subject.getPurchasedBitsData().subscribe(dt => {
+        this.subject.getAllPaymentsData().subscribe(dt => {
             // console.log(dt)
         });
     }
@@ -48,20 +51,11 @@ export class PurchaseBitsComponent implements OnInit {
             this.totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
             if (dt) {
                 this.paymentsService.getPurchasesHistory(dt).subscribe(ph => {
-                    // this.subject.setPurchasedBitsData(d);
-                    this.countTotals(ph.filter(d => d.transfer_group === 'purchases'), 'purchased');
+                    this.totals = this.countTotals.transform(dt);
+                    // this.subject.setAllPaymentsData({data: dt, totals: this.totals});
                 });
             }
         });
-    }
-
-    countTotals(dt, key) {
-        dt.map(d => {
-            this.totals[key].coins += (d.amount / 0.0199) / 100;
-            this.totals[key].dollars += d.amount / 100;
-        });
-
-
     }
 
     createArray(len) {

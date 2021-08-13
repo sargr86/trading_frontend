@@ -15,6 +15,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {AccountsService} from '@core/services/wallet/accounts.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {LoaderService} from '@core/services/loader.service';
+import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -29,7 +30,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     filterApplied = false;
     tableData;
 
-    totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
+    totals = {purchases: {coins: 0, dollars: 0}, transfers: {coins: 0, dollars: 0}};
 
     @Input() authUser: User;
     @Input() accountTransfers = [];
@@ -50,16 +51,23 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         public router: Router,
         private subject: SubjectService,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private countTotals: CountPurchasedTransferredTotalsPipe
     ) {
     }
 
     ngOnInit(): void {
-        this.getPaymentsHistory({});
+        // this.getPaymentsHistory({});
 
 
-        this.subject.getPurchasedBitsData().subscribe(dt => {
-            this.getPaymentsHistory({});
+        this.subject.getAllPaymentsData().subscribe(dt => {
+            console.log(dt)
+            this.payments = dt.data;
+            this.totals = dt.totals;
+            // this.filterPayments();
+            this.filteredPayments = dt.data;
+            this.tableData = new MatTableDataSource(this.filteredPayments);
+            this.tableData.paginator = this.paginator;
         });
     }
 
@@ -81,28 +89,16 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
     getPaymentsHistory(filters) {
         const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
-        this.totals = {purchased: {coins: 0, dollars: 0}, transferred: {coins: 0, dollars: 0}};
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt;
-                // this.subject.setPurchasedBitsData( dt);
-                this.countTotals(dt.filter(d => d.transfer_group === 'purchases'), 'purchased');
-                this.countTotals(dt.filter(d => d.transfer_group === 'transfers'), 'transferred');
+                this.totals = this.countTotals.transform(dt);
                 // this.filterPayments();
                 this.filteredPayments = dt;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;
             }));
         }
-    }
-
-    countTotals(dt, key) {
-        dt.map(d => {
-            this.totals[key].coins += (d.amount / (100 * 0.0199));
-            this.totals[key].dollars += d.amount / 100;
-        });
-
-
     }
 
     changeTabToPayouts() {

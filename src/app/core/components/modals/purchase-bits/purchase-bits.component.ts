@@ -49,9 +49,9 @@ export class PurchaseBitsComponent implements OnInit {
             width: '800px'
         }).afterClosed().subscribe((dt) => {
             if (dt) {
-                this.paymentsService.getAllPaymentsHistory(dt).subscribe(ph => {
-                    this.totals = this.countTotals.transform(ph);
-                    // this.subject.setAllPaymentsData({data: dt, totals: this.totals});
+                this.paymentsService.getAllPaymentsHistory({user_id: this.authUser.id, ...dt}).subscribe(ph => {
+                    this.totals = ph.user_coins;
+                    this.subject.setAllPaymentsData(ph);
                 });
             }
         });

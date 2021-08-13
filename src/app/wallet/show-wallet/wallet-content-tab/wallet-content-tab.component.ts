@@ -30,7 +30,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     filterApplied = false;
     tableData;
 
-    totals = {purchases: {coins: 0, dollars: 0}, transfers: {coins: 0, dollars: 0}};
+    totals;
 
     @Input() authUser: User;
     @Input() accountTransfers = [];
@@ -62,10 +62,11 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
 
         this.subject.getAllPaymentsData().subscribe(dt => {
             console.log(dt)
-            this.payments = dt.data;
-            this.totals = dt.totals;
+            this.payments = dt.payment_intents;
+            this.totals = dt.user_coins;
+            console.log(this.totals)
             // this.filterPayments();
-            this.filteredPayments = dt.data;
+            this.filteredPayments = dt.payment_intents;
             this.tableData = new MatTableDataSource(this.filteredPayments);
             this.tableData.paginator = this.paginator;
         });
@@ -88,13 +89,13 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     getPaymentsHistory(filters) {
-        const params = {customer: this.userCards?.[0]?.stripe_customer_id, ...filters};
+        const params = {customer: this.userCards?.[0]?.stripe_customer_id, user_id: this.authUser.id, ...filters};
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
-                this.payments = dt;
-                this.totals = this.countTotals.transform(dt);
+                this.payments = dt.payment_intents;
+                this.totals = dt.user_coins;
                 // this.filterPayments();
-                this.filteredPayments = dt;
+                this.filteredPayments = dt.payment_intents;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;
             }));

@@ -27,7 +27,7 @@ export class SubjectService {
     private indicesData = new Subject<any>();
     private userStocksData = new Subject<any>();
     private userCardsData = new Subject<any>();
-    private purchasedBitsData = new Subject<any>();
+    private allPaymentsData = new Subject<any>();
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
     private userCardsSource = new BehaviorSubject(this.userCards);
@@ -119,12 +119,12 @@ export class SubjectService {
         this.userStocksData.next(value);
     }
 
-    getPurchasedBitsData(): Observable<any> {
-        return this.purchasedBitsData.asObservable();
+    getAllPaymentsData(): Observable<any> {
+        return this.allPaymentsData.asObservable();
     }
 
-    setPurchasedBitsData(value) {
-        this.purchasedBitsData.next(value);
+    setAllPaymentsData(value) {
+        this.allPaymentsData.next(value);
     }
 
     getUserStocksData(): Observable<any> {

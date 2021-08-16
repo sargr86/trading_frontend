@@ -151,7 +151,7 @@ export class CompletePurchaseModalComponent implements OnInit {
             account_id: this.selectedCard.stripe_account_id,
             currency: this.purchase.currency,
             card: this.selectedCard,
-            purchase: this.purchase
+            purchase: {unit_amount: this.purchase.unit_amount, discount: this.purchase?.metadata?.discount}
         }).subscribe(async (clientSecret) => {
             const stripe = await this.stripePromise;
             // const stripe = Stripe('<<YOUR-PUBLISHABLE-API-KEY>>');

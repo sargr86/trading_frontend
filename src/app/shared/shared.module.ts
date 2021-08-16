@@ -108,7 +108,8 @@ import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
         FixTextLineBreaksPipe,
         CapitalizeAddSpacesPipe,
         GetWalletTablesColumnContentsPipe,
-        CountPurchasedTransferredTotalsPipe
+        CountPurchasedTransferredTotalsPipe,
+        ApplyDiscountToPricePipe
     ],
     exports: [
         FormsModule,

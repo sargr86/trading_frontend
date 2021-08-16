@@ -27,7 +27,7 @@
             </div>
             <p class="bits-text-2">{{product?.metadata?.discount || 0}}% discount</p>
             <a class="bits-text-3" (click)="openPurchaseModal(product)">
-                ${{((product.unit_amount / 100)|applyDiscount:product?.metadata?.discount).toFixed(6).slice(0, -4) }}
+                ${{getDiscountedPrice(product) }}
             </a>
         </div>
     </div>

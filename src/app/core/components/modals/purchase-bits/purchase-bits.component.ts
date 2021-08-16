@@ -6,6 +6,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {ProductsService} from '@core/services/wallet/products.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {Subscription} from 'rxjs';
+import {ApplyDiscountToPricePipe} from '@shared/pipes/apply-discount-to-price.pipe';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -28,6 +29,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         private paymentsService: PaymentsService,
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
+        private applyDiscount: ApplyDiscountToPricePipe
     ) {
     }
 
@@ -55,6 +57,11 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
                 }));
             }
         }));
+    }
+
+    getDiscountedPrice(product) {
+        return this.applyDiscount.transform(product.unit_amount / 100, product?.metadata?.discount)
+            .toFixed(6).slice(0, -4);
     }
 
     createArray(len) {

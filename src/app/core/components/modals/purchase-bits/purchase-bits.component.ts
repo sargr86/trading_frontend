@@ -35,6 +35,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
             this.bitProducts = dt;
+            console.log(dt)
         }));
 
         this.subject.getAllPaymentsData().subscribe(dt => {

@@ -42,7 +42,8 @@ import {PaymentsFilterFormComponent} from './components/payments-filter-form/pay
 import {CapitalizeAddSpacesPipe} from './pipes/capitalize-add-spaces.pipe';
 import {GetWalletTablesColumnContentsPipe} from './pipes/get-wallet-tables-column-contents.pipe';
 import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-transfered-totals.pipe';
-import { ConvertToCurrencyPipe } from './pipes/convert-to-currency.pipe';
+import {ConvertToCurrencyPipe} from './pipes/convert-to-currency.pipe';
+import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
 
 @NgModule({
     declarations: [
@@ -78,7 +79,8 @@ import { ConvertToCurrencyPipe } from './pipes/convert-to-currency.pipe';
         CapitalizeAddSpacesPipe,
         GetWalletTablesColumnContentsPipe,
         CountPurchasedTransferredTotalsPipe,
-        ConvertToCurrencyPipe
+        ConvertToCurrencyPipe,
+        ApplyDiscountToPricePipe
     ],
     imports: [
         CommonModule,
@@ -141,7 +143,8 @@ import { ConvertToCurrencyPipe } from './pipes/convert-to-currency.pipe';
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,
         PaymentsFilterFormComponent,
-        ConvertToCurrencyPipe
+        ConvertToCurrencyPipe,
+        ApplyDiscountToPricePipe
     ]
 
 })

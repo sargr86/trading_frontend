@@ -18,26 +18,9 @@
                     .table-item {
                         color: #f53c6f;
                         position: relative;
-
-                        &::after {
-                            content: "\f106";
-                            position: absolute;
-                            left: 80px;
-                            top: 15px;
-                            font-family: "Font Awesome 5 Pro";
-                            font-weight: 900;
-                            line-height: 6px;
-                        }
-
-                        &::before {
-                            content: "\f107";
-                            position: absolute;
-                            left: 80px;
-                            bottom: 15px;
-                            font-family: "Font Awesome 5 Pro";
-                            font-weight: 900;
-                            line-height: 6px;
-                        }
+                    }
+                    .mat-sort-header-arrow{
+                        //color: $red;
                     }
                 }
 
@@ -63,5 +46,4 @@
     display: flex;
     align-items: center;
 }
-
 

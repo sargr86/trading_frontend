@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CheckForEmptyObjectPipe implements PipeTransform {
 
-  transform(obj: unknown): unknown {
+  transform(obj: unknown): boolean {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
   }
 

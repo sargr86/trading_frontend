@@ -115,7 +115,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 // this.payments = dt;
                 this.totals = dt.user_coins;
                 this.subject.setAllPaymentsData(dt);
-                // console.log(this.totals.purchases.dollars)
+                this.subject.changePaymentsData(dt);
             }));
         }
     }

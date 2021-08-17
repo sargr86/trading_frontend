@@ -16,6 +16,8 @@ import {AccountsService} from '@core/services/wallet/accounts.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {LoaderService} from '@core/services/loader.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
+import {filter} from 'rxjs/operators';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -52,24 +54,21 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         public router: Router,
         private subject: SubjectService,
         public loader: LoaderService,
-        private countTotals: CountPurchasedTransferredTotalsPipe
+        private countTotals: CountPurchasedTransferredTotalsPipe,
+        private isEmptyObj: CheckForEmptyObjectPipe
     ) {
     }
 
     ngOnInit(): void {
-        // this.getPaymentsHistory({});
-
-
-        this.subject.getAllPaymentsData().subscribe(dt => {
-            console.log(dt)
-            this.payments = dt.payment_intents;
-            this.totals = dt.user_coins;
-            console.log(this.totals)
-            // this.filterPayments();
-            this.filteredPayments = dt.payment_intents;
-            this.tableData = new MatTableDataSource(this.filteredPayments);
-            this.tableData.paginator = this.paginator;
-        });
+        this.subject.currentPaymentsData
+            .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
+            .subscribe((dt: any) => {
+                this.payments = dt.payment_intents;
+                this.filteredPayments = dt.payment_intents;
+                this.totals = dt.user_coins;
+                this.tableData = new MatTableDataSource(this.filteredPayments);
+                this.tableData.paginator = this.paginator;
+            });
     }
 
     handle(e) {
@@ -89,12 +88,14 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     }
 
     getPaymentsHistory(filters) {
-        const params = {customer: this.userCards?.[0]?.stripe_customer_id, user_id: this.authUser.id, ...filters};
+        const params = {
+            customer: this.userCards?.[0]?.stripe_customer_id,
+            user_id: this.authUser.id, ...filters
+        };
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt.payment_intents;
                 this.totals = dt.user_coins;
-                // this.filterPayments();
                 this.filteredPayments = dt.payment_intents;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;

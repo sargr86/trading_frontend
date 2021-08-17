@@ -11,38 +11,42 @@
         </div>
         <div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">+ Add New Card</div>
     </div>
-    <div class="mr-lg-5 mr-4">
-        <div class="sub-titles mb-3">Purchased Metl Coins</div>
-        <div class="d-flex align-items-center">
-            <div class="mr-5">
-                <small>{{totals?.purchased.toFixed(2)}}</small>
-                <div class="d-flex">
-                    <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
-                    <img src="assets/img/coin/light_blue.svg" alt="" width="16" height="16">
+    <ng-container *ngIf="totals">
+
+        <div class="mr-lg-5 mr-4">
+
+            <div class="sub-titles mb-3">Purchased Metl Coins</div>
+            <div class="d-flex align-items-center">
+                <div class="mr-5">
+                    <small>{{totals?.purchased.toFixed(2)}}</small>
+                    <div class="d-flex">
+                        <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
+                        <img src="assets/img/coin/light_blue.svg" alt="" width="16" height="16">
+                    </div>
+                </div>
+                <div class="total-class">
+                    ${{(totals?.purchased_worth).toFixed(2)}}
                 </div>
             </div>
-            <div class="total-class">
-                ${{(totals?.purchased_worth).toFixed(2)}}
-            </div>
         </div>
-    </div>
-    <div class="mr-lg-5 mr-4">
-        <div class="sub-titles mb-3">Received Metl Coins</div>
-        <div class="d-flex align-items-center">
-            <div class="mr-5">
-                <small>{{totals?.received.toFixed(2)}}</small>
-                <div class="d-flex">
-                    <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
-                    <img src="assets/img/coin/light_blue.svg" alt="" height="16" width="16" class="mr-1">
-                    <img src="assets/img/coin/green.svg" alt="" height="16" width="16" class="mr-1">
-                    <img src="assets/img/coin/blue.svg" alt="" width="16" height="16">
+        <div class="mr-lg-5 mr-4">
+            <div class="sub-titles mb-3">Received Metl Coins</div>
+            <div class="d-flex align-items-center">
+                <div class="mr-5">
+                    <small>{{totals?.received.toFixed(2)}}</small>
+                    <div class="d-flex">
+                        <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
+                        <img src="assets/img/coin/light_blue.svg" alt="" height="16" width="16" class="mr-1">
+                        <img src="assets/img/coin/green.svg" alt="" height="16" width="16" class="mr-1">
+                        <img src="assets/img/coin/blue.svg" alt="" width="16" height="16">
+                    </div>
+                </div>
+                <div class="total-class">
+                    ${{(totals?.received_worth).toFixed(2)}}
                 </div>
             </div>
-            <div class="total-class">
-                ${{(totals?.received_worth).toFixed(2)}}
-            </div>
         </div>
-    </div>
+    </ng-container>
 </div>
 
 <hr>

@@ -6,6 +6,8 @@ import {SubjectService} from '@core/services/subject.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {MatSort, Sort} from '@angular/material/sort';
 import {sortTableData} from '@core/helpers/sort-table-data-by-column';
+import {filter} from 'rxjs/operators';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-payments-purchase-history-tab',
@@ -25,16 +27,22 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, AfterViewIni
 
     constructor(
         private paymentsService: PaymentsService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private isEmptyObj: CheckForEmptyObjectPipe
     ) {
 
     }
 
     ngOnInit(): void {
-        this.getPurchasesHistory();
-        // this.subject.getAllPaymentsData().subscribe(dt => {
-        //     this.getPurchasesHistory({});
-        // });
+        this.subject.currentPaymentsData
+            .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
+            .subscribe((dt: any) => {
+                this.purchases = dt.payment_intents;
+                this.filteredPurchases = dt.payment_intents;
+                this.tableData = new MatTableDataSource(this.filteredPurchases);
+                this.tableData.paginator = this.paginator;
+                this.tableData.sort = this.sort;
+            });
     }
 
     getFilters(e) {

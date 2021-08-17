@@ -38,10 +38,6 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
             this.bitProducts = dt;
         }));
-
-        this.subject.getAllPaymentsData().subscribe(dt => {
-            // console.log(dt)
-        });
     }
 
     openPurchaseModal(purchase) {
@@ -53,6 +49,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
                 this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({user_id: this.authUser.id, ...dt}).subscribe(ph => {
                     this.totals = ph.user_coins;
                     this.subject.setAllPaymentsData(ph);
+                    this.subject.changePaymentsData(ph);
                 }));
             }
         }));

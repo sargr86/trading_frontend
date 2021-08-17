@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.loginForm.valid) {
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
                 localStorage.setItem('token', dt?.token || '');
-                this.subject.changeAuthUser(jwtDecode(localStorage.getItem('token')));
+                this.subject.changeAuthUser(jwtDecode(dt?.token || ''));
                 await this.router.navigateByUrl(this.authGuard.redirectUrl || '/');
             }));
         }

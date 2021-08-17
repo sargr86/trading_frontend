@@ -72,6 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getAuthenticatedUser() {
         this.subscriptions.push(this.subject.authUser.subscribe(dt => {
+            console.log(dt)
             this.authUser = dt;
             this.getUserCards();
             this.getDailyStocks();
@@ -95,6 +96,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.userCards = dt;
             this.showPurchaseBits = false;
         });
+
+        console.log({user_id: this.authUser.id})
 
         // Getting user cards from the server
         this.subscriptions.push(this.stripeCustomersService.getUserCards({user_id: this.authUser.id}).subscribe((dt: Card[]) => {

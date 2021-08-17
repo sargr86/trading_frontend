@@ -9,6 +9,7 @@ import {EMAIL_PATTERN} from '@core/constants/patterns';
 import {VerifyEmailComponent} from '@core/components/modals/verify-email/verify-email.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SubjectService} from '@core/services/subject.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
     selector: 'app-login',
@@ -42,9 +43,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isSubmitted = true;
         if (this.loginForm.valid) {
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
-                localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-                this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
-                await this.router.navigateByUrl(this.authGuard.redirectUrl ? this.authGuard.redirectUrl : '/');
+                localStorage.setItem('token', dt?.token || '');
+                this.subject.changeAuthUser(jwtDecode(localStorage.getItem('token')));
+                await this.router.navigateByUrl(this.authGuard.redirectUrl || '/');
             }));
         }
     }

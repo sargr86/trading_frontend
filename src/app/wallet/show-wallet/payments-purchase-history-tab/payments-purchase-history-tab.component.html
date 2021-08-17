@@ -3,11 +3,13 @@
     <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
 </div>
 
-<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4" [hidden]="filteredPurchases.length===0">
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8 table border my-4"
+       matSort matSortActive="created" matSortDirection="desc"
+       matSortDisableClear [hidden]="filteredPurchases.length===0">
 
     <ng-container *ngFor="let col of displayedColumns">
         <ng-container [matColumnDef]="col">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell [mat-sort-header]=" col === 'date' ? col : null " [disabled]="col !== 'date'" *matHeaderCellDef>
                 <div class="table-item d-flex align-items-center">{{col|capitalizeAddSpaces}}</div>
             </th>
             <td mat-cell *matCellDef="let element">

@@ -15,6 +15,7 @@ export class SubjectService {
     stockSortTypes = [];
     videoComments = [];
     defaultExtAccount = 'bank_account';
+    paymentsData = {};
 
     public messageData = new Subject<any>();
     public videoCommentsData = new Subject<any>();
@@ -37,6 +38,7 @@ export class SubjectService {
     private indicesSource = new BehaviorSubject(this.indices);
     private stockTypesSource = new BehaviorSubject(this.stockTypes);
     private stockSortTypesSource = new BehaviorSubject(this.stockSortTypes);
+    private paymentsDataSource = new BehaviorSubject(this.paymentsData);
 
     authUser = this.authUserSource.asObservable();
     currentUserStocks = this.userStocksSource.asObservable();
@@ -46,6 +48,7 @@ export class SubjectService {
     currentIndices = this.indicesSource.asObservable();
     currentVideoComments = this.videoCommentsSource.asObservable();
     currentDefaultExtAccountSource = this.defaultExtAccountSource.asObservable();
+    currentPaymentsData = this.paymentsDataSource.asObservable();
 
 
     constructor() {
@@ -159,7 +162,11 @@ export class SubjectService {
         this.userCardsSource.next(cards);
     }
 
-    changeDefaultExtAccount(acc){
+    changeDefaultExtAccount(acc) {
         this.defaultExtAccountSource.next(acc);
+    }
+
+    changePaymentsData(data) {
+        this.paymentsDataSource.next(data);
     }
 }

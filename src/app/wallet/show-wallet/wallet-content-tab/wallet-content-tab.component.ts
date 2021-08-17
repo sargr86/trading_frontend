@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
 import {UsersService} from '@core/services/users.service';
@@ -18,13 +18,15 @@ import {LoaderService} from '@core/services/loader.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {filter} from 'rxjs/operators';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
+import {MatSort, Sort} from '@angular/material/sort';
+import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 
 @Component({
     selector: 'app-wallet-content-tab',
     templateUrl: './wallet-content-tab.component.html',
     styleUrls: ['./wallet-content-tab.component.scss']
 })
-export class WalletContentTabComponent implements OnInit, OnDestroy {
+export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestroy {
     subscriptions: Subscription[] = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'payment_group', 'status'];
     payments = [];
@@ -38,6 +40,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     @Input() accountTransfers = [];
     @Input() userCards: Card[] = [];
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
     @Output() changeTab = new EventEmitter();
 
     pageSize = 5;
@@ -55,7 +58,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         public loader: LoaderService,
         private countTotals: CountPurchasedTransferredTotalsPipe,
-        private isEmptyObj: CheckForEmptyObjectPipe
+        private isEmptyObj: CheckForEmptyObjectPipe,
     ) {
     }
 
@@ -69,6 +72,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;
             });
+
+
     }
 
     handle(e) {
@@ -99,12 +104,23 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
                 this.filteredPayments = dt.payment_intents;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;
+                this.tableData.sort = this.sort;
             }));
         }
     }
 
     changeTabToPayouts() {
         this.changeTab.emit(3);
+    }
+
+    ngAfterViewInit() {
+        this.sort.sortChange.subscribe((sort: Sort) => {
+            this.filteredPayments = sortTableData(this.filteredPayments, 'created', sort.direction);
+            this.paginator.pageIndex = 0;
+            this.tableData = new MatTableDataSource(this.filteredPayments);
+            this.tableData.paginator = this.paginator;
+        });
+
     }
 
     ngOnDestroy(): void {

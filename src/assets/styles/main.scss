@@ -13,6 +13,7 @@
 @import '~@videojs/themes/dist/forest/index.css';
 // Sea
 @import '~@videojs/themes/dist/sea/index.css';
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@ctrl/ngx-emoji-mart/picker';
 @import "~plyr/src/sass/plyr";
@@ -1091,6 +1092,15 @@ mat-optgroup {
         .mat-progress-spinner circle, .mat-spinner circle {
             stroke: $white !important;
         }
+    }
+}
+
+.vjs-watermark-content {
+    img {
+        position: absolute;
+        width: 12%;
+        top: 10px;
+        left: 10px;
     }
 }
 

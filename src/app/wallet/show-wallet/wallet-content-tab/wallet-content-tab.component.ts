@@ -67,10 +67,11 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
             .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
             .subscribe((dt: any) => {
                 this.payments = dt.payment_intents;
-                this.filteredPayments = dt.payment_intents;
+                this.filterPayments();
                 this.totals = dt.user_coins;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;
+                this.tableData.sort = this.sort;
             });
 
 
@@ -80,6 +81,7 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
         this.pageIndex = e.pageIndex;
         this.pageSize = e.pageSize;
         this.filterPayments();
+        this.tableData = new MatTableDataSource(this.filteredPayments);
     }
 
     filterPayments() {
@@ -100,6 +102,7 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt.payment_intents;
+                this.filterPayments();
                 this.totals = dt.user_coins;
                 this.filteredPayments = dt.payment_intents;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
@@ -115,10 +118,10 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
 
     ngAfterViewInit() {
         this.sort.sortChange.subscribe((sort: Sort) => {
-            this.filteredPayments = sortTableData(this.filteredPayments, 'created', sort.direction);
+            this.payments = sortTableData(this.payments, 'created', sort.direction);
             this.paginator.pageIndex = 0;
+            this.filterPayments();
             this.tableData = new MatTableDataSource(this.filteredPayments);
-            this.tableData.paginator = this.paginator;
         });
 
     }

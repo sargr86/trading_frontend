@@ -60,6 +60,7 @@
         "videojs-hls-quality-selector": "^1.1.4",
         "videojs-record": "^4.1.0",
         "videojs-resolution-switcher": "^0.4.2",
+        "videojs-watermark": "^2.0.0",
         "xlsx": "^0.17.0",
         "zone.js": "~0.10.2"
     },

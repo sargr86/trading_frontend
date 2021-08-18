@@ -10,6 +10,9 @@ import * as adapter from 'webrtc-adapter/out/adapter_no_global.js';
 import * as RecordRTC from 'recordrtc';
 import * as moment from 'moment';
 
+import watermark from 'videojs-watermark';
+import 'videojs-watermark/dist/videojs-watermark.css';
+
 
 import * as Record from 'videojs-record/dist/videojs.record.js';
 import {VideoService} from '@core/services/video.service';
@@ -166,6 +169,13 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 console.log('Source changed to %s', this.player.src());
             });
         });
+
+        videojs.registerPlugin('watermark', watermark);
+        this.player.watermark({
+            image: 'assets/img/logo.png',
+            position: 'top-right'
+        });
+
 
         // device is ready
         this.player.on('deviceReady', (a) => {

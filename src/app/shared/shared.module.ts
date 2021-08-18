@@ -45,7 +45,6 @@ import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-trans
 import {ConvertToCurrencyPipe} from './pipes/convert-to-currency.pipe';
 import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
 import { MatReusableTableComponent } from './components/mat-reusable-table/mat-reusable-table.component';
-import {MatTableExporterModule} from 'mat-table-exporter';
 
 @NgModule({
     declarations: [
@@ -97,7 +96,6 @@ import {MatTableExporterModule} from 'mat-table-exporter';
         NgxPayPalModule,
         CreditCardDirectivesModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
-        MatTableExporterModule
     ],
     providers: [
         GetAuthUserPipe,

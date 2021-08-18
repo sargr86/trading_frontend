@@ -1,0 +1,29 @@
+<table mat-table matTableExporter [dataSource]="tableData" #table
+       class="mat-elevation-z8 table border my-4" matSort matSortActive="created" matSortDirection="desc"
+       [hidden]="filteredData.length===0">
+
+    <ng-container *ngFor="let col of columns">
+        <ng-container [matColumnDef]="col">
+            <th mat-header-cell [mat-sort-header]=" col === 'date' ? col : null " [disabled]="col !== 'date'"
+                *matHeaderCellDef>
+                <div class="table-item d-flex align-items-center">{{col|capitalizeAddSpaces}}</div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="table-item">
+                    <span>{{col|getColumnContent:element}}</span>
+                </div>
+            </td>
+        </ng-container>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+</table>
+
+<div>
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" [hidden]="filteredData.length===0"
+                   [pageIndex]="pageIndex" (page)="handle($event)"
+                   [pageSize]="pageSize" [length]="data.length" showFirstLastButtons></mat-paginator>
+    <h3 [hidden]="filteredData.length>0">No payments found</h3>
+</div>

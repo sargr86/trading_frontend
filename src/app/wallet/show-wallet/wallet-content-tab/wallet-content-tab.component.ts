@@ -6,7 +6,7 @@ import {UsersService} from '@core/services/users.service';
 import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {Subscription} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
@@ -26,7 +26,7 @@ import {sortTableData} from '@core/helpers/sort-table-data-by-column';
     templateUrl: './wallet-content-tab.component.html',
     styleUrls: ['./wallet-content-tab.component.scss']
 })
-export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestroy {
+export class WalletContentTabComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     displayedColumns = ['date', 'amount_submitted', 'payment_method', 'payment_group', 'status'];
     payments = [];
@@ -45,6 +45,11 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
 
     pageSize = 5;
     pageIndex = 0;
+
+    changingValue: Subject<boolean> = new Subject();
+    tellChild(){
+        this.changingValue.next(true);
+    }
 
 
     constructor(
@@ -67,6 +72,7 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
             .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
             .subscribe((dt: any) => {
                 this.payments = dt.payment_intents;
+                console.log(this.payments)
                 this.totals = dt.user_coins;
                 this.filterPayments();
                 this.tableData = new MatTableDataSource(this.filteredPayments);
@@ -116,15 +122,7 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
         this.changeTab.emit(3);
     }
 
-    ngAfterViewInit() {
-        this.sort.sortChange.subscribe((sort: Sort) => {
-            this.payments = sortTableData(this.payments, 'created', sort.direction);
-            this.paginator.pageIndex = 0;
-            this.filterPayments();
-            this.tableData = new MatTableDataSource(this.filteredPayments);
-        });
 
-    }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

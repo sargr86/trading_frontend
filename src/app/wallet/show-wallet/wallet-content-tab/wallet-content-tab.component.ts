@@ -67,8 +67,8 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
             .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
             .subscribe((dt: any) => {
                 this.payments = dt.payment_intents;
-                this.filterPayments();
                 this.totals = dt.user_coins;
+                this.filterPayments();
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;
                 this.tableData.sort = this.sort;
@@ -102,8 +102,8 @@ export class WalletContentTabComponent implements OnInit, AfterViewInit, OnDestr
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt.payment_intents;
-                this.filterPayments();
                 this.totals = dt.user_coins;
+                this.filterPayments();
                 this.filteredPayments = dt.payment_intents;
                 this.tableData = new MatTableDataSource(this.filteredPayments);
                 this.tableData.paginator = this.paginator;

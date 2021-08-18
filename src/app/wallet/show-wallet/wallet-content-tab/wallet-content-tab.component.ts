@@ -47,7 +47,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     pageIndex = 0;
 
     changingValue: Subject<boolean> = new Subject();
-    tellChild(){
+
+    tellChild() {
         this.changingValue.next(true);
     }
 
@@ -72,27 +73,10 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
             .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
             .subscribe((dt: any) => {
                 this.payments = dt.payment_intents;
-                console.log(this.payments)
                 this.totals = dt.user_coins;
-                this.filterPayments();
-                this.tableData = new MatTableDataSource(this.filteredPayments);
-                this.tableData.paginator = this.paginator;
-                this.tableData.sort = this.sort;
             });
 
 
-    }
-
-    handle(e) {
-        this.pageIndex = e.pageIndex;
-        this.pageSize = e.pageSize;
-        this.filterPayments();
-        this.tableData = new MatTableDataSource(this.filteredPayments);
-    }
-
-    filterPayments() {
-        this.filteredPayments = this.payments.slice(this.pageIndex * this.pageSize,
-            this.pageIndex * this.pageSize + this.pageSize);
     }
 
     getFilters(e) {
@@ -109,11 +93,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
                 this.payments = dt.payment_intents;
                 this.totals = dt.user_coins;
-                this.filterPayments();
-                this.filteredPayments = dt.payment_intents;
-                this.tableData = new MatTableDataSource(this.filteredPayments);
-                this.tableData.paginator = this.paginator;
-                this.tableData.sort = this.sort;
             }));
         }
     }
@@ -121,8 +100,6 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     changeTabToPayouts() {
         this.changeTab.emit(3);
     }
-
-
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

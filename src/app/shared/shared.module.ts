@@ -44,6 +44,8 @@ import {GetWalletTablesColumnContentsPipe} from './pipes/get-wallet-tables-colum
 import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-transfered-totals.pipe';
 import {ConvertToCurrencyPipe} from './pipes/convert-to-currency.pipe';
 import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
+import { MatReusableTableComponent } from './components/mat-reusable-table/mat-reusable-table.component';
+import {MatTableExporterModule} from 'mat-table-exporter';
 
 @NgModule({
     declarations: [
@@ -80,7 +82,8 @@ import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
         GetWalletTablesColumnContentsPipe,
         CountPurchasedTransferredTotalsPipe,
         ConvertToCurrencyPipe,
-        ApplyDiscountToPricePipe
+        ApplyDiscountToPricePipe,
+        MatReusableTableComponent
     ],
     imports: [
         CommonModule,
@@ -94,6 +97,7 @@ import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
         NgxPayPalModule,
         CreditCardDirectivesModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
+        MatTableExporterModule
     ],
     providers: [
         GetAuthUserPipe,
@@ -140,12 +144,13 @@ import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
         FixTextLineBreaksPipe,
         GetWalletTablesColumnContentsPipe,
         CountPurchasedTransferredTotalsPipe,
+        ConvertToCurrencyPipe,
+        ApplyDiscountToPricePipe,
         VideoRegularPlayerComponent,
         StocksMarqueeComponent,
         CompletePurchaseModalComponent,
         PaymentsFilterFormComponent,
-        ConvertToCurrencyPipe,
-        ApplyDiscountToPricePipe
+        MatReusableTableComponent,
     ]
 
 })

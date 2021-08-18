@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
 import {sortTableData} from '@core/helpers/sort-table-data-by-column';
@@ -13,7 +13,7 @@ import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe'
     templateUrl: './mat-reusable-table.component.html',
     styleUrls: ['./mat-reusable-table.component.scss']
 })
-export class MatReusableTableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MatReusableTableComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     subscriptions: Subscription [] = [];
 
@@ -23,6 +23,7 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnDestr
 
     @Input() data = [];
     @Input() columns = [];
+    @Input() tab;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -35,14 +36,20 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnDestr
     ) {
     }
 
-    @Input() changing: Subject<boolean>;
+    @Input() changing: Subject<string>;
 
     ngOnInit(): void {
         this.filterPayments();
         this.tableData = new MatTableDataSource(this.filteredData);
         this.tableData.paginator = this.paginator;
         this.tableData.sort = this.sort;
+    }
 
+    ngOnChanges() {
+        this.filterPayments();
+        this.tableData = new MatTableDataSource(this.filteredData);
+        this.tableData.paginator = this.paginator;
+        this.tableData.sort = this.sort;
     }
 
     handle(e) {
@@ -73,12 +80,17 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnDestr
 
     ngAfterViewInit() {
 
-        // Exporting to Excel file from here (it exports all the pages of paginated table!!!)
-        this.subscriptions.push(this.changing.subscribe(() => {
-            const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.prepareDataForXls());
-            const wb: XLSX.WorkBook = {Sheets: {data: ws}, SheetNames: ['data']};
-            XLSX.writeFile(wb, 'Exported_File.xlsx');
-        }));
+        if (this.changing) {
+
+            // Exporting to Excel file from here (it exports all the pages of paginated table!!!)
+            this.subscriptions.push(this.changing.subscribe((action) => {
+                if (action === 'export') {
+                    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.prepareDataForXls());
+                    const wb: XLSX.WorkBook = {Sheets: {data: ws}, SheetNames: ['data']};
+                    XLSX.writeFile(wb, 'Exported_File.xlsx');
+                }
+            }));
+        }
 
         this.subscriptions.push(this.sort.sortChange.subscribe((sort: Sort) => {
             this.data = sortTableData(this.data, 'created', sort.direction);

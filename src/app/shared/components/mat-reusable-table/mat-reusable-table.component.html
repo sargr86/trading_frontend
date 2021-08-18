@@ -25,6 +25,6 @@
     <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" [hidden]="filteredData.length===0"
                    [pageIndex]="pageIndex" (page)="handle($event)"
                    [pageSize]="pageSize" [length]="data.length" showFirstLastButtons></mat-paginator>
-    <h3 [hidden]="filteredData.length>0">No payments found</h3>
+    <h3 [hidden]="filteredData.length > 0">No {{tab}} found</h3>
 </div>
 

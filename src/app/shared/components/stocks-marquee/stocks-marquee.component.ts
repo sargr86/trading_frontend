@@ -26,8 +26,8 @@ export class StocksMarqueeComponent implements OnInit {
     }
 
     getPercentageDetails(stock) {
-        const value = stock.changesPercentage.replace(/[(%)]/g, '');
-        return {...{value}, color: 'black-percent-' + (+value > 0 ? 'green' : 'red')};
+        const value = +stock.changesPercentage.replace(/[(%)]/g, '');
+        return {...{value: value.toFixed(2)}, color: 'black-percent-' + (+value > 0 ? 'green' : 'red')};
 
     }
 

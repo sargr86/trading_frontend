@@ -67,7 +67,6 @@
 
 <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="tableData"
        class="mat-elevation-z8 table border my-4" matSort matSortActive="created" matSortDirection="desc"
-       matSortDisableClear
        [hidden]="filteredPayments.length===0">
 
     <ng-container *ngFor="let col of displayedColumns">
@@ -91,6 +90,7 @@
 
 <div>
     <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25]" [hidden]="filteredPayments.length===0"
-                   showFirstLastButtons></mat-paginator>
+                   [pageIndex]="pageIndex" (page)="handle($event)"
+                   [pageSize]="pageSize" [length]="payments.length" showFirstLastButtons></mat-paginator>
     <h3 [hidden]="filteredPayments.length>0">No payments found</h3>
 </div>

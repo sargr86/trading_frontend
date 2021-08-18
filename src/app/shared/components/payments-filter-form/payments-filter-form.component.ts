@@ -29,7 +29,6 @@ export class PaymentsFilterFormComponent implements OnInit {
 
 
     dateChanged(e, control) {
-        console.log(this.createdCtrl.controls)
         this.createdCtrl.controls[control].patchValue(e.value);
         this.datesRange[control] = moment(e.value).format('X');
         this.formReady.emit(this.datesRange);

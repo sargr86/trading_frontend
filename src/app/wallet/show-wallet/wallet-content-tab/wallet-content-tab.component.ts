@@ -18,8 +18,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {filter} from 'rxjs/operators';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
-import {MatSort, Sort} from '@angular/material/sort';
-import {sortTableData} from '@core/helpers/sort-table-data-by-column';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
     selector: 'app-wallet-content-tab',
@@ -46,11 +45,7 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     pageSize = 5;
     pageIndex = 0;
 
-    changingValue: Subject<boolean> = new Subject();
-
-    tellChild() {
-        this.changingValue.next(true);
-    }
+    changingValue: Subject<string> = new Subject();
 
 
     constructor(
@@ -75,8 +70,10 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
                 this.payments = dt.payment_intents;
                 this.totals = dt.user_coins;
             });
+    }
 
-
+    tellChild() {
+        this.changingValue.next('export');
     }
 
     getFilters(e) {
@@ -90,7 +87,9 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id, ...filters
         };
         if (params.customer) {
+            this.loader.dataLoading = true;
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
+                this.loader.dataLoading = false;
                 this.payments = dt.payment_intents;
                 this.totals = dt.user_coins;
             }));

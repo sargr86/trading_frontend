@@ -14,7 +14,7 @@ import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe
     templateUrl: './payments-purchase-history-tab.component.html',
     styleUrls: ['./payments-purchase-history-tab.component.scss']
 })
-export class PaymentsPurchaseHistoryTabComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     purchases = [];
     filteredPurchases = [];
@@ -60,16 +60,6 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, AfterViewIni
                 this.tableData.sort = this.sort;
             }));
         }
-    }
-
-    ngAfterViewInit() {
-        this.sort.sortChange.subscribe((sort: Sort) => {
-            this.filteredPurchases = sortTableData(this.filteredPurchases, 'created', sort.direction);
-            this.paginator.pageIndex = 0;
-            this.tableData = new MatTableDataSource(this.filteredPurchases);
-            this.tableData.paginator = this.paginator;
-        });
-
     }
 
     ngOnDestroy(): void {

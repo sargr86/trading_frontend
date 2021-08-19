@@ -24,6 +24,7 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnChang
     @Input() data = [];
     @Input() columns = [];
     @Input() tab;
+    @Input() matSortActive = 'date';
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -76,6 +77,10 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnChang
             });
         });
         return contents;
+    }
+
+    isSortableCol(col) {
+        return ['date', 'initiated'].includes(col);
     }
 
     ngAfterViewInit() {

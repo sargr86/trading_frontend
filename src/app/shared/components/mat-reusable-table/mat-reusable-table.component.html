@@ -1,10 +1,10 @@
 <table mat-table [dataSource]="tableData"
-       class="mat-elevation-z8 table border my-4" matSort matSortActive="created" matSortDirection="desc"
+       class="mat-elevation-z8 table border my-4" matSort [matSortActive]="matSortActive" matSortDirection="desc"
        [hidden]="filteredData.length===0">
 
     <ng-container *ngFor="let col of columns">
         <ng-container [matColumnDef]="col">
-            <th mat-header-cell [mat-sort-header]=" col === 'date' ? col : null " [disabled]="col !== 'date'"
+            <th mat-header-cell [mat-sort-header]="isSortableCol(col) ? col : null" [disabled]="!isSortableCol(col)"
                 *matHeaderCellDef>
                 <div class="table-item d-flex align-items-center">{{col|capitalizeAddSpaces}}</div>
             </th>

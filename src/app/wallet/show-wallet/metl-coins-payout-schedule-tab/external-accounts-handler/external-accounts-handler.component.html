@@ -3,7 +3,7 @@
         <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
     </div>
     <div *ngIf="bankAccount" class="bank">
-        <div>
+        <div class="external-account" (click)="showExtAccountPayouts(bankAccount)">
             <p class="name">{{bankAccount.bank_name}}</p>
             <p class="numbers">
                 <span class="routing-number">{{bankAccount.routing_number}}</span>
@@ -20,7 +20,7 @@
         </p>
     </div>
     <div *ngIf="debitCardAccount" class="debit-card">
-        <div>
+        <div class="external-account" (click)="showExtAccountPayouts(debitCardAccount)">
             <p class="brand">{{debitCardAccount.brand}}</p>
             <p class="card-number">
                 **** **** **** {{debitCardAccount.last4}}

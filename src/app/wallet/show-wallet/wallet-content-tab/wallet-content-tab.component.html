@@ -4,14 +4,16 @@
         <div class="d-flex">
             <ul>
                 <li *ngFor="let card of userCards">
-                    <img src="assets/img/credit-card%20(7).svg" alt="" width="22" height="15">
+                    <img src="assets/img/credit-card.svg" alt="" width="22" height="15">
                     <span class="ml-2">**** **** **** {{card.last4}}</span>
                 </li>
             </ul>
         </div>
-        <div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">+ Add New Card</div>
+        <div role="button" class="red-link-btn" (click)="router.navigate(['user/cards/add'])">
+            + Add New Card
+        </div>
     </div>
-    <ng-container *ngIf="totals">
+    <ng-container>
 
         <div class="mr-lg-5 mr-4">
 

@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {User} from '@shared/models/user';
+import {PaymentsService} from '@core/services/wallet/payments.service';
 
 @Component({
     selector: 'app-payments-received-history-tab',
@@ -29,25 +30,25 @@ export class PaymentsReceivedHistoryTabComponent implements OnInit, OnDestroy {
 
     constructor(
         private subject: SubjectService,
-        private cardsService: CardsService,
+        private paymentsService: PaymentsService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
     ) {
     }
 
     ngOnInit(): void {
-        this.getTransfersHistory({});
+        // this.getTransfersHistory({});
     }
 
     getTransfersHistory(filters) {
-        // const stripeAccountId = this.userCards?.[0].stripe_account_id;
-        // const params = this.getExactParams.transform({stripe_account_id: stripeAccountId, ...filters});
-        // this.subscriptions.push(this.walletService.getReceivedPaymentsHistory(params).subscribe(dt => {
-        //     this.accountTransfers = dt;
-            this.filteredTransfers = this.accountTransfers;
+        const stripeAccountId = this.userCards?.[0].stripe_account_id;
+        const params = {stripe_account_id: stripeAccountId, ...filters};
+        this.subscriptions.push(this.paymentsService.getReceivedPaymentsHistory(params).subscribe(dt => {
+            this.accountTransfers = dt;
+            // this.filteredTransfers = this.accountTransfers;
             this.tableData = new MatTableDataSource(this.accountTransfers);
             this.tableData.paginator = this.paginator;
             // this.transfersLoaded.emit(dt);
-        // }));
+        }));
     }
 
     getFilters(e) {

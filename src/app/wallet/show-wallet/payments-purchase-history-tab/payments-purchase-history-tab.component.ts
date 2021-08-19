@@ -37,8 +37,8 @@ export class PaymentsPurchaseHistoryTabComponent implements OnInit, OnDestroy {
         this.subject.currentPaymentsData
             .pipe(filter(dt => !this.isEmptyObj.transform(dt)))
             .subscribe((dt: any) => {
-                this.purchases = dt.payment_intents;
-                this.filteredPurchases = dt.payment_intents;
+                this.purchases = dt.payment_intents.filter(t => t.transfer_group === 'purchases');
+                this.filteredPurchases = dt.payment_intents.filter(t => t.transfer_group === 'purchases');
                 this.tableData = new MatTableDataSource(this.filteredPurchases);
                 this.tableData.paginator = this.paginator;
                 this.tableData.sort = this.sort;

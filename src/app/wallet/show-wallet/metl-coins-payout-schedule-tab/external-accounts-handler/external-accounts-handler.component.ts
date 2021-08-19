@@ -20,6 +20,7 @@ export class ExternalAccountsHandlerComponent implements OnInit, OnDestroy {
 
     @Input() userCards = [];
     @Output() extAccountChanged = new EventEmitter();
+    @Output() viewExtAccountPayouts = new EventEmitter();
 
 
     constructor(
@@ -85,6 +86,10 @@ export class ExternalAccountsHandlerComponent implements OnInit, OnDestroy {
             this.extAccountChanged.emit(this.defaultExtAccount);
             this.subject.changeDefaultExtAccount(this.defaultExtAccount);
         }));
+    }
+
+    showExtAccountPayouts(acc){
+        this.viewExtAccountPayouts.emit(acc);
     }
 
     ngOnDestroy(): void {

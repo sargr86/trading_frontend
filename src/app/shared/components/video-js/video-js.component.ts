@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import videojs from 'video.js';
 import {API_URL} from '@core/constants/global';
-import * as Plyr from 'plyr';
+// import * as Plyr from 'plyr';
 // import 'videojs-hls-quality-selector';
 
 declare var require: any;
-require('videojs-contrib-quality-levels');
-require('videojs-hls-quality-selector');
+// require('videojs-contrib-quality-levels');
+// require('videojs-hls-quality-selector');
 
 @Component({
     selector: 'app-vjs-player',

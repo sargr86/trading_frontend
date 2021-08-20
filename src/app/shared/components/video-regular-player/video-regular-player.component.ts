@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
+import watermark from 'videojs-watermark';
+import 'videojs-watermark/dist/videojs-watermark.css';
+import videojs from 'video.js';
 
 @Component({
     selector: 'app-video-regular-player',
@@ -10,12 +13,14 @@ export class VideoRegularPlayerComponent implements OnInit {
 
     @Input() videoData;
     videoUrl;
+    player;
 
     constructor() {
     }
 
     ngOnInit(): void {
         const video = document.getElementsByTagName('video')[0];
+        // this.player = videojs(video, {});
         this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
         video.setAttribute('src', this.videoUrl);
     }

@@ -173,7 +173,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         videojs.registerPlugin('watermark', watermark);
         this.player.watermark({
             image: 'assets/img/logo.png',
-            position: 'top-right'
+            position: 'bottom-right',
+            fadeTime: 1000
         });
 
 

@@ -24,12 +24,4 @@ export class VideoRegularPlayerComponent implements OnInit {
         video.setAttribute('src', this.videoUrl);
     }
 
-    toggleFullscreen() {
-        if (!document.fullscreenElement) {
-            document.getElementsByTagName('video')[0].requestFullscreen();
-        } else if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-    }
-
 }

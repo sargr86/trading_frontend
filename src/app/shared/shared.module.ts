@@ -45,6 +45,7 @@ import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-trans
 import {ConvertToCurrencyPipe} from './pipes/convert-to-currency.pipe';
 import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
 import { MatReusableTableComponent } from './components/mat-reusable-table/mat-reusable-table.component';
+import { VideoJsPlayerComponent } from './components/video-js-player/video-js-player.component';
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import { MatReusableTableComponent } from './components/mat-reusable-table/mat-r
         CountPurchasedTransferredTotalsPipe,
         ConvertToCurrencyPipe,
         ApplyDiscountToPricePipe,
-        MatReusableTableComponent
+        MatReusableTableComponent,
+        VideoJsPlayerComponent
     ],
     imports: [
         CommonModule,
@@ -149,6 +151,7 @@ import { MatReusableTableComponent } from './components/mat-reusable-table/mat-r
         CompletePurchaseModalComponent,
         PaymentsFilterFormComponent,
         MatReusableTableComponent,
+        VideoJsPlayerComponent,
     ]
 
 })

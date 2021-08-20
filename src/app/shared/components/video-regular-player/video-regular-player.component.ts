@@ -20,9 +20,16 @@ export class VideoRegularPlayerComponent implements OnInit {
 
     ngOnInit(): void {
         const video = document.getElementsByTagName('video')[0];
-        // this.player = videojs(video, {});
         this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
         video.setAttribute('src', this.videoUrl);
+    }
+
+    toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.getElementsByTagName('video')[0].requestFullscreen();
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
     }
 
 }

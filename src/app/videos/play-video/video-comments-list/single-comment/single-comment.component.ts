@@ -69,6 +69,10 @@ export class SingleCommentComponent implements OnInit {
         return reactors.filter(r => r?.users_comments[reaction]).length;
     }
 
+    getFullName(data) {
+        return data.first_name + ' ' + data.last_name;
+    }
+
     async openChannelPage(username) {
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
             await this.router.navigate(['channels/show'], {queryParams: {username}})

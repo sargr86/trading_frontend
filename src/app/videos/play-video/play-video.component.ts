@@ -8,6 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-play-video',
@@ -38,7 +39,8 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private toastr: ToastrService,
-        private loader: LoaderService
+        private loader: LoaderService,
+        private titleService: Title
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -50,6 +52,7 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.subscriptions.push(this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
+            this.titleService.setTitle(dt.name);
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);
                 this.updateViewsCount(dt);

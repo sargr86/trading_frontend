@@ -3,8 +3,8 @@
     <div class="ads-block-left">
         <ng-container *ngIf="videoData">
             <div class="videoWrap">
-<!--                <app-video-js-player [videoData]="videoData"></app-video-js-player>-->
-<!--                <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>-->
+                <!--                <app-video-js-player [videoData]="videoData"></app-video-js-player>-->
+                <!--                <app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>-->
                 <app-video-regular-player [videoData]="videoData"></app-video-regular-player>
             </div>
 
@@ -43,7 +43,8 @@
             <div class="tags-container">
                 <div class="editable-details" *ngIf="!showTagsForm">
                     <p class="video-title">{{videoData?.name}}</p>
-                    <button id="add-tags" *ngIf="!showTagsForm && authUser?.id === videoData.author_id"
+                    <button id="add-tags"
+                            *ngIf="auth.loggedIn() && !showTagsForm && authUser?.id === videoData.author_id"
                             (click)="showTagsForm = !showTagsForm">
                         <mat-icon>edit</mat-icon>
                         <span>Edit details</span>
@@ -70,7 +71,8 @@
             <div class="comments-block">
                 <app-video-comments-form *ngIf="auth.loggedIn()" (added)="commentAdded($event)" [videoData]="videoData"
                                          class="w-100"></app-video-comments-form>
-                <mat-spinner [diameter]="15" [hidden]="!auth.loggedIn() || commentsLoading === 'finished'"></mat-spinner>
+                <mat-spinner [diameter]="15"
+                             [hidden]="!auth.loggedIn() || commentsLoading === 'finished'"></mat-spinner>
                 <app-video-comments-list [videoData]="videoData"
                                          [videoComments]="videoComments"></app-video-comments-list>
             </div>

@@ -115,7 +115,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     maxLength: 3600, //30
                     debug: true,
                     videoEngine: 'recordrtc',
-                    videoMimeType: 'video/webm;codecs=H264',
+                    videoMimeType: 'video/webm;codecs=vp8,opus',
                     frameWidth: 640,
                     frameHeight: 480
                     // convertEngine: 'ts-ebml'
@@ -197,7 +197,6 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // this.thumbnailFile = this.videoSettings.thumbnail;
             // console.log(this.videoSettings.thumbnail)
 
-            console.log(this.authUser)
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
                 author_id: this.authUser.id,

@@ -1103,5 +1103,15 @@ mat-optgroup {
         right: 26px;
     }
 }
+.video-js{
+    width: 100% !important;
+}
+
+.video-js .vjs-big-play-button {
+    display: none;
+}
+.video-js .vjs-control-bar {
+    display: flex;
+}
 
 @import "responsive";

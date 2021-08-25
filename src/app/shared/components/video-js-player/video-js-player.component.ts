@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import videojs from 'video.js';
 import watermark from 'videojs-watermark';
@@ -8,50 +8,44 @@ import watermark from 'videojs-watermark';
     templateUrl: './video-js-player.component.html',
     styleUrls: ['./video-js-player.component.scss']
 })
-export class VideoJsPlayerComponent implements OnInit {
+export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
     @Input() videoData;
-    videoUrl;
+    @Input() videoUrl;
+    videoInit = false;
 
     @ViewChild('target', {static: true}) target: ElementRef;
-    @Input() options: {
-        fluid: boolean,
-        liveui: boolean,
-        aspectRatio: string,
-        autoplay: boolean,
-        sources: {
-            src: string,
-            type: string,
-        }[],
-        plugins?: {
-            record: {
-                audio: boolean,
-                video: boolean,
-                maxLength: number,
-                debug: boolean
-            }
-        },
 
+    options = {
+        preload: 'metadata',
+        controls: true,
+        autoplay: true,
+        overrideNative: true,
+        techOrder: ['html5'],
         html5: {
-            vhs: {
-                withCredentials: boolean
+            nativeVideoTracks: false,
+            nativeAudioTracks: false,
+            nativeTextTracks: false,
+            hls: {
+                withCredentials: false,
+                overrideNative: true,
+                debug: true
             }
         }
-
     };
     player: videojs.Player;
 
-    constructor() {
+    constructor(
+        private cdr: ChangeDetectorRef
+    ) {
     }
 
     ngOnInit(): void {
-        this.initPlayer();
 
     }
 
     initPlayer() {
-        const video = document.getElementsByTagName('video')[0];
-        this.videoUrl = API_URL + 'uploads/videos/' + this.videoData.filename;
-        video.setAttribute('src', this.videoUrl);
+        const video = document.getElementById('player');
+
         this.player = videojs(video, this.options, () => {
             videojs.registerPlugin('watermark', watermark);
             this.player.watermark({
@@ -59,7 +53,14 @@ export class VideoJsPlayerComponent implements OnInit {
                 position: 'bottom-right',
                 fadeTime: 1000
             });
+            videojs.deregisterPlugin('watermark');
         });
+        this.videoInit = true;
+        this.cdr.detectChanges();
+    }
+
+    ngAfterViewInit() {
+        this.initPlayer();
     }
 
 }

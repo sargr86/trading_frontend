@@ -17,7 +17,7 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
     player: videojs.Player;
 
     constructor(
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
     ) {
     }
 
@@ -41,7 +41,11 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
         });
 
         this.player.on('loadedmetadata', () => {
-            console.log(this)
+            this.videoInit = 'finished';
+        });
+
+        this.player.on('error', (err) => {
+            const error = this.player.error();
             this.videoInit = 'finished';
         });
 

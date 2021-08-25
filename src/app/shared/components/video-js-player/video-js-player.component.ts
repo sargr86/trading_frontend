@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {API_URL} from '@core/constants/global';
+import {VIDEOJS_PLAYER_OPTIONS} from '@core/constants/global';
 import videojs from 'video.js';
 import watermark from 'videojs-watermark';
 
@@ -11,27 +11,9 @@ import watermark from 'videojs-watermark';
 export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
     @Input() videoData;
     @Input() videoUrl;
-    videoInit = false;
+    videoInit = 'idle';
 
-    @ViewChild('target', {static: true}) target: ElementRef;
-
-    options = {
-        preload: 'metadata',
-        controls: true,
-        autoplay: true,
-        overrideNative: true,
-        techOrder: ['html5'],
-        html5: {
-            nativeVideoTracks: false,
-            nativeAudioTracks: false,
-            nativeTextTracks: false,
-            hls: {
-                withCredentials: false,
-                overrideNative: true,
-                debug: true
-            }
-        }
-    };
+    options = VIDEOJS_PLAYER_OPTIONS;
     player: videojs.Player;
 
     constructor(
@@ -45,7 +27,7 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
 
     initPlayer() {
         const video = document.getElementById('player');
-
+        this.videoInit = 'pending';
         this.player = videojs(video, this.options, () => {
             videojs.registerPlugin('watermark', watermark);
             this.player.watermark({
@@ -53,10 +35,19 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
                 position: 'bottom-right',
                 fadeTime: 1000
             });
+
             videojs.deregisterPlugin('watermark');
+
         });
-        this.videoInit = true;
+
+        this.player.on('loadedmetadata', () => {
+            console.log(this)
+            this.videoInit = 'finished';
+        });
+
+
         this.cdr.detectChanges();
+
     }
 
     ngAfterViewInit() {

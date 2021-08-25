@@ -138,21 +138,21 @@ export const MINI_GRAPHS_TABS = [
 ];
 
 export const VIDEOJS_PLAYER_OPTIONS = {
-    autoplay: true,
+    preload: 'metadata',
     controls: true,
-    bigPlayButton: false,
-    progressControl: true,
-    fluid: false,
-    preload: 'auto',
+    autoplay: true,
+    overrideNative: true,
+    techOrder: ['html5'],
     html5: {
-        vhs: {
-            withCredentials: true,
-            overrideNative: true,
-        },
+        nativeVideoTracks: false,
         nativeAudioTracks: false,
-        nativeVideoTracks: false
-    },
-    sources: []
+        nativeTextTracks: false,
+        hls: {
+            withCredentials: false,
+            overrideNative: true,
+            debug: true
+        }
+    }
 };
 
 export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51HdPckKqYIKd5fEInH0pL35DSdkG9JfxAiuT7K3JutO3zFseApoTCjdj72fK82tORdAjDIUOPQzSm62DIeUUmdpw00OhdcsU0p';

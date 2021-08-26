@@ -32,6 +32,8 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     cardOptions = STRIPE_CARD_OPTIONS;
     elementsOptions: StripeElementsOptions = {locale: 'en'};
 
+    isSubmitted = false;
+
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
     constructor(
@@ -68,34 +70,38 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     }
 
     saveCard() {
-        this.loader.dataLoading = true;
-        if (this.editCase) {
-            this.subscriptions.push(this.customersService.updateStripeCard({
-                card_id: this.cardId,
-                ...this.saveCardForm.value
-            }).subscribe(async (dt) => {
-                this.loader.dataLoading = false;
-                this.toastr.success('The card info has been updated successfully');
-                await this.router.navigate(['/wallet/show']);
-            }));
-        } else {
-            this.subscriptions.push(this.stripeService
-                .createToken(this.card.element, {name: this.authUser.first_name + ' ' + this.authUser.last_name})
-                .subscribe(result => {
-                    if (result.token) {
-                        const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
-                        this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
-                            this.loader.dataLoading = false;
-                            this.toastr.success('The card has been added successfully');
-                            this.subject.changeUserCards(dt.cards);
-                            await this.router.navigate(['/wallet/show']);
+        this.isSubmitted = true;
+        if (this.saveCardForm.valid) {
+            this.loader.dataLoading = true;
 
-                        });
-                    } else if (result.error) {
-                        this.loader.dataLoading = false;
-                        this.toastr.error(result.error.message);
-                    }
+            if (this.editCase) {
+                this.subscriptions.push(this.customersService.updateStripeCard({
+                    card_id: this.cardId,
+                    ...this.saveCardForm.value
+                }).subscribe(async (dt) => {
+                    this.loader.dataLoading = false;
+                    this.toastr.success('The card info has been updated successfully');
+                    await this.router.navigate(['/wallet/show']);
                 }));
+            } else {
+                this.subscriptions.push(this.stripeService
+                    .createToken(this.card.element, {name: this.authUser.first_name + ' ' + this.authUser.last_name})
+                    .subscribe(result => {
+                        if (result.token) {
+                            const cardData = generateStripeCardData(result, this.authUser, this.saveCardForm.value.name);
+                            this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
+                                this.loader.dataLoading = false;
+                                this.toastr.success('The card has been added successfully');
+                                this.subject.changeUserCards(dt.cards);
+                                await this.router.navigate(['/wallet/show']);
+
+                            });
+                        } else if (result.error) {
+                            this.loader.dataLoading = false;
+                            this.toastr.error(result.error.message);
+                        }
+                    }));
+            }
         }
     }
 

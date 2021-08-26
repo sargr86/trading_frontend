@@ -3,6 +3,12 @@
         <div class="field-row">
             <input formControlName="name" class="form-control">
         </div>
+        <div>
+            <mat-error *ngIf="isSubmitted && saveCardForm.get('name').hasError('required')">
+                Card name is required
+            </mat-error>
+        </div>
+
         <ngx-stripe-card [hidden]="editCase"
                          [options]="cardOptions"
                          [elementsOptions]="elementsOptions">

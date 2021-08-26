@@ -48,8 +48,7 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
             const error = this.player.error();
             this.videoInit = 'finished';
         });
-
-
+        this.videoInit = 'finished';
         this.cdr.detectChanges();
 
     }

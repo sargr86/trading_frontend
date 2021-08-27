@@ -1116,6 +1116,13 @@ mat-optgroup {
     display: flex;
 }
 
+.video-js .vjs-time-control {
+    display: block;
+}
+.video-js .vjs-remaining-time {
+    display: none;
+}
+
 mat-error {
     color: #F53C6F!important;
 }

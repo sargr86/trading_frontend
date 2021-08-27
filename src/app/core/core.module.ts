@@ -60,7 +60,7 @@ import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purch
         PageLoadingComponent,
         StocksListsTabsComponent,
         TurboPlanComponent,
-        PurchaseCoinsComponent
+        PurchaseCoinsComponent,
     ],
     imports: [
         CommonModule,

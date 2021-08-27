@@ -46,6 +46,7 @@ import {ConvertToCurrencyPipe} from './pipes/convert-to-currency.pipe';
 import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
 import { MatReusableTableComponent } from './components/mat-reusable-table/mat-reusable-table.component';
 import { VideoJsPlayerComponent } from './components/video-js-player/video-js-player.component';
+import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.directive';
 
 @NgModule({
     declarations: [
@@ -84,7 +85,8 @@ import { VideoJsPlayerComponent } from './components/video-js-player/video-js-pl
         ConvertToCurrencyPipe,
         ApplyDiscountToPricePipe,
         MatReusableTableComponent,
-        VideoJsPlayerComponent
+        VideoJsPlayerComponent,
+        NumbersOnlyInputDirective
     ],
     imports: [
         CommonModule,
@@ -152,6 +154,7 @@ import { VideoJsPlayerComponent } from './components/video-js-player/video-js-pl
         PaymentsFilterFormComponent,
         MatReusableTableComponent,
         VideoJsPlayerComponent,
+        NumbersOnlyInputDirective
     ]
 
 })

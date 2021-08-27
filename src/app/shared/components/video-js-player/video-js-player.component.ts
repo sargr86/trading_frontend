@@ -33,7 +33,7 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
             this.player.watermark({
                 image: 'assets/img/logo.png',
                 position: 'bottom-right',
-                fadeTime: 1000
+                fadeTime: null
             });
 
             videojs.deregisterPlugin('watermark');
@@ -48,7 +48,6 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
             const error = this.player.error();
             this.videoInit = 'finished';
         });
-        this.videoInit = 'finished';
         this.cdr.detectChanges();
 
     }

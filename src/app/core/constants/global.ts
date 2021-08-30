@@ -129,7 +129,7 @@ export const MAIN_SECTIONS = [
     {name: 'Chat rooms', img: 'item-8', icon: '', link: '/chat/rooms', separator: true, production: false, auth: true},
     {name: 'Saved videos', img: 'item-11', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11', icon: '', link: '/videos', auth: true, separator: true, production: true},
-    {name: 'Analytics', img: 'item-9', icon: '', link: '/stocks/analytics', auth: true, production: true},
+    {name: 'Analytics', img: 'item-9', icon: '', link: 'analytics', auth: true, production: true},
 ];
 
 export const MINI_GRAPHS_TABS = [

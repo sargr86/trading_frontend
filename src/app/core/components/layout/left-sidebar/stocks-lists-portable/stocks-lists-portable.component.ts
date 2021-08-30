@@ -9,6 +9,8 @@ import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {Tab} from '@shared/models/tab';
 import {MINI_GRAPHS_TABS} from '@core/constants/global';
+import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -48,7 +50,8 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         private stocksService: StocksService,
         private cdr: ChangeDetectorRef,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private dialog: MatDialog
     ) {
     }
 
@@ -133,12 +136,26 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     async viewFullWatchlist() {
-        await this.router.navigate(['channels/show'], {
-            queryParams: {
-                username: this.authUser.username,
-                tab: 'watchlist'
-            }
-        });
+        this.openModal();
+        // await this.router.navigate(['channels/show'], {
+        //     queryParams: {
+        //         username: this.authUser.username,
+        //         tab: 'watchlist'
+        //     }
+        // });
+    }
+
+    openModal() {
+        if (this.auth.loggedIn()) {
+            this.dialog.open(StocksListsModalComponent, {
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                height: '100%',
+                width: '100%',
+                panelClass: 'stocks-lists-modal'
+            }).afterClosed().subscribe(dt => {
+            });
+        }
     }
 
     updateUserStocksPriority(e) {

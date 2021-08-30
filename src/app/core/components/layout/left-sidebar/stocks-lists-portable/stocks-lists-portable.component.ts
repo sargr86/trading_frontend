@@ -159,6 +159,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     }
 
     updateUserStocksPriority(e) {
+
         const sendData = {
             order_type: e.orderType.toLowerCase(),
             rows: JSON.stringify(e.stocks),

@@ -1,6 +1,6 @@
 <ng-container *ngFor="let section of mainSections;let i = index;trackBy:trackByElement">
     <div class="left-menu-main" [class.st-left-menu]="i===0"
-         [class.active]="router.url === section.link || (section.link === 'analytics' && router.url.includes('analytics'))"
+         [class.active]="router.url === section.link || (section.link === '/stocks/analytics' && router.url.includes('analytics'))"
          (click)="changePage(section.link)" *ngIf="(section.auth && auth.loggedIn()) || !section.auth"
          [hidden]="!section.production && envName==='production'">
         <mat-icon *ngIf="section.icon">{{section.icon}}</mat-icon>

@@ -18,6 +18,7 @@ import {CustomersService} from '@core/services/wallet/customers.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
+import {cardsStore} from '@shared/stores/cards-store';
 
 @Component({
     selector: 'app-navbar',
@@ -46,6 +47,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     userCards = [];
     totals;
+
+    cardsStore = cardsStore;
 
     constructor(
         public router: Router,
@@ -102,6 +105,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.stripeCustomersService.getUserCards({user_id: this.authUser.id})
                 .subscribe((dt: Card[]) => {
                     this.userCards = dt;
+                    this.cardsStore.setCards(dt);
                     // console.log(this.userCards)
                     this.subject.changeUserCards(dt);
                     this.getAllPaymentsHistory();

@@ -9,6 +9,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {filter} from 'rxjs/operators';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {cardsStore} from '@shared/stores/cards-store';
 
 @Component({
     selector: 'app-show-wallet',
@@ -24,6 +25,8 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
     transfersLoaded = false;
     selectedTabIndex = 0;
     defaultExtAccount;
+
+    cardsStore = cardsStore;
 
     @ViewChild('tabGroup', {static: false}) tabGroup;
 
@@ -41,7 +44,7 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.getUserCards();
+        // this.getUserCards();
         this.getTransfersHistory({});
         this.getSavedActiveTab();
     }

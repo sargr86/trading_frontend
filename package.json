@@ -39,6 +39,8 @@
         "jquery": "^3.5.1",
         "jwt-decode": "^3.0.0",
         "material-design-icons": "^3.0.1",
+        "mobx": "^6.3.2",
+        "mobx-angular": "^4.3.0",
         "moment": "^2.29.1",
         "ng-phone-number": "^1.0.15",
         "ngx-bootstrap": "^6.1.0",

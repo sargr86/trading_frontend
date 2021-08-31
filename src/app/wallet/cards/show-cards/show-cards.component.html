@@ -1,6 +1,6 @@
-<div id="user-cards-list">
+<div id="user-cards-list" *mobxAutorun>
     <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
-    <ng-container *ngFor="let card of userCards;let ind = index">
+    <ng-container *ngFor="let card of cardsStore.cards;let ind = index">
         <div class="card p-4 " [ngClass]="getBgClass(ind)" [class.darken]="showActions && selectedCard === card"
 
              (mouseover)="toggleActions(card,true)"

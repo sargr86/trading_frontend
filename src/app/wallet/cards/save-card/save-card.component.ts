@@ -13,6 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {SubjectService} from '@core/services/subject.service';
+import {cardsStore} from '@shared/stores/cards-store';
 
 @Component({
     selector: 'app-save-card',
@@ -36,6 +37,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
+    cardsStore = cardsStore;
     constructor(
         public router: Router,
         private route: ActivatedRoute,
@@ -92,7 +94,10 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                             this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
                                 this.loader.dataLoading = false;
                                 this.toastr.success('The card has been added successfully');
-                                this.subject.changeUserCards(dt.cards);
+                                this.subject.changeUserCards(dt);
+                                console.log(dt)
+                                this.cardsStore.setCards(dt);
+                                console.log(this.cardsStore.cards)
                                 await this.router.navigate(['/wallet/show']);
 
                             });

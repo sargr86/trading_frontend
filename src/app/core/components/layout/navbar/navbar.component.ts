@@ -107,7 +107,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                     this.userCards = dt;
                     this.cardsStore.setCards(dt);
                     // console.log(this.userCards)
-                    this.subject.changeUserCards(dt);
+                    // this.subject.changeUserCards(dt);
                     this.getAllPaymentsHistory();
                 }));
     }
@@ -171,7 +171,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     checkIfUserHasCard() {
-        if (this.userCards?.length > 0) {
+        if (this.cardsStore.cards?.length > 0) {
             this.showPurchaseBits = true;
         } else {
             this.toastr.error('Please add at least one card first', 'No cards');

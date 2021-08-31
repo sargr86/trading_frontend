@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {Card} from '@shared/models/card';
 import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
@@ -34,7 +34,8 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         public router: Router,
         private subject: SubjectService,
         private customersService: CustomersService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        // private changeDetection: ChangeDetectionStrategy.OnPush
     ) {
     }
 

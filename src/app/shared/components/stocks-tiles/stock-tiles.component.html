@@ -23,7 +23,7 @@
                     <p class="stock-price"><span class="dollar-sign">$</span>{{stock.price}}</p>
                     <div class="stock-price-details">
                         <p class="stock-price-change">{{stock.change?.toFixed(2)}}</p>
-                        <p class="stock-price-change-percent">{{stock.changesPercentage.toFixed(2)}}%</p>
+                        <p class="stock-price-change-percent">{{(+stock.changesPercentage).toFixed(2)}}%</p>
                     </div>
                 </div>
 

@@ -3,7 +3,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {SubjectService} from '@core/services/subject.service';
 import {StocksService} from '@core/services/stocks.service';
-import {NavigationEnd, Router, RoutesRecognized} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
@@ -11,6 +11,7 @@ import {Tab} from '@shared/models/tab';
 import {MINI_GRAPHS_TABS} from '@core/constants/global';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import {MatDialog} from '@angular/material/dialog';
+import {stocksStore} from '@shared/stores/stocks-store';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -43,8 +44,12 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
     disallowedStocksPages = false;
 
+    stocksStore = stocksStore;
+    routerEventsLoaded = false;
+
     constructor(
         public router: Router,
+        private route: ActivatedRoute,
         private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private subject: SubjectService,
@@ -82,13 +87,15 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                             this.selectedSortType = dt[0];
                         }));
 
-                        this.getUserStocks();
+                        // this.getUserStocks();
                         this.getIndices(); // @todo remove if refreshing implemented
                     }
                 }
 
             }
         }));
+
+        this.getUserStocks();
 
 
         this.subscriptions.push(this.subject.getStocksData().subscribe(dt => {
@@ -122,6 +129,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
             this.userStocks = dt?.user_stocks || [];
             this.loader.stocksLoading.status = 'finished';
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+            this.stocksStore.setStocks(this.userStocks);
         }));
 
 

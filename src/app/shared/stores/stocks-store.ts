@@ -3,7 +3,7 @@ import { action, observable} from 'mobx';
 
 
 @Injectable()
-export class CardsStore {
+export class StocksStore {
     @observable stocks = [];
 
     @action setStocks(stocks: any) {
@@ -12,4 +12,4 @@ export class CardsStore {
 
 }
 
-export const cardsStore = new CardsStore();
+export const stocksStore = new StocksStore();

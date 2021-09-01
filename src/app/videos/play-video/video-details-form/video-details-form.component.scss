@@ -6,6 +6,24 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
+    .center-group {
+        .image-container {
+            position: relative;
+
+            .saved-thumbnail {
+                width: 150px;
+            }
+
+            mat-icon {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+            }
+        }
+
+    }
+
     .right-group {
         display: flex;
         align-items: center;
@@ -27,7 +45,7 @@
             border-radius: 0;
             transition: 0.3s ease-in-out;
             margin-left: 30px;
-            @media screen and (max-width: 767px){
+            @media screen and (max-width: 767px) {
                 margin-left: 0;
             }
         }

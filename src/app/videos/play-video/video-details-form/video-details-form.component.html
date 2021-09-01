@@ -13,6 +13,13 @@
             </mat-error>
         </div>
     </div>
+    <div class="center-group">
+        <div class="image-container" *ngIf="videoData.thumbnail">
+            <img class="saved-thumbnail"  [src]="apiUrl+ 'uploads/thumbnails/'+videoData.thumbnail">
+            <mat-icon (click)="removeThumbnail()">cancel</mat-icon>
+        </div>
+        <input type="file" (change)="changeThumbnail($event)" [hidden]="videoData.thumbnail">
+    </div>
     <div class="right-group">
 
         <div id="video-tags">

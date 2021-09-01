@@ -156,11 +156,10 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     saveVideoDetails(e) {
-        this.videoData.tags = e.tags;
-        this.subscriptions.push(this.videoService.saveVideoDetails({
-            ...e,
-            video_id: this.videoData.id
-        }).subscribe(dt => {
+        console.log(e.tags)
+        this.subscriptions.push(this.videoService.saveVideoDetails(
+            e
+        ).subscribe(dt => {
             this.videoData = dt;
             this.showTagsForm = false;
         }));

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {ToastrService} from 'ngx-toastr';
-import {TAG_CHARACTERS_LIMIT} from '@core/constants/global';
+import {API_URL, TAG_CHARACTERS_LIMIT} from '@core/constants/global';
 
 @Component({
     selector: 'app-video-details-form',
@@ -18,6 +18,10 @@ export class VideoDetailsFormComponent implements OnInit {
     isSubmitted = false;
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
+    apiUrl = API_URL;
+
+    thumbnailFile;
+
     constructor(
         private fb: FormBuilder,
         private toastr: ToastrService
@@ -25,11 +29,18 @@ export class VideoDetailsFormComponent implements OnInit {
         this.videoDetailsForm = this.fb.group({
             name: ['', [Validators.required, Validators.maxLength(TAG_CHARACTERS_LIMIT)]],
             tags: [[], Validators.required],
+            thumbnail: [''],
+            video_id: []
         });
     }
 
     ngOnInit(): void {
-        this.videoDetailsForm.patchValue({name: this.videoData.name});
+        console.log(this.videoData)
+        this.videoDetailsForm.patchValue({
+            video_id: this.videoData.id,
+            ...this.videoData
+        });
+        console.log(this.videoDetailsForm.value)
     }
 
     add(event: MatChipInputEvent): void {
@@ -62,11 +73,32 @@ export class VideoDetailsFormComponent implements OnInit {
         }
     }
 
+    removeThumbnail() {
+        this.videoDetailsForm.patchValue({thumbnail: ''});
+        this.videoData.thumbnail = '';
+    }
+
+    changeThumbnail(e) {
+        this.thumbnailFile = e.target.files[0];
+        this.videoDetailsForm.patchValue({thumbnail: this.thumbnailFile.name});
+    }
+
     saveDetails() {
         this.videoDetailsForm.patchValue({tags: this.videoData.tags});
         this.isSubmitted = true;
         if (this.videoDetailsForm.valid) {
-            this.formReady.emit(this.videoDetailsForm.value);
+            const formData = new FormData();
+            for (const field in this.videoDetailsForm.value) {
+                if (field !== 'tags') {
+                    formData.append(field, this.videoDetailsForm.value[field]);
+                } else {
+                    formData.append(field, JSON.stringify(this.videoDetailsForm.value[field]));
+                }
+            }
+            if (this.thumbnailFile) {
+                formData.append('video_thumbnail_file', this.thumbnailFile, this.thumbnailFile.name);
+            }
+            this.formReady.emit(formData);
         }
     }
 

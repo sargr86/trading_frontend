@@ -48,6 +48,10 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/get-categories`, {});
     }
 
+    getVideoTags() {
+        return this.httpClient.get<any>(`${API_URL}videos/get-all-tags`, {});
+    }
+
     getUserVideos(params) {
         return this.httpClient.get<any>(`${API_URL}videos/get-user-videos`, {params});
     }

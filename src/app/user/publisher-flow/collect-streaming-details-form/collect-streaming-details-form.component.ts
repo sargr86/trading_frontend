@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {API_URL, DESCRIPTION_CHARACTERS_LIMIT} from '@core/constants/global';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {VideoService} from '@core/services/video.service';
@@ -7,6 +7,8 @@ import {ToastrService} from 'ngx-toastr';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {MatChipInputEvent, MatChipList} from '@angular/material/chips';
 import {LoaderService} from '@core/services/loader.service';
+import {Observable} from 'rxjs';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 @Component({
     selector: 'app-stream-details-form',
@@ -31,6 +33,8 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     privacyTypes = [{name: 'Public', icon: 'public'}, {name: 'Private', icon: 'lock'}];
     selectedPrivacy;
 
+    savedTags = [];
+
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
     @ViewChild('tagList') tagList: MatChipList;
     @Output('formReady') formReady = new EventEmitter();
@@ -49,6 +53,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         this.selectedPrivacy = this.privacyTypes[0];
         this.initForm();
         this.getVideoCategories();
+        this.getVideoTags();
 
         // this.startStreamingForm.get('tags').statusChanges.subscribe(
         //     status => this.tagList.errorState = this.tags.length > 3
@@ -75,11 +80,22 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         });
     }
 
+    getVideoTags() {
+        this.videoService.getVideoTags().subscribe(dt => {
+            this.savedTags = dt;
+        });
+    }
+
     changedPrivacy(e) {
         this.selectedPrivacy = this.privacyTypes.find(t => t.name === e.value);
     }
 
+    autocompleteSelect(e) {
+        console.log(e)
+    }
+
     add(event: MatChipInputEvent): void {
+        console.log('add')
         const input = event.input;
         const value = event.value;
 
@@ -158,4 +174,8 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         return this.startStreamingForm.get('tags');
     }
 
+    autoCompleteTagsSelected(event: MatAutocompleteSelectedEvent): void {
+        this.tags.push({name: event.option.viewValue});
+        this.startStreamingForm.patchValue({tags: this.tags});
+    }
 }

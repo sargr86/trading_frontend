@@ -4,6 +4,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {ToastrService} from 'ngx-toastr';
 import {API_URL, TAG_CHARACTERS_LIMIT} from '@core/constants/global';
+import {DROPZONE_CONFIG} from 'ngx-dropzone-wrapper';
 
 @Component({
     selector: 'app-video-details-form',
@@ -22,6 +23,8 @@ export class VideoDetailsFormComponent implements OnInit {
 
     thumbnailFile;
 
+    dropzoneConfig = DROPZONE_CONFIG;
+
     constructor(
         private fb: FormBuilder,
         private toastr: ToastrService
@@ -35,12 +38,10 @@ export class VideoDetailsFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.videoData)
         this.videoDetailsForm.patchValue({
             video_id: this.videoData.id,
             ...this.videoData
         });
-        console.log(this.videoDetailsForm.value)
     }
 
     add(event: MatChipInputEvent): void {
@@ -100,6 +101,15 @@ export class VideoDetailsFormComponent implements OnInit {
             }
             this.formReady.emit(formData);
         }
+    }
+
+    removeImage() {
+
+    }
+
+    onAddedFile(e) {
+        this.thumbnailFile = e[0];
+        this.videoDetailsForm.patchValue({thumbnail: this.thumbnailFile.name});
     }
 
 }

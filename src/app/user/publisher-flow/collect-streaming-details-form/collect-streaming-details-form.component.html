@@ -93,7 +93,7 @@
                     <span class="material-icons">backup</span>
                     Upload Thumbnail
                 </label>
-                <mat-spinner [diameter]="15" *ngIf="thumbnailUploading"></mat-spinner>
+                <mat-spinner [diameter]="15" *ngIf="loader.fileProcessing"></mat-spinner>
                 <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
                 <mat-error *ngIf="startStreamingForm.get('thumbnail').hasError('required') && isSubmitted">
                     The thumbnail is required

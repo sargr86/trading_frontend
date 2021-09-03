@@ -1,26 +1,39 @@
 @import 'variables';
+@import "dropzone-custom";
 
 #tags-form {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
 
     .center-group {
+        display: flex;
+        align-items: center;
+        width: 33%;
+
         .image-container {
             position: relative;
 
             .saved-thumbnail {
                 width: 150px;
             }
+        }
 
-            mat-icon {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                cursor: pointer;
+        .actions-container {
+            width: 100%;
+
+            #change-thumbnail {
+                background-color: $metl-green;
+                color: $white;
+                margin-left: 10px;
+                display: flex;
+                align-items: center;
+                padding: 8px 24px;
             }
         }
+
+
 
     }
 
@@ -45,6 +58,7 @@
             border-radius: 0;
             transition: 0.3s ease-in-out;
             margin-left: 30px;
+            padding: 10px;
             @media screen and (max-width: 767px) {
                 margin-left: 0;
             }

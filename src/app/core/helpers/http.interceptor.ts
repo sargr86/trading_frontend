@@ -31,6 +31,7 @@ export class RequestInterceptor implements HttpInterceptor {
             if (err instanceof HttpErrorResponse) {
                 this.loader.formProcessing = false;
                 this.loader.dataLoading = false;
+                this.loader.fileProcessing = false;
                 this.loader.stocksLoading.status = 'finished';
                 const message = err.error.msg;
 
@@ -43,7 +44,7 @@ export class RequestInterceptor implements HttpInterceptor {
                     this.toastr.error('Please check server connection.', 'Unable to connect to server');
                 } else if (err.error.hasOwnProperty('main')) {
                     this.toastr.error(err.error.msg, err.error.main);
-                } else if(err.error.hasOwnProperty('msg')){
+                } else if (err.error.hasOwnProperty('msg')) {
                     this.toastr.error(message.replace(/<(.|\n)*?>/g, ''));
                 }
                 // Stripe errors

@@ -44,9 +44,20 @@ import {GetWalletTablesColumnContentsPipe} from './pipes/get-wallet-tables-colum
 import {CountPurchasedTransferredTotalsPipe} from './pipes/count-purchased-transfered-totals.pipe';
 import {ConvertToCurrencyPipe} from './pipes/convert-to-currency.pipe';
 import {ApplyDiscountToPricePipe} from './pipes/apply-discount-to-price.pipe';
-import { MatReusableTableComponent } from './components/mat-reusable-table/mat-reusable-table.component';
-import { VideoJsPlayerComponent } from './components/video-js-player/video-js-player.component';
+import {MatReusableTableComponent} from './components/mat-reusable-table/mat-reusable-table.component';
+import {VideoJsPlayerComponent} from './components/video-js-player/video-js-player.component';
 import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.directive';
+import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
+
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+    url: '{no_url}',
+    maxFilesize: 50,
+    maxFiles: 1,
+    acceptedFiles: 'image/*',
+    autoProcessQueue: false,
+    addRemoveLinks: true
+};
 
 @NgModule({
     declarations: [
@@ -100,6 +111,7 @@ import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.d
         NgxPayPalModule,
         CreditCardDirectivesModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
+        DropzoneModule
     ],
     providers: [
         GetAuthUserPipe,
@@ -115,7 +127,11 @@ import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.d
         CapitalizeAddSpacesPipe,
         GetWalletTablesColumnContentsPipe,
         CountPurchasedTransferredTotalsPipe,
-        ApplyDiscountToPricePipe
+        ApplyDiscountToPricePipe,
+        {
+            provide: DROPZONE_CONFIG,
+            useValue: DEFAULT_DROPZONE_CONFIG
+        }
     ],
     exports: [
         FormsModule,
@@ -154,8 +170,9 @@ import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.d
         PaymentsFilterFormComponent,
         MatReusableTableComponent,
         VideoJsPlayerComponent,
-        NumbersOnlyInputDirective
-    ]
+        NumbersOnlyInputDirective,
+        DropzoneModule
+    ],
 
 })
 export class SharedModule {

@@ -39,3 +39,21 @@
         }
     }
 }
+
+#video-thumbnail-dropzone {
+    .dz-message {
+        height: 150px;
+        overflow: hidden;
+    }
+
+    .dz-progress {
+        display: none;
+    }
+
+    .dz-image {
+        img {
+            height: 200px;
+            object-fit: cover;
+        }
+    }
+}

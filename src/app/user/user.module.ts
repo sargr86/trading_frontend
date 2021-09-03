@@ -24,15 +24,6 @@ import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-drop
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
 
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-    url: '{no_url}',
-    maxFilesize: 50,
-    maxFiles: 1,
-    acceptedFiles: 'image/*',
-    autoProcessQueue: false,
-    addRemoveLinks: true
-};
-
 @NgModule({
     declarations: [
         ProfileComponent,
@@ -58,15 +49,9 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         OpenviduSessionModule,
         NgxPhotoEditorModule,
         BsDatepickerModule.forRoot(),
-        DropzoneModule,
         SharedModule
     ],
-    providers: [
-        {
-            provide: DROPZONE_CONFIG,
-            useValue: DEFAULT_DROPZONE_CONFIG
-        }
-    ],
+
     exports: []
 })
 export class UserModule {

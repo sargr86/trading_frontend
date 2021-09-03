@@ -15,10 +15,17 @@
     </div>
     <div class="center-group">
         <div class="image-container" *ngIf="videoData.thumbnail">
-            <img class="saved-thumbnail"  [src]="apiUrl+ 'uploads/thumbnails/'+videoData.thumbnail">
-            <mat-icon (click)="removeThumbnail()">cancel</mat-icon>
+            <img class="saved-thumbnail" [src]="apiUrl+ 'uploads/thumbnails/'+videoData.thumbnail">
         </div>
-        <input type="file" (change)="changeThumbnail($event)" [hidden]="videoData.thumbnail">
+        <div class="actions-container">
+            <button id="change-thumbnail" *ngIf="videoData.thumbnail" (click)="removeThumbnail()">Change thumbnail
+            </button>
+            <dropzone [config]="dropzoneConfig" [hidden]="videoData.thumbnail" (removedFile)="removeImage()"
+                      id="video-thumbnail-dropzone" class="single" #dropzone (thumbnail)="onAddedFile($event)"
+                      [message]="'Click or drag an image to upload'">
+            </dropzone>
+            <input type="file" (change)="changeThumbnail($event)" [hidden]="true">
+        </div>
     </div>
     <div class="right-group">
 
@@ -45,6 +52,7 @@
         <div class="actions">
             <button id="save-tags" (click)="saveDetails()">
                 <mat-icon>checked</mat-icon>
+                <span>Save changes</span>
             </button>
         </div>
     </div>

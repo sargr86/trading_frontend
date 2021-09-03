@@ -7,6 +7,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 export class LoaderService {
     formProcessing = false;
     dataLoading = false;
+    fileProcessing = false;
     isLoading = new Subject<boolean>();
     stocksLoading = {status: 'idle', text: ''};
 

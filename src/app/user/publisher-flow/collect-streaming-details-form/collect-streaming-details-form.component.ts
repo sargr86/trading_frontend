@@ -6,6 +6,7 @@ import {VideoService} from '@core/services/video.service';
 import {ToastrService} from 'ngx-toastr';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {MatChipInputEvent, MatChipList} from '@angular/material/chips';
+import {LoaderService} from '@core/services/loader.service';
 
 @Component({
     selector: 'app-stream-details-form',
@@ -39,6 +40,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         private toastr: ToastrService,
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
+        public loader: LoaderService
     ) {
     }
 
@@ -109,11 +111,13 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         fd.append('video_thumbnail_file', this.thumbnailFile);
         this.startStreamingForm.patchValue({thumbnail: this.thumbnailFile.name});
         this.thumbnailUploading = true;
+        this.loader.fileProcessing = true;
 
         this.videoService.saveVideoThumbnail(fd).subscribe(filename => {
             this.toastr.success('The thumbnail has been uploaded successfully');
             this.thumbnailUploading = false;
             this.thumbnailUploaded = true;
+            this.loader.fileProcessing = false;
         });
     }
 

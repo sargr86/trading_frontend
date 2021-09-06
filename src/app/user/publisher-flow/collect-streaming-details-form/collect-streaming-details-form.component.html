@@ -28,9 +28,15 @@
 
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteTagsSelected($event)">
-                    <mat-option *ngFor="let tag of savedTags" [value]="tag">
-                        {{tag.name}}
-                    </mat-option>
+
+                    <mat-optgroup *ngFor="let group of savedTags" [label]="group.name">
+                        <mat-option *ngFor="let tag of group.values" [value]="tag">
+                            {{tag?.tag_details.name}}
+                        </mat-option>
+                    </mat-optgroup>
+
+
+
                 </mat-autocomplete>
 
                 <mat-hint align="end">Please press 'Enter' after the tag name and write not more than 3 tags</mat-hint>

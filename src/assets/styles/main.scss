@@ -1119,12 +1119,19 @@ mat-optgroup {
 .video-js .vjs-time-control {
     display: block;
 }
+
 .video-js .vjs-remaining-time {
     display: none;
 }
 
 mat-error {
-    color: #F53C6F!important;
+    color: #F53C6F !important;
+}
+
+.mat-optgroup-label {
+    font-weight: bold !important;
+    text-transform: uppercase;
+    padding: 0 0 0 10px !important;
 }
 
 @import "responsive";

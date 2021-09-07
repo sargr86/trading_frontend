@@ -108,8 +108,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     getUserInfo() {
         this.dataLoading = 'loading';
+        const viewingOwnChannel = +(this.authUser.username === this.passedUsername);
         if (this.passedUsername) {
-            this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
+            this.usersService.getUserInfo({
+                username: this.passedUsername,
+                own_channel: viewingOwnChannel
+            }).subscribe(dt => {
                 if (dt) {
                     this.channelUser = dt;
                 }

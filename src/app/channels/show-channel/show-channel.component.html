@@ -3,7 +3,7 @@
     <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
     <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
     <ng-container *ngIf="channelUser">
-        <app-channel-profile [channelUser]="channelUser" [authUser]="authUser"
+        <app-channel-profile [channelUser]="channelUser" [authUser]="authUser" *ngIf="channelUser"
                              (toggleChatBox)="toggleChatBox()"></app-channel-profile>
         <div class="stocks-watchlist pWatchlist">
             <div class="profile-list user-profile-block">

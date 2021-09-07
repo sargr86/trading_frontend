@@ -48,6 +48,7 @@ import {MatReusableTableComponent} from './components/mat-reusable-table/mat-reu
 import {VideoJsPlayerComponent} from './components/video-js-player/video-js-player.component';
 import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.directive';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
+import { ChatBottomBoxComponent } from './components/chat-bottom-box/chat-bottom-box.component';
 
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
@@ -97,7 +98,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ApplyDiscountToPricePipe,
         MatReusableTableComponent,
         VideoJsPlayerComponent,
-        NumbersOnlyInputDirective
+        NumbersOnlyInputDirective,
+        ChatBottomBoxComponent
     ],
     imports: [
         CommonModule,
@@ -171,7 +173,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         MatReusableTableComponent,
         VideoJsPlayerComponent,
         NumbersOnlyInputDirective,
-        DropzoneModule
+        DropzoneModule,
+        ChatBottomBoxComponent
     ],
 
 })

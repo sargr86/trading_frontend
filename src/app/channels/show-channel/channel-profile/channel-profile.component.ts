@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {CroppedEvent} from 'ngx-photo-editor';
 import {UsersService} from '@core/services/users.service';
@@ -32,6 +32,8 @@ export class ChannelProfileComponent implements OnInit {
 
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
+
+    @Output() toggleChatBox = new EventEmitter();
 
     constructor(
         private usersService: UsersService,
@@ -77,12 +79,12 @@ export class ChannelProfileComponent implements OnInit {
     detectImageChange() {
         // document.querySelector('img.avatar').addEventListener('load', () => {
         //     console.log('Loading image!!!')
-            if (this.profileChangedEvent || this.coverChangedEvent) {
-                this.loader.dataLoading = false;
-                this.changingImage = false;
-                console.log('Avatar changed');
-                console.log(this.changingImage);
-            }
+        if (this.profileChangedEvent || this.coverChangedEvent) {
+            this.loader.dataLoading = false;
+            this.changingImage = false;
+            console.log('Avatar changed');
+            console.log(this.changingImage);
+        }
         // });
     }
 
@@ -175,6 +177,10 @@ export class ChannelProfileComponent implements OnInit {
                 this.changeAuthUserInfo(dt);
             }));
         }
+    }
+
+    toggleBottomChatBox() {
+        this.toggleChatBox.emit(this.channelUser);
     }
 
 }

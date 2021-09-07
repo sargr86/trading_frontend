@@ -57,6 +57,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     subscriptions = [];
     trackByElement = trackByElement;
 
+    showChatBox = false;
+
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;
     @ViewChild(VideosTabComponent) videosTab: VideosTabComponent;
@@ -195,6 +197,10 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
                 }));
         }
 
+    }
+
+    toggleChatBox() {
+        this.showChatBox = !this.showChatBox;
     }
 
 

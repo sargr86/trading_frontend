@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 .sub-bell {
     color: $red;
@@ -6,17 +7,13 @@
 }
 
 .subscribe-btn {
-    width: 119px;
-    height: 36px;
-    background: #18B587;
-    font-family: "Muli-Light";
-    font-size: 16px;
-    color: white !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include regularButton;
     margin-left: 16px;
     margin-right: 16px;
+}
+
+.toggle-chat-box-btn {
+    @include regularButton;
 }
 
 .loader {

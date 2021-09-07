@@ -14,6 +14,20 @@
     transition: 0.3s ease-in-out;
 }
 
+@mixin regularButton {
+    width: 119px;
+    height: 36px;
+    padding: 15px 32px;
+    color: $white !important;
+    font-size: 16px;
+    font-family: "Muli-Light";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+    background: $metl-green;
+}
+
 
 // Playlist videos modal
 @mixin videoItem {

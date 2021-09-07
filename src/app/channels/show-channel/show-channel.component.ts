@@ -108,8 +108,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     getUserInfo() {
         this.dataLoading = 'loading';
+        const viewingOwnChannel = +(this.authUser.username === this.passedUsername);
         if (this.passedUsername) {
-            this.usersService.getUserInfo({username: this.passedUsername}).subscribe(dt => {
+            this.usersService.getUserInfo({
+                username: this.passedUsername,
+                own_channel: viewingOwnChannel
+            }).subscribe(dt => {
                 if (dt) {
                     this.channelUser = dt;
                 }
@@ -119,9 +123,15 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
 
-    changeActiveTab(tab) {
+    async changeActiveTab(tab) {
         this.activeTab = tab;
         this.showFilters = false;
+        await this.router.navigate([`/channels/show`], {
+            queryParams: {
+                tab: tab.name.toLowerCase(),
+                username: this.passedUsername
+            }
+        });
         this.subject.setToggleFiltersData(this.showFilters);
         if (this.activeTab.name === 'Videos') {
             this.getUserInfo();

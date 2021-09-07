@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
     }
 
     checkIfPolicyPage() {
-        return /accessibility-assessment|security|help|privacy-policy|cookie-policy|about/.test(this.router.url);
+        return /accessibility-assessment|security|help|privacy-policy|cookie-policy|about-us/.test(this.router.url);
     }
 
 

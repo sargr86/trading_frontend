@@ -123,9 +123,15 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
 
-    changeActiveTab(tab) {
+    async changeActiveTab(tab) {
         this.activeTab = tab;
         this.showFilters = false;
+        await this.router.navigate([`/channels/show`], {
+            queryParams: {
+                tab: tab.name.toLowerCase(),
+                username: this.passedUsername
+            }
+        });
         this.subject.setToggleFiltersData(this.showFilters);
         if (this.activeTab.name === 'Videos') {
             this.getUserInfo();

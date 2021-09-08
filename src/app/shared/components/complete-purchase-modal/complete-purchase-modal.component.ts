@@ -15,6 +15,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {ToastrService} from 'ngx-toastr';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {LoaderService} from '@core/services/loader.service';
+import {cardsStore} from '@shared/stores/cards-store';
 
 
 @Component({
@@ -44,6 +45,8 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
+    cardsStore = cardsStore;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private matDialogRef: MatDialogRef<CompletePurchaseModalComponent>,
@@ -69,10 +72,11 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.selectedCard = this.authUser?.users_cards.find(t => t.primary) || this.authUser?.users_cards[0];
 
-        this.subject.currentUserCards.subscribe(dt => {
-            this.userCards = dt;
-            this.selectedCard = dt.find(t => t.primary) || dt[0];
-        });
+
+        this.userCards = this.cardsStore.cards;
+        this.selectedCard = this.userCards.find(t => t.primary) || this.userCards[0];
+
+
     }
 
     createPaymentIntent() {

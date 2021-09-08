@@ -1,19 +1,50 @@
-<div class="bottom_chat">
-    <div class="w-100 h-100 position-relative">
-        <div class="d-flex justify-content-between border-bottom py-3">
-            <div>
-                <img class="avatar" id="profile-image"
-                     [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
-                <span>{{channelUser.first_name + ' ' + channelUser.last_name}}</span>
+<form [formGroup]="chatForm">
+    <div class="bottom_chat">
+        <div class="w-100 h-100 position-relative">
+            <div class="d-flex justify-content-between border-bottom py-3">
+                <div>
+                    <img class="avatar" id="profile-image"
+                         [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                    <span>{{channelUser.first_name + ' ' + channelUser.last_name}}</span>
+                </div>
+                <div>
+                    <img src="assets/img/x.svg" alt="">
+                </div>
             </div>
-            <div>
-                <img src="assets/img/x.svg" alt="">
+
+            <div class="chat-information">
+                <div class="loader" *ngIf="loadingMessages">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+                <ng-container *ngIf="!loadingMessages">
+                    <div class="chat-block" *ngFor="let message of messages">
+
+                        <ng-container *ngIf="message.from">
+
+                            <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
+                                 [src]="message.avatar|getImgPath:'user_avatars'">
+                            <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' : '')}}</p>
+                        </ng-container>
+
+                        <ng-container *ngIf="!message.from">
+                            <img class="avatar" [class.selectable]="message.user.from!==this.authUser.username"
+                                 [src]="message.user.avatar|getImgPath:'user_avatars'">
+                            <p class="chat-block-1">{{message.user.from + (message.user.from === authUser.username ? '(Me)' : '')}}</p>
+                        </ng-container>
+                        <p class="chat-block-2">{{message.message}}</p>
+                    </div>
+                </ng-container>
             </div>
-        </div>
-        <div class="textarea d-flex align-items-end">
-            <button class="add-btn">+</button>
-            <textarea cols="1" rows="1" class="flex-1 mx-3" placeholder="Message"></textarea>
-            <button class="send-btn"> <img src="assets/img/send.svg"> </button>
+
+
+
+            <div class="textarea d-flex align-items-end">
+                <button class="add-btn">+</button>
+                <input class="flex-1 mx-3" formControlName="message" placeholder="Message"
+                       (keyup.enter)="sendMessage($event)">
+
+                <button class="send-btn"><img src="assets/img/send.svg"></button>
+            </div>
         </div>
     </div>
-</div>
+</form>

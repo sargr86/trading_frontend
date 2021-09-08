@@ -8,12 +8,65 @@
     height: 400px;
     background-color: white;
     z-index: 9999;
+
+    .chat-information {
+        max-height: 400px;
+        overflow-y: scroll;
+
+        height: calc(100% - 115px);
+        padding: 14px 12px 30px 12px;
+
+
+        .chat-block {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+
+
+            .avatar {
+                width: 24px !important;
+                height: 24px !important;
+            }
+
+
+
+            .chat-block-1 {
+                margin: 0;
+                color: #9B9B9B;
+                font-size: 14px;
+                font-family: "Muli-Light";
+                width: 76px !important;
+            }
+
+            .chat-block-2 {
+                margin-bottom: 0;
+                margin-left: 16px;
+                flex: 1;
+                color: #545454;
+                font-size: 14px;
+                font-family: "Muli-Light";
+            }
+
+            .chat-block-1,
+            .chat-block-2 {
+                max-width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+
+
     .textarea {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
+
         .add-btn {
             width: 20px;
             height: 20px;
@@ -22,18 +75,21 @@
             justify-content: center;
             border-radius: 50%;
         }
-        textarea {
+
+        input {
             border-top: 0;
             border-left: 0;
             border-right: 0;
             border-bottom: 1px solid #ddd;
             padding: 5px 10px;
+
             &:focus {
                 outline: none;
                 border: 0;
                 border-bottom: 1px solid #ddd;
             }
         }
+
         .send-btn {
             background-color: transparent;
             border: 0;
@@ -41,6 +97,7 @@
         }
     }
 }
+
 .flex-1 {
     flex: 1;
 }

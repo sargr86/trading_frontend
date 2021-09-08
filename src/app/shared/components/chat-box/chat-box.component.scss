@@ -5,6 +5,8 @@
     max-width: 500px;
     //margin-bottom: 40px;
     box-shadow: 0 0 6px #0000001A;
+    height: 100%;
+    margin-left: 20px;
 
     .chat-title {
         width: 100%;
@@ -14,10 +16,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .dropdown-item {
+            color: #545454;
+            font-family: "Muli-Light";
+            font-size: 12px;
+        }
     }
 
     .chat-information {
-        //width: 316px;
+        max-height: 400px;
+        overflow-y: scroll;
+
         height: calc(100% - 115px);
         padding: 14px 12px 30px 12px;
 
@@ -31,8 +41,19 @@
 
 
             .avatar {
-                width: 15px;
+                width: 24px !important;
+                height: 24px !important;
             }
+
+            .selectable {
+                cursor: pointer;
+            }
+
+            .selected {
+                border: 1px solid $red;
+            }
+
+
 
             .chat-block-1 {
                 margin: 0;
@@ -50,14 +71,18 @@
                 font-size: 14px;
                 font-family: "Muli-Light";
             }
+
+            .chat-block-1,
+            .chat-block-2 {
+                max-width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
     }
 
-    .dropdown-item {
-        color: #545454;
-        font-family: "Muli-Light";
-        font-size: 12px;
-    }
+
 
     .dropdown-toggle:hover {
         cursor: pointer;
@@ -73,6 +98,18 @@
             display: flex;
             justify-content: space-between;
             margin-top: 12px;
+
+            .chat-by-bits {
+                width: 68px;
+                height: 19px;
+                background: #F53C6F 0% 0% no-repeat padding-box;
+                font-size: 12px;
+                font-family: "Muli-SemiBold";
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white !important;
+            }
         }
 
         .smile {
@@ -99,25 +136,9 @@
             justify-content: space-between;
             align-items: center;
         }
+
+
     }
-}
-
-.chat-by-bits {
-    width: 68px;
-    height: 19px;
-    background: #F53C6F 0% 0% no-repeat padding-box;
-    font-size: 12px;
-    font-family: "Muli-SemiBold";
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white !important;
-
-}
-
-.chat-content {
-    height: 100%;
-    margin-left: 20px;
 
     #chat-placeholder {
         height: 100%;
@@ -127,33 +148,5 @@
         color: #545454;
         font-size: 12px;
         padding: 10px
-    }
-
-    .chat-information {
-        max-height: 400px;
-        overflow-y: scroll;
-
-        .chat-block{
-            .avatar{
-                width: 24px !important;
-                height: 24px !important;
-            }
-            .chat-block-1,
-            .chat-block-2 {
-                max-width: 80%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-        }
-    }
-
-    .selectable {
-        cursor: pointer;
-    }
-
-    .selected {
-        border: 1px solid $red;
     }
 }

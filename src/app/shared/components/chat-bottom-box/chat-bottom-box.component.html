@@ -23,19 +23,18 @@
 
                             <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
                                  [src]="message.avatar|getImgPath:'user_avatars'">
-                            <p class="chat-block-1">{{message.from + (message.from === authUser.username ? '(Me)' : '')}}</p>
+                            <p class="chat-block-1">{{message?.user?.first_name + ' ' + message?.user?.last_name + (message.from === authUser.username ? '(Me)' : '')}}</p>
                         </ng-container>
 
                         <ng-container *ngIf="!message.from">
                             <img class="avatar" [class.selectable]="message.user.from!==this.authUser.username"
                                  [src]="message.user.avatar|getImgPath:'user_avatars'">
-                            <p class="chat-block-1">{{message.user.from + (message.user.from === authUser.username ? '(Me)' : '')}}</p>
+                            <p class="chat-block-1">{{message?.user.first_name + ' ' + message?.user.last_name + (message.user.from === authUser.username ? '(Me)' : '')}}</p>
                         </ng-container>
                         <p class="chat-block-2">{{message.message}}</p>
                     </div>
                 </ng-container>
             </div>
-
 
 
             <div class="textarea d-flex align-items-end">

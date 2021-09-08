@@ -21,6 +21,7 @@ import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {StocksService} from '@core/services/stocks.service';
 import {ToastrService} from 'ngx-toastr';
 import trackByElement from '@core/helpers/track-by-element';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -81,7 +82,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         public loader: LoaderService,
         private updateStocks: UpdateUserStocksPipe,
         private stocksService: StocksService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private chatService: ChatService
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
@@ -212,6 +214,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     toggleChatBox() {
         this.showChatBox = !this.showChatBox;
     }
+
+
 
 
     ngOnDestroy(): void {

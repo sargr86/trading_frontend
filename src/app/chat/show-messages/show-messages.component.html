@@ -1,4 +1,3 @@
-
 <ul class="categories border-none">
     <li><a class="active">Recommendations</a></li>
     <li><a>Today's picks</a></li>
@@ -21,167 +20,15 @@
         </div>
 
         <div *ngIf="activeTab=='direct'" class="list-wrap">
-
             <ul class="list">
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
+                <li *ngFor="let msg of usersMessages" (click)="makeUserActive(msg.user)"
+                    [class.active]="activeUser?.id === msg.user.id">
+                    <div class="img">
+                        <img class="avatar" [src]="msg.avatar|getImgPath: 'avatars'">
                     </div>
-                </li>
-                <li class="active">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
                     <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
+                        <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
+                        <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
                     </div>
                 </li>
             </ul>
@@ -223,11 +70,13 @@
     </div>
 
 
-    <div class="chat" *ngIf="activeTab=='direct'" >
+    <div class="chat" *ngIf="activeTab=='direct'">
         <div class="chat-about">
             <div class="left">
-                <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                <div class="name">Full Name</div>
+                <div class="img">
+                    <img class="avatar" [src]="activeUser?.avatar|getImgPath: 'avatars'">
+                </div>
+                <div class="name">{{activeUser?.first_name+ ' '+ activeUser?.last_name}}</div>
             </div>
             <div class="right">
                 <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
@@ -237,71 +86,89 @@
 
         <ul class="chat-history">
 
-            <li class="data_list"><span>Wednesday, February 5th</span></li>
-
-            <li class="other-message">
+            <!--            <li class="data_list"><span>Wednesday, February 5th</span></li>-->
+<!--            {{selectedUserMessages[0].messages.length}}-->
+            <li class="message-container other-message" *ngFor="let msg of selectedUserMessages.messages">
                 <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
+                    <div class="img">
+                        <img class="avatar" [src]="msg.avatar|getImgPath: 'avatars'">
+                    </div>
+                    <div class="name">{{msg.from_user.first_name + ' ' + msg.from_user.last_name}}</div>
                     <div class="date">15։12</div>
                 </div>
                 <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                   {{msg.message}}
                 </div>
             </li>
 
-            <li class="my-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                </div>
-            </li>
-            <li class="other-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                </div>
-            </li>
+            <!--            <li class="my-message">-->
+            <!--                <div class="message-data">-->
+            <!--                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>-->
+            <!--                    <div class="name">Full Name</div>-->
+            <!--                    <div class="date">15։12</div>-->
+            <!--                </div>-->
+            <!--                <div class="message">-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores-->
+            <!--                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua.-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <!--            <li class="other-message">-->
+            <!--                <div class="message-data">-->
+            <!--                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>-->
+            <!--                    <div class="name">Full Name</div>-->
+            <!--                    <div class="date">15։12</div>-->
+            <!--                </div>-->
+            <!--                <div class="message">-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores-->
+            <!--                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua.-->
+            <!--                </div>-->
+            <!--            </li>-->
 
-            <li class="my-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr
-                </div>
-            </li>
-            <li class="other-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                </div>
-            </li>
+            <!--            <li class="my-message">-->
+            <!--                <div class="message-data">-->
+            <!--                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>-->
+            <!--                    <div class="name">Full Name</div>-->
+            <!--                    <div class="date">15։12</div>-->
+            <!--                </div>-->
+            <!--                <div class="message">-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <!--            <li class="other-message">-->
+            <!--                <div class="message-data">-->
+            <!--                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>-->
+            <!--                    <div class="name">Full Name</div>-->
+            <!--                    <div class="date">15։12</div>-->
+            <!--                </div>-->
+            <!--                <div class="message">-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores-->
+            <!--                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua.-->
+            <!--                </div>-->
+            <!--            </li>-->
 
-            <li class="my-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                </div>
-            </li>
+            <!--            <li class="my-message">-->
+            <!--                <div class="message-data">-->
+            <!--                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>-->
+            <!--                    <div class="name">Full Name</div>-->
+            <!--                    <div class="date">15։12</div>-->
+            <!--                </div>-->
+            <!--                <div class="message">-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores-->
+            <!--                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.-->
+            <!--                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut-->
+            <!--                    labore et dolore magna aliquyam erat, sed diam voluptua.-->
+            <!--                </div>-->
+            <!--            </li>-->
 
         </ul>
 
@@ -314,7 +181,6 @@
             </div>
         </div>
     </div>
-
 
 
     <div class="chat" *ngIf="activeTab=='group'">
@@ -340,7 +206,8 @@
                     <div class="date">15։12</div>
                 </div>
                 <div class="message">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit amet accusantium quae necessitatibus, id velit qui doloribus non vero voluptates.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit amet accusantium quae
+                    necessitatibus, id velit qui doloribus non vero voluptates.
                 </div>
             </li>
 
@@ -363,10 +230,11 @@
                     <div class="date">15։12</div>
                 </div>
                 <div class="message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias mollitia quia, odit corporis incidunt quasi.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias mollitia quia, odit corporis
+                    incidunt quasi.
                 </div>
             </li>
-             <li class="my-message">
+            <li class="my-message">
                 <div class="message-data">
                     <div class="img" style="background-image: url(assets/img/item-12.png); "></div>
                     <div class="name">Full Name</div>

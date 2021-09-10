@@ -11,7 +11,7 @@
                 <li *ngFor="let msg of usersMessages" (click)="makeUserActive(msg.user)"
                     [class.active]="activeUser?.id === msg.user.id">
                     <div class="img">
-                        <img class="avatar" [src]="msg.user.avatar|getImgPath: 'avatars'">
+                        <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
                     </div>
                     <div class="text">
                         <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
@@ -61,7 +61,7 @@
         <div class="chat-about" *ngIf="activeUser">
             <div class="left">
                 <div class="img">
-                    <img class="avatar" [src]="activeUser.avatar|getImgPath: 'avatars'">
+                    <img class="avatar" [src]="activeUser.avatar|getImgPath: 'user_avatars'">
                 </div>
                 <div class="name">{{activeUser.first_name + ' ' + activeUser.last_name}}</div>
             </div>
@@ -78,7 +78,7 @@
             <li class="message-container" [ngClass]="getMessageClass(msg.from_user)" *ngFor="let msg of selectedUserMessages?.messages">
                 <div class="message-data">
                     <div class="img">
-                        <img class="avatar" [src]="msg.from_user.avatar|getImgPath: 'avatars'">
+                        <img class="avatar" [src]="msg.from_user.avatar|getImgPath: 'user_avatars'">
                     </div>
                     <div class="name">{{msg.from_user.first_name + ' ' + msg.from_user.last_name}}</div>
                     <div class="date">{{msg.created_at | date: 'HH:mm'}}</div>

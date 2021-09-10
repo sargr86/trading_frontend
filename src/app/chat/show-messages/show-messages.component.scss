@@ -1,16 +1,17 @@
 @import 'categories';
-.categories{
-    &.border-none{
+
+.categories {
+    &.border-none {
         border: 0;
         margin: 0;
     }
 }
 
-.chat-wrap{
+.chat-wrap {
     display: flex;
     flex-wrap: wrap;
 
-    .img{
+    .img {
         width: 48px;
         height: 48px;
         border-radius: 50%;
@@ -19,29 +20,33 @@
         background-repeat: no-repeat;
     }
 
-    .people-list{
+    .people-list {
         flex: 0 0 316px;
-        background: #F5F5F5 ;
+        background: #F5F5F5;
 
         ::-webkit-scrollbar {
             width: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: transparent;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #DCDCDC;
             border-radius: 4px
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: rgb(174, 174, 174);
         }
 
 
-        .tab-wrap{
+        .tab-wrap {
             display: flex;
             margin-bottom: 16px;
-            .tab{
+
+            .tab {
                 flex: 1;
                 padding: 6px 16px;
                 font-size: 16px;
@@ -50,38 +55,42 @@
                 color: #FFFFFF;
                 text-align: left;
                 transition: all 0.3s ease;
-                &.active{
+
+                &.active {
                     background: #F53C6F;
                 }
-                &:not(.active):hover{
+
+                &:not(.active):hover {
                     background: #18B587;
                     color: #FFFFFF;
                 }
             }
         }
 
-        .list-wrap{
+        .list-wrap {
             // max-height: 600px;
             // overflow-x: auto;
         }
 
-        .CreateGroupChat{
+        .CreateGroupChat {
             padding: 0 15px;
             margin: 4px 0 16px;
             background: transparent;
             color: #18B587;
             font-size: 16px;
             font-family: "Muli-Bold";
-            img{
+
+            img {
                 width: 20px;
                 margin-right: 2px;
             }
         }
 
-        .list{
+        .list {
             max-height: 600px;
             overflow-x: auto;
-            li{
+
+            li {
                 padding: 6px 10px;
                 display: flex;
                 border-left: solid 5px transparent;
@@ -92,34 +101,35 @@
                 -ms-transition: all 0.3s ease;
                 transition: all 0.3s ease;
 
-                &.active , &:hover{
+                &.active, &:hover {
                     border-left: solid 5px #18B587;
                     background: #ffffff;
-                    .text{
-                        .name{
+
+                    .text {
+                        .name {
                             color: #18B587;
                         }
 
-                        span{
+                        span {
                             color: #18B587;
                         }
                     }
                 }
 
 
-                .img{
+                .img {
                     margin-right: 22px;
                 }
 
-                .text{
-                    .name{
+                .text {
+                    .name {
                         text-transform: capitalize;
                         font-size: 16px;
                         font-weight: 500;
                         color: #545454;
                     }
 
-                    span{
+                    span {
                         margin-top: 4px;
                         display: block;
                         font-size: 14px;
@@ -129,12 +139,13 @@
                 }
             }
         }
+
         @media screen and (max-width: 1029px) {
             flex: 1;
         }
     }
 
-    .chat{
+    .chat {
         margin-left: 32px;
         flex: 1;
         min-width: 350px;
@@ -142,18 +153,21 @@
         ::-webkit-scrollbar {
             width: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: transparent;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #DCDCDC;
             border-radius: 4px
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: rgb(174, 174, 174);
         }
 
-        .chat-about{
+        .chat-about {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -161,52 +175,54 @@
             padding: 12px 16px;
 
 
-            .left{
+            .left {
                 display: flex;
                 align-items: center;
-                .img{
+
+                .img {
                     margin-right: 16px;
                 }
 
-                .name{
+                .name {
                     color: #18B587;
                     font-size: 16px;
                     font-weight: 500;
                 }
             }
 
-            .right{
+            .right {
                 display: flex;
                 align-items: center;
 
-                i{
+                i {
                     color: #C9C9C9;
                 }
 
-                >div{
+                > div {
                     margin-left: 16px;
                 }
             }
         }
 
-        .chat-history{
+        .chat-history {
             margin-top: 16px;
             overflow-x: auto;
             height: 600px;
 
 
-            li{
+            li {
                 margin-bottom: 32px;
                 padding-right: 48px;
 
-                &.data_list{
+                &.data_list {
                     height: 1px;
                     margin: 16px 0 32px;
                     background: #C9C9C9;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    span{
+
+                    span {
                         background: #ffffff;
                         color: #C9C9C9;
                         padding: 0 32px;
@@ -214,41 +230,45 @@
                     }
                 }
 
-                &.my-message{
+                &.my-message {
                     padding-right: 8px;
                     margin-left: 48px;
-                    .message{
+
+                    .message {
                         background: #18B587;
                         color: #FFFFFF;
                     }
-                    .message-data{
+
+                    .message-data {
                         justify-content: flex-end;
                     }
                 }
-                .message-data{
+
+                .message-data {
                     display: flex;
                     align-items: center;
                     margin-bottom: 16px;
                     padding-left: 16px;
-                    .img{
+
+                    .img {
                         margin-right: 16px;
                     }
 
-                    .name{
+                    .name {
                         color: #545454;
                         font-size: 16px;
                         font-weight: 500;
                         margin-right: 16px;
                     }
 
-                    .date{
+                    .date {
                         font-size: 13px;
                         font-weight: 300;
                         color: #545454;
                     }
                 }
 
-                .message{
+                .message {
                     background: #F5F5F5;
                     color: #545454;
                     font-weight: 500;
@@ -260,27 +280,35 @@
             }
         }
 
-        .chat-message{
-            background: #F5F5F5 ;
+        .chat-message {
+            background: #F5F5F5;
             display: flex;
-            input{
-                width: 100%;
-                padding: 12px 16px;
-                background: transparent;
+
+            .chat-form {
+                width: 90%;
+
+                input {
+                    width: 100%;
+                    padding: 12px 16px;
+                    background: transparent;
+                }
             }
 
-            .icons{
+            .icons {
                 display: flex;
                 align-items: center;
                 padding-right: 16px;
-                a{
+
+                a {
                     margin-left: 12px;
-                    &:first-child{
+
+                    &:first-child {
                         margin: 0;
                     }
                 }
             }
         }
+
         @media screen and (max-width: 1029px) {
             margin-left: 0;
             margin-top: 24px;

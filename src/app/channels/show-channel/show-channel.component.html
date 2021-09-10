@@ -66,4 +66,4 @@
         <p>Channel with such name is not found</p>
     </div>
 </div>
-<app-chat-bottom-box *ngIf="showChatBox && channelUser" [channelUser]="channelUser"></app-chat-bottom-box>
+<app-chat-bottom-box *ngIf="showChatBox && channelUser" [channelUser]="channelUser" (close)="showChatBox = false"></app-chat-bottom-box>

@@ -58,7 +58,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     subscriptions = [];
     trackByElement = trackByElement;
 
-    showChatBox = true;
+    showChatBox = false;
 
 
     @ViewChild(WatchlistTabComponent) watchListTab: WatchlistTabComponent;

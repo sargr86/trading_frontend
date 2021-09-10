@@ -17,6 +17,7 @@ export class ChatBottomBoxComponent implements OnInit {
 
     @Input() channelUser;
     @Output() sendMsg = new EventEmitter();
+    @Output() close = new EventEmitter();
 
     constructor(
         private fb: FormBuilder,
@@ -63,6 +64,10 @@ export class ChatBottomBoxComponent implements OnInit {
             });
             this.chatForm.patchValue({message: ''});
         }
+    }
+
+    closeChatBox() {
+        this.close.emit();
     }
 
 

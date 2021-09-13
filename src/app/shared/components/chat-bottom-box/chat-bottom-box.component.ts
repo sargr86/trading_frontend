@@ -70,5 +70,8 @@ export class ChatBottomBoxComponent implements OnInit {
         this.close.emit();
     }
 
+    getMessageClass(user) {
+        return user.id === this.authUser.id ? 'my-message' : 'other-message';
+    }
 
 }

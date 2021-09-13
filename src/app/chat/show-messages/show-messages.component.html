@@ -72,7 +72,6 @@
         </div>
 
         <ul class="chat-history" id="direct-messages" #directMessagesList>
-
             <!--            <li class="data_list"><span>Wednesday, February 5th</span></li>-->
             <!--            {{selectedUserMessages[0].messages.length}}-->
             <li class="message-container" [ngClass]="getMessageClass(msg.from_user)" *ngFor="let msg of selectedUserMessages?.messages">

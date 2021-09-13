@@ -33,7 +33,7 @@
 <!--                                 [src]="message.to_user.avatar|getImgPath:'user_avatars'">-->
 <!--                            <p class="chat-block-1">{{message?.to_user.first_name + ' ' + message?.to_user.last_name}}</p>-->
 <!--                        </ng-container>-->
-                        <p class="chat-block-2 w-100">{{message.message}}</p>
+                        <p class="chat-block-2 w-100" [ngClass]="getMessageClass(message?.from_user)">{{message.message}}</p>
                     </div>
                 </ng-container>
             </div>

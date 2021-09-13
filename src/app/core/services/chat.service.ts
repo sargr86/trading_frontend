@@ -17,6 +17,7 @@ export class ChatService {
     }
 
     getGeneralChatMessages(params) {
+        console.log('OK')
         return this.httpClient.get<any>(`${API_URL}chat/get-chat-messages`, {params});
     }
 

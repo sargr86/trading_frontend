@@ -19,21 +19,23 @@
                 <ng-container *ngIf="!loadingMessages">
                     <div class="chat-block d-flex flex-column" *ngFor="let message of messages">
 
-                        <ng-container>
-                            <div class="d-flex w-100 align-items-center">
-                                <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
-                                     [src]="message.avatar|getImgPath:'user_avatars'">
-                                <p class="chat-block-1">{{message?.from_user?.first_name + ' ' + message?.from_user?.last_name}}</p>
-                            </div>
-                        </ng-container>
+                        <div class="w-100"  [ngClass]="getMessageClass(message?.from_user)">
+                            <ng-container>
+                                <div class="d-flex w-100 align-items-center">
+                                    <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
+                                         [src]="message.avatar|getImgPath:'user_avatars'">
+                                    <p class="chat-block-1">{{message?.from_user?.first_name + ' ' + message?.from_user?.last_name}}</p>
+                                </div>
+                            </ng-container>
 
-<!--                        <ng-container *ngIf="!message.from">-->
-<!--                            <p>to</p>-->
-<!--                            <img class="avatar" [class.selectable]="message.to_user.from!==this.authUser.username"-->
-<!--                                 [src]="message.to_user.avatar|getImgPath:'user_avatars'">-->
-<!--                            <p class="chat-block-1">{{message?.to_user.first_name + ' ' + message?.to_user.last_name}}</p>-->
-<!--                        </ng-container>-->
-                        <p class="chat-block-2 w-100" [ngClass]="getMessageClass(message?.from_user)">{{message.message}}</p>
+                            <!--                        <ng-container *ngIf="!message.from">-->
+                            <!--                            <p>to</p>-->
+                            <!--                            <img class="avatar" [class.selectable]="message.to_user.from!==this.authUser.username"-->
+                            <!--                                 [src]="message.to_user.avatar|getImgPath:'user_avatars'">-->
+                            <!--                            <p class="chat-block-1">{{message?.to_user.first_name + ' ' + message?.to_user.last_name}}</p>-->
+                            <!--                        </ng-container>-->
+                            <p class="chat-block-2 w-100">{{message.message}}</p>
+                        </div>
                     </div>
                 </ng-container>
             </div>

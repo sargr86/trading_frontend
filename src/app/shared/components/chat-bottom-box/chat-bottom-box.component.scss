@@ -33,7 +33,7 @@
                 margin: 0;
                 color: #9B9B9B;
                 font-size: 14px;
-                font-family: "Muli-Light";
+                font-family: "Muli-Light", sans-serif;
                 width: 86px !important;
             }
 
@@ -43,15 +43,15 @@
                 flex: 1;
                 color: #545454;
                 font-size: 14px;
-                font-family: "Muli-Light";
+                font-family: "Muli-Light", sans-serif;
             }
 
             .chat-block-1,
             .chat-block-2 {
-                max-width: 80%;
+                max-width: 85%;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
+                //white-space: nowrap;
             }
         }
     }
@@ -100,4 +100,23 @@
 }
 .close-box{
     cursor: pointer;
+}
+.my-message {
+    margin-bottom: 16px;
+    .chat-block-2 {
+        background: #18B587;
+        color: #FFFFFF!important;
+        padding: 5px;
+    }
+    &>div {
+        justify-content: flex-end;
+    }
+}
+.other-message {
+    margin-bottom: 16px;
+    .chat-block-2 {
+        background: #F5F5F5;
+        color: #545454;
+        padding: 5px;
+    }
 }

@@ -40,8 +40,8 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             from_id: [this.authUser.id],
             to_id: [this.activeUser?.id],
             avatar: [this.authUser?.avatar],
-            // from_user: [this.authUser],
-            // to_user: [this.activeUser],
+            from_user: [this.authUser],
+            to_user: [this.activeUser],
             message: ['', Validators.required],
             personal: [1]
         });
@@ -64,7 +64,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
     getMessagesFromSocket() {
         this.socketService.onNewMessage().subscribe((dt: any) => {
             console.log(dt)
-            this.usersMessages.push(dt);
+            this.selectedUserMessages.messages.push(dt);
         });
     }
 
@@ -78,14 +78,14 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         if (this.chatForm.valid) {
             const data = {...this.chatForm.value};
 
-            this.socketService.sendMessage(data);
 
-            // this.chatService.saveMessage(data).subscribe(dt => {
-            //     this.selectedUserMessages = dt[0];
-            //
-            //     this.scrollMsgsToBottom();
-            //     console.log(this.selectedUserMessages)
-            // });
+            this.chatService.saveMessage(data).subscribe(dt => {
+                this.selectedUserMessages = dt[0];
+
+                this.socketService.sendMessage(data);
+                this.scrollMsgsToBottom();
+                console.log(this.selectedUserMessages)
+            });
             this.chatForm.patchValue({message: ''});
         }
     }

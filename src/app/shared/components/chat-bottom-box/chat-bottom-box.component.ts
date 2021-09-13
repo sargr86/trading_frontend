@@ -74,5 +74,4 @@ export class ChatBottomBoxComponent implements OnInit {
         return user.id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
-
 }

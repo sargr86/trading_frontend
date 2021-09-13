@@ -5,6 +5,7 @@ import {StripeCardElementOptions} from '@stripe/stripe-js';
 
 
 export const API_URL = environment.apiUrl;
+export const SOCKET_URL = 'ws://localhost:3001/';
 export const VIDEO_DEFAULT_THUMBNAILS_PATH = 'assets/img/video-thumbnail-default.png';
 export const VIDEO_DEFAULT_COVERS_PATH = 'assets/img/default-thumbnail.png';
 export const VIDEO_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';

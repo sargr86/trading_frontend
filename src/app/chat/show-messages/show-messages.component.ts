@@ -2,6 +2,7 @@ import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, View
 import {ChatService} from '@core/services/chat.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-show-messages',
@@ -22,6 +23,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
     constructor(
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
+        private socketService: SocketIoService,
         private fb: FormBuilder
     ) {
     }
@@ -37,7 +39,9 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             from: [this.authUser.username],
             from_id: [this.authUser.id],
             to_id: [this.activeUser?.id],
-            avatar: [this.authUser.avatar],
+            avatar: [this.authUser?.avatar],
+            from_user: [this.authUser],
+            to_user: [this.activeUser],
             message: ['', Validators.required],
             personal: [1]
         });
@@ -48,11 +52,19 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
     }
 
     getUsersMessages() {
+        this.getMessagesFromSocket();
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = dt;
             this.activeUser = dt[0]?.user;
             this.selectedUserMessages = this.usersMessages.find(m => m.user.id === this.activeUser.id);
             this.chatForm.patchValue({to_id: this.activeUser?.id});
+        });
+    }
+
+    getMessagesFromSocket() {
+        this.socketService.onNewMessage().subscribe((dt: any) => {
+            console.log(dt)
+            this.selectedUserMessages.messages.push(dt);
         });
     }
 
@@ -65,8 +77,12 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
     sendMessage(e) {
         if (this.chatForm.valid) {
             const data = {...this.chatForm.value};
+
+
             this.chatService.saveMessage(data).subscribe(dt => {
                 this.selectedUserMessages = dt[0];
+
+                this.socketService.sendMessage(data);
                 this.scrollMsgsToBottom();
                 console.log(this.selectedUserMessages)
             });

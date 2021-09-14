@@ -30,6 +30,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        this.addUserToSocket();
         this.getUsersMessages();
         this.initForm();
     }
@@ -41,7 +42,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             to_id: [this.activeUser?.id],
             avatar: [this.authUser?.avatar],
             from_user: [this.authUser],
-            to_user: [this.activeUser],
+            to_user: [null],
             message: ['', Validators.required],
             personal: [1]
         });
@@ -51,13 +52,17 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         this.activeTab = tab;
     }
 
+    addUserToSocket() {
+        this.socketService.addNewUser(this.authUser.username);
+    }
+
     getUsersMessages() {
         this.getMessagesFromSocket();
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = dt;
             this.activeUser = dt[0]?.user;
             this.selectedUserMessages = this.usersMessages.find(m => m.user.id === this.activeUser.id);
-            this.chatForm.patchValue({to_id: this.activeUser?.id});
+            this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
         });
     }
 

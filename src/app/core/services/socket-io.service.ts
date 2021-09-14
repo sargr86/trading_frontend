@@ -18,10 +18,14 @@ export class SocketIoService {
         this.socket = io(SOCKET_URL);
     }
 
+    addNewUser(username){
+        this.socket.emit('newUser', username);
+    }
+
     // EMITTER example
     sendMessage(data: any) {
         console.log(data)
-        this.socket.emit('sendMessage', data);
+        this.socket.emit('sendMessagae', data);
     }
 
     // HANDLER example

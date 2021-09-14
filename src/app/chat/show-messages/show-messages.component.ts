@@ -61,8 +61,11 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         this.getMessagesFromSocket();
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = dt;
-            this.activeUser = dt[0]?.user;
-            this.selectedUserMessages = this.usersMessages.find(m => m.user.id === this.activeUser.id);
+
+            if (!this.isChatUsersListSize()) {
+                this.activeUser = dt[0]?.user;
+            }
+            this.selectedUserMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
             this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
         });
     }

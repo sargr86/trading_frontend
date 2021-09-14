@@ -1,21 +1,36 @@
 <app-user-tags></app-user-tags>
 <div class="chat-wrap">
-    <div class="people-list">
+    <div class="people-list" [class.responsive-list]="isChatUsersListSize()">
         <div class="tab-wrap">
             <button class="tab" [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat</button>
             <button class="tab" [class.active]="activeTab=='group'" (click)="changeTab('group')">Group Chat</button>
         </div>
 
         <div [hidden]="activeTab!=='direct'" class="list-wrap">
-            <ul class="list">
+            <ul class="list align-items-center">
                 <li *ngFor="let msg of usersMessages" (click)="makeUserActive(msg.user)"
                     [class.active]="activeUser?.id === msg.user.id">
-                    <div class="img">
-                        <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
+                    <div class="d-flex">
+                        <div class="img">
+                            <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
+                        </div>
+                        <div class="text">
+                            <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
+                            <div class="d-flex align-items-center">
+                                <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
+                                <span class="ml-4">12:21</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text">
-                        <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
-                        <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
+                    <div class="ml-auto more-btn">
+                        <button mat-button [matMenuTriggerFor]="menu">
+                            <mat-icon  role="img" class="mat-icon notranslate material-icons" aria-hidden="true">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Unread</button>
+                            <button mat-menu-item>Delete</button>
+                            <button mat-menu-item>Block</button>
+                        </mat-menu>
                     </div>
                 </li>
             </ul>

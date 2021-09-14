@@ -2,6 +2,7 @@ import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, View
 import {ChatService} from '@core/services/chat.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import IsResponsive from '@core/helpers/is-responsive';
 
 @Component({
     selector: 'app-show-messages',
@@ -68,7 +69,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             this.chatService.saveMessage(data).subscribe(dt => {
                 this.selectedUserMessages = dt[0];
                 this.scrollMsgsToBottom();
-                console.log(this.selectedUserMessages)
+                console.log(this.selectedUserMessages);
             });
             this.chatForm.patchValue({message: ''});
         }
@@ -78,12 +79,16 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         try {
             this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight;
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
     }
 
     getMessageClass(user) {
         return user.id === this.authUser.id ? 'my-message' : 'other-message';
+    }
+
+    isChatUsersListSize() {
+        return IsResponsive.isChatUsersListSize();
     }
 
     ngAfterViewChecked() {

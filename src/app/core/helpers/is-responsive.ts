@@ -7,5 +7,9 @@ export default class IsResponsive {
         return window.screen.availWidth <= 991;
     }
 
+    static isChatUsersListSize() {
+        return window.screen.availWidth <= 1111;
+    }
+
 
 }

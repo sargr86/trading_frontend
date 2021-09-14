@@ -14,6 +14,7 @@ export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
 
 
+
 export const OWL_OPTIONS: OwlOptions = {
     loop: false,
     margin: 25,

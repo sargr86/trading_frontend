@@ -75,7 +75,7 @@
     <div class="chat" [hidden]="activeTab!=='direct'">
         <div class="chat-about" *ngIf="activeUser">
             <div class="left">
-                <div class="img">
+                <div cl    ass="img">
                     <img class="avatar" [src]="activeUser.avatar|getImgPath: 'user_avatars'">
                 </div>
                 <div class="name">{{activeUser.first_name + ' ' + activeUser.last_name}}</div>

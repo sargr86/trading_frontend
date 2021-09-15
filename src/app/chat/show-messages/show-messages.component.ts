@@ -5,6 +5,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SocketIoService} from '@core/services/socket-io.service';
 import IsResponsive from '@core/helpers/is-responsive';
 
+import {DatePipe} from '@angular/common';
+import {GroupByPipe} from '@shared/pipes/group-by.pipe';
+
 @Component({
     selector: 'app-show-messages',
     templateUrl: './show-messages.component.html',
@@ -25,6 +28,8 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        private datePipe: DatePipe,
+        private groupBy: GroupByPipe,
         private fb: FormBuilder
     ) {
     }
@@ -65,22 +70,37 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             if (!this.isChatUsersListSize()) {
                 this.activeUser = dt[0]?.user;
             }
-            this.selectedUserMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
+            const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
+            this.selectedUserMessages.user = selectedMessages.user;
+            this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
+            console.log(this.selectedUserMessages.messages)
             this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
         });
     }
 
     getMessagesFromSocket() {
         this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log(dt)
-            this.selectedUserMessages.messages.push(dt);
+
+            // this.usersMessages.find(m => m.user.id === this.activeUser?.id)
+            this.usersMessages.find(m => m.user.id === dt?.from_id).messages.push(dt);
+            const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
+            this.selectedUserMessages = {messages: [], user: {}};
+            this.selectedUserMessages.user = selectedMessages.user;
+            this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
+            console.log(this.selectedUserMessages.messages)
+            // this.selectedUserMessages.messages = this.groupBy.transform(this.selectedUserMessages.messages, 'created_at');
+
         });
     }
 
     makeUserActive(user) {
         this.activeUser = user;
-        this.chatForm.patchValue({to_id: user.id});
-        this.selectedUserMessages = this.usersMessages.find(m => m.user.id === user.id);
+        this.selectedUserMessages = {messages: [], user: {}};
+        this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
+        const userMessages = JSON.parse(JSON.stringify(this.usersMessages.find(m => m.user.id === user.id)));
+        this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
+        this.selectedUserMessages.user = userMessages.user;
+
     }
 
     sendMessage(e) {
@@ -89,7 +109,8 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
 
 
             this.chatService.saveMessage(data).subscribe(dt => {
-                this.selectedUserMessages = dt[0];
+                this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
+                this.selectedUserMessages.user = dt[0].user;
 
                 this.socketService.sendMessage(data);
                 this.scrollMsgsToBottom();
@@ -113,6 +134,17 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
 
     isChatUsersListSize() {
         return IsResponsive.isChatUsersListSize();
+    }
+
+    order(um) {
+        return um.sort((a, b) => {
+            if (b.messages[0].created_at > a.messages[0].created_at) {
+                return 1;
+            } else if (b.messages[0].created_at < a.messages[0].created_at) {
+                return -1;
+            }
+            return 0;
+        });
     }
 
     ngAfterViewChecked() {

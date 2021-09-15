@@ -24,8 +24,7 @@ export class SocketIoService {
 
     // EMITTER example
     sendMessage(data: any) {
-        console.log(data)
-        this.socket.emit('sendMessagae', data);
+        this.socket.emit('sendMessage', data);
     }
 
     // HANDLER example

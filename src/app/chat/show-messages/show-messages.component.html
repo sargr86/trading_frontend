@@ -9,7 +9,7 @@
 
         <div [hidden]="activeTab!=='direct'" class="list-wrap">
             <ul class="list align-items-center">
-                <li *ngFor="let msg of usersMessages" (click)="makeUserActive(msg.user)"
+                <li *ngFor="let msg of order(usersMessages)" (click)="makeUserActive(msg.user)"
                     [class.active]="activeUser?.id === msg.user.id">
                     <div class="d-flex">
                         <div class="img">
@@ -18,7 +18,7 @@
                         <div class="text">
                             <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
                             <div class="d-flex align-items-center">
-                                <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
+                                <span>{{msg?.messages[0].message}}</span>
                                 <span class="ml-4">{{msg?.messages[0].created_at | date: 'HH:mm'}}</span>
                             </div>
                         </div>
@@ -93,21 +93,25 @@
         </div>
 
         <ul class="chat-history" id="direct-messages" #directMessagesList>
-            <!--            <li class="data_list"><span>Wednesday, February 5th</span></li>-->
             <!--            {{selectedUserMessages[0].messages.length}}-->
-            <li class="message-container" [ngClass]="getMessageClass(msg.from_user)"
-                *ngFor="let msg of selectedUserMessages?.messages">
-                <div class="message-data">
-                    <div class="img">
-                        <img class="avatar" [src]="msg.from_user.avatar|getImgPath: 'user_avatars'">
-                    </div>
-                    <div class="name">{{msg.from_user.first_name + ' ' + msg.from_user.last_name}}</div>
-                    <div class="date">{{msg.created_at | date: 'HH:mm'}}</div>
-                </div>
-                <div class="message">
-                    {{msg.message}}
-                </div>
-            </li>
+            <ng-container *ngFor="let msg of selectedUserMessages?.messages.reverse()">
+
+                <li class="data-list"><span>{{msg.key}}</span></li>
+                <ng-container *ngFor="let m of msg.value.reverse()">
+                    <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
+                        <div class="message-data">
+                            <div class="img">
+                                <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
+                            </div>
+                            <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
+                            <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
+                        </div>
+                        <div class="message">
+                            {{m.message}}
+                        </div>
+                    </li>
+                </ng-container>
+            </ng-container>
         </ul>
 
         <div class="chat-message" *ngIf="activeUser">
@@ -138,7 +142,7 @@
 
         <ul class="chat-history">
 
-            <li class="data_list"><span>Wednesday, February 5th</span></li>
+            <li class="data-list"><span>Wednesday, February 5th</span></li>
 
             <li class="other-message">
                 <div class="message-data">

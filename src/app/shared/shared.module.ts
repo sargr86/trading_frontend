@@ -49,6 +49,7 @@ import {VideoJsPlayerComponent} from './components/video-js-player/video-js-play
 import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.directive';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { ChatBottomBoxComponent } from './components/chat-bottom-box/chat-bottom-box.component';
+import { GroupByPipe } from './pipes/group-by.pipe';
 
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
@@ -99,7 +100,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         MatReusableTableComponent,
         VideoJsPlayerComponent,
         NumbersOnlyInputDirective,
-        ChatBottomBoxComponent
+        ChatBottomBoxComponent,
+        GroupByPipe
     ],
     imports: [
         CommonModule,
@@ -130,6 +132,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetWalletTablesColumnContentsPipe,
         CountPurchasedTransferredTotalsPipe,
         ApplyDiscountToPricePipe,
+        GroupByPipe,
         {
             provide: DROPZONE_CONFIG,
             useValue: DEFAULT_DROPZONE_CONFIG

@@ -111,6 +111,9 @@
     &>div {
         justify-content: flex-end;
     }
+    img {
+        display: none;
+    }
 }
 .other-message {
     margin-bottom: 16px;
@@ -119,4 +122,13 @@
         color: #545454;
         padding: 5px;
     }
+    img {
+        margin-right: 0!important;
+    }
+}
+.abs {
+    position: absolute;
+    font-size: 11px;
+    top: -14px;
+    right: 0;
 }

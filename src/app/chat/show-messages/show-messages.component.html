@@ -94,10 +94,10 @@
 
         <ul class="chat-history" id="direct-messages" #directMessagesList>
             <!--            {{selectedUserMessages[0].messages.length}}-->
-            <ng-container *ngFor="let msg of selectedUserMessages?.messages.reverse()">
+            <ng-container *ngFor="let msg of selectedUserMessages?.messages">
 
                 <li class="data-list"><span>{{msg.key}}</span></li>
-                <ng-container *ngFor="let m of msg.value.reverse()">
+                <ng-container *ngFor="let m of msg.value">
                     <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
                         <div class="message-data">
                             <div class="img">

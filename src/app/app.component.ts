@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
     }
 
     isSidebarShown() {
-        return !this.router.url.includes('auth') && !this.checkIfPolicyPage() && !this.isSmallScreen;
+        return !this.router.url.includes('auth') && !this.checkIfPolicyPage() && !this.isSmallScreen();
     }
 
     checkIfPolicyPage() {

@@ -101,7 +101,7 @@
                 -ms-transition: all 0.3s ease;
                 transition: all 0.3s ease;
 
-                &.active, &:hover {
+                &.active {
                     border-left: solid 5px #18B587;
                     background: #ffffff;
 
@@ -112,6 +112,21 @@
 
                         span {
                             color: #18B587;
+                        }
+                    }
+                }
+
+                &:hover {
+                    border-left: solid 5px #F53C6F;
+                    background: #ffffff;
+
+                    .text {
+                        .name {
+                            color: #F53C6F;
+                        }
+
+                        span {
+                            color: #F53C6F;
                         }
                     }
                 }

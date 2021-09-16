@@ -8,6 +8,8 @@ import IsResponsive from '@core/helpers/is-responsive';
 import {DatePipe} from '@angular/common';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 
+import * as moment from 'moment';
+
 @Component({
     selector: 'app-show-messages',
     templateUrl: './show-messages.component.html',
@@ -37,7 +39,9 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.addUserToSocket();
+        // if (!this.isChatUsersListSize()) {
         this.getUsersMessages();
+        // }
         this.initForm();
     }
 
@@ -69,12 +73,13 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
 
             if (!this.isChatUsersListSize()) {
                 this.activeUser = dt[0]?.user;
+                const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
+                this.selectedUserMessages.user = selectedMessages.user;
+                this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
+                this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
+            } else {
+
             }
-            const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
-            this.selectedUserMessages.user = selectedMessages.user;
-            this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
-            console.log(this.selectedUserMessages.messages)
-            this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
         });
     }
 
@@ -138,13 +143,23 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
 
     order(um) {
         return um.sort((a, b) => {
-            if (b.messages[0].created_at > a.messages[0].created_at) {
-                return 1;
-            } else if (b.messages[0].created_at < a.messages[0].created_at) {
-                return -1;
-            }
-            return 0;
+            return +(+moment(b.messages[b.messages.length - 1].created_at) - (+moment(a.messages[a.messages.length - 1].created_at)));
         });
+
+    }
+
+    getDateText(dateCreated) {
+        const today = moment();
+        const yesterday = moment().subtract(1, 'day');
+        const passedDate = moment(dateCreated, 'dddd, MMMM Do');
+
+        if (passedDate.isSame(today, 'day')) {
+            return 'Today';
+        } else if (passedDate.isSame(yesterday, 'day')) {
+            return 'Yesterday';
+        }
+
+        return dateCreated;
     }
 
     ngAfterViewChecked() {

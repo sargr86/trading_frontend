@@ -328,3 +328,11 @@
 .responsive-list + .chat {
     //display: none!important;
 }
+.other-message {
+
+}
+.my-message {
+    .img, .name {
+        display: none;
+    }
+}

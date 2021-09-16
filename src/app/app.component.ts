@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     title = '';
     subscriptions: Subscription[] = [];
     pageTitle;
-    isSmallScreen = IsResponsive.isSmallScreen();
+
     authUser;
 
     constructor(
@@ -114,5 +114,9 @@ export class AppComponent implements OnInit {
         this.stocksService.getStocksSortTypes({}).subscribe(dt => {
             this.subject.changeStockSortTypes(dt);
         });
+    }
+
+    isSmallScreen(){
+        return IsResponsive.isSmallScreen();
     }
 }

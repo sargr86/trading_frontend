@@ -38,7 +38,7 @@ export class ChannelSubscriptionsComponent implements OnInit {
         });
 
 
-        this.channelsService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
+        this.channelsService.getUserChannelSubscriptions({user_id: this.authUser?.id}).subscribe(dt => {
             this.channels = dt;
         });
 

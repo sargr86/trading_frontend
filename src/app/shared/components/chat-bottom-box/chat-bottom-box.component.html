@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <div class="chat-information">
+             <div class="chat-information">
                 <div class="loader" *ngIf="loadingMessages">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
@@ -26,7 +26,7 @@
                                          [src]="message.avatar|getImgPath:'user_avatars'">
 <!--                                    <p class="chat-block-1">{{message?.from_user?.first_name + ' ' + message?.from_user?.last_name}}</p>-->
                                     <p class="chat-block-2 w-100">{{message.message}}</p>
-                                    <div class="abs">14:21</div>
+                                    <div class="abs">{{message.created_at | date: 'HH:mm'}}</div>
                                 </div>
                             </ng-container>
 

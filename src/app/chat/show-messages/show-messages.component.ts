@@ -23,6 +23,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
     activeUser;
 
     chatForm: FormGroup;
+    typingText: string;
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
 
@@ -43,6 +44,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         this.getUsersMessages();
         // }
         this.initForm();
+        this.getTyping();
     }
 
     initForm() {
@@ -74,8 +76,8 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             if (!this.isChatUsersListSize()) {
                 this.activeUser = dt[0]?.user;
                 const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
-                this.selectedUserMessages.user = selectedMessages.user;
-                this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
+                this.selectedUserMessages.user = selectedMessages?.user;
+                this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');
                 this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
             } else {
 
@@ -91,6 +93,7 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
             const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
             this.selectedUserMessages = {messages: [], user: {}};
             this.selectedUserMessages.user = selectedMessages.user;
+            this.typingText = null;
             this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
             console.log(this.selectedUserMessages.messages)
             // this.selectedUserMessages.messages = this.groupBy.transform(this.selectedUserMessages.messages, 'created_at');
@@ -160,6 +163,21 @@ export class ShowMessagesComponent implements OnInit, AfterViewChecked {
         }
 
         return dateCreated;
+    }
+
+    setTyping() {
+        this.socketService.setTyping({
+            from_user: this.chatForm.value.from_user,
+            to_user: this.chatForm.value.to_user,
+            message: this.chatForm.value.message
+        });
+    }
+
+    getTyping() {
+        this.socketService.getTyping().subscribe((dt: any) => {
+            console.log(dt.message)
+            this.typingText = dt.message ? `${dt.from_user.username} is typing...` : null;
+        });
     }
 
     ngAfterViewChecked() {

@@ -18,7 +18,7 @@ export class SocketIoService {
         this.socket = io(SOCKET_URL);
     }
 
-    addNewUser(username){
+    addNewUser(username) {
         this.socket.emit('newUser', username);
     }
 
@@ -31,6 +31,18 @@ export class SocketIoService {
     onNewMessage() {
         return new Observable(observer => {
             this.socket.on('newMessage', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    setTyping(data) {
+        this.socket.emit('setTyping', data);
+    }
+
+    getTyping() {
+        return new Observable(observer => {
+            this.socket.on('getTyping', msg => {
                 observer.next(msg);
             });
         });

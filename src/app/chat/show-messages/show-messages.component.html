@@ -1,210 +1,222 @@
 <app-user-tags></app-user-tags>
-<div class="chat-wrap">
-    <div class="people-list" [hidden]="isChatUsersListSize() && activeUser"
-         [class.responsive-list]="isChatUsersListSize()">
-        <div class="tab-wrap">
-            <button class="tab" [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat</button>
-            <button class="tab" [class.active]="activeTab=='group'" (click)="changeTab('group')">Group Chat</button>
-        </div>
-
-        <div [hidden]="activeTab!=='direct'" class="list-wrap">
-            <ul class="list align-items-center">
-                <li *ngFor="let msg of order(usersMessages)" (click)="makeUserActive(msg.user)"
-                    [class.active]="activeUser?.id === msg.user.id">
-                    <div class="d-flex">
-                        <div class="img">
-                            <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
-                        </div>
-                        <div class="text">
-                            <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
-                            <div class="d-flex align-items-center">
-                                <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
-                                <span
-                                    class="ml-4">{{msg?.messages[msg?.messages.length - 1].created_at | date: 'HH:mm'}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ml-auto more-btn">
-                        <button mat-button [matMenuTriggerFor]="menu">
-                            <mat-icon role="img" class="mat-icon notranslate material-icons" aria-hidden="true">
-                                more_vert
-                            </mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Unread</button>
-                            <button mat-menu-item>Delete</button>
-                            <button mat-menu-item>Block</button>
-                        </mat-menu>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div *ngIf="activeTab=='group'" class="list-wrap">
-            <button class="CreateGroupChat"><img src="assets/img/noun_create.png" alt=""> Create new group chat</button>
-            <ul class="list">
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li class="active">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="text">
-                        <div class="name">Name</div>
-                        <span>Lorem ipsum dolor sit amet</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+<div>
+    <div class="tab-wrap">
+        <button class="tab" [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat</button>
+        <button class="tab" [class.active]="activeTab=='group'" (click)="changeTab('group')">Group Chat</button>
     </div>
 
+    <div class="chat-wrap">
 
-    <div class="chat" [hidden]="activeTab!=='direct' || (isChatUsersListSize() && !activeUser)">
-        <div class="chat-about" *ngIf="activeUser">
-            <div class="left">
-                <button mat-icon-button *ngIf="isChatUsersListSize()" (click)="activeUser = null;">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-                <div class="img">
-                    <img class="avatar" [src]="activeUser.avatar|getImgPath: 'user_avatars'">
-                </div>
-                <div class="name">{{activeUser.first_name + ' ' + activeUser.last_name}}</div>
-            </div>
-            <div class="right">
-                <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
-                <div class="dotes"><a href=""><i class="fas fa-ellipsis-v"></i></a></div>
-            </div>
-        </div>
+        <ng-container *ngIf="activeTab==='direct'">
+            <div class="people-groups-container" [hidden]="isChatUsersListSize() && activeUser"
+                 [class.responsive-list]="isChatUsersListSize()">
 
-        <ul class="chat-history" id="direct-messages" #directMessagesList>
-            <!--            {{selectedUserMessages[0].messages.length}}-->
-            <ng-container *ngFor="let msg of selectedUserMessages?.messages">
-
-                <li class="data-list"><span>{{getDateText(msg.key)}}</span></li>
-                <ng-container *ngFor="let m of msg.value">
-                    <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
-                        <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
+                <div id="people-list" class="list-wrap">
+                    <ul class="list align-items-center">
+                        <li *ngFor="let msg of order(usersMessages)" (click)="makeUserActive(msg.user)"
+                            [class.active]="activeUser?.id === msg.user.id">
+                            <div class="d-flex">
                                 <div class="img">
-                                    <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
+                                    <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
                                 </div>
-                                <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
+                                <div class="text">
+                                    <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
+                                    <div class="d-flex align-items-center">
+                                        <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
+                                        <span
+                                            class="ml-4">{{msg?.messages[msg?.messages.length - 1].created_at | date: 'HH:mm'}}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
+                            <div class="ml-auto more-btn">
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <mat-icon role="img" class="mat-icon notranslate material-icons" aria-hidden="true">
+                                        more_vert
+                                    </mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item>Unread</button>
+                                    <button mat-menu-item>Delete</button>
+                                    <button mat-menu-item>Block</button>
+                                </mat-menu>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="chat" [hidden]="activeTab!=='direct' || (isChatUsersListSize() && !activeUser)">
+                <div class="chat-about" *ngIf="activeUser">
+                    <div class="left">
+                        <button mat-icon-button *ngIf="isChatUsersListSize()" (click)="activeUser = null;">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                        <div class="img">
+                            <img class="avatar" [src]="activeUser.avatar|getImgPath: 'user_avatars'">
+                        </div>
+                        <div class="name">{{activeUser.first_name + ' ' + activeUser.last_name}}</div>
+                    </div>
+                    <div class="right">
+                        <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
+                        <div class="dotes"><a href=""><i class="fas fa-ellipsis-v"></i></a></div>
+                    </div>
+                </div>
+
+                <ul class="chat-history" id="direct-messages" #directMessagesList>
+                    <!--            {{selectedUserMessages[0].messages.length}}-->
+                    <ng-container *ngFor="let msg of selectedUserMessages?.messages">
+
+                        <li class="data-list"><span>{{getDateText(msg.key)}}</span></li>
+                        <ng-container *ngFor="let m of msg.value">
+                            <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
+                                <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="img">
+                                            <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
+                                        </div>
+                                        <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
+                                    </div>
+                                    <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
+                                </div>
+                                <div class="message">
+                                    {{m.message}}
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                </ul>
+
+                <small class="text-center font-italic d-block">{{typingText}}</small>
+                <div class="chat-message" *ngIf="activeUser">
+                    <form [formGroup]="chatForm" class="chat-form">
+                        <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
+                               (keyup)="setTyping()"
+                               (keyup.enter)="sendMessage($event)">
+                    </form>
+                    <div class="icons">
+                        <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
+                        <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
+                        <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTab=='group'">
+
+            <div class="people-groups-container" [hidden]="isChatUsersListSize() && activeUser"
+                 [class.responsive-list]="isChatUsersListSize()">
+                <div id="groups-list" class="list-wrap">
+                    <button class="CreateGroupChat"><img src="assets/img/noun_create.png" alt=""> Create new group chat
+                    </button>
+                    <ul class="list">
+                        <li>
+                            <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                            <div class="text">
+                                <div class="name">Name</div>
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                            <div class="text">
+                                <div class="name">Name</div>
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </div>
+                        </li>
+                        <li class="active">
+                            <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                            <div class="text">
+                                <div class="name">Name</div>
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                            <div class="text">
+                                <div class="name">Name</div>
+                                <span>Lorem ipsum dolor sit amet</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="chat" *ngIf="activeTab=='group'">
+                <div class="chat-about">
+                    <div class="left">
+                        <div class="img" style="background-image: url(assets/img/item-4.png); "></div>
+                        <div class="name">Group chat name</div>
+                    </div>
+                    <div class="right">
+                        <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
+                        <div class="dotes"><a href=""><i class="fas fa-ellipsis-v"></i></a></div>
+                    </div>
+                </div>
+
+                <ul class="chat-history">
+
+                    <li class="data-list"><span>Wednesday, February 5th</span></li>
+
+                    <li class="other-message">
+                        <div class="message-data">
+                            <div class="d-flex align-items-center">
+                                <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                                <div class="name">Full Name</div>
+                            </div>
+                            <div class="date">15։12</div>
                         </div>
                         <div class="message">
-                            {{m.message}}
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit amet accusantium quae
+                            necessitatibus, id velit qui doloribus non vero voluptates.
                         </div>
                     </li>
-                </ng-container>
-            </ng-container>
-        </ul>
 
-        <small class="text-center font-italic d-block">{{typingText}}</small>
-        <div class="chat-message" *ngIf="activeUser">
-            <form [formGroup]="chatForm" class="chat-form">
-                <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
-                       (keyup)="setTyping()"
-                       (keyup.enter)="sendMessage($event)">
-            </form>
-            <div class="icons">
-                <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
-                <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
-                <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
-            </div>
-        </div>
-    </div>
+                    <li class="other-message">
+                        <div class="message-data">
+                            <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                            <div class="name">Full Name</div>
+                            <div class="date">15։12</div>
+                        </div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem possimus excepturi
+                            ipsam?
+                        </div>
+                    </li>
 
 
-    <div class="chat" *ngIf="activeTab=='group'">
-        <div class="chat-about">
-            <div class="left">
-                <div class="img" style="background-image: url(assets/img/item-4.png); "></div>
-                <div class="name">Group chat name</div>
-            </div>
-            <div class="right">
-                <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
-                <div class="dotes"><a href=""><i class="fas fa-ellipsis-v"></i></a></div>
-            </div>
-        </div>
+                    <li class="other-message">
+                        <div class="message-data">
+                            <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                            <div class="name">Full Name</div>
+                            <div class="date">15։12</div>
+                        </div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias mollitia quia, odit corporis
+                            incidunt quasi.
+                        </div>
+                    </li>
+                    <li class="my-message">
+                        <div class="message-data mb-0">
+                            <div class="img" style="background-image: url(assets/img/item-12.png); "></div>
+                            <div class="name">Full Name</div>
+                            <div class="date">15։12</div>
+                        </div>
+                        <div class="message">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr
+                        </div>
+                    </li>
+                </ul>
 
-        <ul class="chat-history">
-
-            <li class="data-list"><span>Wednesday, February 5th</span></li>
-
-            <li class="other-message">
-                <div class="message-data">
-                    <div class="d-flex align-items-center">
-                        <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                        <div class="name">Full Name</div>
+                <div class="chat-message">
+                    <input type="text" placeholder="Type your message">
+                    <div class="icons">
+                        <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
+                        <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
+                        <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
                     </div>
-                    <div class="date">15։12</div>
                 </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit amet accusantium quae
-                    necessitatibus, id velit qui doloribus non vero voluptates.
-                </div>
-            </li>
-
-            <li class="other-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem possimus excepturi ipsam?
-                </div>
-            </li>
-
-
-            <li class="other-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias mollitia quia, odit corporis
-                    incidunt quasi.
-                </div>
-            </li>
-            <li class="my-message">
-                <div class="message-data mb-0">
-                    <div class="img" style="background-image: url(assets/img/item-12.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr
-                </div>
-            </li>
-        </ul>
-
-        <div class="chat-message">
-            <input type="text" placeholder="Type your message">
-            <div class="icons">
-                <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
-                <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
-                <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
             </div>
-        </div>
+        </ng-container>
     </div>
+
 </div>

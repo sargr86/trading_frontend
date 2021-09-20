@@ -7,6 +7,34 @@
     }
 }
 
+
+.tab-wrap {
+    display: flex;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 317px;
+
+    .tab {
+        flex: 1;
+        padding: 6px 16px;
+        font-size: 16px;
+        font-weight: 500;
+        background: #C9C9C9;
+        color: #FFFFFF;
+        text-align: left;
+        transition: all 0.3s ease;
+
+        &.active {
+            background: #F53C6F;
+        }
+
+        &:not(.active):hover {
+            background: #18B587;
+            color: #FFFFFF;
+        }
+    }
+}
+
 .chat-wrap {
     display: flex;
     flex-wrap: wrap;
@@ -20,7 +48,9 @@
         background-repeat: no-repeat;
     }
 
-    .people-list {
+
+
+    .people-groups-container {
         flex: 0 0 316px;
         background: #F5F5F5;
 
@@ -42,30 +72,7 @@
         }
 
 
-        .tab-wrap {
-            display: flex;
-            margin-bottom: 16px;
 
-            .tab {
-                flex: 1;
-                padding: 6px 16px;
-                font-size: 16px;
-                font-weight: 500;
-                background: #C9C9C9;
-                color: #FFFFFF;
-                text-align: left;
-                transition: all 0.3s ease;
-
-                &.active {
-                    background: #F53C6F;
-                }
-
-                &:not(.active):hover {
-                    background: #18B587;
-                    color: #FFFFFF;
-                }
-            }
-        }
 
         .list-wrap {
             // max-height: 600px;

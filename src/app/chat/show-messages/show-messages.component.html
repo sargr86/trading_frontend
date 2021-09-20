@@ -5,7 +5,6 @@
         <button class="tab" [class.active]="activeTab=='group'" (click)="changeTab('group')">Group Chat</button>
     </div>
 
-
     <app-direct-chat *ngIf="activeTab==='direct'" [authUser]="authUser"></app-direct-chat>
     <app-group-chat *ngIf="activeTab=='group'"></app-group-chat>
 

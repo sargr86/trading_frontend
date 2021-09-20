@@ -12,7 +12,6 @@
     }
 
 
-
     .people-groups-container {
         flex: 0 0 316px;
         background: #F5F5F5;
@@ -259,6 +258,15 @@
                     padding: 16px;
                     font-family: "Muli-Light";
                 }
+
+                .seen {
+                    text-align: right;
+                    .seen-avatar {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 20px;
+                    }
+                }
             }
         }
 
@@ -302,18 +310,23 @@
 .more-btn {
     //display: none;
 }
+
 .responsive-list {
     flex: 0 0 100% !important;
+
     .more-btn {
         display: block;
     }
 }
+
 .responsive-list + .chat {
     //display: none!important;
 }
+
 .other-message {
 
 }
+
 .my-message {
     .img, .name {
         display: none;

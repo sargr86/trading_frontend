@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import IsResponsive from '@core/helpers/is-responsive';
 import * as moment from 'moment';
 import {ChatService} from '@core/services/chat.service';
@@ -13,7 +13,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     templateUrl: './direct-chat.component.html',
     styleUrls: ['./direct-chat.component.scss']
 })
-export class DirectChatComponent implements OnInit, AfterViewChecked {
+export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     @Input() authUser;
 
@@ -43,6 +43,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked {
         this.getUsersMessages();
         this.initForm();
         this.getTyping();
+        this.getSeen();
     }
 
     addUserToSocket() {
@@ -64,6 +65,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked {
 
     getMessageClass(user) {
         return user.id === this.authUser.id ? 'my-message' : 'other-message';
+    }
+
+    getSeenAvatar(msg) {
+        if (msg.from_user.id !== this.authUser.id) {
+            return msg.from_user.avatar;
+        } else if (msg.to_user.id !== this.authUser.id) {
+            return msg.to_user.avatar;
+        }
     }
 
     isChatUsersListSize() {
@@ -98,14 +107,15 @@ export class DirectChatComponent implements OnInit, AfterViewChecked {
         this.socketService.onNewMessage().subscribe((dt: any) => {
 
             // this.usersMessages.find(m => m.user.id === this.activeUser?.id)
-            this.usersMessages.find(m => m.user.id === dt?.from_id).messages.push(dt);
-            const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
-            this.selectedUserMessages = {messages: [], user: {}};
-            this.selectedUserMessages.user = selectedMessages.user;
+            // this.usersMessages.find(m => m.user.id === dt?.from_id).messages.push(dt);
+            // const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
+            // this.selectedUserMessages = {messages: [], user: {}};
+            // this.selectedUserMessages.user = selectedMessages.user;
             this.typingText = null;
-            this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
-            console.log(this.selectedUserMessages.messages)
+            // this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
+            // console.log(this.selectedUserMessages.messages);
             // this.selectedUserMessages.messages = this.groupBy.transform(this.selectedUserMessages.messages, 'created_at');
+            this.getUsersMessages();
 
         });
     }
@@ -131,7 +141,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked {
 
                 this.socketService.sendMessage(data);
                 this.scrollMsgsToBottom();
-                console.log(this.selectedUserMessages)
+                console.log(this.selectedUserMessages);
             });
             this.chatForm.patchValue({message: ''});
         }
@@ -159,7 +169,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked {
         return dateCreated;
     }
 
-    setTyping() {
+    setTyping(msg = null) {
         this.socketService.setTyping({
             from_user: this.chatForm.value.from_user,
             to_user: this.chatForm.value.to_user,
@@ -169,13 +179,38 @@ export class DirectChatComponent implements OnInit, AfterViewChecked {
 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
-            console.log(dt.message)
+            // console.log(dt.message);
             this.typingText = dt.message ? `${dt.from_user.username} is typing...` : null;
+        });
+    }
+
+    setSeen() {
+        this.scrollMsgsToBottom();
+        this.socketService.setSeen({
+            from_id: this.chatForm.value.from_id,
+            to_id: this.chatForm.value.to_id,
+            from_user: this.chatForm.value.from_user,
+            to_user: this.chatForm.value.to_user,
+            seen: 1,
+            seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
+        });
+    }
+
+    getSeen() {
+
+        this.socketService.getSeen().subscribe((dt: any) => {
+            this.selectedUserMessages.messages = [];
+            // console.log('get seen', dt)
+            this.getUsersMessages();
         });
     }
 
     ngAfterViewChecked() {
         this.scrollMsgsToBottom();
+    }
+
+    ngOnDestroy() {
+        this.setTyping(null);
     }
 
 }

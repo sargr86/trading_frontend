@@ -48,4 +48,16 @@ export class SocketIoService {
         });
     }
 
+    setSeen(data) {
+        this.socket.emit('setSeen', data);
+    }
+
+    getSeen() {
+        return new Observable(observer => {
+            this.socket.on('getSeen', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 }

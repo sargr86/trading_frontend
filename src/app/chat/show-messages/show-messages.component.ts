@@ -17,12 +17,6 @@ export class ShowMessagesComponent implements OnInit {
     activeTab = 'direct';
     authUser;
 
-
-
-
-
-
-
     constructor(
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
@@ -42,16 +36,9 @@ export class ShowMessagesComponent implements OnInit {
     }
 
 
-
     changeTab(tab) {
         this.activeTab = tab;
     }
-
-
-
-
-
-
 
 
 }

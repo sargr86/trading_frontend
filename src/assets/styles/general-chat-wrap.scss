@@ -298,3 +298,24 @@
         }
     }
 }
+
+.more-btn {
+    //display: none;
+}
+.responsive-list {
+    flex: 0 0 100% !important;
+    .more-btn {
+        display: block;
+    }
+}
+.responsive-list + .chat {
+    //display: none!important;
+}
+.other-message {
+
+}
+.my-message {
+    .img, .name {
+        display: none;
+    }
+}

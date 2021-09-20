@@ -53,7 +53,6 @@
         </div>
 
         <ul class="chat-history" id="direct-messages" #directMessagesList>
-            <!--            {{selectedUserMessages[0].messages.length}}-->
             <ng-container *ngFor="let msg of selectedUserMessages?.messages">
 
                 <li class="data-list"><span>{{getDateText(msg.key)}}</span></li>

@@ -5,10 +5,12 @@ import {ChatRoutingModule} from './chat-routing.module';
 import {ShowChatroomsComponent} from './show-chatrooms/show-chatrooms.component';
 import {ShowMessagesComponent} from './show-messages/show-messages.component';
 import {SharedModule} from '@shared/shared.module';
+import { DirectChatComponent } from './show-messages/direct-chat/direct-chat.component';
+import { GroupChatComponent } from './show-messages/group-chat/group-chat.component';
 
 
 @NgModule({
-    declarations: [ShowChatroomsComponent, ShowMessagesComponent],
+    declarations: [ShowChatroomsComponent, ShowMessagesComponent, DirectChatComponent, GroupChatComponent],
     imports: [
         CommonModule,
         ChatRoutingModule,

@@ -1,0 +1,116 @@
+<div class="chat-wrap">
+
+    <div class="people-groups-container" [hidden]="isChatUsersListSize()"
+         [class.responsive-list]="isChatUsersListSize()">
+        <div id="groups-list" class="list-wrap">
+            <button class="CreateGroupChat"><img src="assets/img/noun_create.png" alt=""> Create new group chat
+            </button>
+            <ul class="list">
+                <li>
+                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <div class="text">
+                        <div class="name">Name</div>
+                        <span>Lorem ipsum dolor sit amet</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <div class="text">
+                        <div class="name">Name</div>
+                        <span>Lorem ipsum dolor sit amet</span>
+                    </div>
+                </li>
+                <li class="active">
+                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <div class="text">
+                        <div class="name">Name</div>
+                        <span>Lorem ipsum dolor sit amet</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <div class="text">
+                        <div class="name">Name</div>
+                        <span>Lorem ipsum dolor sit amet</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="chat">
+        <div class="chat-about">
+            <div class="left">
+                <div class="img" style="background-image: url(assets/img/item-4.png); "></div>
+                <div class="name">Group chat name</div>
+            </div>
+            <div class="right">
+                <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
+                <div class="dotes"><a href=""><i class="fas fa-ellipsis-v"></i></a></div>
+            </div>
+        </div>
+
+        <ul class="chat-history">
+
+            <li class="data-list"><span>Wednesday, February 5th</span></li>
+
+            <li class="other-message">
+                <div class="message-data">
+                    <div class="d-flex align-items-center">
+                        <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                        <div class="name">Full Name</div>
+                    </div>
+                    <div class="date">15։12</div>
+                </div>
+                <div class="message">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit amet accusantium quae
+                    necessitatibus, id velit qui doloribus non vero voluptates.
+                </div>
+            </li>
+
+            <li class="other-message">
+                <div class="message-data">
+                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <div class="name">Full Name</div>
+                    <div class="date">15։12</div>
+                </div>
+                <div class="message">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem possimus excepturi
+                    ipsam?
+                </div>
+            </li>
+
+
+            <li class="other-message">
+                <div class="message-data">
+                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <div class="name">Full Name</div>
+                    <div class="date">15։12</div>
+                </div>
+                <div class="message">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias mollitia quia, odit corporis
+                    incidunt quasi.
+                </div>
+            </li>
+            <li class="my-message">
+                <div class="message-data mb-0">
+                    <div class="img" style="background-image: url(assets/img/item-12.png); "></div>
+                    <div class="name">Full Name</div>
+                    <div class="date">15։12</div>
+                </div>
+                <div class="message">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr
+                </div>
+            </li>
+        </ul>
+
+        <div class="chat-message">
+            <input type="text" placeholder="Type your message">
+            <div class="icons">
+                <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
+                <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
+                <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
+            </div>
+        </div>
+    </div>
+</div>

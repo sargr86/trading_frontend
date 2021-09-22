@@ -213,4 +213,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.setTyping(null);
     }
 
+
+
 }

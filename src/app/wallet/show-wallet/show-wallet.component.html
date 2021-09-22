@@ -4,7 +4,7 @@
     </h3>
     <div *mobxAutorun>
         <ng-container *ngIf="cardsStore.cards?.length > 0">
-        <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex"
+        <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex" [@.disabled]="true"
                        (selectedTabChange)="tabChange($event)" >
             <mat-tab label="Wallet">
                 <app-wallet-content-tab [userCards]="cardsStore.cards" [authUser]="authUser" [accountTransfers]="transfers"

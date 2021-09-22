@@ -4,9 +4,9 @@
 
         <div id="people-list" class="list-wrap">
             <ul class="list align-items-center">
-                <li *ngFor="let msg of order(usersMessages)" (click)="makeUserActive(msg.user)"
+                <li *ngFor="let msg of order(usersMessages)"
                     [class.active]="activeUser?.id === msg.user.id">
-                    <div class="d-flex">
+                    <div class="d-flex user-last-msg" (click)="makeUserActive(msg.user)">
                         <div class="img">
                             <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
                         </div>

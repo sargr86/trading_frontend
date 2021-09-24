@@ -12,19 +12,19 @@
                 </div>
             </div>
 
-             <div class="chat-information">
+            <div class="chat-information" #directMessagesList>
                 <div class="loader" *ngIf="loadingMessages">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
-                <ng-container *ngIf="!loadingMessages">
-                    <div class="chat-block d-flex flex-column" *ngFor="let message of messages">
+<!--                <div [hidden]="loadingMessages">-->
+                    <div class="chat-block d-flex flex-column"  *ngFor="let message of messages">
 
-                        <div class="w-100"  [ngClass]="getMessageClass(message?.from_user)">
+                        <div class="w-100" [ngClass]="getMessageClass(message?.from_user)">
                             <ng-container>
                                 <div class="d-flex w-100 align-items-center position-relative">
                                     <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
                                          [src]="message.avatar|getImgPath:'user_avatars'">
-<!--                                    <p class="chat-block-1">{{message?.from_user?.first_name + ' ' + message?.from_user?.last_name}}</p>-->
+                                    <!--                                    <p class="chat-block-1">{{message?.from_user?.first_name + ' ' + message?.from_user?.last_name}}</p>-->
                                     <p class="chat-block-2 w-100">{{message.message}}</p>
                                     <div class="abs">{{message.created_at | date: 'HH:mm'}}</div>
                                 </div>
@@ -36,16 +36,19 @@
                             <!--                                 [src]="message.to_user.avatar|getImgPath:'user_avatars'">-->
                             <!--                            <p class="chat-block-1">{{message?.to_user.first_name + ' ' + message?.to_user.last_name}}</p>-->
                             <!--                        </ng-container>-->
-<!--                            <p class="chat-block-2 w-100">{{message.message}}</p>-->
+                            <!--                            <p class="chat-block-2 w-100">{{message.message}}</p>-->
                         </div>
                     </div>
-                </ng-container>
+<!--                </div>-->
             </div>
 
-
+            <div *ngIf="typingText" class="typing-text-container">
+                <small class="text-center font-italic d-block">{{typingText}}</small>
+            </div>
             <div class="textarea d-flex align-items-end">
                 <button class="add-btn">+</button>
                 <input class="flex-1 mx-3" formControlName="message" placeholder="Message"
+                       (keyup)="setTyping()" (focus)="setSeen()"
                        (keyup.enter)="sendMessage($event)">
 
                 <button class="send-btn"><img src="assets/img/send.svg"></button>

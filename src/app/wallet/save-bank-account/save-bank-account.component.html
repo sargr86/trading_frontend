@@ -1,4 +1,4 @@
-<form [formGroup]="stripeBankAccountForm" class="col-8">
+<form [formGroup]="stripeBankAccountForm" class="col-lg-8">
     <mat-tab-group #tabGroup [selectedIndex]="stripeAccountExists">
         <mat-tab label="Personal details" [disabled]="!!stripeAccountExists">
             <div class="py-5">
@@ -6,7 +6,7 @@
                 <div class="text-green">Tell us a few details about yourself.</div>
             </div>
             <div class="d-flex" formGroupName="individual">
-                <div class="col-6 pl-0">
+                <div class="col-lg-6 pl-0">
                     <label>Legal name of person</label>
                     <input formControlName="first_name" placeholder="First name" class="form-control">
                     <span class="error"
@@ -84,7 +84,7 @@
                 <h2>Select an account for payouts</h2>
                 <div class="text-green">A payout is the transfer of funds from Stripe to your bank account .</div>
             </div>
-            <div class="col-6 pl-0" formGroupName="external_account">
+            <div class="col-lg-6 pl-0" formGroupName="external_account">
                 <div class="d-flex">
                     <div role="button" class="form-control mr-3 radio-btn"
                          [class.active]="externalAccountType==='bank_account'"

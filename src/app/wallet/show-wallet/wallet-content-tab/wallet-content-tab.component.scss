@@ -45,5 +45,11 @@
 #external-accounts {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    div[role='button'] {
+        white-space: nowrap;
+        margin: 5px;
+    }
 }
 

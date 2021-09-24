@@ -1,5 +1,5 @@
 <hr>
-<div class="d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center justify-content-between flex-wrap">
     <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
     <app-external-accounts-handler [userCards]="userCards"
                                    (viewExtAccountPayouts)="getExtAccountType($event)"

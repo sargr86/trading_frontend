@@ -1,11 +1,12 @@
 <ng-container *ngFor="let section of mainSections;let i = index;trackBy:trackByElement">
-    <div class="left-menu-main" [class.st-left-menu]="i===0"
+    <div class="left-menu-main" [class.st-left-menu]="i===0" matBadge="1" [matBadgeHidden]="section.name!=='Messages' || !newMessage"
          [class.active]="router.url === section.link || (section.link === '/stocks/analytics' && router.url.includes('analytics'))"
          (click)="changePage(section.link)" *ngIf="(section.auth && auth.loggedIn()) || !section.auth"
          [hidden]="!section.production && envName==='production'">
         <mat-icon *ngIf="section.icon">{{section.icon}}</mat-icon>
         <img *ngIf="section.img" [src]="'assets/img/'+section.img+'.png'" alt="section-icon">
-        <p>{{section.name}}</p>
+        <p >{{section.name}}</p>
+
     </div>
     <div class="line-item" *ngIf="auth.loggedIn() && section.separator"></div>
 </ng-container>

@@ -1134,4 +1134,9 @@ mat-error {
     padding: 0 0 0 10px !important;
 }
 
+.mat-badge-content {
+    background-color: $red !important;
+    color: $white!important;
+}
+
 @import "responsive";

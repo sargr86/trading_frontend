@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {environment} from '@env';
 import {AuthService} from '@core/services/auth.service';
 import trackByElement from '@core/helpers/track-by-element';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-section-links',
@@ -13,6 +14,7 @@ import trackByElement from '@core/helpers/track-by-element';
 export class SectionLinksComponent implements OnInit {
     mainSections = MAIN_SECTIONS;
     envName;
+    newMessage = false;
     trackByElement = trackByElement;
 
     @Output('closeSidenav') closeSidenav = new EventEmitter();
@@ -20,11 +22,28 @@ export class SectionLinksComponent implements OnInit {
     constructor(
         public router: Router,
         public auth: AuthService,
+        private socketService: SocketIoService
     ) {
     }
 
     ngOnInit(): void {
         this.envName = environment.envName;
+        this.getMessagesFromSocket();
+        this.getSeen();
+    }
+
+    getMessagesFromSocket() {
+        this.socketService.onNewMessage().subscribe((dt: any) => {
+            console.log('new message')
+            this.newMessage = true;
+        });
+    }
+
+    getSeen() {
+        this.socketService.getSeen().subscribe((dt: any) => {
+            console.log('get seen', dt)
+            this.newMessage = false;
+        });
     }
 
     changePage(route, params = {}) {

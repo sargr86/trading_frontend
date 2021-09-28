@@ -106,15 +106,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     getMessagesFromSocket() {
         this.socketService.onNewMessage().subscribe((dt: any) => {
 
-            // this.usersMessages.find(m => m.user.id === this.activeUser?.id)
-            // this.usersMessages.find(m => m.user.id === dt?.from_id).messages.push(dt);
-            // const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
-            // this.selectedUserMessages = {messages: [], user: {}};
-            // this.selectedUserMessages.user = selectedMessages.user;
             this.typingText = null;
-            // this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages.messages, 'created_at');
-            // console.log(this.selectedUserMessages.messages);
-            // this.selectedUserMessages.messages = this.groupBy.transform(this.selectedUserMessages.messages, 'created_at');
             this.getUsersMessages();
 
         });
@@ -185,6 +177,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     setSeen() {
+        console.log('set seen')
         this.scrollMsgsToBottom();
         this.socketService.setSeen({
             from_id: this.chatForm.value.from_id,
@@ -212,7 +205,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     ngOnDestroy() {
         this.setTyping(null);
     }
-
 
 
 }

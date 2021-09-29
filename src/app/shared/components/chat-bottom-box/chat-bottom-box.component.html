@@ -8,7 +8,7 @@
                     <span>{{channelUser.first_name + ' ' + channelUser.last_name}}</span>
                 </div>
                 <div>
-                    <img src="assets/img/x.svg" class="close-box" alt="" (click)="closeChatBox()">
+                    <img src="assets/img/x.svg" class="close-box" alt="close-chat-box" (click)="closeChatBox()">
                 </div>
             </div>
 
@@ -16,33 +16,23 @@
                 <div class="loader" *ngIf="loadingMessages">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
-<!--                <div [hidden]="loadingMessages">-->
-                    <div class="chat-block d-flex flex-column"  *ngFor="let message of messages">
+                <div class="chat-block d-flex flex-column" *ngFor="let message of messages">
 
-                        <div class="w-100" [ngClass]="getMessageClass(message?.from_user)">
-                            <ng-container>
-                                <div class="d-flex w-100 align-items-center position-relative">
-                                    <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
-                                         [src]="message.avatar|getImgPath:'user_avatars'">
-                                    <!--                                    <p class="chat-block-1">{{message?.from_user?.first_name + ' ' + message?.from_user?.last_name}}</p>-->
-                                    <p class="chat-block-2 w-100">{{message.message}}</p>
-                                    <div class="abs">{{message.created_at | date: 'HH:mm'}}</div>
-                                </div>
-                            </ng-container>
-
-                            <!--                        <ng-container *ngIf="!message.from">-->
-                            <!--                            <p>to</p>-->
-                            <!--                            <img class="avatar" [class.selectable]="message.to_user.from!==this.authUser.username"-->
-                            <!--                                 [src]="message.to_user.avatar|getImgPath:'user_avatars'">-->
-                            <!--                            <p class="chat-block-1">{{message?.to_user.first_name + ' ' + message?.to_user.last_name}}</p>-->
-                            <!--                        </ng-container>-->
-                            <!--                            <p class="chat-block-2 w-100">{{message.message}}</p>-->
-                        </div>
-                        <div class="seen" *ngIf="message.seen">
-                            <img class="seen-avatar" [src]="getSeenAvatar(message)|getImgPath: 'user_avatars'">
-                        </div>
+                    <div class="w-100" [ngClass]="getMessageClass(message?.from_user)">
+                        <ng-container>
+                            <div class="d-flex w-100 align-items-center position-relative">
+                                <img class="avatar" [class.selectable]="message.from!==this.authUser.username"
+                                     [src]="message.avatar|getImgPath:'user_avatars'">
+                                <p class="chat-block-2 w-100">{{message.message}}</p>
+                                <div class="abs">{{message.created_at | date: 'HH:mm'}}</div>
+                            </div>
+                        </ng-container>
                     </div>
-<!--                </div>-->
+                    <div class="seen" *ngIf="message.seen">
+                        <img class="seen-avatar" [src]="getSeenAvatar(message)|getImgPath: 'user_avatars'">
+                    </div>
+
+                </div>
             </div>
 
             <div *ngIf="typingText" class="typing-text-container">
@@ -51,10 +41,9 @@
             <div class="textarea d-flex align-items-end">
                 <button class="add-btn">+</button>
                 <input class="flex-1 mx-3" formControlName="message" placeholder="Message"
-                       (keyup)="setTyping()" (focus)="setSeen()"
-                       (keyup.enter)="sendMessage()">
+                       (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessage()">
 
-                <button class="send-btn" (click)="sendMessage()"><img src="assets/img/send.svg"></button>
+                <button class="send-btn" (click)="sendMessage()"><img alt="send button" src="assets/img/send.svg"></button>
             </div>
         </div>
     </div>

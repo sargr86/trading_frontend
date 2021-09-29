@@ -17,13 +17,30 @@
         height: calc(100% - 115px);
         padding: 14px 12px 30px 12px;
 
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #DCDCDC;
+            border-radius: 4px
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgb(174, 174, 174);
+        }
+
 
         .chat-block {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 18px;
 
 
             .avatar {
@@ -54,6 +71,17 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 //white-space: nowrap;
+            }
+        }
+
+        .seen {
+            width: 100%;
+            text-align: right;
+
+            .seen-avatar {
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
             }
         }
     }

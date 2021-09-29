@@ -38,6 +38,9 @@
                             <!--                        </ng-container>-->
                             <!--                            <p class="chat-block-2 w-100">{{message.message}}</p>-->
                         </div>
+                        <div class="seen" *ngIf="message.seen">
+                            <img class="seen-avatar" [src]="getSeenAvatar(message)|getImgPath: 'user_avatars'">
+                        </div>
                     </div>
 <!--                </div>-->
             </div>
@@ -49,9 +52,9 @@
                 <button class="add-btn">+</button>
                 <input class="flex-1 mx-3" formControlName="message" placeholder="Message"
                        (keyup)="setTyping()" (focus)="setSeen()"
-                       (keyup.enter)="sendMessage($event)">
+                       (keyup.enter)="sendMessage()">
 
-                <button class="send-btn"><img src="assets/img/send.svg"></button>
+                <button class="send-btn" (click)="sendMessage()"><img src="assets/img/send.svg"></button>
             </div>
         </div>
     </div>

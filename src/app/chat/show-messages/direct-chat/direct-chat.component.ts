@@ -105,7 +105,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getMessagesFromSocket() {
         this.socketService.onNewMessage().subscribe((dt: any) => {
-
+            console.log('new message direct chat!!!')
             this.typingText = null;
             this.getUsersMessages();
 

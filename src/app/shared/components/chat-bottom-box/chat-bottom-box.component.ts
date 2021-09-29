@@ -79,11 +79,12 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
     }
 
 
-    sendMessage(e) {
+    sendMessage() {
         if (this.chatForm.valid) {
             const data = {...this.chatForm.value};
             // console.log(data)
             this.sendMsg.emit(data);
+            this.socketService.sendMessage(data);
             this.chatService.saveMessage(data).subscribe(dt => {
                 this.messages = dt;
             });
@@ -139,6 +140,14 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
             // console.log('get seen', dt)
             this.loadPreviousMessages();
         });
+    }
+
+    getSeenAvatar(msg) {
+        if (msg.from_user.id !== this.authUser.id) {
+            return msg.from_user.avatar;
+        } else if (msg.to_user.id !== this.authUser.id) {
+            return msg.to_user.avatar;
+        }
     }
 
     scrollMsgsToBottom() {

@@ -92,7 +92,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.usersMessages = dt;
 
             if (!this.isChatUsersListSize()) {
-                this.activeUser = dt[0]?.user;
+                this.activeUser = this.activeUser || dt[0]?.user;
                 const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
                 this.selectedUserMessages.user = selectedMessages?.user;
                 this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');

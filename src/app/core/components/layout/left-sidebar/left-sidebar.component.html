@@ -3,7 +3,7 @@
 </div>
 <div id="left-sidebar" [class.disabled]="router.url.includes('publish')">
     <div id="left-menu">
-        <app-section-links (closeSidenav)="closeSidenav.emit($event)"></app-section-links>
+        <app-section-links (closeSidenav)="closeSidenav.emit($event)" [authUser]="authUser"></app-section-links>
     </div>
 
     <ng-container *ngIf="auth.loggedIn()">

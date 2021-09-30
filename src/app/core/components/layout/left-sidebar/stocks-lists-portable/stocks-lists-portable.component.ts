@@ -88,7 +88,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
                         }));
 
                         // this.getUserStocks();
-                        this.getIndices(); // @todo remove if refreshing implemented
+                        // this.getIndices(); // @todo remove if refreshing implemented
                     }
                 }
 
@@ -96,6 +96,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         }));
 
         this.getUserStocks();
+        this.getIndices();
 
 
         this.subscriptions.push(this.subject.getStocksData().subscribe(dt => {
@@ -114,7 +115,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     getIndices() {
         this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
-            this.subject.changeIndices(dt);
+            // this.subject.changeIndices(dt);
         }));
     }
 

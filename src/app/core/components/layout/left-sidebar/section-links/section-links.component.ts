@@ -1,10 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MAIN_SECTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {environment} from '@env';
 import {AuthService} from '@core/services/auth.service';
 import trackByElement from '@core/helpers/track-by-element';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-section-links',
@@ -17,12 +18,14 @@ export class SectionLinksComponent implements OnInit {
     newMessage = false;
     trackByElement = trackByElement;
 
+    @Input() authUser;
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
     constructor(
         public router: Router,
         public auth: AuthService,
-        private socketService: SocketIoService
+        private socketService: SocketIoService,
+        private chatService: ChatService
     ) {
     }
 
@@ -30,6 +33,13 @@ export class SectionLinksComponent implements OnInit {
         this.envName = environment.envName;
         this.getMessagesFromSocket();
         this.getSeen();
+        this.getUserMessages();
+    }
+
+    getUserMessages() {
+        this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
+            this.newMessage = !!dt.filter(d => !d.seen).length;
+        });
     }
 
     getMessagesFromSocket() {
@@ -41,7 +51,7 @@ export class SectionLinksComponent implements OnInit {
 
     getSeen() {
         this.socketService.getSeen().subscribe((dt: any) => {
-            console.log('get seen', dt)
+            // console.log('get seen', dt)
             this.newMessage = false;
         });
     }

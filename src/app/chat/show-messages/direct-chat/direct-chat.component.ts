@@ -112,13 +112,17 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         });
     }
 
-    makeUserActive(user) {
+    makeUserActive(user, lastMsg) {
         this.activeUser = user;
         this.selectedUserMessages = {messages: [], user: {}};
         this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
         const userMessages = JSON.parse(JSON.stringify(this.usersMessages.find(m => m.user.id === user.id)));
         this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
         this.selectedUserMessages.user = userMessages.user;
+
+        if (!lastMsg.seen) {
+            this.setSeen();
+        }
 
     }
 

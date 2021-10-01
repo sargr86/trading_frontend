@@ -1,11 +1,30 @@
 @import '~assets/styles/general-chat-wrap';
+@import 'variables';
 
 .user-last-msg {
-    width: 92%;
+    width: 98%;
 }
 
 .right {
     i {
         cursor: pointer;
+    }
+}
+
+.left-group {
+    display: flex;
+}
+
+.seen-circle {
+    background-color: transparent;
+
+    i {
+        color: $metl-green;
+    }
+}
+
+.more-btn {
+    button {
+        background-color: transparent;
     }
 }

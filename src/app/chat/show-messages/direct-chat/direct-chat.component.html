@@ -4,31 +4,45 @@
 
         <div id="people-list" class="list-wrap">
             <ul class="list align-items-center">
-                <li *ngFor="let msg of order(usersMessages)"
+                <li *ngFor="let msg of order(usersMessages)" (click)="setSeen()"
                     [class.active]="activeUser?.id === msg.user.id">
-                    <div class="d-flex user-last-msg" (click)="makeUserActive(msg.user)">
-                        <div class="img">
-                            <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
-                        </div>
-                        <div class="text">
-                            <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
-                            <div class="d-flex align-items-center">
-                                <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
-                                <span
-                                    class="ml-4">{{msg?.messages[msg?.messages.length - 1].created_at | dateFromNow}}</span>
+                    <div class="d-flex user-last-msg align-items-center justify-content-between" (click)="makeUserActive(msg.user)">
+                        <div class="left-group">
+
+                            <div class="img">
+                                <img class="avatar" [src]="msg.user.avatar|getImgPath: 'user_avatars'">
+                            </div>
+                            <div class="text">
+                                <div class="name">{{msg.user.first_name + ' ' + msg.user.last_name}}</div>
+                                <div class="d-flex align-items-center">
+                                    <span>{{msg?.messages[msg?.messages.length - 1].message}}</span>
+                                    <span
+                                        class="ml-4">{{msg?.messages[msg?.messages.length - 1].created_at | dateFromNow}}</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="ml-auto more-btn">
+                            <ng-container *ngIf="msg?.messages[msg?.messages.length - 1].seen === 1">
+                                <button [matMenuTriggerFor]="menu" class="">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item
+                                            (click)="unreadLastMsg(msg.user, msg?.messages[msg?.messages.length - 1])">
+                                        Unread
+                                    </button>
+                                    <button mat-menu-item>Delete</button>
+                                    <button mat-menu-item>Block</button>
+                                </mat-menu>
+                            </ng-container>
+                            <ng-container *ngIf="msg?.messages[msg?.messages.length - 1].seen === 0">
+                                <button class="seen-circle">
+                                    <i class="fas fa-circle"></i>
+                                </button>
+                            </ng-container>
+                        </div>
                     </div>
-                    <div class="ml-auto more-btn">
-                        <button mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Unread</button>
-                            <button mat-menu-item>Delete</button>
-                            <button mat-menu-item>Block</button>
-                        </mat-menu>
-                    </div>
+
                 </li>
             </ul>
         </div>

@@ -193,9 +193,34 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
         this.socketService.getSeen().subscribe((dt: any) => {
             this.selectedUserMessages.messages = [];
-            // console.log('get seen', dt)
+            console.log('get seen', dt)
             this.getUsersMessages();
         });
+    }
+
+    unreadLastMsg(from, lastMsg) {
+
+        if (lastMsg.to_id === this.authUser.id && lastMsg.from_id === from.id) {
+            const params = {
+                to_id: this.authUser.id,
+                to_user: this.authUser,
+                from_user: {username: from.from, ...from},
+                from_id: from.id,
+                id: lastMsg.id,
+                seen: 0
+            };
+
+            console.log(params)
+
+            console.log('unread msg!!')
+            this.socketService.setSeen(params);
+
+            // this.chatService.unreadMsg(params).subscribe(dt => {
+            //
+            // });
+        }
+
+
     }
 
     ngAfterViewChecked() {

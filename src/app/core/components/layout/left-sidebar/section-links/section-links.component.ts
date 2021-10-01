@@ -52,7 +52,7 @@ export class SectionLinksComponent implements OnInit {
     getSeen() {
         this.socketService.getSeen().subscribe((dt: any) => {
             // console.log('get seen', dt)
-            this.newMessage = false;
+            this.newMessage = !dt.seen;
         });
     }
 

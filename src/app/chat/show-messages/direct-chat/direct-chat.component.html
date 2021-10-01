@@ -2,6 +2,21 @@
     <div class="people-groups-container" [hidden]="isChatUsersListSize() && activeUser"
          [class.responsive-list]="isChatUsersListSize()">
         <div id="people-list" class="list-wrap">
+            <div class="users-types">
+                <button [matMenuTriggerFor]="menu" class="">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <i class="fas fa-users"></i>
+                        Active users
+                    </button>
+                    <button mat-menu-item>
+                        <i class="fa fa-users-slash"></i>
+                        Blocked users
+                    </button>
+                </mat-menu>
+            </div>
             <ul class="list align-items-center">
                 <li *ngFor="let msg of order(usersMessages)"
                     [class.active]="activeUser?.id === msg.user.id">
@@ -12,7 +27,7 @@
                     </ng-container>
 
                     <ng-template #itemTemplate let-user="user" let-lastMsg="lastMsg">
-                        <div class="d-flex user-last-msg align-items-center justify-content-between" >
+                        <div class="d-flex user-last-msg align-items-center justify-content-between">
                             <div class="left-group" (click)="makeUserActive(user, lastMsg)">
 
                                 <div class="img">
@@ -37,7 +52,6 @@
                                                 (click)="unreadLastMsg(user, lastMsg)">
                                             Unread
                                         </button>
-                                        <button mat-menu-item>Delete</button>
                                         <button mat-menu-item>Block</button>
                                     </mat-menu>
                                 </ng-container>
@@ -65,16 +79,16 @@
                 <div class="name">{{activeUser.first_name + ' ' + activeUser.last_name}}</div>
             </div>
             <div class="right">
-                <div class="remove"><i class="fas fa-trash"></i></div>
-                <div class="ml-auto more-btn">
-                    <button class="dotes" mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Unread</button>
-                        <button mat-menu-item>Block</button>
-                    </mat-menu>
-                </div>
+                <!--                <div class="remove"><i class="fas fa-trash"></i></div>-->
+                <!--                <div class="ml-auto more-btn">-->
+                <!--                    <button class="dotes" mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true">-->
+                <!--                        <i class="fas fa-ellipsis-v"></i>-->
+                <!--                    </button>-->
+                <!--                    <mat-menu #menu="matMenu">-->
+                <!--                        <button mat-menu-item>Unread</button>-->
+                <!--                        <button mat-menu-item>Block</button>-->
+                <!--                    </mat-menu>-->
+                <!--                </div>-->
             </div>
         </div>
 

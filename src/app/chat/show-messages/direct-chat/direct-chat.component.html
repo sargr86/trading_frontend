@@ -2,23 +2,33 @@
     <div class="people-groups-container" [hidden]="isChatUsersListSize() && activeUser"
          [class.responsive-list]="isChatUsersListSize()">
         <div id="people-list" class="list-wrap">
-            <div class="users-types">
-                <button [matMenuTriggerFor]="menu" class="">
-                    <i class="fas fa-ellipsis-h"></i>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <i class="fas fa-users"></i>
-                        Active users
+            <div class="top-actions">
+                <div id="back-to-active-users">
+                    <button *ngIf="showBlockedUsers" (click)="toggleBlockedUsers(false)">
+                        <mat-icon>arrow_backward</mat-icon>
+                        <span>Active contacts</span>
                     </button>
-                    <button mat-menu-item>
-                        <i class="fa fa-users-slash"></i>
-                        Blocked users
+                </div>
+                <div>
+
+                    <button [matMenuTriggerFor]="menu" class="show-actions">
+                        <i class="fas fa-ellipsis-h"></i>
                     </button>
-                </mat-menu>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="toggleBlockedUsers(false)" [disableRipple]="true">
+                            <i class="fas fa-users"></i>
+                            Active users
+                        </button>
+                        <button mat-menu-item (click)="toggleBlockedUsers(true)" [disableRipple]="true">
+                            <i class="fa fa-users-slash"></i>
+                            Blocked users
+                        </button>
+                    </mat-menu>
+                </div>
             </div>
             <ul class="list align-items-center">
-                <li *ngFor="let msg of order(usersMessages)"
+                <li *ngFor="let msg of filteredUsersMessages"
                     [class.active]="activeUser?.id === msg.user.id">
 
                     <ng-container
@@ -52,7 +62,9 @@
                                                 (click)="unreadLastMsg(user, lastMsg)">
                                             Unread
                                         </button>
-                                        <button mat-menu-item>Block</button>
+                                        <button mat-menu-item *ngIf="!showBlockedUsers" (click)="blockUser(user)">
+                                            Block
+                                        </button>
                                     </mat-menu>
                                 </ng-container>
                                 <ng-container *ngIf="lastMsg.seen === 0">

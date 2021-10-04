@@ -1,4 +1,13 @@
-import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+    AfterViewChecked,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import IsResponsive from '@core/helpers/is-responsive';
 import * as moment from 'moment';
 import {ChatService} from '@core/services/chat.service';
@@ -7,6 +16,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {DatePipe} from '@angular/common';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UsersService} from '@core/services/users.service';
 
 @Component({
     selector: 'app-direct-chat',
@@ -18,12 +28,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     @Input() authUser;
 
     usersMessages = [];
+    filteredUsersMessages = [];
     selectedUserMessages = {messages: [], user: {}};
     activeUser;
 
     typingText: string;
 
     chatForm: FormGroup;
+    showBlockedUsers = false;
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
 
@@ -31,9 +43,11 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        private usersService: UsersService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -83,17 +97,17 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         return um.sort((a, b) => {
             return +(+moment(b.messages[b.messages.length - 1].created_at) - (+moment(a.messages[a.messages.length - 1].created_at)));
         });
-
     }
 
     getUsersMessages() {
         this.getMessagesFromSocket();
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
-            this.usersMessages = dt;
+            this.usersMessages = this.order(dt);
+            this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);
 
             if (!this.isChatUsersListSize()) {
-                this.activeUser = this.activeUser || dt[0]?.user;
-                const selectedMessages = this.usersMessages.find(m => m.user.id === this.activeUser?.id);
+                this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
+                const selectedMessages = this.filteredUsersMessages.find(m => m.user.id === this.activeUser?.id);
                 this.selectedUserMessages.user = selectedMessages?.user;
                 this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');
                 this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
@@ -116,7 +130,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.activeUser = user;
         this.selectedUserMessages = {messages: [], user: {}};
         this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
-        const userMessages = JSON.parse(JSON.stringify(this.usersMessages.find(m => m.user.id === user.id)));
+        const userMessages = JSON.parse(JSON.stringify(this.filteredUsersMessages.find(m => m.user.id === user.id)));
         this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
         this.selectedUserMessages.user = userMessages.user;
 
@@ -124,6 +138,15 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.setSeen();
         }
 
+    }
+
+    toggleBlockedUsers(show) {
+        this.showBlockedUsers = show;
+        this.filteredUsersMessages = this.usersMessages.filter(d => {
+            return !!d.user.blocked === this.showBlockedUsers;
+        });
+        this.activeUser = this.filteredUsersMessages[0]?.user;
+        this.makeUserActive(this.activeUser, this.filteredUsersMessages[0]?.messages[this.filteredUsersMessages[0]?.messages.length - 1])
     }
 
     sendMessage(e) {
@@ -218,13 +241,16 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
             console.log('unread msg!!')
             this.socketService.setSeen(params);
-
-            // this.chatService.unreadMsg(params).subscribe(dt => {
-            //
-            // });
         }
 
 
+    }
+
+    blockUser(user) {
+        const params = {connection_id: user.id, user_id: this.authUser.id};
+        this.usersService.blockUser(params).subscribe(dt => {
+            this.getUsersMessages();
+        });
     }
 
     ngAfterViewChecked() {

@@ -29,6 +29,10 @@ export class UsersService {
         return this.httpClient.put<any>(`${API_URL}users/save-profile-changes`, params);
     }
 
+    blockUser(params) {
+        return this.httpClient.put<any>(`${API_URL}users/block-user`, params);
+    }
+
 
 
 

@@ -29,22 +29,36 @@
     }
 }
 
-.users-types {
+.top-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-right: 20px;
 
-    button {
+    .show-actions {
         background-color: #C9C9C9;
         padding: 5px;
         border-radius: 35px;
         width: 30px;
         height: 30px;
         color: white;
-        margin-bottom:10px;
+        margin-bottom: 10px;
 
         &:hover {
             background-color: $metl-green;;
+        }
+    }
+
+    #back-to-active-users {
+        padding-left: 10px;
+        button {
+            display: flex;
+            align-items: center;
+            background-color: unset;
+            border: none;
+
+            span {
+                margin-left: 5px;
+            }
         }
     }
 }

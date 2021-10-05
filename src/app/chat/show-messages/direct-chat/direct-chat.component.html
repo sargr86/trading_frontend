@@ -9,18 +9,18 @@
                         <span>Active contacts</span>
                     </button>
                 </div>
-                <div>
+                <div class="three-dot-actions">
 
                     <button [matMenuTriggerFor]="menu" class="show-actions">
                         <i class="fas fa-ellipsis-h"></i>
                     </button>
 
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="toggleBlockedUsers(false)" [disableRipple]="true">
+                        <button mat-menu-item [class.active]="!showBlockedUsers" (click)="toggleBlockedUsers(false)" [disableRipple]="true">
                             <i class="fas fa-users"></i>
                             Active users
                         </button>
-                        <button mat-menu-item (click)="toggleBlockedUsers(true)" [disableRipple]="true">
+                        <button mat-menu-item [class.active]="showBlockedUsers" (click)="toggleBlockedUsers(true)" [disableRipple]="true">
                             <i class="fa fa-users-slash"></i>
                             Blocked users
                         </button>
@@ -64,6 +64,9 @@
                                         </button>
                                         <button mat-menu-item *ngIf="!showBlockedUsers" (click)="blockUser(user)">
                                             Block
+                                        </button>
+                                        <button mat-menu-item *ngIf="showBlockedUsers" (click)="blockUser(user)">
+                                            Unblock
                                         </button>
                                     </mat-menu>
                                 </ng-container>

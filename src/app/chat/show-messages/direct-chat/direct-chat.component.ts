@@ -129,13 +129,15 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     makeUserActive(user, lastMsg) {
         this.activeUser = user;
         this.selectedUserMessages = {messages: [], user: {}};
-        this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
-        const userMessages = JSON.parse(JSON.stringify(this.filteredUsersMessages.find(m => m.user.id === user.id)));
-        this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
-        this.selectedUserMessages.user = userMessages.user;
+        if (user) {
+            this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
+            const userMessages = JSON.parse(JSON.stringify(this.filteredUsersMessages.find(m => m.user.id === user.id)));
+            this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
+            this.selectedUserMessages.user = userMessages.user;
 
-        if (!lastMsg.seen) {
-            this.setSeen();
+            if (!lastMsg.seen) {
+                this.setSeen();
+            }
         }
 
     }
@@ -247,7 +249,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     blockUser(user) {
-        const params = {connection_id: user.id, user_id: this.authUser.id};
+        const params = {connection_id: user.id, user_id: this.authUser.id, block: +!this.showBlockedUsers};
         this.usersService.blockUser(params).subscribe(dt => {
             this.getUsersMessages();
         });

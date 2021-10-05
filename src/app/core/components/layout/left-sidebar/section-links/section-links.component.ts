@@ -16,6 +16,7 @@ export class SectionLinksComponent implements OnInit {
     mainSections = MAIN_SECTIONS;
     envName;
     newMessage = false;
+    usersMessages = [];
     trackByElement = trackByElement;
 
     @Input() authUser;
@@ -38,6 +39,7 @@ export class SectionLinksComponent implements OnInit {
 
     getUserMessages() {
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
+            this.usersMessages = dt;
             this.newMessage = !!dt.filter(d => !d.seen).length;
         });
     }
@@ -51,8 +53,7 @@ export class SectionLinksComponent implements OnInit {
 
     getSeen() {
         this.socketService.getSeen().subscribe((dt: any) => {
-            // console.log('get seen', dt)
-            this.newMessage = !dt.seen;
+           this.getUserMessages();
         });
     }
 

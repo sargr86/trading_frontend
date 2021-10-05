@@ -1147,4 +1147,10 @@ mat-error {
     }
 }
 
+.mat-menu-content {
+    .active {
+        color: $metl-green!important;
+    }
+}
+
 @import "responsive";

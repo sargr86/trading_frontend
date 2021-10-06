@@ -34,7 +34,10 @@ export class SectionLinksComponent implements OnInit {
         this.envName = environment.envName;
         this.getMessagesFromSocket();
         this.getSeen();
-        this.getUserMessages();
+
+        if (this.auth.loggedIn()) {
+            this.getUserMessages();
+        }
     }
 
     getUserMessages() {
@@ -53,7 +56,7 @@ export class SectionLinksComponent implements OnInit {
 
     getSeen() {
         this.socketService.getSeen().subscribe((dt: any) => {
-           this.getUserMessages();
+            this.getUserMessages();
         });
     }
 

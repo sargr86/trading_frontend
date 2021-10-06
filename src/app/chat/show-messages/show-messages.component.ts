@@ -17,6 +17,8 @@ export class ShowMessagesComponent implements OnInit {
     activeTab = 'direct';
     authUser;
 
+    chatGroups = [];
+
     constructor(
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
@@ -30,14 +32,19 @@ export class ShowMessagesComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
 
-        // if (!this.isChatUsersListSize()) {
-        // }
+        this.getGroups();
 
     }
 
 
     changeTab(tab) {
         this.activeTab = tab;
+    }
+
+    getGroups() {
+        this.chatService.getChatGroups({}).subscribe(dt => {
+            this.chatGroups = dt;
+        });
     }
 
 

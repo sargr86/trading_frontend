@@ -123,15 +123,20 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
     }
 
     setSeen() {
-        this.scrollMsgsToBottom();
-        this.socketService.setSeen({
-            from_id: this.chatForm.value.from_id,
-            to_id: this.chatForm.value.to_id,
-            from_user: this.chatForm.value.from_user,
-            to_user: this.chatForm.value.to_user,
-            seen: 1,
-            seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
-        });
+        const userMessages = this.messages;
+        const isOwnMessage = userMessages[userMessages.length - 1].from_id === this.authUser.id;
+
+        if (!isOwnMessage) {
+            this.scrollMsgsToBottom();
+            this.socketService.setSeen({
+                from_id: this.chatForm.value.from_id,
+                to_id: this.chatForm.value.to_id,
+                from_user: this.chatForm.value.from_user,
+                to_user: this.chatForm.value.to_user,
+                seen: 1,
+                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
+            });
+        }
     }
 
     getSeen() {

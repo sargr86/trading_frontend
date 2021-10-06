@@ -54,6 +54,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     ngOnInit(): void {
 
         this.addUserToSocket();
+        this.getMessagesFromSocket();
         this.getUsersMessages();
         this.initForm();
         this.getTyping();
@@ -100,7 +101,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getUsersMessages() {
-        this.getMessagesFromSocket();
+
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = this.order(dt);
             this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);

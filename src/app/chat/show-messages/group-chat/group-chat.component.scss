@@ -2,6 +2,15 @@
 @import 'variables';
 @import 'mixins';
 
+.center {
+    width: 50%;
+
+    mat-form-field {
+        width: 100%;
+        padding: 5px;
+    }
+}
+
 #group-chat-form {
     display: flex;
     margin-bottom: 10px;

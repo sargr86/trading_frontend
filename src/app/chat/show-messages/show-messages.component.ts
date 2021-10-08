@@ -14,10 +14,11 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
     styleUrls: ['./show-messages.component.scss']
 })
 export class ShowMessagesComponent implements OnInit {
-    activeTab = 'direct';
+    activeTab = 'group';
     authUser;
 
     chatGroups = [];
+    groupsLoaded = false;
 
     constructor(
         private chatService: ChatService,
@@ -43,6 +44,7 @@ export class ShowMessagesComponent implements OnInit {
 
     getGroups() {
         this.chatService.getChatGroups({}).subscribe(dt => {
+            this.groupsLoaded = true;
             this.chatGroups = dt;
         });
     }

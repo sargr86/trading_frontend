@@ -30,7 +30,7 @@
                 </div>
             </div>
             <ul class="list align-items-center">
-                <li *ngFor="let msg of filteredUsersMessages"
+                <li *ngFor="let msg of usersMessages"
                     [class.active]="activeUser?.id === msg.user.id">
 
                     <ng-container

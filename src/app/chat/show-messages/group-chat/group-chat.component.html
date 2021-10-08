@@ -18,7 +18,7 @@
             <ul class="list">
                 <li [class.active]="group===selectedGroup" *ngFor="let group of groups"
                     (click)="makeGroupActive(group)">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
+                    <img class="img" [src]="'assets/img/' + (group.avatar || 'default-user.png')">
                     <div class="text">
                         <div class="name">{{group.name}}</div>
                         <span>Lorem ipsum dolor sit amet</span>
@@ -29,16 +29,66 @@
     </div>
 
     <div class="chat">
-        <div class="chat-about">
-            <div class="left">
-                <div class="img" style="background-image: url(assets/img/item-4.png); "></div>
-                <div class="name">{{selectedGroup?.name}}</div>
+        <form [formGroup]="groupChatDetailsForm">
+            <div class="chat-about">
+
+
+                <div class="left">
+                    <label for="group-avatar-input">
+                        <img class="img" [src]="'assets/img/' + (selectedGroup?.avatar || 'default-user.png')">
+                    </label>
+                    <input id="group-avatar-input" type="file" [hidden]="true" (change)="getAvatar($event)">
+                    <div class="name">{{selectedGroup?.name}}</div>
+                </div>
+                <div class="center">
+                    <mat-form-field>
+                        <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
+                            <mat-chip *ngFor="let tag of groupMembers" (removed)="removeMember(tag)">
+                                {{tag}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+
+                            <input type="text" #chipsInput
+                                   placeholder="Member name from your contacts"
+                                   matInput
+                                   maxlength="10"
+                                   [formControl]="memberCtrl"
+                                   [matChipInputFor]="tagList"
+                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                   [matAutocomplete]="auto">
+
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteMemberSelected($event)">
+
+                            <!--                            <mat-optgroup *ngFor="let contact of userContacts" [label]="group.name">-->
+                            <mat-option *ngFor="let contact of filteredContacts" [value]="contact.id">
+                                {{contact.first_name + ' ' + contact.last_name}}
+                            </mat-option>
+                            <!--                            </mat-optgroup>-->
+
+
+                        </mat-autocomplete>
+
+                        <mat-hint align="end">Please press 'Enter' after the name</mat-hint>
+
+                    </mat-form-field>
+                </div>
+                <div class="right">
+                    <div class="remove"><a><i class="fas fa-trash"></i></a></div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            Add members
+                        </button>
+                        <button mat-menu-item>
+                            Leave group
+                        </button>
+                    </mat-menu>
+                </div>
             </div>
-            <div class="right">
-                <div class="remove"><a href=""><i class="fas fa-trash"></i></a></div>
-                <div class="dotes"><a href=""><i class="fas fa-ellipsis-v"></i></a></div>
-            </div>
-        </div>
+        </form>
 
         <ul class="chat-history">
 

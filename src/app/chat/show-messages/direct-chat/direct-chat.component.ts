@@ -101,10 +101,11 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getUsersMessages() {
-
+        this.selectedUserMessages.messages = [];
         this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = this.order(dt);
             this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);
+            console.log('get messages!!!')
 
             if (!this.isChatUsersListSize()) {
                 this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
@@ -207,23 +208,27 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     setSeen() {
+        const userMessages = this.selectedUserMessages.messages[0].value;
+        const isOwnMessage = userMessages[userMessages.length - 1].from_id === this.authUser.id;
         console.log('set seen')
         this.scrollMsgsToBottom();
-        this.socketService.setSeen({
-            from_id: this.chatForm.value.from_id,
-            to_id: this.chatForm.value.to_id,
-            from_user: this.chatForm.value.from_user,
-            to_user: this.chatForm.value.to_user,
-            seen: 1,
-            seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
-        });
+        if (!isOwnMessage) {
+            this.socketService.setSeen({
+                from_id: this.chatForm.value.from_id,
+                to_id: this.chatForm.value.to_id,
+                from_user: this.chatForm.value.from_user,
+                to_user: this.chatForm.value.to_user,
+                seen: 1,
+                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
+            });
+        }
     }
 
     getSeen() {
 
         this.socketService.getSeen().subscribe((dt: any) => {
             this.selectedUserMessages.messages = [];
-            console.log('get seen', dt)
+            // console.log('get seen', dt)
             this.getUsersMessages();
         });
     }

@@ -6,8 +6,22 @@
     width: 50%;
 
     mat-form-field {
-        width: 100%;
+        width: 70%;
         padding: 5px;
+    }
+
+    ul {
+        display: flex;
+    }
+
+    .member-add {
+        display: flex;
+        align-items: center;
+        button {
+            @include regularButton;
+            width: 50px;
+
+        }
     }
 }
 
@@ -33,4 +47,34 @@
     }
 
 
+}
+
+.group-member {
+    position: relative;
+    width: 42px;
+    border-radius: 42px;
+
+    mat-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: auto;
+        margin-right: auto;
+        display: none;
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+
+
+        mat-icon {
+            display: block;
+        }
+
+        img {
+            opacity: 0.5;
+        }
+    }
 }

@@ -3,8 +3,10 @@ import IsResponsive from '@core/helpers/is-responsive';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChatService} from '@core/services/chat.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {UsersService} from "@core/services/users.service";
-import {Observable, of} from "rxjs";
+import {UsersService} from '@core/services/users.service';
+import {ConfirmationDialogComponent} from "@core/components/modals/confirmation-dialog/confirmation-dialog.component";
+import {Subscription} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-group-chat',
@@ -19,8 +21,11 @@ export class GroupChatComponent implements OnInit {
     selectedGroup;
     userContacts = [];
     groupMembers = [];
+    inputGroupMembers = [];
     filteredContacts = [];
     memberCtrl = new FormControl();
+
+    subscriptions: Subscription[] = [];
 
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -32,7 +37,8 @@ export class GroupChatComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private chatService: ChatService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private dialog: MatDialog
     ) {
         this.memberCtrl.valueChanges.subscribe(search => {
             this.filteredContacts = this.userContacts.filter(item =>
@@ -49,15 +55,26 @@ export class GroupChatComponent implements OnInit {
         this.selectedGroup = this.groups[0];
 
         this.groupChatDetailsForm = this.fb.group({
+            group_id: [''],
             member_ids: ['', Validators.required]
         });
 
+
+        this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+
         this.getUserContacts();
+        this.getGroupMembers();
     }
 
     getUserContacts() {
         this.usersService.getUserContacts({user_id: this.authUser.id, blocked: 0}).subscribe(dt => {
             this.userContacts = dt;
+        });
+    }
+
+    getGroupMembers() {
+        this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
+            this.groupMembers = dt;
         });
     }
 
@@ -68,6 +85,7 @@ export class GroupChatComponent implements OnInit {
 
     makeGroupActive(group) {
         this.selectedGroup = group;
+        this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
     }
 
     addGroup() {
@@ -81,24 +99,48 @@ export class GroupChatComponent implements OnInit {
         this.selectedGroup.avatar = e.target.files[0].name;
     }
 
-    removeMember(member) {
-        const index = this.groupMembers.indexOf(member);
+    removeInputMember(member) {
+        const index = this.inputGroupMembers.indexOf(member);
 
         if (index >= 0) {
-            this.groupMembers.splice(index, 1);
-            this.groupChatDetailsForm.patchValue({tags: this.groupMembers});
+            this.inputGroupMembers.splice(index, 1);
+            this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers});
         }
     }
+
+    removeSavedMember(member_id) {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.chatService.removeGroupMember({group_id: this.selectedGroup.id, member_id}).subscribe(dt => {
+                    this.groupMembers = dt;
+                });
+            }
+        }));
+
+    }
+
 
     autoCompleteMemberSelected(e) {
         const value = e.option.value;
 
-        if (!this.groupMembers.includes(value)) {
-            this.groupMembers.push(e.option.viewValue);
-            this.groupChatDetailsForm.patchValue({member_ids: this.groupMembers});
+        if (!this.inputGroupMembers.find(gm => gm.id === value)) {
+            this.inputGroupMembers.push({name: e.option.viewValue, id: e.option.value});
+            this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers.map(gm => gm.id)});
         }
+
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
+    }
+
+    addMember(e) {
+
+        this.chipsInput.nativeElement.value = '';
+        this.memberCtrl.setValue('');
+
+        this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
+            this.groupMembers = dt;
+            this.inputGroupMembers = [];
+        });
     }
 
 

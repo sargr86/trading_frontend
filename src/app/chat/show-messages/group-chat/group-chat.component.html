@@ -41,39 +41,52 @@
                     <div class="name">{{selectedGroup?.name}}</div>
                 </div>
                 <div class="center">
-                    <mat-form-field>
-                        <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
-                            <mat-chip *ngFor="let tag of groupMembers" (removed)="removeMember(tag)">
-                                {{tag}}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
+                    <div class="member-add">
+                        <mat-form-field>
+                            <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
+                                <mat-chip *ngFor="let member of inputGroupMembers"
+                                          (removed)="removeInputMember(member)">
+                                    {{member.name}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
 
-                            <input type="text" #chipsInput
-                                   placeholder="Member name from your contacts"
-                                   matInput
-                                   maxlength="10"
-                                   [formControl]="memberCtrl"
-                                   [matChipInputFor]="tagList"
-                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                   [matAutocomplete]="auto">
+                                <input type="text" #chipsInput
+                                       placeholder="Member name from your contacts"
+                                       matInput
+                                       maxlength="10"
+                                       [formControl]="memberCtrl"
+                                       [matChipInputFor]="tagList"
+                                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                       [matAutocomplete]="auto">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete"
+                                              (optionSelected)="autoCompleteMemberSelected($event)">
 
-                        </mat-chip-list>
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteMemberSelected($event)">
-
-                            <!--                            <mat-optgroup *ngFor="let contact of userContacts" [label]="group.name">-->
-                            <mat-option *ngFor="let contact of filteredContacts" [value]="contact.id">
-                                {{contact.first_name + ' ' + contact.last_name}}
-                            </mat-option>
-                            <!--                            </mat-optgroup>-->
+                                <!--                            <mat-optgroup *ngFor="let contact of userContacts" [label]="group.name">-->
+                                <mat-option *ngFor="let contact of filteredContacts" [value]="contact.id">
+                                    {{contact.first_name + ' ' + contact.last_name}}
+                                </mat-option>
+                                <!--                            </mat-optgroup>-->
 
 
-                        </mat-autocomplete>
+                            </mat-autocomplete>
 
-                        <mat-hint align="end">Please press 'Enter' after the name</mat-hint>
+                            <mat-hint align="end">Please press 'Enter' after the name</mat-hint>
 
-                    </mat-form-field>
+                        </mat-form-field>
+                        <button (click)="addMember($event)">Add</button>
+                    </div>
+                    <ul *ngIf="groupMembers.length > 0">
+                        <li class="group-member" *ngFor="let m of groupMembers">
+                            <img class="avatar" [src]="m.member.avatar|getImgPath: 'user_avatars'">
+                            <mat-icon (click)="removeSavedMember(m.member_id)">cancel</mat-icon>
+                        </li>
+                    </ul>
                 </div>
                 <div class="right">
+                    <button mat-icon-button [disableRipple]="true">
+                        <mat-icon>people</mat-icon>
+                    </button>
                     <div class="remove"><a><i class="fas fa-trash"></i></a></div>
                     <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
                         <i class="fas fa-ellipsis-v"></i>

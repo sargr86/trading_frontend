@@ -32,4 +32,16 @@ export class ChatService {
         return this.httpClient.post<any>(`${API_URL}chat/create-group`, params);
     }
 
+    getGroupMembers(params){
+        return this.httpClient.get<any>(`${API_URL}chat/get-group-members`, {params});
+    }
+
+    addGroupMembers(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/add-group-members`, params);
+    }
+
+    removeGroupMember(params) {
+        return this.httpClient.delete<any>(`${API_URL}chat/remove-group-member`, {params});
+    }
+
 }

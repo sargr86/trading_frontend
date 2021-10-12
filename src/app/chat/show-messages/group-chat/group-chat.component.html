@@ -87,7 +87,7 @@
                     <button mat-icon-button [disableRipple]="true">
                         <mat-icon>people</mat-icon>
                     </button>
-                    <div class="remove"><a><i class="fas fa-trash"></i></a></div>
+                    <div class="remove" (click)="removeGroup()"><a><i class="fas fa-trash"></i></a></div>
                     <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
                         <i class="fas fa-ellipsis-v"></i>
                     </button>

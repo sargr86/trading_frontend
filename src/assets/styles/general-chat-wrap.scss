@@ -1,3 +1,5 @@
+@import 'variables';
+
 .chat-wrap {
     display: flex;
     flex-wrap: wrap;
@@ -159,12 +161,15 @@
             justify-content: space-between;
             background: #F5F5F5;
             padding: 12px 16px;
+
             .left {
                 display: flex;
                 align-items: center;
+
                 .img {
                     margin-right: 16px;
                 }
+
                 .name {
                     color: #18B587;
                     font-size: 16px;
@@ -175,9 +180,13 @@
             .right {
                 display: flex;
                 align-items: center;
-                i {
-                    color: #C9C9C9;
+
+                .remove {
+                    i {
+                        color: $red;
+                    }
                 }
+
                 > div {
                     margin-left: 16px;
                 }
@@ -188,6 +197,7 @@
             //margin-top: 16px;
             overflow-x: auto;
             height: 600px;
+
             li {
                 margin-bottom: 32px;
                 padding-right: 48px;
@@ -258,6 +268,7 @@
 
                 .seen {
                     text-align: right;
+
                     .seen-avatar {
                         width: 20px;
                         height: 20px;
@@ -271,7 +282,8 @@
             background: #F5F5F5;
             display: flex;
             justify-content: space-between;
-            & > input{
+
+            & > input {
                 background: #F5F5F5;
             }
 

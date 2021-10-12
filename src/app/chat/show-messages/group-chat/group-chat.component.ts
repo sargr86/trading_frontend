@@ -4,9 +4,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChatService} from '@core/services/chat.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {UsersService} from '@core/services/users.service';
-import {ConfirmationDialogComponent} from "@core/components/modals/confirmation-dialog/confirmation-dialog.component";
-import {Subscription} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {Subscription} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-group-chat',
@@ -68,10 +68,12 @@ export class GroupChatComponent implements OnInit {
         });
 
 
-        this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+        if (this.selectedGroup) {
+            this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+            this.getGroupMembers();
+        }
 
         this.getUserContacts();
-        this.getGroupMembers();
     }
 
     getUserContacts() {
@@ -124,6 +126,16 @@ export class GroupChatComponent implements OnInit {
             }
         }));
 
+    }
+
+    removeGroup() {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.chatService.removeGroup({group_id: this.selectedGroup.id}).subscribe(dt => {
+                    this.groups = dt;
+                });
+            }
+        }));
     }
 
 

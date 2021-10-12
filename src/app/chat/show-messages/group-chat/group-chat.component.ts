@@ -41,9 +41,17 @@ export class GroupChatComponent implements OnInit {
         private dialog: MatDialog
     ) {
         this.memberCtrl.valueChanges.subscribe(search => {
-            this.filteredContacts = this.userContacts.filter(item =>
-                (item.first_name + ' ' + item.last_name).toLowerCase().includes(search)
-            );
+            if (search) {
+                this.filteredContacts = this.userContacts.filter(fc => {
+                    const fullNameLowerCased = (fc.first_name + ' ' + fc.last_name).toLowerCase();
+                    if (fullNameLowerCased.includes(search)) {
+                        return !this.groupMembers.find(gm => gm.member.name.toLowerCase() === fullNameLowerCased);
+                    }
+                    return false;
+                });
+
+
+            }
         });
     }
 
@@ -95,7 +103,6 @@ export class GroupChatComponent implements OnInit {
     }
 
     getAvatar(e) {
-        console.log(e.target.files[0])
         this.selectedGroup.avatar = e.target.files[0].name;
     }
 
@@ -125,6 +132,7 @@ export class GroupChatComponent implements OnInit {
 
         if (!this.inputGroupMembers.find(gm => gm.id === value)) {
             this.inputGroupMembers.push({name: e.option.viewValue, id: e.option.value});
+            console.log(this.inputGroupMembers)
             this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers.map(gm => gm.id)});
         }
 

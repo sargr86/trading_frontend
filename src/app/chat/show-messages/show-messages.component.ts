@@ -43,7 +43,7 @@ export class ShowMessagesComponent implements OnInit {
     }
 
     getGroups() {
-        this.chatService.getChatGroups({}).subscribe(dt => {
+        this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
             this.groupsLoaded = true;
             this.chatGroups = dt;
         });

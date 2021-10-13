@@ -29,10 +29,8 @@
     </div>
 
     <div class="chat">
-        <form [formGroup]="groupChatDetailsForm">
+        <form [formGroup]="groupChatDetailsForm" [hidden]="!selectedGroup">
             <div class="chat-about">
-
-
                 <div class="left">
                     <label for="group-avatar-input">
                         <img class="img" [src]="'assets/img/' + (selectedGroup?.avatar || 'default-user.png')">
@@ -78,7 +76,8 @@
                     </div>
                     <ul *ngIf="groupMembers.length > 0">
                         <li class="group-member" *ngFor="let m of groupMembers">
-                            <img class="avatar" [src]="m.member.avatar|getImgPath: 'user_avatars'">
+                            <img class="avatar" [matTooltip]="m.member.name"
+                                 [src]="m.member.avatar|getImgPath: 'user_avatars'">
                             <mat-icon (click)="removeSavedMember(m.member_id)">cancel</mat-icon>
                         </li>
                     </ul>
@@ -95,7 +94,7 @@
                         <button mat-menu-item>
                             Add members
                         </button>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="leaveGroup()" *ngIf="authUser.id !== selectedGroup.creator_id">
                             Leave group
                         </button>
                     </mat-menu>
@@ -103,7 +102,7 @@
             </div>
         </form>
 
-        <ul class="chat-history">
+        <ul class="chat-history" [hidden]="!selectedGroup">
 
             <li class="data-list"><span>Wednesday, February 5th</span></li>
 
@@ -130,7 +129,7 @@
             </li>
         </ul>
 
-        <div class="chat-message">
+        <div class="chat-message" [hidden]="!selectedGroup">
             <input type="text" placeholder="Type your message">
             <div class="icons">
                 <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>

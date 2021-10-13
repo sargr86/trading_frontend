@@ -58,6 +58,7 @@ export class GroupChatComponent implements OnInit {
 
     ngOnInit(): void {
         this.groupChatForm = this.fb.group({
+            creator_id: [this.authUser.id],
             name: ['', Validators.required]
         });
         this.selectedGroup = this.groups[0];
@@ -96,12 +97,16 @@ export class GroupChatComponent implements OnInit {
     makeGroupActive(group) {
         this.selectedGroup = group;
         this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+        this.getGroupMembers();
     }
 
     addGroup() {
-        this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
-            this.groups = dt;
-        });
+        if (this.groupChatForm.valid) {
+            this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
+                this.groups = dt;
+                this.groupChatForm.patchValue({name: ''});
+            });
+        }
     }
 
     getAvatar(e) {
@@ -144,7 +149,6 @@ export class GroupChatComponent implements OnInit {
 
         if (!this.inputGroupMembers.find(gm => gm.id === value)) {
             this.inputGroupMembers.push({name: e.option.viewValue, id: e.option.value});
-            console.log(this.inputGroupMembers)
             this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers.map(gm => gm.id)});
         }
 
@@ -161,6 +165,20 @@ export class GroupChatComponent implements OnInit {
             this.groupMembers = dt;
             this.inputGroupMembers = [];
         });
+    }
+
+    leaveGroup() {
+        console.log(this.selectedGroup)
+        if(this.selectedGroup.creator_id !== this.authUser.id){
+            this.chatService.leaveGroup({
+                member_id: this.authUser.id,
+                group_id: this.selectedGroup.id
+            }).subscribe(dt => {
+
+            });
+        }
+
+
     }
 
 

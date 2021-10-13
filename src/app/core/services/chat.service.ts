@@ -48,4 +48,8 @@ export class ChatService {
         return this.httpClient.delete<any>(`${API_URL}chat/remove-group`, {params});
     }
 
+    leaveGroup(params) {
+        return this.httpClient.delete<any>(`${API_URL}chat/leave-group`, {params});
+    }
+
 }

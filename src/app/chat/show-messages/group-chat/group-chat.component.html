@@ -36,7 +36,7 @@
                         <img class="img" [src]="'assets/img/' + (selectedGroup?.avatar || 'default-user.png')">
                     </label>
                     <input id="group-avatar-input" type="file" [hidden]="true" (change)="getAvatar($event)">
-                    <div class="name">{{selectedGroup?.name}}</div>
+                    <div class="group-name">{{selectedGroup?.name}}</div>
                 </div>
                 <div class="center">
                     <div class="member-add">
@@ -78,7 +78,9 @@
                         <li class="group-member" *ngFor="let m of groupMembers">
                             <img class="avatar" [matTooltip]="m.member.name"
                                  [src]="m.member.avatar|getImgPath: 'user_avatars'">
-                            <mat-icon (click)="removeSavedMember(m.member_id)">cancel</mat-icon>
+                            <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
+                                      (click)="removeSavedMember(m.member_id)">cancel
+                            </mat-icon>
                         </li>
                     </ul>
                 </div>
@@ -86,7 +88,9 @@
                     <button mat-icon-button [disableRipple]="true">
                         <mat-icon>people</mat-icon>
                     </button>
-                    <div class="remove" (click)="removeGroup()"><a><i class="fas fa-trash"></i></a></div>
+                    <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">
+                        <a><i class="fas fa-trash"></i></a>
+                    </div>
                     <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
@@ -94,7 +98,7 @@
                         <button mat-menu-item>
                             Add members
                         </button>
-                        <button mat-menu-item (click)="leaveGroup()" *ngIf="authUser.id !== selectedGroup.creator_id">
+                        <button mat-menu-item (click)="leaveGroup()" *ngIf="authUser.id !== selectedGroup?.creator_id">
                             Leave group
                         </button>
                     </mat-menu>

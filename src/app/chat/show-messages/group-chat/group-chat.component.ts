@@ -168,17 +168,16 @@ export class GroupChatComponent implements OnInit {
     }
 
     leaveGroup() {
-        console.log(this.selectedGroup)
-        if(this.selectedGroup.creator_id !== this.authUser.id){
-            this.chatService.leaveGroup({
-                member_id: this.authUser.id,
-                group_id: this.selectedGroup.id
-            }).subscribe(dt => {
-
-            });
-        }
-
-
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.chatService.leaveGroup({
+                    member_id: this.authUser.id,
+                    group_id: this.selectedGroup.id
+                }).subscribe(dt => {
+                    this.groups = dt;
+                });
+            }
+        }));
     }
 
 

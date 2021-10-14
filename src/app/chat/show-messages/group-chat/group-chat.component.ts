@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import IsResponsive from '@core/helpers/is-responsive';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChatService} from '@core/services/chat.service';
@@ -13,7 +13,7 @@ import {MatDialog} from '@angular/material/dialog';
     templateUrl: './group-chat.component.html',
     styleUrls: ['./group-chat.component.scss']
 })
-export class GroupChatComponent implements OnInit {
+export class GroupChatComponent implements OnInit, OnDestroy {
 
     groupChatForm: FormGroup;
     groupChatDetailsForm: FormGroup;
@@ -40,7 +40,7 @@ export class GroupChatComponent implements OnInit {
         private usersService: UsersService,
         private dialog: MatDialog
     ) {
-        this.memberCtrl.valueChanges.subscribe(search => {
+        this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
             if (search) {
                 this.filteredContacts = this.userContacts.filter(fc => {
                     const fullNameLowerCased = (fc.first_name + ' ' + fc.last_name).toLowerCase();
@@ -52,7 +52,7 @@ export class GroupChatComponent implements OnInit {
 
 
             }
-        });
+        }));
     }
 
 
@@ -78,15 +78,15 @@ export class GroupChatComponent implements OnInit {
     }
 
     getUserContacts() {
-        this.usersService.getUserContacts({user_id: this.authUser.id, blocked: 0}).subscribe(dt => {
+        this.subscriptions.push(this.usersService.getUserContacts({user_id: this.authUser.id, blocked: 0}).subscribe(dt => {
             this.userContacts = dt;
-        });
+        }));
     }
 
     getGroupMembers() {
-        this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
+        this.subscriptions.push(this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
             this.groupMembers = dt;
-        });
+        }));
     }
 
 
@@ -102,10 +102,10 @@ export class GroupChatComponent implements OnInit {
 
     addGroup() {
         if (this.groupChatForm.valid) {
-            this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
+            this.subscriptions.push(this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
                 this.groups = dt;
                 this.groupChatForm.patchValue({name: ''});
-            });
+            }));
         }
     }
 
@@ -161,10 +161,10 @@ export class GroupChatComponent implements OnInit {
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
 
-        this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
+        this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
             this.groupMembers = dt;
             this.inputGroupMembers = [];
-        });
+        }));
     }
 
     leaveGroup() {
@@ -180,5 +180,8 @@ export class GroupChatComponent implements OnInit {
         }));
     }
 
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
 }

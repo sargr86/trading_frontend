@@ -4,25 +4,46 @@
 
 .center {
     width: 50%;
+    display: flex;
+
 
     mat-form-field {
         width: 70%;
         padding: 5px;
     }
 
-    ul {
+    .members-list {
         display: flex;
+        align-items: center;
+
+        ul {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: horizontal;
+            overflow: hidden;
+
+        }
+
+        #show-more-members {
+            width: 110px;
+            color: $metl-green;
+            margin-left: 10px;
+        }
     }
 
     .member-add {
         display: flex;
         align-items: center;
+        width: 100%;
+
         button {
             @include regularButton;
             width: 50px;
 
         }
     }
+
+
 }
 
 #group-chat-form {

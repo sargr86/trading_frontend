@@ -35,11 +35,11 @@
                     <label for="group-avatar-input">
                         <img class="img" [src]="'assets/img/' + (selectedGroup?.avatar || 'default-user.png')">
                     </label>
-                    <input id="group-avatar-input" type="file" [hidden]="true" (change)="getAvatar($event)">
+                    <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
                     <div class="group-name">{{selectedGroup?.name}}</div>
                 </div>
                 <div class="center">
-                    <div class="member-add">
+                    <div class="member-add" [hidden]="!showMembersInput">
                         <mat-form-field>
                             <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
                                 <mat-chip *ngFor="let member of inputGroupMembers"
@@ -74,18 +74,23 @@
                         </mat-form-field>
                         <button (click)="addMember($event)">Add</button>
                     </div>
-                    <ul *ngIf="groupMembers.length > 0">
-                        <li class="group-member" *ngFor="let m of groupMembers">
-                            <img class="avatar" [matTooltip]="m.member.name"
-                                 [src]="m.member.avatar|getImgPath: 'user_avatars'">
-                            <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
-                                      (click)="removeSavedMember(m.member_id)">cancel
-                            </mat-icon>
-                        </li>
-                    </ul>
+                    <div class="members-list" [hidden]="showMembersInput">
+                        <ul *ngIf="groupMembers.length > 0">
+                            <li class="group-member" *ngFor="let m of groupMembers">
+                                <img class="avatar" [matTooltip]="m.member.name"
+                                     [src]="m.member.avatar|getImgPath: 'user_avatars'">
+                                <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
+                                          (click)="removeSavedMember(m.member_id)">cancel
+                                </mat-icon>
+                            </li>
+                        </ul>
+                        <a id="show-more-members" (click)="openAllMembersModal()">
+                            Show more
+                        </a>
+                    </div>
                 </div>
                 <div class="right">
-                    <button mat-icon-button [disableRipple]="true">
+                    <button mat-icon-button [disableRipple]="true" (click)="showMembersInput = !showMembersInput">
                         <mat-icon>people</mat-icon>
                     </button>
                     <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">

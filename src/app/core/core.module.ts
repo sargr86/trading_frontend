@@ -33,6 +33,7 @@ import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/sto
 import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {TurboPlanComponent} from "@core/components/ungrouped/turbo-plan/turbo-plan.component";
 import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purchase-coins.component';
+import { ShowChatGroupMembersComponent } from './components/modals/show-chat-group-members/show-chat-group-members.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purch
         StocksListsTabsComponent,
         TurboPlanComponent,
         PurchaseCoinsComponent,
+        ShowChatGroupMembersComponent,
     ],
     imports: [
         CommonModule,

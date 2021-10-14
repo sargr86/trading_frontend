@@ -7,6 +7,7 @@ import {UsersService} from '@core/services/users.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
+import {ShowChatGroupMembersComponent} from "@core/components/modals/show-chat-group-members/show-chat-group-members.component";
 
 @Component({
     selector: 'app-group-chat',
@@ -17,12 +18,17 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     groupChatForm: FormGroup;
     groupChatDetailsForm: FormGroup;
+
     showGroupChatForm = false;
+    showMembersInput = true;
+
     selectedGroup;
+
     userContacts = [];
     groupMembers = [];
     inputGroupMembers = [];
     filteredContacts = [];
+
     memberCtrl = new FormControl();
 
     subscriptions: Subscription[] = [];
@@ -78,7 +84,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getUserContacts() {
-        this.subscriptions.push(this.usersService.getUserContacts({user_id: this.authUser.id, blocked: 0}).subscribe(dt => {
+        this.subscriptions.push(this.usersService.getUserContacts({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
             this.userContacts = dt;
         }));
     }
@@ -109,7 +118,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    getAvatar(e) {
+    changeAvatar(e) {
         this.selectedGroup.avatar = e.target.files[0].name;
     }
 
@@ -177,6 +186,15 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                     this.groups = dt;
                 });
             }
+        }));
+    }
+
+    openAllMembersModal() {
+        this.subscriptions.push(this.dialog.open(ShowChatGroupMembersComponent, {
+            width: '300px',
+            height: '400px'
+        }).afterClosed().subscribe(dt => {
+
         }));
     }
 

@@ -8,6 +8,7 @@ import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ShowChatGroupMembersComponent} from "@core/components/modals/show-chat-group-members/show-chat-group-members.component";
+import {SocketIoService} from "@core/services/socket-io.service";
 
 @Component({
     selector: 'app-group-chat',
@@ -44,6 +45,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private chatService: ChatService,
         private usersService: UsersService,
+        private socketService: SocketIoService,
         private dialog: MatDialog
     ) {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
@@ -113,13 +115,25 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         if (this.groupChatForm.valid) {
             this.subscriptions.push(this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
                 this.groups = dt;
+                this.socketService.setNewGroup(this.groupChatForm.value);
                 this.groupChatForm.patchValue({name: ''});
             }));
         }
     }
 
     changeAvatar(e) {
-        this.selectedGroup.avatar = e.target.files[0].name;
+        // this.selectedGroup.avatar = e.target.files[0].name;
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('avatar', file.name);
+        formData.append('group_id', this.selectedGroup.id);
+        formData.append('member_id', this.authUser.id);
+        formData.append('group_avatar_file', file);
+        // console.log({avatar: e.target.files[0].name})
+        this.subscriptions.push(this.chatService.changeGroupAvatar(formData).subscribe(dt => {
+            this.groups = dt;
+            this.selectedGroup = this.groups.find(group => this.selectedGroup.id === group.id);
+        }));
     }
 
     removeInputMember(member) {
@@ -173,6 +187,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
             this.groupMembers = dt;
             this.inputGroupMembers = [];
+            this.socketService.inviteToNewGroup(this.groupChatDetailsForm.value);
         }));
     }
 

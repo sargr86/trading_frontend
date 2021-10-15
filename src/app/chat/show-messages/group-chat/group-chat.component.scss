@@ -76,6 +76,14 @@
     border-radius: 42px;
     margin-left: 5px;
 
+    &.pending {
+        background-color: rgba(0, 0, 0, 0.5);
+
+        img {
+            opacity: 0.5;
+        }
+    }
+
     mat-icon {
         position: absolute;
         left: 50%;

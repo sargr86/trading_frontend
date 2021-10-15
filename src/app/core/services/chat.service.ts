@@ -52,4 +52,8 @@ export class ChatService {
         return this.httpClient.delete<any>(`${API_URL}chat/leave-group`, {params});
     }
 
+    changeGroupAvatar(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/change-group-avatar`, params);
+    }
+
 }

@@ -60,4 +60,12 @@ export class SocketIoService {
         });
     }
 
+    setNewGroup(data) {
+        this.socket.emit('setNewGroup', data);
+    }
+
+    inviteToNewGroup(data) {
+        this.socket.emit('inviteToNewGroup', data);
+    }
+
 }

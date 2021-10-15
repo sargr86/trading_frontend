@@ -18,7 +18,7 @@
             <ul class="list">
                 <li [class.active]="group===selectedGroup" *ngFor="let group of groups"
                     (click)="makeGroupActive(group)">
-                    <img class="img" [src]="'assets/img/' + (group.avatar || 'default-user.png')">
+                    <img class="img" [src]="group.avatar|getImgPath:'group_avatars'">
                     <div class="text">
                         <div class="name">{{group.name}}</div>
                         <span>Lorem ipsum dolor sit amet</span>
@@ -33,7 +33,7 @@
             <div class="chat-about">
                 <div class="left">
                     <label for="group-avatar-input">
-                        <img class="img" [src]="'assets/img/' + (selectedGroup?.avatar || 'default-user.png')">
+                        <img class="img" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
                     </label>
                     <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
                     <div class="group-name">{{selectedGroup?.name}}</div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="members-list" [hidden]="showMembersInput">
                         <ul *ngIf="groupMembers.length > 0">
-                            <li class="group-member" *ngFor="let m of groupMembers">
+                            <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.confirmed">
                                 <img class="avatar" [matTooltip]="m.member.name"
                                      [src]="m.member.avatar|getImgPath: 'user_avatars'">
                                 <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"

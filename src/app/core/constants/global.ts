@@ -5,14 +5,13 @@ import {StripeCardElementOptions} from '@stripe/stripe-js';
 
 
 export const API_URL = environment.apiUrl;
-export const SOCKET_URL = 'ws://localhost:3001/';
+export const SOCKET_URL = environment.socketUrl;
 export const VIDEO_DEFAULT_THUMBNAILS_PATH = 'assets/img/video-thumbnail-default.png';
 export const VIDEO_DEFAULT_COVERS_PATH = 'assets/img/default-thumbnail.png';
 export const VIDEO_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
 export const USER_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
 export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
-
 
 
 export const OWL_OPTIONS: OwlOptions = {

@@ -16,7 +16,8 @@
                 </button>
             </form>
             <ul class="list">
-                <li [class.active]="group===selectedGroup" *ngFor="let group of groups"
+                <li class="list-chat-group" [class.active]="group===selectedGroup" *ngFor="let group of groups"
+                    [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
                     (click)="makeGroupActive(group)">
                     <img class="img" [src]="group.avatar|getImgPath:'group_avatars'">
                     <div class="text">
@@ -28,89 +29,99 @@
         </div>
     </div>
 
-    <div class="chat">
-        <form [formGroup]="groupChatDetailsForm" [hidden]="!selectedGroup">
-            <div class="chat-about">
-                <div class="left">
-                    <label for="group-avatar-input">
-                        <img class="img" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
-                    </label>
-                    <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
-                    <div class="group-name">{{selectedGroup?.name}}</div>
-                </div>
-                <div class="center">
-                    <div class="member-add" [hidden]="!showMembersInput">
-                        <mat-form-field>
-                            <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
-                                <mat-chip *ngFor="let member of inputGroupMembers"
-                                          (removed)="removeInputMember(member)">
-                                    {{member.name}}
-                                    <mat-icon matChipRemove>cancel</mat-icon>
-                                </mat-chip>
-
-                                <input type="text" #chipsInput
-                                       placeholder="Member name from your contacts"
-                                       matInput
-                                       maxlength="10"
-                                       [formControl]="memberCtrl"
-                                       [matChipInputFor]="tagList"
-                                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                       [matAutocomplete]="auto">
-                            </mat-chip-list>
-                            <mat-autocomplete #auto="matAutocomplete"
-                                              (optionSelected)="autoCompleteMemberSelected($event)">
-
-                                <!--                            <mat-optgroup *ngFor="let contact of userContacts" [label]="group.name">-->
-                                <mat-option *ngFor="let contact of filteredContacts" [value]="contact.id">
-                                    {{contact.first_name + ' ' + contact.last_name}}
-                                </mat-option>
-                                <!--                            </mat-optgroup>-->
-
-
-                            </mat-autocomplete>
-
-                            <mat-hint align="end">Please press 'Enter' after the name</mat-hint>
-
-                        </mat-form-field>
-                        <button (click)="addMember($event)">Add</button>
+    <div class="chat" *ngIf="selectedGroup">
+        <div class="chat-top">
+            <form [formGroup]="groupChatDetailsForm"
+                  [hidden]="!selectedGroup || !ifConfirmedToJoinTheGroup(selectedGroup)">
+                <div class="chat-about">
+                    <div class="left">
+                        <label for="group-avatar-input">
+                            <img class="img" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
+                        </label>
+                        <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
+                        <div class="group-name">{{selectedGroup?.name}}</div>
                     </div>
-                    <div class="members-list" [hidden]="showMembersInput">
-                        <ul *ngIf="groupMembers.length > 0">
-                            <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.confirmed">
-                                <img class="avatar" [matTooltip]="m.member.name"
-                                     [src]="m.member.avatar|getImgPath: 'user_avatars'">
-                                <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
-                                          (click)="removeSavedMember(m.member_id)">cancel
-                                </mat-icon>
-                            </li>
-                        </ul>
-                        <a id="show-more-members" (click)="openAllMembersModal()">
-                            Show more
-                        </a>
+                    <div class="center">
+                        <div class="member-add" [hidden]="!showMembersInput">
+                            <mat-form-field>
+                                <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
+                                    <mat-chip *ngFor="let member of inputGroupMembers"
+                                              (removed)="removeInputMember(member)">
+                                        {{member.first_name + ' ' + member.last_name}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+
+                                    <input type="text" #chipsInput
+                                           placeholder="Member name from your contacts"
+                                           matInput
+                                           maxlength="10"
+                                           [formControl]="memberCtrl"
+                                           [matChipInputFor]="tagList"
+                                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                           [matAutocomplete]="auto">
+                                </mat-chip-list>
+                                <mat-autocomplete #auto="matAutocomplete"
+                                                  (optionSelected)="autoCompleteMemberSelected($event)">
+
+                                    <!--                            <mat-optgroup *ngFor="let contact of userContacts" [label]="group.name">-->
+                                    <mat-option *ngFor="let contact of filteredContacts" [value]="contact">
+                                        {{contact.first_name + ' ' + contact.last_name}}
+                                    </mat-option>
+                                    <!--                            </mat-optgroup>-->
+
+
+                                </mat-autocomplete>
+
+                                <mat-hint align="end">Please press 'Enter' after the name</mat-hint>
+
+                            </mat-form-field>
+                            <button (click)="addMember($event)">Add</button>
+                        </div>
+                        <div class="members-list" [hidden]="showMembersInput">
+                            <ul *ngIf="groupMembers.length > 0">
+                                <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.confirmed">
+                                    <img class="avatar" [matTooltip]="m.member.name"
+                                         [src]="m.member.avatar|getImgPath: 'user_avatars'">
+                                    <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
+                                              (click)="removeSavedMember(m.member_id)">cancel
+                                    </mat-icon>
+                                </li>
+                            </ul>
+                            <a id="show-more-members" (click)="openAllMembersModal()">
+                                Show more
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="right">
-                    <button mat-icon-button [disableRipple]="true" (click)="showMembersInput = !showMembersInput">
-                        <mat-icon>people</mat-icon>
-                    </button>
-                    <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">
-                        <a><i class="fas fa-trash"></i></a>
-                    </div>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
-                            Add members
+                    <div class="right">
+                        <button mat-icon-button [disableRipple]="true" (click)="showMembersInput = !showMembersInput">
+                            <mat-icon>people</mat-icon>
                         </button>
-                        <button mat-menu-item (click)="leaveGroup()" *ngIf="authUser.id !== selectedGroup?.creator_id">
-                            Leave group
+                        <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">
+                            <a><i class="fas fa-trash"></i></a>
+                        </div>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
-                    </mat-menu>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                Add members
+                            </button>
+                            <button mat-menu-item (click)="leaveGroup()"
+                                    *ngIf="authUser.id !== selectedGroup?.creator_id">
+                                Leave group
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </form>
+            <div class="confirm-joining-group" [hidden]="!selectedGroup || ifConfirmedToJoinTheGroup(selectedGroup)">
+                <p>Please accept or decline joining to the <strong>{{selectedGroup.name}}</strong> group</p>
+                <div class="actions">
+                    <button class="accept-btn" (click)="acceptGroupJoin()">Accept</button>
+                    <button class="decline-btn" (click)="declineGroupJoin()">Decline</button>
                 </div>
             </div>
-        </form>
-
+        </div>
         <ul class="chat-history" [hidden]="!selectedGroup">
 
             <li class="data-list"><span>Wednesday, February 5th</span></li>

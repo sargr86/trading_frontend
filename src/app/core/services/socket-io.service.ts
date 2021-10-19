@@ -68,4 +68,12 @@ export class SocketIoService {
         this.socket.emit('inviteToNewGroup', data);
     }
 
+    inviteToGroupSent() {
+        return new Observable(observer => {
+            this.socket.on('inviteToGroupSent', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 }

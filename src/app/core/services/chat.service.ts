@@ -24,7 +24,7 @@ export class ChatService {
         return this.httpClient.post<any>(`${API_URL}chat/save-message`, params);
     }
 
-    getChatGroups(params){
+    getChatGroups(params) {
         return this.httpClient.get<any>(`${API_URL}chat/get-chat-groups`, {params});
     }
 
@@ -32,7 +32,7 @@ export class ChatService {
         return this.httpClient.post<any>(`${API_URL}chat/create-group`, params);
     }
 
-    getGroupMembers(params){
+    getGroupMembers(params) {
         return this.httpClient.get<any>(`${API_URL}chat/get-group-members`, {params});
     }
 
@@ -50,6 +50,14 @@ export class ChatService {
 
     leaveGroup(params) {
         return this.httpClient.delete<any>(`${API_URL}chat/leave-group`, {params});
+    }
+
+    acceptGroupJoin(params) {
+        return this.httpClient.put<any>(`${API_URL}chat/accept-join-group`, params);
+    }
+
+    declineGroupJoin(params) {
+        return this.httpClient.put<any>(`${API_URL}chat/decline-join-group`, params);
     }
 
     changeGroupAvatar(params) {

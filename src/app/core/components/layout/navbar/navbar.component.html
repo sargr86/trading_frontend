@@ -28,15 +28,25 @@
             <app-stocks-marquee [stocks]="stocks"></app-stocks-marquee>
             <div class="notification-block">
                 <div class="nav-item dropdown">
-                    <a class="header-bit-btn nav-lin" data-toggle="dropdown" (click)="checkIfUserHasCard()">Buy Coins</a>
+                    <a class="header-bit-btn nav-lin" data-toggle="dropdown" (click)="checkIfUserHasCard()">Buy
+                        Coins</a>
                     <div class="dropdown-menu" [hidden]="!showPurchaseBits">
                         <app-purchase-bits [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
-                <div class="notification" [hidden]="envName==='production'">
+                <div class="notification" [hidden]="envName==='production'" [matMenuTriggerFor]="menu">
                     <i class="fas fa-bell"></i>
-                    <span>+99</span>
+                    <span *ngIf="notifications.length > 0">{{notifications.length}}</span>
                 </div>
+
+                <mat-menu #menu="matMenu" [hidden]="notifications.length === 0">
+                    <ng-container *ngFor="let notification of notifications">
+                        <button mat-menu-item>
+                            {{notification}}
+                        </button>
+                    </ng-container>
+                </mat-menu>
+
                 <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
 
                 <div class="nav-item" [hidden]="routerUrl === '/wallet/show'">

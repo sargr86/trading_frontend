@@ -19,6 +19,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {cardsStore} from '@shared/stores/cards-store';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-navbar',
@@ -33,10 +34,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     envName = environment.envName;
 
-
     @Output('search') search = new EventEmitter();
     @Output('closeSidenav') closeSidenav = new EventEmitter();
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
+    notifications = [];
 
     passedUsername;
 
@@ -57,6 +58,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         private stocksService: StocksService,
         private paymentsService: PaymentsService,
+        private socketService: SocketIoService,
         private route: ActivatedRoute,
         private dialog: MatDialog,
         private toastr: ToastrService,
@@ -70,7 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
-
+        this.getNotifications();
     }
 
     getAuthenticatedUser() {
@@ -94,11 +96,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getUserCards() {
 
         // Get user cards from saved storage in case of changes in the below components
-        this.subject.currentUserCards.subscribe(dt => {
+        this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
             this.userCards = dt;
             this.showPurchaseBits = false;
             // console.log(this.userCards)
-        });
+        }));
 
         // Getting user cards from the server
         this.subscriptions.push(
@@ -176,6 +178,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         } else {
             this.toastr.error('Please add at least one card first', 'No cards');
         }
+    }
+
+    getNotifications() {
+        this.socketService.inviteToGroupSent().subscribe((data: any) => {
+            // this.toastr.success(msg);
+            this.notifications.push(data.msg);
+        });
     }
 
     async openWalletPage() {

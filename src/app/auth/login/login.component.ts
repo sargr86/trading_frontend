@@ -10,6 +10,7 @@ import {VerifyEmailComponent} from '@core/components/modals/verify-email/verify-
 import {MatDialog} from '@angular/material/dialog';
 import {SubjectService} from '@core/services/subject.service';
 import jwtDecode from 'jwt-decode';
+import {SocketIoService} from "@core/services/socket-io.service";
 
 @Component({
     selector: 'app-login',
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private auth: AuthService,
         private authGuard: AuthGuard,
         private dialog: MatDialog,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private socketService: SocketIoService
     ) {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
                 localStorage.setItem('token', dt?.token || '');
                 this.subject.changeAuthUser(jwtDecode(dt?.token || ''));
+                console.log(jwtDecode(dt?.token || ''))
                 await this.router.navigateByUrl(this.authGuard.redirectUrl || '/');
             }));
         }

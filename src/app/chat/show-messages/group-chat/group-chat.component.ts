@@ -7,8 +7,9 @@ import {UsersService} from '@core/services/users.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {ShowChatGroupMembersComponent} from "@core/components/modals/show-chat-group-members/show-chat-group-members.component";
-import {SocketIoService} from "@core/services/socket-io.service";
+import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
+import {SocketIoService} from '@core/services/socket-io.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-group-chat',
@@ -21,12 +22,13 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     groupChatDetailsForm: FormGroup;
 
     showGroupChatForm = false;
-    showMembersInput = true;
+    showMembersInput = false;
 
     selectedGroup;
 
     userContacts = [];
     groupMembers = [];
+    socketGroupUsers = [];
     inputGroupMembers = [];
     filteredContacts = [];
 
@@ -46,6 +48,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private usersService: UsersService,
         private socketService: SocketIoService,
+        private toastr: ToastrService,
         private dialog: MatDialog
     ) {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
@@ -57,8 +60,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                     }
                     return false;
                 });
-
-
             }
         }));
     }
@@ -85,10 +86,13 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.addUserToSocket();
         this.getUserContacts();
         this.getGroupJoinInvitation();
+        this.getChatNotifications();
+        console.log('ngOnInit')
     }
 
     addUserToSocket() {
-        this.socketService.addNewUser(this.authUser.username);
+
+        this.socketService.addNewUser(this.authUser);
     }
 
     getUserContacts() {
@@ -115,6 +119,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.selectedGroup = group;
         this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
         this.getGroupMembers();
+        console.log(this.socketGroupUsers)
     }
 
     addGroup() {
@@ -178,7 +183,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
         if (!this.inputGroupMembers.find(gm => gm.id === value)) {
             this.inputGroupMembers.push(e.option.value);
-            console.log(this.inputGroupMembers)
+            console.log(this.inputGroupMembers);
             this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers});
         }
 
@@ -234,6 +239,29 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         });
     }
 
+    getChatNotifications() {
+        this.socketService.getChatNotifications().subscribe((data: any) => {
+            // console.log(data)
+            this.socketGroupUsers = data.groupUsers;
+            // console.log(this.socketGroupUsers)
+            if (data.group === this.selectedGroup.name && data.username !== this.authUser.username) {
+                this.toastr.info(data.msg);
+                this.getGroupMembers();
+            }
+        });
+    }
+
+    getUserCurrentStatus(groupMember) {
+        const groupName = groupMember.group.name;
+        // console.log(this.socketGroupUsers)
+        if (this.socketGroupUsers && groupName === this.selectedGroup.name) {
+            const foundInSocketUsers = !!this.socketGroupUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.member.username === sGroupUser.username);
+            // console.log(foundInSocketUsers)
+            return foundInSocketUsers;
+        }
+        return false;
+    }
+
     acceptGroupJoin() {
         this.subscriptions.push(
             this.chatService.acceptGroupJoin({
@@ -242,6 +270,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             }).subscribe(dt => {
                 this.groups = dt;
                 this.selectedGroup = this.groups.find(group => this.selectedGroup.id === group.id);
+                this.socketService.acceptJoinToGroup({
+                    group: this.selectedGroup.name,
+                    username: this.authUser.username
+                });
             })
         );
     }
@@ -256,6 +288,13 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.selectedGroup = this.groups.find(group => this.selectedGroup.id === group.id);
             })
         );
+    }
+
+    getSocketRoomUsers() {
+        this.socketService.acceptJoinToGroup({
+            group: this.selectedGroup.name,
+            username: this.authUser.username
+        });
     }
 
     ngOnDestroy(): void {

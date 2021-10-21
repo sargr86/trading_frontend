@@ -131,6 +131,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.auth.logout().subscribe(async () => {
             localStorage.removeItem('token');
             await this.router.navigate(['/']);
+            this.socketService.disconnect({username: this.authUser.username});
         }));
     }
 

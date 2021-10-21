@@ -4,6 +4,7 @@ import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
 import {GetAuthUserPipe} from "@shared/pipes/get-auth-user.pipe";
+import {SocketIoService} from "@core/services/socket-io.service";
 
 @Component({
     selector: 'app-home',
@@ -14,12 +15,14 @@ export class HomeComponent implements OnInit {
     owlOptions = OWL_OPTIONS;
     videos = [];
     apiUrl = API_URL;
+    authUser;
 
     constructor(
         private videoService: VideoService,
         public router: Router,
         public auth: AuthService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private socketService: SocketIoService
     ) {
     }
 
@@ -27,6 +30,10 @@ export class HomeComponent implements OnInit {
         this.videoService.get({}).subscribe(dt => {
             this.videos = dt.videos;
         });
+        this.authUser = this.getAuthUser.transform();
+        if (this.authUser) {
+            this.socketService.addNewUser(this.authUser);
+        }
     }
 
     async getVideosByTag(name) {

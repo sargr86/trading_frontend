@@ -18,8 +18,11 @@ export class SocketIoService {
         this.socket = io(SOCKET_URL);
     }
 
-    addNewUser(username) {
-        this.socket.emit('newUser', username);
+    addNewUser(user) {
+        this.setupSocketConnection();
+        console.log('add to socket!!!', user)
+        console.log(this.socket)
+        this.socket.emit('newUser', user);
     }
 
     // EMITTER example
@@ -74,6 +77,22 @@ export class SocketIoService {
                 observer.next(msg);
             });
         });
+    }
+
+    acceptJoinToGroup(data) {
+        this.socket.emit('acceptJoinToGroup', data);
+    }
+
+    getChatNotifications() {
+        return new Observable(observer => {
+            this.socket.on('chatNotification', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    disconnect(data) {
+        this.socket.emit('forceDisconnect', data);
     }
 
 }

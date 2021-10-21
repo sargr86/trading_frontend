@@ -85,6 +85,7 @@
                                     <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
                                               (click)="removeSavedMember(m.member_id)">cancel
                                     </mat-icon>
+                                    <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'" ></div>
                                 </li>
                             </ul>
                             <a id="show-more-members" (click)="openAllMembersModal()">

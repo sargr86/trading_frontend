@@ -97,6 +97,7 @@ export class AppComponent implements OnInit {
     }
 
     closeSidenav(close, sidenav) {
+        console.log(close, sidenav)
         // if (this.responsiveMode) {
         if (close) {
             sidenav.close();
@@ -116,7 +117,7 @@ export class AppComponent implements OnInit {
         });
     }
 
-    isSmallScreen(){
+    isSmallScreen() {
         return IsResponsive.isSmallScreen();
     }
 }

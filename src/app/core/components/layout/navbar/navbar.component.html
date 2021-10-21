@@ -39,13 +39,13 @@
                     <span *ngIf="notifications.length > 0">{{notifications.length}}</span>
                 </div>
 
-                <mat-menu #menu="matMenu" [hidden]="notifications.length === 0">
-                    <ng-container *ngFor="let notification of notifications">
-                        <button mat-menu-item>
-                            {{notification}}
-                        </button>
-                    </ng-container>
-                </mat-menu>
+<!--                <mat-menu #menu="matMenu" [hidden]="notifications.length === 0">-->
+<!--                    <ng-container *ngFor="let notification of notifications">-->
+<!--                        <button mat-menu-item>-->
+<!--                            {{notification}}-->
+<!--                        </button>-->
+<!--                    </ng-container>-->
+<!--                </mat-menu>-->
 
                 <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
 

@@ -111,6 +111,26 @@
     border-radius: 42px;
     margin-left: 5px;
 
+    .status {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 14px;
+        top: 28px;
+        right: 0;
+        padding: 0;
+        line-height: 0;
+
+        &.offline {
+            background-color: gray;
+        }
+
+        &.online {
+            background-color: $metl-green;
+        }
+    }
+
+
     &.pending {
         background-color: rgba(0, 0, 0, 0.5);
 

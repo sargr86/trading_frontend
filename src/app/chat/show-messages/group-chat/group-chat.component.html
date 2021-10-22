@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <ul class="chat-history" id="direct-messages" #directMessagesList>
+        <ul class="chat-history" id="group-messages" #groupMessagesList>
             <ng-container *ngFor="let msg of selectedGroupMessages?.messages">
 
                 <li class="data-list"><span>{{msg.key|getDateText}}</span></li>

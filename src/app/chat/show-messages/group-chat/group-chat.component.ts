@@ -93,10 +93,11 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.getGroupJoinInvitation();
         this.getChatNotifications();
         this.initForm();
+        this.getMessagesFromSocket();
+        this.getGroupMessages();
     }
 
     addUserToSocket() {
-
         this.socketService.addNewUser({...this.authUser, group: true});
     }
 
@@ -104,9 +105,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.chatForm = this.fb.group({
             from: [this.authUser.username],
             from_id: [this.authUser.id],
-            to_id: [this.selectedGroup?.id],
+            group_id: [this.selectedGroup?.id],
             avatar: [this.authUser?.avatar],
             from_user: [this.authUser],
+            to_id: [null],
             to_user: [null],
             to_group: [this.selectedGroup],
             message: ['', Validators.required],
@@ -316,9 +318,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         });
     }
 
+
     sendMessage(e) {
         if (this.chatForm.valid) {
-            const data = {...this.chatForm.value};
+            const data = {...this.chatForm.value, group: this.selectedGroup.name};
 
 
             this.chatService.saveMessage(data).subscribe(dt => {
@@ -340,6 +343,25 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             console.log(err);
         }
     }
+
+    getGroupMessages() {
+        this.subscriptions.push(this.chatService.getGroupChatMessages({group_id: this.selectedGroup.id}).subscribe(dt => {
+            this.selectedGroupMessages = dt;
+        }));
+    }
+
+    getMessagesFromSocket() {
+        this.socketService.onNewMessage().subscribe((dt: any) => {
+            if (dt.group) {
+
+                console.log('new message group chat!!!');
+                // this.typingText = null;
+                // this.getUsersMessages();
+            }
+
+        });
+    }
+
 
     getMessageClass(user) {
         return user.id === this.authUser.id ? 'my-message' : 'other-message';

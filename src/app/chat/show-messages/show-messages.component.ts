@@ -1,7 +1,6 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChatService} from '@core/services/chat.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SocketIoService} from '@core/services/socket-io.service';
 
 import {DatePipe} from '@angular/common';
@@ -14,7 +13,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
     styleUrls: ['./show-messages.component.scss']
 })
 export class ShowMessagesComponent implements OnInit {
-    activeTab = 'direct';
+    activeTab = 'group';
     authUser;
 
     chatGroups = [];
@@ -26,7 +25,6 @@ export class ShowMessagesComponent implements OnInit {
         private socketService: SocketIoService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
-        private fb: FormBuilder
     ) {
     }
 

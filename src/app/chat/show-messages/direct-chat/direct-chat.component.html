@@ -112,7 +112,7 @@
         <ul class="chat-history" id="direct-messages" #directMessagesList>
             <ng-container *ngFor="let msg of selectedUserMessages?.messages">
 
-                <li class="data-list"><span>{{getDateText(msg.key)}}</span></li>
+                <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
                 <ng-container *ngFor="let m of msg.value;let ind = index">
                     <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
                         <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">

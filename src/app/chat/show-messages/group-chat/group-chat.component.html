@@ -123,35 +123,38 @@
                 </div>
             </div>
         </div>
-        <ul class="chat-history" [hidden]="!selectedGroup">
+        <ul class="chat-history" id="direct-messages" #directMessagesList>
+            <ng-container *ngFor="let msg of selectedGroupMessages?.messages">
 
-            <li class="data-list"><span>Wednesday, February 5th</span></li>
-
-            <li class="other-message">
-                <div class="message-data">
-                    <div class="img" style="background-image: url(assets/img/item-1.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias mollitia quia, odit corporis
-                    incidunt quasi.
-                </div>
-            </li>
-            <li class="my-message">
-                <div class="message-data mb-0">
-                    <div class="img" style="background-image: url(assets/img/item-12.png); "></div>
-                    <div class="name">Full Name</div>
-                    <div class="date">15։12</div>
-                </div>
-                <div class="message">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr
-                </div>
-            </li>
+                <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
+                <ng-container *ngFor="let m of msg.value;let ind = index">
+                    <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
+                        <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="img">
+                                    <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
+                                </div>
+                                <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
+                            </div>
+                            <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
+                        </div>
+                        <div class="message">
+                            {{m.message}}
+                        </div>
+                        <div class="seen" *ngIf="m.seen">
+                            <img class="seen-avatar" [src]="getSeenAvatar(m)|getImgPath: 'user_avatars'">
+                        </div>
+                    </li>
+                </ng-container>
+            </ng-container>
         </ul>
 
         <div class="chat-message" [hidden]="!selectedGroup">
-            <input type="text" placeholder="Type your message">
+            <form [formGroup]="chatForm" class="chat-form">
+                <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
+                       (keyup)="setTyping()" (focus)="setSeen()"
+                       (keyup.enter)="sendMessage($event)">
+            </form>
             <div class="icons">
                 <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
                 <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>

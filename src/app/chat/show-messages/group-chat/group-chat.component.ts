@@ -41,7 +41,12 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     @Input() groups = [];
     @Input() authUser;
 
+    chatForm: FormGroup;
+
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
+    @ViewChild('groupMessagesList') private messagesList: ElementRef;
+
+    selectedGroupMessages = {messages: [], group: {}};
 
     constructor(
         private fb: FormBuilder,
@@ -87,12 +92,26 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.getUserContacts();
         this.getGroupJoinInvitation();
         this.getChatNotifications();
-        console.log('ngOnInit')
+        this.initForm();
     }
 
     addUserToSocket() {
 
-        this.socketService.addNewUser(this.authUser);
+        this.socketService.addNewUser({...this.authUser, group: true});
+    }
+
+    initForm() {
+        this.chatForm = this.fb.group({
+            from: [this.authUser.username],
+            from_id: [this.authUser.id],
+            to_id: [this.selectedGroup?.id],
+            avatar: [this.authUser?.avatar],
+            from_user: [this.authUser],
+            to_user: [null],
+            to_group: [this.selectedGroup],
+            message: ['', Validators.required],
+            personal: [1]
+        });
     }
 
     getUserContacts() {
@@ -295,6 +314,51 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             group: this.selectedGroup.name,
             username: this.authUser.username
         });
+    }
+
+    sendMessage(e) {
+        if (this.chatForm.valid) {
+            const data = {...this.chatForm.value};
+
+
+            this.chatService.saveMessage(data).subscribe(dt => {
+                // this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
+                // this.selectedUserMessages.user = dt[0].user;
+
+                this.socketService.sendMessage(data);
+                this.scrollMsgsToBottom();
+                // console.log(this.selectedUserMessages);
+            });
+            this.chatForm.patchValue({message: ''});
+        }
+    }
+
+    scrollMsgsToBottom() {
+        try {
+            this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    getMessageClass(user) {
+        return user.id === this.authUser.id ? 'my-message' : 'other-message';
+    }
+
+    getSeenAvatar(msg) {
+        if (msg.from_user.id !== this.authUser.id) {
+            return msg.from_user.avatar;
+        } else if (msg.to_user.id !== this.authUser.id) {
+            return msg.to_user.avatar;
+        }
+    }
+
+    setSeen() {
+
+    }
+
+    setTyping() {
+
     }
 
     ngOnDestroy(): void {

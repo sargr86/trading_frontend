@@ -20,8 +20,8 @@ export class SocketIoService {
 
     addNewUser(user) {
         this.setupSocketConnection();
-        console.log('add to socket!!!', user)
-        console.log(this.socket)
+        // console.log('add to socket!!!', user)
+        // console.log(this.socket)
         this.socket.emit('newUser', user);
     }
 

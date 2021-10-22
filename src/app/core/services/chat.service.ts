@@ -16,8 +16,8 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/get-messages`, {params});
     }
 
-    getGeneralChatMessages(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-chat-messages`, {params});
+    getDirectChatMessages(params) {
+        return this.httpClient.get<any>(`${API_URL}chat/get-direct-chat-messages`, {params});
     }
 
     saveMessage(params) {

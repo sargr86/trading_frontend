@@ -50,6 +50,7 @@ import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.d
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { ChatBottomBoxComponent } from './components/chat-bottom-box/chat-bottom-box.component';
 import { GroupByPipe } from './pipes/group-by.pipe';
+import { GetDateTextForMessagesPipe } from './pipes/get-date-text-for-messages.pipe';
 
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
@@ -101,7 +102,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         VideoJsPlayerComponent,
         NumbersOnlyInputDirective,
         ChatBottomBoxComponent,
-        GroupByPipe
+        GroupByPipe,
+        GetDateTextForMessagesPipe
     ],
     imports: [
         CommonModule,
@@ -132,6 +134,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetWalletTablesColumnContentsPipe,
         CountPurchasedTransferredTotalsPipe,
         ApplyDiscountToPricePipe,
+        GetDateTextForMessagesPipe,
         GroupByPipe,
         {
             provide: DROPZONE_CONFIG,
@@ -177,7 +180,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         VideoJsPlayerComponent,
         NumbersOnlyInputDirective,
         DropzoneModule,
-        ChatBottomBoxComponent
+        ChatBottomBoxComponent,
+        GetDateTextForMessagesPipe
     ],
 
 })

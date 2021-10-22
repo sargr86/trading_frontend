@@ -62,7 +62,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     addUserToSocket() {
-        this.socketService.addNewUser(this.authUser.username);
+        this.socketService.addNewUser({...this.authUser, group: false});
     }
 
     initForm() {
@@ -102,7 +102,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getUsersMessages() {
         this.selectedUserMessages.messages = [];
-        this.chatService.getGeneralChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
+        this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = this.order(dt);
             this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);
             console.log('get messages!!!')
@@ -178,19 +178,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         }
     }
 
-    getDateText(dateCreated) {
-        const today = moment();
-        const yesterday = moment().subtract(1, 'day');
-        const passedDate = moment(dateCreated, 'dddd, MMMM Do');
 
-        if (passedDate.isSame(today, 'day')) {
-            return 'Today';
-        } else if (passedDate.isSame(yesterday, 'day')) {
-            return 'Yesterday';
-        }
-
-        return dateCreated;
-    }
 
     setTyping(msg = null) {
         this.socketService.setTyping({

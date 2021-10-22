@@ -14,7 +14,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
     styleUrls: ['./show-messages.component.scss']
 })
 export class ShowMessagesComponent implements OnInit {
-    activeTab = 'group';
+    activeTab = 'direct';
     authUser;
 
     chatGroups = [];
@@ -33,7 +33,9 @@ export class ShowMessagesComponent implements OnInit {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
 
-        this.getGroups();
+        if (this.authUser) {
+            this.getGroups();
+        }
 
     }
 

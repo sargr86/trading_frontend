@@ -179,7 +179,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
 
-
     setTyping(msg = null) {
         this.socketService.setTyping({
             from_user: this.chatForm.value.from_user,
@@ -191,7 +190,9 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
             // console.log(dt.message);
-            this.typingText = dt.message ? `${dt.from_user.username} is typing...` : null;
+            if (dt.from_user.id !== this.authUser.id) {
+                this.typingText = dt.message ? `${dt.from_user.username} is typing...` : null;
+            }
         });
     }
 

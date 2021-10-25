@@ -149,6 +149,7 @@
             </ng-container>
         </ul>
 
+        <small class="text-center font-italic d-block">{{typingText}}</small>
         <div class="chat-message" [hidden]="!selectedGroup">
             <form [formGroup]="chatForm" class="chat-form">
                 <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"

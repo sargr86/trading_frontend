@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ToastrService} from 'ngx-toastr';
-import {GroupByPipe} from "@shared/pipes/group-by.pipe";
+import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 
 @Component({
     selector: 'app-group-chat',
@@ -36,6 +36,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     memberCtrl = new FormControl();
 
     subscriptions: Subscription[] = [];
+
+    typingText;
 
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -97,6 +99,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.initForm();
         this.getMessagesFromSocket();
         this.getGroupMessages();
+        this.getTyping();
     }
 
     addUserToSocket() {
@@ -388,8 +391,20 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     }
 
-    setTyping() {
+    getTyping() {
+        this.socketService.getTyping().subscribe((dt: any) => {
+            if (dt.from_user.id !== this.authUser.id) {
+                this.typingText = dt.message ? `${dt.from_user.username} is typing...` : null;
+            }
+        });
+    }
 
+    setTyping() {
+        this.socketService.setTyping({
+            from_user: this.chatForm.value.from_user,
+            group: this.selectedGroup.name,
+            message: this.chatForm.value.message
+        });
     }
 
     ngOnDestroy(): void {

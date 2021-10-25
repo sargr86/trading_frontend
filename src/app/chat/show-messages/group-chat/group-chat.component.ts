@@ -11,6 +11,7 @@ import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-g
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ToastrService} from 'ngx-toastr';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-group-chat',
@@ -50,6 +51,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
     selectedGroupMessages = [];
+    selectedRawMessages = [];
 
     constructor(
         private fb: FormBuilder,
@@ -100,6 +102,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.getMessagesFromSocket();
         this.getGroupMessages();
         this.getTyping();
+        this.getSeen();
     }
 
     addUserToSocket() {
@@ -356,6 +359,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             group_id: this.selectedGroup.id,
             group: 1
         }).subscribe(dt => {
+            this.selectedRawMessages = dt;
             this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
             console.log(this.selectedGroupMessages)
         }));
@@ -382,13 +386,35 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     getSeenAvatar(msg) {
         if (msg.from_user.id !== this.authUser.id) {
             return msg.from_user.avatar;
-        } else if (msg.to_user.id !== this.authUser.id) {
-            return msg.to_user.avatar;
+        } else if (msg?.to_user?.id !== this.authUser.id) {
+            return msg?.to_user?.avatar;
         }
     }
 
-    setSeen() {
+    getSeen() {
 
+        this.socketService.getSeen().subscribe((dt: any) => {
+            this.selectedGroupMessages = [];
+            console.log('get seen', dt)
+            this.getGroupMessages();
+        });
+    }
+
+    setSeen() {
+        const isOwnMessage = this.selectedRawMessages[this.selectedRawMessages.length - 1].from_id === this.authUser.id;
+        console.log('set seen')
+        this.scrollMsgsToBottom();
+        if (!isOwnMessage) {
+            this.socketService.setSeen({
+                from_id: this.chatForm.value.from_id,
+                to_id: this.chatForm.value.to_id,
+                from_user: this.chatForm.value.from_user,
+                group: this.selectedGroup.name,
+                group_id: this.selectedGroup.id,
+                seen: 1,
+                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
+            });
+        }
     }
 
     getTyping() {

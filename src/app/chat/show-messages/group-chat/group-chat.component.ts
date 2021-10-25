@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ToastrService} from 'ngx-toastr';
+import {GroupByPipe} from "@shared/pipes/group-by.pipe";
 
 @Component({
     selector: 'app-group-chat',
@@ -46,7 +47,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
-    selectedGroupMessages = {messages: [], group: {}};
+    selectedGroupMessages = [];
 
     constructor(
         private fb: FormBuilder,
@@ -54,7 +55,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private socketService: SocketIoService,
         private toastr: ToastrService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private groupBy: GroupByPipe
     ) {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
             if (search) {
@@ -138,9 +140,11 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     makeGroupActive(group) {
         this.selectedGroup = group;
+        // console.log(group)
         this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+        this.chatForm.patchValue({group_id: this.selectedGroup.id});
         this.getGroupMembers();
-        console.log(this.socketGroupUsers)
+        this.getGroupMessages();
     }
 
     addGroup() {
@@ -345,8 +349,12 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getGroupMessages() {
-        this.subscriptions.push(this.chatService.getGroupChatMessages({group_id: this.selectedGroup.id}).subscribe(dt => {
-            this.selectedGroupMessages = dt;
+        this.subscriptions.push(this.chatService.getGroupChatMessages({
+            group_id: this.selectedGroup.id,
+            group: 1
+        }).subscribe(dt => {
+            this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
+            console.log(this.selectedGroupMessages)
         }));
     }
 
@@ -355,6 +363,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             if (dt.group) {
 
                 console.log('new message group chat!!!');
+                this.getGroupMessages();
                 // this.typingText = null;
                 // this.getUsersMessages();
             }

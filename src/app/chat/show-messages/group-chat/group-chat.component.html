@@ -124,7 +124,7 @@
             </div>
         </div>
         <ul class="chat-history" id="group-messages" #groupMessagesList>
-            <ng-container *ngFor="let msg of selectedGroupMessages?.messages">
+            <ng-container *ngFor="let msg of selectedGroupMessages">
 
                 <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
                 <ng-container *ngFor="let m of msg.value;let ind = index">

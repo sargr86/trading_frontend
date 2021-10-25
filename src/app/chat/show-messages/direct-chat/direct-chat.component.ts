@@ -198,7 +198,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     setSeen() {
         const userMessages = this.selectedUserMessages.messages[0].value;
-        const isOwnMessage = userMessages[userMessages.length - 1].from_id === this.authUser.id;
+        const isOwnMessage = userMessages[userMessages.length - 1]?.from_id === this.authUser.id;
         console.log('set seen')
         this.scrollMsgsToBottom();
         if (!isOwnMessage) {

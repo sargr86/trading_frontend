@@ -361,7 +361,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.selectedRawMessages = dt;
             this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
-            console.log(this.selectedGroupMessages)
         }));
     }
 
@@ -371,7 +370,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
                 console.log('new message group chat!!!');
                 this.getGroupMessages();
-                // this.typingText = null;
+                this.typingText = null;
                 // this.getUsersMessages();
             }
 
@@ -401,7 +400,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     setSeen() {
-        const isOwnMessage = this.selectedRawMessages[this.selectedRawMessages.length - 1].from_id === this.authUser.id;
+        const isOwnMessage = this.selectedRawMessages[this.selectedRawMessages.length - 1]?.from_id === this.authUser.id;
         console.log('set seen')
         this.scrollMsgsToBottom();
         if (!isOwnMessage) {

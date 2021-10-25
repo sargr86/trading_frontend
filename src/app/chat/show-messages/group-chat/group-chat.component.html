@@ -85,7 +85,7 @@
                                     <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
                                               (click)="removeSavedMember(m.member_id)">cancel
                                     </mat-icon>
-                                    <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'" ></div>
+                                    <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
                                 </li>
                             </ul>
                             <a id="show-more-members" (click)="openAllMembersModal()">
@@ -142,7 +142,8 @@
                             {{m.message}}
                         </div>
                         <div class="seen" *ngIf="m.seen">
-                            <img class="seen-avatar" [src]="getSeenAvatar(m)|getImgPath: 'user_avatars'">
+                            <img class="seen-avatar" [matTooltip]="m.from_user.first_name + ' ' + m.from_user.last_name"
+                                 [src]="getSeenAvatar(m)|getImgPath: 'user_avatars'">
                         </div>
                     </li>
                 </ng-container>

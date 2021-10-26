@@ -34,18 +34,19 @@
                         <app-purchase-bits [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
-                <div class="notification" [hidden]="envName==='production'" [matMenuTriggerFor]="menu">
+                <div class="notification" [hidden]="envName==='production'" [matMenuTriggerFor]="notifMenu" [class.disabled]="notifications.length===0">
                     <i class="fas fa-bell"></i>
                     <span *ngIf="notifications.length > 0">{{notifications.length}}</span>
                 </div>
 
-<!--                <mat-menu #menu="matMenu" [hidden]="notifications.length === 0">-->
-<!--                    <ng-container *ngFor="let notification of notifications">-->
-<!--                        <button mat-menu-item>-->
-<!--                            {{notification}}-->
-<!--                        </button>-->
-<!--                    </ng-container>-->
-<!--                </mat-menu>-->
+
+                <mat-menu #notifMenu="matMenu">
+                    <ng-container *ngFor="let notification of notifications">
+                        <button mat-menu-item>
+                            {{notification}}
+                        </button>
+                    </ng-container>
+                </mat-menu>
 
                 <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
 

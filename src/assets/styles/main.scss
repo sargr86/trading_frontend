@@ -13,7 +13,6 @@
 @import '~@videojs/themes/dist/forest/index.css';
 // Sea
 @import '~@videojs/themes/dist/sea/index.css';
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@ctrl/ngx-emoji-mart/picker';
 //@import "~plyr/src/sass/plyr";
@@ -1136,12 +1135,11 @@ mat-error {
 
 .mat-badge-content {
     background-color: $red !important;
-    color: $white!important;
+    color: $white !important;
 }
 
-.left-menu-main:not(.active){
-    .mat-badge-content
-    {
+.left-menu-main:not(.active) {
+    .mat-badge-content {
         left: 130px !important;
         top: -5px !important;
     }
@@ -1149,12 +1147,16 @@ mat-error {
 
 .mat-menu-content {
     .active {
-        color: $metl-green!important;
+        color: $metl-green !important;
     }
 }
 
 .toast-info {
-    background-color: $metl-green!important;
+    background-color: $metl-green !important;
+}
+
+.disabled {
+    pointer-events: none;
 }
 
 @import "responsive";

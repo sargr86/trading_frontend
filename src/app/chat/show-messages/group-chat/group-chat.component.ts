@@ -382,18 +382,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         return user.id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
-    getSeenAvatar(msg) {
-        if (msg.from_user.id !== this.authUser.id) {
-            return msg.from_user.avatar;
-        } else if (msg?.to_user?.id !== this.authUser.id) {
-            return msg?.to_user?.avatar;
-        }
-    }
-
     getSeen() {
 
         this.socketService.getSeen().subscribe((dt: any) => {
-            this.selectedGroupMessages = [];
+            console.log(this.selectedGroupMessages)
             console.log('get seen', dt)
             this.getGroupMessages();
         });
@@ -405,6 +397,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.scrollMsgsToBottom();
         if (!isOwnMessage) {
             this.socketService.setSeen({
+                message_id: this.selectedRawMessages[this.selectedRawMessages.length - 1].id,
                 from_id: this.chatForm.value.from_id,
                 to_id: this.chatForm.value.to_id,
                 from_user: this.chatForm.value.from_user,

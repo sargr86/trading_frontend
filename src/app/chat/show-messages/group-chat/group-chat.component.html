@@ -141,9 +141,12 @@
                         <div class="message">
                             {{m.message}}
                         </div>
-                        <div class="seen" *ngIf="m.seen">
-                            <img class="seen-avatar" [matTooltip]="m.from_user.first_name + ' ' + m.from_user.last_name"
-                                 [src]="getSeenAvatar(m)|getImgPath: 'user_avatars'">
+                        <div class="seen">
+                            <ng-container *ngFor="let seen of m.seen_by">
+                                <img class="seen-avatar"
+                                     [matTooltip]="seen.first_name + ' ' + seen.last_name"
+                                     [src]="seen.avatar|getImgPath: 'user_avatars'">
+                            </ng-container>
                         </div>
                     </li>
                 </ng-container>

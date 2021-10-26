@@ -357,7 +357,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     getGroupMessages() {
         this.subscriptions.push(this.chatService.getGroupChatMessages({
-            group_id: this.selectedGroup.id,
+            group_id: this.selectedGroup?.id,
             group: 1
         }).subscribe(dt => {
             this.selectedRawMessages = dt;

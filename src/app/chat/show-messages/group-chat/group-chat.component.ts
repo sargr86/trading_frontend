@@ -242,6 +242,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                     group_id: this.selectedGroup.id
                 }).subscribe(dt => {
                     this.groups = dt;
+                    this.socketService.leaveGroup({group: this.selectedGroup.name, username: this.authUser.username});
                     this.selectedGroup = null;
                 });
             }
@@ -283,7 +284,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getUserCurrentStatus(groupMember) {
-        const groupName = groupMember.group.name;
+        const groupName = groupMember?.group?.name;
         // console.log(this.socketGroupUsers)
         if (this.socketGroupUsers && groupName === this.selectedGroup.name) {
             const foundInSocketUsers = !!this.socketGroupUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.member.username === sGroupUser.username);

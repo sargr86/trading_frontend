@@ -91,6 +91,18 @@ export class SocketIoService {
         });
     }
 
+    leaveGroup(data) {
+        this.socket.emit('leaveGroup', data);
+    }
+
+    leaveGroupNotify() {
+        return new Observable(observer => {
+            this.socket.on('leaveGroupNotify', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     disconnect(data) {
         this.socket.emit('forceDisconnect', data);
     }

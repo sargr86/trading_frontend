@@ -918,7 +918,7 @@ mat-optgroup {
 
 .disabled {
     pointer-events: none;
-    opacity: 0.4;
+    //opacity: 0.4;
 }
 
 .wallet-content {
@@ -1153,10 +1153,6 @@ mat-error {
 
 .toast-info {
     background-color: $metl-green !important;
-}
-
-.disabled {
-    pointer-events: none;
 }
 
 @import "responsive";

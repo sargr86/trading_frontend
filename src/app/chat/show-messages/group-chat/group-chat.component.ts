@@ -214,7 +214,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
         if (!this.inputGroupMembers.find(gm => gm.id === value)) {
             this.inputGroupMembers.push(e.option.value);
-            console.log(this.inputGroupMembers);
             this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers});
         }
 
@@ -273,7 +272,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     getChatNotifications() {
         this.socketService.getChatNotifications().subscribe((data: any) => {
-            // console.log(data)
+            console.log(data)
             this.socketGroupUsers = data.groupUsers;
             // console.log(this.socketGroupUsers)
             if (data.group === this.selectedGroup.name && data.username !== this.authUser.username) {
@@ -386,7 +385,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     getSeen() {
 
         this.socketService.getSeen().subscribe((dt: any) => {
-            console.log(this.selectedGroupMessages)
             console.log('get seen', dt)
             this.getGroupMessages();
         });

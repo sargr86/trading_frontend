@@ -80,7 +80,8 @@ export class SocketIoService {
     }
 
     acceptJoinToGroup(data) {
-        this.socket.emit('acceptJoinToGroup', data);
+        this.setupSocketConnection();
+        this.socket.emit('acceptJoinGroup', data);
     }
 
     getChatNotifications() {

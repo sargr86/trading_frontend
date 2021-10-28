@@ -25,6 +25,14 @@ export class SocketIoService {
         this.socket.emit('newUser', user);
     }
 
+    userOnlineFeedback() {
+        return new Observable(observer => {
+            this.socket.on('userConnected', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     // EMITTER example
     sendMessage(data: any) {
         this.socket.emit('sendMessage', data);

@@ -42,8 +42,9 @@
                         <div class="d-flex user-last-msg align-items-center justify-content-between">
                             <div class="left-group" (click)="makeUserActive(user, lastMsg)">
 
-                                <div class="img">
+                                <div class="img user-avatar">
                                     <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
+                                    <div class="status" [hidden]="onlineUsers.length === 0" [ngClass]="getUserCurrentStatus(user.from) ? 'online':'offline'"></div>
                                 </div>
                                 <div class="text">
                                     <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
@@ -72,7 +73,7 @@
                                         </button>
                                     </mat-menu>
                                 </ng-container>
-                                <ng-container *ngIf="lastMsg.seen === 0">
+                                <ng-container *ngIf="lastMsg.seen === 0 && lastMsg.from_id !== this.authUser.id">
                                     <button class="seen-circle">
                                         <i class="fas fa-circle"></i>
                                     </button>

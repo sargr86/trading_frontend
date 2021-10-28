@@ -37,6 +37,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     chatForm: FormGroup;
     showBlockedUsers = false;
 
+    onlineUsers = [];
+
     @ViewChild('directMessagesList') private messagesList: ElementRef;
 
     constructor(
@@ -54,15 +56,33 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     ngOnInit(): void {
 
         this.addUserToSocket();
+        this.getOnlineUsers();
         this.getMessagesFromSocket();
         this.getUsersMessages();
         this.initForm();
         this.getTyping();
         this.getSeen();
+        this.getChatNotifications();
     }
 
     addUserToSocket() {
         this.socketService.addNewUser({...this.authUser, group: false});
+    }
+
+    getOnlineUsers() {
+        this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+            this.onlineUsers = dt;
+        });
+    }
+
+    getUserCurrentStatus(username) {
+        return this.onlineUsers.length === 0 || this.onlineUsers.includes(username);
+    }
+
+    getChatNotifications() {
+        this.socketService.getChatNotifications().subscribe((data: any) => {
+            this.onlineUsers = data.users;
+        });
     }
 
     initForm() {
@@ -80,14 +100,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getMessageClass(user) {
         return user.id === this.authUser.id ? 'my-message' : 'other-message';
-    }
-
-    getSeenAvatar(msg) {
-        if (msg.from_user.id !== this.authUser.id) {
-            return msg.from_user.avatar;
-        } else if (msg.to_user.id !== this.authUser.id) {
-            return msg.to_user.avatar;
-        }
     }
 
     isChatUsersListSize() {

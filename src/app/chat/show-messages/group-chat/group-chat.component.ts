@@ -284,10 +284,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     getUserCurrentStatus(groupMember) {
         const groupName = groupMember?.group?.name;
-        // console.log(this.socketGroupUsers)
         if (this.socketGroupUsers && groupName === this.selectedGroup.name) {
             const foundInSocketUsers = !!this.socketGroupUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.member.username === sGroupUser.username);
-            // console.log(foundInSocketUsers)
             return foundInSocketUsers;
         }
         return false;

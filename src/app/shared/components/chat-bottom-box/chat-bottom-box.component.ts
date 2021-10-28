@@ -29,7 +29,6 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
     typingText;
 
     @Input() channelUser;
-    @Output() sendMsg = new EventEmitter();
     @Output() close = new EventEmitter();
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
@@ -64,7 +63,7 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
     }
 
     addUserToSocket() {
-        this.socketService.addNewUser(this.authUser.username);
+        this.socketService.addNewUser(this.authUser);
     }
 
     loadPreviousMessages() {
@@ -81,15 +80,13 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
 
     sendMessage() {
         if (this.chatForm.valid) {
-            const data = {...this.chatForm.value};
-            // console.log(data)
-            this.sendMsg.emit(data);
-            this.socketService.sendMessage(data);
+            const data = this.chatForm.value ;
             this.chatService.saveMessage(data).subscribe(dt => {
                 this.messages = dt;
+                this.socketService.sendMessage(data);
+                this.chatForm.patchValue({message: ''});
+                this.setTyping();
             });
-            this.chatForm.patchValue({message: ''});
-            this.setTyping();
         }
     }
 
@@ -124,18 +121,20 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
 
     setSeen() {
         const userMessages = this.messages;
-        const isOwnMessage = userMessages[userMessages.length - 1].from_id === this.authUser.id;
+        if (userMessages.length > 0) {
+            const isOwnMessage = userMessages[userMessages.length - 1]?.from_id === this.authUser.id;
 
-        if (!isOwnMessage) {
-            this.scrollMsgsToBottom();
-            this.socketService.setSeen({
-                from_id: this.chatForm.value.from_id,
-                to_id: this.chatForm.value.to_id,
-                from_user: this.chatForm.value.from_user,
-                to_user: this.chatForm.value.to_user,
-                seen: 1,
-                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
-            });
+            if (!isOwnMessage) {
+                this.scrollMsgsToBottom();
+                this.socketService.setSeen({
+                    from_id: this.chatForm.value.from_id,
+                    to_id: this.chatForm.value.to_id,
+                    from_user: this.chatForm.value.from_user,
+                    to_user: this.chatForm.value.to_user,
+                    seen: 1,
+                    seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
+                });
+            }
         }
     }
 

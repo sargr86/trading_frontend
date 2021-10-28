@@ -135,18 +135,20 @@
             </ng-container>
         </ul>
 
-        <small class="text-center font-italic d-block">{{typingText}}</small>
-        <div class="chat-message" *ngIf="activeUser">
-            <form [formGroup]="chatForm" class="chat-form">
-                <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
-                       (keyup)="setTyping()" (focus)="setSeen()"
-                       (keyup.enter)="sendMessage($event)">
-            </form>
-            <div class="icons">
-                <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
-                <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
-                <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
+        <ng-container *ngIf="activeUser">
+            <small class="text-center font-italic d-block">{{typingText}}</small>
+            <div class="chat-message">
+                <form [formGroup]="chatForm" class="chat-form">
+                    <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
+                           (keyup)="setTyping()" (focus)="setSeen()"
+                           (keyup.enter)="sendMessage($event)">
+                </form>
+                <div class="icons">
+                    <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
+                    <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
+                    <a href=""><img src="assets/img/send-24px.svg" alt=""></a>
+                </div>
             </div>
-        </div>
+        </ng-container>
     </div>
 </div>

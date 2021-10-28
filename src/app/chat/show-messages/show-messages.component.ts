@@ -13,7 +13,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
     styleUrls: ['./show-messages.component.scss']
 })
 export class ShowMessagesComponent implements OnInit {
-    activeTab = 'group';
+    activeTab = 'direct';
     authUser;
 
     chatGroups = [];

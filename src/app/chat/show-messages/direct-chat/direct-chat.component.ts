@@ -191,7 +191,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.socketService.getTyping().subscribe((dt: any) => {
             // console.log(dt.message);
             if (dt.from_user.id !== this.authUser.id) {
-                this.typingText = dt.message ? `${dt.from_user.username} is typing...` : null;
+                this.typingText = dt.message ? `${dt.from_user.first_name} is typing...` : null;
             }
         });
     }

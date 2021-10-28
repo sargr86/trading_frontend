@@ -33,7 +33,6 @@ export class SectionLinksComponent implements OnInit {
     ngOnInit(): void {
         this.envName = environment.envName;
         this.getMessagesFromSocket();
-        this.getSeen();
 
         if (this.auth.loggedIn()) {
             this.getUserMessages();
@@ -43,7 +42,8 @@ export class SectionLinksComponent implements OnInit {
     getUserMessages() {
         this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
             this.usersMessages = dt;
-            this.newMessage = !!dt.filter(d => !d.seen).length;
+            this.newMessage = !!dt.filter(d => !d.seen && d.from_id !== this.authUser.id).length;
+            console.log('New Message')
         });
     }
 
@@ -54,11 +54,6 @@ export class SectionLinksComponent implements OnInit {
         });
     }
 
-    getSeen() {
-        this.socketService.getSeen().subscribe((dt: any) => {
-            this.getUserMessages();
-        });
-    }
 
     changePage(route, params = {}) {
         this.closeSidenav.emit(true);

@@ -198,18 +198,21 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     setSeen() {
         const userMessages = this.selectedUserMessages.messages[0].value;
-        const isOwnMessage = userMessages[userMessages.length - 1]?.from_id === this.authUser.id;
-        console.log('set seen')
-        this.scrollMsgsToBottom();
-        if (!isOwnMessage) {
-            this.socketService.setSeen({
-                from_id: this.chatForm.value.from_id,
-                to_id: this.chatForm.value.to_id,
-                from_user: this.chatForm.value.from_user,
-                to_user: this.chatForm.value.to_user,
-                seen: 1,
-                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
-            });
+        if (userMessages.length > 0) {
+            const isOwnMessage = userMessages[userMessages.length - 1]?.from_id === this.authUser.id;
+            console.log('set seen')
+            this.scrollMsgsToBottom();
+            if (!isOwnMessage) {
+                this.socketService.setSeen({
+                    message_id: userMessages[userMessages.length - 1].id,
+                    from_id: this.chatForm.value.from_id,
+                    to_id: this.chatForm.value.to_id,
+                    from_user: this.chatForm.value.from_user,
+                    to_user: this.chatForm.value.to_user,
+                    seen: 1,
+                    seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
+                });
+            }
         }
     }
 
@@ -217,7 +220,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
         this.socketService.getSeen().subscribe((dt: any) => {
             this.selectedUserMessages.messages = [];
-            // console.log('get seen', dt)
+            console.log('get seen', dt)
             this.getUsersMessages();
         });
     }
@@ -248,6 +251,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.usersService.blockUser(params).subscribe(dt => {
             this.getUsersMessages();
         });
+    }
+
+    getSeenTooltip(message) {
+        const user = message.to_user;
+        const thisWeekDate = moment(message.seen_at).isSame(new Date(), 'week');
+        const seenDate = moment(message.seen_at).format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
+
+        return `${user.first_name} ${user.last_name} at ${seenDate}`;
     }
 
     ngAfterViewChecked() {

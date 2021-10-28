@@ -127,8 +127,8 @@
                         <div class="message">
                             {{m.message}}
                         </div>
-                        <div class="seen" *ngIf="m.seen">
-                            <img class="seen-avatar" [src]="getSeenAvatar(m)|getImgPath: 'user_avatars'">
+                        <div class="seen" *ngIf="m.seen && m.to_id!==authUser.id">
+                            <img class="seen-avatar" [matTooltip]="getSeenTooltip(m)" [src]="m.to_user.avatar|getImgPath: 'user_avatars'">
                         </div>
                     </li>
                 </ng-container>

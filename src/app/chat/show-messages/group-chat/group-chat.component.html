@@ -24,6 +24,9 @@
                         <div class="name">{{group.name}}</div>
                         <span>Lorem ipsum dolor sit amet</span>
                     </div>
+                    <button class="seen-circle">
+                        <i class="fas fa-circle"></i>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -40,6 +43,7 @@
                         </label>
                         <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
                         <div class="group-name">{{selectedGroup?.name}}</div>
+
                     </div>
                     <div class="center">
                         <div class="member-add" [hidden]="!showMembersInput">

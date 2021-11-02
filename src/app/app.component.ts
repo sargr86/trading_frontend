@@ -9,7 +9,7 @@ import IsResponsive from '@core/helpers/is-responsive';
 import {StocksService} from '@core/services/stocks.service';
 import {environment} from '@env';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
-import {GetAuthUserPipe} from "@shared/pipes/get-auth-user.pipe";
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-root',

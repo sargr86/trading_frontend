@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import IsResponsive from '@core/helpers/is-responsive';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChatService} from '@core/services/chat.service';
@@ -50,6 +50,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
+    @Output() groupRemoved = new EventEmitter();
+
     selectedGroupMessages = [];
     selectedRawMessages = [];
 
@@ -79,7 +81,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.groupChatForm = this.fb.group({
             creator_id: [this.authUser.id],
-            name: ['', Validators.required]
+            name: ['', Validators.required],
+            username: [this.authUser.username]
         });
         this.selectedGroup = this.groups[0];
 
@@ -202,7 +205,9 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.chatService.removeGroup({group_id: this.selectedGroup.id}).subscribe(dt => {
+                    this.socketService.removeGroup({group: this.selectedGroup.name, username: this.authUser.username});
                     this.groups = dt;
+                    this.selectedGroup = null;
                 });
             }
         }));
@@ -273,11 +278,19 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     getChatNotifications() {
         this.socketService.getChatNotifications().subscribe((data: any) => {
             console.log(data)
+            console.log(data.group, this.selectedGroup?.name)
+            console.log(data.username, this.authUser.username)
             this.socketGroupUsers = data.groupUsers;
-            // console.log(this.socketGroupUsers)
-            if (data.group === this.selectedGroup.name && data.username !== this.authUser.username) {
+            if (data.groupRemoved) {
+                console.log('group removed')
+                this.groupRemoved.emit({});
+                this.selectedGroup = data.username !== this.authUser.username ? null : this.groups[this.groups.length - 1];
+                console.log(this.groups[this.groups.length - 1])
+            } else if (data.group === this.selectedGroup?.name) {
+                // if (data.username !== this.authUser.username) {
                 this.toastr.info(data.msg);
                 this.getGroupMembers();
+                // }
             }
         });
     }

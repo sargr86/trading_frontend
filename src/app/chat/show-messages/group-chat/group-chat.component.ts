@@ -137,9 +137,11 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getGroupMembers() {
-        this.subscriptions.push(this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
-            this.groupMembers = dt;
-        }));
+        if (this.selectedGroup) {
+            this.subscriptions.push(this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
+                this.groupMembers = dt;
+            }));
+        }
     }
 
 
@@ -160,6 +162,9 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         if (this.groupChatForm.valid) {
             this.subscriptions.push(this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
                 this.groups = dt;
+                if (this.groups.length === 1) {
+                    this.selectedGroup = this.groups[1];
+                }
                 this.socketService.setNewGroup(this.groupChatForm.value);
                 this.groupChatForm.patchValue({name: ''});
             }));
@@ -231,6 +236,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
 
+        console.log(this.groupChatDetailsForm.value, this.selectedGroup)
+
         this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
             this.groupMembers = dt;
             this.socketService.inviteToNewGroup({members: this.inputGroupMembers, group_id: this.selectedGroup.id});
@@ -286,7 +293,16 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.groupRemoved.emit({});
                 this.selectedGroup = data.username !== this.authUser.username ? null : this.groups[this.groups.length - 1];
                 console.log(this.groups[this.groups.length - 1])
-            } else if (data.group === this.selectedGroup?.name) {
+            } else if (data.groupCreated) {
+                console.log(this.socketGroupUsers)
+                this.selectedGroup = this.groups.find(g => g.name === data.group);
+                console.log(this.selectedGroup)
+                if (this.selectedGroup) {
+                    this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+                    console.log(this.groupChatDetailsForm.value)
+                    this.getGroupMembers();
+                }
+            } else {
                 // if (data.username !== this.authUser.username) {
                 this.toastr.info(data.msg);
                 this.getGroupMembers();

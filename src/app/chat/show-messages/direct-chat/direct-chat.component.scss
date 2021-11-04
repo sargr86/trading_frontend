@@ -16,11 +16,12 @@
 }
 
 .seen-circle {
-    background-color: transparent;
-
-    i {
-        color: $metl-green;
-    }
+    background-color: $red!important;
+    color: $white;
+    width:20px;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 12px;
 }
 
 .more-btn {

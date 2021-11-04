@@ -29,6 +29,7 @@ export class SubjectService {
     private userStocksData = new Subject<any>();
     private userCardsData = new Subject<any>();
     private allPaymentsData = new Subject<any>();
+    private newMessageSourcesLenData = new Subject<any>();
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
     private userCardsSource = new BehaviorSubject(this.userCards);
@@ -125,6 +126,16 @@ export class SubjectService {
     getAllPaymentsData(): Observable<any> {
         return this.allPaymentsData.asObservable();
     }
+
+    setNewMessagesSourceLenData(value) {
+        this.newMessageSourcesLenData.next(value);
+    }
+
+    getNewMessagesSourceLenData(): Observable<any> {
+        return this.newMessageSourcesLenData.asObservable();
+    }
+
+
 
     setAllPaymentsData(value) {
         this.allPaymentsData.next(value);

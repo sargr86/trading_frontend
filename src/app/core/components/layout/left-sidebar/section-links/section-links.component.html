@@ -1,5 +1,5 @@
 <ng-container *ngFor="let section of mainSections;let i = index;trackBy:trackByElement">
-    <div class="left-menu-main" [class.st-left-menu]="i===0"  matBadge="1" [matBadgeHidden]="section.name!=='Messages' || !newMessage"
+    <div class="left-menu-main" [class.st-left-menu]="i===0"  [matBadge]="newMessagesLen" [matBadgeHidden]="section.name!=='Messages' || newMessagesLen ===0"
          [class.active]="router.url === section.link || (section.link === '/stocks/analytics' && router.url.includes('analytics'))"
          (click)="changePage(section.link)" *ngIf="(section.auth && auth.loggedIn()) || !section.auth"
          [hidden]="!section.production && envName==='production'">

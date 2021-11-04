@@ -17,6 +17,7 @@ import {DatePipe} from '@angular/common';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsersService} from '@core/services/users.service';
+import {SubjectService} from "@core/services/subject.service";
 
 @Component({
     selector: 'app-direct-chat',
@@ -38,6 +39,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     showBlockedUsers = false;
 
     onlineUsers = [];
+    newMessageSourcesLen = 0;
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
 
@@ -46,6 +48,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
         private usersService: UsersService,
+        private subject: SubjectService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
         private fb: FormBuilder,
@@ -117,7 +120,9 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = this.order(dt);
             this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);
-            console.log('get messages!!!')
+            this.newMessageSourcesLen = this.filteredUsersMessages.filter(fm => fm.unseens).length;
+            this.subject.setNewMessagesSourceLenData(this.newMessageSourcesLen);
+            console.log('get messages!!!', this.newMessageSourcesLen)
 
             if (!this.isChatUsersListSize()) {
                 this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
@@ -271,6 +276,10 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         const seenDate = moment(message.seen_at).format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
 
         return `${user.first_name} ${user.last_name} at ${seenDate}`;
+    }
+
+    checkIfLastMessageSeen(lastMsg) {
+        return lastMsg.seen === 0 && lastMsg.from_id !== this.authUser.id;
     }
 
     ngAfterViewChecked() {

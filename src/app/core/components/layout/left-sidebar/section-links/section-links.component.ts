@@ -6,6 +6,7 @@ import {AuthService} from '@core/services/auth.service';
 import trackByElement from '@core/helpers/track-by-element';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
+import {SubjectService} from "@core/services/subject.service";
 
 @Component({
     selector: 'app-section-links',
@@ -15,7 +16,7 @@ import {ChatService} from '@core/services/chat.service';
 export class SectionLinksComponent implements OnInit {
     mainSections = MAIN_SECTIONS;
     envName;
-    newMessage = false;
+    newMessagesLen = 0;
     usersMessages = [];
     trackByElement = trackByElement;
 
@@ -26,12 +27,18 @@ export class SectionLinksComponent implements OnInit {
         public router: Router,
         public auth: AuthService,
         private socketService: SocketIoService,
+        private subject: SubjectService,
         private chatService: ChatService
     ) {
     }
 
     ngOnInit(): void {
         this.envName = environment.envName;
+
+        this.subject.getNewMessagesSourceLenData().subscribe(len => {
+            this.newMessagesLen = len;
+            console.log('received:', len)
+        });
 
         if (this.auth.loggedIn()) {
             this.getUserMessages();
@@ -41,11 +48,11 @@ export class SectionLinksComponent implements OnInit {
     getUserMessages() {
         this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
             this.usersMessages = dt;
-            this.newMessage = !!dt.filter(d => !d.seen && d.from_id !== this.authUser.id).length;
-            console.log('New Message')
+            console.log(dt)
+            this.newMessagesLen = [...new Set(dt.filter(d => !d.seen && d.from_id !== this.authUser.id).map(obj => obj.from_id))].length;
+            console.log('New Message', this.newMessagesLen)
         });
     }
-
 
 
     changePage(route, params = {}) {

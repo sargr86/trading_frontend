@@ -73,9 +73,9 @@
                                         </button>
                                     </mat-menu>
                                 </ng-container>
-                                <ng-container *ngIf="lastMsg.seen === 0 && lastMsg.from_id !== this.authUser.id">
+                                <ng-container *ngIf="checkIfLastMessageSeen(lastMsg)">
                                     <button class="seen-circle">
-                                        <i class="fas fa-circle"></i>
+                                        <strong>{{msg.unseens}}</strong>
                                     </button>
                                 </ng-container>
                             </div>

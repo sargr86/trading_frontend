@@ -284,23 +284,16 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     getChatNotifications() {
         this.socketService.getChatNotifications().subscribe((data: any) => {
-            console.log(data)
-            console.log(data.group, this.selectedGroup?.name)
-            console.log(data.username, this.authUser.username)
             this.socketGroupsUsers = data.groupsUsers;
             console.log(this.socketGroupsUsers)
             if (data.groupRemoved) {
                 console.log('group removed')
                 this.groupRemoved.emit({});
                 this.selectedGroup = data.username !== this.authUser.username ? null : this.groups[this.groups.length - 1];
-                console.log(this.groups[this.groups.length - 1])
             } else if (data.groupCreated) {
-                console.log(this.socketGroupsUsers)
                 this.selectedGroup = this.groups.find(g => g.name === data.group);
-                console.log(this.selectedGroup)
                 if (this.selectedGroup) {
                     this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
-                    console.log(this.groupChatDetailsForm.value)
                     this.getGroupMembers();
                 }
             } else {

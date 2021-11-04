@@ -32,7 +32,6 @@ export class SectionLinksComponent implements OnInit {
 
     ngOnInit(): void {
         this.envName = environment.envName;
-        this.getMessagesFromSocket();
 
         if (this.auth.loggedIn()) {
             this.getUserMessages();
@@ -47,12 +46,6 @@ export class SectionLinksComponent implements OnInit {
         });
     }
 
-    getMessagesFromSocket() {
-        this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log('new message')
-            this.newMessage = true;
-        });
-    }
 
 
     changePage(route, params = {}) {

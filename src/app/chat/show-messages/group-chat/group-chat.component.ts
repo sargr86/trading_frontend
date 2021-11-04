@@ -30,7 +30,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     userContacts = [];
     groupMembers = [];
-    socketGroupUsers = [];
+    socketGroupsUsers = [];
     inputGroupMembers = [];
     filteredContacts = [];
 
@@ -287,14 +287,15 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             console.log(data)
             console.log(data.group, this.selectedGroup?.name)
             console.log(data.username, this.authUser.username)
-            this.socketGroupUsers = data.groupUsers;
+            this.socketGroupsUsers = data.groupsUsers;
+            console.log(this.socketGroupsUsers)
             if (data.groupRemoved) {
                 console.log('group removed')
                 this.groupRemoved.emit({});
                 this.selectedGroup = data.username !== this.authUser.username ? null : this.groups[this.groups.length - 1];
                 console.log(this.groups[this.groups.length - 1])
             } else if (data.groupCreated) {
-                console.log(this.socketGroupUsers)
+                console.log(this.socketGroupsUsers)
                 this.selectedGroup = this.groups.find(g => g.name === data.group);
                 console.log(this.selectedGroup)
                 if (this.selectedGroup) {
@@ -313,8 +314,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     getUserCurrentStatus(groupMember) {
         const groupName = groupMember?.group?.name;
-        if (this.socketGroupUsers && groupName === this.selectedGroup.name) {
-            const foundInSocketUsers = !!this.socketGroupUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.member.username === sGroupUser.username);
+        if (this.socketGroupsUsers && groupName === this.selectedGroup.name) {
+            const foundInSocketUsers = !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.member.username === sGroupUser.username);
             return foundInSocketUsers;
         }
         return false;
@@ -388,6 +389,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.selectedRawMessages = dt;
             this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
+
         }));
     }
 
@@ -396,6 +398,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             if (dt.group) {
 
                 console.log('new message group chat!!!');
+                this.groupRemoved.emit({});
                 this.getGroupMessages();
                 this.typingText = null;
                 // this.getUsersMessages();

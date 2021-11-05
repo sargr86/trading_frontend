@@ -55,6 +55,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     selectedGroupMessages = [];
     selectedRawMessages = [];
 
+    groupsMessages = [];
+
     constructor(
         private fb: FormBuilder,
         private chatService: ChatService,
@@ -106,6 +108,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.getGroupMessages();
         this.getTyping();
         this.getSeen();
+        this.getGroupsMessages();
     }
 
     addUserToSocket() {
@@ -133,6 +136,15 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             blocked: 0
         }).subscribe(dt => {
             this.userContacts = dt;
+        }));
+    }
+
+    getGroupsMessages() {
+        this.subscriptions.push(this.chatService.getGroupsMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.groupsMessages = dt;
         }));
     }
 
@@ -391,7 +403,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             if (dt.group) {
 
                 console.log('new message group chat!!!');
-                this.groupRemoved.emit({});
+                // this.groupRemoved.emit({});
                 this.getGroupMessages();
                 this.typingText = null;
                 // this.getUsersMessages();

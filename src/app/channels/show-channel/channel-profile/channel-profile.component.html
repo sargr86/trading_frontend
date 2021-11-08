@@ -63,6 +63,10 @@
         </div>
         <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
             <!--            <i class="sub-bell fas fa-bell"></i>-->
+            <a class="add-friend-btn">
+                <mat-icon>person_add</mat-icon>
+                <span>Add friend</span>
+            </a>
             <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn">
                 <mat-icon>chat</mat-icon>
                 Message

@@ -57,6 +57,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     groupsMessages = [];
 
+    haveGroupJoinInvitation = false;
+
     constructor(
         private fb: FormBuilder,
         private chatService: ChatService,
@@ -71,7 +73,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.filteredContacts = this.userContacts.filter(fc => {
                     const fullNameLowerCased = (fc.first_name + ' ' + fc.last_name).toLowerCase();
                     if (fullNameLowerCased.includes(search)) {
-                        return !this.groupMembers.find(gm => gm.member.name.toLowerCase() === fullNameLowerCased);
+                        return !this.groupMembers.find(gm => gm.name.toLowerCase() === fullNameLowerCased);
                     }
                     return false;
                 });
@@ -95,7 +97,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         // this.getGroupMessages();
         this.getTyping();
         this.getSeen();
-
     }
 
     initGroupChatForms() {
@@ -147,11 +148,12 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.groupsMessages = dt;
             this.selectedGroup = dt[0];
-            this.selectedGroupMessages = this.groupBy.transform(dt[0].chat_group_messages, 'created_at');
+            this.selectedGroupMessages = this.groupBy.transform(dt[0]?.chat_group_messages, 'created_at');
 
             if (this.selectedGroup) {
                 this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
                 this.groupMembers = this.selectedGroup?.chat_group_members;
+                console.log(this.groupMembers)
             }
         }));
     }
@@ -161,12 +163,11 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
         this.chatForm.patchValue({group_id: this.selectedGroup.id});
         this.selectedGroupMessages = this.groupBy.transform(group.chat_group_messages, 'created_at');
-        this.groupMembers = this.selectedGroup?.chat_group_members;
+        this.getGroupMembers();
     }
 
     addGroup() {
         if (this.groupChatForm.valid) {
-            console.log(this.selectedGroup)
             this.subscriptions.push(this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
                 this.getGroupsMessages();
                 this.socketService.setNewGroup(this.groupChatForm.value);
@@ -186,8 +187,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         formData.append('group_avatar_file', file);
         // console.log({avatar: e.target.files[0].name})
         this.subscriptions.push(this.chatService.changeGroupAvatar(formData).subscribe(dt => {
-            this.groups = dt;
-            this.selectedGroup = this.groups.find(group => this.selectedGroup.id === group.id);
+            this.groupsMessages = dt;
+            this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
         }));
     }
 
@@ -204,7 +205,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.chatService.removeGroupMember({group_id: this.selectedGroup.id, member_id}).subscribe(dt => {
-                    this.groupMembers = dt;
+                    this.groupMembers = dt?.chat_group_members;
                 });
             }
         }));
@@ -216,7 +217,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             if (confirmed) {
                 this.chatService.removeGroup({group_id: this.selectedGroup.id}).subscribe(dt => {
                     this.socketService.removeGroup({group: this.selectedGroup.name, username: this.authUser.username});
-                    this.groups = dt;
+                    this.groupsMessages = dt;
                     this.selectedGroup = null;
                 });
             }
@@ -244,7 +245,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         console.log(this.groupChatDetailsForm.value, this.selectedGroup)
 
         this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
-            this.groupMembers = dt;
+            this.groupMembers = dt?.chat_group_members;
             this.socketService.inviteToNewGroup({members: this.inputGroupMembers, group_id: this.selectedGroup.id});
             this.inputGroupMembers = [];
         }));
@@ -257,7 +258,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                     member_id: this.authUser.id,
                     group_id: this.selectedGroup.id
                 }).subscribe(dt => {
-                    this.groups = dt;
+                    this.groupsMessages = dt;
                     this.socketService.leaveGroup({group: this.selectedGroup.name, username: this.authUser.username});
                     this.selectedGroup = null;
                 });
@@ -281,42 +282,13 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     getGroupJoinInvitation() {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
-                this.groups = dt;
-                this.selectedGroup = this.groups.find(group => data.group_id === group.id);
+
+                this.groupsMessages = dt;
+                this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
+                this.haveGroupJoinInvitation = true;
+                console.log(this.selectedGroup)
             });
         });
-    }
-
-    getChatNotifications() {
-        this.socketService.getChatNotifications().subscribe((data: any) => {
-            this.socketGroupsUsers = data.groupsUsers;
-            // console.log(this.socketGroupsUsers)
-            if (data.groupRemoved) {
-                console.log('group removed')
-                this.groupRemoved.emit({});
-                this.selectedGroup = data.username !== this.authUser.username ? null : this.groups[this.groups.length - 1];
-            } else if (data.groupCreated) {
-                this.selectedGroup = this.groups.find(g => g.name === data.group);
-                if (this.selectedGroup) {
-                    this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
-                    this.groupMembers = this.selectedGroup?.chat_group_members;
-                }
-            } else {
-                // if (data.username !== this.authUser.username) {
-                this.toastr.info(data.msg);
-                this.groupMembers = this.selectedGroup?.chat_group_members;
-                // }
-            }
-        });
-    }
-
-    getUserCurrentStatus(groupMember) {
-        const groupName = this.groupsMessages.find(gm => gm.id === groupMember.chat_groups_members.group_id)?.name;
-        if (this.socketGroupsUsers && groupName === this.selectedGroup.name) {
-            const foundInSocketUsers = !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
-            return foundInSocketUsers;
-        }
-        return false;
     }
 
     acceptGroupJoin() {
@@ -325,8 +297,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 group_id: this.selectedGroup.id,
                 member_id: this.authUser.id
             }).subscribe(dt => {
-                this.groups = dt;
-                this.selectedGroup = this.groups.find(group => this.selectedGroup.id === group.id);
+                this.groupsMessages = dt;
+                this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
+                console.log(this.selectedGroup)
+                this.haveGroupJoinInvitation = false;
                 this.socketService.acceptJoinToGroup({
                     group: this.selectedGroup.name,
                     username: this.authUser.username
@@ -341,11 +315,59 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 group_id: this.selectedGroup.id,
                 member_id: this.authUser.id
             }).subscribe(dt => {
-                this.groups = dt;
-                this.selectedGroup = this.groups.find(group => this.selectedGroup.id === group.id);
+                this.groupsMessages = dt;
+                this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
             })
         );
     }
+
+    getChatNotifications() {
+        this.socketService.getChatNotifications().subscribe((data: any) => {
+            this.socketGroupsUsers = data.groupsUsers;
+            // console.log(this.socketGroupsUsers)
+            if (data.groupRemoved) {
+                this.getGroupsMessages();
+                // this.selectedGroup = data.username !== this.authUser.username ? null : this.groupsMessages[this.groups.length - 1];
+            } else if (data.groupCreated) {
+                this.selectedGroup = this.groupsMessages.find(g => g.name === data.group);
+                if (this.selectedGroup) {
+                    this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+                    this.groupMembers = this.selectedGroup?.chat_group_members;
+                }
+            } else if (!data.joiningChat) {
+                // if (data.username !== this.authUser.username) {
+                // this.toastr.info(data.msg);
+                if (data.acceptingJoinGroup || data.leavingGroup) {
+
+                    this.selectedGroup = this.groupsMessages.find(g => g.name === data.group);
+                    if (this.selectedGroup) {
+                        this.getGroupMembers();
+                    }
+                }
+
+                this.groupMembers = this.selectedGroup?.chat_group_members;
+                // }
+            }
+        });
+    }
+
+    getGroupMembers() {
+        this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
+            this.groupMembers = dt?.chat_group_members;
+
+        });
+    }
+
+    getUserCurrentStatus(groupMember) {
+        // console.log(groupMember)
+        const groupName = this.groupsMessages.find(gm => gm.id === groupMember?.chat_groups_members?.group_id)?.name;
+        if (this.socketGroupsUsers && groupName === this.selectedGroup.name) {
+            const foundInSocketUsers = !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
+            return foundInSocketUsers;
+        }
+        return false;
+    }
+
 
     getSocketRoomUsers() {
         this.socketService.acceptJoinToGroup({

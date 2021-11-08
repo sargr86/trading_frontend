@@ -16,7 +16,7 @@
                 </button>
             </form>
             <ul class="list">
-                <li class="list-chat-group" [class.active]="group.id===selectedGroup.id"
+                <li class="list-chat-group" [class.active]="group.id===selectedGroup?.id"
                     *ngFor="let group of groupsMessages"
                     [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
                     (click)="makeGroupActive(group)">
@@ -87,12 +87,12 @@
                             <button (click)="addMember($event)">Add</button>
                         </div>
                         <div class="members-list" [hidden]="showMembersInput">
-                            <ul *ngIf="groupMembers.length > 0">
-                                <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.confirmed">
+                            <ul *ngIf="groupMembers?.length > 0">
+                                <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.chat_groups_members.confirmed">
                                     <img class="avatar" [matTooltip]="m.name"
                                          [src]="m.avatar|getImgPath: 'user_avatars'">
                                     <mat-icon *ngIf="m.id !== selectedGroup?.creator_id"
-                                              (click)="removeSavedMember(m.member_id)">cancel
+                                              (click)="removeSavedMember(m.id)">cancel
                                     </mat-icon>
                                     <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
                                 </li>
@@ -124,6 +124,7 @@
                     </div>
                 </div>
             </form>
+
             <div class="confirm-joining-group" [hidden]="!selectedGroup || ifConfirmedToJoinTheGroup(selectedGroup)">
                 <p>Please accept or decline joining to the <strong>{{selectedGroup.name}}</strong> group</p>
                 <div class="actions">
@@ -133,7 +134,7 @@
             </div>
         </div>
         <ul class="chat-history" id="group-messages" #groupMessagesList>
-            <ng-container *ngIf="selectedGroupMessages.length > 0">
+            <ng-container *ngIf="selectedGroupMessages?.length > 0">
                 <ng-container *ngFor="let msg of selectedGroupMessages">
 
                     <li class="data-list"><span>{{msg.key|getDateText}}</span></li>

@@ -16,6 +16,12 @@
     @include regularButton;
 }
 
+.add-friend-btn{
+    @include regularButton;
+    background-color: $red;
+    padding: 0;
+}
+
 .loader {
     display: flex;
     justify-content: center;

@@ -16,17 +16,22 @@
                 </button>
             </form>
             <ul class="list">
-                <li class="list-chat-group" [class.active]="group===selectedGroup" *ngFor="let group of groups"
+                <li class="list-chat-group" [class.active]="group.id===selectedGroup.id"
+                    *ngFor="let group of groupsMessages"
                     [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
                     (click)="makeGroupActive(group)">
-                    <img class="img" [src]="group.avatar|getImgPath:'group_avatars'">
-                    <div class="text">
-                        <div class="name">{{group.name}}</div>
-                        <span>Lorem ipsum dolor sit amet</span>
+                    <div class="left">
+                        <img class="img" [src]="group.avatar|getImgPath:'group_avatars'">
+                        <div class="text">
+                            <div class="name">{{group.name}}</div>
+                            <span>{{group.chat_group_messages[group.chat_group_messages.length - 1]?.message}}</span>
+                        </div>
                     </div>
-                    <button class="seen-circle">
-                        <i class="fas fa-circle"></i>
-                    </button>
+                    <div class="right">
+                        <button class="seen-circle" *ngIf="group.unseens > 0">
+                            <strong>{{group.unseens}}</strong>
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -84,9 +89,9 @@
                         <div class="members-list" [hidden]="showMembersInput">
                             <ul *ngIf="groupMembers.length > 0">
                                 <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.confirmed">
-                                    <img class="avatar" [matTooltip]="m.member.name"
-                                         [src]="m.member.avatar|getImgPath: 'user_avatars'">
-                                    <mat-icon *ngIf="m.member.id !== selectedGroup?.creator_id"
+                                    <img class="avatar" [matTooltip]="m.name"
+                                         [src]="m.avatar|getImgPath: 'user_avatars'">
+                                    <mat-icon *ngIf="m.id !== selectedGroup?.creator_id"
                                               (click)="removeSavedMember(m.member_id)">cancel
                                     </mat-icon>
                                     <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
@@ -128,31 +133,33 @@
             </div>
         </div>
         <ul class="chat-history" id="group-messages" #groupMessagesList>
-            <ng-container *ngFor="let msg of selectedGroupMessages">
+            <ng-container *ngIf="selectedGroupMessages.length > 0">
+                <ng-container *ngFor="let msg of selectedGroupMessages">
 
-                <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
-                <ng-container *ngFor="let m of msg.value;let ind = index">
-                    <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
-                        <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <div class="img">
-                                    <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
+                    <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
+                    <ng-container *ngFor="let m of msg.value;let ind = index">
+                        <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
+                            <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="img">
+                                        <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
+                                    </div>
+                                    <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
                                 </div>
-                                <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
+                                <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
                             </div>
-                            <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
-                        </div>
-                        <div class="message">
-                            {{m.message}}
-                        </div>
-                        <div class="seen">
-                            <ng-container *ngFor="let seen of m.seen_by">
-                                <img class="seen-avatar"
-                                     [matTooltip]="seen.first_name + ' ' + seen.last_name"
-                                     [src]="seen.avatar|getImgPath: 'user_avatars'">
-                            </ng-container>
-                        </div>
-                    </li>
+                            <div class="message">
+                                {{m.message}}
+                            </div>
+                            <div class="seen">
+                                <ng-container *ngFor="let seen of m.seen_by">
+                                    <img class="seen-avatar"
+                                         [matTooltip]="seen.first_name + ' ' + seen.last_name"
+                                         [src]="seen.avatar|getImgPath: 'user_avatars'">
+                                </ng-container>
+                            </div>
+                        </li>
+                    </ng-container>
                 </ng-container>
             </ng-container>
         </ul>

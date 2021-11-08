@@ -48,7 +48,7 @@ export class SectionLinksComponent implements OnInit {
     getUserMessages() {
         this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
             this.usersMessages = dt;
-            console.log(dt)
+            // console.log(dt)
             this.newMessagesLen = [...new Set(dt.filter(d => !d.seen && d.from_id !== this.authUser.id).map(obj => obj.from_id))].length;
             console.log('New Message', this.newMessagesLen)
         });

@@ -4,6 +4,19 @@
 
 
 .list-chat-group {
+    display: flex;
+
+    .left {
+        width: 90%;
+        display: flex;
+    }
+
+    .right {
+        display: flex;
+        justify-content: center;
+        padding-top: 15px;
+    }
+
     &.unconfirmed {
         background-color: rgba(0, 0, 0, 0.3) !important;
     }
@@ -165,9 +178,10 @@
 }
 
 .seen-circle {
-    background-color: transparent;
-
-    i {
-        color: $metl-green;
-    }
+    background-color: $red !important;
+    color: $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 12px;
 }

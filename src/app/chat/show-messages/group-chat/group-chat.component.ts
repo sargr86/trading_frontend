@@ -81,38 +81,35 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
+
+        this.initGroupChatForms();
+        this.initForm();
+        this.getGroupsMessages();
+        this.addUserToSocket();
+
+
+        this.getUserContacts();
+        this.getGroupJoinInvitation();
+        this.getChatNotifications();
+        this.getMessagesFromSocket();
+        // this.getGroupMessages();
+        this.getTyping();
+        this.getSeen();
+
+    }
+
+    initGroupChatForms() {
         this.groupChatForm = this.fb.group({
             creator_id: [this.authUser.id],
             name: ['', Validators.required],
             username: [this.authUser.username]
         });
-        this.selectedGroup = this.groups[0];
+
 
         this.groupChatDetailsForm = this.fb.group({
             group_id: [''],
             member_ids: ['', Validators.required]
         });
-
-
-        if (this.selectedGroup) {
-            this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
-            this.getGroupMembers();
-        }
-
-        this.addUserToSocket();
-        this.getUserContacts();
-        this.getGroupJoinInvitation();
-        this.getChatNotifications();
-        this.initForm();
-        this.getMessagesFromSocket();
-        this.getGroupMessages();
-        this.getTyping();
-        this.getSeen();
-        this.getGroupsMessages();
-    }
-
-    addUserToSocket() {
-        this.socketService.addNewUser({...this.authUser, group: true});
     }
 
     initForm() {
@@ -130,6 +127,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         });
     }
 
+    addUserToSocket() {
+        this.socketService.addNewUser({...this.authUser, group: true});
+    }
+
     getUserContacts() {
         this.subscriptions.push(this.usersService.getUserContacts({
             user_id: this.authUser.id,
@@ -145,42 +146,34 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             blocked: 0
         }).subscribe(dt => {
             this.groupsMessages = dt;
+            this.selectedGroup = dt[0];
+            this.selectedGroupMessages = this.groupBy.transform(dt[0].chat_group_messages, 'created_at');
+
+            if (this.selectedGroup) {
+                this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
+                this.groupMembers = this.selectedGroup?.chat_group_members;
+            }
         }));
-    }
-
-    getGroupMembers() {
-        if (this.selectedGroup) {
-            this.subscriptions.push(this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
-                this.groupMembers = dt;
-            }));
-        }
-    }
-
-
-    isChatUsersListSize() {
-        return IsResponsive.isChatUsersListSize();
     }
 
     makeGroupActive(group) {
         this.selectedGroup = group;
-        // console.log(group)
         this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
         this.chatForm.patchValue({group_id: this.selectedGroup.id});
-        this.getGroupMembers();
-        this.getGroupMessages();
+        this.selectedGroupMessages = this.groupBy.transform(group.chat_group_messages, 'created_at');
+        this.groupMembers = this.selectedGroup?.chat_group_members;
     }
 
     addGroup() {
         if (this.groupChatForm.valid) {
+            console.log(this.selectedGroup)
             this.subscriptions.push(this.chatService.addGroup(this.groupChatForm.value).subscribe(dt => {
-                this.groups = dt;
-                if (this.groups.length === 1) {
-                    this.selectedGroup = this.groups[1];
-                }
+                this.getGroupsMessages();
                 this.socketService.setNewGroup(this.groupChatForm.value);
                 this.groupChatForm.patchValue({name: ''});
             }));
         }
+
     }
 
     changeAvatar(e) {
@@ -297,7 +290,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     getChatNotifications() {
         this.socketService.getChatNotifications().subscribe((data: any) => {
             this.socketGroupsUsers = data.groupsUsers;
-            console.log(this.socketGroupsUsers)
+            // console.log(this.socketGroupsUsers)
             if (data.groupRemoved) {
                 console.log('group removed')
                 this.groupRemoved.emit({});
@@ -306,21 +299,21 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.selectedGroup = this.groups.find(g => g.name === data.group);
                 if (this.selectedGroup) {
                     this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
-                    this.getGroupMembers();
+                    this.groupMembers = this.selectedGroup?.chat_group_members;
                 }
             } else {
                 // if (data.username !== this.authUser.username) {
                 this.toastr.info(data.msg);
-                this.getGroupMembers();
+                this.groupMembers = this.selectedGroup?.chat_group_members;
                 // }
             }
         });
     }
 
     getUserCurrentStatus(groupMember) {
-        const groupName = groupMember?.group?.name;
+        const groupName = this.groupsMessages.find(gm => gm.id === groupMember.chat_groups_members.group_id)?.name;
         if (this.socketGroupsUsers && groupName === this.selectedGroup.name) {
-            const foundInSocketUsers = !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.member.username === sGroupUser.username);
+            const foundInSocketUsers = !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
             return foundInSocketUsers;
         }
         return false;
@@ -387,16 +380,16 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         }
     }
 
-    getGroupMessages() {
-        this.subscriptions.push(this.chatService.getGroupChatMessages({
-            group_id: this.selectedGroup?.id,
-            group: 1
-        }).subscribe(dt => {
-            this.selectedRawMessages = dt;
-            this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
-
-        }));
-    }
+    // getGroupMessages() {
+    //     this.subscriptions.push(this.chatService.getGroupChatMessages({
+    //         group_id: this.selectedGroup?.id,
+    //         group: 1
+    //     }).subscribe(dt => {
+    //         this.selectedRawMessages = dt;
+    //         this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
+    //
+    //     }));
+    // }
 
     getMessagesFromSocket() {
         this.socketService.onNewMessage().subscribe((dt: any) => {
@@ -404,7 +397,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
                 console.log('new message group chat!!!');
                 // this.groupRemoved.emit({});
-                this.getGroupMessages();
+                // this.getGroupMessages();
+                // this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
                 this.typingText = null;
                 // this.getUsersMessages();
             }
@@ -421,7 +415,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
         this.socketService.getSeen().subscribe((dt: any) => {
             console.log('get seen', dt)
-            this.getGroupMessages();
+            // this.getGroupMessages();
         });
     }
 
@@ -457,6 +451,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             group: this.selectedGroup.name,
             message: this.chatForm.value.message
         });
+    }
+
+    isChatUsersListSize() {
+        return IsResponsive.isChatUsersListSize();
     }
 
     ngOnDestroy(): void {

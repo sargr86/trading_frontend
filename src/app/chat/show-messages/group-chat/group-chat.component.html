@@ -28,8 +28,8 @@
                         </div>
                     </div>
                     <div class="right">
-                        <button class="seen-circle" *ngIf="group.unseens > 0">
-                            <strong>{{group.unseens}}</strong>
+                        <button class="seen-circle" [hidden]="!isSeenByAuthUser(group.chat_group_messages, group.name)">
+                            <strong>{{isSeenByAuthUser(group.chat_group_messages, group.name)}}</strong>
                         </button>
                     </div>
                 </li>
@@ -88,7 +88,8 @@
                         </div>
                         <div class="members-list" [hidden]="showMembersInput">
                             <ul *ngIf="groupMembers?.length > 0">
-                                <li class="group-member" *ngFor="let m of groupMembers" [class.pending]="!m.chat_groups_members.confirmed">
+                                <li class="group-member" *ngFor="let m of groupMembers"
+                                    [class.pending]="!m.chat_groups_members.confirmed">
                                     <img class="avatar" [matTooltip]="m.name"
                                          [src]="m.avatar|getImgPath: 'user_avatars'">
                                     <mat-icon *ngIf="m.id !== selectedGroup?.creator_id"
@@ -165,7 +166,7 @@
             </ng-container>
         </ul>
 
-        <small class="text-center font-italic d-block">{{typingText}}</small>
+        <small class="text-center font-italic d-block" *ngIf="typingText.text">{{typingText.text}}</small>
         <div class="chat-message" [hidden]="!selectedGroup">
             <form [formGroup]="chatForm" class="chat-form">
                 <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"

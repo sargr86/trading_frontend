@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MAIN_SECTIONS} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {environment} from '@env';
@@ -6,18 +6,20 @@ import {AuthService} from '@core/services/auth.service';
 import trackByElement from '@core/helpers/track-by-element';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-section-links',
     templateUrl: './section-links.component.html',
     styleUrls: ['./section-links.component.scss']
 })
-export class SectionLinksComponent implements OnInit {
+export class SectionLinksComponent implements OnInit, OnDestroy {
     mainSections = MAIN_SECTIONS;
     envName;
-    newMessagesLen = 0;
+    newMessageSources = [];
     usersMessages = [];
+    subscriptions: Subscription[] = []
     trackByElement = trackByElement;
 
     @Input() authUser;
@@ -35,24 +37,26 @@ export class SectionLinksComponent implements OnInit {
     ngOnInit(): void {
         this.envName = environment.envName;
 
-        this.subject.getNewMessagesSourceLenData().subscribe(len => {
-            this.newMessagesLen = len;
-            console.log('received:', len)
-        });
+        this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
+            this.newMessageSources = data.source.filter(d => d.unseen_sender !== this.authUser.id);
+            console.log('received:', data)
+            console.log("new messages from " + data.type + ":" + this.newMessageSources.length)
+        }));
 
         if (this.auth.loggedIn()) {
-            this.getUserMessages();
+            // this.getDirectChatMessages();
         }
     }
 
-    getUserMessages() {
-        this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
-            this.usersMessages = dt;
-            // console.log(dt)
-            this.newMessagesLen = [...new Set(dt.filter(d => !d.seen && d.from_id !== this.authUser.id).map(obj => obj.from_id))].length;
-            console.log('New Message', this.newMessagesLen)
-        });
-    }
+    // getDirectChatMessages() {
+    //     this.subscriptions.push(this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
+    //         this.usersMessages = dt;
+    //         // console.log(dt)
+    //         this.newMessageSources = [...new Set(dt.filter(d => !d.seen && d.from_id !== this.authUser.id).map(obj => obj.from_id))];
+    //         // this.newMessageSources = this.newMessageSources.filter(d => d.unseen_sender !== this.authUser.id);
+    //         console.log('New Message', this.newMessageSources)
+    //     }));
+    // }
 
 
     changePage(route, params = {}) {
@@ -60,6 +64,10 @@ export class SectionLinksComponent implements OnInit {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([route], {queryParams: params})
         );
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

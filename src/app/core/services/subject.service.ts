@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
     providedIn: 'root'
 })
 export class SubjectService {
-    token = localStorage.getItem('token')
+    token = localStorage.getItem('token');
     authUserData = this.token ? jwtDecode(this.token) : '';
     userStocks = {stocks: [], empty: true, initial: true};
     userCards = [];
@@ -29,7 +29,7 @@ export class SubjectService {
     private userStocksData = new Subject<any>();
     private userCardsData = new Subject<any>();
     private allPaymentsData = new Subject<any>();
-    private newMessageSourcesLenData = new Subject<any>();
+    private newMessageSourcesData = new Subject<any>();
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
     private userCardsSource = new BehaviorSubject(this.userCards);
@@ -127,12 +127,12 @@ export class SubjectService {
         return this.allPaymentsData.asObservable();
     }
 
-    setNewMessagesSourceLenData(value) {
-        this.newMessageSourcesLenData.next(value);
+    setNewMessagesSourceData(value) {
+        this.newMessageSourcesData.next(value);
     }
 
-    getNewMessagesSourceLenData(): Observable<any> {
-        return this.newMessageSourcesLenData.asObservable();
+    getNewMessagesSourceData(): Observable<any> {
+        return this.newMessageSourcesData.asObservable();
     }
 
 

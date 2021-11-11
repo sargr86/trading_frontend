@@ -17,7 +17,7 @@ import {DatePipe} from '@angular/common';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsersService} from '@core/services/users.service';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-direct-chat',
@@ -30,7 +30,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     usersMessages = [];
     filteredUsersMessages = [];
-    selectedUserMessages = {messages: [], user: {}};
+    selectedUserMessages = {messages: [], user: {}, rawMessages: []};
     activeUser;
 
     typingText: string;
@@ -39,7 +39,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     showBlockedUsers = false;
 
     onlineUsers = [];
-    newMessageSourcesLen = 0;
+    newMessageSources = [];
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
 
@@ -119,20 +119,26 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.selectedUserMessages.messages = [];
         this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = this.order(dt);
+            console.log(this.usersMessages)
             this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);
-            this.newMessageSourcesLen = this.filteredUsersMessages.filter(fm => fm.unseens).length;
-            this.subject.setNewMessagesSourceLenData(this.newMessageSourcesLen);
-            console.log('get messages!!!', this.newMessageSourcesLen)
+            this.newMessageSources = this.filteredUsersMessages.filter(fm => fm.unseens);
+            this.subject.setNewMessagesSourceData({source: this.newMessageSources, type: 'direct'});
+            console.log('get messages!!!', this.newMessageSources)
+            this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
 
-            if (!this.isChatUsersListSize()) {
-                this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
-                const selectedMessages = this.filteredUsersMessages.find(m => m.user.id === this.activeUser?.id);
-                this.selectedUserMessages.user = selectedMessages?.user;
-                this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');
-                this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
-            } else {
 
-            }
+            // if (!this.isChatUsersListSize()) {
+            //     console.log('OK')
+            const selectedMessages = this.filteredUsersMessages.find(m => m.user.id === this.activeUser?.id);
+            this.selectedUserMessages.user = selectedMessages?.user;
+            this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');
+            this.selectedUserMessages.rawMessages = selectedMessages?.messages;
+            this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
+            // console.log(this.activeUser)
+            // console.log(this.usersMessages, this.selectedUserMessages)
+            // } else {
+
+            // }
         });
     }
 
@@ -147,11 +153,12 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     makeUserActive(user, lastMsg) {
         this.activeUser = user;
-        this.selectedUserMessages = {messages: [], user: {}};
+        this.selectedUserMessages = {messages: [], user: {}, rawMessages: []};
         if (user) {
             this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
             const userMessages = JSON.parse(JSON.stringify(this.filteredUsersMessages.find(m => m.user.id === user.id)));
             this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
+            this.selectedUserMessages.rawMessages = userMessages.messages;
             this.selectedUserMessages.user = userMessages.user;
 
             if (!lastMsg.seen) {
@@ -206,18 +213,19 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
-            // console.log(dt.message);
-            if (dt.from_user.id !== this.authUser.id) {
+            console.log(dt.from_user.id, this.authUser.id, this.activeUser);
+            if (dt.from_user.id !== this.authUser.id && this.activeUser.id === dt.from_user.id) {
                 this.typingText = dt.message ? `${dt.from_user.first_name} is typing...` : null;
             }
         });
     }
 
     setSeen() {
-        const userMessages = this.selectedUserMessages.messages[0].value;
+        console.log(this.selectedUserMessages.messages)
+        const userMessages = this.selectedUserMessages.rawMessages;
         if (userMessages.length > 0) {
             const isOwnMessage = userMessages[userMessages.length - 1]?.from_id === this.authUser.id;
-            console.log('set seen')
+            console.log('set seen', isOwnMessage)
             this.scrollMsgsToBottom();
             if (!isOwnMessage) {
                 this.socketService.setSeen({

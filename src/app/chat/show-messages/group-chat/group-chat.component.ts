@@ -12,7 +12,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {ToastrService} from 'ngx-toastr';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import * as moment from 'moment';
-import {group} from "@angular/animations";
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-group-chat',
@@ -65,6 +65,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private usersService: UsersService,
         private socketService: SocketIoService,
+        private subject: SubjectService,
         private toastr: ToastrService,
         private dialog: MatDialog,
         private groupBy: GroupByPipe
@@ -503,18 +504,14 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         return IsResponsive.isChatUsersListSize();
     }
 
-    isSeenByAuthUser(messages, groupName) {
+    isSeenByAuthUser(messages) {
         const f = messages.filter(message => {
             let found = false;
             if (message.from_id !== this.authUser.id) {
-                // console.log('GROUP=>', groupName, 'MESSAGE=>', message.message, 'AUTH USER=>' + this.authUser.id)
-                // console.log('sender id: ' + message.from_user.first_name, '--- message:' + message.message)
                 found = !message.seen_by.find(sb => sb.id === this.authUser.id);
-                // console.log('not seen by me=>', found)
             }
             return found;
         });
-        // console.log(groupName + '=>' + messages.length, f.length)
         return f.length;
     }
 

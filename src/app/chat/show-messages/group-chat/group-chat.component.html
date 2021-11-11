@@ -28,8 +28,8 @@
                         </div>
                     </div>
                     <div class="right">
-                        <button class="seen-circle" [hidden]="!isSeenByAuthUser(group.chat_group_messages, group.name)">
-                            <strong>{{isSeenByAuthUser(group.chat_group_messages, group.name)}}</strong>
+                        <button class="seen-circle" [hidden]="!isSeenByAuthUser(group.chat_group_messages)">
+                            <strong>{{isSeenByAuthUser(group.chat_group_messages)}}</strong>
                         </button>
                     </div>
                 </li>

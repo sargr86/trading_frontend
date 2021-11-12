@@ -43,7 +43,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-    @Input() groups = [];
     @Input() authUser;
 
     chatForm: FormGroup;
@@ -52,6 +51,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
     @Output() groupRemoved = new EventEmitter();
+
 
     selectedGroupMessages = [];
     selectedRawMessages = [];
@@ -149,6 +149,9 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             blocked: 0
         }).subscribe(dt => {
             this.groupsMessages = dt;
+
+
+
             this.selectedGroup = dt.find(d => d.name === selectedGroupBefore) || dt[0];
             console.log(this.selectedGroup)
             this.selectedGroupMessages = this.groupBy.transform(this.selectedGroup?.chat_group_messages, 'created_at');
@@ -344,7 +347,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 }
             } else if (!data.joiningChat) {
                 // if (data.username !== this.authUser.username) {
-                // this.toastr.info(data.msg);
+                this.toastr.info(data.msg);
                 if (data.acceptingJoinGroup || data.leavingGroup) {
 
                     this.selectedGroup = this.groupsMessages.find(g => g.name === data.group);
@@ -493,7 +496,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getTypingTextStatus(dt) {
-        const sameGroupTyping = dt.from_user.id !== this.authUser.id && dt.group === this.selectedGroup.name && dt.message;
+        const sameGroupTyping = dt.from_user?.id !== this.authUser.id && dt.group === this.selectedGroup.name && dt.message;
         this.typingText = {
             group: sameGroupTyping ? this.selectedGroup?.name === dt.group : null,
             text: sameGroupTyping ? `${dt.from_user.username} is typing...` : null

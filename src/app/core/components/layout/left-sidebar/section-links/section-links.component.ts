@@ -17,7 +17,7 @@ import {Subscription} from 'rxjs';
 export class SectionLinksComponent implements OnInit, OnDestroy {
     mainSections = MAIN_SECTIONS;
     envName;
-    newMessageSources = [];
+    newMessageSources = 0;
     usersMessages = [];
     subscriptions: Subscription[] = []
     trackByElement = trackByElement;
@@ -36,11 +36,19 @@ export class SectionLinksComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.envName = environment.envName;
-
+        let directNewMessagesCount = 0;
+        let groupNewMessagesCount = 0;
         this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
-            this.newMessageSources = data.source.filter(d => d.unseen_sender !== this.authUser.id);
-            console.log('received:', data)
-            console.log("new messages from " + data.type + ":" + this.newMessageSources.length)
+
+            if (data.type === 'direct') {
+
+                directNewMessagesCount = data.source.filter(d => d.unseens > 0)?.length;
+            } else {
+                groupNewMessagesCount = data.source.filter(d => d.new_messages_count > 0)?.length;
+            }
+            this.newMessageSources = directNewMessagesCount + groupNewMessagesCount;
+            console.log('received:', directNewMessagesCount, groupNewMessagesCount)
+            console.log('new messages from ' + data.type + ':' + this.newMessageSources)
         }));
 
         if (this.auth.loggedIn()) {

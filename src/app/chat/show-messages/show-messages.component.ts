@@ -5,6 +5,8 @@ import {SocketIoService} from '@core/services/socket-io.service';
 
 import {DatePipe} from '@angular/common';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
+import {Subscription} from 'rxjs';
+import {SubjectService} from '@core/services/subject.service';
 
 
 @Component({
@@ -16,13 +18,17 @@ export class ShowMessagesComponent implements OnInit {
     activeTab = 'direct';
     authUser;
 
-    chatGroups = [];
+    groupsMessages = [];
     groupsLoaded = false;
+    subscriptions: Subscription[] = [];
+    newMessagesCountInGroups = 0;
+    newMessagesCountInDirect = 0;
 
     constructor(
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        private subject: SubjectService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
     ) {
@@ -30,11 +36,7 @@ export class ShowMessagesComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-
-        if (this.authUser) {
-            this.getGroups();
-        }
-
+        this.getGroupsMessages();
     }
 
 
@@ -42,12 +44,18 @@ export class ShowMessagesComponent implements OnInit {
         this.activeTab = tab;
     }
 
-    getGroups() {
-        console.log('get groups!!!');
-        this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
+    getGroupsMessages() {
+        this.subscriptions.push(this.chatService.getGroupsMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.groupsMessages = dt;
             this.groupsLoaded = true;
-            this.chatGroups = dt;
-        });
+            const newMessagesSource = dt.filter(fm => fm.new_messages_count > 0);
+            console.log(newMessagesSource)
+            this.newMessagesCountInGroups = newMessagesSource.length;
+            this.subject.setNewMessagesSourceData({source: newMessagesSource, type: 'group'});
+        }));
     }
 
 

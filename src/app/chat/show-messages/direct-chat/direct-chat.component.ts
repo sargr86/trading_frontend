@@ -2,10 +2,10 @@ import {
     AfterViewChecked,
     ChangeDetectorRef,
     Component,
-    ElementRef,
+    ElementRef, EventEmitter,
     Input,
     OnDestroy,
-    OnInit,
+    OnInit, Output,
     ViewChild
 } from '@angular/core';
 import IsResponsive from '@core/helpers/is-responsive';
@@ -42,6 +42,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     newMessageSources = [];
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
+    @Output() newMessagesCountReceived = new EventEmitter();
 
     constructor(
         private chatService: ChatService,
@@ -119,6 +120,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.selectedUserMessages.messages = [];
         this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
             this.usersMessages = this.order(dt);
+            const newMessagesSource = dt.filter(d => d.unseens > 0);
+            this.newMessagesCountReceived.emit(newMessagesSource.length);
             console.log(this.usersMessages)
             this.filteredUsersMessages = dt.filter(d => !!d.user.blocked === this.showBlockedUsers);
             this.newMessageSources = this.filteredUsersMessages.filter(fm => fm.unseens);

@@ -18,6 +18,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsersService} from '@core/services/users.service';
 import {SubjectService} from '@core/services/subject.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-direct-chat',
@@ -41,6 +42,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     onlineUsers = [];
     newMessageSources = [];
 
+    subscriptions: Subscription[] = [];
+
     @ViewChild('directMessagesList') private messagesList: ElementRef;
     @Output() newMessagesCountReceived = new EventEmitter();
 
@@ -53,7 +56,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
         private fb: FormBuilder,
-        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -74,9 +76,9 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getOnlineUsers() {
-        this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+        this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
             this.onlineUsers = dt;
-        });
+        }));
     }
 
     getUserCurrentStatus(username) {
@@ -84,9 +86,9 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getChatNotifications() {
-        this.socketService.getChatNotifications().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
             this.onlineUsers = data.users;
-        });
+        }));
     }
 
     initForm() {
@@ -110,16 +112,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         return IsResponsive.isChatUsersListSize();
     }
 
-    order(um) {
-        return um.sort((a, b) => {
-            return +(+moment(b.messages[b.messages.length - 1].created_at) - (+moment(a.messages[a.messages.length - 1].created_at)));
-        });
-    }
-
     getUsersMessages() {
         this.selectedUserMessages.messages = [];
-        this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: '', personal: 1}).subscribe(dt => {
-            this.usersMessages = this.order(dt);
+        this.subscriptions.push(this.chatService.getDirectChatMessages({
+            from_id: this.authUser.id,
+            to_id: '',
+            personal: 1
+        }).subscribe(dt => {
+            this.usersMessages = dt;
             const newMessagesSource = dt.filter(d => d.unseens > 0);
             this.newMessagesCountReceived.emit(newMessagesSource.length);
             console.log(this.usersMessages)
@@ -129,29 +129,21 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             console.log('get messages!!!', this.newMessageSources)
             this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
 
-
-            // if (!this.isChatUsersListSize()) {
-            //     console.log('OK')
             const selectedMessages = this.filteredUsersMessages.find(m => m.user.id === this.activeUser?.id);
             this.selectedUserMessages.user = selectedMessages?.user;
             this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');
             this.selectedUserMessages.rawMessages = selectedMessages?.messages;
             this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
-            // console.log(this.activeUser)
-            // console.log(this.usersMessages, this.selectedUserMessages)
-            // } else {
-
-            // }
-        });
+        }));
     }
 
     getMessagesFromSocket() {
-        this.socketService.onNewMessage().subscribe((dt: any) => {
+        this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             console.log('new message direct chat!!!')
             this.typingText = null;
             this.getUsersMessages();
 
-        });
+        }));
     }
 
     makeUserActive(user, lastMsg) {
@@ -185,14 +177,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             const data = {...this.chatForm.value};
 
 
-            this.chatService.saveMessage(data).subscribe(dt => {
+            this.subscriptions.push(this.chatService.saveMessage(data).subscribe(dt => {
                 this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
                 this.selectedUserMessages.user = dt[0].user;
 
                 this.socketService.sendMessage(data);
                 this.scrollMsgsToBottom();
                 console.log(this.selectedUserMessages);
-            });
+            }));
             this.chatForm.patchValue({message: ''});
         }
     }
@@ -215,12 +207,12 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getTyping() {
-        this.socketService.getTyping().subscribe((dt: any) => {
+        this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
             console.log(dt.from_user.id, this.authUser.id, this.activeUser);
             if (dt.from_user.id !== this.authUser.id && this.activeUser.id === dt.from_user.id) {
                 this.typingText = dt.message ? `${dt.from_user.first_name} is typing...` : null;
             }
-        });
+        }));
     }
 
     setSeen() {
@@ -246,11 +238,11 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getSeen() {
 
-        this.socketService.getSeen().subscribe((dt: any) => {
+        this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             this.selectedUserMessages.messages = [];
             console.log('get seen', dt)
             this.getUsersMessages();
-        });
+        }));
     }
 
     unreadLastMsg(from, lastMsg) {
@@ -276,9 +268,9 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     blockUser(user) {
         const params = {connection_id: user.id, user_id: this.authUser.id, block: +!this.showBlockedUsers};
-        this.usersService.blockUser(params).subscribe(dt => {
+        this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
             this.getUsersMessages();
-        });
+        }));
     }
 
     getSeenTooltip(message) {
@@ -299,6 +291,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     ngOnDestroy() {
         this.setTyping(null);
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

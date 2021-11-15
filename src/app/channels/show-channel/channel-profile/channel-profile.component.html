@@ -65,15 +65,21 @@
             <!--            <i class="sub-bell fas fa-bell"></i>-->
             <a class="add-friend-btn">
                 <mat-icon>person_add</mat-icon>
-                <span>Add friend</span>
+                <span>Connect</span>
             </a>
             <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn">
                 <mat-icon>chat</mat-icon>
-                Message
+                <span>Message</span>
             </a>
-            <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">Subscribe</a>
+            <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">
+                <mat-icon>favorite_border</mat-icon>
+                <span>Subscribe</span>
+            </a>
             <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
-               (click)="subscribeToChannel(channelUser.channel)">Subscribed</a>
+               (click)="subscribeToChannel(channelUser.channel)">
+                <mat-icon>favorite</mat-icon>
+                <span>Subscribed</span>
+            </a>
         </div>
         <div class="d-flex align-items-center" *ngIf="channelUser.username === authUser.username">
             <button class="btn" type="button" id="edit-channel" (click)="toggleEditMode()" *ngIf="!editMode">

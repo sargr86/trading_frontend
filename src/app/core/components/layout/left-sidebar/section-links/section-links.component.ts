@@ -50,21 +50,9 @@ export class SectionLinksComponent implements OnInit, OnDestroy {
             console.log('received:', directNewMessagesCount, groupNewMessagesCount)
             console.log('new messages from ' + data.type + ':' + this.newMessageSources)
         }));
-
-        if (this.auth.loggedIn()) {
-            // this.getDirectChatMessages();
-        }
     }
 
-    // getDirectChatMessages() {
-    //     this.subscriptions.push(this.chatService.getDirectChatMessages({from_id: this.authUser.id, to_id: ''}).subscribe(dt => {
-    //         this.usersMessages = dt;
-    //         // console.log(dt)
-    //         this.newMessageSources = [...new Set(dt.filter(d => !d.seen && d.from_id !== this.authUser.id).map(obj => obj.from_id))];
-    //         // this.newMessageSources = this.newMessageSources.filter(d => d.unseen_sender !== this.authUser.id);
-    //         console.log('New Message', this.newMessageSources)
-    //     }));
-    // }
+
 
 
     changePage(route, params = {}) {

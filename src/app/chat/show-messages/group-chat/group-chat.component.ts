@@ -151,7 +151,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             this.groupsMessages = dt;
 
 
-
             this.selectedGroup = dt.find(d => d.name === selectedGroupBefore) || dt[0];
             console.log(this.selectedGroup)
             this.selectedGroupMessages = this.groupBy.transform(this.selectedGroup?.chat_group_messages, 'created_at');
@@ -327,6 +326,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 member_id: this.authUser.id
             }).subscribe(dt => {
                 this.groupsMessages = dt;
+                this.socketService.declineJoinToGroup({
+                    group: this.selectedGroup?.name,
+                    username: this.authUser.username
+                });
                 this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
             })
         );
@@ -348,12 +351,12 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             } else if (!data.joiningChat) {
                 // if (data.username !== this.authUser.username) {
                 this.toastr.info(data.msg);
-                if (data.acceptingJoinGroup || data.leavingGroup) {
+                if (data.acceptingJoinGroup || data.decliningJoinGroup || data.leavingGroup) {
 
                     this.selectedGroup = this.groupsMessages.find(g => g.name === data.group);
                     if (this.selectedGroup) {
                         this.getGroupMembers();
-                        this.getGroupMessages();
+                        // this.getGroupMessages();
                     }
                 }
 
@@ -481,7 +484,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
-            console.log(dt.group, this.selectedGroup.name)
+            console.log(dt.group, this.selectedGroup?.name)
             this.getTypingTextStatus(dt);
 
         });

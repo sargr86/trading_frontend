@@ -92,6 +92,11 @@ export class SocketIoService {
         this.socket.emit('acceptJoinGroup', data);
     }
 
+    declineJoinToGroup(data) {
+        this.setupSocketConnection();
+        this.socket.emit('declineJoinGroup', data);
+    }
+
     getChatNotifications() {
         return new Observable(observer => {
             this.socket.on('chatNotification', msg => {

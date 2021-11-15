@@ -16,10 +16,11 @@
     @include regularButton;
 }
 
-.add-friend-btn{
+.add-friend-btn {
     @include regularButton;
     background-color: $red;
     padding: 0;
+    margin-right: 16px;
 }
 
 .loader {

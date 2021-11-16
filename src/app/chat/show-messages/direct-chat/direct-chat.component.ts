@@ -31,7 +31,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     usersMessages = [];
     filteredUsersMessages = [];
-    selectedUserMessages = {messages: [], user: {}, rawMessages: []};
+    selectedUserMessages = {messages: [], user: {}, rawMessages: [], connection_id: null};
     activeUser;
 
     typingText: string;
@@ -95,6 +95,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.chatForm = this.fb.group({
             from: [this.authUser.username],
             from_id: [this.authUser.id],
+            connection_id: [this.selectedUserMessages?.connection_id],
             to_id: [this.activeUser?.id],
             avatar: [this.authUser?.avatar],
             from_user: [this.authUser],
@@ -126,13 +127,17 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.newMessageSources = this.filteredUsersMessages.filter(fm => fm.unseens);
             this.subject.setNewMessagesSourceData({source: this.newMessageSources, type: 'direct'});
             console.log('get messages!!!', this.newMessageSources)
-            this.activeUser = this.activeUser || this.filteredUsersMessages[0]?.user;
+            this.activeUser = this.activeUser || {
+                ...this.filteredUsersMessages[0]?.user,
+                connection_id: this.filteredUsersMessages[0].connection_id
+            };
 
             const selectedMessages = this.filteredUsersMessages.find(m => m.user.id === this.activeUser?.id);
             this.selectedUserMessages.user = selectedMessages?.user;
+            this.selectedUserMessages.connection_id = selectedMessages?.connection_id;
             this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.messages, 'created_at');
             this.selectedUserMessages.rawMessages = selectedMessages?.messages;
-            this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser});
+            this.chatForm.patchValue({to_id: this.activeUser?.id, to_user: this.activeUser, connection_id: this.activeUser.connection_id});
         }));
     }
 
@@ -147,13 +152,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     makeUserActive(user, lastMsg) {
         this.activeUser = user;
-        this.selectedUserMessages = {messages: [], user: {}, rawMessages: []};
+        this.selectedUserMessages = {messages: [], user: {}, rawMessages: [], connection_id: null};
         if (user) {
             this.chatForm.patchValue({to_id: user.id, to_user: this.activeUser});
             const userMessages = JSON.parse(JSON.stringify(this.filteredUsersMessages.find(m => m.user.id === user.id)));
             this.selectedUserMessages.messages = this.groupBy.transform(userMessages.messages, 'created_at');
             this.selectedUserMessages.rawMessages = userMessages.messages;
             this.selectedUserMessages.user = userMessages.user;
+            this.selectedUserMessages.connection_id = userMessages.connection_id;
 
             if (!lastMsg.seen) {
                 this.setSeen();
@@ -176,7 +182,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             const data = {...this.chatForm.value};
 
 
-            this.subscriptions.push(this.chatService.saveMessage(data).subscribe(dt => {
+            this.subscriptions.push(this.chatService.saveDirectMessage(data).subscribe(dt => {
                 this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
                 this.selectedUserMessages.user = dt[0].user;
 

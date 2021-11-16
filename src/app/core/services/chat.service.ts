@@ -36,6 +36,10 @@ export class ChatService {
         return this.httpClient.post<any>(`${API_URL}chat/save-message`, params);
     }
 
+    saveDirectMessage(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/direct/save-message`, params);
+    }
+
     getChatGroups(params) {
         return this.httpClient.get<any>(`${API_URL}chat/get-chat-groups`, {params});
     }

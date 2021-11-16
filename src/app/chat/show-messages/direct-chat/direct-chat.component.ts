@@ -115,9 +115,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     getUsersMessages() {
         this.selectedUserMessages.messages = [];
         this.subscriptions.push(this.chatService.getDirectMessages({
-            from_id: this.authUser.id,
-            to_id: '',
-            personal: 1
+            user_id: this.authUser.id,
+            blocked: 0
         }).subscribe(dt => {
             this.usersMessages = dt;
             const newMessagesSource = dt.filter(d => d.unseens > 0);

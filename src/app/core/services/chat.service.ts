@@ -16,12 +16,12 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/get-messages`, {params});
     }
 
-    getDirectChatMessages(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-direct-chat-messages`, {params});
-    }
+    // getDirectChatMessages(params) {
+    //     return this.httpClient.get<any>(`${API_URL}chat/get-direct-chat-messages`, {params});
+    // }
 
     getDirectMessages(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-direct-messages`, {params});
+        return this.httpClient.get<any>(`${API_URL}chat/direct/get-direct-messages`, {params});
     }
 
     getGroupChatMessages(params) {

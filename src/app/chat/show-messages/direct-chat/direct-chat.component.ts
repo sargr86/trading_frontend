@@ -285,7 +285,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     ngAfterViewChecked() {
-        this.scrollMsgsToBottom();
+        // this.scrollMsgsToBottom();
     }
 
     ngOnDestroy() {

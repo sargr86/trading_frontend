@@ -68,7 +68,7 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
 
     loadPreviousMessages() {
         this.loadingMessages = true;
-        this.chatService.getDirectChatMessages({
+        this.chatService.getDirectMessages({
             to_id: this.channelUser.id,
             from_id: this.authUser.id
         }).subscribe(dt => {

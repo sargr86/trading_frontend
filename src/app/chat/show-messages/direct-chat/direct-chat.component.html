@@ -30,12 +30,12 @@
                 </div>
             </div>
             <ul class="list align-items-center">
-                <li *ngFor="let msg of usersMessages"
-                    [class.active]="activeUser?.id === msg.user.id">
+                <li *ngFor="let userMessages of usersMessages"
+                    [class.active]="activeUser?.id === userMessages.id">
 
                     <ng-container
                         [ngTemplateOutlet]="itemTemplate"
-                        [ngTemplateOutletContext]="{user: msg.user, lastMsg: msg?.messages[msg?.messages.length - 1]}">
+                        [ngTemplateOutletContext]="{user: userMessages, lastMsg: getUserLastMessage(userMessages?.users_connections[0]?.users_messages)}">
                     </ng-container>
 
                     <ng-template #itemTemplate let-user="user" let-lastMsg="lastMsg">
@@ -44,11 +44,11 @@
 
                                 <div class="img user-avatar">
                                     <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
-                                    <div class="status" [hidden]="onlineUsers.length === 0" [ngClass]="getUserCurrentStatus(user.from) ? 'online':'offline'"></div>
+                                    <div class="status" [hidden]="onlineUsers.length === 0" [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
                                 </div>
                                 <div class="text">
                                     <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center" *ngIf="lastMsg">
                                         <span>{{lastMsg.message}}</span>
                                         <span
                                             class="ml-4">{{lastMsg.created_at | dateFromNow}}</span>
@@ -56,12 +56,12 @@
                                 </div>
                             </div>
                             <div class="ml-auto more-btn">
-                                <ng-container *ngIf="lastMsg.seen === 1">
+                                <ng-container *ngIf="lastMsg?.seen === 1">
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="" [disableRipple]="true">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item
+                                        <button mat-menu-item *ngIf="lastMsg"
                                                 (click)="unreadLastMsg(user, lastMsg)">
                                             Unread
                                         </button>
@@ -75,7 +75,7 @@
                                 </ng-container>
                                 <ng-container *ngIf="checkIfLastMessageSeen(lastMsg)">
                                     <button class="seen-circle">
-                                        <strong>{{msg.unseens}}</strong>
+                                        <strong>{{userMessages?.unseens}}</strong>
                                     </button>
                                 </ng-container>
                             </div>

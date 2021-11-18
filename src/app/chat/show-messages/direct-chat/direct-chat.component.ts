@@ -130,8 +130,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
                 // connection_id: this.filteredUsersMessages[0].users_connections[0].id
             };
 
-            console.log(this.activeUser)
-
             const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
             this.selectedUserMessages.user = selectedMessages;
             this.selectedUserMessages.connection_id = selectedMessages?.users_connections[0].id;
@@ -242,13 +240,13 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             console.log('set seen', isOwnMessage)
             this.scrollMsgsToBottom();
             if (!isOwnMessage) {
-                console.log(userMessages, this.chatForm.value)
                 this.socketService.setSeen({
                     message_id: userMessages[userMessages.length - 1].id,
                     from_id: this.chatForm.value.from_id,
                     to_id: this.chatForm.value.to_id,
                     from_user: this.chatForm.value.from_user,
                     to_user: this.chatForm.value.to_user,
+                    connection_id: this.chatForm.value.connection_id,
                     seen: 1,
                     seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
                 });
@@ -265,25 +263,26 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         }));
     }
 
-    unreadLastMsg(from, lastMsg) {
+    unreadLastMessages(usersMessages) {
+        const messages = usersMessages.users_connections[0]?.users_messages;
+        const lastReceivedMessages = [];
 
-        if (lastMsg.to_id === this.authUser.id && lastMsg.from_id === from.id) {
-            const params = {
-                to_id: this.authUser.id,
-                to_user: this.authUser,
-                from_user: {username: from.from, ...from},
-                from_id: from.id,
-                id: lastMsg.id,
-                seen: 0
-            };
+        messages.reverse().some((message) => {
+            if (message.from_id !== this.authUser.id) {
+                lastReceivedMessages.push(message);
+            }
+            return message.from_id === this.authUser.id;
+        });
 
-            console.log(params)
+        const params = {
+            message_ids: lastReceivedMessages.map(m => m.id),
+            to_user: usersMessages.username,
+            from_user: this.authUser.username
+        };
 
-            console.log('unread msg!!')
-            this.socketService.setSeen(params);
+        if (params.message_ids.length > 0) {
+            this.socketService.unreadLastMessages(params);
         }
-
-
     }
 
     blockUser(user) {

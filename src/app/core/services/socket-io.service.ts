@@ -63,12 +63,18 @@ export class SocketIoService {
         this.socket.emit('setSeen', data);
     }
 
+
+
     getSeen() {
         return new Observable(observer => {
             this.socket.on('getSeen', msg => {
                 observer.next(msg);
             });
         });
+    }
+
+    unreadLastMessages(data) {
+        this.socket.emit('unreadLastMessages', data);
     }
 
     setNewGroup(data) {

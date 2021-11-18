@@ -36,6 +36,10 @@ export class ChatService {
         return this.httpClient.post<any>(`${API_URL}chat/save-message`, params);
     }
 
+    unreadLastMessages(params){
+        return this.httpClient.put<any>(`${API_URL}chat/unread-last-messages`, params);
+    }
+
     saveDirectMessage(params) {
         return this.httpClient.post<any>(`${API_URL}chat/direct/save-message`, params);
     }

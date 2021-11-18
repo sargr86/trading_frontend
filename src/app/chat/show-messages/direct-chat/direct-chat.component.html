@@ -62,7 +62,7 @@
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item *ngIf="lastMsg"
-                                                (click)="unreadLastMsg(user, lastMsg)">
+                                                (click)="unreadLastMessages(user)">
                                             Unread
                                         </button>
                                         <button mat-menu-item *ngIf="!showBlockedUsers" (click)="blockUser(user)">

@@ -16,27 +16,13 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/get-messages`, {params});
     }
 
-    // getDirectChatMessages(params) {
-    //     return this.httpClient.get<any>(`${API_URL}chat/get-direct-chat-messages`, {params});
-    // }
+    /* DIRECT CHAT STUFF*/
 
     getDirectMessages(params) {
         return this.httpClient.get<any>(`${API_URL}chat/direct/get-direct-messages`, {params});
     }
 
-    getGroupChatMessages(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-group-chat-messages`, {params});
-    }
-
-    getGroupsMessages(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-groups-messages`, {params});
-    }
-
-    saveMessage(params) {
-        return this.httpClient.post<any>(`${API_URL}chat/save-message`, params);
-    }
-
-    unreadLastMessages(params){
+    unreadLastMessages(params) {
         return this.httpClient.put<any>(`${API_URL}chat/unread-last-messages`, params);
     }
 
@@ -44,44 +30,60 @@ export class ChatService {
         return this.httpClient.post<any>(`${API_URL}chat/direct/save-message`, params);
     }
 
+
+    /* GROUP CHAT STUFF*/
+
+    getGroupChatMessages(params) {
+        return this.httpClient.get<any>(`${API_URL}chat/group/get-group-chat-messages`, {params});
+    }
+
+    getGroupsMessages(params) {
+        return this.httpClient.get<any>(`${API_URL}chat/group/get-groups-messages`, {params});
+    }
+
+    saveMessage(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/group/save-message`, params);
+    }
+
+
     getChatGroups(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-chat-groups`, {params});
+        return this.httpClient.get<any>(`${API_URL}chat/group/get-chat-groups`, {params});
     }
 
     addGroup(params) {
-        return this.httpClient.post<any>(`${API_URL}chat/create-group`, params);
+        return this.httpClient.post<any>(`${API_URL}chat/group/create-group`, params);
     }
 
     getGroupMembers(params) {
-        return this.httpClient.get<any>(`${API_URL}chat/get-group-members`, {params});
+        return this.httpClient.get<any>(`${API_URL}chat/group/get-group-members`, {params});
     }
 
     addGroupMembers(params) {
-        return this.httpClient.post<any>(`${API_URL}chat/add-group-members`, params);
+        return this.httpClient.post<any>(`${API_URL}chat/group/add-group-members`, params);
     }
 
     removeGroupMember(params) {
-        return this.httpClient.delete<any>(`${API_URL}chat/remove-group-member`, {params});
+        return this.httpClient.delete<any>(`${API_URL}chat/group/remove-group-member`, {params});
     }
 
     removeGroup(params) {
-        return this.httpClient.delete<any>(`${API_URL}chat/remove-group`, {params});
+        return this.httpClient.delete<any>(`${API_URL}chat/group/remove-group`, {params});
     }
 
     leaveGroup(params) {
-        return this.httpClient.delete<any>(`${API_URL}chat/leave-group`, {params});
+        return this.httpClient.delete<any>(`${API_URL}chat/group/leave-group`, {params});
     }
 
     acceptGroupJoin(params) {
-        return this.httpClient.put<any>(`${API_URL}chat/accept-join-group`, params);
+        return this.httpClient.put<any>(`${API_URL}chat/group/accept-join-group`, params);
     }
 
     declineGroupJoin(params) {
-        return this.httpClient.put<any>(`${API_URL}chat/decline-join-group`, params);
+        return this.httpClient.put<any>(`${API_URL}chat/group/decline-join-group`, params);
     }
 
     changeGroupAvatar(params) {
-        return this.httpClient.post<any>(`${API_URL}chat/change-group-avatar`, params);
+        return this.httpClient.post<any>(`${API_URL}chat/group/change-group-avatar`, params);
     }
 
 }

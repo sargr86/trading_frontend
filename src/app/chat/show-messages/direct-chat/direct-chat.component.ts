@@ -105,8 +105,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         });
     }
 
-    getMessageClass(user) {
-        return user.id === this.authUser.id ? 'my-message' : 'other-message';
+    isOwnMessage(user) {
+        return user.id === this.authUser.id;
     }
 
     isChatUsersListSize() {
@@ -155,7 +155,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     makeUserActive(user, lastMsg) {
         this.activeUser = user;
-        console.log(user)
         this.selectedUserMessages = {messages: [], user: {}, rawMessages: [], connection_id: null};
         if (user) {
             this.chatForm.patchValue({
@@ -306,6 +305,10 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getUserLastMessage(messages) {
         return messages[messages.length - 1];
+    }
+
+    ifUnreadShown(lastMsg) {
+        return lastMsg?.from_id !== this.authUser.id;
     }
 
     ngAfterViewChecked() {

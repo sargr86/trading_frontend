@@ -44,24 +44,28 @@
 
                                 <div class="img user-avatar">
                                     <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
-                                    <div class="status" [hidden]="onlineUsers.length === 0" [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
+                                    <div class="status" [hidden]="onlineUsers.length === 0"
+                                         [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
                                 </div>
                                 <div class="text">
                                     <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
                                     <div class="d-flex align-items-center" *ngIf="lastMsg">
-                                        <span>{{lastMsg.message}}</span>
-                                        <span
-                                            class="ml-4">{{lastMsg.created_at | dateFromNow}}</span>
+                                        <div>
+                                            <span class="latest-message">{{lastMsg.message}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="ml-4 latest-msg-date">{{lastMsg.created_at | dateFromNow}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="ml-auto more-btn">
-                                <ng-container *ngIf="lastMsg?.seen === 1">
+                                <ng-container *ngIf="lastMsg.seen==1 || isOwnMessage(user)">
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="" [disableRipple]="true">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item *ngIf="lastMsg"
+                                        <button mat-menu-item *ngIf="ifUnreadShown(lastMsg)"
                                                 (click)="unreadLastMessages(user)">
                                             Unread
                                         </button>
@@ -115,7 +119,7 @@
 
                 <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
                 <ng-container *ngFor="let m of msg.value;let ind = index">
-                    <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
+                    <li class="message-container" [ngClass]="isOwnMessage(m.from_user)? 'my-message' : 'other-message'">
                         <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <div class="img">
@@ -129,7 +133,8 @@
                             {{m.message}}
                         </div>
                         <div class="seen" *ngIf="m.seen && m.to_id!==authUser.id">
-                            <img class="seen-avatar" [matTooltip]="getSeenTooltip(m)" [src]="m.to_user.avatar|getImgPath: 'user_avatars'">
+                            <img class="seen-avatar" [matTooltip]="getSeenTooltip(m)"
+                                 [src]="m.to_user.avatar|getImgPath: 'user_avatars'">
                         </div>
                     </li>
                 </ng-container>

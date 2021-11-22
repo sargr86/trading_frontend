@@ -30,7 +30,7 @@
                 </div>
             </div>
             <ul class="list align-items-center">
-                <li *ngFor="let userMessages of usersMessages"
+                <li *ngFor="let userMessages of filteredUsersMessages"
                     [class.active]="activeUser?.id === userMessages.id">
 
                     <ng-container
@@ -51,16 +51,17 @@
                                     <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
                                     <div class="d-flex align-items-center" *ngIf="lastMsg">
                                         <div>
-                                            <span class="latest-message">{{lastMsg.message}}</span>
+                                            <span class="latest-message">{{lastMsg.message|fixLineBreaks}}</span>
                                         </div>
                                         <div>
-                                            <span class="ml-4 latest-msg-date">{{lastMsg.created_at | dateFromNow}}</span>
+                                            <span
+                                                class="ml-4 latest-msg-date">{{lastMsg.created_at | dateFromNow}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="ml-auto more-btn">
-                                <ng-container *ngIf="lastMsg.seen==1 || isOwnMessage(user)">
+                                <ng-container *ngIf="lastMsg?.seen==1 || isOwnMessage(user)">
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="" [disableRipple]="true">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
@@ -145,9 +146,11 @@
             <small class="text-center font-italic d-block">{{typingText}}</small>
             <div class="chat-message">
                 <form [formGroup]="chatForm" class="chat-form">
-                    <input class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
-                           (keyup)="setTyping()" (focus)="setSeen()"
-                           (keyup.enter)="sendMessage($event)">
+                    <textarea cdkTextareaAutosize rows="4" class="flex-1 mx-3" formControlName="message"
+                              placeholder="Type your message"
+                              (keyup)="setTyping()" (focus)="setSeen()"
+                              (keyup.enter)="sendMessage($event)">
+                    </textarea>
                 </form>
                 <div class="icons">
                     <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>

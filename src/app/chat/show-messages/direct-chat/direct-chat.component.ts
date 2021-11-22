@@ -168,7 +168,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.selectedUserMessages.messages = this.groupBy.transform(userMessages?.users_connections[0].users_messages, 'created_at');
             this.selectedUserMessages.rawMessages = userMessages?.users_connections[0].users_messages;
             console.log(this.chatForm.value)
-            if (!lastMsg.seen) {
+            if (!lastMsg?.seen) {
                 this.setSeen();
             }
         }
@@ -178,10 +178,13 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     toggleBlockedUsers(show) {
         this.showBlockedUsers = show;
         this.filteredUsersMessages = this.usersMessages.filter(d => {
-            return !!d.user.blocked === this.showBlockedUsers;
+            return !!d.blocked === this.showBlockedUsers;
         });
-        this.activeUser = this.filteredUsersMessages[0]?.user;
-        this.makeUserActive(this.activeUser, this.filteredUsersMessages[0]?.messages[this.filteredUsersMessages[0]?.messages.length - 1])
+        this.activeUser = this.filteredUsersMessages[0];
+        console.log(this.activeUser)
+        const activeUserMessages = this.activeUser?.users_connections[0]?.users_messages;
+        this.makeUserActive(this.activeUser, activeUserMessages[activeUserMessages.length - 1]);
+
     }
 
     sendMessage(e) {
@@ -190,6 +193,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
 
             this.subscriptions.push(this.chatService.saveDirectMessage(data).subscribe(dt => {
+                this.usersMessages = dt;
                 this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
                 const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
                 this.selectedUserMessages.user = selectedMessages;

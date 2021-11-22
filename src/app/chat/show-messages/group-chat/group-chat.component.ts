@@ -23,6 +23,7 @@ import {ToastrService} from 'ngx-toastr';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
+import {FixTextLineBreaksPipe} from "@shared/pipes/fix-text-line-breaks.pipe";
 
 @Component({
     selector: 'app-group-chat',
@@ -78,7 +79,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         private toastr: ToastrService,
         private dialog: MatDialog,
-        private groupBy: GroupByPipe
+        private groupBy: GroupByPipe,
+        private fixLineBreaks: FixTextLineBreaksPipe
     ) {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
             if (search) {
@@ -170,7 +172,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.chatForm.patchValue({group_id: this.selectedGroup.id});
                 this.groupMembers = this.selectedGroup?.chat_group_members;
                 // this.getGroupMessages();
-                console.log(this.groupMembers)
+                // console.log(this.groupMembers)
             }
         }));
     }
@@ -377,7 +379,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getGroupMembers() {
-        this.subscriptions.push( this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
+        this.subscriptions.push(this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
             this.groupMembers = dt?.chat_group_members;
 
         }));
@@ -394,19 +396,23 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
 
     sendMessage(e) {
-        if (this.chatForm.valid) {
-            const data = {...this.chatForm.value, group: this.selectedGroup.name};
+        this.chatForm.patchValue({message: this.fixLineBreaks.transform(e.target.value)});
+
+        if (e.keyCode === 13 && !e.shiftKey) {
+            if (this.chatForm.valid) {
+                const data = {...this.chatForm.value, group: this.selectedGroup.name};
 
 
-            this.subscriptions.push(this.chatService.saveMessage(data).subscribe(dt => {
-                // this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
-                // this.selectedUserMessages.user = dt[0].user;
+                this.subscriptions.push(this.chatService.saveMessage(data).subscribe(dt => {
+                    // this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
+                    // this.selectedUserMessages.user = dt[0].user;
 
-                this.socketService.sendMessage(data);
-                this.scrollMsgsToBottom();
-                // console.log(this.selectedUserMessages);
-            }));
-            this.chatForm.patchValue({message: ''});
+                    this.socketService.sendMessage(data);
+                    this.scrollMsgsToBottom();
+                    // console.log(this.selectedUserMessages);
+                }));
+                this.chatForm.patchValue({message: ''});
+            }
         }
     }
 
@@ -455,8 +461,8 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     getSeen() {
 
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
-            console.log('get seen', dt)
-            console.log(this.selectedGroup)
+            // console.log('get seen', dt)
+            // console.log(this.selectedGroup)
             this.getGroupsMessages(this.selectedGroup.name);
         }));
     }

@@ -138,7 +138,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.chatForm.patchValue({
                 to_id: this.activeUser?.id,
                 to_user: this.activeUser,
-                connection_id: this.activeUser.users_connections[0].id
+                connection_id: this.activeUser.users_connections?.[0].id
             });
             console.log(this.chatForm.value)
         }));
@@ -318,7 +318,11 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     ifMoreActionsShown(lastMsg) {
-        return lastMsg.from_id === this.authUser.id || lastMsg?.seen === 1;
+        return lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1;
+    }
+
+    ifContactBlocked(user){
+        return user.users_connections?.[0].is_blocked;
     }
 
     ngAfterViewChecked() {

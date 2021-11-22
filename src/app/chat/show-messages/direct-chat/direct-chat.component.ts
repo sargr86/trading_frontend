@@ -178,12 +178,13 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     toggleBlockedUsers(show) {
         this.showBlockedUsers = show;
         this.filteredUsersMessages = this.usersMessages.filter(d => {
-            return !!d.blocked === this.showBlockedUsers;
+            return !!d.users_connections?.[0].is_blocked === this.showBlockedUsers;
         });
         this.activeUser = this.filteredUsersMessages[0];
-        console.log(this.activeUser)
-        const activeUserMessages = this.activeUser?.users_connections[0]?.users_messages;
-        this.makeUserActive(this.activeUser, activeUserMessages[activeUserMessages.length - 1]);
+        if (this.activeUser) {
+            const activeUserMessages = this.activeUser?.users_connections[0]?.users_messages;
+            this.makeUserActive(this.activeUser, activeUserMessages[activeUserMessages.length - 1]);
+        }
 
     }
 
@@ -304,6 +305,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     checkIfLastMessageSeen(lastMsg) {
+        // console.log(lastMsg)
         return lastMsg?.seen === 0 && lastMsg?.from_id !== this.authUser.id;
     }
 
@@ -313,6 +315,10 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     ifUnreadShown(lastMsg) {
         return lastMsg?.from_id !== this.authUser.id;
+    }
+
+    ifMoreActionsShown(lastMsg) {
+        return lastMsg.from_id === this.authUser.id || lastMsg?.seen === 1;
     }
 
     ngAfterViewChecked() {

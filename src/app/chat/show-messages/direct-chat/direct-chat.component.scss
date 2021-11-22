@@ -90,8 +90,12 @@
 }
 
 .latest-message, .latest-msg-date {
-    display: -webkit-box!important;
+    display: -webkit-box !important;
     -webkit-line-clamp: 1;
     overflow: hidden;
     -webkit-box-orient: vertical;
+}
+
+.more-actions-btn {
+    width: 20px !important;
 }

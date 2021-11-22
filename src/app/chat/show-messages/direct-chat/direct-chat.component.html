@@ -61,12 +61,13 @@
                                 </div>
                             </div>
                             <div class="ml-auto more-btn">
-                                <ng-container *ngIf="lastMsg?.seen==1 || isOwnMessage(user)">
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="" [disableRipple]="true">
+                                <ng-container *ngIf="ifMoreActionsShown(lastMsg)">
+                                    <button mat-icon-button class="more-actions-btn" [matMenuTriggerFor]="menu"
+                                            [disableRipple]="true">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item *ngIf="ifUnreadShown(lastMsg)"
+                                        <button mat-menu-item *ngIf="ifUnreadShown(lastMsg) "
                                                 (click)="unreadLastMessages(user)">
                                             Unread
                                         </button>
@@ -144,7 +145,7 @@
 
         <ng-container *ngIf="activeUser">
             <small class="text-center font-italic d-block">{{typingText}}</small>
-            <div class="chat-message">
+            <div class="chat-message" [class.disabled]="activeUser.users_connections[0].is_blocked">
                 <form [formGroup]="chatForm" class="chat-form">
                     <textarea cdkTextareaAutosize rows="4" class="flex-1 mx-3" formControlName="message"
                               placeholder="Type your message"

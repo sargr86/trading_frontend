@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import IsResponsive from '@core/helpers/is-responsive';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChatService} from '@core/services/chat.service';
@@ -91,7 +101,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.getGroupsMessages();
         this.addUserToSocket();
 
-
         this.getUserContacts();
         this.getGroupJoinInvitation();
         this.getChatNotifications();
@@ -152,10 +161,11 @@ export class GroupChatComponent implements OnInit, OnDestroy {
 
 
             this.selectedGroup = dt.find(d => d.name === selectedGroupBefore) || dt[0];
-            console.log(this.selectedGroup)
             this.selectedGroupMessages = this.groupBy.transform(this.selectedGroup?.chat_group_messages, 'created_at');
-            console.log(this.selectedGroupMessages)
             if (this.selectedGroup) {
+                if (this.selectedGroup?.chat_group_messages.length > 0) {
+                    this.scrollMsgsToBottom();
+                }
                 this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
                 this.chatForm.patchValue({group_id: this.selectedGroup.id});
                 this.groupMembers = this.selectedGroup?.chat_group_members;
@@ -290,7 +300,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getGroupJoinInvitation() {
-        this.socketService.inviteToGroupSent().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
 
                 this.groupsMessages = dt;
@@ -298,7 +308,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.haveGroupJoinInvitation = true;
                 console.log(this.selectedGroup)
             });
-        });
+        }));
     }
 
     acceptGroupJoin() {
@@ -336,7 +346,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     }
 
     getChatNotifications() {
-        this.socketService.getChatNotifications().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
             this.socketGroupsUsers = data.groupsUsers;
             // console.log(this.socketGroupsUsers)
             if (data.groupRemoved) {
@@ -363,32 +373,23 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 this.groupMembers = this.selectedGroup?.chat_group_members;
                 // }
             }
-        });
+        }));
     }
 
     getGroupMembers() {
-        this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
+        this.subscriptions.push( this.chatService.getGroupMembers({group_id: this.selectedGroup.id}).subscribe(dt => {
             this.groupMembers = dt?.chat_group_members;
 
-        });
+        }));
     }
 
     getUserCurrentStatus(groupMember) {
         // console.log(groupMember)
         const groupName = this.groupsMessages.find(gm => gm.id === groupMember?.chat_groups_members?.group_id)?.name;
-        if (this.socketGroupsUsers && groupName === this.selectedGroup.name) {
-            const foundInSocketUsers = !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
-            return foundInSocketUsers;
+        if (this.socketGroupsUsers && groupName === this.selectedGroup?.name) {
+            return !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
         }
         return false;
-    }
-
-
-    getSocketRoomUsers() {
-        this.socketService.acceptJoinToGroup({
-            group: this.selectedGroup.name,
-            username: this.authUser.username
-        });
     }
 
 
@@ -397,39 +398,41 @@ export class GroupChatComponent implements OnInit, OnDestroy {
             const data = {...this.chatForm.value, group: this.selectedGroup.name};
 
 
-            this.chatService.saveMessage(data).subscribe(dt => {
+            this.subscriptions.push(this.chatService.saveMessage(data).subscribe(dt => {
                 // this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
                 // this.selectedUserMessages.user = dt[0].user;
 
                 this.socketService.sendMessage(data);
                 this.scrollMsgsToBottom();
                 // console.log(this.selectedUserMessages);
-            });
+            }));
             this.chatForm.patchValue({message: ''});
         }
     }
 
     scrollMsgsToBottom() {
+
         try {
+            // console.log(this.messagesList.nativeElement, this.messagesList.nativeElement.scrollHeight)
             this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight;
         } catch (err) {
             console.log(err);
         }
     }
 
-    getGroupMessages() {
-        this.subscriptions.push(this.chatService.getGroupChatMessages({
-            group_id: this.selectedGroup?.id,
-            group: 1
-        }).subscribe(dt => {
-            this.selectedRawMessages = dt;
-            this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
-
-        }));
-    }
+    // getGroupMessages() {
+    //     this.subscriptions.push(this.chatService.getGroupChatMessages({
+    //         group_id: this.selectedGroup?.id,
+    //         group: 1
+    //     }).subscribe(dt => {
+    //         this.selectedRawMessages = dt;
+    //         this.selectedGroupMessages = this.groupBy.transform(dt, 'created_at');
+    //
+    //     }));
+    // }
 
     getMessagesFromSocket() {
-        this.socketService.onNewMessage().subscribe((dt: any) => {
+        this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             if (dt.group) {
 
                 console.log('new message group chat!!!');
@@ -440,21 +443,22 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 // this.getUsersMessages();
             }
 
-        });
+        }));
     }
 
 
     getMessageClass(user) {
+        this.scrollMsgsToBottom();
         return user.id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
     getSeen() {
 
-        this.socketService.getSeen().subscribe((dt: any) => {
+        this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             console.log('get seen', dt)
             console.log(this.selectedGroup)
             this.getGroupsMessages(this.selectedGroup.name);
-        });
+        }));
     }
 
     setSeen() {
@@ -463,10 +467,10 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         const messages = this.selectedGroup?.chat_group_messages;
         const lastMessage = messages[messages.length - 1];
         const isOwnMessage = lastMessage?.from_id === this.authUser.id;
-        console.log('set seen')
-        console.log(isOwnMessage)
-        console.log(lastMessage)
-        console.log(this.selectedGroup)
+        // console.log('set seen')
+        // console.log(isOwnMessage)
+        // console.log(lastMessage)
+        // console.log(this.selectedGroup)
         this.scrollMsgsToBottom();
         if (!isOwnMessage) {
             this.socketService.setSeen({
@@ -480,6 +484,14 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 seen_at: moment().format('YYYY-MM-DD, h:mm:ss a')
             });
         }
+    }
+
+    getSeenTooltip(message) {
+        const seenDate = message.group_chat_messages_seen.created_at;
+        const thisWeekDate = moment(seenDate).isSame(new Date(), 'week');
+        const seenDateFormatted = moment(seenDate).format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
+
+        return `${message.first_name} ${message.last_name} at ${seenDateFormatted}`;
     }
 
     getTyping() {

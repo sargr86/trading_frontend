@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="chat" *ngIf="selectedGroup">
+    <div class="chat" [hidden]="!selectedGroup">
         <div class="chat-top">
             <form [formGroup]="groupChatDetailsForm"
                   [hidden]="!selectedGroup || !ifConfirmedToJoinTheGroup(selectedGroup)">
@@ -127,7 +127,7 @@
             </form>
 
             <div class="confirm-joining-group" [hidden]="!selectedGroup || ifConfirmedToJoinTheGroup(selectedGroup)">
-                <p>Please accept or decline joining to the <strong>{{selectedGroup.name}}</strong> group</p>
+                <p>Please accept or decline joining to the <strong>{{selectedGroup?.name}}</strong> group</p>
                 <div class="actions">
                     <button class="accept-btn" (click)="acceptGroupJoin()">Accept</button>
                     <button class="decline-btn" (click)="declineGroupJoin()">Decline</button>
@@ -135,8 +135,8 @@
             </div>
         </div>
         <ul class="chat-history" id="group-messages" #groupMessagesList>
-            <ng-container *ngIf="selectedGroupMessages?.length > 0">
-                <ng-container *ngFor="let msg of selectedGroupMessages">
+            <div [hidden]="selectedGroupMessages?.length === 0">
+                <div *ngFor="let msg of selectedGroupMessages">
 
                     <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
                     <ng-container *ngFor="let m of msg.value;let ind = index">
@@ -156,14 +156,14 @@
                             <div class="seen">
                                 <ng-container *ngFor="let seen of m.seen_by">
                                     <img class="seen-avatar"
-                                         [matTooltip]="seen.first_name + ' ' + seen.last_name"
+                                         [matTooltip]="getSeenTooltip(seen)"
                                          [src]="seen.avatar|getImgPath: 'user_avatars'">
                                 </ng-container>
                             </div>
                         </li>
                     </ng-container>
-                </ng-container>
-            </ng-container>
+                </div>
+            </div>
         </ul>
 
         <small class="text-center font-italic d-block" *ngIf="typingText.text">{{typingText.text}}</small>

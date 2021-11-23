@@ -70,6 +70,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.getTyping();
         this.getSeen();
         this.getChatNotifications();
+        this.getBlockUnblockUser();
     }
 
     addUserToSocket() {
@@ -129,7 +130,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.subject.setNewMessagesSourceData({source: this.newMessageSources, type: 'direct'});
             this.activeUser = this.activeUser || this.filteredUsersMessages[0];
             // connection_id: this.filteredUsersMessages[0].users_connections[0].id
-            console.log(this.activeUser)
+            // console.log(this.activeUser)
 
             const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
             this.selectedUserMessages.user = selectedMessages;
@@ -141,7 +142,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
                 to_user: this.activeUser,
                 connection_id: this.activeUser?.users_connections?.[0].id
             });
-            console.log(this.chatForm.value)
+            // console.log(this.chatForm.value)
         }));
     }
 
@@ -168,7 +169,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.selectedUserMessages.connection_id = userMessages?.users_connections[0].id;
             this.selectedUserMessages.messages = this.groupBy.transform(userMessages?.users_connections[0].users_messages, 'created_at');
             this.selectedUserMessages.rawMessages = userMessages?.users_connections[0].users_messages;
-            console.log(this.chatForm.value)
             if (!lastMsg?.seen) {
                 this.setSeen();
             }
@@ -294,9 +294,22 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         const params = {
             connection_id: user.users_connections?.[0].id,
             user_id: this.authUser.id,
-            block: +!this.showBlockedUsers
+            block: +!this.showBlockedUsers,
+            contact_username: user.username
         };
+        console.log(user)
         this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
+            this.activeUser = null;
+            this.getUsersMessages();
+            this.socketService.blockUnblockUser(params);
+        }));
+    }
+
+    getBlockUnblockUser() {
+        this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
+            // this.selectedUserMessages.messages = [];
+            console.log('get block/unblock', dt)
+            this.activeUser = null;
             this.getUsersMessages();
         }));
     }
@@ -317,8 +330,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         return messages[messages.length - 1];
     }
 
-    getChatInputPlaceholder(activeUser){
-       return  !this.ifContactBlocked(activeUser) ? 'Type your message' : 'Since the contact is blocked you are no longer able to send messages to this user';
+    getChatInputPlaceholder(activeUser) {
+        return !this.ifContactBlocked(activeUser) ? 'Type your message' : 'Since the contact is blocked you are no longer able to send messages to this user';
     }
 
     ifUnreadShown(lastMsg, user) {
@@ -326,7 +339,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     ifMoreActionsShown(lastMsg, user) {
-        return !lastMsg || lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1 || user.users_connections[0].is_blocked;
+        return !user.users_connections[0].is_blocked && (!lastMsg || lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1);
     }
 
     ifContactBlocked(user) {

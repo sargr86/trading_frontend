@@ -77,6 +77,18 @@ export class SocketIoService {
         this.socket.emit('unreadLastMessages', data);
     }
 
+    blockUnblockUser(data){
+        this.socket.emit('blockUnblockUser', data);
+    }
+
+    getBlockUnblockUser(){
+        return new Observable(observer => {
+            this.socket.on('getBlockUnblockUser', dt => {
+                observer.next(dt);
+            });
+        });
+    }
+
     setNewGroup(data) {
         this.socket.emit('setNewGroup', data);
     }

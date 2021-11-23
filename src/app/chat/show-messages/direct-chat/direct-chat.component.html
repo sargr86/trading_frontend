@@ -42,7 +42,7 @@
                         <div class="d-flex user-last-msg align-items-center justify-content-between">
                             <div class="left-group" (click)="makeUserActive(user, lastMsg)">
 
-                                <div class="img user-avatar">
+                                <div class="img user-avatar" [class.blocked]="ifContactBlocked(user)">
                                     <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
                                     <div class="status" [hidden]="onlineUsers.length === 0"
                                          [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
@@ -92,7 +92,7 @@
         </div>
     </div>
     <div class="chat" [hidden]="(isChatUsersListSize() && !activeUser)">
-        <div class="chat-about" *ngIf="activeUser">
+        <div class="chat-about" *ngIf="activeUser" [class.blocked]="ifContactBlocked(activeUser)">
             <div class="left">
                 <button mat-icon-button *ngIf="isChatUsersListSize()" (click)="activeUser = null;">
                     <mat-icon>arrow_back</mat-icon>

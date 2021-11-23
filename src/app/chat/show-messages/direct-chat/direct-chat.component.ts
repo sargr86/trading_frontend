@@ -19,6 +19,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsersService} from '@core/services/users.service';
 import {SubjectService} from '@core/services/subject.service';
 import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-direct-chat',
@@ -53,6 +54,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
         private usersService: UsersService,
+        private toastr: ToastrService,
         private subject: SubjectService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
@@ -293,11 +295,11 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     blockUser(user) {
         const params = {
             connection_id: user.users_connections?.[0].id,
-            user_id: this.authUser.id,
+            user: this.authUser,
             block: +!this.showBlockedUsers,
             contact_username: user.username
         };
-        console.log(user)
+
         this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
             this.activeUser = null;
             this.getUsersMessages();
@@ -309,6 +311,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
             // this.selectedUserMessages.messages = [];
             console.log('get block/unblock', dt)
+            this.toastr.error(`${dt.user.username} blocked the connection between you two`)
             this.activeUser = null;
             this.getUsersMessages();
         }));
@@ -331,7 +334,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getChatInputPlaceholder(activeUser) {
-        return !this.ifContactBlocked(activeUser) ? 'Type your message' : 'Since the contact is blocked you are no longer able to send messages to this user';
+        return !this.ifContactBlocked(activeUser) ? 'Type your message' : 'Since the contact is blocked you will no longer be able to send messages to this user';
     }
 
     ifUnreadShown(lastMsg, user) {

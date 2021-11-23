@@ -99,3 +99,11 @@
 .more-actions-btn {
     width: 20px !important;
 }
+
+.blocked {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+
+    img {
+        opacity: 0.5;
+    }
+}

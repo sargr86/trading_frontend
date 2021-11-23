@@ -9,7 +9,7 @@
                         <span>Active contacts</span>
                     </button>
                 </div>
-                <div class="three-dot-actions" *ngIf="filteredUsersMessages.length > 0">
+                <div class="three-dot-actions" *ngIf="filteredUsersMessages.length > 0 || blockedUsers.length > 0">
 
                     <button [matMenuTriggerFor]="menu" class="show-actions">
                         <i class="fas fa-ellipsis-h"></i>
@@ -61,13 +61,13 @@
                                 </div>
                             </div>
                             <div class="ml-auto more-btn">
-                                <ng-container *ngIf="ifMoreActionsShown(lastMsg)">
+                                <ng-container *ngIf="ifMoreActionsShown(lastMsg, user)">
                                     <button mat-icon-button class="more-actions-btn" [matMenuTriggerFor]="menu"
                                             [disableRipple]="true">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item *ngIf="ifUnreadShown(lastMsg) "
+                                        <button mat-menu-item *ngIf="ifUnreadShown(lastMsg, user) "
                                                 (click)="unreadLastMessages(user)">
                                             Unread
                                         </button>
@@ -148,7 +148,7 @@
             <div class="chat-message" [class.disabled]="ifContactBlocked(activeUser)">
                 <form [formGroup]="chatForm" class="chat-form">
                     <textarea cdkTextareaAutosize rows="4" class="flex-1 mx-3" formControlName="message"
-                              placeholder="Type your message"
+                              [placeholder]="getChatInputPlaceholder(activeUser)"
                               (keyup)="setTyping()" (focus)="setSeen()"
                               (keyup.enter)="sendMessage($event)">
                     </textarea>

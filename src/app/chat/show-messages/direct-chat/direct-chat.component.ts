@@ -40,6 +40,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     showBlockedUsers = false;
 
     onlineUsers = [];
+    blockedUsers = [];
     newMessageSources = [];
 
     subscriptions: Subscription[] = [];
@@ -122,13 +123,13 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.usersMessages = dt;
             const newMessagesSource = dt.filter(d => d.unseens > 0);
             this.newMessagesCountReceived.emit(newMessagesSource.length);
+            this.blockedUsers = dt.filter(d => d.users_connections[0].is_blocked === 1);
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
             this.newMessageSources = this.filteredUsersMessages.filter(fm => fm.unseens);
             this.subject.setNewMessagesSourceData({source: this.newMessageSources, type: 'direct'});
-            this.activeUser = this.activeUser || {
-                ...this.filteredUsersMessages[0],
-                // connection_id: this.filteredUsersMessages[0].users_connections[0].id
-            };
+            this.activeUser = this.activeUser || this.filteredUsersMessages[0];
+            // connection_id: this.filteredUsersMessages[0].users_connections[0].id
+            console.log(this.activeUser)
 
             const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
             this.selectedUserMessages.user = selectedMessages;
@@ -138,7 +139,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.chatForm.patchValue({
                 to_id: this.activeUser?.id,
                 to_user: this.activeUser,
-                connection_id: this.activeUser.users_connections?.[0].id
+                connection_id: this.activeUser?.users_connections?.[0].id
             });
             console.log(this.chatForm.value)
         }));
@@ -290,7 +291,11 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     blockUser(user) {
-        const params = {connection_id: user.id, user_id: this.authUser.id, block: +!this.showBlockedUsers};
+        const params = {
+            connection_id: user.users_connections?.[0].id,
+            user_id: this.authUser.id,
+            block: +!this.showBlockedUsers
+        };
         this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
             this.getUsersMessages();
         }));
@@ -305,7 +310,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     checkIfLastMessageSeen(lastMsg) {
-        // console.log(lastMsg)
         return lastMsg?.seen === 0 && lastMsg?.from_id !== this.authUser.id;
     }
 
@@ -313,15 +317,19 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         return messages[messages.length - 1];
     }
 
-    ifUnreadShown(lastMsg) {
-        return lastMsg?.from_id !== this.authUser.id;
+    getChatInputPlaceholder(activeUser){
+       return  !this.ifContactBlocked(activeUser) ? 'Type your message' : 'Since the contact is blocked you are no longer able to send messages to this user';
     }
 
-    ifMoreActionsShown(lastMsg) {
-        return lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1;
+    ifUnreadShown(lastMsg, user) {
+        return lastMsg?.from_id !== this.authUser.id && !user.users_connections[0].is_blocked;
     }
 
-    ifContactBlocked(user){
+    ifMoreActionsShown(lastMsg, user) {
+        return !lastMsg || lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1 || user.users_connections[0].is_blocked;
+    }
+
+    ifContactBlocked(user) {
         return user.users_connections?.[0].is_blocked;
     }
 

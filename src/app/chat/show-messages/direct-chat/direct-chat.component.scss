@@ -69,6 +69,11 @@
 .user-avatar {
     position: relative;
 
+    .avatar {
+        width: 48px !important;
+        height: 48px;
+    }
+
     .status {
         position: absolute;
         width: 14px;

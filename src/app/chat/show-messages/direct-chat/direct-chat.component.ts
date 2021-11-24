@@ -128,6 +128,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
             this.newMessagesCountReceived.emit(newMessagesSource.length);
             this.blockedUsers = dt.filter(d => d.users_connections[0].is_blocked === 1);
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
+            console.log(this.blockedUsers)
             this.newMessageSources = this.filteredUsersMessages.filter(fm => fm.unseens);
             this.subject.setNewMessagesSourceData({source: this.newMessageSources, type: 'direct'});
             this.activeUser = this.activeUser || this.filteredUsersMessages[0];

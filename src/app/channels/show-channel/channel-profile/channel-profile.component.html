@@ -63,10 +63,23 @@
         </div>
         <div class="d-flex align-items-center" *ngIf="channelUser.username !== authUser.username">
             <!--            <i class="sub-bell fas fa-bell"></i>-->
-            <a class="add-friend-btn">
+            <a class="add-friend-btn" (click)="connectWithUser()"
+               *ngIf="!attemptedToConnect && usersConnectionStatus==='idle'">
                 <mat-icon>person_add</mat-icon>
                 <span>Connect</span>
             </a>
+
+            <a class="waiting-for-confirmation-btn" (click)="connectWithUser()"
+               *ngIf="attemptedToConnect || usersConnectionStatus==='pending'">
+                <mat-icon>check</mat-icon>
+                <span>Waiting for confirmation</span>
+            </a>
+
+            <a class="users-connected-btn" *ngIf="usersConnectionStatus==='connected'">
+                <mat-icon>check</mat-icon>
+                <span>Connected</span>
+            </a>
+
             <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn">
                 <mat-icon>chat</mat-icon>
                 <span>Message</span>

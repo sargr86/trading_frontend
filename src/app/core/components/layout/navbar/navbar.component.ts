@@ -73,6 +73,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
         this.getNotifications();
+        this.addUserToSocket();
+        this.getConnectWithUser();
+    }
+
+    addUserToSocket() {
+        this.socketService.addNewUser({...this.authUser, group: false});
+    }
+
+    getConnectWithUser() {
+        this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
+            console.log('get connect with user', dt)
+        }));
     }
 
     getAuthenticatedUser() {

@@ -37,5 +37,9 @@ export class UsersService {
         return this.httpClient.get<any>(`${API_URL}users/get-contacts`, {params});
     }
 
+    checkIfUsersConnected(params) {
+        return this.httpClient.get<any>(`${API_URL}users/check-connection`, {params});
+    }
+
 
 }

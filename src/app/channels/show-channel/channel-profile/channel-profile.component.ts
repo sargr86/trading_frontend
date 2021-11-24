@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {CroppedEvent} from 'ngx-photo-editor';
 import {UsersService} from '@core/services/users.service';
@@ -8,13 +8,15 @@ import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-channel-profile',
     templateUrl: './channel-profile.component.html',
     styleUrls: ['./channel-profile.component.scss']
 })
-export class ChannelProfileComponent implements OnInit {
+export class ChannelProfileComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
 
     profileChangedEvent: any;
@@ -29,6 +31,9 @@ export class ChannelProfileComponent implements OnInit {
     editMode = false;
 
     channelForm: FormGroup;
+    subscriptions: Subscription[] = [];
+    attemptedToConnect = false;
+    usersConnectionStatus = 'idle';
 
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
@@ -41,9 +46,25 @@ export class ChannelProfileComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
+        private socketService: SocketIoService,
         public loader: LoaderService,
         private fb: FormBuilder
     ) {
+
+
+    }
+
+    ngOnInit(): void {
+        if (this.channelUser) {
+            this.checkChannelSubscription();
+            this.initChannelForm();
+            // this.detectImageChange();
+            this.checkIfUsersConnected();
+        }
+    }
+
+
+    initChannelForm() {
         this.channelForm = this.fb.group({
             id: [''],
             avatar: [''],
@@ -52,20 +73,24 @@ export class ChannelProfileComponent implements OnInit {
             username: ['']
         });
 
+        this.channelForm.patchValue({
+            name: this.channelUser.channel.name,
+            id: this.channelUser.channel.id,
+            username: this.channelUser.username,
+            avatar: this.channelUser.channel.avatar,
+            cover: this.channelUser.channel.cover
+        });
     }
 
-    ngOnInit(): void {
-        if (this.channelUser) {
-            this.checkChannelSubscription();
-            // this.detectImageChange();
-            this.channelForm.patchValue({
-                name: this.channelUser.channel.name,
-                id: this.channelUser.channel.id,
-                username: this.channelUser.username,
-                avatar: this.channelUser.channel.avatar,
-                cover: this.channelUser.channel.cover
-            });
-        }
+    checkIfUsersConnected() {
+        this.usersService.checkIfUsersConnected({
+            user_id: this.authUser.id,
+            channel_user_id: this.channelUser.id
+        }).subscribe(dt => {
+            if (dt) {
+                this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
+            }
+        });
     }
 
     coverChangeEvent(event: any) {
@@ -100,9 +125,9 @@ export class ChannelProfileComponent implements OnInit {
         fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
         fd.append('avatar', filename);
         fd.append('id', this.authUser.id);
-        this.usersService.changeProfileImage(fd).subscribe((dt) => {
+        this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
             this.changeAuthUserInfo(dt);
-        });
+        }));
     }
 
     coverCropped(event: CroppedEvent) {
@@ -115,9 +140,9 @@ export class ChannelProfileComponent implements OnInit {
         fd.append('cover', filename);
         fd.append('id', this.authUser.id);
         this.loader.dataLoading = true;
-        this.usersService.changeCoverImage(fd).subscribe((dt) => {
+        this.subscriptions.push(this.usersService.changeCoverImage(fd).subscribe((dt) => {
             this.changeAuthUserInfo(dt);
-        });
+        }));
     }
 
     removeCover() {
@@ -131,24 +156,27 @@ export class ChannelProfileComponent implements OnInit {
     }
 
     subscribeToChannel(channel): void {
-        this.channelService.subscribeToChannel({user_id: this.authUser.id, channel_id: channel.id}).subscribe(dt => {
+        this.subscriptions.push(this.channelService.subscribeToChannel({
+            user_id: this.authUser.id,
+            channel_id: channel.id
+        }).subscribe(dt => {
             this.subscribedToChannel = dt.status === 'Subscribed';
             this.subscribersCount = dt.subscribers_count;
-            this.channelService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
+            this.subscriptions.push(this.channelService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
                 this.subject.setUserSubscriptions(d);
-            });
-        });
+            }));
+        }));
     }
 
     checkChannelSubscription() {
         // console.log(this.channelUser)
-        this.channelService.checkChannelSubscription({
+        this.subscriptions.push(this.channelService.checkChannelSubscription({
             user_id: this.authUser.id,
             channel_id: this.channelUser.channel.id
         }).subscribe(dt => {
             this.subscribedToChannel = dt.status === 'Subscribed';
             this.subscribersCount = dt.subscribers_count;
-        });
+        }));
     }
 
     changeAuthUserInfo(dt) {
@@ -172,15 +200,27 @@ export class ChannelProfileComponent implements OnInit {
         console.log('save changes!!!')
 
         if (this.channelForm.valid) {
-            this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
+            this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
                 this.editMode = false;
                 this.changeAuthUserInfo(dt);
-            }));
+            })));
         }
     }
 
     toggleBottomChatBox() {
         this.toggleChatBox.emit(this.channelUser);
+    }
+
+    connectWithUser() {
+        this.attemptedToConnect = true;
+        this.socketService.connectWithUser({
+            authUser: this.authUser,
+            channelUser: this.channelUser
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

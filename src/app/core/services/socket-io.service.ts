@@ -25,6 +25,18 @@ export class SocketIoService {
         this.socket.emit('newUser', user);
     }
 
+    connectWithUser(data) {
+        this.socket.emit('connectWithUser', data);
+    }
+
+    getConnectWithUser() {
+        return new Observable(observer => {
+            this.socket.on('getConnectWithUser', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     userOnlineFeedback() {
         return new Observable(observer => {
             this.socket.on('userConnected', msg => {
@@ -64,7 +76,6 @@ export class SocketIoService {
     }
 
 
-
     getSeen() {
         return new Observable(observer => {
             this.socket.on('getSeen', msg => {
@@ -77,11 +88,11 @@ export class SocketIoService {
         this.socket.emit('unreadLastMessages', data);
     }
 
-    blockUnblockUser(data){
+    blockUnblockUser(data) {
         this.socket.emit('blockUnblockUser', data);
     }
 
-    getBlockUnblockUser(){
+    getBlockUnblockUser() {
         return new Observable(observer => {
             this.socket.on('getBlockUnblockUser', dt => {
                 observer.next(dt);

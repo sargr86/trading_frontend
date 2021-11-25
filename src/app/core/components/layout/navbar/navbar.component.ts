@@ -20,6 +20,7 @@ import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {NotificationsService} from "@core/services/notifications.service";
 
 @Component({
     selector: 'app-navbar',
@@ -64,7 +65,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private cardsService: CardsService,
         private stripeCustomersService: CustomersService,
-        private countTotals: CountPurchasedTransferredTotalsPipe
+        private countTotals: CountPurchasedTransferredTotalsPipe,
+        private notificationsService: NotificationsService
     ) {
 
     }
@@ -75,6 +77,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.getNotifications();
         this.addUserToSocket();
         this.getConnectWithUser();
+        this.getAuthUserNotifications();
     }
 
     addUserToSocket() {
@@ -86,6 +89,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
             console.log('get connect with user', dt)
             this.notifications.push({type: 'connection_request', msg: dt?.msg});
         }));
+    }
+
+    getAuthUserNotifications() {
+        this.subscriptions.push(
+            this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
+                dt.map(d => {
+                    this.notifications.push(d);
+                });
+            })
+        );
     }
 
     getAuthenticatedUser() {
@@ -197,7 +210,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getNotifications() {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             // this.toastr.success(msg);
-            this.notifications.push({type: 'invite', msg: data.msg});
+            this.notifications.push({type: 'invitation-to-join-group', msg: data.msg});
         });
     }
 

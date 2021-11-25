@@ -51,6 +51,7 @@ import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-drop
 import { ChatBottomBoxComponent } from './components/chat-bottom-box/chat-bottom-box.component';
 import { GroupByPipe } from './pipes/group-by.pipe';
 import { GetDateTextForMessagesPipe } from './pipes/get-date-text-for-messages.pipe';
+import { GetElegantDatePipe } from './pipes/get-elegant-date.pipe';
 
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
@@ -103,7 +104,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NumbersOnlyInputDirective,
         ChatBottomBoxComponent,
         GroupByPipe,
-        GetDateTextForMessagesPipe
+        GetDateTextForMessagesPipe,
+        GetElegantDatePipe
     ],
     imports: [
         CommonModule,
@@ -181,7 +183,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NumbersOnlyInputDirective,
         DropzoneModule,
         ChatBottomBoxComponent,
-        GetDateTextForMessagesPipe
+        GetDateTextForMessagesPipe,
+        GetElegantDatePipe
     ],
 
 })

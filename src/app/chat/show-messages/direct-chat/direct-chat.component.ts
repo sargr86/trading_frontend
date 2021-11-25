@@ -20,6 +20,7 @@ import {UsersService} from '@core/services/users.service';
 import {SubjectService} from '@core/services/subject.service';
 import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+import {GetElegantDatePipe} from "@shared/pipes/get-elegant-date.pipe";
 
 @Component({
     selector: 'app-direct-chat',
@@ -59,6 +60,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
         private fb: FormBuilder,
+        private getElegantDate: GetElegantDatePipe
     ) {
     }
 
@@ -320,8 +322,9 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     getSeenTooltip(message) {
         const user = message.to_user;
-        const thisWeekDate = moment(message.seen_at).isSame(new Date(), 'week');
-        const seenDate = moment(message.seen_at).format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
+        // const thisWeekDate = moment(message.seen_at).isSame(new Date(), 'week');
+        // const seenDate = moment(message.seen_at).format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
+        const seenDate = this.getElegantDate.transform(message.seen_at);
 
         return `${user.first_name} ${user.last_name} at ${seenDate}`;
     }

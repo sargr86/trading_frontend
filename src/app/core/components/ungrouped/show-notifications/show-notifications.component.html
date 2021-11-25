@@ -1,0 +1,26 @@
+<ul>
+    <li *ngFor="let notification of notifications" class="notification">
+        <div class="left">
+            <img class="avatar" id="profile-image"
+                 [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+        </div>
+        <div class="right">
+            <div class="notification-body">
+                <p class="notification-text" [innerHTML]="notification.msg"></p>
+                <span class="date" [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
+            </div>
+            <div class="additional-actions">
+                <div class="connection-actions">
+                    <button class="confirm-connection-btn">
+                        <mat-icon>check</mat-icon>
+                        <span>Confirm</span>
+                    </button>
+                    <button class="decline-connection-btn">
+                        <mat-icon>close</mat-icon>
+                        <span>Decline</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

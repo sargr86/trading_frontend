@@ -31,9 +31,10 @@ import { StocksListsPortableComponent } from './components/layout/left-sidebar/s
 import { PageLoadingComponent } from './components/ungrouped/page-loading/page-loading.component';
 import {StocksListsTabsComponent} from '@core/components/layout/left-sidebar/stocks-lists-portable/stocks-lists-tabs/stocks-lists-tabs.component';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
-import {TurboPlanComponent} from "@core/components/ungrouped/turbo-plan/turbo-plan.component";
+import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-plan.component';
 import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purchase-coins.component';
 import { ShowChatGroupMembersComponent } from './components/modals/show-chat-group-members/show-chat-group-members.component';
+import { ShowNotificationsComponent } from './components/ungrouped/show-notifications/show-notifications.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { ShowChatGroupMembersComponent } from './components/modals/show-chat-gro
         TurboPlanComponent,
         PurchaseCoinsComponent,
         ShowChatGroupMembersComponent,
+        ShowNotificationsComponent,
     ],
     imports: [
         CommonModule,

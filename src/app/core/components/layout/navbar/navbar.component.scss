@@ -72,6 +72,7 @@ nav {
 .notification {
     position: relative;
     margin-right: 16px;
+    cursor: pointer;
 
     i {
         color: #545454;
@@ -148,5 +149,10 @@ nav {
 
 
 .view-more-notifications {
+    cursor: pointer;
     text-align: center;
+}
+
+.notification-item {
+    display: flex;
 }

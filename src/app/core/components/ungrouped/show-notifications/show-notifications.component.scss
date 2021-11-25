@@ -1,0 +1,41 @@
+@import 'variables';
+@import 'mixins';
+
+.notification {
+    display: flex;
+
+    .left {
+        .avatar {
+            width: 55px !important;
+            height: 55px !important;
+        }
+    }
+
+    .right {
+        display: flex;
+
+        .notification-body {
+            .date {
+                margin: 10px 0;
+                padding: 0;
+            }
+        }
+
+        .additional-actions {
+            .connection-actions {
+                display: flex;
+                width: 300px;
+                justify-content: space-around;
+                margin-left: 50px;
+
+                button {
+                    @include regularButton;
+                }
+
+                .decline-connection-btn {
+                    background-color: $red;
+                }
+            }
+        }
+    }
+}

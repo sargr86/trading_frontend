@@ -43,11 +43,18 @@
 
                 <mat-menu #notifMenu="matMenu">
                     <ng-container *ngFor="let notification of notifications">
-                        <button mat-menu-item>
-                            {{notification.msg}}
-                        </button>
+                        <div class="notification-item" mat-menu-item>
+                            <div class="left">
+                                <img class="avatar" id="profile-image"
+                                     [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+                            </div>
+                            <div class="right">
+                                <p [innerHTML]="notification.msg"></p>
+                            </div>
+                        </div>
                     </ng-container>
-                    <p class="view-more-notifications" *ngIf="notifications.length > 0">View more</p>
+                    <p class="view-more-notifications" *ngIf="notifications.length > 0"
+                       (click)="router.navigate(['/notifications'])">View more</p>
                 </mat-menu>
 
                 <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>

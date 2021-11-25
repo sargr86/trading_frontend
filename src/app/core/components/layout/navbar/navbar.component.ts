@@ -84,6 +84,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
+            this.notifications.push({type: 'connection_request', msg: dt?.msg});
         }));
     }
 
@@ -196,7 +197,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getNotifications() {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             // this.toastr.success(msg);
-            this.notifications.push(data.msg);
+            this.notifications.push({type: 'invite', msg: data.msg});
         });
     }
 

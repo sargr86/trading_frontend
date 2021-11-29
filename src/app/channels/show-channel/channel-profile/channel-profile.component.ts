@@ -60,6 +60,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.initChannelForm();
             // this.detectImageChange();
             this.checkIfUsersConnected();
+            this.getAcceptedDeclinedRequests();
         }
     }
 
@@ -213,10 +214,23 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     connectWithUser() {
         this.attemptedToConnect = true;
+        this.usersConnectionStatus = 'pending';
         this.socketService.connectWithUser({
             authUser: this.authUser,
             channelUser: this.channelUser
         });
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            this.usersConnectionStatus = 'connected';
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+            this.usersConnectionStatus = 'idle';
+        }));
     }
 
     ngOnDestroy(): void {

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {cardsStore} from '@shared/stores/cards-store';
+import {AuthService} from "@core/services/auth.service";
 
 @Component({
     selector: 'app-show-wallet-cards',
@@ -15,13 +16,16 @@ export class ShowWalletCardsComponent implements OnInit {
 
     constructor(
         private getAuthUser: GetAuthUserPipe,
-        private customersService: CustomersService
+        private customersService: CustomersService,
+        public auth: AuthService
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.getCards();
+        if (this.auth.loggedIn()) {
+            this.getCards();
+        }
     }
 
     getCards() {

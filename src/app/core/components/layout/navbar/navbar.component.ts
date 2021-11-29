@@ -74,10 +74,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
-        this.getNotifications();
-        this.addUserToSocket();
-        this.getConnectWithUser();
-        this.getAuthUserNotifications();
+
+        if (this.auth.loggedIn()) {
+            this.getInviteNotifications();
+            this.addUserToSocket();
+            this.getConnectWithUser();
+            this.getAuthUserNotifications();
+            this.getAcceptedDeclinedRequests();
+            this.getUserCards();
+            this.getDailyStocks();
+        }
+
+
     }
 
     addUserToSocket() {
@@ -87,7 +95,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
-            this.notifications.push({type: 'connection_request', msg: dt?.msg});
+            this.notifications.push(dt);
         }));
     }
 
@@ -101,11 +109,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
         );
     }
 
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            this.notifications.push(dt);
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+            this.notifications.push(dt);
+        }));
+    }
+
     getAuthenticatedUser() {
         this.subscriptions.push(this.subject.authUser.subscribe(dt => {
             this.authUser = dt;
-            this.getUserCards();
-            this.getDailyStocks();
+            console.log(dt)
+
         }));
     }
 
@@ -207,7 +227,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    getNotifications() {
+    getInviteNotifications() {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             // this.toastr.success(msg);
             this.notifications.push({type: 'invitation-to-join-group', msg: data.msg});

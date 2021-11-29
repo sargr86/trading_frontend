@@ -10,12 +10,12 @@
                 <span class="date" [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
             </div>
             <div class="additional-actions">
-                <div class="connection-actions">
-                    <button class="confirm-connection-btn">
+                <div class="connection-actions" *ngIf="notification.type === 'users_connection_notifications'">
+                    <button class="confirm-connection-btn" (click)="confirmConnection(notification)">
                         <mat-icon>check</mat-icon>
                         <span>Confirm</span>
                     </button>
-                    <button class="decline-connection-btn">
+                    <button class="decline-connection-btn" (click)="declineConnection(notification)">
                         <mat-icon>close</mat-icon>
                         <span>Decline</span>
                     </button>

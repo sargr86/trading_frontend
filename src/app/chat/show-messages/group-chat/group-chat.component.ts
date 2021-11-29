@@ -23,7 +23,7 @@ import {ToastrService} from 'ngx-toastr';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
-import {FixTextLineBreaksPipe} from "@shared/pipes/fix-text-line-breaks.pipe";
+import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 
 @Component({
     selector: 'app-group-chat',

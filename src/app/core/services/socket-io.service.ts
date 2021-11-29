@@ -162,4 +162,32 @@ export class SocketIoService {
         this.socket.emit('forceDisconnect', data);
     }
 
+    acceptConnection(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('acceptConnection', data);
+    }
+
+    declineConnection(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('declineConnection', data);
+    }
+
+    acceptedConnection() {
+        // this.setupSocketConnection();
+        return new Observable(observer => {
+            this.socket.on('acceptedConnection', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    declinedConnection() {
+        // this.setupSocketConnection();
+        return new Observable(observer => {
+            this.socket.on('declinedConnection', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 }

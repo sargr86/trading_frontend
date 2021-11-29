@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {NotificationsService} from '@core/services/notifications.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import * as moment from 'moment';
-import {Subscription} from "rxjs";
-import {SocketIoService} from "@core/services/socket-io.service";
+import {Subscription} from 'rxjs';
+import {SocketIoService} from '@core/services/socket-io.service';
+import {notificationsStore} from '@shared/stores/notifications-store';
 
 @Component({
     selector: 'app-show-notifications',
@@ -13,6 +14,7 @@ import {SocketIoService} from "@core/services/socket-io.service";
 export class ShowNotificationsComponent implements OnInit {
     authUser;
     notifications = [];
+    notificationsStore = notificationsStore;
 
     subscriptions: Subscription[] = [];
 
@@ -32,6 +34,7 @@ export class ShowNotificationsComponent implements OnInit {
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
             this.notifications = dt;
+            this.notificationsStore.setNotifications(dt);
         }));
     }
 
@@ -44,10 +47,19 @@ export class ShowNotificationsComponent implements OnInit {
             from_user: notification.to_user,
         });
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
+        this.notificationsStore.setNotifications(this.notifications);
     }
 
     declineConnection(notification) {
-        this.socketService.declineConnection({});
+        this.socketService.declineConnection({
+            notification_id: notification.id,
+            connection_id: notification.connection_id,
+            to_user: notification.from_user,
+            from_user: notification.to_user,
+        });
+
+        this.notifications = this.notifications.filter(n => n.id !== notification.id);
+        this.notificationsStore.setNotifications(this.notifications);
     }
 
     getConnectWithUser() {

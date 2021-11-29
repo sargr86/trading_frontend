@@ -20,7 +20,8 @@ import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {NotificationsService} from "@core/services/notifications.service";
+import {NotificationsService} from '@core/services/notifications.service';
+import {notificationsStore} from "@shared/stores/notifications-store";
 
 @Component({
     selector: 'app-navbar',
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     @Output('closeSidenav') closeSidenav = new EventEmitter();
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
     notifications = [];
+    notificationsStore = notificationsStore;
 
     passedUsername;
 
@@ -75,6 +77,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
 
+        this.authUser = this.getAuthUser.transform();
+
         if (this.auth.loggedIn()) {
             this.getInviteNotifications();
             this.addUserToSocket();
@@ -96,6 +100,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
             this.notifications.push(dt);
+            this.notificationsStore.setNotifications(this.notifications);
         }));
     }
 
@@ -105,28 +110,31 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 dt.map(d => {
                     this.notifications.push(d);
                 });
+                this.notificationsStore.setNotifications(this.notifications);
             })
         );
+
+
     }
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt)
             this.notifications.push(dt);
+            this.notificationsStore.setNotifications(this.notifications);
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
             console.log('declined')
             this.notifications.push(dt);
+            this.notificationsStore.setNotifications(this.notifications);
         }));
     }
 
     getAuthenticatedUser() {
-        this.subscriptions.push(this.subject.authUser.subscribe(dt => {
-            this.authUser = dt;
-            console.log(dt)
-
-        }));
+        // this.subscriptions.push(this.subject.authUser.subscribe(dt => {
+        //     this.authUser = dt;
+        // }));
     }
 
     getRouterUrlParams() {
@@ -231,6 +239,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             // this.toastr.success(msg);
             this.notifications.push({type: 'invitation-to-join-group', msg: data.msg});
+            this.notificationsStore.setNotifications(this.notifications);
         });
     }
 

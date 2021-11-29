@@ -35,6 +35,7 @@ import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-pl
 import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purchase-coins.component';
 import { ShowChatGroupMembersComponent } from './components/modals/show-chat-group-members/show-chat-group-members.component';
 import { ShowNotificationsComponent } from './components/ungrouped/show-notifications/show-notifications.component';
+import {MobxAngularModule} from "mobx-angular";
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { ShowNotificationsComponent } from './components/ungrouped/show-notifica
         MaterialModule,
         SharedModule,
 
-        CreditCardDirectivesModule
+        CreditCardDirectivesModule,
+        MobxAngularModule
     ],
     exports: [
         NavbarComponent,

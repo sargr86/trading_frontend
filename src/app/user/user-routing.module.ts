@@ -10,7 +10,7 @@ import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
-import {AuthGuard} from '@core/guards/auth.guard';
+import {ShowConnectionsComponent} from '@app/user/show-connections/show-connections.component';
 
 const routes: Routes = [
     {
@@ -81,6 +81,10 @@ const routes: Routes = [
         path: 'video-library',
         component: VideoLibraryComponent
     },
+    {
+        path: 'connections',
+        component: ShowConnectionsComponent
+    }
 ];
 
 @NgModule({

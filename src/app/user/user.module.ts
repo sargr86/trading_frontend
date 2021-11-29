@@ -23,6 +23,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
+import { ShowConnectionsComponent } from './show-connections/show-connections.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { PaymentCancelComponent } from './payment-cancel/payment-cancel.componen
         JoinVideoStreamingComponent,
         PaymentSuccessComponent,
         PaymentCancelComponent,
+        ShowConnectionsComponent,
     ],
     imports: [
         CommonModule,

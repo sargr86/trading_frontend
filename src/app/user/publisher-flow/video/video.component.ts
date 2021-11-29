@@ -303,7 +303,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                this.chatService.saveMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                this.chatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
                     // console.log('Message successfully sent');
                 });
             })

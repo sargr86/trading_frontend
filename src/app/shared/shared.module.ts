@@ -138,6 +138,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ApplyDiscountToPricePipe,
         GetDateTextForMessagesPipe,
         GroupByPipe,
+        GetElegantDatePipe,
         {
             provide: DROPZONE_CONFIG,
             useValue: DEFAULT_DROPZONE_CONFIG

@@ -16,10 +16,18 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/get-messages`, {params});
     }
 
+    saveVideoMessage(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/video/save-message`, params);
+    }
+
     /* DIRECT CHAT STUFF*/
 
     getDirectMessages(params) {
         return this.httpClient.get<any>(`${API_URL}chat/direct/get-direct-messages`, {params});
+    }
+
+    getMessagesBetweenTwoUsers(params) {
+        return this.httpClient.get<any>(`${API_URL}chat/direct/get-messages-between-two-users`, {params});
     }
 
     unreadLastMessages(params) {
@@ -29,7 +37,6 @@ export class ChatService {
     saveDirectMessage(params) {
         return this.httpClient.post<any>(`${API_URL}chat/direct/save-message`, params);
     }
-
 
     /* GROUP CHAT STUFF*/
 
@@ -41,7 +48,7 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/group/get-groups-messages`, {params});
     }
 
-    saveMessage(params) {
+    saveGroupMessage(params) {
         return this.httpClient.post<any>(`${API_URL}chat/group/save-message`, params);
     }
 

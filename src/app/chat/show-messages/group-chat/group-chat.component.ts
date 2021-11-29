@@ -403,7 +403,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 const data = {...this.chatForm.value, group: this.selectedGroup.name};
 
 
-                this.subscriptions.push(this.chatService.saveMessage(data).subscribe(dt => {
+                this.subscriptions.push(this.chatService.saveGroupMessage(data).subscribe(dt => {
                     // this.selectedUserMessages.messages = this.groupBy.transform(dt[0].messages, 'created_at');
                     // this.selectedUserMessages.user = dt[0].user;
 

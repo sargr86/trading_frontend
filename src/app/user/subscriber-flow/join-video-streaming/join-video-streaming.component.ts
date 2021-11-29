@@ -205,7 +205,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                this.chatService.saveMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                this.chatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
                 });
             })
             .catch(error => {

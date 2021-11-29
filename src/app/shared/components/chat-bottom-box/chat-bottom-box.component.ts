@@ -14,6 +14,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import * as moment from 'moment';
+import {UsersService} from '@core/services/users.service';
 
 @Component({
     selector: 'app-chat-bottom-box',
@@ -37,7 +38,8 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
         private chatService: ChatService,
-        private socketService: SocketIoService
+        private socketService: SocketIoService,
+        private usersService: UsersService
     ) {
     }
 
@@ -46,6 +48,7 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
         this.initForm();
         this.addUserToSocket();
         this.loadPreviousMessages();
+        this.checkIfUsersConnected();
         this.getTyping();
         this.getMessagesFromSocket();
     }
@@ -59,6 +62,23 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
             message: ['', Validators.required],
             from_user: [this.authUser],
             to_user: [this.channelUser],
+            connection_id: [''],
+            bottom_chat: 1
+        });
+    }
+
+    checkIfUsersConnected() {
+        this.usersService.checkIfUsersConnected({
+            user_id: this.authUser.id,
+            channel_user_id: this.channelUser.id
+        }).subscribe(dt => {
+            if (dt) {
+                this.chatForm.patchValue({
+                    connection_id: dt.id
+                });
+
+                console.log(this.chatForm.value)
+            }
         });
     }
 
@@ -68,7 +88,7 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
 
     loadPreviousMessages() {
         this.loadingMessages = true;
-        this.chatService.getDirectMessages({
+        this.chatService.getMessagesBetweenTwoUsers({
             to_id: this.channelUser.id,
             from_id: this.authUser.id
         }).subscribe(dt => {
@@ -80,8 +100,8 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
 
     sendMessage() {
         if (this.chatForm.valid) {
-            const data = this.chatForm.value ;
-            this.chatService.saveMessage(data).subscribe(dt => {
+            const data = this.chatForm.value;
+            this.chatService.saveDirectMessage(data).subscribe(dt => {
                 this.messages = dt;
                 this.socketService.sendMessage(data);
                 this.chatForm.patchValue({message: ''});

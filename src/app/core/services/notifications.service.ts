@@ -14,4 +14,8 @@ export class NotificationsService {
     getAuthUserNotifications(params) {
         return this.httpClient.get(`${API_URL}notifications/get`, {params});
     }
+
+    readNotification(params) {
+        return this.httpClient.put(`${API_URL}notifications/read`, params);
+    }
 }

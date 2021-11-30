@@ -34,6 +34,7 @@ export class ShowNotificationsComponent implements OnInit {
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
             this.notifications = dt;
+            console.log(dt)
             this.notificationsStore.setNotifications(dt);
         }));
     }
@@ -65,6 +66,12 @@ export class ShowNotificationsComponent implements OnInit {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             this.getNotifications();
+        }));
+    }
+
+    readNotification(id) {
+        this.subscriptions.push(this.notificationsService.readNotification({id}).subscribe((dt: any) => {
+
         }));
     }
 

@@ -1,5 +1,5 @@
 <ul *mobxAutorun>
-    <li *ngFor="let notification of notifications" class="notification">
+    <li *ngFor="let notification of notifications" class="notification" (click)="readNotification(notification.id)">
         <div class="left">
             <img class="avatar" id="profile-image"
                  [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
@@ -10,7 +10,7 @@
                 <span class="date" [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
             </div>
             <div class="additional-actions">
-                <div class="connection-actions" *ngIf="notification.type === 'users_connection_notifications'">
+                <div class="connection-actions" *ngIf="notification.notification_type.name === 'users_connection_request'">
                     <button class="confirm-connection-btn" (click)="confirmConnection(notification)">
                         <mat-icon>check</mat-icon>
                         <span>Confirm</span>

@@ -80,7 +80,7 @@
                 <span>Connected</span>
             </a>
 
-            <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn">
+            <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn" *ngIf="usersConnectionStatus==='connected'">
                 <mat-icon>chat</mat-icon>
                 <span>Message</span>
             </a>

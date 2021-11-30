@@ -32,6 +32,7 @@ export class SocketIoService {
     getConnectWithUser() {
         return new Observable(observer => {
             this.socket.on('getConnectWithUser', msg => {
+                console.log('here')
                 observer.next(msg);
             });
         });

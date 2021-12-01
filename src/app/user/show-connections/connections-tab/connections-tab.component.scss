@@ -1,0 +1,33 @@
+.connections-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+
+    .connection {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid silver;
+        padding: 10px;
+        width: 400px;
+
+        .left {
+            display: flex;
+
+            .user-avatar {
+                position: relative;
+
+                .avatar {
+                    width: 48px !important;
+                    height: 48px;
+                }
+            }
+        }
+
+        .right {
+            button {
+                background: transparent;
+            }
+        }
+    }
+}

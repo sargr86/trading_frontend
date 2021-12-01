@@ -1,18 +1,20 @@
-<app-user-tags></app-user-tags>
-<div *ngIf="authUser">
-    <div class="tab-wrap">
-        <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()" matBadgePosition="before"
-                [matBadgeHidden]="activeTab==='direct' || newMessagesCountInDirect===0 "
-                [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat
-        </button>
-        <button class="tab group-tab" [matBadge]="newMessagesCountInGroups.toString()"
-                [matBadgeHidden]="activeTab==='group' || newMessagesCountInGroups===0 "
-                [class.active]="activeTab==='group'"
-                (click)="changeTab('group')">Group Chat
-        </button>
-    </div>
-    <app-direct-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"
-                     (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-chat>
-    <app-group-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-chat>
+<ng-container *ngIf="authUser">
+    <app-user-tags></app-user-tags>
+    <div>
+        <div class="tab-wrap">
+            <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()" matBadgePosition="before"
+                    [matBadgeHidden]="activeTab==='direct' || newMessagesCountInDirect===0 "
+                    [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat
+            </button>
+            <button class="tab group-tab" [matBadge]="newMessagesCountInGroups.toString()"
+                    [matBadgeHidden]="activeTab==='group' || newMessagesCountInGroups===0 "
+                    [class.active]="activeTab==='group'"
+                    (click)="changeTab('group')">Group Chat
+            </button>
+        </div>
+        <app-direct-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"
+                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-chat>
+        <app-group-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-chat>
 
-</div>
+    </div>
+</ng-container>

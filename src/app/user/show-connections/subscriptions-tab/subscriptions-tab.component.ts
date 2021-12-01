@@ -1,19 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {API_URL} from '@core/constants/global';
+import {Subscription} from 'rxjs';
 import {ChannelsService} from '@core/services/channels.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
-import {API_URL} from '@core/constants/global';
+import {Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import trackByElement from '@core/helpers/track-by-element';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
 
 @Component({
-    selector: 'app-show-subscriptions',
-    templateUrl: './show-subscriptions.component.html',
-    styleUrls: ['./show-subscriptions.component.scss']
+  selector: 'app-subscriptions-tab',
+  templateUrl: './subscriptions-tab.component.html',
+  styleUrls: ['./subscriptions-tab.component.scss']
 })
-export class ShowSubscriptionsComponent implements OnInit, OnDestroy {
+export class SubscriptionsTabComponent implements OnInit {
+
     authUser;
     userChannels;
     apiUrl = API_URL;

@@ -40,7 +40,6 @@ export class ShowNotificationsComponent implements OnInit {
     }
 
     confirmConnection(notification) {
-        console.log(notification)
         this.socketService.acceptConnection({
             notification_id: notification.id,
             connection_id: notification.connection_id,

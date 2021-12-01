@@ -7,13 +7,17 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./show-connections.component.scss']
 })
 export class ShowConnectionsComponent implements OnInit {
-
+    selectedTabIndex = 0;
     subscriptions: Subscription[] = [];
 
     constructor() {
     }
 
     ngOnInit(): void {
+    }
+
+    tabChange(e) {
+
     }
 
 }

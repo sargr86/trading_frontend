@@ -24,6 +24,10 @@ import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-drop
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
 import { ShowConnectionsComponent } from './show-connections/show-connections.component';
+import { ConnectionsTabComponent } from './show-connections/connections-tab/connections-tab.component';
+import { ConnectionRequestsTabComponent } from './show-connections/connection-requests-tab/connection-requests-tab.component';
+import { SubscribersTabComponent } from './show-connections/subscribers-tab/subscribers-tab.component';
+import { SubscriptionsTabComponent } from './show-connections/subscriptions-tab/subscriptions-tab.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +48,10 @@ import { ShowConnectionsComponent } from './show-connections/show-connections.co
         PaymentSuccessComponent,
         PaymentCancelComponent,
         ShowConnectionsComponent,
+        ConnectionsTabComponent,
+        ConnectionRequestsTabComponent,
+        SubscribersTabComponent,
+        SubscriptionsTabComponent,
     ],
     imports: [
         CommonModule,

@@ -9,7 +9,7 @@ import {UsersService} from '@core/services/users.service';
     styleUrls: ['./show-connections.component.scss']
 })
 export class ShowConnectionsComponent implements OnInit {
-    selectedTabIndex = 0;
+    selectedTabIndex = 1;
     subscriptions: Subscription[] = [];
     authUser;
 
@@ -35,6 +35,7 @@ export class ShowConnectionsComponent implements OnInit {
         this.usersService.getUserConnections({user_id: this.authUser.id}).subscribe(dt => {
             this.connections = dt.filter(d => d.confirmed === 1);
             this.connectionRequests = dt.filter(d => d.confirmed === 0);
+            console.log(this.connectionRequests)
         });
     }
 

@@ -2,10 +2,12 @@
     <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex" [@.disabled]="true"
                    (selectedTabChange)="tabChange($event)" *ngIf="authUser">
         <mat-tab label="Connections">
-            <app-connections-tab [authUser]="authUser" [connections]="connections"></app-connections-tab>
+            <app-connections-tab [authUser]="authUser" [connections]="connections"
+                                 [hidden]="connections.length === 0"></app-connections-tab>
         </mat-tab>
         <mat-tab label="Connection requests">
-            <app-connection-requests-tab></app-connection-requests-tab>
+            <app-connection-requests-tab [authUser]="authUser" [connectionRequests]="connectionRequests"
+                                         [hidden]="connectionRequests.length === 0"></app-connection-requests-tab>
         </mat-tab>
         <mat-tab label="Subscribers">
             <app-subscribers-tab></app-subscribers-tab>

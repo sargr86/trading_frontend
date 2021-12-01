@@ -195,25 +195,27 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     sendMessage(e) {
-        if (this.chatForm.valid) {
-            const data = {...this.chatForm.value};
+        if (e.keyCode === 13 && !e.shiftKey && this.chatForm.value.message.trim() !== '') {
+            if (this.chatForm.valid) {
+                const data = {...this.chatForm.value};
 
 
-            this.subscriptions.push(this.chatService.saveDirectMessage(data).subscribe(dt => {
-                this.usersMessages = dt;
-                this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
-                const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
-                this.selectedUserMessages.user = selectedMessages;
-                this.selectedUserMessages.connection_id = selectedMessages?.users_connections[0].id;
-                console.log(selectedMessages?.users_connections)
-                this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.users_connections[0].users_messages, 'created_at');
-                this.selectedUserMessages.rawMessages = selectedMessages?.users_connections[0].users_messages;
+                this.subscriptions.push(this.chatService.saveDirectMessage(data).subscribe(dt => {
+                    this.usersMessages = dt;
+                    this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
+                    const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
+                    this.selectedUserMessages.user = selectedMessages;
+                    this.selectedUserMessages.connection_id = selectedMessages?.users_connections[0].id;
+                    console.log(selectedMessages?.users_connections)
+                    this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.users_connections[0].users_messages, 'created_at');
+                    this.selectedUserMessages.rawMessages = selectedMessages?.users_connections[0].users_messages;
 
-                this.socketService.sendMessage(data);
-                this.scrollMsgsToBottom();
-                console.log(this.selectedUserMessages);
-            }));
-            this.chatForm.patchValue({message: ''});
+                    this.socketService.sendMessage(data);
+                    this.scrollMsgsToBottom();
+                    console.log(this.selectedUserMessages);
+                }));
+                this.chatForm.patchValue({message: ''});
+            }
         }
     }
 

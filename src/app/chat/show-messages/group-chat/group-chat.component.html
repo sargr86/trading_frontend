@@ -4,7 +4,7 @@
          [class.responsive-list]="isChatUsersListSize()">
         <div id="groups-list" class="list-wrap">
             <button class="create-group-chat" [hidden]="showGroupChatForm" (click)="showGroupChatForm = true"><img
-                src="assets/img/noun_create.png" alt=""> Create new group chat
+                src="assets/img/noun_create.png" alt=""> Create new group
             </button>
             <form [formGroup]="groupChatForm" [hidden]="!showGroupChatForm" id="group-chat-form">
                 <input formControlName="name" placeholder="Group name">

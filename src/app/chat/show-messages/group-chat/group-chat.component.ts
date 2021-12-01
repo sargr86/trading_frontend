@@ -398,7 +398,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     sendMessage(e) {
         this.chatForm.patchValue({message: this.fixLineBreaks.transform(e.target.value)});
 
-        if (e.keyCode === 13 && !e.shiftKey) {
+        if (e.keyCode === 13 && !e.shiftKey && this.chatForm.value.message.trim() !== '') {
             if (this.chatForm.valid) {
                 const data = {...this.chatForm.value, group: this.selectedGroup.name};
 

@@ -10,10 +10,10 @@
                                          [hidden]="connectionRequests.length === 0"></app-connection-requests-tab>
         </mat-tab>
         <mat-tab label="Subscribers">
-            <app-subscribers-tab></app-subscribers-tab>
+            <app-subscribers-tab [authUser]="authUser"></app-subscribers-tab>
         </mat-tab>
         <mat-tab label="Subscriptions">
-            <app-subscriptions-tab></app-subscriptions-tab>
+            <app-subscriptions-tab [authUser]="authUser"></app-subscriptions-tab>
         </mat-tab>
     </mat-tab-group>
 

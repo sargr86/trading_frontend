@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {Subscription} from 'rxjs';
 import {ChannelsService} from '@core/services/channels.service';
@@ -9,13 +9,13 @@ import {SubjectService} from '@core/services/subject.service';
 import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
-  selector: 'app-subscriptions-tab',
-  templateUrl: './subscriptions-tab.component.html',
-  styleUrls: ['./subscriptions-tab.component.scss']
+    selector: 'app-subscriptions-tab',
+    templateUrl: './subscriptions-tab.component.html',
+    styleUrls: ['./subscriptions-tab.component.scss']
 })
 export class SubscriptionsTabComponent implements OnInit {
 
-    authUser;
+    @Input() authUser;
     userChannels;
     apiUrl = API_URL;
     trackByElement = trackByElement;
@@ -23,12 +23,11 @@ export class SubscriptionsTabComponent implements OnInit {
 
     constructor(
         private channelsService: ChannelsService,
-        private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         public router: Router,
         private subject: SubjectService
     ) {
-        this.authUser = this.getAuthUser.transform();
+
     }
 
     ngOnInit(): void {

@@ -48,5 +48,8 @@ export class ChannelsService {
         return this.httpClient.put<any>(`${API_URL}channels/save-channel-details`, params);
     }
 
+    getChannelSubscriptions(params){
+        return this.httpClient.get<any>(`${API_URL}channels/get-channel-subscribers`, {params});
+    }
 
 }

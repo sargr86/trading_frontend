@@ -1,1 +1,27 @@
-<p>subscribers-tab works!</p>
+<div class="channel-subscribers-container">
+    <ng-container *ngFor="let user of channelSubscribers?.subscribers">
+        <div class="subscriber">
+            <div class="left">
+                <div class="img user-avatar">
+                    <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
+                </div>
+                <div class="text">
+                    <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
+                </div>
+            </div>
+            <div class="right">
+                <button [matMenuTriggerFor]="menu" class="show-actions">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item
+                            [disableRipple]="true">
+                        Disconnect
+                    </button>
+
+                </mat-menu>
+            </div>
+        </div>
+    </ng-container>
+</div>

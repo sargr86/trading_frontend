@@ -1,19 +1,26 @@
-<ul *ngIf="userChannels">
-    <li *ngFor="let channel of userChannels.subscriptions;trackBy:trackByElement" class="channel-item">
-        <div class="thumbnail">
-            <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'">
-        </div>
-        <div class="info">
-            <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
-            <div class="shortened-details">
-                <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+<div class="subscriptions-container">
+    <ul *ngIf="userChannels">
+        <li *ngFor="let channel of userChannels.subscriptions;trackBy:trackByElement" class="channel-item">
+            <div class="left">
+
+                <div class="thumbnail">
+                    <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'">
+                </div>
+                <div class="info">
+                    <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                    <div class="shortened-details">
+                        <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+                    </div>
+                    <p>{{channel.description}}</p>
+                </div>
             </div>
-            <p>{{channel.description}}</p>
-            <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
-                    [class.subscribed]="checkIfSubscribed(channel)"
-                    (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
-            </button>
-        </div>
-    </li>
-</ul>
+            <div class="right">
+                <button class="subscribe-btn" *ngIf="channel?.user?.username !== authUser?.username"
+                        [class.subscribed]="checkIfSubscribed(channel)"
+                        (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Unsubscribe' : 'Subscribe'}}
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>
 

@@ -6,47 +6,81 @@
     color: $metl-green;
 }
 
+.subscriptions-container{
+    margin-top: 30px;
+}
 
 
 .channel-item {
     display: flex;
-    //width: 936px;
+    width: 455px;
     margin-bottom: 32px;
     flex-wrap: wrap;
+    padding: 10px;
+    align-items: center;
+    border: 1px solid silver;
 
-    .avatar {
-        width: 240px !important;
-        height: 240px;
+    .left {
+        display: flex;
+        align-items: center;
+
+        .avatar {
+            width: 48px !important;
+            height: 48px;
+        }
+
+        .info {
+            margin-top: 4px;
+            min-width: 250px;
+            max-width: 350px;
+
+            .name {
+                color: #545454;
+                font-size: 16px;
+                font-family: 'Muli-Bold';
+                cursor: pointer;
+            }
+
+            .dot {
+                margin-left: 26px;
+                margin-top: -3px;
+            }
+
+            p {
+                font-size: 14px;
+                font-family: 'Muli-Light';
+            }
+
+
+            .watchers-count, .videos-count {
+                font-size: 14px;
+                color: #818181;
+            }
+
+
+        }
     }
 
-    .info {
-        margin-top: 4px;
-        min-width: 250px;
-        max-width: 350px;
 
-        .name {
-            color: #545454;
-            font-size: 24px;
-            font-family: 'Muli-Bold';
-            cursor: pointer;
-        }
-
-        .dot {
-            margin-left: 26px;
-            margin-top: -3px;
-        }
-
-        p {
+    .right {
+        .subscribe-btn {
+            width: 119px;
+            height: 36px;
+            padding: 15px 32px;
+            color: #ffffff !important;
             font-size: 16px;
-            font-family: 'Muli-Light';
+            font-family: "Muli-Light";
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+
+            &.subscribed {
+                background-color: #b3b3b3 !important;
+            }
+
+
         }
-
-
-        .watchers-count, .videos-count {
-            font-size: 14px;
-            color: #818181;
-        }
-
     }
 }
 

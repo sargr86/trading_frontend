@@ -9,7 +9,7 @@ import {UsersService} from '@core/services/users.service';
     styleUrls: ['./show-connections.component.scss']
 })
 export class ShowConnectionsComponent implements OnInit {
-    selectedTabIndex = 2;
+    selectedTabIndex = 3;
     subscriptions: Subscription[] = [];
     authUser;
 

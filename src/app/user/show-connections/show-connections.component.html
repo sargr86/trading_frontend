@@ -2,7 +2,7 @@
     <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex" [@.disabled]="true"
                    (selectedTabChange)="tabChange($event)" *ngIf="authUser">
         <mat-tab label="Connections">
-            <app-connections-tab [authUser]="authUser"></app-connections-tab>
+            <app-connections-tab [authUser]="authUser" [connections]="connections"></app-connections-tab>
         </mat-tab>
         <mat-tab label="Connection requests">
             <app-connection-requests-tab></app-connection-requests-tab>

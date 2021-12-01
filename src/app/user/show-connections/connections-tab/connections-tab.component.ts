@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UsersService} from "@core/services/users.service";
 
 @Component({
     selector: 'app-connections-tab',
@@ -8,21 +7,18 @@ import {UsersService} from "@core/services/users.service";
 })
 export class ConnectionsTabComponent implements OnInit {
     @Input() authUser;
-    connections = [];
+    @Input() connections;
+
 
     constructor(
-        private usersService: UsersService
+
     ) {
     }
 
     ngOnInit(): void {
-        this.getConnections();
+
     }
 
-    getConnections() {
-        this.usersService.getUserContacts({user_id: this.authUser.id}).subscribe(dt => {
-            this.connections = dt;
-        });
-    }
+
 
 }

@@ -1,12 +1,16 @@
-<ul *mobxAutorun>
-    <li *ngFor="let notification of notifications" class="notification flex-wrap" (click)="readNotification(notification.id)">
+<ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
+    <li *ngFor="let notification of notifications" class="notification flex-wrap"
+        (click)="readNotification(notification.id)">
 
-        <div class="left d-flex pl-2 pl-sm-0">
-            <img class="avatar" id="profile-image"
-                 [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+        <div class="left d-flex pl-2">
+            <div class="avatar-container">
+                <img class="avatar" id="profile-image"
+                     [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+            </div>
             <div class="notification-body">
                 <p class="notification-text" [innerHTML]="notification.msg"></p>
-                <span class="date" [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
+                <span class="date"
+                      [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
             </div>
         </div>
         <div class="right">

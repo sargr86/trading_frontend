@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NotificationsService} from '@core/services/notifications.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import * as moment from 'moment';
@@ -18,6 +18,8 @@ export class ShowNotificationsComponent implements OnInit {
 
     subscriptions: Subscription[] = [];
 
+    @Input() shownInSidebar = false;
+
     constructor(
         private notificationsService: NotificationsService,
         private getAuthUser: GetAuthUserPipe,
@@ -29,6 +31,7 @@ export class ShowNotificationsComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.getNotifications();
         this.getConnectWithUser();
+        this.getAcceptedDeclinedRequests();
     }
 
     getNotifications() {
@@ -65,6 +68,20 @@ export class ShowNotificationsComponent implements OnInit {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             this.getNotifications();
+        }));
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            this.notifications.push(dt);
+            this.notificationsStore.setNotifications(this.notifications);
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+            this.notifications.push(dt);
+            this.notificationsStore.setNotifications(this.notifications);
         }));
     }
 

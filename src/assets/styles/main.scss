@@ -160,8 +160,13 @@ li {
     border-radius: 50%;
 }
 
-#profile-image {
-    cursor: pointer;
+.avatar-container {
+    margin-right: 16px;
+
+    #profile-image {
+        cursor: pointer;
+        margin-right: 0 !important;
+    }
 }
 
 // Ads

@@ -43,3 +43,20 @@
         }
     }
 }
+
+
+@media screen and (max-width: 456px) {
+    #profile-image {
+        width: 60px !important;
+        height: 60px !important;
+        margin-top: 5px;
+    }
+}
+
+.sidebar-notifications {
+    #profile-image {
+        width: 60px !important;
+        height: 60px !important;
+        margin-top: 5px;
+    }
+}

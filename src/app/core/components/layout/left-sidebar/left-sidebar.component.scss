@@ -14,16 +14,21 @@
 }
 
 
-
 .subscription {
     cursor: pointer;
 }
 
 
-
 @media (max-width: 991px) {
     #left-sidebar {
         width: 300px;
+    }
+
+}
+
+@media (min-width: 991px) {
+    .logo-container {
+        display: none;
     }
 
 }

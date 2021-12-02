@@ -23,20 +23,22 @@
             }
         }
 
-        .additional-actions {
-            .connection-actions {
-                display: flex;
-                width: 300px;
-                justify-content: space-around;
-                margin-left: 50px;
 
-                button {
-                    @include regularButton;
-                }
+    }
 
-                .decline-connection-btn {
-                    background-color: $red;
-                }
+    .additional-actions {
+        .connection-actions {
+            display: flex;
+            width: 300px;
+            justify-content: space-around;
+            margin-left: 50px;
+
+            button {
+                @include regularButton;
+            }
+
+            .decline-connection-btn {
+                background-color: $red;
             }
         }
     }

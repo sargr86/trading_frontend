@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     @Output('search') search = new EventEmitter();
     @Output('closeSidenav') closeSidenav = new EventEmitter();
+    @Output('closeNotifications') closeRightSidenav = new EventEmitter();
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
     notifications = [];
     notificationsStore = notificationsStore;

@@ -35,7 +35,8 @@ import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-pl
 import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purchase-coins.component';
 import { ShowChatGroupMembersComponent } from './components/modals/show-chat-group-members/show-chat-group-members.component';
 import { ShowNotificationsComponent } from './components/ungrouped/show-notifications/show-notifications.component';
-import {MobxAngularModule} from "mobx-angular";
+import {MobxAngularModule} from 'mobx-angular';
+import { RightSidebarComponent } from './components/layout/right-sidebar/right-sidebar.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import {MobxAngularModule} from "mobx-angular";
         PurchaseCoinsComponent,
         ShowChatGroupMembersComponent,
         ShowNotificationsComponent,
+        RightSidebarComponent,
     ],
     imports: [
         CommonModule,
@@ -86,6 +88,7 @@ import {MobxAngularModule} from "mobx-angular";
         LeftSidebarComponent,
         PurchaseBitsComponent,
         StocksListsPortableComponent,
+        RightSidebarComponent
     ],
     entryComponents: [],
     providers: [

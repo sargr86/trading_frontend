@@ -1,5 +1,5 @@
 <nav class="home-header navbar navbar-expand-lg navbar-light">
-    <div>
+    <div class="website-logo">
         <img class="navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
     </div>
 
@@ -8,7 +8,7 @@
         <app-search-videos-form class="d-block d-lg-none mb-0 flex-1"
                                 (search)="searchVideos($event)"></app-search-videos-form>
     </div>
-    <div class="right-side-actions d-sm-flex d-md-flex d-lg-none d-block">
+    <div class="right-side-actions d-sm-flex d-md-flex d-lg-none align-items-end">
         <button class="navbar-toggler" type="button" [class.disabled]="router.url.includes('publish')"
                 (click)="closeSidenav.emit(false)">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="header-right nav-menu">
+        <div class="header-right nav-menu flex-sm-nowrap flex-wrap">
             <app-search-videos-form class="d-none d-lg-block" *ngIf="!routerUrl?.includes('analytics')"
                                     (search)="searchVideos($event)"></app-search-videos-form>
             <app-search-stocks-form class="d-none d-lg-block" [autocomplete]="true" [openStockOnEnter]="true"
@@ -34,7 +34,7 @@
                         <app-purchase-bits [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
-                <div class="notification" [hidden]="envName==='production'" [matMenuTriggerFor]="notifMenu"
+                <div class="notification" [hidden]="envName==='production'" (click)="closeRightSidenav.emit(true)"
                      [class.disabled]="notificationsStore.notifications.length===0">
                     <i class="fas fa-bell"></i>
                     <span *ngIf="notificationsStore.notifications.length > 0">{{notificationsStore.notifications.length}}</span>

@@ -19,6 +19,8 @@ nav {
         padding: 0 200px;
         box-shadow: 0 0 6px #0000002E;
 
+
+
         @media screen and (max-width: 1440px) {
             padding: 0 100px;
         }
@@ -26,7 +28,12 @@ nav {
             padding: 5px 40px;
         }
         @media screen and (max-width: 560px) {
-            padding: 5px 15px;
+            padding: 15px 15px;
+        }
+    }
+    .website-logo {
+        @media screen and (max-width: 350px) {
+            margin:auto;
         }
     }
 

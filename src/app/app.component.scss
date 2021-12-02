@@ -38,6 +38,7 @@
 .body-content-right {
     width: calc(100% - 272px);
     overflow: hidden;
+
     &.full-width {
         width: 100%;
     }
@@ -54,7 +55,16 @@
     }
 }
 
+#right-sidenav {
+    width: 360px !important;
+    margin-top: 81px;
+}
 
+@media screen and (max-width: 991px) {
+    #right-sidenav {
+        margin-top: 113px;
+    }
+}
 @media screen and (max-width: 767px) {
     .open-left-menu.d-none {
         font-size: 30px;
@@ -69,5 +79,17 @@
         right: -30px;
         top: -20px;
         font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #right-sidenav {
+        width: 100% !important;
+        margin-top: 145px;
+    }
+}
+@media screen and (max-width: 456px) {
+    #right-sidenav {
+        margin-top: 183px;
     }
 }

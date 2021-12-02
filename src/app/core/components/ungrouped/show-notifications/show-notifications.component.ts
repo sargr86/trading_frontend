@@ -79,7 +79,7 @@ export class ShowNotificationsComponent implements OnInit {
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined')
+            console.log('declined', dt)
             this.notifications.push(dt);
             this.notificationsStore.setNotifications(this.notifications);
         }));

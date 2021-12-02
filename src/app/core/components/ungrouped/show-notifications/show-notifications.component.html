@@ -1,5 +1,6 @@
 <ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
-    <li *ngFor="let notification of notifications" class="notification flex-wrap"
+    <li *ngFor="let notification of notifications" class="notification"
+        [class.flex-wrap]="notification.notification_type.name === 'users_connection_request'"
         (click)="readNotification(notification.id)">
 
         <div class="left d-flex pl-2">
@@ -27,6 +28,29 @@
                     <mat-icon>close</mat-icon>
                     <span>Decline</span>
                 </button>
+            </div>
+            <div class="regular-notification-actions"
+                 *ngIf="notification.notification_type.name !== 'users_connection_request'">
+                <div class="dotes">
+                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                            aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>check</mat-icon>
+                            <span>Mark as read</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>close</mat-icon>
+                            <span>Remove this notification</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>cancel_presentation</mat-icon>
+                            <span>Turn off notifications from this page</span>
+                        </button>
+                    </mat-menu>
+                </div>
             </div>
         </div>
     </li>

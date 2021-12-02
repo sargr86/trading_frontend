@@ -115,7 +115,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     getIndices() {
         this.subscriptions.push(this.stocksService.getIndices({}).subscribe(dt => {
             this.indices = dt;
-            // this.subject.changeIndices(dt);
+            this.subject.changeIndices(dt);
         }));
     }
 

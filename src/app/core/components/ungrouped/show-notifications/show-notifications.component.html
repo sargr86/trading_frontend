@@ -1,7 +1,7 @@
 <ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
     <li *ngFor="let notification of notifications" class="notification"
         [class.flex-wrap]="notification.notification_type.name === 'users_connection_request'"
-        (click)="readNotification(notification.id)">
+        (click)="readNotification(notification)">
 
         <div class="left d-flex pl-2">
             <div class="avatar-container">

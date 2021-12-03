@@ -132,8 +132,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.stocksStore.setStocks(this.userStocks);
         }));
-
-
     }
 
     updateFollowedLists(stocks) {

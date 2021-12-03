@@ -85,8 +85,8 @@ export class ShowNotificationsComponent implements OnInit {
         }));
     }
 
-    readNotification(id) {
-        this.subscriptions.push(this.notificationsService.readNotification({id}).subscribe((dt: any) => {
+    readNotification(n) {
+        this.subscriptions.push(this.notificationsService.readNotification({id: n.id, type: n.notification_type.name}).subscribe((dt: any) => {
 
         }));
     }

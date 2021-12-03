@@ -34,7 +34,7 @@
                         <app-purchase-bits [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
-                <div class="notification" [hidden]="envName==='production'" (click)="closeRightSidenav.emit(true)"
+                <div class="notification" (click)="closeRightSidenav.emit(true)"
                      [class.disabled]="notificationsStore.notifications.length===0">
                     <i class="fas fa-bell"></i>
                     <span *ngIf="notificationsStore.notifications.length > 0">{{notificationsStore.notifications.length}}</span>

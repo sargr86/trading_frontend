@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {notificationsStore} from '@shared/stores/notifications-store';
+import {sortTableData} from '@core/helpers/sort-table-data-by-column';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-show-notifications',
@@ -23,7 +25,8 @@ export class ShowNotificationsComponent implements OnInit {
     constructor(
         private notificationsService: NotificationsService,
         private getAuthUser: GetAuthUserPipe,
-        private socketService: SocketIoService
+        private socketService: SocketIoService,
+        public router: Router
     ) {
     }
 
@@ -36,7 +39,7 @@ export class ShowNotificationsComponent implements OnInit {
 
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
-            this.notifications = dt;
+            this.notifications = sortTableData(dt, 'created_at', 'desc');
             console.log(dt)
             this.notificationsStore.setNotifications(dt);
         }));
@@ -86,8 +89,13 @@ export class ShowNotificationsComponent implements OnInit {
     }
 
     readNotification(n) {
-        this.subscriptions.push(this.notificationsService.readNotification({id: n.id, type: n.notification_type.name}).subscribe((dt: any) => {
-
+        this.subscriptions.push(this.notificationsService.readNotification({
+            id: n.id,
+            type: n.notification_type.name
+        }).subscribe((dt: any) => {
+            this.notifications = sortTableData(dt, 'created_at', 'desc');
+            console.log(dt)
+            this.notificationsStore.setNotifications(dt);
         }));
     }
 

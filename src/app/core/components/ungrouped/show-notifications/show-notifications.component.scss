@@ -7,7 +7,14 @@
     border-bottom: 1px solid #e5e5e5;
     padding: 10px 0;
 
+    &.unread {
+        background-color: #8cc5b440;
+    }
+
     .left {
+        width: 97%;
+        cursor: pointer;
+
         .avatar {
             width: 55px !important;
             height: 55px !important;
@@ -34,6 +41,7 @@
     .additional-actions {
         display: flex;
         align-items: center;
+
         .connection-actions {
             display: flex;
             width: 300px;
@@ -51,6 +59,10 @@
     }
 }
 
+.view-more-notifications {
+    cursor: pointer;
+    text-align: center;
+}
 
 @media screen and (max-width: 456px) {
     .avatar-container {

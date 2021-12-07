@@ -1,9 +1,9 @@
 <ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
-    <li *ngFor="let notification of notifications" class="notification"
+    <li *ngFor="let notification of notificationsStore.notifications" class="notification" [class.unread]="notification.read===0"
         [class.flex-wrap]="notification.notification_type.name === 'users_connection_request'"
-        (click)="readNotification(notification)">
+        >
 
-        <div class="left d-flex pl-2">
+        <div class="left d-flex pl-2" (click)="readNotification(notification)">
             <div class="avatar-container">
                 <img class="avatar" id="profile-image"
                      [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
@@ -13,10 +13,6 @@
                 <span class="date"
                       [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
             </div>
-        </div>
-        <div class="right">
-
-
         </div>
         <div class="additional-actions">
             <div class="connection-actions" *ngIf="notification.notification_type.name === 'users_connection_request'">
@@ -37,7 +33,7 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="readNotification(notification)">
                             <mat-icon>check</mat-icon>
                             <span>Mark as read</span>
                         </button>
@@ -55,3 +51,6 @@
         </div>
     </li>
 </ul>
+
+<p class="view-more-notifications" *ngIf="notificationsStore.notifications.length > 0 && shownInSidebar"
+   (click)="router.navigate(['/notifications'])">View more</p>

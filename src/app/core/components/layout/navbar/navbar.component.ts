@@ -244,6 +244,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
         });
     }
 
+    notificationClicked() {
+        this.closeRightSidenav.emit(true);
+    }
+
+    getUnreadNotificationsCount() {
+        return notificationsStore.notifications.filter(n => n.read === 0).length;
+    }
+
     async openWalletPage() {
         await this.router.navigate(['wallet/show']);
     }

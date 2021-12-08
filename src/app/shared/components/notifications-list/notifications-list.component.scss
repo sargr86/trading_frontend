@@ -1,6 +1,23 @@
 @import 'variables';
 @import 'mixins';
 
+.top {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        color: $red;
+        font-family: "Muli", sans-serif, bold;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .view-more-notifications {
+        color: $metl-green;
+    }
+}
+
+
 .notification {
     display: flex;
     justify-content: space-between;

@@ -1,19 +1,20 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
 import {NotificationsService} from '@core/services/notifications.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import * as moment from 'moment';
-import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {Router} from '@angular/router';
 import {notificationsStore} from '@shared/stores/notifications-store';
 import {sortTableData} from '@core/helpers/sort-table-data-by-column';
-import {Router} from "@angular/router";
+import * as moment from 'moment';
 
 @Component({
-    selector: 'app-show-notifications',
-    templateUrl: './show-notifications.component.html',
-    styleUrls: ['./show-notifications.component.scss']
+    selector: 'app-notifications-list',
+    templateUrl: './notifications-list.component.html',
+    styleUrls: ['./notifications-list.component.scss']
 })
-export class ShowNotificationsComponent implements OnInit {
+export class NotificationsListComponent implements OnInit, OnDestroy {
+
     authUser;
     notifications = [];
     notificationsStore = notificationsStore;
@@ -21,6 +22,7 @@ export class ShowNotificationsComponent implements OnInit {
     subscriptions: Subscription[] = [];
 
     @Input() shownInSidebar = false;
+    @Input() notificationsCategory = 'new';
 
     constructor(
         private notificationsService: NotificationsService,
@@ -45,6 +47,16 @@ export class ShowNotificationsComponent implements OnInit {
         }));
     }
 
+    filterByCategory(notifications, category) {
+        // console.log('OK')
+        const filteredNotifications = notifications.filter(n => {
+            const diff = moment().diff(n.created_at, 'hours');
+            return category === 'early' ? diff > 0 : diff <= 0;
+        });
+        // console.log(filteredNotifications, category);
+        return filteredNotifications;
+    }
+
     confirmConnection(notification) {
         this.socketService.acceptConnection({
             notification_id: notification.id,
@@ -53,6 +65,7 @@ export class ShowNotificationsComponent implements OnInit {
             from_user: notification.to_user,
         });
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
+
         this.notificationsStore.setNotifications(this.notifications);
     }
 
@@ -76,13 +89,14 @@ export class ShowNotificationsComponent implements OnInit {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt)
+            console.log('accepted', dt);
             this.notifications.push(dt);
+            this.notifications = sortTableData(dt, 'created_at', 'desc');
             this.notificationsStore.setNotifications(this.notifications);
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined', dt)
+            console.log('declined', dt);
             this.notifications.push(dt);
             this.notificationsStore.setNotifications(this.notifications);
         }));
@@ -94,9 +108,23 @@ export class ShowNotificationsComponent implements OnInit {
             type: n.notification_type.name
         }).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
-            console.log(dt)
+            console.log(dt);
             this.notificationsStore.setNotifications(dt);
         }));
+    }
+
+    markAllAsRead() {
+        const ids = this.notificationsStore.notifications.map(n => n.id);
+        console.log(this.notificationsStore.notifications)
+        this.notificationsService.markNotificationsAsRead({ids, user_id: this.authUser.id}).subscribe(dt => {
+            this.notifications = sortTableData(dt, 'created_at', 'desc');
+            this.notificationsStore.setNotifications(dt);
+        });
+        console.log(ids)
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

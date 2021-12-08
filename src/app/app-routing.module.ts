@@ -15,7 +15,6 @@ import {PageLoadingComponent} from '@core/components/ungrouped/page-loading/page
 import {PaymentSuccessComponent} from '@app/user/payment-success/payment-success.component';
 import {PaymentCancelComponent} from '@app/user/payment-cancel/payment-cancel.component';
 import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-plan.component';
-import {ShowNotificationsComponent} from "@core/components/ungrouped/show-notifications/show-notifications.component";
 
 
 const routes: Routes = [
@@ -67,10 +66,6 @@ const routes: Routes = [
         path: 'wallet',
         loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule),
         canActivate: [AuthGuard]
-    },
-    {
-        path: 'notifications',
-        component: ShowNotificationsComponent
     },
     {
         path: 'about-us',

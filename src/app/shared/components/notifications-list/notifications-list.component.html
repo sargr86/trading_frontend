@@ -1,7 +1,22 @@
+<div class="notifications-title-read" *ngIf="notificationsCategory==='new'">
+    <h3>Notifications</h3>
+    <p class="mark-as-read" (click)="markAllAsRead()">Mark all as read</p>
+</div>
+<div class="top">
+    <div>
+        <p *ngIf="filterByCategory(notificationsStore.notifications, notificationsCategory)?.length > 0">{{notificationsCategory === 'new' ? 'New' : 'Earlier' }}</p>
+    </div>
+    <div>
+        <p class="view-more-notifications"
+           *ngIf="filterByCategory(notificationsStore.notifications, notificationsCategory)?.length > 0 && shownInSidebar"
+           (click)="router.navigate(['user/notifications'])">View more</p>
+    </div>
+</div>
 <ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
-    <li *ngFor="let notification of notificationsStore.notifications" class="notification" [class.unread]="notification.read===0"
-        [class.flex-wrap]="notification.notification_type.name === 'users_connection_request'"
-        >
+    <li *ngFor="let notification of filterByCategory(notificationsStore.notifications, notificationsCategory)"
+        class="notification" [class.unread]="notification.read===0"
+        [class.flex-wrap]="notification?.notification_type?.name === 'users_connection_request'"
+    >
 
         <div class="left d-flex pl-2" (click)="readNotification(notification)">
             <div class="avatar-container">
@@ -15,7 +30,8 @@
             </div>
         </div>
         <div class="additional-actions">
-            <div class="connection-actions" *ngIf="notification.notification_type.name === 'users_connection_request'">
+            <div class="connection-actions"
+                 *ngIf="notification?.notification_type?.name === 'users_connection_request'">
                 <button class="confirm-connection-btn" (click)="confirmConnection(notification)">
                     <mat-icon>check</mat-icon>
                     <span>Confirm</span>
@@ -26,7 +42,7 @@
                 </button>
             </div>
             <div class="regular-notification-actions"
-                 *ngIf="notification.notification_type.name !== 'users_connection_request'">
+                 *ngIf="notification?.notification_type?.name !== 'users_connection_request'">
                 <div class="dotes">
                     <button mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true"
                             aria-label="Example icon-button with a menu">
@@ -52,5 +68,4 @@
     </li>
 </ul>
 
-<p class="view-more-notifications" *ngIf="notificationsStore.notifications.length > 0 && shownInSidebar"
-   (click)="router.navigate(['/notifications'])">View more</p>
+

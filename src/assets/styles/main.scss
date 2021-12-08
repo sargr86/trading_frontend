@@ -1160,4 +1160,15 @@ mat-error {
     background-color: $metl-green !important;
 }
 
+.notifications-title-read {
+    display: flex;
+    justify-content: space-between;
+
+    .mark-as-read {
+        color: $red;
+        font-size: 14px;
+        cursor: pointer;
+    }
+}
+
 @import "responsive";

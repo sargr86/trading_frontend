@@ -11,6 +11,7 @@ import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.co
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 import {ShowConnectionsComponent} from '@app/user/show-connections/show-connections.component';
+import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
 
 const routes: Routes = [
     {
@@ -84,8 +85,13 @@ const routes: Routes = [
     {
         path: 'connections',
         component: ShowConnectionsComponent
-    }
+    },
+    {
+        path: 'notifications',
+        component: ShowNotificationsComponent
+    },
 ];
+
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

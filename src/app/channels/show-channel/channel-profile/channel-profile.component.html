@@ -75,10 +75,17 @@
                 <span>Waiting for confirmation</span>
             </a>
 
-            <a class="users-connected-btn" *ngIf="usersConnectionStatus==='connected'">
+            <button class="users-connected-btn" *ngIf="usersConnectionStatus==='connected'" [matMenuTriggerFor]="menu">
                 <mat-icon>check</mat-icon>
                 <span>Connected</span>
-            </a>
+            </button>
+
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="disconnectUser()">
+                    <mat-icon>close</mat-icon>
+                    <span>Disconnect</span>
+                </button>
+            </mat-menu>
 
             <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn" *ngIf="usersConnectionStatus==='connected'">
                 <mat-icon>chat</mat-icon>

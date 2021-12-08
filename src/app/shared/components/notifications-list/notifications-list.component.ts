@@ -90,9 +90,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt);
-            this.notifications.push(dt);
-            this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setNotifications(this.notifications);
+            if (dt) {
+                this.notifications.push(dt);
+                this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
+                this.notificationsStore.setNotifications(this.notifications);
+            }
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {

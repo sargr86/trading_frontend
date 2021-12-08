@@ -33,6 +33,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     channelForm: FormGroup;
     subscriptions: Subscription[] = [];
     attemptedToConnect = false;
+    usersConnection;
     usersConnectionStatus = 'idle';
 
     @Input('channelUser') channelUser;
@@ -61,6 +62,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             // this.detectImageChange();
             this.checkIfUsersConnected();
             this.getAcceptedDeclinedRequests();
+            this.getDisconnectUser();
         }
     }
 
@@ -88,6 +90,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
             channel_user_id: this.channelUser.id
         }).subscribe(dt => {
+            this.usersConnection = dt;
             if (dt) {
                 this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
             }
@@ -229,6 +232,21 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
             console.log('declined')
+            this.usersConnectionStatus = 'idle';
+        }));
+    }
+
+    disconnectUser() {
+        this.socketService.disconnectUsers({
+            id: this.usersConnection.id,
+            to_username: this.channelUser.username
+        });
+        this.usersConnectionStatus = 'idle';
+    }
+
+    getDisconnectUser() {
+        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
+            console.log('disconnected', dt)
             this.usersConnectionStatus = 'idle';
         }));
     }

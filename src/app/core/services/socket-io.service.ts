@@ -38,6 +38,18 @@ export class SocketIoService {
         });
     }
 
+    disconnectUsers(data) {
+        this.socket.emit('disconnectUsers', data);
+    }
+
+    getDisconnectUsers(data) {
+        return new Observable(observer => {
+            this.socket.on('getDisconnectUsers', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     userOnlineFeedback() {
         return new Observable(observer => {
             this.socket.on('userConnected', msg => {

@@ -121,8 +121,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt)
-            this.notifications.push(dt);
-            this.notificationsStore.setNotifications(this.notifications);
+            if (dt) {
+                this.notifications.push(dt);
+                this.notificationsStore.setNotifications(this.notifications);
+            }
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
@@ -249,7 +251,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUnreadNotificationsCount() {
-        return notificationsStore.notifications.filter(n => n.read === 0).length;
+        return notificationsStore.notifications.filter(n => n?.read === 0).length;
     }
 
     async openWalletPage() {

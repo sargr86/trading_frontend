@@ -1,8 +1,8 @@
+<mat-spinner [diameter]="15" *ngIf="loader.channelLoading.status==='loading'"></mat-spinner>
 <div class="profile-list">
     <!--    <app-categories></app-categories>-->
-    <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
-    <mat-spinner [diameter]="15" *ngIf="dataLoading==='loading'"></mat-spinner>
     <ng-container *ngIf="channelUser">
+        <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
         <app-channel-profile [channelUser]="channelUser" [authUser]="authUser" *ngIf="channelUser"
                              (toggleChatBox)="toggleChatBox()"></app-channel-profile>
         <div class="stocks-watchlist pWatchlist">
@@ -63,8 +63,9 @@
             <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>
         </div>
     </ng-container>
-    <div class="channel-not-found" *ngIf="!channelUser && dataLoading==='finished'">
+    <div class="channel-not-found" *ngIf="!channelUser && loader.channelLoading.status==='finished'">
         <p>Channel with such name is not found</p>
     </div>
 </div>
-<app-chat-bottom-box *ngIf="showChatBox && channelUser" [channelUser]="channelUser" (close)="showChatBox = false"></app-chat-bottom-box>
+<app-chat-bottom-box *ngIf="showChatBox && channelUser" [channelUser]="channelUser"
+                     (close)="showChatBox = false"></app-chat-bottom-box>

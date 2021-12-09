@@ -109,7 +109,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     }
 
     getUserInfo() {
-        this.dataLoading = 'loading';
+        this.loader.channelLoading.status = 'loading';
         const viewingOwnChannel = +(this.authUser.username === this.passedUsername);
         if (this.passedUsername) {
             this.usersService.getUserInfo({
@@ -119,7 +119,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
                 if (dt) {
                     this.channelUser = dt;
                 }
-                this.dataLoading = 'finished';
+                this.loader.channelLoading.status = 'finished';
             });
         }
     }

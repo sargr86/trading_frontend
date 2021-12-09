@@ -33,6 +33,7 @@ export class RequestInterceptor implements HttpInterceptor {
                 this.loader.dataLoading = false;
                 this.loader.fileProcessing = false;
                 this.loader.stocksLoading.status = 'finished';
+                this.loader.channelLoading.status = 'finished';
                 const message = err.error.msg;
 
                 // Sequelize db connection error

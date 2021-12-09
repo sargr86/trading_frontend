@@ -117,12 +117,20 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     markAllAsRead() {
         const ids = this.notificationsStore.notifications.map(n => n.id);
-        console.log(this.notificationsStore.notifications)
         this.notificationsService.markNotificationsAsRead({ids, user_id: this.authUser.id}).subscribe(dt => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
             this.notificationsStore.setNotifications(dt);
         });
-        console.log(ids)
+    }
+
+    removeNotification(n) {
+        this.subscriptions.push(this.notificationsService.removeNotification({
+            id: n.id,
+            type: n.notification_type.name
+        }).subscribe((dt: any) => {
+            this.notifications = sortTableData(dt, 'created_at', 'desc');
+            this.notificationsStore.setNotifications(dt);
+        }));
     }
 
     ngOnDestroy(): void {

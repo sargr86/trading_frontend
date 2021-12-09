@@ -20,6 +20,10 @@ export class NotificationsService {
         return this.httpClient.put(`${API_URL}notifications/read`, params);
     }
 
+    removeNotification(params) {
+        return this.httpClient.delete(`${API_URL}notifications/remove`, {params});
+    }
+
     markNotificationsAsRead(params) {
         return this.httpClient.put(`${API_URL}notifications/mark-all-as-read`, params);
     }

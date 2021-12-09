@@ -53,7 +53,7 @@
                             <mat-icon>check</mat-icon>
                             <span>Mark as read</span>
                         </button>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="removeNotification(notification)">
                             <mat-icon>close</mat-icon>
                             <span>Remove this notification</span>
                         </button>

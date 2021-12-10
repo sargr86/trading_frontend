@@ -21,6 +21,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {GetElegantDatePipe} from "@shared/pipes/get-elegant-date.pipe";
+import {environment} from "@env";
 
 @Component({
     selector: 'app-direct-chat',
@@ -46,6 +47,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     newMessageSources = [];
 
     subscriptions: Subscription[] = [];
+    isProduction = environment.production;
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
     @Output() newMessagesCountReceived = new EventEmitter();

@@ -121,7 +121,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt)
-            if (dt) {
+            if (dt.receiver_id === this.authUser.id) {
                 this.notifications.push(dt);
                 this.notificationsStore.setNotifications(this.notifications);
             }

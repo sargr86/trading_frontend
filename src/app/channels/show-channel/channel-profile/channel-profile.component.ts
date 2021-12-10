@@ -227,7 +227,11 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt)
-            this.usersConnectionStatus = 'connected';
+            console.log(dt.receiver_id, this.channelUser.id)
+            if ((dt.receiver_id === this.authUser.id && dt.initiator_id === this.channelUser.id)
+                || (dt.receiver_id === this.channelUser.id && dt.initiator_id === this.authUser.id)) {
+                this.usersConnectionStatus = 'connected';
+            }
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {

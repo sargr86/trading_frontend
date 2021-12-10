@@ -154,7 +154,7 @@
                               (keyup.enter)="sendMessage($event)">
                     </textarea>
                 </form>
-                <div class="icons">
+                <div class="icons" [hidden]="isProduction">
                     <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
                     <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
                     <a href=""><img src="assets/img/send-24px.svg" alt=""></a>

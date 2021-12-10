@@ -1,8 +1,65 @@
 .tabs-container {
-    display: flex;
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
 
     mat-tab-group {
-        width: 60%;
+        width: 100%;
     }
 }
+
+.search-block {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: 1px solid black;
+    z-index: 99;
+    max-width: 316px;
+    width: 100%;
+    padding: 6px 0px 6px 16px !important;
+    font-family: "Muli-Light",sans-serif;
+    background:  #EFEFEF;
+    color:#81818112;
+    font-size: 16px;
+    border:none;
+    outline: none;
+    margin:0;
+    overflow: visible;
+    display:flex;
+    justify-content: space-between;
+    @media only screen and (max-width: 1440px) {
+        max-width: 250px;
+    }
+    @media only screen and (max-width: 1300px) {
+        font-size: 14px;
+        left: 15px;
+        //right: 30px;
+        top: 50px;
+        max-width: 250px;
+    }
+    @media only screen and (max-width:1024px) {
+        top: 60px;
+    }
+    @media only screen and (max-width: 320px) {
+        max-width: 205px;
+    }
+}
+
+.search-block > input {
+    background:  #EFEFEF;
+    @media only screen and (min-width:1024px) and (max-width: 1300px) {
+        max-width: 150px;
+        width: 100%;
+    }
+}
+
+.search-block > img {
+    max-width: 24px;
+    margin-right: 16px;
+}
+
+
+
+
 

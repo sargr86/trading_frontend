@@ -13,11 +13,13 @@
                 <button [matMenuTriggerFor]="menu" class="show-actions">
                     <i class="fas fa-ellipsis-h"></i>
                 </button>
-
                 <mat-menu #menu="matMenu">
+
                     <button mat-menu-item
+
                             [disableRipple]="true">
-                        Disconnect
+                        <img class="iconDis" src="assets/img/iconDis.png" alt="">
+                        Disconnection
                     </button>
 
                 </mat-menu>

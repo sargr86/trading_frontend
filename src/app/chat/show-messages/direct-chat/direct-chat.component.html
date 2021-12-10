@@ -16,7 +16,8 @@
                     </button>
 
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item [class.active]="!showBlockedUsers" (click)="toggleBlockedUsers(false)"
+                        <button
+                            mat-menu-item [class.active]="!showBlockedUsers" (click)="toggleBlockedUsers(false)"
                                 [disableRipple]="true">
                             <i class="fas fa-users"></i>
                             Active users

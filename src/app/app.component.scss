@@ -39,6 +39,7 @@
     width: calc(100% - 272px);
     overflow: hidden;
 
+
     &.full-width {
         width: 100%;
     }
@@ -48,10 +49,11 @@
     display: flex;
     justify-content: space-between;
     padding: 0 15px !important;
-    width: 90%;
-    margin: 112px auto 0;
+    width: 88%;
+    margin-top: 112px;
     @media (max-width: 768px) {
         width: 100%;
+
     }
 }
 

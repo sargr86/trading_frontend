@@ -5,6 +5,10 @@
     flex-wrap: wrap;
     border-bottom: 0.5px solid #E2E2E2;
     margin-bottom: 24px;
+    //@media screen and (max-width: 767px) {
+    //    margin-top:60px
+    //}
+
 }
 
 .categories li {

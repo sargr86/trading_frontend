@@ -20,7 +20,6 @@ nav {
         box-shadow: 0 0 6px #0000002E;
 
 
-
         @media screen and (max-width: 1440px) {
             padding: 0 100px;
         }
@@ -31,9 +30,10 @@ nav {
             padding: 15px 15px;
         }
     }
+
     .website-logo {
         @media screen and (max-width: 350px) {
-            margin:auto;
+            margin: auto;
         }
     }
 
@@ -155,7 +155,9 @@ nav {
 }
 
 
-
+.additional-section {
+    text-align: left !important;
+}
 
 .notification-item {
     display: flex;

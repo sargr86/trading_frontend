@@ -68,7 +68,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     ngOnInit(): void {
 
-        this.addUserToSocket();
+        // this.addUserToSocket();
         this.getOnlineUsers();
         this.getMessagesFromSocket();
         this.getUsersMessages();
@@ -84,7 +84,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getOnlineUsers() {
+        this.socketService.getConnectedUsers({username: this.authUser.username});
+        this.socketService.usersOnlineFeedback().subscribe((dt: any) => {
+            console.log(dt)
+            this.onlineUsers = dt;
+        });
+
         this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+            console.log(this.onlineUsers)
             this.onlineUsers = dt;
         }));
     }

@@ -77,6 +77,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.getSeen();
         this.getChatNotifications();
         this.getBlockUnblockUser();
+        this.getAcceptedDeclinedRequests();
     }
 
     addUserToSocket() {
@@ -103,6 +104,18 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     getChatNotifications() {
         this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
             this.onlineUsers = data.users;
+        }));
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            this.getUsersMessages();
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+
         }));
     }
 

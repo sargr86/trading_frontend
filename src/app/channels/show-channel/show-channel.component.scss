@@ -7,13 +7,17 @@
         width: 100%;
     }
 }
-
+.child-inp-auto{
+    background: #0D1B3E;
+    input{
+        width: auto;
+    }
+}
 
 .search-wrapper {
     display: flex;
     max-width: min-content;
     align-items: center;
-
     .toggle-filters-btn {
         display: flex;
         margin-right: 20px;

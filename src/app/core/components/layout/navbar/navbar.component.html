@@ -3,9 +3,9 @@
         <img class="navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
     </div>
 
-    <!-- Search videos for responsive mode-->
+<!--     Search videos for responsive mode-->
     <div *ngIf="!routerUrl?.includes('analytics')">
-        <app-search-videos-form class="d-block d-lg-none mb-0 flex-1"
+        <app-search-videos-form class="d-block d-lg-none mb-0 flex-1 middle-search-form"
                                 (search)="searchVideos($event)"></app-search-videos-form>
     </div>
     <div class="right-side-actions d-sm-flex d-md-flex d-lg-none align-items-end">
@@ -93,7 +93,12 @@
                     </mat-menu>
 
                 </div>
+
+
             </div>
         </div>
     </div>
+
+    <app-search-videos-form class="bottom-search-form" *ngIf="!routerUrl?.includes('analytics')"
+                            (search)="searchVideos($event)"></app-search-videos-form>
 </nav>

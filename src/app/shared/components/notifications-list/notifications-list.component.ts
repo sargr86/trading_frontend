@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {notificationsStore} from '@shared/stores/notifications-store';
 import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -28,15 +29,19 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         private notificationsService: NotificationsService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        public auth: AuthService,
         public router: Router
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.getNotifications();
-        this.getConnectWithUser();
-        this.getAcceptedDeclinedRequests();
+        if (this.auth.loggedIn()) {
+            this.getNotifications();
+            this.getConnectWithUser();
+            this.getAcceptedDeclinedRequests();
+        }
+
     }
 
     getNotifications() {

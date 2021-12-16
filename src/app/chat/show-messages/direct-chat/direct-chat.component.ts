@@ -68,7 +68,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     ngOnInit(): void {
 
-        this.addUserToSocket();
+        // this.addUserToSocket();
         this.getOnlineUsers();
         this.getMessagesFromSocket();
         this.getUsersMessages();
@@ -77,6 +77,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         this.getSeen();
         this.getChatNotifications();
         this.getBlockUnblockUser();
+        this.getAcceptedDeclinedRequests();
     }
 
     addUserToSocket() {
@@ -84,7 +85,14 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getOnlineUsers() {
+        this.socketService.getConnectedUsers({username: this.authUser.username});
+        this.socketService.usersOnlineFeedback().subscribe((dt: any) => {
+            console.log(dt)
+            this.onlineUsers = dt;
+        });
+
         this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+            console.log(this.onlineUsers)
             this.onlineUsers = dt;
         }));
     }
@@ -96,6 +104,18 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     getChatNotifications() {
         this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
             this.onlineUsers = data.users;
+        }));
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            this.getUsersMessages();
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+
         }));
     }
 

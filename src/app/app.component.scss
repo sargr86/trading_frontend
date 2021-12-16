@@ -39,7 +39,6 @@
     width: calc(100% - 272px);
     overflow: hidden;
 
-
     &.full-width {
         width: 100%;
     }
@@ -53,7 +52,6 @@
     margin-top: 112px;
     @media (max-width: 768px) {
         width: 100%;
-
     }
 }
 
@@ -67,6 +65,7 @@
         margin-top: 113px;
     }
 }
+
 @media screen and (max-width: 767px) {
     .open-left-menu.d-none {
         font-size: 30px;
@@ -90,6 +89,7 @@
         margin-top: 145px;
     }
 }
+
 @media screen and (max-width: 456px) {
     #right-sidenav {
         margin-top: 183px;

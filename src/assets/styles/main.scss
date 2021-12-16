@@ -44,8 +44,8 @@ input, button {
     padding: 0;
 }
 
-.mat-tab-header{
-    border:none!important;
+.mat-tab-header {
+    border: none !important;
 }
 
 button:hover {
@@ -694,6 +694,12 @@ select {
     }
 }
 
+.nav-item {
+    .dropdown-item {
+        font-family: Roboto, "Helvetica Neue", sans-serif !important;
+    }
+}
+
 .stocks-watchlist {
     margin-top: 40px;
 
@@ -1027,6 +1033,7 @@ mat-optgroup {
         background-color: #81818112;
         border: 0;
     }
+
     .mat-tab-labels {
         @media only screen and (max-width: 768px) {
             margin-bottom: 15px;
@@ -1037,11 +1044,11 @@ mat-optgroup {
         min-width: min-content;
         padding: 0;
         margin-right: 40px;
-        font: normal normal bold 18px/26px "Muli-Bold"!important;
+        font: normal normal bold 18px/26px "Muli-Bold" !important;
         letter-spacing: 0px;
         color: #545454;
         opacity: 1;
-        @media only screen and (min-width:1024px) and (max-width: 1300px) {
+        @media only screen and (min-width: 1024px) and (max-width: 1300px) {
             padding: 0 7px !important;
             min-width: 70px;
         }
@@ -1171,7 +1178,6 @@ mat-error {
 }
 
 
-
 .left-menu-main:not(.active) {
     .mat-badge-content {
         left: 130px !important;
@@ -1179,51 +1185,55 @@ mat-error {
     }
 }
 
-.mat-menu-panel{
+.mat-menu-panel {
 
-    min-height:0px !important;
-    margin-top:20px;
+    min-height: 0px !important;
+    margin-top: 20px;
     @media only screen and (max-width: 425px) {
         position: absolute;
         right: 50px;
     }
 }
 
-.menuDiv{
+.menuDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .mat-menu-content {
     .active {
         color: $metl-green !important;
     }
-    padding: 0px!important;
-    display: block;
+
+    padding: 0px !important;
+    display: flex;
     justify-content: space-between;
     max-width: 165px;
     width: 100%;
 
-    .redAvatarImg{
-        width:18px;
-        height:18px;
-        display:flex;
+    .redAvatarImg {
+        width: 18px;
+        height: 18px;
+        display: flex;
         align-items: center;
         margin-left: 14px;
 
     }
 }
 
-.removeStyle{
-    color:#F53C6F !important;
+.removeStyle {
+    color: #F53C6F !important;
     text-align: center !important;
 }
+
 .toast-info {
     background-color: $metl-green !important;
 }
+
 .mat-tab-body-content {
     @media only screen and (max-width: 768px) {
-        margin-top: 20px!important;
+        margin-top: 20px !important;
     }
 }
 
@@ -1239,12 +1249,12 @@ mat-error {
     }
 }
 
-.mat-tab-body.mat-tab-body-active{
-    overflow-y: hidden!important;
+.mat-tab-body.mat-tab-body-active {
+    overflow-y: hidden !important;
 }
 
-.mat-menu-item{
-    text-align: center!important;
+.mat-menu-item {
+    text-align: center !important;
 }
 
 

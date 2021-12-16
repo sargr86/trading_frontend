@@ -50,6 +50,18 @@ export class SocketIoService {
         });
     }
 
+    getConnectedUsers(data) {
+        this.socket.emit('getConnectedUsers', data);
+    }
+
+    usersOnlineFeedback() {
+        return new Observable(observer => {
+            this.socket.on('usersConnected', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     userOnlineFeedback() {
         return new Observable(observer => {
             this.socket.on('userConnected', msg => {

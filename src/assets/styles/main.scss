@@ -1241,7 +1241,7 @@ mat-error {
     background: #0D1B3E;
 
     input {
-        width: auto !important;
+        width: 100% !important;
         @media only screen and (min-width: 768px) {
             font-size: 15px !important;
         }
@@ -1249,6 +1249,11 @@ mat-error {
             font-size: 11px !important;
             margin-right: 4px !important;
             padding: 6px 28px 6px 6px !important;
+        }
+        @media only screen and (max-width: 374px) {
+            font-size: 10px !important;
+            margin-right: 2px !important;
+            padding: 4px 13px 4px 4px !important;
         }
     }
 }
@@ -1287,6 +1292,12 @@ mat-error {
 @media screen and (min-width: 546px) {
     .bottom-search-form {
         display: none;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .middle-search-form {
+        display:none !important;
     }
 }
 

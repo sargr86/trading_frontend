@@ -3,9 +3,9 @@
         <img class="navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
     </div>
 
-<!--     Search videos for responsive mode-->
+    <!--     Search videos for responsive mode-->
     <div *ngIf="!routerUrl?.includes('analytics')">
-        <app-search-videos-form class="d-block d-lg-none mb-0 flex-1 middle-search-form"
+        <app-search-videos-form class="mb-0  middle-search-form"
                                 (search)="searchVideos($event)"></app-search-videos-form>
     </div>
     <div class="right-side-actions d-sm-flex d-md-flex d-lg-none align-items-end">
@@ -40,23 +40,23 @@
                 </div>
 
 
-<!--                <mat-menu #notifMenu="matMenu">-->
-<!--                    <div class="notification-items" *mobxAutorun>-->
-<!--                        <ng-container *ngFor="let notification of notificationsStore.notifications">-->
-<!--                            <div class="notification-item" mat-menu-item>-->
-<!--                                <div class="left">-->
-<!--                                    <img class="avatar" id="profile-image"-->
-<!--                                         [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">-->
-<!--                                </div>-->
-<!--                                <div class="right">-->
-<!--                                    <p [innerHTML]="notification.msg"></p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </ng-container>-->
-<!--                    </div>-->
-<!--                    <p class="view-more-notifications" *ngIf="notifications.length > 0"-->
-<!--                       (click)="router.navigate(['/notifications'])">View more</p>-->
-<!--                </mat-menu>-->
+                <!--                <mat-menu #notifMenu="matMenu">-->
+                <!--                    <div class="notification-items" *mobxAutorun>-->
+                <!--                        <ng-container *ngFor="let notification of notificationsStore.notifications">-->
+                <!--                            <div class="notification-item" mat-menu-item>-->
+                <!--                                <div class="left">-->
+                <!--                                    <img class="avatar" id="profile-image"-->
+                <!--                                         [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">-->
+                <!--                                </div>-->
+                <!--                                <div class="right">-->
+                <!--                                    <p [innerHTML]="notification.msg"></p>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </ng-container>-->
+                <!--                    </div>-->
+                <!--                    <p class="view-more-notifications" *ngIf="notifications.length > 0"-->
+                <!--                       (click)="router.navigate(['/notifications'])">View more</p>-->
+                <!--                </mat-menu>-->
 
                 <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
 

@@ -9,14 +9,12 @@
 }
 .child-inp-auto{
     background: #0D1B3E;
-    input{
-        width: auto;
-    }
+
 }
 
 .search-wrapper {
     display: flex;
-    max-width: min-content;
+    //max-width: min-content;
     align-items: center;
     .toggle-filters-btn {
         display: flex;
@@ -51,6 +49,10 @@
     align-items: center;
     height: 31px;
     margin-right: 20px;
+    @media only screen and (max-width: 374px) {
+        margin-right: 5px !important;
+    }
+
 
     button {
         background-color: unset;
@@ -65,3 +67,6 @@
         width: 100%;
     }
 }
+
+
+

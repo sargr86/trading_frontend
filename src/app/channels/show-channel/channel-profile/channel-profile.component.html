@@ -70,10 +70,17 @@
             </a>
 
             <a class="waiting-for-confirmation-btn"
-               *ngIf="usersConnectionStatus==='pending'">
+               *ngIf="usersConnectionStatus==='pending'" [matMenuTriggerFor]="pendingMenu">
                 <mat-icon>check</mat-icon>
                 <span>Waiting for confirmation</span>
             </a>
+
+            <mat-menu #pendingMenu="matMenu">
+                <button mat-menu-item (click)="cancelUsersConnecting(usersConnection)">
+                    <mat-icon>close</mat-icon>
+                    <span>Cancel</span>
+                </button>
+            </mat-menu>
 
             <button class="users-connected-btn" *ngIf="usersConnectionStatus==='connected'" [matMenuTriggerFor]="menu">
                 <mat-icon>check</mat-icon>

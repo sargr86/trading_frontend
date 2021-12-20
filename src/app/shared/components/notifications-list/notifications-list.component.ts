@@ -40,6 +40,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             this.getNotifications();
             this.getConnectWithUser();
             this.getAcceptedDeclinedRequests();
+            this.cancelledUsersConnecting();
         }
 
     }
@@ -141,6 +142,13 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
             this.notificationsStore.setNotifications(dt);
         }));
+    }
+
+    cancelledUsersConnecting() {
+        this.socketService.cancelledUsersConnecting().subscribe(dt => {
+            // console.log(dt, 'cancelled')
+            this.getNotifications();
+        });
     }
 
     ngOnDestroy(): void {

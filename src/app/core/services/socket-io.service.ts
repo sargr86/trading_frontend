@@ -215,4 +215,17 @@ export class SocketIoService {
         });
     }
 
+    cancelUsersConnecting(data) {
+        this.socket.emit('cancelUsersConnection', data);
+    }
+
+    cancelledUsersConnecting() {
+        // this.setupSocketConnection();
+        return new Observable(observer => {
+            this.socket.on('cancelledUsersConnection', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 }

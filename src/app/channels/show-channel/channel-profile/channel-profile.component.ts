@@ -62,7 +62,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             // this.detectImageChange();
             this.checkIfUsersConnected();
             this.getAcceptedDeclinedRequests();
+            this.getConnectWithUser();
             this.getDisconnectUser();
+            this.cancelledUsersConnecting();
         }
     }
 
@@ -221,6 +223,29 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.socketService.connectWithUser({
             authUser: this.authUser,
             channelUser: this.channelUser
+        });
+    }
+
+    getConnectWithUser() {
+        this.socketService.getConnectWithUser().subscribe(dt => {
+            console.log('get connect', dt)
+            this.usersConnection = dt;
+
+        });
+    }
+
+    cancelUsersConnecting(connection) {
+        this.socketService.cancelUsersConnecting({
+            authUser: this.authUser,
+            channelUser: this.channelUser,
+            connection_id: connection.id
+        });
+    }
+
+    cancelledUsersConnecting() {
+        this.socketService.cancelledUsersConnecting().subscribe(dt => {
+            console.log(dt, 'cancelled')
+            this.usersConnectionStatus = 'idle';
         });
     }
 

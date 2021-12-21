@@ -1,7 +1,8 @@
 <div class="notifications-title-read" *ngIf="notificationsCategory==='new'">
     <h3>Notifications</h3>
-    <p class="mark-as-read" (click)="markAllAsRead()">Mark all as read</p>
+    <p class="mark-as-read" *ngIf="notificationsStore.notifications.length > 0" (click)="markAllAsRead()">Mark all as read</p>
 </div>
+
 <div class="top">
     <div>
         <p *ngIf="filterByCategory(notificationsStore.notifications, notificationsCategory)?.length > 0">{{notificationsCategory === 'new' ? 'New' : 'Earlier' }}</p>

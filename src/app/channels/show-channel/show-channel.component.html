@@ -23,17 +23,19 @@
                     </div>
                 </div>
                 <div class="search-wrapper" >
-                    <div class="toggle-filters-btn">
-                        <button class="filter-toggle-btn"
-                                *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
-                                [class.filters-active]="showFilters"
-                                (click)="toggleFilters()">
-                            <mat-icon>tune</mat-icon>
-                        </button>
-                    </div>
-                    <div>
-                        <app-search-videos-form (search)="searchVideos($event)"
-                                                *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
+                    <div class="left-side" *ngIf="activeTab.name==='Videos'">
+                        <div class="toggle-filters-btn">
+                            <button class="filter-toggle-btn"
+                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
+                                    [class.filters-active]="showFilters"
+                                    (click)="toggleFilters()">
+                                <mat-icon>tune</mat-icon>
+                            </button>
+                        </div>
+
+                            <app-search-videos-form  class="child-inp" (search)="searchVideos($event)"
+                                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
+
                     </div>
                     <div class="right-side" *ngIf="activeTab.name==='Watchlist'">
 
@@ -44,7 +46,7 @@
                         </div>
 
                         <div class="watchlist-search d-" *ngIf="activeTab.name!=='About'">
-                            <app-search-stocks-form  class ="d-block" *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
+                            <app-search-stocks-form  class ="d-block clase" *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
                                                     [whiteForm]="true" [returnSearchText]="true"
                                                     (search)="searchInUserStocks($event)">
                             </app-search-stocks-form>

@@ -30,9 +30,9 @@
 }
 
 @media (max-width: 1400px) {
-    .user-profile-block .watchlist-search {
-        margin: 0 auto 20px;
-    }
+    //.user-profile-block .watchlist-search {
+    //    margin: 0 auto 20px;
+    //}
     .user-profile-block .nav-tabs {
         display: flex;
         justify-content: space-around;
@@ -125,7 +125,7 @@
         margin-bottom: 0;
     }
     .search-wrapper {
-        width: 300px;
+        max-width: 330px;
         margin-bottom: 0;
         margin-right: 0;
     }
@@ -137,7 +137,7 @@
     .header-right {
         flex-wrap: wrap;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 5px;
     }
     .feeder-bar {
         //flex-wrap: wrap;

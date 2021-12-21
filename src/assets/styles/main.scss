@@ -759,7 +759,6 @@ select {
         height: 31px;
         background: #FFFFFF 0 0 no-repeat padding-box;
         box-shadow: 0 0 6px #0000000F;
-        margin-bottom: 12px;
         margin-right: 3px;
 
         i {
@@ -1281,7 +1280,7 @@ mat-error {
 @media screen and (max-width: 545px) {
     .bottom-search-form {
         display: block;
-        margin-top: 20px;
+        margin-top: 10px;
         width: 100%;
     }
 

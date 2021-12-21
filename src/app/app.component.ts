@@ -98,7 +98,7 @@ export class AppComponent implements OnInit {
     }
 
     closeSidenav(close, sidenav) {
-        console.log(close, sidenav)
+        // console.log(close, sidenav)
         // if (this.responsiveMode) {
         if (close) {
             sidenav.close();

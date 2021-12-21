@@ -20,9 +20,9 @@ import {UsersService} from '@core/services/users.service';
 import {SubjectService} from '@core/services/subject.service';
 import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
-import {GetElegantDatePipe} from "@shared/pipes/get-elegant-date.pipe";
-import {environment} from "@env";
-
+import {GetElegantDatePipe} from '@shared/pipes/get-elegant-date.pipe';
+import {environment} from '@env';
+import {notificationsStore} from '@shared/stores/notifications-store';
 @Component({
     selector: 'app-direct-chat',
     templateUrl: './direct-chat.component.html',
@@ -51,6 +51,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
     @ViewChild('directMessagesList') private messagesList: ElementRef;
     @Output() newMessagesCountReceived = new EventEmitter();
+
+    notificationsStore = notificationsStore;
 
     constructor(
         private chatService: ChatService,
@@ -87,12 +89,10 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     getOnlineUsers() {
         this.socketService.getConnectedUsers({username: this.authUser.username});
         this.socketService.usersOnlineFeedback().subscribe((dt: any) => {
-            console.log(dt)
             this.onlineUsers = dt;
         });
 
         this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
-            console.log(this.onlineUsers)
             this.onlineUsers = dt;
         }));
     }

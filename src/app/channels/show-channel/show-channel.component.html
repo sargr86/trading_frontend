@@ -45,8 +45,8 @@
                             </button>
                         </div>
 
-                        <div class="watchlist-search d-" *ngIf="activeTab.name!=='About'">
-                            <app-search-stocks-form  class ="d-block clase" *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
+                        <div class="watchlist-search d-" *ngIf="activeTab.name!=='About'" [class.bordered]="userStocks?.length > 0">
+                            <app-search-stocks-form  class ="d-block search-stocks-component" *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
                                                     [whiteForm]="true" [returnSearchText]="true"
                                                     (search)="searchInUserStocks($event)">
                             </app-search-stocks-form>

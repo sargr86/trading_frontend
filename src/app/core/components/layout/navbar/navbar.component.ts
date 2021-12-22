@@ -91,9 +91,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
 
 
-
     }
-
 
 
     addUserToSocket() {
@@ -103,8 +101,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
-            this.notifications.push(dt);
-            this.notificationsStore.setNotifications(this.notifications);
+            if (dt) {
+                this.notifications.push(dt);
+                this.notificationsStore.setNotifications(this.notifications);
+            }
         }));
     }
 

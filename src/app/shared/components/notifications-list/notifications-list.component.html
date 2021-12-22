@@ -1,6 +1,12 @@
 <div class="notifications-title-read" *ngIf="notificationsCategory==='new'">
     <h3>Notifications</h3>
-    <p class="mark-as-read" *ngIf="notificationsStore.notifications.length > 0" (click)="markAllAsRead()">Mark all as read</p>
+
+    <div>
+        <p class="mark-as-read" *ngIf="notificationsStore.notifications.length > 0" (click)="markAllAsRead()">Mark all
+            as read</p>
+        <p class="remove-all" *ngIf="!shownInSidebar && notificationsStore.notifications.length > 0"
+           (click)="removeAll()">Remove all notifications</p>
+    </div>
 </div>
 
 <div class="top">
@@ -9,10 +15,11 @@
     </div>
     <div>
         <p class="view-more-notifications"
-           *ngIf="filterByCategory(notificationsStore.notifications, notificationsCategory)?.length > 0 && shownInSidebar"
+           *ngIf="notificationsStore.notifications?.length > 0 && shownInSidebar"
            (click)="router.navigate(['user/notifications'])">View more</p>
     </div>
 </div>
+<p *ngIf="notificationsCategory==='new' && notificationsStore.notifications?.length === 0">No notifications found</p>
 <ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
     <li *ngFor="let notification of filterByCategory(notificationsStore.notifications, notificationsCategory)"
         class="notification" [class.unread]="notification?.read===0"

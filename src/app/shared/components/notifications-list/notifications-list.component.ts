@@ -143,6 +143,15 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }));
     }
 
+    removeAll() {
+        this.subscriptions.push(this.notificationsService.removeAllNotifications({
+            user_id: this.authUser.id
+        }).subscribe((dt: any) => {
+            this.notifications = dt;
+            this.notificationsStore.setNotifications(dt);
+        }));
+    }
+
     cancelledUsersConnecting() {
         this.socketService.cancelledUsersConnecting().subscribe(dt => {
             // console.log(dt, 'cancelled')

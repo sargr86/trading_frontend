@@ -21,7 +21,7 @@ import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased
 import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
-import {notificationsStore} from "@shared/stores/notifications-store";
+import {notificationsStore} from '@shared/stores/notifications-store';
 
 @Component({
     selector: 'app-navbar',
@@ -83,15 +83,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (this.auth.loggedIn()) {
             this.getInviteNotifications();
             this.addUserToSocket();
-            this.getConnectWithUser();
             this.getAuthUserNotifications();
             this.getAcceptedDeclinedRequests();
             this.getUserCards();
             this.getDailyStocks();
+            this.getConnectWithUser();
         }
 
 
+
     }
+
+
 
     addUserToSocket() {
         this.socketService.addNewUser({...this.authUser, group: false});
@@ -144,6 +147,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
+                this.getConnectWithUser();
             } else if (ev instanceof ActivationEnd) {
                 this.passedUsername = ev.snapshot.queryParams.username;
             }

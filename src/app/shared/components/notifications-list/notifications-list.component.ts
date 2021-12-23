@@ -48,15 +48,14 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
-            console.log(dt)
             this.notificationsStore.setNotifications(dt);
         }));
     }
 
     filterByCategory(notifications, category) {
-        // console.log('OK')
+        // console.log(notifications)
         const filteredNotifications = notifications.filter(n => {
-            const diff = moment().diff(n.created_at, 'hours');
+            const diff = moment().diff(n?.created_at, 'hours');
             return category === 'early' ? diff > 0 : diff <= 0;
         });
         // console.log(filteredNotifications, category);
@@ -95,9 +94,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt);
-            console.log(dt.receiver_id, this.authUser.id)
-            console.log(this.notificationsStore.notifications, this.notifications)
+            // console.log('accepted', dt);
+            // console.log(dt.receiver_id, this.authUser.id)
+            // console.log(this.notificationsStore.notifications, this.notifications)
             if (dt.receiver_id === this.authUser.id) {
                 // this.notifications.push(dt);
                 // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');

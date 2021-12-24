@@ -15,7 +15,18 @@ form {
         @media screen and (max-width: 410px) {
             min-width: 260px;
         }
+        @media screen and (min-width: 375px) and (max-width: 510px) {
+            flex: none !important;
+            width: calc(100% - 5px)!important;
+            min-width: 270px !important;
+        }
+        @media screen and (min-width: 320px) and (max-width: 375px) {
+            flex: none !important;
+            width: calc(100% - 15px)!important;
+            min-width: 270px !important;
+        }
     }
+
 
     .save-profile-changes {
         width: 100%;
@@ -39,6 +50,12 @@ form {
             width: 400px;
             height: 400px;
             position: relative;
+            @media only screen and (min-width: 320px)and (max-width:510px) {
+                max-width: 400%;
+                width: 100%;
+            }
+
+
 
             .remove-profile-img {
                 cursor: pointer;
@@ -54,7 +71,11 @@ form {
         @media screen and (max-width: 767px) {
             margin-left: 0;
         }
+
+
     }
 }
+
+
 
 

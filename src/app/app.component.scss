@@ -55,6 +55,9 @@
         width: 100%;
         margin-top: 140px;
     }
+    @media (max-width: 374px) {
+        padding: 0 20px!important;
+    }
 }
 
 #right-sidenav {

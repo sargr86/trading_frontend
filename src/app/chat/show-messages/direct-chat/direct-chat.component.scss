@@ -95,12 +95,24 @@
     }
 }
 
-.latest-message, .latest-msg-date {
+.latest-message {
     display: -webkit-box !important;
     -webkit-line-clamp: 1;
     overflow: hidden;
     -webkit-box-orient: vertical;
 }
+
+.latest-msg-date{
+    margin-left: 10px!important;
+    display: flex !important;
+    white-space: nowrap !important;
+    margin-top: 3px !important;
+    @media screen and (max-width: 374px) {
+        font-size: 8px !important;
+        margin-left: 6px !important;
+    }
+}
+
 
 .more-actions-btn {
     width: 20px !important;

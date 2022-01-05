@@ -15,7 +15,7 @@
     </div>
     <div>
         <p class="view-more-notifications"
-           *ngIf="notificationsStore.notifications?.length > 0 && shownInSidebar"
+           *ngIf="notificationsStore.notifications?.length > 0 && shownInSidebar && notificationsCategory==='new'"
            (click)="router.navigate(['user/notifications'])">View more</p>
     </div>
 </div>

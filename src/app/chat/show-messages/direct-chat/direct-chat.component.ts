@@ -133,8 +133,8 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
         });
     }
 
-    isOwnMessage(user) {
-        return user.id === this.authUser.id;
+    isOwnMessage(user_id) {
+        return user_id === this.authUser.id;
     }
 
     isChatUsersListSize() {
@@ -222,20 +222,20 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
                 const data = {...this.chatForm.value};
 
 
-                this.subscriptions.push(this.chatService.saveDirectMessage(data).subscribe(dt => {
-                    this.usersMessages = dt;
-                    this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
-                    const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
-                    this.selectedUserMessages.user = selectedMessages;
-                    this.selectedUserMessages.connection_id = selectedMessages?.users_connections[0].id;
-                    console.log(selectedMessages?.users_connections)
-                    this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.users_connections[0].users_messages, 'created_at');
-                    this.selectedUserMessages.rawMessages = selectedMessages?.users_connections[0].users_messages;
+                // this.subscriptions.push(this.chatService.saveDirectMessage(data).subscribe(dt => {
+                //     this.usersMessages = dt;
+                //     this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
+                //     const selectedMessages = this.filteredUsersMessages.find(m => m.id === this.activeUser?.id);
+                //     this.selectedUserMessages.user = selectedMessages;
+                //     this.selectedUserMessages.connection_id = selectedMessages?.users_connections[0].id;
+                //     console.log(selectedMessages?.users_connections)
+                //     this.selectedUserMessages.messages = this.groupBy.transform(selectedMessages?.users_connections[0].users_messages, 'created_at');
+                //     this.selectedUserMessages.rawMessages = selectedMessages?.users_connections[0].users_messages;
 
                     this.socketService.sendMessage(data);
                     this.scrollMsgsToBottom();
                     console.log(this.selectedUserMessages);
-                }));
+                // }));
                 this.chatForm.patchValue({message: ''});
             }
         }
@@ -345,7 +345,7 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
 
     getSeenTooltip(message) {
-        const user = message.to_user;
+        const user = this.selectedUserMessages.user as any;
         // const thisWeekDate = moment(message.seen_at).isSame(new Date(), 'week');
         // const seenDate = moment(message.seen_at).format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
         const seenDate = this.getElegantDate.transform(message.seen_at);

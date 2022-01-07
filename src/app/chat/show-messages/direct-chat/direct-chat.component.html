@@ -122,14 +122,8 @@
 
                 <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
                 <ng-container *ngFor="let m of msg.value;let ind = index">
-                    <li class="message-container" [ngClass]="isOwnMessage(m.from_user)? 'my-message' : 'other-message'">
+                    <li class="message-container" [ngClass]="isOwnMessage(m.from_id)? 'my-message' : 'other-message'">
                         <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <div class="img">
-                                    <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
-                                </div>
-                                <div class="name">{{m.from_user.first_name + ' ' + m.from_user.last_name}}</div>
-                            </div>
                             <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
                         </div>
                         <div class="message" [innerHTML]="m.message">
@@ -137,7 +131,7 @@
                         </div>
                         <div class="seen" *ngIf="m.seen && m.to_id!==authUser.id">
                             <img class="seen-avatar" [matTooltip]="getSeenTooltip(m)"
-                                 [src]="m.to_user.avatar|getImgPath: 'user_avatars'">
+                                 [src]="selectedUserMessages.user?.avatar|getImgPath: 'user_avatars'">
                         </div>
                     </li>
                 </ng-container>

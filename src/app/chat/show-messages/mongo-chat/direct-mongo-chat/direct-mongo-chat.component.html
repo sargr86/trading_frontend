@@ -37,7 +37,7 @@
 
                     <ng-template #itemTemplate let-user="user" let-lastMsg="lastMsg">
                         <div class="d-flex user-last-msg align-items-center justify-content-between">
-                            <div class="left-group" (click)="makeUserActive(user, lastMsg)">
+                            <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)">
 
                                 <div class="img user-avatar" [class.blocked]="ifContactBlocked(user)">
                                     <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">

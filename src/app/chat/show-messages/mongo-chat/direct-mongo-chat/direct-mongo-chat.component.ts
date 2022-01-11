@@ -19,6 +19,7 @@ export class DirectMongoChatComponent implements OnInit {
     selectedUserMessages;
 
 
+    blockedUsers = [];
     onlineUsers = [];
     showBlockedUsers = false;
 
@@ -45,8 +46,16 @@ export class DirectMongoChatComponent implements OnInit {
         }));
     }
 
-    makeUserActive(user, lastMsg) {
+    selectUserMessages(userMessages, lastMsg) {
+        this.selectedUserMessages = userMessages;
+    }
 
+    toggleBlockedUsers(show) {
+        this.showBlockedUsers = show;
+        this.filteredUsersMessages = this.usersMessages.filter(d => {
+            return !!d.users_connections?.[0].is_blocked === this.showBlockedUsers;
+        });
+        this.selectedUserMessages = this.filteredUsersMessages[0];
     }
 
     unreadLastMessages(usersMessages) {
@@ -66,8 +75,7 @@ export class DirectMongoChatComponent implements OnInit {
     }
 
     ifContactsListActionsShown() {
-        // filteredUsersMessages.length > 0 || blockedUsers.length > 0
-        return true;
+        return this.filteredUsersMessages.length > 0;
     }
 
     ifContactBlocked(user) {
@@ -87,9 +95,6 @@ export class DirectMongoChatComponent implements OnInit {
     }
 
 
-    toggleBlockedUsers(show) {
-        this.showBlockedUsers = show;
-    }
 
 
 }

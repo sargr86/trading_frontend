@@ -12,9 +12,10 @@
                     (click)="changeTab('group')">Group Chat
             </button>
         </div>
-        <app-direct-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"
-                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-chat>
+<!--        <app-direct-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"-->
+<!--                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-chat>-->
         <app-group-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-chat>
-
+        <app-direct-mongo-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"
+                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-mongo-chat>
     </div>
 </ng-container>

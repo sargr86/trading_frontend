@@ -53,7 +53,7 @@ import {GroupByPipe} from './pipes/group-by.pipe';
 import {GetDateTextForMessagesPipe} from './pipes/get-date-text-for-messages.pipe';
 import {GetElegantDatePipe} from './pipes/get-elegant-date.pipe';
 import {NotificationsListComponent} from '@shared/components/notifications-list/notifications-list.component';
-import {MobxAngularModule} from "mobx-angular";
+import {MobxAngularModule} from 'mobx-angular';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',

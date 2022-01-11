@@ -17,6 +17,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {UserModule} from '@app/user/user.module';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -54,7 +55,8 @@ export function tokenGetter() {
             useClass: RequestInterceptor,
             multi: true
         },
-        CurrencyPipe
+        CurrencyPipe,
+        {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}},
     ],
     bootstrap: [AppComponent]
 })

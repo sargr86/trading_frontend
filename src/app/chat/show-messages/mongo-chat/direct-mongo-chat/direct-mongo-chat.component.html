@@ -51,8 +51,9 @@
                                             <span class="latest-message">{{lastMsg.message|fixLineBreaks}}</span>
                                         </div>
                                         <div>
-                                                                    <span
-                                                                        class="ml-4 latest-msg-date">{{lastMsg.created_at | dateFromNow}}</span>
+                                            <span class="ml-4 latest-msg-date">
+                                                {{lastMsg.created_at | dateFromNow}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -71,9 +72,6 @@
                                         <button mat-menu-item *ngIf="!showBlockedUsers" (click)="blockUser(user)">
                                             Block
                                         </button>
-                                        <!--                                        <button mat-menu-item *ngIf="showBlockedUsers" (click)="blockUser(user)">-->
-                                        <!--                                            Unblock-->
-                                        <!--                                        </button>-->
                                     </mat-menu>
                                 </ng-container>
                                 <ng-container *ngIf="ifLastMessageSeen(lastMsg)">

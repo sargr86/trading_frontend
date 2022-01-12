@@ -34,6 +34,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     attemptedToConnect = false;
     usersConnection;
+    isBlocked = false;
     usersConnectionStatus = 'idle';
 
     @Input('channelUser') channelUser;
@@ -65,6 +66,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.getConnectWithUser();
             this.getDisconnectUser();
             this.cancelledUsersConnecting();
+            this.getBlockUnblockUser();
         }
     }
 
@@ -95,6 +97,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.usersConnection = dt;
             if (dt) {
                 this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
+                this.isBlocked = !!dt.is_blocked;
             }
         });
     }
@@ -256,6 +259,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             if ((dt.receiver_id === this.authUser.id && dt.initiator_id === this.channelUser.id)
                 || (dt.receiver_id === this.channelUser.id && dt.initiator_id === this.authUser.id)) {
                 this.usersConnectionStatus = 'connected';
+                this.isBlocked = false;
             }
         }));
 
@@ -264,6 +268,8 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.usersConnectionStatus = 'idle';
         }));
     }
+
+
 
     disconnectUser() {
         this.socketService.disconnectUsers({
@@ -277,6 +283,13 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
             console.log('disconnected', dt)
             this.usersConnectionStatus = 'idle';
+        }));
+    }
+
+    getBlockUnblockUser() {
+        this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
+            console.log('get block/unblock', dt)
+            this.isBlocked = true;
         }));
     }
 

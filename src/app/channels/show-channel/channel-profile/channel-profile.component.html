@@ -94,7 +94,7 @@
                 </button>
             </mat-menu>
 
-            <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn" *ngIf="usersConnectionStatus==='connected'">
+            <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn" *ngIf="usersConnectionStatus==='connected' && !isBlocked">
                 <mat-icon>chat</mat-icon>
                 <span>Message</span>
             </a>

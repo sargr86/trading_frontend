@@ -1,8 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Subscription} from 'rxjs';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
+import {UsersService} from '@core/services/users.service';
+import {ToastrService} from 'ngx-toastr';
+import {notificationsStore} from '@shared/stores/notifications-store';
+import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-direct-mongo-chat',
@@ -10,7 +14,7 @@ import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
     styleUrls: ['./direct-mongo-chat.component.scss'],
     providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
 })
-export class DirectMongoChatComponent implements OnInit {
+export class DirectMongoChatComponent implements OnInit, OnDestroy {
     @Input() authUser;
     subscriptions: Subscription[] = [];
 
@@ -23,16 +27,27 @@ export class DirectMongoChatComponent implements OnInit {
     onlineUsers = [];
     showBlockedUsers = false;
 
+    notificationsStore = notificationsStore;
+
 
     constructor(
         private chatService: ChatService,
         private socketService: SocketIoService,
-        public mobileHelper: MobileResponsiveHelper
+        private usersService: UsersService,
+        private toastr: ToastrService,
+        public mobileHelper: MobileResponsiveHelper,
+        private capitalize: CapitalizeAddSpacesPipe
     ) {
     }
 
     ngOnInit(): void {
         this.getUsersMessages();
+        this.getChatNotifications();
+        this.getOnlineUsers();
+        this.getBlockUnblockUser();
+        this.getAcceptedDeclinedRequests();
+        this.getCancelledUsersConnection();
+        this.getDisconnectUser();
     }
 
     getUsersMessages() {
@@ -62,8 +77,80 @@ export class DirectMongoChatComponent implements OnInit {
 
     }
 
-    blockUser(user) {
+    getOnlineUsers() {
+        this.socketService.getConnectedUsers({username: this.authUser.username});
 
+        this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+            this.onlineUsers = dt;
+        }));
+    }
+
+    getChatNotifications() {
+        this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
+            console.log(data)
+            this.onlineUsers = data.users;
+        }));
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            this.getUsersMessages();
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+
+        }));
+    }
+
+    getCancelledUsersConnection() {
+        this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
+            console.log('cancelled')
+            this.getUsersMessages();
+        }));
+    }
+
+    getDisconnectUser() {
+        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
+            console.log('disconnected', dt)
+            this.getUsersMessages();
+        }));
+    }
+
+    blockUser(user) {
+        const params = {
+            connection_id: user.users_connections?.[0].id,
+            user: this.authUser,
+            block: +!this.showBlockedUsers,
+            contact_username: user.username
+        };
+
+        this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
+            this.getUsersMessages();
+            this.socketService.blockUnblockUser({
+                connection_id: user.users_connections?.[0].id,
+                block: +!this.showBlockedUsers,
+                from_id: this.authUser.id,
+                to_id: user.id,
+                msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has blocked the connection between you two`,
+                contact_username: user.username
+            });
+        }));
+    }
+
+    getBlockUnblockUser() {
+        this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
+            console.log('get block/unblock', dt)
+            this.setNotifications(dt);
+            this.getUsersMessages();
+        }));
+    }
+
+    setNotifications(dt) {
+        const notifications = this.notificationsStore.notifications;
+        notifications.unshift(dt);
+        this.notificationsStore.setNotifications(notifications);
     }
 
     getUserLastMessage(messages) {
@@ -94,7 +181,9 @@ export class DirectMongoChatComponent implements OnInit {
         return lastMsg?.seen === 0 && lastMsg?.from_id !== this.authUser.id;
     }
 
-
-
+    ngOnDestroy() {
+        // this.setTyping(null);
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
 }

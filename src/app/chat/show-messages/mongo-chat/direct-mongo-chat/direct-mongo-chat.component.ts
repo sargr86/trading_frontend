@@ -6,7 +6,6 @@ import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {UsersService} from '@core/services/users.service';
 import {ToastrService} from 'ngx-toastr';
 import {notificationsStore} from '@shared/stores/notifications-store';
-import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
 
 @Component({
     selector: 'app-direct-mongo-chat',
@@ -36,7 +35,6 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private toastr: ToastrService,
         public mobileHelper: MobileResponsiveHelper,
-        private capitalize: CapitalizeAddSpacesPipe
     ) {
     }
 
@@ -100,7 +98,6 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
             console.log('declined')
-
         }));
     }
 

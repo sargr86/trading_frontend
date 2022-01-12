@@ -115,7 +115,6 @@ export class DirectChatComponent implements OnInit, AfterViewChecked, OnDestroy 
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
             console.log('declined')
-
         }));
     }
 

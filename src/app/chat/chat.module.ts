@@ -8,10 +8,11 @@ import {SharedModule} from '@shared/shared.module';
 import { DirectChatComponent } from './show-messages/direct-chat/direct-chat.component';
 import { GroupChatComponent } from './show-messages/group-chat/group-chat.component';
 import { DirectMongoChatComponent } from './show-messages/mongo-chat/direct-mongo-chat/direct-mongo-chat.component';
+import { UsersListComponent } from './show-messages/mongo-chat/direct-mongo-chat/users-list/users-list.component';
 
 
 @NgModule({
-    declarations: [ShowChatroomsComponent, ShowMessagesComponent, DirectChatComponent, GroupChatComponent, DirectMongoChatComponent],
+    declarations: [ShowChatroomsComponent, ShowMessagesComponent, DirectChatComponent, GroupChatComponent, DirectMongoChatComponent, UsersListComponent],
     imports: [
         CommonModule,
         ChatRoutingModule,

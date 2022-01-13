@@ -1,0 +1,160 @@
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {notificationsStore} from '@shared/stores/notifications-store';
+import {SocketIoService} from '@core/services/socket-io.service';
+import {UsersService} from '@core/services/users.service';
+import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
+import {Subscription} from 'rxjs';
+
+@Component({
+    selector: 'app-users-list',
+    templateUrl: './users-list.component.html',
+    styleUrls: ['./users-list.component.scss']
+})
+export class UsersListComponent implements OnInit {
+    @Input() authUser;
+    @Output() refresh = new EventEmitter();
+
+    subscriptions: Subscription[] = [];
+    filteredUsersMessages = [];
+    selectedUserMessages;
+
+
+    blockedUsers = [];
+    onlineUsers = [];
+    showBlockedUsers = false;
+
+    notificationsStore = notificationsStore;
+
+    constructor(
+        private socketService: SocketIoService,
+        private usersService: UsersService,
+        public mobileHelper: MobileResponsiveHelper,
+    ) {
+    }
+
+    ngOnInit(): void {
+        this.getUserMessages();
+        this.getOnlineUsers();
+        this.getBlockUnblockUser();
+        this.getAcceptedDeclinedRequests();
+        this.getCancelledUsersConnection();
+        this.getDisconnectUser();
+
+
+    }
+
+    selectUserMessages(userMessages, lastMsg) {
+        this.selectedUserMessages = userMessages;
+    }
+
+    getUserMessages(){
+        this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
+        this.selectedUserMessages = this.filteredUsersMessages[0];
+    }
+
+    toggleBlockedUsers(show) {
+        this.showBlockedUsers = show;
+        this.filteredUsersMessages = this.usersMessages.filter(d => {
+            return !!d.users_connections?.[0].is_blocked === show;
+        });
+        this.selectedUserMessages = this.filteredUsersMessages[0];
+    }
+
+    unreadLastMessages(usersMessages) {
+
+    }
+
+    getOnlineUsers() {
+        this.socketService.getConnectedUsers({username: this.authUser.username});
+
+        this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+            this.onlineUsers = dt;
+        }));
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt);
+            this.refresh.emit();
+        }));
+    }
+
+    getCancelledUsersConnection() {
+        this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
+            console.log('cancelled');
+            this.refresh.emit();
+        }));
+    }
+
+    getDisconnectUser() {
+        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
+            console.log('disconnected', dt);
+            this.setNotifications(dt);
+            this.refresh.emit();
+        }));
+    }
+
+    blockUser(user) {
+        const params = {
+            connection_id: user.users_connections?.[0].id,
+            user: this.authUser,
+            block: +!this.showBlockedUsers,
+            contact_username: user.username
+        };
+
+        this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
+            this.refresh.emit();
+            this.socketService.blockUnblockUser({
+                connection_id: user.users_connections?.[0].id,
+                block: +!this.showBlockedUsers,
+                from_id: this.authUser.id,
+                to_id: user.id,
+                msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has blocked the connection between you two`,
+                contact_username: user.username
+            });
+        }));
+    }
+
+    getBlockUnblockUser() {
+        this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
+            console.log('get block/unblock', dt);
+            this.setNotifications(dt);
+            this.refresh.emit();
+        }));
+    }
+
+    setNotifications(dt) {
+        const notifications = this.notificationsStore.notifications;
+        notifications.unshift(dt);
+        this.notificationsStore.setNotifications(notifications);
+    }
+
+    getUserLastMessage(messages) {
+        return messages[messages.length - 1];
+    }
+
+    getUserCurrentStatus(username) {
+        return this.onlineUsers.length === 0 || this.onlineUsers.includes(username);
+    }
+
+    ifContactsListActionsShown() {
+        return this.filteredUsersMessages.length > 0;
+    }
+
+    ifContactBlocked(user) {
+        return user.users_connections?.[0].is_blocked;
+    }
+
+    ifUnreadShown(lastMsg, user) {
+        return lastMsg?.from_id !== this.authUser.id && !user.users_connections[0].is_blocked;
+    }
+
+    ifMoreActionsShown(lastMsg, user) {
+        return !user.users_connections[0].is_blocked && (!lastMsg || lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1);
+    }
+
+    ifLastMessageSeen(lastMsg) {
+        return lastMsg?.seen === 0 && lastMsg?.from_id !== this.authUser.id;
+    }
+
+}

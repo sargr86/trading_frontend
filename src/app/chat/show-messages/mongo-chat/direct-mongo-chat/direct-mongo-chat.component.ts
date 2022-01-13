@@ -38,7 +38,6 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.getUsersMessages();
-        this.getChatNotifications();
         this.getOnlineUsers();
         this.getBlockUnblockUser();
         this.getAcceptedDeclinedRequests();
@@ -81,21 +80,10 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getChatNotifications() {
-        this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
-            console.log(data)
-            this.onlineUsers = data.users;
-        }));
-    }
-
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt);
             this.getUsersMessages();
-        }));
-
-        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined');
         }));
     }
 

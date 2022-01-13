@@ -4,7 +4,6 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {Subscription} from 'rxjs';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {UsersService} from '@core/services/users.service';
-import {ToastrService} from 'ngx-toastr';
 import {notificationsStore} from '@shared/stores/notifications-store';
 
 @Component({
@@ -33,7 +32,6 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private usersService: UsersService,
-        private toastr: ToastrService,
         public mobileHelper: MobileResponsiveHelper,
     ) {
     }
@@ -66,7 +64,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
     toggleBlockedUsers(show) {
         this.showBlockedUsers = show;
         this.filteredUsersMessages = this.usersMessages.filter(d => {
-            return !!d.users_connections?.[0].is_blocked === this.showBlockedUsers;
+            return !!d.users_connections?.[0].is_blocked === show;
         });
         this.selectedUserMessages = this.filteredUsersMessages[0];
     }
@@ -92,18 +90,18 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt)
+            console.log('accepted', dt);
             this.getUsersMessages();
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined')
+            console.log('declined');
         }));
     }
 
     getCancelledUsersConnection() {
         this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
-            console.log('cancelled')
+            console.log('cancelled');
             this.getUsersMessages();
         }));
     }
@@ -111,6 +109,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
     getDisconnectUser() {
         this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
             console.log('disconnected', dt)
+            this.setNotifications(dt);
             this.getUsersMessages();
         }));
     }
@@ -138,7 +137,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
 
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
-            console.log('get block/unblock', dt)
+            console.log('get block/unblock', dt);
             this.setNotifications(dt);
             this.getUsersMessages();
         }));

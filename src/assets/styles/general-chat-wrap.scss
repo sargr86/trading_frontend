@@ -19,12 +19,13 @@
     }
 
 
-
 }
 
 .people-groups-container {
     flex: 0 0 316px;
     background: #F5F5F5;
+    max-width: 317px;
+    width: 100%;
 
     ::-webkit-scrollbar {
         width: 6px;
@@ -173,7 +174,7 @@
         justify-content: space-between;
         background: #F5F5F5;
         padding: 12px 16px;
-        @media only screen and (max-width:767px) {
+        @media only screen and (max-width: 767px) {
             display: block;
             position: relative;
         }
@@ -199,8 +200,8 @@
         .right {
             display: flex;
             align-items: center;
-            @media only screen and (min-width: 374px)and (max-width:767px) {
-                position:absolute;
+            @media only screen and (min-width: 374px) and (max-width: 767px) {
+                position: absolute;
                 top: 24px;
                 right: 0px;
             }
@@ -222,13 +223,12 @@
         //margin-top: 16px;
         overflow-x: auto;
         height: 600px;
-        @media (min-width: 767px) and (max-width:1024px) {
+        @media (min-width: 767px) and (max-width: 1024px) {
             height: 420px;
         }
         @media (max-width: 767px) {
             height: 340px;
         }
-
 
 
         li {
@@ -322,7 +322,7 @@
         }
 
         &.disabled {
-            background-color: #c7c4c4!important;
+            background-color: #c7c4c4 !important;
         }
 
         .chat-form {
@@ -390,8 +390,8 @@
     }
 }
 
-@media only screen and (max-width:374px) {
-    .mat-form-field-appearance-legacy .mat-hint{
+@media only screen and (max-width: 374px) {
+    .mat-form-field-appearance-legacy .mat-hint {
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
         overflow: hidden !important;

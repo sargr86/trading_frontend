@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {usersMessagesStore} from '@shared/stores/users-messages-store';
+import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 
 @Component({
     selector: 'app-direct-chat-messages',
@@ -7,12 +7,17 @@ import {usersMessagesStore} from '@shared/stores/users-messages-store';
     styleUrls: ['./direct-chat-messages.component.scss']
 })
 export class DirectChatMessagesComponent implements OnInit {
-    usersMessagesStore = usersMessagesStore;
+    selectedUserMessages;
 
-    constructor() {
+    constructor(
+        private userMessagesStore: UserMessagesSubjectService,
+    ) {
     }
 
     ngOnInit(): void {
+        this.userMessagesStore.selectedUserMessages$.subscribe(dt => {
+            this.selectedUserMessages = dt;
+        });
     }
 
 }

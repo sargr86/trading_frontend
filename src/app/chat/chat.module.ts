@@ -5,14 +5,15 @@ import {ChatRoutingModule} from './chat-routing.module';
 import {ShowChatroomsComponent} from './show-chatrooms/show-chatrooms.component';
 import {ShowMessagesComponent} from './show-messages/show-messages.component';
 import {SharedModule} from '@shared/shared.module';
-import { DirectChatComponent } from './show-messages/direct-chat/direct-chat.component';
-import { GroupChatComponent } from './show-messages/group-chat/group-chat.component';
-import { DirectMongoChatComponent } from './show-messages/mongo-chat/direct-mongo-chat/direct-mongo-chat.component';
-import { UsersListComponent } from './show-messages/mongo-chat/direct-mongo-chat/users-list/users-list.component';
+import {DirectChatComponent} from './show-messages/direct-chat/direct-chat.component';
+import {GroupChatComponent} from './show-messages/group-chat/group-chat.component';
+import {DirectMongoChatComponent} from './show-messages/mongo-chat/direct-mongo-chat/direct-mongo-chat.component';
+import {UsersListComponent} from './show-messages/mongo-chat/direct-mongo-chat/users-list/users-list.component';
+import {DirectChatMessagesComponent} from '@app/chat/show-messages/mongo-chat/direct-mongo-chat/direct-chat-messages/direct-chat-messages.component';
 
 
 @NgModule({
-    declarations: [ShowChatroomsComponent, ShowMessagesComponent, DirectChatComponent, GroupChatComponent, DirectMongoChatComponent, UsersListComponent],
+    declarations: [ShowChatroomsComponent, ShowMessagesComponent, DirectChatComponent, GroupChatComponent, DirectChatMessagesComponent, DirectMongoChatComponent, UsersListComponent],
     imports: [
         CommonModule,
         ChatRoutingModule,

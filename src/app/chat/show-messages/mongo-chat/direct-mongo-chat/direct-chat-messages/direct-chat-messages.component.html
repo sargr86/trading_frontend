@@ -1,5 +1,13 @@
-<div>
-    <h1>OK</h1>
-    {{selectedUserMessages|json}}
+<div class="chat" [hidden]="(mobileHelper.isChatUsersListSize() && !selectedUserMessages)">
+    <div class="chat-about" *ngIf="selectedUserMessages" [class.blocked]="ifContactBlocked(selectedUserMessages)">
+        <div class="left">
+            <button mat-icon-button *ngIf="mobileHelper.isChatUsersListSize()" (click)="selectedUserMessages = null;">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="img">
+                <img class="avatar" [src]="selectedUserMessages.avatar|getImgPath: 'user_avatars'">
+            </div>
+            <div class="name">{{selectedUserMessages.first_name + ' ' + selectedUserMessages.last_name}}</div>
+        </div>
+    </div>
 </div>
-

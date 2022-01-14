@@ -1,7 +1,7 @@
-<div class="chat-message-form" [class.disabled]="ifContactBlocked(activeUser)">
+<div class="chat-message-form">
     <form [formGroup]="chatForm" class="chat-form">
                     <textarea cdkTextareaAutosize rows="4" class="flex-1 mx-3" formControlName="message"
-                              [placeholder]="getChatInputPlaceholder(activeUser)"
+                              placeholder="Type your message"
                               (keyup)="setTyping()" (focus)="setSeen()"
                               (keyup.enter)="sendMessage($event)">
                     </textarea>

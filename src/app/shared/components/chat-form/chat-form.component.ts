@@ -1,15 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {environment} from '@env';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {Subscription} from 'rxjs';
+import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 
 @Component({
-  selector: 'app-chat-form',
-  templateUrl: './chat-form.component.html',
-  styleUrls: ['./chat-form.component.scss']
+    selector: 'app-chat-form',
+    templateUrl: './chat-form.component.html',
+    styleUrls: ['./chat-form.component.scss']
 })
 export class ChatFormComponent implements OnInit {
+    isProduction = environment.production;
+    subscriptions: Subscription [] = [];
+    chatForm: FormGroup;
+    authUser;
 
-  constructor() { }
+    selectedUser = null;
+    @Output() sent = new EventEmitter();
+    @Output() typing = new EventEmitter();
+    @Output() seen = new EventEmitter();
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private fb: FormBuilder,
+        private getAuthUser: GetAuthUserPipe,
+        private userMessagesStore: UserMessagesSubjectService,
+    ) {
+    }
+
+    ngOnInit(): void {
+        this.authUser = this.getAuthUser.transform();
+        this.initForm();
+        this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+            this.selectedUser = dt;
+            this.chatForm.patchValue({
+                connection_id: this.selectedUser?.users_connections[0]?.id,
+                to_id: this.selectedUser?.id,
+            });
+        }));
+    }
+
+
+    initForm() {
+        this.chatForm = this.fb.group({
+            from: [this.authUser.username],
+            from_id: [this.authUser.id],
+            connection_id: [''],
+            to_id: [''],
+            avatar: [this.authUser?.avatar],
+            from_user: [this.authUser],
+            to_user: [null],
+            message: ['', Validators.required],
+            personal: [1]
+        });
+    }
+
+    setTyping() {
+        this.typing.emit({
+            from_user: this.chatForm.value.from_user,
+            to_user: this.chatForm.value.to_user,
+            message: this.chatForm.value.message
+        });
+    }
+
+    setSeen() {
+        this.seen.emit({
+            from_id: this.chatForm.value.from_id,
+            to_id: this.chatForm.value.to_id,
+            from_user: this.chatForm.value.from_user,
+            to_user: this.chatForm.value.to_user,
+            connection_id: this.chatForm.value.connection_id
+        });
+    }
+
+    sendMessage(e) {
+        if (e.keyCode === 13 && !e.shiftKey && this.chatForm.value.message.trim() !== '') {
+            if (this.chatForm.valid) {
+                this.sent.emit({...this.chatForm.value});
+            }
+        }
+    }
 
 }

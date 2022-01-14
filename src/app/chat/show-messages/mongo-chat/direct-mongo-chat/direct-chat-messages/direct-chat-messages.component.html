@@ -1,24 +1,24 @@
 <ng-container
     [ngTemplateOutlet]="itemTemplate"
-    [ngTemplateOutletContext]="{messages: selectedUserMessages}">
+    [ngTemplateOutletContext]="{uMessages: selectedUserMessages}">
 </ng-container>
 
-<ng-template let-messages="messages" #itemTemplate>
-    <div class="chat" [hidden]="(mobileHelper.isChatUsersListSize() && !messages)">
-        <div class="chat-about" *ngIf="messages" [class.blocked]="isContactBlocked(messages)">
+<ng-template let-uMessages="uMessages" #itemTemplate>
+    <div class="chat" [hidden]="(mobileHelper.isChatUsersListSize() && !uMessages)">
+        <div class="chat-about" *ngIf="uMessages" [class.blocked]="isContactBlocked(uMessages)">
             <div class="left">
                 <button mat-icon-button *ngIf="mobileHelper.isChatUsersListSize()" (click)="backToUsers()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <div class="img">
-                    <img class="avatar" [src]="messages.avatar|getImgPath: 'user_avatars'">
+                    <img class="avatar" [src]="uMessages.avatar|getImgPath: 'user_avatars'">
                 </div>
-                <div class="name">{{messages.first_name + ' ' + messages.last_name}}</div>
+                <div class="name">{{uMessages.first_name + ' ' + uMessages.last_name}}</div>
             </div>
         </div>
 
         <ul class="chat-history" id="direct-messages" #directMessagesList>
-            <ng-container *ngFor="let msg of getMessagesByDate(messages?.direct_messages)">
+            <ng-container *ngFor="let msg of getMessagesByDate(uMessages?.direct_messages)">
                 <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
 
                 <ng-container *ngFor="let m of msg.value">
@@ -35,10 +35,12 @@
                 </ng-container>
             </ng-container>
         </ul>
+        <div class="chat-form" [class.disabled]="isContactBlocked(uMessages)">
+            <small class="text-center font-italic d-block">{{typingText}}</small>
+            <app-chat-form (seen)="setSeen($event)" (typing)="setTyping($event)" (sent)="sendMessage($event)">
+            </app-chat-form>
+        </div>
     </div>
 </ng-template>
 
-<div class="chat-form">
-    <small class="text-center font-italic d-block">{{typingText}}</small>
-    <app-chat-form></app-chat-form>
-</div>
+

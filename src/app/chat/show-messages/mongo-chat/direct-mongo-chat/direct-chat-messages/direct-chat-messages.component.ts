@@ -35,6 +35,18 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         }));
     }
 
+    setSeen(e) {
+        console.log('seen', e)
+    }
+
+    setTyping(e) {
+        console.log('typing', e)
+    }
+
+    sendMessage(e) {
+        console.log('sent', e)
+    }
+
     getMessagesByDate(dt) {
         return this.groupByDate.transform(dt, 'created_at');
     }

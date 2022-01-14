@@ -260,16 +260,17 @@
                     color: #FFFFFF;
                 }
 
-                .message-data {
+                .message-date {
                     justify-content: flex-end;
                 }
             }
 
-            .message-data {
+            .message-date {
                 display: flex;
                 align-items: center;
                 margin-bottom: 16px;
                 padding-left: 16px;
+                justify-content: space-between;
 
                 .img {
                     margin-right: 16px;

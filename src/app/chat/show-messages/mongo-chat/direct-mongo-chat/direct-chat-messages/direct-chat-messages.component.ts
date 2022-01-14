@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
@@ -12,10 +12,14 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 })
 export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     @Input() authUser;
+    @ViewChild('directMessagesList') private messagesList: ElementRef;
     @Output() refresh = new EventEmitter();
+
     subscriptions: Subscription[] = [];
 
     selectedUserMessages;
+
+    typingText = null;
 
     constructor(
         private userMessagesStore: UserMessagesSubjectService,
@@ -31,7 +35,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getMessagesByDate(dt){
+    getMessagesByDate(dt) {
         return this.groupByDate.transform(dt, 'created_at');
     }
 
@@ -47,7 +51,11 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     }
 
     isOwnMessage(from_id) {
-        return from_id === this.authUser.id;
+        return from_id === this.authUser.id ? 'my-message' : 'other-message';
+    }
+
+    backToUsers() {
+        this.selectedUserMessages = null;
     }
 
     ngOnDestroy() {

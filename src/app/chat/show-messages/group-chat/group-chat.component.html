@@ -141,7 +141,7 @@
                     <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
                     <ng-container *ngFor="let m of msg.value;let ind = index">
                         <li class="message-container" [ngClass]="getMessageClass(m.from_user)">
-                            <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
+                            <div class="message-date mb-0 pl-0 d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     <div class="img">
                                         <img class="avatar" [src]="m.from_user.avatar|getImgPath: 'user_avatars'">
@@ -167,7 +167,7 @@
         </ul>
 
         <small class="text-center font-italic d-block" *ngIf="typingText.text">{{typingText.text}}</small>
-        <div class="chat-message" [hidden]="!selectedGroup">
+        <div class="chat-message-form" [hidden]="!selectedGroup">
             <form [formGroup]="chatForm" class="chat-form">
                 <textarea cdkTextareaAutosize class="flex-1 mx-3" formControlName="message" placeholder="Type your message"
                        (keyup)="setTyping()" (focus)="setSeen()"

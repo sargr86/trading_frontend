@@ -54,6 +54,7 @@ import {GetDateTextForMessagesPipe} from './pipes/get-date-text-for-messages.pip
 import {GetElegantDatePipe} from './pipes/get-elegant-date.pipe';
 import {NotificationsListComponent} from '@shared/components/notifications-list/notifications-list.component';
 import {MobxAngularModule} from 'mobx-angular';
+import { ChatFormComponent } from './components/chat-form/chat-form.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -107,7 +108,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NotificationsListComponent,
         GroupByPipe,
         GetDateTextForMessagesPipe,
-        GetElegantDatePipe
+        GetElegantDatePipe,
+        ChatFormComponent
     ],
     imports: [
         CommonModule,
@@ -189,7 +191,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ChatBottomBoxComponent,
         NotificationsListComponent,
         GetDateTextForMessagesPipe,
-        GetElegantDatePipe
+        GetElegantDatePipe,
+        ChatFormComponent
     ],
 
 })

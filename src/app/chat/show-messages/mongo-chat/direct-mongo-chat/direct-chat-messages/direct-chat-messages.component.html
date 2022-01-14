@@ -1,5 +1,5 @@
 <div class="chat" [hidden]="(mobileHelper.isChatUsersListSize() && !selectedUserMessages)">
-    <div class="chat-about" *ngIf="selectedUserMessages" [class.blocked]="ifContactBlocked(selectedUserMessages)">
+    <div class="chat-about" *ngIf="selectedUserMessages" [class.blocked]="isContactBlocked(selectedUserMessages)">
         <div class="left">
             <button mat-icon-button *ngIf="mobileHelper.isChatUsersListSize()" (click)="selectedUserMessages = null;">
                 <mat-icon>arrow_back</mat-icon>
@@ -10,4 +10,25 @@
             <div class="name">{{selectedUserMessages.first_name + ' ' + selectedUserMessages.last_name}}</div>
         </div>
     </div>
+
+    <ul class="chat-history" id="direct-messages" #directMessagesList>
+        <ng-container *ngFor="let msg of getMessagesByDate(selectedUserMessages?.direct_messages)">
+
+            <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
+            <ng-container *ngFor="let m of msg.value;let ind = index">
+                <li class="message-container" [ngClass]="isOwnMessage(m.from_id)? 'my-message' : 'other-message'">
+                    <div class="message-data mb-0 pl-0 d-flex justify-content-between align-items-center">
+                        <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
+                    </div>
+                    <div class="message" [innerHTML]="m.message">
+
+                    </div>
+                    <div class="seen" *ngIf="m.seen && m.to_id!==authUser.id">
+                        <img class="seen-avatar" [matTooltip]="getSeenTooltip(m)"
+                             [src]="m.to_user.avatar|getImgPath: 'user_avatars'">
+                    </div>
+                </li>
+            </ng-container>
+        </ng-container>
+    </ul>
 </div>

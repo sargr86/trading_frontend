@@ -73,9 +73,9 @@
                                     </button>
                                 </mat-menu>
                             </ng-container>
-                            <ng-container *ngIf="ifLastMessageSeen(lastMsg)">
+                            <ng-container *ngIf="ifLastMessageUnseen(lastMsg) && getUnseenMessagesCount(userMessages)">
                                 <button class="seen-circle">
-                                    <strong>{{userMessages?.unseens}}</strong>
+                                    <strong>{{getUnseenMessagesCount(userMessages)}}</strong>
                                 </button>
                             </ng-container>
                         </div>

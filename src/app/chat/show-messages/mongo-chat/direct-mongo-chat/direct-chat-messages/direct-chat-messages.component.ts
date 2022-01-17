@@ -6,6 +6,7 @@ import {GetElegantDatePipe} from '@shared/pipes/get-elegant-date.pipe';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import * as moment from 'moment';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-direct-chat-messages',
@@ -26,6 +27,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     constructor(
         private userMessagesStore: UserMessagesSubjectService,
         private socketService: SocketIoService,
+        private chatService: ChatService,
         public mobileHelper: MobileResponsiveHelper,
         private getElegantDate: GetElegantDatePipe,
         private groupByDate: GroupByPipe,
@@ -37,8 +39,10 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
             this.selectedUserMessages = dt;
         }));
 
+        this.scrollMsgsToBottom();
         this.getSeen();
         this.getTyping();
+        this.getMessagesFromSocket();
     }
 
     setSeen(e) {
@@ -78,7 +82,24 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     }
 
     sendMessage(e) {
-        console.log('sent', e)
+        console.log('sent', e);
+        this.socketService.sendMessage(e);
+    }
+
+    getMessagesFromSocket() {
+        this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
+            console.log('new message direct chat!!!')
+            this.typingText = null;
+            this.scrollMsgsToBottom();
+            this.updateMessagesStore(dt);
+        }));
+    }
+
+    updateMessagesStore(dt) {
+        const selectedUserMessages = this.userMessagesStore.selectedUserMessages as any;
+        selectedUserMessages.direct_messages = dt;
+        this.userMessagesStore.changeUser(selectedUserMessages);
+        console.log(this.userMessagesStore.selectedUserMessages)
     }
 
     getMessagesByDate(dt) {
@@ -106,6 +127,14 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
 
     backToUsers() {
         this.selectedUserMessages = null;
+    }
+
+    scrollMsgsToBottom() {
+        try {
+            this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     identifyDateKey(index, item) {

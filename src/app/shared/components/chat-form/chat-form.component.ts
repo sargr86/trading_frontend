@@ -80,7 +80,17 @@ export class ChatFormComponent implements OnInit {
     sendMessage(e) {
         if (e.keyCode === 13 && !e.shiftKey && this.chatForm.value.message.trim() !== '') {
             if (this.chatForm.valid) {
-                this.sent.emit({...this.chatForm.value});
+                this.sent.emit({
+                    from_id: this.chatForm.value.from_id,
+                    from_username: this.chatForm.value.from_username,
+                    to_id: this.chatForm.value.to_id,
+                    connection_id: this.chatForm.value.connection_id,
+                    message: this.chatForm.value.message,
+                    to_username: this.chatForm.value.to_username,
+                    seen: false,
+                    seen_at: ''
+                });
+                this.chatForm.patchValue({message: ''});
             }
         }
     }

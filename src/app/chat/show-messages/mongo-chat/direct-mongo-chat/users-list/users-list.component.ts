@@ -41,8 +41,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.getAcceptedDeclinedRequests();
         this.getCancelledUsersConnection();
         this.getDisconnectUser();
-
-
     }
 
     selectUserMessages(userMessages, lastMsg) {
@@ -158,11 +156,15 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     ifMoreActionsShown(lastMsg, user) {
-        return !user.users_connections[0].is_blocked && (!lastMsg || lastMsg?.from_id === this.authUser.id || lastMsg?.seen === 1);
+        return !user.users_connections[0].is_blocked && (!lastMsg || lastMsg?.from_id === this.authUser.id || lastMsg?.seen);
     }
 
-    ifLastMessageSeen(lastMsg) {
-        return lastMsg?.seen === 0 && lastMsg?.from_id !== this.authUser.id;
+    ifLastMessageUnseen(lastMsg) {
+        return !lastMsg?.seen && lastMsg?.from_id !== this.authUser.id;
+    }
+
+    getUnseenMessagesCount(userMessages) {
+        return userMessages.direct_messages.filter(um => !um.seen).length;
     }
 
     ngOnDestroy() {

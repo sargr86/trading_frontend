@@ -4,6 +4,8 @@ import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {GetElegantDatePipe} from '@shared/pipes/get-elegant-date.pipe';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
+import * as moment from 'moment';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-direct-chat-messages',
@@ -23,6 +25,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
 
     constructor(
         private userMessagesStore: UserMessagesSubjectService,
+        private socketService: SocketIoService,
         public mobileHelper: MobileResponsiveHelper,
         private getElegantDate: GetElegantDatePipe,
         private groupByDate: GroupByPipe,
@@ -33,10 +36,31 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.selectedUserMessages = dt;
         }));
+
+        this.getSeen();
     }
 
     setSeen(e) {
-        console.log('seen', e)
+        const messages = this.selectedUserMessages.direct_messages;
+        const lastMessage = messages[messages.length - 1];
+        const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
+        if (!isOwnLastMessage) {
+            this.socketService.setSeen({
+                message_id: lastMessage._id,
+                seen: 1,
+                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a'),
+                ...e
+            });
+        }
+    }
+
+    getSeen() {
+
+        this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
+            this.selectedUserMessages.messages = [];
+            console.log('get seen', dt)
+            this.refresh.emit();
+        }));
     }
 
     setTyping(e) {
@@ -52,7 +76,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     }
 
     getSeenTooltip(message) {
-        const user = message.to_user;
+        const user = this.selectedUserMessages;
         const seenDate = this.getElegantDate.transform(message.seen_at);
 
         return `${user.first_name} ${user.last_name} at ${seenDate}`;
@@ -66,8 +90,21 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         return from_id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
+    isSeenByOtherUser(msg) {
+        return msg.seen && msg.to_id !== this.authUser.id;
+    }
+
     backToUsers() {
         this.selectedUserMessages = null;
+    }
+
+
+    identifyDateKey(index, item) {
+        return item.key;
+    }
+
+    identifyMessage(index, item) {
+        return item._id;
     }
 
     ngOnDestroy() {

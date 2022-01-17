@@ -36,6 +36,7 @@ export class ChatFormComponent implements OnInit {
             this.chatForm.patchValue({
                 connection_id: this.selectedUser?.users_connections[0]?.id,
                 to_id: this.selectedUser?.id,
+                to_username: this.selectedUser?.username
             });
         }));
     }
@@ -49,7 +50,8 @@ export class ChatFormComponent implements OnInit {
             to_id: [''],
             avatar: [this.authUser?.avatar],
             from_user: [this.authUser],
-            to_user: [null],
+            // to_user: [null],
+            to_username: [null],
             message: ['', Validators.required],
             personal: [1]
         });
@@ -68,7 +70,7 @@ export class ChatFormComponent implements OnInit {
             from_id: this.chatForm.value.from_id,
             to_id: this.chatForm.value.to_id,
             from_user: this.chatForm.value.from_user,
-            to_user: this.chatForm.value.to_user,
+            to_username: this.chatForm.value.to_username,
             connection_id: this.chatForm.value.connection_id
         });
     }

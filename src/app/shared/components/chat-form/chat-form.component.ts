@@ -44,7 +44,7 @@ export class ChatFormComponent implements OnInit {
 
     initForm() {
         this.chatForm = this.fb.group({
-            from: [this.authUser.username],
+            from_username: [this.authUser.username],
             from_id: [this.authUser.id],
             connection_id: [''],
             to_id: [''],
@@ -59,8 +59,10 @@ export class ChatFormComponent implements OnInit {
 
     setTyping() {
         this.typing.emit({
-            from_user: this.chatForm.value.from_user,
-            to_user: this.chatForm.value.to_user,
+            from_id: this.chatForm.value.from_id,
+            from_first_name: this.authUser.first_name,
+            from_username: this.chatForm.value.from_username,
+            to_username: this.chatForm.value.to_username,
             message: this.chatForm.value.message
         });
     }
@@ -69,7 +71,7 @@ export class ChatFormComponent implements OnInit {
         this.seen.emit({
             from_id: this.chatForm.value.from_id,
             to_id: this.chatForm.value.to_id,
-            from_user: this.chatForm.value.from_user,
+            from_username: this.chatForm.value.from_username,
             to_username: this.chatForm.value.to_username,
             connection_id: this.chatForm.value.connection_id
         });

@@ -38,6 +38,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         }));
 
         this.getSeen();
+        this.getTyping();
     }
 
     setSeen(e) {
@@ -55,16 +56,25 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     }
 
     getSeen() {
-
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             this.selectedUserMessages.messages = [];
-            console.log('get seen', dt)
+            console.log('get seen', dt);
             this.refresh.emit();
         }));
     }
 
     setTyping(e) {
-        console.log('typing', e)
+        // console.log('typing', e)
+        this.socketService.setTyping(e);
+    }
+
+    getTyping() {
+        this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
+            // console.log(dt.from_id, this.authUser.id, this.selectedUserMessages);
+            if (dt.from_id !== this.authUser.id && this.selectedUserMessages.id === dt.from_id) {
+                this.typingText = dt.message ? `${dt.from_first_name} is typing...` : null;
+            }
+        }));
     }
 
     sendMessage(e) {
@@ -97,7 +107,6 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     backToUsers() {
         this.selectedUserMessages = null;
     }
-
 
     identifyDateKey(index, item) {
         return item.key;

@@ -7,6 +7,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import * as moment from 'moment';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-direct-chat-messages',
@@ -26,6 +27,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
 
     constructor(
         private userMessagesStore: UserMessagesSubjectService,
+        private subject: SubjectService,
         private socketService: SocketIoService,
         private chatService: ChatService,
         public mobileHelper: MobileResponsiveHelper,
@@ -37,6 +39,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.selectedUserMessages = dt;
+            this.setNewMessageSources();
         }));
 
         this.scrollMsgsToBottom();
@@ -51,7 +54,7 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
         if (!isOwnLastMessage) {
             this.socketService.setSeen({
-                message_id: lastMessage._id,
+                message_id: lastMessage?._id,
                 seen: 1,
                 seen_at: moment().format('YYYY-MM-DD, h:mm:ss a'),
                 ...e
@@ -99,7 +102,14 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         const selectedUserMessages = this.userMessagesStore.selectedUserMessages as any;
         selectedUserMessages.direct_messages = dt;
         this.userMessagesStore.changeUser(selectedUserMessages);
+
+        this.setNewMessageSources();
         console.log(this.userMessagesStore.selectedUserMessages)
+    }
+
+    setNewMessageSources() {
+        const sources = this.userMessagesStore.userMessages.filter(m => m.direct_messages.filter(d => !d.seen).length > 0);
+        this.subject.setNewMessagesSourceData({sources: sources.length, type: 'direct'});
     }
 
     getMessagesByDate(dt) {

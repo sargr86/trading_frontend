@@ -64,9 +64,14 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
 
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
-            this.selectedUserMessages.messages = [];
-            console.log('get seen', dt);
-            this.refresh.emit();
+            // this.selectedUserMessages.messages = [];
+            console.log('get seen', dt.from_id, this.authUser.id);
+            console.log(this.selectedUserMessages)
+            // this.refresh.emit();
+
+            if (dt.from_id !== this.authUser.id) {
+                this.updateMessagesStore(dt.direct_messages);
+            }
         }));
     }
 
@@ -93,8 +98,10 @@ export class DirectChatMessagesComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             console.log('new message direct chat!!!')
             this.typingText = null;
-            this.scrollMsgsToBottom();
-            this.updateMessagesStore(dt);
+            if (dt.from_id !== this.authUser.id) {
+                this.scrollMsgsToBottom();
+                this.updateMessagesStore(dt);
+            }
         }));
     }
 

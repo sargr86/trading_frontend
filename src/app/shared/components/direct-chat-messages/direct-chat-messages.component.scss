@@ -1,0 +1,15 @@
+@import "../../../chat/show-messages/direct-chat/direct-chat.component";
+
+.embed {
+    margin-left: 0;
+    margin-top: 0px;
+    height: 200px;
+    position: absolute;
+    /* overflow-y: scroll; */
+    min-width: 223px;
+
+    #direct-messages{
+        overflow-y: scroll;
+        height: 253px;
+    }
+}

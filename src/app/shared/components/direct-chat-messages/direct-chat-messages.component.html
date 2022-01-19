@@ -4,9 +4,9 @@
 </ng-container>
 
 <ng-template let-uMessages="uMessages" #itemTemplate>
-    <div class="chat" [hidden]="(mobileHelper.isChatUsersListSize() && !uMessages)">
+    <div class="chat" [class.embed]="embedMode" [hidden]="(mobileHelper.isChatUsersListSize() && !uMessages)">
 
-        <div class="chat-about" *ngIf="uMessages" [class.blocked]="isContactBlocked(uMessages)">
+        <div class="chat-about" *ngIf="uMessages && !embedMode" [class.blocked]="isContactBlocked(uMessages)">
             <div class="left">
                 <button mat-icon-button *ngIf="mobileHelper.isChatUsersListSize()" (click)="backToUsers()">
                     <mat-icon>arrow_back</mat-icon>

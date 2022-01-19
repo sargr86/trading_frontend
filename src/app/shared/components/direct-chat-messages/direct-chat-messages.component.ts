@@ -22,10 +22,12 @@ import {SubjectService} from '@core/services/subject.service';
 @Component({
     selector: 'app-direct-chat-messages',
     templateUrl: './direct-chat-messages.component.html',
-    styleUrls: ['./direct-chat-messages.component.scss']
+    styleUrls: ['./direct-chat-messages.component.scss'],
+    providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
 })
 export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() authUser;
+    @Input() embedMode = false;
     @ViewChild('directMessagesList') private messagesList: ElementRef;
 
     subscriptions: Subscription[] = [];
@@ -56,7 +58,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
         this.getTyping();
         this.getMessagesFromSocket();
     }
-
+    //
     ngAfterViewInit() {
         this.scrollMsgsToBottom();
     }

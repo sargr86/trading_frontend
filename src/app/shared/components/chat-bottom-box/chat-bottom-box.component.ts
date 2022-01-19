@@ -15,11 +15,15 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import * as moment from 'moment';
 import {UsersService} from '@core/services/users.service';
+import {Subscription} from 'rxjs';
+import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {DirectChatMessagesComponent} from '@shared/components/direct-chat-messages/direct-chat-messages.component';
 
 @Component({
     selector: 'app-chat-bottom-box',
     templateUrl: './chat-bottom-box.component.html',
-    styleUrls: ['./chat-bottom-box.component.scss']
+    styleUrls: ['./chat-bottom-box.component.scss'],
+    providers: [DirectChatMessagesComponent]
 })
 export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestroy {
     chatForm: FormGroup;
@@ -28,6 +32,8 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
     loadingMessages = false;
     messages = [];
     typingText;
+
+    subscriptions: Subscription[] = [];
 
     @Input() channelUser;
     @Output() close = new EventEmitter();
@@ -39,7 +45,8 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
         private getAuthUser: GetAuthUserPipe,
         private chatService: ChatService,
         private socketService: SocketIoService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private userMessagesStore: UserMessagesSubjectService
     ) {
     }
 
@@ -47,10 +54,11 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
         this.authUser = this.getAuthUser.transform();
         this.initForm();
         this.addUserToSocket();
-        this.loadPreviousMessages();
+        // this.loadPreviousMessages();
         this.checkIfUsersConnected();
         this.getTyping();
         this.getMessagesFromSocket();
+        this.getUsersMessages();
     }
 
     initForm() {
@@ -84,6 +92,18 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
 
     addUserToSocket() {
         this.socketService.addNewUser(this.authUser);
+    }
+
+    getUsersMessages() {
+        this.subscriptions.push(this.chatService.getDirectMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.messages = dt;
+            this.userMessagesStore.setUserMessages(dt);
+            console.log(this.channelUser)
+            this.userMessagesStore.changeUser(dt.find(d => d.id === this.channelUser.id));
+        }));
     }
 
     loadPreviousMessages() {
@@ -183,7 +203,7 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
     }
 
     ngAfterViewChecked() {
-        this.scrollMsgsToBottom();
+        // this.scrollMsgsToBottom();
     }
 
     ngOnDestroy() {

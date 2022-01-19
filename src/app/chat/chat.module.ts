@@ -13,7 +13,15 @@ import {DirectChatMessagesComponent} from '@app/chat/show-messages/mongo-chat/di
 
 
 @NgModule({
-    declarations: [ShowChatroomsComponent, ShowMessagesComponent, DirectChatComponent, GroupChatComponent, DirectChatMessagesComponent, DirectMongoChatComponent, UsersListComponent],
+    declarations: [
+        ShowChatroomsComponent,
+        ShowMessagesComponent,
+        DirectChatComponent,
+        GroupChatComponent,
+        DirectChatMessagesComponent,
+        DirectMongoChatComponent,
+        UsersListComponent
+    ],
     imports: [
         CommonModule,
         ChatRoutingModule,

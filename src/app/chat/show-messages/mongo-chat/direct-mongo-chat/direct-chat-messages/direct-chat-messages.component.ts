@@ -27,7 +27,6 @@ import {SubjectService} from '@core/services/subject.service';
 export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() authUser;
     @ViewChild('directMessagesList') private messagesList: ElementRef;
-    @Output() refresh = new EventEmitter();
 
     subscriptions: Subscription[] = [];
 
@@ -78,12 +77,12 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
 
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
-            console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${dt.from_id}, to_ID ${dt.to_id}`);
-
-            if (this.selectedUserMessages.id === dt.to_id) {
-                this.userMessagesStore.changeUserMessages(dt.to_id, dt.direct_messages);
-            } else if (this.selectedUserMessages.id === dt.from_id) {
-                this.userMessagesStore.changeUserMessages(dt.from_id, dt.direct_messages);
+            const {from_id, to_id, direct_messages} = dt;
+            console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
+            if (this.selectedUserMessages.id === to_id) {
+                this.userMessagesStore.changeUserMessages(to_id, direct_messages);
+            } else if (this.selectedUserMessages.id === from_id) {
+                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
             }
             this.setNewMessageSources();
         }));
@@ -109,14 +108,14 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${dt.from_id}, to_ID ${dt.to_id}`)
-
+            const {from_id, to_id, direct_messages} = dt;
+            console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
             this.typingText = null;
             this.scrollMsgsToBottom();
-            if (dt.from_id === this.authUser.id || (dt.to_id === this.authUser.id && dt.from_id === this.selectedUserMessages.id)) {
-                this.userMessagesStore.changeUserMessages(this.selectedUserMessages.id, dt.direct_messages)
+            if (from_id === this.authUser.id || (to_id === this.authUser.id && from_id === this.selectedUserMessages.id)) {
+                this.userMessagesStore.changeUserMessages(this.selectedUserMessages.id, direct_messages);
             } else {
-                this.userMessagesStore.changeUserMessages(dt.from_id, dt.direct_messages)
+                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
             }
             this.setNewMessageSources();
         }));

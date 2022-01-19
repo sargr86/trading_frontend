@@ -32,5 +32,9 @@ export class UserMessagesSubjectService {
         return this.selectedUserMessagesSource.getValue();
     }
 
+    changeUserMessages(id, messages) {
+        this.userMessages.find(um => um.id === id).direct_messages = messages;
+    }
+
 
 }

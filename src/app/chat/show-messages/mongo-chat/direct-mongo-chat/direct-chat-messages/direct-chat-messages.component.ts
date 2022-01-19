@@ -52,7 +52,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
             this.typingText = null;
         }));
 
-
         this.setNewMessageSources();
         this.getSeen();
         this.getTyping();
@@ -79,13 +78,14 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
 
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
-            // console.log('get seen', dt.from_id, this.authUser.id, dt, this.selectedUserMessages);
+            console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${dt.from_id}, to_ID ${dt.to_id}`);
 
-            if (dt.to_id === this.selectedUserMessages.id) {
-                this.updateSelectedUserMsgsStore(dt);
+            if (this.selectedUserMessages.id === dt.to_id) {
+                this.userMessagesStore.changeUserMessages(dt.to_id, dt.direct_messages);
             } else if (this.selectedUserMessages.id === dt.from_id) {
-                this.updateOtherUsersMsgsStore(dt);
+                this.userMessagesStore.changeUserMessages(dt.from_id, dt.direct_messages);
             }
+            this.setNewMessageSources();
         }));
     }
 
@@ -109,29 +109,17 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log('new message direct chat!!!', dt, dt.from_id, this.authUser.id)
+            console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${dt.from_id}, to_ID ${dt.to_id}`)
+
             this.typingText = null;
             this.scrollMsgsToBottom();
             if (dt.from_id === this.authUser.id || (dt.to_id === this.authUser.id && dt.from_id === this.selectedUserMessages.id)) {
-                this.updateSelectedUserMsgsStore(dt);
+                this.userMessagesStore.changeUserMessages(this.selectedUserMessages.id, dt.direct_messages)
             } else {
-                this.updateOtherUsersMsgsStore(dt);
+                this.userMessagesStore.changeUserMessages(dt.from_id, dt.direct_messages)
             }
+            this.setNewMessageSources();
         }));
-    }
-
-    updateSelectedUserMsgsStore(dt) {
-        const selectedUserMessages = this.userMessagesStore.selectedUserMessages as any;
-        selectedUserMessages.direct_messages = dt.direct_messages;
-        this.userMessagesStore.changeUser(selectedUserMessages);
-        this.setNewMessageSources();
-    }
-
-    updateOtherUsersMsgsStore(dt) {
-        console.log('other user messages')
-        const userMessages = this.userMessagesStore.userMessages;
-        userMessages.find(u => u.id === dt.from_id).direct_messages = dt.direct_messages;
-        this.setNewMessageSources();
     }
 
     setNewMessageSources() {

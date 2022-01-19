@@ -50,6 +50,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     getUserMessages() {
         this.userMessagesStore.userMessages$.subscribe(dt => {
+            console.log('users list!!!', dt)
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
             this.selectedUserMessages = this.filteredUsersMessages[0];
             this.userMessagesStore.changeUser(this.selectedUserMessages);

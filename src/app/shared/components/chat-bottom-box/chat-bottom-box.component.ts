@@ -56,9 +56,10 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
         this.addUserToSocket();
         // this.loadPreviousMessages();
         this.checkIfUsersConnected();
-        this.getTyping();
-        this.getMessagesFromSocket();
-        this.getUsersMessages();
+        // this.getTyping();
+        // this.getMessagesFromSocket();
+        // this.getUsersMessages();
+        this.getConnectionMessages();
     }
 
     initForm() {
@@ -94,16 +95,31 @@ export class ChatBottomBoxComponent implements OnInit, AfterViewChecked, OnDestr
         this.socketService.addNewUser(this.authUser);
     }
 
-    getUsersMessages() {
+    // getUsersMessages() {
+    //     this.subscriptions.push(this.chatService.getDirectMessages({
+    //         user_id: this.authUser.id,
+    //         blocked: 0
+    //     }).subscribe(dt => {
+    //         // this.messages = dt;
+    //         // this.userMessagesStore.setUserMessages(dt);
+    //         // console.log(this.channelUser)
+    //         // this.userMessagesStore.changeUser(dt.find(d => d.id === this.channelUser.id));
+    //     }));
+    // }
+
+    getConnectionMessages() {
+
         this.subscriptions.push(this.chatService.getDirectMessages({
             user_id: this.authUser.id,
-            blocked: 0
+            other_user_id: this.channelUser.id
         }).subscribe(dt => {
             this.messages = dt;
             this.userMessagesStore.setUserMessages(dt);
-            console.log(this.channelUser)
-            this.userMessagesStore.changeUser(dt.find(d => d.id === this.channelUser.id));
+            console.log(this.userMessagesStore.userMessages)
+            this.userMessagesStore.changeUser(dt[0]);
+            console.log(this.userMessagesStore.selectedUserMessages)
         }));
+
     }
 
     loadPreviousMessages() {

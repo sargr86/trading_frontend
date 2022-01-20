@@ -30,6 +30,10 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/direct/get-messages-between-two-users`, {params});
     }
 
+    getConnectionMessages(params) {
+        return this.httpClient.get<any>(`${API_URL}chat/direct/get-connection-messages`, {params});
+    }
+
     unreadLastMessages(params) {
         return this.httpClient.put<any>(`${API_URL}chat/unread-last-messages`, params);
     }

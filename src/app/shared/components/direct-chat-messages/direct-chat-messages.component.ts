@@ -1,4 +1,5 @@
 import {
+    AfterViewChecked,
     AfterViewInit,
     Component,
     ElementRef,
@@ -25,7 +26,7 @@ import {SubjectService} from '@core/services/subject.service';
     styleUrls: ['./direct-chat-messages.component.scss'],
     providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
 })
-export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, OnDestroy {
     @Input() authUser;
     @Input() embedMode = false;
     @ViewChild('directMessagesList') private messagesList: ElementRef;
@@ -49,6 +50,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
 
     ngOnInit(): void {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+            console.log(dt)
             this.selectedUserMessages = dt;
             this.typingText = null;
         }));
@@ -58,8 +60,9 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
         this.getTyping();
         this.getMessagesFromSocket();
     }
+
     //
-    ngAfterViewInit() {
+    ngAfterViewChecked() {
         this.scrollMsgsToBottom();
     }
 
@@ -80,7 +83,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-            console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
+            // console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
             if (this.selectedUserMessages.id === to_id) {
                 this.userMessagesStore.changeUserMessages(to_id, direct_messages);
             } else if (this.selectedUserMessages.id === from_id) {
@@ -104,21 +107,21 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewInit, OnDes
     }
 
     sendMessage(e) {
-        console.log('sent', e);
+        // console.log('sent', e);
         this.socketService.sendMessage(e);
     }
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-            console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
+            // console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
             this.typingText = null;
-            this.scrollMsgsToBottom();
             if (from_id === this.authUser.id || (to_id === this.authUser.id && from_id === this.selectedUserMessages.id)) {
                 this.userMessagesStore.changeUserMessages(this.selectedUserMessages.id, direct_messages);
             } else {
                 this.userMessagesStore.changeUserMessages(from_id, direct_messages);
             }
+            this.scrollMsgsToBottom();
             this.setNewMessageSources();
         }));
     }

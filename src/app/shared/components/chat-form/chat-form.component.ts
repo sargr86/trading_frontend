@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {environment} from '@env';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -10,13 +10,14 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
     templateUrl: './chat-form.component.html',
     styleUrls: ['./chat-form.component.scss']
 })
-export class ChatFormComponent implements OnInit {
+export class ChatFormComponent implements OnInit, OnDestroy {
     isProduction = environment.production;
     subscriptions: Subscription [] = [];
     chatForm: FormGroup;
     authUser;
 
     selectedUser = null;
+    @Input() embed = false;
     @Output() sent = new EventEmitter();
     @Output() typing = new EventEmitter();
     @Output() seen = new EventEmitter();
@@ -77,22 +78,30 @@ export class ChatFormComponent implements OnInit {
         });
     }
 
-    sendMessage(e) {
-        if (e.keyCode === 13 && !e.shiftKey && this.chatForm.value.message.trim() !== '') {
-            if (this.chatForm.valid) {
-                this.sent.emit({
-                    from_id: this.chatForm.value.from_id,
-                    from_username: this.chatForm.value.from_username,
-                    to_id: this.chatForm.value.to_id,
-                    connection_id: this.chatForm.value.connection_id,
-                    message: this.chatForm.value.message,
-                    to_username: this.chatForm.value.to_username,
-                    seen: false,
-                    seen_at: ''
-                });
-                this.chatForm.patchValue({message: ''});
-            }
+    sendMessageOnEnter(e) {
+        if (e.keyCode === 13 && !e.shiftKey) {
+            this.sendMessage();
         }
+    }
+
+    sendMessage() {
+        if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
+            this.sent.emit({
+                from_id: this.chatForm.value.from_id,
+                from_username: this.chatForm.value.from_username,
+                to_id: this.chatForm.value.to_id,
+                connection_id: this.chatForm.value.connection_id,
+                message: this.chatForm.value.message,
+                to_username: this.chatForm.value.to_username,
+                seen: false,
+                seen_at: ''
+            });
+            this.chatForm.patchValue({message: ''});
+        }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

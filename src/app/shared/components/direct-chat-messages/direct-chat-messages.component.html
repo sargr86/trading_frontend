@@ -39,7 +39,7 @@
 
         <div class="chat-form" [class.disabled]="isContactBlocked(uMessages)">
             <small class="text-center font-italic d-block">{{typingText}}</small>
-            <app-chat-form (seen)="setSeen($event)" (typing)="setTyping($event)" (sent)="sendMessage($event)">
+            <app-chat-form [embed]="embedMode" (seen)="setSeen($event)" (typing)="setTyping($event)" (sent)="sendMessage($event)">
             </app-chat-form>
         </div>
     </div>

@@ -1,49 +1,19 @@
-<form [formGroup]="chatForm">
-    <div class="bottom_chat">
-        <div class="w-100 h-100 position-relative">
-            <div class="d-flex justify-content-between border-bottom py-3">
-                <div>
-                    <img class="avatar" id="profile-image"
-                         [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
-                    <span>{{channelUser.first_name + ' ' + channelUser.last_name}}</span>
-                </div>
-                <div>
-                    <img src="assets/img/x.svg" class="close-box" alt="close-chat-box" (click)="closeChatBox()">
-                </div>
+<div class="bottom-chat">
+    <div class="w-100 h-100 position-relative">
+        <div class="channel-user-name-container">
+            <div>
+                <img class="avatar" id="profile-image" alt="channel-user-avatar"
+                     [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                <span>{{channelUser.first_name + ' ' + channelUser.last_name}}</span>
             </div>
-
-            <!--            <div class="chat-information" #directMessagesList>-->
-            <!--                <div class="loader" *ngIf="loadingMessages">-->
-            <!--                    <mat-spinner [diameter]="30"></mat-spinner>-->
-            <!--                </div>-->
-            <!--                <div class="chat-block d-flex flex-column" *ngFor="let message of messages">-->
-
-            <!--                    <div class="w-100" [ngClass]="getMessageClass(message?.from_user)">-->
-            <!--                        <ng-container>-->
-            <!--                            <div class="d-flex w-100 align-items-center position-relative">-->
-            <!--                                <img class="avatar" [class.selectable]="message.from!==this.authUser.username"-->
-            <!--                                     [src]="message.avatar|getImgPath:'user_avatars'">-->
-            <!--                                <p class="chat-block-2 w-100">{{message.message}}</p>-->
-            <!--                                <div class="abs">{{message.created_at | date: 'HH:mm'}}</div>-->
-            <!--                            </div>-->
-            <!--                        </ng-container>-->
-            <!--                    </div>-->
-            <!--                    <div class="seen" *ngIf="message.seen">-->
-            <!--                        <img class="seen-avatar" [src]="getSeenAvatar(message)|getImgPath: 'user_avatars'">-->
-            <!--                    </div>-->
-
-            <!--                </div>-->
-            <!--            </div>-->
-
-            <!--            <div *ngIf="typingText" class="typing-text-container">-->
-            <!--                <small class="text-center font-italic d-block">{{typingText}}</small>-->
-            <!--            </div>-->
-
-            <div class="chat-messages-container">
-                <app-direct-chat-messages *ngIf="messages.length > 0" [authUser]="authUser"
-                                          [embedMode]="true"></app-direct-chat-messages>
+            <div>
+                <img src="assets/img/x.svg" class="close-box" alt="close-chat-box" (click)="closeChatBox()">
             </div>
+        </div>
 
+        <div class="chat-messages-container">
+            <app-direct-chat-messages *ngIf="messages.length > 0" [authUser]="authUser"
+                                      [embedMode]="true"></app-direct-chat-messages>
         </div>
     </div>
-</form>
+</div>

@@ -9,11 +9,14 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
 @Component({
     selector: 'app-users-list',
     templateUrl: './users-list.component.html',
-    styleUrls: ['./users-list.component.scss']
+    styleUrls: ['./users-list.component.scss'],
+    providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
 })
 export class UsersListComponent implements OnInit, OnDestroy {
     @Input() authUser;
+    @Input() sidebarMode = false;
     @Output() refresh = new EventEmitter();
+    @Output() openBottomChatBox = new EventEmitter();
 
     subscriptions: Subscription[] = [];
     filteredUsersMessages = [];
@@ -45,8 +48,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     selectUserMessages(userMessages, lastMsg) {
-        this.selectedUserMessages = userMessages;
-        this.userMessagesStore.changeUser(userMessages);
+        if (this.sidebarMode) {
+            this.openBottomChatBox.emit();
+        } else {
+            this.selectedUserMessages = userMessages;
+            this.userMessagesStore.changeUser(userMessages);
+        }
     }
 
     getUserMessages() {

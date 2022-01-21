@@ -3,4 +3,5 @@
     <app-notifications-list [shownInSidebar]="true" [notificationsCategory]="'early'"></app-notifications-list>
 </ng-container>
 
-
+<app-users-list *ngIf="shownItems==='messages' && usersMessages" [authUser]="authUser"
+                [sidebarMode]="true" (openBottomChatBox)="openBottomChatBox.emit()"></app-users-list>

@@ -56,6 +56,7 @@ import {NotificationsListComponent} from '@shared/components/notifications-list/
 import {MobxAngularModule} from 'mobx-angular';
 import { ChatFormComponent } from './components/chat-form/chat-form.component';
 import {DirectChatMessagesComponent} from '@shared/components/direct-chat-messages/direct-chat-messages.component';
+import {UsersListComponent} from '@shared/components/direct-chat/users-list/users-list.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -111,7 +112,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetDateTextForMessagesPipe,
         GetElegantDatePipe,
         ChatFormComponent,
-        DirectChatMessagesComponent
+        DirectChatMessagesComponent,
+        UsersListComponent
     ],
     imports: [
         CommonModule,
@@ -195,7 +197,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetDateTextForMessagesPipe,
         GetElegantDatePipe,
         ChatFormComponent,
-        DirectChatMessagesComponent
+        DirectChatMessagesComponent,
+        UsersListComponent
     ],
 
 })

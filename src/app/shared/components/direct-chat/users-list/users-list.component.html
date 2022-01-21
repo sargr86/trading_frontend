@@ -1,7 +1,7 @@
 <div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()"
      [class.responsive-list]="mobileHelper.isChatUsersListSize()">
     <div id="people-list" class="list-wrap">
-        <div class="top-actions">
+        <div class="top-actions" *ngIf="!sidebarMode">
             <div id="back-to-active-users">
                 <button *ngIf="showBlockedUsers" (click)="toggleBlockedUsers(false)">
                     <mat-icon>arrow_backward</mat-icon>

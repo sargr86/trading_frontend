@@ -251,7 +251,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     notificationClicked() {
-        this.closeRightSidenav.emit(true);
+        this.closeRightSidenav.emit('notifications');
+    }
+
+    messagesClicked(){
+        this.closeRightSidenav.emit('messages');
     }
 
     getUnreadNotificationsCount() {

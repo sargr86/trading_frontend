@@ -34,6 +34,9 @@
                         <app-purchase-bits [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
+                <div class="messages" (click)="messagesClicked()">
+                    <i class="fab fa-facebook-messenger"></i>
+                </div>
                 <div class="notification" (click)="notificationClicked()">
                     <i class="fas fa-bell"></i>
                     <span *ngIf="getUnreadNotificationsCount() > 0">{{getUnreadNotificationsCount()}}</span>

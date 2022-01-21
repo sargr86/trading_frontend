@@ -76,13 +76,13 @@ nav {
     cursor: pointer;
 }
 
-.notification {
+.notification,.messages {
     position: relative;
     margin-right: 16px;
     cursor: pointer;
 
     i {
-        color: #545454;
+        //color: #545454;
     }
 
     span {

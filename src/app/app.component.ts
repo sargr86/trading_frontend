@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
 
     authUser;
     rightSidenavOpened = false;
+    rightSidenavFor;
 
     constructor(
         public router: Router,
@@ -108,9 +109,10 @@ export class AppComponent implements OnInit {
         // }
     }
 
-    toggleNotifications(rightSidenav){
+    toggleNotifications(e, rightSidenav) {
         rightSidenav.toggle();
         this.rightSidenavOpened = rightSidenav.opened;
+        this.rightSidenavFor = e;
     }
 
     getStockTypes() {

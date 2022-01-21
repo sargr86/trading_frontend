@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'app-right-sidebar',
@@ -6,6 +6,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
     styleUrls: ['./right-sidebar.component.scss']
 })
 export class RightSidebarComponent implements OnInit {
+    @Input() shownItems;
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
     constructor() {

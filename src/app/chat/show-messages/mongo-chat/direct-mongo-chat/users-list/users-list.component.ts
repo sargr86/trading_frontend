@@ -41,6 +41,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.getAcceptedDeclinedRequests();
         this.getCancelledUsersConnection();
         this.getDisconnectUser();
+        this.getSeen();
     }
 
     selectUserMessages(userMessages, lastMsg) {
@@ -67,7 +68,29 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     unreadLastMessages(usersMessages) {
+        const messages = usersMessages.direct_messages;
+        const lastReceivedMessages = [];
 
+        messages.reverse().some((message) => {
+            if (message.from_id !== this.authUser.id) {
+                lastReceivedMessages.push(message);
+            }
+            return message.from_id === this.authUser.id;
+        });
+        messages.reverse();
+
+        const params = {
+            connection_id: usersMessages.users_connections?.[0].id,
+            message_ids: lastReceivedMessages.map(m => m._id),
+            to_user: usersMessages.username,
+            from_user: this.authUser.username,
+            from_id: this.authUser.id,
+            to_id: usersMessages.id
+        };
+
+        if (params.message_ids.length > 0) {
+            this.socketService.unreadLastMessages(params);
+        }
     }
 
     getOnlineUsers() {
@@ -127,6 +150,18 @@ export class UsersListComponent implements OnInit, OnDestroy {
             console.log('get block/unblock', dt);
             this.setNotifications(dt);
             this.refresh.emit();
+        }));
+    }
+
+    getSeen() {
+        this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
+            const {from_id, to_id, direct_messages} = dt;
+
+            if (this.selectedUserMessages.id === from_id) {
+                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
+            } else {
+                this.userMessagesStore.changeUserMessages(to_id, direct_messages);
+            }
         }));
     }
 

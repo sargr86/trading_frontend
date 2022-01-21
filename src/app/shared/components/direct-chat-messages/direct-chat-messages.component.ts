@@ -50,7 +50,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     ngOnInit(): void {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
-            console.log(dt)
             this.selectedUserMessages = dt;
             this.typingText = null;
         }));

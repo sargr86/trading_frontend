@@ -30,7 +30,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.getUsersMessages();
+        this.getUsersMessages();
         console.log(this.userMessagesStore.userMessages)
 
     }

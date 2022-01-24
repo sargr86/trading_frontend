@@ -270,7 +270,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         let directNewMessagesCount = 0;
         let groupNewMessagesCount = 0;
         this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
-            console.log('changed')
             if (data.type === 'direct') {
 
                 directNewMessagesCount = data.sources;

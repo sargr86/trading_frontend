@@ -33,6 +33,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     @Input() channelUser;
+    @Input() isOpenedFromChannelPage = false;
     @Output() closeBox = new EventEmitter();
 
 
@@ -48,7 +49,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.addUserToSocket();
+        // this.addUserToSocket();
         this.getUsersMessages();
     }
 
@@ -57,15 +58,22 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     }
 
     getUsersMessages() {
-
+        // const selectedContact = this.userMessagesStore.userMessages.find(d => d.id === this.channelUser.id);
+        // if (selectedContact) {
+        //     this.userMessagesStore.changeUser(selectedContact);
+        // } else if (this.isOpenedFromChannelPage){
+        //     console.log(this.channelUser)
+        //     this.userMessagesStore.changeUser(this.channelUser);
+        // }
         this.subscriptions.push(this.chatService.getDirectMessages({
             user_id: this.authUser.id,
         }).subscribe(dt => {
             this.messages = dt;
             this.userMessagesStore.setUserMessages(dt);
             console.log(this.userMessagesStore.userMessages)
+            this.userMessagesStore.changeUser(dt.find(d => d.id === this.channelUser.id));
             // this.userMessagesStore.changeUser(dt[0]);
-            // console.log(this.userMessagesStore.selectedUserMessages)
+            console.log(this.userMessagesStore.selectedUserMessages)
         }));
 
     }

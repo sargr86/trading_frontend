@@ -4,7 +4,7 @@
     <div>
         <p class="mark-as-read" *ngIf="notificationsStore.notifications.length > 0" (click)="markAllAsRead()">Mark all
             as read</p>
-        <p class="remove-all" *ngIf="!shownInSidebar && notificationsStore.notifications.length > 0"
+        <p class="remove-all" *ngIf="notificationsStore.notifications.length > 0"
            (click)="removeAll()">Remove all notifications</p>
     </div>
 </div>

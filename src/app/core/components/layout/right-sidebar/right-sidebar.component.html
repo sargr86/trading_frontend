@@ -4,4 +4,4 @@
 </ng-container>
 
 <app-users-list *ngIf="shownItems==='messages' && usersMessages" [authUser]="authUser"
-                [sidebarMode]="true" (openBottomChatBox)="openBottomChatBox.emit()"></app-users-list>
+                [sidebarMode]="true" (openBottomChatBox)="openBottomChatBox.emit($event)"></app-users-list>

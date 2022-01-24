@@ -22,6 +22,7 @@ import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
 import {notificationsStore} from '@shared/stores/notifications-store';
+import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 
 @Component({
     selector: 'app-navbar',
@@ -54,6 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     totals;
 
     cardsStore = cardsStore;
+    newMessageSources = 0;
 
     constructor(
         public router: Router,
@@ -69,7 +71,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private cardsService: CardsService,
         private stripeCustomersService: CustomersService,
         private countTotals: CountPurchasedTransferredTotalsPipe,
-        private notificationsService: NotificationsService
+        private notificationsService: NotificationsService,
+        private userMessagesStore: UserMessagesSubjectService
     ) {
 
     }
@@ -88,6 +91,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getUserCards();
             this.getDailyStocks();
             this.getConnectWithUser();
+            this.getNewMessagesSources();
         }
 
 
@@ -254,12 +258,41 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.closeRightSidenav.emit('notifications');
     }
 
-    messagesClicked(){
+    messagesClicked() {
         this.closeRightSidenav.emit('messages');
     }
 
     getUnreadNotificationsCount() {
         return notificationsStore.notifications.filter(n => n?.read === 0).length;
+    }
+
+    getNewMessagesSources() {
+        let directNewMessagesCount = 0;
+        let groupNewMessagesCount = 0;
+        this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
+            console.log('changed')
+            if (data.type === 'direct') {
+
+                directNewMessagesCount = data.sources;
+            } else {
+                groupNewMessagesCount = data.source.filter(d => d.new_messages_count > 0)?.length;
+            }
+            this.newMessageSources = directNewMessagesCount + groupNewMessagesCount;
+            // console.log('received:', directNewMessagesCount, groupNewMessagesCount)
+            // console.log('new messages from ' + data.type + ':' + this.newMessageSources)
+        }));
+    }
+
+    getUnreadMessagesCount() {
+        return this.userMessagesStore.userMessages.length;
+    }
+
+    isMessagesIconHidden() {
+        return this.routerUrl === '/chat/messages' || !this.auth.loggedIn();
+    }
+
+    isWalletIconHidden(){
+        return this.routerUrl === '/wallet/show' || !this.auth.loggedIn();
     }
 
     async openWalletPage() {

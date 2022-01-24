@@ -25,7 +25,9 @@ export class RightSidebarComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.getUsersMessages();
+        if (this.authUser) {
+            this.getUsersMessages();
+        }
     }
 
     getUsersMessages() {

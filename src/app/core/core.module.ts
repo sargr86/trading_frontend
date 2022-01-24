@@ -66,6 +66,7 @@ import { RightSidebarComponent } from './components/layout/right-sidebar/right-s
         PurchaseCoinsComponent,
         ShowChatGroupMembersComponent,
         RightSidebarComponent,
+        // ChatBottomBoxComponent
     ],
     imports: [
         CommonModule,
@@ -87,6 +88,7 @@ import { RightSidebarComponent } from './components/layout/right-sidebar/right-s
         PurchaseBitsComponent,
         StocksListsPortableComponent,
         RightSidebarComponent,
+        // ChatBottomBoxComponent,
     ],
     entryComponents: [],
     providers: [

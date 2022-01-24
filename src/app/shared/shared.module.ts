@@ -48,7 +48,7 @@ import {MatReusableTableComponent} from './components/mat-reusable-table/mat-reu
 import {VideoJsPlayerComponent} from './components/video-js-player/video-js-player.component';
 import {NumbersOnlyInputDirective} from '@shared/directives/numbers-only-input.directive';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
-import {ChatBottomBoxComponent} from './components/chat-bottom-box/chat-bottom-box.component';
+import {ChatBottomBoxComponent} from './components/direct-chat/chat-bottom-box/chat-bottom-box.component';
 import {GroupByPipe} from './pipes/group-by.pipe';
 import {GetDateTextForMessagesPipe} from './pipes/get-date-text-for-messages.pipe';
 import {GetElegantDatePipe} from './pipes/get-elegant-date.pipe';
@@ -198,7 +198,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetElegantDatePipe,
         ChatFormComponent,
         DirectChatMessagesComponent,
-        UsersListComponent
+        UsersListComponent,
     ],
 
 })

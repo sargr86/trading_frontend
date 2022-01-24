@@ -34,14 +34,14 @@
                         <app-purchase-bits [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
-                <div class="messages" (click)="messagesClicked()">
+                <div class="messages" (click)="messagesClicked()" [hidden]="isMessagesIconHidden()">
                     <i class="fab fa-facebook-messenger"></i>
+                    <span *ngIf="newMessageSources > 0">{{newMessageSources}}</span>
                 </div>
-                <div class="notification" (click)="notificationClicked()">
+                <div class="notification" (click)="notificationClicked()" [hidden]="!auth.loggedIn()">
                     <i class="fas fa-bell"></i>
                     <span *ngIf="getUnreadNotificationsCount() > 0">{{getUnreadNotificationsCount()}}</span>
                 </div>
-
 
                 <!--                <mat-menu #notifMenu="matMenu">-->
                 <!--                    <div class="notification-items" *mobxAutorun>-->
@@ -63,7 +63,7 @@
 
                 <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
 
-                <div class="nav-item" [hidden]="routerUrl === '/wallet/show'">
+                <div class="nav-item" [hidden]="isWalletIconHidden()">
                     <img src="assets/img/wallet-nav-icon.svg" class="wallet-icon"
                          (click)="openWalletPage()">
                 </div>

@@ -18,6 +18,7 @@ import {UserModule} from '@app/user/user.module';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
+import {SharedModule} from '@shared/shared.module';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -46,7 +47,8 @@ export function tokenGetter() {
         }),
         NgbModule,
         UserModule,
-        NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY)
+        NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
+        SharedModule
     ],
     providers: [
         DatePipe,

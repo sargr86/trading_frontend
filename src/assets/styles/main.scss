@@ -1281,6 +1281,10 @@ mat-error {
     text-align: center !important;
 }
 
+mat-sidenav-container{
+    height: 100vh!important; // gotta think about this more
+}
+
 @media screen and (max-width: 545px) {
     .bottom-search-form {
         display: block;

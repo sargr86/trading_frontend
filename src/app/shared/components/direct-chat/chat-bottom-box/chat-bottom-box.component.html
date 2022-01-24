@@ -3,8 +3,8 @@
         <div class="channel-user-name-container">
             <div>
                 <img class="avatar" id="profile-image" alt="channel-user-avatar"
-                     [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
-                <span>{{channelUser.first_name + ' ' + channelUser.last_name}}</span>
+                     [src]="channelUser?.channel?.avatar|getImgPath: 'avatars'">
+                <span>{{channelUser?.first_name + ' ' + channelUser?.last_name}}</span>
             </div>
             <div>
                 <img src="assets/img/x.svg" class="close-box" alt="close-chat-box" (click)="closeChatBox()">

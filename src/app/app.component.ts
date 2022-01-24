@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
     rightSidenavOpened = false;
     rightSidenavFor;
 
+    chatBoxUser;
+
     constructor(
         public router: Router,
         private subject: SubjectService,
@@ -66,6 +68,9 @@ export class AppComponent implements OnInit {
             return null;
         })).subscribe(title => {
             this.pageTitle = title;
+            if (this.router.url === '/chat/messages') {
+                this.chatBoxUser = null;
+            }
             if (this.pageTitle) {
                 this.titleService.setTitle(this.pageTitle);
             }
@@ -79,8 +84,12 @@ export class AppComponent implements OnInit {
         }
     }
 
-    isSidebarShown() {
+    isLeftSidebarShown() {
         return !this.router.url.includes('auth') && !this.checkIfPolicyPage() && !this.isSmallScreen();
+    }
+
+    isRightSidebarShown() {
+        return !/auth|chat/.test(this.router.url) && this.rightSidenavOpened && this.rightSidenavFor;
     }
 
     checkIfPolicyPage() {

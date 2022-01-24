@@ -103,8 +103,8 @@
     -webkit-box-orient: vertical;
 }
 
-.latest-msg-date{
-    margin-left: 10px!important;
+.latest-msg-date {
+    margin-left: 10px !important;
     display: flex !important;
     white-space: nowrap !important;
     margin-top: 3px !important;
@@ -124,5 +124,11 @@
 
     img {
         opacity: 0.5;
+    }
+}
+
+.sidebar-mode {
+    .people-groups-container {
+        max-width: 360px;
     }
 }

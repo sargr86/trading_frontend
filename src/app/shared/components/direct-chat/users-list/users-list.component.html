@@ -1,4 +1,4 @@
-<div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()"
+<div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()" [class.sidebar-mode]="sidebarMode"
      [class.responsive-list]="mobileHelper.isChatUsersListSize()">
     <div id="people-list" class="list-wrap">
         <div class="top-actions" *ngIf="!sidebarMode">

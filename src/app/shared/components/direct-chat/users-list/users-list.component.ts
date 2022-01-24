@@ -38,8 +38,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getUserMessages();
-        this.getOnlineUsers();
+        if (this.authUser) {
+            this.getUserMessages();
+            this.getOnlineUsers();
+        }
         this.getBlockUnblockUser();
         this.getAcceptedDeclinedRequests();
         this.getCancelledUsersConnection();
@@ -49,11 +51,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     selectUserMessages(userMessages, lastMsg) {
         if (this.sidebarMode) {
-            this.openBottomChatBox.emit();
-        } else {
-            this.selectedUserMessages = userMessages;
-            this.userMessagesStore.changeUser(userMessages);
+            console.log('OK')
+            this.openBottomChatBox.emit(userMessages);
         }
+        // else {
+        this.selectedUserMessages = userMessages;
+        this.userMessagesStore.changeUser(userMessages);
+        // }
     }
 
     getUserMessages() {

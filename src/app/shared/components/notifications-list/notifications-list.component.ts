@@ -4,10 +4,10 @@ import {NotificationsService} from '@core/services/notifications.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Router} from '@angular/router';
-import {notificationsStore} from '@shared/stores/notifications-store';
 import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
+import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -18,7 +18,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     authUser;
     notifications = [];
-    notificationsStore = notificationsStore;
 
     subscriptions: Subscription[] = [];
 
@@ -27,6 +26,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     constructor(
         private notificationsService: NotificationsService,
+        public notificationsStore: NotificationsSubjectStoreService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
         public auth: AuthService,
@@ -48,12 +48,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setNotifications(dt);
+            this.notificationsStore.setAllNotifications(dt);
         }));
     }
 
     filterByCategory(notifications, category) {
-        // console.log(notifications)
         const filteredNotifications = notifications.filter(n => {
             const diff = moment().diff(n?.created_at, 'hours');
             return category === 'early' ? diff > 0 : diff <= 0;
@@ -71,7 +70,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         });
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
 
-        this.notificationsStore.setNotifications(this.notifications);
+        this.notificationsStore.setAllNotifications(this.notifications);
     }
 
     declineConnection(notification) {
@@ -83,7 +82,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         });
 
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
-        this.notificationsStore.setNotifications(this.notifications);
+        this.notificationsStore.setAllNotifications(this.notifications);
     }
 
     getConnectWithUser() {
@@ -121,15 +120,15 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
             console.log(dt);
-            this.notificationsStore.setNotifications(dt);
+            this.notificationsStore.setAllNotifications(dt);
         }));
     }
 
     markAllAsRead() {
-        const ids = this.notificationsStore.notifications.map(n => n.id);
+        const ids = this.notificationsStore.allNotifications.map(n => n.id);
         this.notificationsService.markNotificationsAsRead({ids, user_id: this.authUser.id}).subscribe(dt => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setNotifications(dt);
+            this.notificationsStore.setAllNotifications(dt);
         });
     }
 
@@ -139,7 +138,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             type: n.notification_type.name
         }).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setNotifications(dt);
+            this.notificationsStore.setAllNotifications(dt);
         }));
     }
 
@@ -148,7 +147,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id
         }).subscribe((dt: any) => {
             this.notifications = dt;
-            this.notificationsStore.setNotifications(dt);
+            this.notificationsStore.setAllNotifications(dt);
         }));
     }
 

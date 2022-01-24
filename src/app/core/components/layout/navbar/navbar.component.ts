@@ -21,8 +21,9 @@ import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased
 import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
-import {notificationsStore} from '@shared/stores/notifications-store';
+import {notificationsStore} from '@shared/stores/notifications-store_old';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 
 @Component({
     selector: 'app-navbar',
@@ -42,7 +43,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     @Output('closeNotifications') closeRightSidenav = new EventEmitter();
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
     notifications = [];
-    notificationsStore = notificationsStore;
 
     passedUsername;
 
@@ -72,7 +72,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private stripeCustomersService: CustomersService,
         private countTotals: CountPurchasedTransferredTotalsPipe,
         private notificationsService: NotificationsService,
-        private userMessagesStore: UserMessagesSubjectService
+        private userMessagesStore: UserMessagesSubjectService,
+        private notificationsStore: NotificationsSubjectStoreService
     ) {
 
     }
@@ -92,6 +93,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getDailyStocks();
             this.getConnectWithUser();
             this.getNewMessagesSources();
+            this.getDisconnected();
         }
 
 
@@ -107,7 +109,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             console.log('get connect with user', dt)
             if (dt) {
                 this.notifications.push(dt);
-                this.notificationsStore.setNotifications(this.notifications);
+                this.notificationsStore.setAllNotifications(this.notifications);
             }
         }));
     }
@@ -118,7 +120,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 dt.map(d => {
                     this.notifications.push(d);
                 });
-                this.notificationsStore.setNotifications(this.notifications);
+                this.notificationsStore.setAllNotifications(this.notifications);
             })
         );
 
@@ -128,17 +130,33 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt)
+            this.userMessagesStore.setUserMessages(dt.users_messages);
             if (dt.receiver_id === this.authUser.id) {
                 this.notifications.push(dt);
-                this.notificationsStore.setNotifications(this.notifications);
+                this.notificationsStore.setAllNotifications(this.notifications);
             }
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
             console.log('declined')
+
             this.notifications.push(dt);
-            this.notificationsStore.setNotifications(this.notifications);
+            this.notificationsStore.setAllNotifications(this.notifications);
         }));
+    }
+
+    getDisconnected() {
+        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
+            console.log('disconnected', dt);
+            this.setNotifications(dt);
+            this.userMessagesStore.setUserMessages(dt.users_messages);
+        }));
+    }
+
+    setNotifications(dt) {
+        const notifications = this.notificationsStore.allNotifications;
+        notifications.unshift(dt);
+        this.notificationsStore.setAllNotifications(notifications);
     }
 
     getAuthenticatedUser() {
@@ -250,7 +268,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             // this.toastr.success(msg);
             this.notifications.push({type: 'invitation-to-join-group', msg: data.msg});
-            this.notificationsStore.setNotifications(this.notifications);
+            this.notificationsStore.setAllNotifications(this.notifications);
         });
     }
 
@@ -263,7 +281,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUnreadNotificationsCount() {
-        return notificationsStore.notifications.filter(n => n?.read === 0).length;
+        return this.notificationsStore.allNotifications.filter(n => n?.read === 0).length;
     }
 
     getNewMessagesSources() {
@@ -290,7 +308,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         return this.routerUrl === '/chat/messages' || !this.auth.loggedIn();
     }
 
-    isWalletIconHidden(){
+    isWalletIconHidden() {
         return this.routerUrl === '/wallet/show' || !this.auth.loggedIn();
     }
 

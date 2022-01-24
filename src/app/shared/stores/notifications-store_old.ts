@@ -3,7 +3,7 @@ import { action, observable} from 'mobx';
 
 
 @Injectable()
-export class NotificationsStore {
+export class NotificationsStore_old {
     @observable notifications = [];
 
     @action setNotifications(notifications: any) {
@@ -12,4 +12,4 @@ export class NotificationsStore {
 
 }
 
-export const notificationsStore = new NotificationsStore();
+export const notificationsStore = new NotificationsStore_old();

@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-    <mat-sidenav [mode]="getMode(sidenav)" #sidenav
+    <mat-sidenav [mode]="getSidenavMode(sidenav)" #sidenav
                  id="sidenav" [opened]="!router.url.includes('auth')">
         <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)"></app-left-sidebar>
     </mat-sidenav>

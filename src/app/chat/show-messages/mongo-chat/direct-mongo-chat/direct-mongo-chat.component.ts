@@ -3,7 +3,6 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Subscription} from 'rxjs';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
-import {UsersService} from '@core/services/users.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 
 
@@ -16,39 +15,25 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
 export class DirectMongoChatComponent implements OnInit, OnDestroy {
     @Input() authUser;
     usersMessages = [];
-
     subscriptions: Subscription[] = [];
-
-
-
 
     constructor(
         private chatService: ChatService,
         private userMessagesStore: UserMessagesSubjectService
-
     ) {
     }
 
     ngOnInit(): void {
         this.getUsersMessages();
-        console.log(this.userMessagesStore.userMessages)
-
     }
 
     getUsersMessages() {
-        this.subscriptions.push(this.chatService.getDirectMessages({
-            user_id: this.authUser.id,
-            blocked: 0
-        }).subscribe(dt => {
+        this.subscriptions.push(this.userMessagesStore.userMessages$.subscribe(dt =>{
             this.usersMessages = dt;
-            this.userMessagesStore.setUserMessages(dt);
         }));
     }
 
-
-
     ngOnDestroy() {
-        // this.setTyping(null);
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 

@@ -2,26 +2,26 @@
     <h3>Notifications</h3>
 
     <div>
-        <p class="mark-as-read" *ngIf="notificationsStore.notifications.length > 0" (click)="markAllAsRead()">Mark all
+        <p class="mark-as-read" *ngIf="notificationsStore.allNotifications.length > 0" (click)="markAllAsRead()">Mark all
             as read</p>
-        <p class="remove-all" *ngIf="notificationsStore.notifications.length > 0"
+        <p class="remove-all" *ngIf="notificationsStore.allNotifications.length > 0"
            (click)="removeAll()">Remove all notifications</p>
     </div>
 </div>
 
 <div class="top">
     <div>
-        <p *ngIf="filterByCategory(notificationsStore.notifications, notificationsCategory)?.length > 0">{{notificationsCategory === 'new' ? 'New' : 'Earlier' }}</p>
+        <p *ngIf="filterByCategory(notificationsStore.allNotifications, notificationsCategory)?.length > 0">{{notificationsCategory === 'new' ? 'New' : 'Earlier' }}</p>
     </div>
     <div>
         <p class="view-more-notifications"
-           *ngIf="notificationsStore.notifications?.length > 0 && shownInSidebar && notificationsCategory==='new'"
+           *ngIf="notificationsStore.allNotifications?.length > 0 && shownInSidebar && notificationsCategory==='new'"
            (click)="router.navigate(['user/notifications'])">View more</p>
     </div>
 </div>
-<p *ngIf="notificationsCategory==='new' && notificationsStore.notifications?.length === 0">No notifications found</p>
+<p *ngIf="notificationsCategory==='new' && notificationsStore.allNotifications?.length === 0">No notifications found</p>
 <ul *mobxAutorun [class.sidebar-notifications]="shownInSidebar">
-    <li *ngFor="let notification of filterByCategory(notificationsStore.notifications, notificationsCategory)"
+    <li *ngFor="let notification of filterByCategory(notificationsStore.allNotifications, notificationsCategory)"
         class="notification" [class.unread]="notification?.read===0"
         [class.flex-wrap]="notification?.notification_type?.name === 'users_connection_request'"
     >

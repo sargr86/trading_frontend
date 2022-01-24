@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
@@ -10,13 +10,15 @@ import {StocksService} from '@core/services/stocks.service';
 import {environment} from '@env';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {ChatService} from '@core/services/chat.service';
+import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     title = '';
     subscriptions: Subscription[] = [];
     pageTitle;
@@ -34,12 +36,24 @@ export class AppComponent implements OnInit {
         private titleService: Title,
         private route: ActivatedRoute,
         private stocksService: StocksService,
-        private getAuthUser: GetAuthUserPipe
+        private getAuthUser: GetAuthUserPipe,
+        private userMessagesStore: UserMessagesSubjectService,
+        private chatService: ChatService
     ) {
 
     }
 
     ngOnInit() {
+        this.authUser = this.getAuthUser.transform();
+        this.logInProduction();
+        this.setPageTitle();
+        this.getStockTypes();
+        if (this.authUser) {
+            this.getUsersMessages();
+        }
+    }
+
+    logInProduction() {
         // console.log(this.getAuthUser.transform())
         // const player = new Plyr('video', {
         //     captions: {active: true},
@@ -50,10 +64,9 @@ export class AppComponent implements OnInit {
             console.log = () => {
             };
         }
+    }
 
-        this.getStockTypes();
-
-        // Getting current page title
+    setPageTitle() {
         this.subscriptions.push(this.router.events.pipe(map(() => {
             let child = this.route.firstChild;
             while (child) {
@@ -96,9 +109,7 @@ export class AppComponent implements OnInit {
         return /accessibility-assessment|security|help|privacy-policy|cookie-policy|about-us/.test(this.router.url);
     }
 
-
-    getMode(sidenav) {
-
+    getSidenavMode(sidenav) {
         // sidenav.toggle();
         if (screen.width <= 991 && !this.router.url.includes('auth')) {
             return 'over';
@@ -124,6 +135,10 @@ export class AppComponent implements OnInit {
         this.rightSidenavFor = e;
     }
 
+    isSmallScreen() {
+        return IsResponsive.isSmallScreen();
+    }
+
     getStockTypes() {
         this.stocksService.getStockTypes({}).subscribe(dt => {
             this.subject.changeStockTypes(dt);
@@ -134,7 +149,18 @@ export class AppComponent implements OnInit {
         });
     }
 
-    isSmallScreen() {
-        return IsResponsive.isSmallScreen();
+    getUsersMessages() {
+
+        this.subscriptions.push(this.chatService.getDirectMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.userMessagesStore.setUserMessages(dt);
+        }));
+    }
+
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 }

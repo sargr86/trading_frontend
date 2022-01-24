@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {notificationsStore} from '@shared/stores/notifications-store';
+import {notificationsStore} from '@shared/stores/notifications-store_old';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
@@ -15,7 +15,6 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
 export class UsersListComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() sidebarMode = false;
-    @Output() refresh = new EventEmitter();
     @Output() openBottomChatBox = new EventEmitter();
 
     subscriptions: Subscription[] = [];
@@ -116,22 +115,20 @@ export class UsersListComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt);
-            this.refresh.emit();
         }));
     }
 
     getCancelledUsersConnection() {
         this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
             console.log('cancelled');
-            this.refresh.emit();
         }));
     }
 
     getDisconnectUser() {
-        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
+        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
             console.log('disconnected', dt);
             this.setNotifications(dt);
-            this.refresh.emit();
+            this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 
@@ -144,14 +141,14 @@ export class UsersListComponent implements OnInit, OnDestroy {
         };
 
         this.subscriptions.push(this.usersService.blockUser(params).subscribe(dt => {
-            this.refresh.emit();
             this.socketService.blockUnblockUser({
                 connection_id: user.users_connections?.[0].id,
                 block: +!this.showBlockedUsers,
                 from_id: this.authUser.id,
                 to_id: user.id,
                 msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has blocked the connection between you two`,
-                contact_username: user.username
+                contact_username: user.username,
+                from_username: this.authUser.username
             });
         }));
     }
@@ -160,7 +157,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
             console.log('get block/unblock', dt);
             this.setNotifications(dt);
-            this.refresh.emit();
+            this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 
@@ -191,7 +188,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     ifContactsListActionsShown() {
-        return this.filteredUsersMessages.length > 0;
+        return this.userMessagesStore.userMessages.length > 0;
     }
 
     ifContactBlocked(user) {

@@ -26,7 +26,7 @@
             </div>
         </div>
         <ul class="list align-items-center">
-            <li *ngFor="let userMessages of filteredUsersMessages"
+            <li *ngFor="let userMessages of filteredUsersMessages" [class.blocked]="ifContactBlocked(userMessages)"
                 [class.active]="selectedUserMessages?.id === userMessages.id">
 
                 <ng-container
@@ -36,9 +36,9 @@
 
                 <ng-template #itemTemplate let-user="user" let-lastMsg="lastMsg">
                     <div class="d-flex user-last-msg align-items-center justify-content-between">
-                        <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)">
+                        <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)" >
 
-                            <div class="img user-avatar" [class.blocked]="ifContactBlocked(user)">
+                            <div class="img user-avatar">
                                 <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
                                 <div class="status" [hidden]="onlineUsers.length === 0"
                                      [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>

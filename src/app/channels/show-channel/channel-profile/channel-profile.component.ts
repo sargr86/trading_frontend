@@ -96,12 +96,8 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.usersConnection = dt;
             if (dt) {
+                this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
                 this.isBlocked = !!dt.is_blocked;
-                if (dt.confirmed) {
-                    this.usersConnectionStatus = this.isBlocked ? 'blocked' : 'connected';
-                } else {
-                    this.usersConnectionStatus = 'pending';
-                }
             }
         });
     }
@@ -301,7 +297,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     isMessageBtnShown() {
-        return /connected|test/.test(this.usersConnectionStatus);
+        return /connected|test/.test(this.usersConnectionStatus) && !this.isBlocked;
     }
 
 

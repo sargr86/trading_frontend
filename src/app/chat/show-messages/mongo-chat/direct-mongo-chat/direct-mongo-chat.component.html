@@ -1,5 +1,5 @@
 <div class="chat-wrap">
-    <app-users-list *ngIf="usersMessages.length > 0" [authUser]="authUser"
+    <app-users-list  [authUser]="authUser"
                     (refresh)="getUsersMessages()"></app-users-list>
-    <app-direct-chat-messages *ngIf="usersMessages.length > 0" [authUser]="authUser"></app-direct-chat-messages>
+    <app-direct-chat-messages  [authUser]="authUser"></app-direct-chat-messages>
 </div>

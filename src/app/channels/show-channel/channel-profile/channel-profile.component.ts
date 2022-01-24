@@ -96,8 +96,12 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.usersConnection = dt;
             if (dt) {
-                this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
                 this.isBlocked = !!dt.is_blocked;
+                if (dt.confirmed) {
+                    this.usersConnectionStatus = this.isBlocked ? 'blocked' : 'connected';
+                } else {
+                    this.usersConnectionStatus = 'pending';
+                }
             }
         });
     }
@@ -280,7 +284,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has broke the connection between you two`,
         });
         this.usersConnectionStatus = 'idle';
-    };
+    }
 
     getDisconnectUser() {
         this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
@@ -295,6 +299,11 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.isBlocked = true;
         }));
     }
+
+    isMessageBtnShown() {
+        return /connected|idle/.test(this.usersConnectionStatus);
+    }
+
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

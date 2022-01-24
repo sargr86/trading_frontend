@@ -143,7 +143,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     }
 
     isContactBlocked(user) {
-        return user.users_connections?.[0].is_blocked;
+        return user?.users_connections?.[0]?.is_blocked;
     }
 
     isOwnMessage(from_id) {

@@ -301,7 +301,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     isMessageBtnShown() {
-        return /connected|idle/.test(this.usersConnectionStatus);
+        return /connected|test/.test(this.usersConnectionStatus);
     }
 
 

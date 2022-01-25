@@ -155,9 +155,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
-            console.log('get block/unblock', dt);
-            this.setNotifications(dt);
-            this.userMessagesStore.setUserMessages(dt.users_messages);
+            // console.log('get block/unblock', dt);
+            // this.setNotifications(dt);
+            // this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 

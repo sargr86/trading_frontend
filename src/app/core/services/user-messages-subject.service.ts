@@ -33,7 +33,11 @@ export class UserMessagesSubjectService {
     }
 
     changeUserMessages(id, messages) {
-        this.userMessages.find(um => um.id === id).direct_messages = messages;
+        const userMessages = this.userMessages.find(um => um.id === id);
+        if (userMessages) {
+            userMessages.direct_messages = messages;
+        }
+
     }
 
 

@@ -36,7 +36,7 @@
                 </div>
                 <div class="messages" (click)="messagesClicked()" [hidden]="isMessagesIconHidden()">
                     <i class="fab fa-facebook-messenger"></i>
-                    <span *ngIf="newMessageSources > 0">{{newMessageSources}}</span>
+                    <span *ngIf="getUnreadMessagesCount() > 0">{{getUnreadMessagesCount()}}</span>
                 </div>
                 <div class="notification" (click)="notificationClicked()" [hidden]="!auth.loggedIn()">
                     <i class="fas fa-bell"></i>

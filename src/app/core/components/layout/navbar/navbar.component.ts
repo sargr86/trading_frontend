@@ -21,7 +21,6 @@ import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased
 import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
-import {notificationsStore} from '@shared/stores/notifications-store_old';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 
@@ -55,7 +54,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     totals;
 
     cardsStore = cardsStore;
-    newMessageSources = 0;
 
     constructor(
         public router: Router,
@@ -92,7 +90,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getUserCards();
             this.getDailyStocks();
             this.getConnectWithUser();
-            this.getNewMessagesSources();
+            this.getMessagesFromSocket();
+            this.getBlockUnblockUser();
             this.getDisconnected();
         }
 
@@ -107,10 +106,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
-            if (dt) {
-                this.notifications.push(dt);
-                this.notificationsStore.setAllNotifications(this.notifications);
-            }
+            // if (dt) {
+            this.notifications.push(dt);
+            this.notificationsStore.setAllNotifications(this.notifications);
+            // }
         }));
     }
 
@@ -149,6 +148,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
             console.log('disconnected', dt);
             this.setNotifications(dt);
+            this.userMessagesStore.setUserMessages(dt.users_messages);
+        }));
+    }
+
+    getBlockUnblockUser() {
+        this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
+            console.log('get block/unblock', dt)
+            if (dt.initiator_id !== this.authUser.id) {
+                this.setNotifications(dt);
+            }
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
@@ -284,24 +293,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
         return this.notificationsStore.allNotifications.filter(n => n?.read === 0).length;
     }
 
-    getNewMessagesSources() {
-        let directNewMessagesCount = 0;
-        let groupNewMessagesCount = 0;
-        this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
-            if (data.type === 'direct') {
-
-                directNewMessagesCount = data.sources;
-            } else {
-                groupNewMessagesCount = data.source.filter(d => d.new_messages_count > 0)?.length;
+    getMessagesFromSocket() {
+        this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
+            console.log('new message', dt)
+            const {from_id, to_id, direct_messages} = dt;
+            if (from_id === this.authUser.id) {
+                this.userMessagesStore.changeUserMessages(to_id, direct_messages);
+            } else if (to_id === this.authUser.id) {
+                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
             }
-            this.newMessageSources = directNewMessagesCount + groupNewMessagesCount;
-            // console.log('received:', directNewMessagesCount, groupNewMessagesCount)
-            // console.log('new messages from ' + data.type + ':' + this.newMessageSources)
+            console.log(this.userMessagesStore.userMessages)
         }));
     }
 
+
     getUnreadMessagesCount() {
-        return this.userMessagesStore.userMessages.length;
+        return this.userMessagesStore.userMessages
+            .filter(m => m.direct_messages.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
+
     }
 
     isMessagesIconHidden() {

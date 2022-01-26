@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {API_URL, OWL_OPTIONS} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     owlOptions = OWL_OPTIONS;
     videos = [];
     apiUrl = API_URL;
@@ -28,15 +28,13 @@ export class HomeComponent implements OnInit {
         public auth: AuthService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
-        private userMessagesStore: UserMessagesSubjectService,
-
     ) {
     }
 
     ngOnInit(): void {
-        this.videoService.get({}).subscribe(dt => {
+        this.subscriptions.push(this.videoService.get({}).subscribe(dt => {
             this.videos = dt.videos;
-        });
+        }));
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
             this.socketService.addNewUser(this.authUser);
@@ -46,6 +44,10 @@ export class HomeComponent implements OnInit {
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

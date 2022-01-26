@@ -277,7 +277,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             connection_id: this.usersConnection.id,
             from_id: this.usersConnection.from_id,
             to_id: this.usersConnection.to_id,
-            msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has broke the connection between you two`,
+            msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has broken the connection between you two`,
         });
         this.usersConnectionStatus = 'idle';
     }

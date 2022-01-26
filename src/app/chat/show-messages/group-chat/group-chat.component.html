@@ -6,6 +6,7 @@
             <button class="create-group-chat" [hidden]="showGroupChatForm" (click)="showGroupChatForm = true"><img
                 src="assets/img/noun_create.png" alt=""> Create new group
             </button>
+
             <form [formGroup]="groupChatForm" [hidden]="!showGroupChatForm" id="group-chat-form">
                 <input formControlName="name" placeholder="Group name">
                 <button mat-icon-button (click)="addGroup()">
@@ -15,6 +16,7 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </form>
+
             <ul class="list">
                 <li class="list-chat-group" [class.active]="group.id===selectedGroup?.id"
                     *ngFor="let group of groupsMessages"

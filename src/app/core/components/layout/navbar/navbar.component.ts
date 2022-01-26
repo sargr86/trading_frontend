@@ -24,6 +24,7 @@ import {NotificationsService} from '@core/services/notifications.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {ChatService} from '@core/services/chat.service';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-navbar',
@@ -72,6 +73,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private countTotals: CountPurchasedTransferredTotalsPipe,
         private notificationsService: NotificationsService,
         private userMessagesStore: UserMessagesSubjectService,
+        private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService
     ) {
@@ -100,6 +102,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (this.authUser) {
             console.log(this.authUser)
             this.getUsersMessages();
+            this.getGroupsMessages();
         }
 
 
@@ -112,6 +115,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
             blocked: 0
         }).subscribe(dt => {
             this.userMessagesStore.setUserMessages(dt);
+        }));
+    }
+
+    getGroupsMessages() {
+        this.subscriptions.push(this.chatService.getGroupsMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.groupsMessagesStore.setGroupsMessages(dt);
         }));
     }
 

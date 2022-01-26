@@ -15,7 +15,7 @@ import {SubjectService} from '@core/services/subject.service';
     styleUrls: ['./show-messages.component.scss']
 })
 export class ShowMessagesComponent implements OnInit {
-    activeTab = 'direct';
+    activeTab = 'group';
     authUser;
 
     groupsMessages = [];

@@ -58,6 +58,7 @@ import { ChatFormComponent } from './components/chat-form/chat-form.component';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {UsersListComponent} from '@shared/components/chat/direct-chat/users-list/users-list.component';
 import { GroupsListComponent } from './components/chat/group-chat/groups-list/groups-list.component';
+import { GroupFormComponent } from './components/chat/group-chat/group-form/group-form.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -115,7 +116,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ChatFormComponent,
         DirectChatMessagesComponent,
         UsersListComponent,
-        GroupsListComponent
+        GroupsListComponent,
+        GroupFormComponent
     ],
     imports: [
         CommonModule,
@@ -202,6 +204,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         DirectChatMessagesComponent,
         UsersListComponent,
         GroupsListComponent,
+        GroupFormComponent,
     ],
 
 })

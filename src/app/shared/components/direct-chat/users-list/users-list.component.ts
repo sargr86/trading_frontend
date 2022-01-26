@@ -41,8 +41,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
             this.getUserMessages();
             this.getOnlineUsers();
         }
-        this.getBlockUnblockUser();
-        this.getAcceptedDeclinedRequests();
+        // this.getBlockUnblockUser();
+        // this.getAcceptedDeclinedRequests();
         this.getCancelledUsersConnection();
         this.getDisconnectUser();
         this.getSeen();
@@ -112,11 +112,11 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getAcceptedDeclinedRequests() {
-        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt);
-        }));
-    }
+    // getAcceptedDeclinedRequests() {
+    //     this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+    //         console.log('accepted', dt);
+    //     }));
+    // }
 
     getCancelledUsersConnection() {
         this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
@@ -153,13 +153,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getBlockUnblockUser() {
-        this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
-            // console.log('get block/unblock', dt);
-            // this.setNotifications(dt);
-            // this.userMessagesStore.setUserMessages(dt.users_messages);
-        }));
-    }
+    // getBlockUnblockUser() {
+    //     this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
+    //         // console.log('get block/unblock', dt);
+    //         // this.setNotifications(dt);
+    //         // this.userMessagesStore.setUserMessages(dt.users_messages);
+    //     }));
+    // }
 
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {

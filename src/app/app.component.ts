@@ -37,8 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
-        private userMessagesStore: UserMessagesSubjectService,
-        private chatService: ChatService
+
     ) {
 
     }
@@ -48,9 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.logInProduction();
         this.setPageTitle();
         this.getStockTypes();
-        if (this.authUser) {
-            this.getUsersMessages();
-        }
+
     }
 
     logInProduction() {
@@ -149,15 +146,7 @@ export class AppComponent implements OnInit, OnDestroy {
         });
     }
 
-    getUsersMessages() {
 
-        this.subscriptions.push(this.chatService.getDirectMessages({
-            user_id: this.authUser.id,
-            blocked: 0
-        }).subscribe(dt => {
-            this.userMessagesStore.setUserMessages(dt);
-        }));
-    }
 
 
     ngOnDestroy(): void {

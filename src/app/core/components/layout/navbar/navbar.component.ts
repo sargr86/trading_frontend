@@ -23,6 +23,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-navbar',
@@ -71,7 +72,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private countTotals: CountPurchasedTransferredTotalsPipe,
         private notificationsService: NotificationsService,
         private userMessagesStore: UserMessagesSubjectService,
-        private notificationsStore: NotificationsSubjectStoreService
+        private notificationsStore: NotificationsSubjectStoreService,
+        private chatService: ChatService
     ) {
 
     }
@@ -95,7 +97,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getDisconnected();
         }
 
+        if (this.authUser) {
+            console.log(this.authUser)
+            this.getUsersMessages();
+        }
 
+
+    }
+
+    getUsersMessages() {
+
+        this.subscriptions.push(this.chatService.getDirectMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.userMessagesStore.setUserMessages(dt);
+        }));
     }
 
 

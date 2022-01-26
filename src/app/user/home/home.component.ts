@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
         private userMessagesStore: UserMessagesSubjectService,
-        private chatService: ChatService
+
     ) {
     }
 
@@ -40,8 +40,7 @@ export class HomeComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         if (this.authUser) {
             this.socketService.addNewUser(this.authUser);
-            console.log(this.authUser)
-            this.getUsersMessages();
+
         }
     }
 
@@ -49,14 +48,6 @@ export class HomeComponent implements OnInit {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }
 
-    getUsersMessages() {
 
-        this.subscriptions.push(this.chatService.getDirectMessages({
-            user_id: this.authUser.id,
-            blocked: 0
-        }).subscribe(dt => {
-            this.userMessagesStore.setUserMessages(dt);
-        }));
-    }
 
 }

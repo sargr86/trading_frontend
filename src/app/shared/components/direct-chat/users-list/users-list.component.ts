@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {notificationsStore} from '@shared/stores/notifications-store_old';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
@@ -26,8 +25,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
     onlineUsers = [];
     showBlockedUsers = false;
 
-    notificationsStore = notificationsStore;
-
     constructor(
         private socketService: SocketIoService,
         private usersService: UsersService,
@@ -40,32 +37,25 @@ export class UsersListComponent implements OnInit, OnDestroy {
         if (this.authUser) {
             this.getUserMessages();
             this.getOnlineUsers();
+            this.getSeen();
         }
-        // this.getBlockUnblockUser();
-        // this.getAcceptedDeclinedRequests();
-        // this.getCancelledUsersConnection();
-        // this.getDisconnectUser();
-        this.getSeen();
-    }
-
-    selectUserMessages(userMessages, lastMsg) {
-        if (this.sidebarMode) {
-            console.log('OK')
-            this.openBottomChatBox.emit(userMessages);
-        }
-        // else {
-        this.selectedUserMessages = userMessages;
-        this.userMessagesStore.changeUser(userMessages);
-        // }
     }
 
     getUserMessages() {
         this.userMessagesStore.userMessages$.subscribe(dt => {
-            console.log('users list!!!', dt)
+            // console.log('users list!!!', dt)
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
             this.selectedUserMessages = this.filteredUsersMessages[0];
             this.userMessagesStore.changeUser(this.selectedUserMessages);
         });
+    }
+
+    selectUserMessages(userMessages, lastMsg) {
+        if (this.sidebarMode) {
+            this.openBottomChatBox.emit(userMessages);
+        }
+        this.selectedUserMessages = userMessages;
+        this.userMessagesStore.changeUser(userMessages);
     }
 
     toggleBlockedUsers(show) {
@@ -104,33 +94,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     getOnlineUsers() {
-
         this.socketService.getConnectedUsers({username: this.authUser.username});
 
         this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
             this.onlineUsers = dt;
         }));
     }
-
-    // getAcceptedDeclinedRequests() {
-    //     this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-    //         console.log('accepted', dt);
-    //     }));
-    // }
-
-    // getCancelledUsersConnection() {
-    //     this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
-    //         console.log('cancelled');
-    //     }));
-    // }
-
-    // getDisconnectUser() {
-    //     this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
-    //         console.log('disconnected', dt);
-    //         this.setNotifications(dt);
-    //         this.userMessagesStore.setUserMessages(dt.users_messages);
-    //     }));
-    // }
 
     blockUser(user) {
         const params = {
@@ -153,14 +122,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    // getBlockUnblockUser() {
-    //     this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
-    //         // console.log('get block/unblock', dt);
-    //         // this.setNotifications(dt);
-    //         // this.userMessagesStore.setUserMessages(dt.users_messages);
-    //     }));
-    // }
-
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
@@ -171,12 +132,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
                 this.userMessagesStore.changeUserMessages(to_id, direct_messages);
             }
         }));
-    }
-
-    setNotifications(dt) {
-        const notifications = this.notificationsStore.notifications;
-        notifications.unshift(dt);
-        this.notificationsStore.setNotifications(notifications);
     }
 
     getUserLastMessage(messages) {

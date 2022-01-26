@@ -139,8 +139,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 this.notificationsStore.setAllNotifications(this.notifications);
             })
         );
-
-
     }
 
     getAcceptedDeclinedRequests() {

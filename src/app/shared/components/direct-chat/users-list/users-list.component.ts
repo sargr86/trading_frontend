@@ -43,8 +43,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }
         // this.getBlockUnblockUser();
         // this.getAcceptedDeclinedRequests();
-        this.getCancelledUsersConnection();
-        this.getDisconnectUser();
+        // this.getCancelledUsersConnection();
+        // this.getDisconnectUser();
         this.getSeen();
     }
 
@@ -118,19 +118,19 @@ export class UsersListComponent implements OnInit, OnDestroy {
     //     }));
     // }
 
-    getCancelledUsersConnection() {
-        this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
-            console.log('cancelled');
-        }));
-    }
+    // getCancelledUsersConnection() {
+    //     this.subscriptions.push(this.socketService.cancelledUsersConnecting().subscribe((dt: any) => {
+    //         console.log('cancelled');
+    //     }));
+    // }
 
-    getDisconnectUser() {
-        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
-            console.log('disconnected', dt);
-            this.setNotifications(dt);
-            this.userMessagesStore.setUserMessages(dt.users_messages);
-        }));
-    }
+    // getDisconnectUser() {
+    //     this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
+    //         console.log('disconnected', dt);
+    //         this.setNotifications(dt);
+    //         this.userMessagesStore.setUserMessages(dt.users_messages);
+    //     }));
+    // }
 
     blockUser(user) {
         const params = {

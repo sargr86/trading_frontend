@@ -17,7 +17,7 @@ import * as moment from 'moment';
 import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
-import {DirectChatMessagesComponent} from '@shared/components/direct-chat-messages/direct-chat-messages.component';
+import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 
 @Component({
     selector: 'app-chat-bottom-box',

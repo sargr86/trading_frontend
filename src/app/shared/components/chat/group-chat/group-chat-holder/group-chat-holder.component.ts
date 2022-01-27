@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-group-chat-holder',
@@ -7,11 +9,21 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class GroupChatHolderComponent implements OnInit {
     @Input() authUser;
+    subscriptions: Subscription[] = [];
 
-    constructor() {
+    selectedGroupMessages;
+
+    constructor(private groupsMessagesStore: GroupsMessagesSubjectService) {
     }
 
     ngOnInit(): void {
+        this.getSelectedGroup();
+    }
+
+    getSelectedGroup() {
+        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            this.selectedGroupMessages = dt;
+        }));
     }
 
 }

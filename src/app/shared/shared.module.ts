@@ -60,6 +60,9 @@ import {UsersListComponent} from '@shared/components/chat/direct-chat/users-list
 import { GroupsListComponent } from './components/chat/group-chat/group-chat-holder/left-side/groups-list/groups-list.component';
 import { GroupFormComponent } from './components/chat/group-chat/group-chat-holder/left-side/group-form/group-form.component';
 import { GroupChatHolderComponent } from './components/chat/group-chat/group-chat-holder/group-chat-holder.component';
+import {GroupChatMessagesComponent} from '@shared/components/chat/group-chat/group-chat-holder/right-side/group-chat-messages/group-chat-messages.component';
+import { GroupChatTopComponent } from './components/chat/group-chat/group-chat-holder/right-side/group-chat-top/group-chat-top.component';
+import { GroupAvatarHandlerComponent } from './components/chat/group-chat/group-chat-holder/right-side/group-chat-top/group-avatar-handler/group-avatar-handler.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -120,6 +123,9 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GroupsListComponent,
         GroupFormComponent,
         GroupChatHolderComponent,
+        GroupChatMessagesComponent,
+        GroupChatTopComponent,
+        GroupAvatarHandlerComponent,
     ],
     imports: [
         CommonModule,

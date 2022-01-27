@@ -10,6 +10,7 @@ export const VIDEO_DEFAULT_THUMBNAILS_PATH = 'assets/img/video-thumbnail-default
 export const VIDEO_DEFAULT_COVERS_PATH = 'assets/img/default-thumbnail.png';
 export const VIDEO_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
 export const USER_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
+export const GROUP_DEFAULT_AVATARS_PATH = 'assets/img/default-group-people-icon_light.jpg';
 export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
 

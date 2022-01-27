@@ -1,2 +1,28 @@
 @import '~assets/styles/chat-users-groups-container';
 @import 'variables';
+
+.list-chat-group {
+    display: flex;
+
+    .left {
+        width: 90%;
+        display: flex;
+    }
+
+    .right {
+        display: flex;
+        justify-content: center;
+        padding-top: 15px;
+    }
+
+    &.unconfirmed {
+        background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+}
+
+.group-avatar {
+    width: 48px !important;
+    height: 48px;
+    border-radius: 10px;
+}
+

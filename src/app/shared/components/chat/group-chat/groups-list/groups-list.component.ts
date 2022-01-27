@@ -29,11 +29,13 @@ export class GroupsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getGroupsMessages();
     }
 
     getGroupsMessages() {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
             this.filteredGroupsMessages = dt;
+            console.log(dt)
             this.selectedGroup = dt[0];
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
         });
@@ -45,6 +47,24 @@ export class GroupsListComponent implements OnInit {
             this.getGroupsMessages();
             this.socketService.setNewGroup(formValue);
         }));
+    }
+
+    makeGroupActive(group) {
+        this.selectedGroup = group;
+    }
+
+    ifConfirmedToJoinTheGroup(group) {
+        return group?.chat_group_members.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
+    }
+
+    isSeenByAuthUser(messages) {
+        return messages.filter(message => {
+            let found = false;
+            if (message.from_id !== this.authUser.id) {
+                found = !message.seen_by.find(sb => sb.id === this.authUser.id);
+            }
+            return found;
+        }).length;
     }
 
 }

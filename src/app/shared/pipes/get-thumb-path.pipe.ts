@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {
-    API_URL, USER_DEFAULT_AVATARS_PATH,
+    API_URL, GROUP_DEFAULT_AVATARS_PATH, USER_DEFAULT_AVATARS_PATH,
     VIDEO_DEFAULT_AVATARS_PATH,
     VIDEO_DEFAULT_COVERS_PATH,
     VIDEO_DEFAULT_THUMBNAILS_PATH
@@ -42,8 +42,10 @@ export class GetThumbPathPipe implements PipeTransform {
                 p = VIDEO_DEFAULT_AVATARS_PATH;
                 break;
             case 'user_avatars':
-            case 'group_avatars':
                 p = USER_DEFAULT_AVATARS_PATH;
+                break;
+            case 'group_avatars':
+                p = GROUP_DEFAULT_AVATARS_PATH;
                 break;
             case 'covers':
                 p = VIDEO_DEFAULT_COVERS_PATH;

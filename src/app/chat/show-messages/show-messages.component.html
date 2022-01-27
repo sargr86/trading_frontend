@@ -1,23 +1,34 @@
 <ng-container *ngIf="authUser">
     <app-user-tags></app-user-tags>
     <div class="page-wrap">
-        <div class="tab-wrap">
-
-            <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()" matBadgePosition="before"
-                    [matBadgeHidden]="activeTab==='direct' || newMessagesCountInDirect===0 "
-                    [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat
-            </button>
-            <button class="tab group-tab" [matBadge]="newMessagesCountInGroups.toString()"
-                    [matBadgeHidden]="activeTab==='group' || newMessagesCountInGroups===0 "
-                    [class.active]="activeTab==='group'"
-                    (click)="changeTab('group')">Group Chat
-            </button>
+        <div class="left-wrap">
+            <div class="tab-wrap">
+                <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()" matBadgePosition="before"
+                        [matBadgeHidden]="activeTab==='direct' || newMessagesCountInDirect===0 "
+                        [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat
+                </button>
+                <button class="tab group-tab" [matBadge]="newMessagesCountInGroups.toString()"
+                        [matBadgeHidden]="activeTab==='group' || newMessagesCountInGroups===0 "
+                        [class.active]="activeTab==='group'"
+                        (click)="changeTab('group')">Group Chat
+                </button>
+            </div>
+            <div class="list-wrap">
+                <app-users-list [authUser]="authUser" *ngIf="activeTab==='direct'"></app-users-list>
+                <app-groups-list [authUser]="authUser" *ngIf="activeTab=='group'"></app-groups-list>
+            </div>
         </div>
+
+        <div class="right-wrap">
+            <app-direct-chat-messages [authUser]="authUser" *ngIf="activeTab==='direct'"></app-direct-chat-messages>
+            <app-group-chat-holder [authUser]="authUser" *ngIf="activeTab=='group'"></app-group-chat-holder>
+        </div>
+
 <!--        <app-direct-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"-->
 <!--                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-chat>-->
 <!--        <app-group-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-chat>-->
-        <app-direct-mongo-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"
-                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-mongo-chat>
-        <app-group-mongo-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-mongo-chat>
+<!--        <app-direct-mongo-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"-->
+<!--                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-mongo-chat>-->
+<!--        <app-group-mongo-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-mongo-chat>-->
     </div>
 </ng-container>

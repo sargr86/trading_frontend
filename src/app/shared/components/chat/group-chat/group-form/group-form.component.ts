@@ -8,10 +8,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class GroupFormComponent implements OnInit {
     groupForm: FormGroup;
+    showGroupChatForm = false;
 
     @Input() authUser;
     @Output() formSubmitted = new EventEmitter();
-    @Output() closeForm = new EventEmitter();
 
     constructor(
         private fb: FormBuilder
@@ -35,6 +35,10 @@ export class GroupFormComponent implements OnInit {
             this.formSubmitted.emit(this.groupForm.value);
             this.groupForm.patchValue({name: ''});
         }
+    }
+
+    toggleForm(shown: boolean) {
+        this.showGroupChatForm = shown;
     }
 
 }

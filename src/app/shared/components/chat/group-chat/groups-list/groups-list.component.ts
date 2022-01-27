@@ -13,7 +13,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 })
 export class GroupsListComponent implements OnInit {
     @Input() authUser;
-    showGroupChatForm = false;
+
 
     subscriptions: Subscription[] = [];
 

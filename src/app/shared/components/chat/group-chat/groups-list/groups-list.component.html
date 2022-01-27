@@ -1,9 +1,11 @@
 <div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()"
      [class.responsive-list]="mobileHelper.isChatUsersListSize()">
+    <div id="group-form-container">
+
+        <app-group-form  [authUser]="authUser" (formSubmitted)="addGroup($event)"
+                       ></app-group-form>
+    </div>
     <div id="groups-list" class="list-wrap">
-        <button class="create-group-chat" [hidden]="showGroupChatForm" (click)="showGroupChatForm = true"><img
-            src="assets/img/noun_create.png" alt=""> Create new group
-        </button>
-        <app-group-form [hidden]="!showGroupChatForm" [authUser]="authUser" (formSubmitted)="addGroup($event)" (closeForm)="showGroupChatForm = false"></app-group-form>
+
     </div>
 </div>

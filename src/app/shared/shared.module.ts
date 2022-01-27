@@ -57,8 +57,8 @@ import {MobxAngularModule} from 'mobx-angular';
 import { ChatFormComponent } from './components/chat-form/chat-form.component';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {UsersListComponent} from '@shared/components/chat/direct-chat/users-list/users-list.component';
-import { GroupsListComponent } from './components/chat/group-chat/group-chat-holder/groups-list/groups-list.component';
-import { GroupFormComponent } from './components/chat/group-chat/group-chat-holder/group-form/group-form.component';
+import { GroupsListComponent } from './components/chat/group-chat/group-chat-holder/left-side/groups-list/groups-list.component';
+import { GroupFormComponent } from './components/chat/group-chat/group-chat-holder/left-side/group-form/group-form.component';
 import { GroupChatHolderComponent } from './components/chat/group-chat/group-chat-holder/group-chat-holder.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {

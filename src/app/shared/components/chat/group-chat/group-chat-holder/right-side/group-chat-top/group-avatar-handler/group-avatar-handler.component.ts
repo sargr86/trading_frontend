@@ -6,6 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
     styleUrls: ['./group-avatar-handler.component.scss']
 })
 export class GroupAvatarHandlerComponent implements OnInit {
+    @Input() authUser;
     @Input() selectedGroup;
 
     constructor() {

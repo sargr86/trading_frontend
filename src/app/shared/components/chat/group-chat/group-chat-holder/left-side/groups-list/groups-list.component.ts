@@ -27,7 +27,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private dialog: MatDialog,
+
     ) {
     }
 
@@ -53,17 +53,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    removeGroup() {
-        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
-            if (confirmed) {
-                this.chatService.removeGroup({group_id: this.selectedGroup.id}).subscribe(dt => {
-                    this.socketService.removeGroup({group: this.selectedGroup.name, username: this.authUser.username});
-                    this.groupsMessagesStore.setGroupsMessages(dt);
-                    this.selectedGroup = null;
-                });
-            }
-        }));
-    }
+
 
     makeGroupActive(group) {
         this.selectedGroup = group;

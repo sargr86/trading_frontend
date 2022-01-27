@@ -1,0 +1,21 @@
+@import "variables";
+.right {
+    display: flex;
+    align-items: center;
+    @media only screen and (min-width: 374px) and (max-width: 767px) {
+        position: absolute;
+        top: 24px;
+        right: 0;
+    }
+
+
+    .remove {
+        i {
+            color: $red;
+        }
+    }
+
+    > div {
+        margin-left: 16px;
+    }
+}

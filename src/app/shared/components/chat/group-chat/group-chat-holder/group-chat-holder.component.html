@@ -1,4 +1,4 @@
 <div class="chat-wrap">
 
-    <app-group-chat-top [selectedGroupMessages]="selectedGroupMessages"></app-group-chat-top>
+    <app-group-chat-top [selectedGroupMessages]="selectedGroupMessages" *ngIf="selectedGroupMessages" [authUser]="authUser"></app-group-chat-top>
 </div>

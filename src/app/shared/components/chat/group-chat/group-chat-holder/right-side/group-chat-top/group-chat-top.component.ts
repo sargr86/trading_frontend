@@ -6,6 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
     styleUrls: ['./group-chat-top.component.scss']
 })
 export class GroupChatTopComponent implements OnInit {
+    @Input() authUser;
     @Input() selectedGroupMessages;
 
     constructor() {

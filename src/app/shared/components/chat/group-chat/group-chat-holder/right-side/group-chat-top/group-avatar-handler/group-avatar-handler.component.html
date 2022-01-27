@@ -1,0 +1,7 @@
+<div class="left">
+    <label for="group-avatar-input">
+        <img class="img group-avatar" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
+    </label>
+    <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
+    <div class="group-name">{{selectedGroup?.name}}</div>
+</div>

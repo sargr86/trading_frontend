@@ -1,1 +1,7 @@
-<app-groups-list [authUser]="authUser"></app-groups-list>
+<div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()"
+     [class.responsive-list]="mobileHelper.isChatUsersListSize()">
+    <div id="group-form-container">
+        <app-group-form [authUser]="authUser"></app-group-form>
+    </div>
+    <app-groups-list [authUser]="authUser"></app-groups-list>
+</div>

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-group-form',
@@ -11,10 +12,10 @@ export class GroupFormComponent implements OnInit {
     showGroupChatForm = false;
 
     @Input() authUser;
-    @Output() formSubmitted = new EventEmitter();
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }
 
@@ -32,7 +33,7 @@ export class GroupFormComponent implements OnInit {
 
     addGroup() {
         if (this.groupForm.valid) {
-            this.formSubmitted.emit(this.groupForm.value);
+            this.groupsMessagesStore.setAddGroupFormValue(this.groupForm.value);
             this.groupForm.patchValue({name: ''});
         }
     }

@@ -11,7 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
     selector: 'app-groups-list',
     templateUrl: './groups-list.component.html',
     styleUrls: ['./groups-list.component.scss'],
-    providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
+
 })
 export class GroupsListComponent implements OnInit, OnDestroy {
     @Input() authUser;
@@ -23,25 +23,29 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     filteredGroupsMessages = [];
 
     constructor(
-        public mobileHelper: MobileResponsiveHelper,
         private chatService: ChatService,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-
     ) {
     }
 
     ngOnInit(): void {
         this.getGroupsMessages();
+        this.getGroupFormValue();
     }
 
     getGroupsMessages() {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
             this.filteredGroupsMessages = dt;
-            console.log(dt);
             this.selectedGroup = dt[0];
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
         });
+    }
+
+    getGroupFormValue() {
+        this.subscriptions.push(this.groupsMessagesStore.addGroupFormValue.subscribe(dt => {
+            this.addGroup(dt);
+        }));
     }
 
     addGroup(formValue) {
@@ -52,7 +56,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             this.socketService.setNewGroup(formValue);
         }));
     }
-
 
 
     makeGroupActive(group) {

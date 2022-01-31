@@ -1,36 +1,31 @@
-<div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()"
-     [class.responsive-list]="mobileHelper.isChatUsersListSize()">
-    <div id="group-form-container">
-        <app-group-form [authUser]="authUser" (formSubmitted)="addGroup($event)"></app-group-form>
-    </div>
-    <div id="groups-list" class="list-wrap">
-        <ul class="list">
-            <li class="list-chat-group" [class.active]="group.id===selectedGroup?.id"
-                *ngFor="let group of filteredGroupsMessages"
-                [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
-                (click)="makeGroupActive(group)">
+<div id="groups-list" class="list-wrap">
+    <ul class="list">
+        <li class="list-chat-group" [class.active]="group.id===selectedGroup?.id"
+            *ngFor="let group of filteredGroupsMessages"
+            [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
+            (click)="makeGroupActive(group)">
 
 
-                <ng-container
-                    [ngTemplateOutlet]="groupTemplate"
-                    [ngTemplateOutletContext]="{messages: group?.chat_group_messages, group: group}">
-                </ng-container>
+            <ng-container
+                [ngTemplateOutlet]="groupTemplate"
+                [ngTemplateOutletContext]="{messages: group?.chat_group_messages, group: group}">
+            </ng-container>
 
-                <ng-template #groupTemplate let-messages="messages" let-group="group">
-                    <div class="left">
-                        <img class="img group-avatar" [src]="group.avatar|getImgPath:'group_avatars'">
-                        <div class="text">
-                            <div class="name">{{group.name}}</div>
-                            <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:' '}}</span>
-                        </div>
+            <ng-template #groupTemplate let-messages="messages" let-group="group">
+                <div class="left">
+                    <img class="img group-avatar" [src]="group.avatar|getImgPath:'group_avatars'">
+                    <div class="text">
+                        <div class="name">{{group.name}}</div>
+                        <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:' '}}</span>
                     </div>
-                    <div class="right" *ngIf="messages">
-                        <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)">
-                            <strong>{{isSeenByAuthUser(messages)}}</strong>
-                        </button>
-                    </div>
-                </ng-template>
-            </li>
-        </ul>
-    </div>
+                </div>
+                <div class="right" *ngIf="messages">
+                    <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)">
+                        <strong>{{isSeenByAuthUser(messages)}}</strong>
+                    </button>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
 </div>
+

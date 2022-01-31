@@ -48,12 +48,12 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     filteredContacts = [];
 
     memberCtrl = new FormControl();
+    readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     subscriptions: Subscription[] = [];
 
     typingText = {group: null, text: null};
 
-    readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
     @Input() authUser;
 
@@ -233,7 +233,6 @@ export class GroupChatComponent implements OnInit, OnDestroy {
                 });
             }
         }));
-
     }
 
     removeGroup() {

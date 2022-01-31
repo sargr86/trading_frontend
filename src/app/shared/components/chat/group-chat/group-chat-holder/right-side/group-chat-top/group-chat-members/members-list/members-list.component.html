@@ -1,0 +1,16 @@
+<div class="members-list">
+    <ul *ngIf="groupMembers?.length > 0">
+        <li class="group-member" *ngFor="let m of groupMembers"
+            [class.pending]="!m.chat_groups_members.confirmed">
+            <img class="avatar" [matTooltip]="m.name"
+                 [src]="m.avatar|getImgPath: 'user_avatars'">
+            <mat-icon *ngIf="m.id !== selectedGroup?.creator_id"
+                      (click)="removeSavedMember(m.id)">cancel
+            </mat-icon>
+            <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
+        </li>
+    </ul>
+    <a id="show-more-members" (click)="openAllMembersModal()">
+        Show more
+    </a>
+</div>

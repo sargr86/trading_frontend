@@ -3,7 +3,8 @@
     <div class="page-wrap">
         <div class="left-wrap">
             <div class="tab-wrap">
-                <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()" matBadgePosition="before"
+                <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()"
+                        matBadgePosition="before"
                         [matBadgeHidden]="activeTab==='direct' || newMessagesCountInDirect===0 "
                         [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat
                 </button>
@@ -21,7 +22,7 @@
 
         <div class="right-wrap">
             <app-direct-chat-messages [authUser]="authUser" *ngIf="activeTab==='direct'"></app-direct-chat-messages>
-            <app-group-chat-holder [authUser]="authUser" *ngIf="activeTab=='group'"></app-group-chat-holder>
+            <app-group-chat-right-side-holder [authUser]="authUser" *ngIf="activeTab=='group'"></app-group-chat-right-side-holder>
         </div>
     </div>
 </ng-container>

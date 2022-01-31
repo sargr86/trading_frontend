@@ -1,13 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {Subscription} from 'rxjs';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
-    selector: 'app-group-chat-holder',
-    templateUrl: './group-chat-holder.component.html',
-    styleUrls: ['./group-chat-holder.component.scss']
+  selector: 'app-group-chat-right-side-holder',
+  templateUrl: './group-chat-right-side-holder.component.html',
+  styleUrls: ['./group-chat-right-side-holder.component.scss']
 })
-export class GroupChatHolderComponent implements OnInit {
+export class GroupChatRightSideHolderComponent implements OnInit {
+
     @Input() authUser;
     subscriptions: Subscription[] = [];
 
@@ -25,5 +26,5 @@ export class GroupChatHolderComponent implements OnInit {
             this.selectedGroupMessages = dt;
         }));
     }
-
 }
+

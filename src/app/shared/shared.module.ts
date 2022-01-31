@@ -59,7 +59,6 @@ import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/d
 import {UsersListComponent} from '@shared/components/chat/direct-chat/users-list/users-list.component';
 import { GroupsListComponent } from './components/chat/group-chat/left-side/groups-list/groups-list.component';
 import { GroupFormComponent } from './components/chat/group-chat/left-side/group-form/group-form.component';
-import { GroupChatHolderComponent } from './components/chat/group-chat/right-side/group-chat-holder.component';
 import {GroupChatMessagesComponent} from '@shared/components/chat/group-chat/right-side/group-chat-messages/group-chat-messages.component';
 import { GroupChatTopComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-top.component';
 import { GroupAvatarHandlerComponent } from './components/chat/group-chat/right-side/group-chat-top/group-avatar-handler/group-avatar-handler.component';
@@ -67,6 +66,7 @@ import { GroupChatActionsComponent } from './components/chat/group-chat/right-si
 import { GroupChatMembersComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/group-chat-members.component';
 import { MembersListComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-list/members-list.component';
 import { MembersAddFormComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-add-form/members-add-form.component';
+import { GroupChatRightSideHolderComponent } from './components/chat/group-chat/right-side/group-chat-right-side-holder.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -126,7 +126,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         UsersListComponent,
         GroupsListComponent,
         GroupFormComponent,
-        GroupChatHolderComponent,
         GroupChatMessagesComponent,
         GroupChatTopComponent,
         GroupAvatarHandlerComponent,
@@ -134,6 +133,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GroupChatMembersComponent,
         MembersListComponent,
         MembersAddFormComponent,
+        GroupChatRightSideHolderComponent,
     ],
     imports: [
         CommonModule,
@@ -221,9 +221,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         UsersListComponent,
         GroupsListComponent,
         GroupFormComponent,
-        GroupChatHolderComponent,
+        GroupChatRightSideHolderComponent
     ],
-
 })
 export class SharedModule {
 }

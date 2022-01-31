@@ -16,7 +16,7 @@
             </div>
             <div class="list-wrap">
                 <app-users-list [authUser]="authUser" *ngIf="activeTab==='direct'"></app-users-list>
-                <app-groups-list [authUser]="authUser" *ngIf="activeTab=='group'"></app-groups-list>
+                <app-group-chat-left-side-holder [authUser]="authUser" *ngIf="activeTab=='group'"></app-group-chat-left-side-holder>
             </div>
         </div>
 

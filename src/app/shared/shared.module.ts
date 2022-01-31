@@ -67,6 +67,7 @@ import { GroupChatMembersComponent } from './components/chat/group-chat/right-si
 import { MembersListComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-list/members-list.component';
 import { MembersAddFormComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-add-form/members-add-form.component';
 import { GroupChatRightSideHolderComponent } from './components/chat/group-chat/right-side/group-chat-right-side-holder.component';
+import {GroupChatLeftSideHolderComponent} from "@shared/components/chat/group-chat/left-side/group-chat-left-side-holder.component";
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -134,6 +135,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         MembersListComponent,
         MembersAddFormComponent,
         GroupChatRightSideHolderComponent,
+        GroupChatLeftSideHolderComponent,
     ],
     imports: [
         CommonModule,
@@ -221,7 +223,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         UsersListComponent,
         GroupsListComponent,
         GroupFormComponent,
-        GroupChatRightSideHolderComponent
+        GroupChatRightSideHolderComponent,
+        GroupChatLeftSideHolderComponent
     ],
 })
 export class SharedModule {

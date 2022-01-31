@@ -4,7 +4,8 @@ import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
-import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
 
 @Component({
     selector: 'app-members-list',
@@ -13,6 +14,8 @@ import {GroupsMessagesSubjectService} from "@core/services/stores/groups-message
 })
 export class MembersListComponent implements OnInit, OnDestroy {
     @Input() selectedGroup;
+    @Input() modalMode = false;
+
     groupMembers = [];
     subscriptions: Subscription[] = [];
 
@@ -31,7 +34,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getGroupMembers() {
         this.groupMembers = this.selectedGroup.chat_group_members;
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
-            this.groupMembers = dt.chat_group_members;
+            this.groupMembers = this.modalMode
+                ? dt.chat_group_members
+                : dt.chat_group_members.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
         });
     }
 
@@ -48,7 +53,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     }
 
     getUserCurrentStatus(groupMember) {
-        // const groupName = this.groupsMessages.find(gm => gm.id === groupMember?.chat_groups_members?.group_id)?.name;
+        const groupName = this.groupsMessagesStore.groupsMessages.find(gm => gm.id === groupMember?.chat_groups_members?.group_id)?.name;
         // if (this.socketGroupsUsers && groupName === this.selectedGroup?.name) {
         //     return !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
         // }
@@ -57,8 +62,8 @@ export class MembersListComponent implements OnInit, OnDestroy {
 
     openAllMembersModal() {
         this.subscriptions.push(this.dialog.open(ShowChatGroupMembersComponent, {
-            width: '300px',
-            height: '400px'
+            width: '700px',
+            height: '500px',
         }).afterClosed().subscribe(dt => {
 
         }));

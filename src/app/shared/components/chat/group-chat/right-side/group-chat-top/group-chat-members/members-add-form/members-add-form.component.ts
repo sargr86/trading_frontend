@@ -29,6 +29,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
 
     @Input() selectedGroup;
     @Input() authUser;
+    @Input() modalMode = false;
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
 
     groupChatDetailsForm: FormGroup;

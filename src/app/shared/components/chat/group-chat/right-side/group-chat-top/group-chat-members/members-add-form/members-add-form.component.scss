@@ -4,10 +4,22 @@
     display: flex;
     align-items: center;
     width: 100%;
+    justify-content: space-around;
 
     button {
         @include regularButton;
         width: 50px;
 
+    }
+
+    mat-form-field {
+        max-width: 210px;
+        width: 100%;
+    }
+}
+
+.modal-mode {
+    .member-add {
+        padding: 20px;
     }
 }

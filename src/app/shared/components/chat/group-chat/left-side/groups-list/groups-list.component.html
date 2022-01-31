@@ -5,7 +5,6 @@
             [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
             (click)="makeGroupActive(group)">
 
-
             <ng-container
                 [ngTemplateOutlet]="groupTemplate"
                 [ngTemplateOutletContext]="{messages: group?.chat_group_messages, group: group}">

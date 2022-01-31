@@ -1,1 +1,11 @@
-<p>show-chat-group-members works!</p>
+<div class="group-members-wrap">
+    <h1>
+        <span class="group-name">{{selectedGroup.name}}</span> members
+    </h1>
+    <div class="members-form">
+        <app-members-add-form [selectedGroup]="selectedGroup" [authUser]="authUser"></app-members-add-form>
+    </div>
+    <div class="members">
+        <app-members-list [selectedGroup]="selectedGroup" [modalMode]="true"></app-members-list>
+    </div>
+</div>

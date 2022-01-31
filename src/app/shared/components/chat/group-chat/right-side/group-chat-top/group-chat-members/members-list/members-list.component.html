@@ -1,16 +1,28 @@
 <div class="members-list" *ngIf="groupMembers?.length > 0">
     <ul>
-        <li class="group-member" *ngFor="let m of groupMembers"
+        <li class="group-member" *ngFor="let m of groupMembers" [class.modal-mode]="modalMode"
             [class.pending]="!m.chat_groups_members.confirmed">
-            <img class="avatar" [matTooltip]="m.name"
-                 [src]="m.avatar|getImgPath: 'user_avatars'">
-            <mat-icon *ngIf="m.id !== selectedGroup?.creator_id"
-                      (click)="removeSavedMember(m.id)">cancel
-            </mat-icon>
-            <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
+            <div class="avatar-status-wrap">
+                <img class="avatar" [matTooltip]="m.name"
+                     [src]="m.avatar|getImgPath: 'user_avatars'">
+                <mat-icon *ngIf="m.id !== selectedGroup?.creator_id && !modalMode"
+                          (click)="removeSavedMember(m.id)">cancel
+                </mat-icon>
+                <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
+            </div>
+
+            <ng-container *ngIf="modalMode">
+                <div class="member-name">
+                    <span>{{m.name}}</span>
+                </div>
+                <div class="actions">
+                    <i class="fa fa-ban" *ngIf="m.id !== selectedGroup?.creator_id"
+                       (click)="removeSavedMember(m.id)"></i>
+                </div>
+            </ng-container>
         </li>
     </ul>
-    <a id="show-more-members" (click)="openAllMembersModal()">
+    <a id="show-more-members" (click)="openAllMembersModal()" *ngIf="!modalMode">
         Show more
     </a>
 </div>

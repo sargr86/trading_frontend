@@ -1,0 +1,28 @@
+@import 'variables';
+
+.group-members-wrap {
+    text-align: center;
+
+    .group-name {
+        text-transform: capitalize;
+        color: $metl-green;
+    }
+
+    .members-form {
+        display: flex;
+        margin: 20px;
+        padding: 0 20px;
+    }
+
+    .members {
+        width: 90%;
+        padding: 10px;
+        margin: 20px auto;
+        border: 1px solid #c3c3c3;
+    }
+}
+
+app-members-add-form{
+    max-width: 380px;
+    width: 100%;
+}

@@ -1,8 +1,9 @@
 @import 'variables';
+
 .members-list {
     display: flex;
     align-items: center;
-    @media only screen and (max-width:374px) {
+    @media only screen and (max-width: 374px) {
         display: block;
     }
 
@@ -11,7 +12,7 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: horizontal;
         overflow: hidden;
-        @media only screen and (max-width:374px) {
+        @media only screen and (max-width: 374px) {
             margin-bottom: 10px !important;
         }
     }
@@ -25,9 +26,9 @@
 
 .group-member {
     position: relative;
-    width: 42px;
     border-radius: 42px;
     margin-left: 5px;
+
 
     .status {
         position: absolute;
@@ -68,6 +69,7 @@
         cursor: pointer;
     }
 
+
     &:hover {
         background-color: rgba(0, 0, 0, 0.5);
 
@@ -80,4 +82,57 @@
             opacity: 0.5;
         }
     }
+
+
+    &:not(.modal-mode) {
+        width: 42px;
+    }
+
+    &.modal-mode {
+        display: flex;
+        align-items: center;
+        //max-width: 200px;
+        //width: 100%;
+        border: 1px solid #c3c3c3;
+        padding: 5px;
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #545454;
+            margin-left: 15px;
+        }
+
+        .actions {
+            margin-left: 10px;
+
+            i {
+                color: $red;
+                cursor: pointer;
+            }
+        }
+
+        &.pending {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        &:hover {
+            background-color: $metl-green;
+
+            .member-name {
+                color: $white;
+            }
+
+            img {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+.avatar-status-wrap {
+    position: relative;
+    width: 42px;
+    pointer-events: none;
 }

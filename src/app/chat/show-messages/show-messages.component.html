@@ -23,12 +23,5 @@
             <app-direct-chat-messages [authUser]="authUser" *ngIf="activeTab==='direct'"></app-direct-chat-messages>
             <app-group-chat-holder [authUser]="authUser" *ngIf="activeTab=='group'"></app-group-chat-holder>
         </div>
-
-<!--        <app-direct-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"-->
-<!--                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-chat>-->
-<!--        <app-group-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-chat>-->
-<!--        <app-direct-mongo-chat *ngIf="activeTab==='direct' && authUser" [authUser]="authUser"-->
-<!--                         (newMessagesCountReceived)="newMessagesCountInDirect = $event"></app-direct-mongo-chat>-->
-<!--        <app-group-mongo-chat *ngIf="activeTab=='group' && authUser" [authUser]="authUser"></app-group-mongo-chat>-->
     </div>
 </ng-container>

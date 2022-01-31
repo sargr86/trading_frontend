@@ -46,7 +46,18 @@ export class GroupChatActionsComponent implements OnInit {
     }
 
     leaveGroup() {
-
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.chatService.leaveGroup({
+                    member_id: this.authUser.id,
+                    group_id: this.selectedGroup.id
+                }).subscribe(dt => {
+                    this.groupsMessagesStore.setGroupsMessages(dt);
+                    this.socketService.leaveGroup({group: this.selectedGroup.name, username: this.authUser.username});
+                    this.selectedGroup = null;
+                });
+            }
+        }));
     }
 
 }

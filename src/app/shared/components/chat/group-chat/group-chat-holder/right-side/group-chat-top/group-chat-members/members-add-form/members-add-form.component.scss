@@ -1,0 +1,13 @@
+@import 'mixins';
+
+.member-add {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    button {
+        @include regularButton;
+        width: 50px;
+
+    }
+}

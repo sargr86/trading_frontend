@@ -24,12 +24,16 @@ export class GroupsMessagesSubjectService {
         this.groupsMessagesSource.next([...messages]);
     }
 
-    get selectedUserMessages() {
-        return this.selectedGroupMessagesSource.getValue();
+    get selectedGroupMessages() {
+        return this.selectedGroupMessagesSource.getValue() as any;
     }
 
     changeGroup(groupMessages: any) {
         this.selectedGroupMessagesSource.next(groupMessages);
+    }
+
+    changeGroupMembers(group) {
+        this.selectedGroupMessagesSource.next(group);
     }
 
 

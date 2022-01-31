@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 @Component({
     selector: 'app-members-list',
@@ -16,22 +17,31 @@ export class MembersListComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
 
-
     constructor(
         private dialog: MatDialog,
         private chatService: ChatService,
+        private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }
 
     ngOnInit(): void {
+        this.getGroupMembers();
+    }
 
+    getGroupMembers() {
+        this.groupMembers = this.selectedGroup.chat_group_members;
+        this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            this.groupMembers = dt.chat_group_members;
+        });
     }
 
     removeSavedMember(member_id) {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.chatService.removeGroupMember({group_id: this.selectedGroup.id, member_id}).subscribe(dt => {
-                    this.groupMembers = dt?.chat_group_members;
+                    // this.groupMembers = dt?.chat_group_members;
+                    this.selectedGroup = dt;
+                    this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);
                 });
             }
         }));

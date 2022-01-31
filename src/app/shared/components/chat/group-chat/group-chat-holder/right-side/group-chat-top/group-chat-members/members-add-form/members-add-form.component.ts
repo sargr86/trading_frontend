@@ -7,6 +7,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {UsersService} from '@core/services/users.service';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 
 @Component({
@@ -37,6 +38,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private usersService: UsersService,
         private socketService: SocketIoService,
+        private groupsMessagesStore: GroupsMessagesSubjectService,
         private fb: FormBuilder
     ) {
     }
@@ -45,13 +47,22 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.initForm();
 
         this.getUserContacts();
+        this.getGroupMembers();
         this.getContactsFilteredBySearch();
+
     }
 
     initForm() {
         this.groupChatDetailsForm = this.fb.group({
-            group_id: [''],
+            group_id: [this.selectedGroup.id],
             member_ids: ['', Validators.required]
+        });
+    }
+
+    getGroupMembers() {
+        this.groupMembers = this.selectedGroup.chat_group_members;
+        this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            this.groupMembers = dt.chat_group_members;
         });
     }
 
@@ -95,13 +106,14 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
 
-        // console.log(this.groupChatDetailsForm.value, this.selectedGroup)
-
         this.subscriptions.push(this.chatService.addGroupMembers(
             this.groupChatDetailsForm.value
         ).subscribe(dt => {
             this.groupMembers = dt?.chat_group_members;
+            this.selectedGroup = dt;
             this.socketService.inviteToNewGroup({members: this.inputGroupMembers, group_id: this.selectedGroup.id});
+            this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);
+            this.groupsMessagesStore.showMembersForm = false;
             this.inputGroupMembers = [];
         }));
     }
@@ -113,16 +125,6 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
             this.inputGroupMembers.splice(index, 1);
             this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers});
         }
-    }
-
-    removeSavedMember(member_id) {
-        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
-            if (confirmed) {
-                this.chatService.removeGroupMember({group_id: this.selectedGroup.id, member_id}).subscribe(dt => {
-                    this.groupMembers = dt?.chat_group_members;
-                });
-            }
-        }));
     }
 
     ngOnDestroy(): void {

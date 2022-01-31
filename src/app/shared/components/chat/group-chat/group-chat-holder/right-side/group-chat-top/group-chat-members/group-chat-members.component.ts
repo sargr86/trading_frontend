@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 @Component({
     selector: 'app-group-chat-members',
@@ -6,10 +7,12 @@ import {Component, Input, OnInit} from '@angular/core';
     styleUrls: ['./group-chat-members.component.scss']
 })
 export class GroupChatMembersComponent implements OnInit {
+    @Input() authUser;
     @Input() selectedGroup;
-    showMembersInput = false;
 
-    constructor() {
+    constructor(
+        public groupChatMessagesStore: GroupsMessagesSubjectService
+    ) {
     }
 
     ngOnInit(): void {

@@ -1,2 +1,2 @@
-<app-members-list [selectedGroup]="selectedGroup" [hidden]="showMembersInput"></app-members-list>
-<app-members-add-form [selectedGroup]="selectedGroup"></app-members-add-form>
+<app-members-list [selectedGroup]="selectedGroup" [hidden]="groupChatMessagesStore.showMembersForm"></app-members-list>
+<app-members-add-form [selectedGroup]="selectedGroup" [authUser]="authUser" [hidden]="!groupChatMessagesStore.showMembersForm"></app-members-add-form>

@@ -11,6 +11,8 @@ export class GroupsMessagesSubjectService {
     groupsMessages$ = this.groupsMessagesSource.asObservable();
     selectedGroupsMessages$ = this.selectedGroupMessagesSource.asObservable();
 
+    showMembersForm = false;
+
     constructor() {
     }
 

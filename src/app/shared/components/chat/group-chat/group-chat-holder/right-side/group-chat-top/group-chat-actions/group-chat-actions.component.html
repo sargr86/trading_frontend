@@ -1,7 +1,7 @@
 <div class="right">
-<!--    <button mat-icon-button [disableRipple]="true" (click)="showMembersInput = !showMembersInput">-->
-<!--        <mat-icon>people</mat-icon>-->
-<!--    </button>-->
+    <button mat-icon-button [disableRipple]="true" (click)="toggleMembersForm()">
+        <mat-icon>people</mat-icon>
+    </button>
     <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">
         <a><i class="fas fa-trash"></i></a>
     </div>

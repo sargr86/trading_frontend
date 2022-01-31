@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
-import {ShowChatGroupMembersComponent} from "@core/components/modals/show-chat-group-members/show-chat-group-members.component";
+import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 
 @Component({
     selector: 'app-members-list',
     templateUrl: './members-list.component.html',
     styleUrls: ['./members-list.component.scss']
 })
-export class MembersListComponent implements OnInit {
+export class MembersListComponent implements OnInit, OnDestroy {
     @Input() selectedGroup;
     groupMembers = [];
     subscriptions: Subscription[] = [];
@@ -52,6 +52,10 @@ export class MembersListComponent implements OnInit {
         }).afterClosed().subscribe(dt => {
 
         }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

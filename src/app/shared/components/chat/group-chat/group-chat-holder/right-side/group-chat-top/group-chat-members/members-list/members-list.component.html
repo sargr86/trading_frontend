@@ -1,5 +1,5 @@
-<div class="members-list">
-    <ul *ngIf="groupMembers?.length > 0">
+<div class="members-list" *ngIf="groupMembers?.length > 0">
+    <ul>
         <li class="group-member" *ngFor="let m of groupMembers"
             [class.pending]="!m.chat_groups_members.confirmed">
             <img class="avatar" [matTooltip]="m.name"

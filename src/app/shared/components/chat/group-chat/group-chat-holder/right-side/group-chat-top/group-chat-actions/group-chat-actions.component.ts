@@ -29,6 +29,10 @@ export class GroupChatActionsComponent implements OnInit {
 
     }
 
+    toggleMembersForm() {
+        this.groupsMessagesStore.showMembersForm = !this.groupsMessagesStore.showMembersForm;
+    }
+
     removeGroup() {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {

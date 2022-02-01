@@ -49,7 +49,6 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.getUserContacts();
         this.getGroupMembers();
         this.getContactsFilteredBySearch();
-
     }
 
     initForm() {

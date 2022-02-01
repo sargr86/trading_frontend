@@ -1,5 +1,4 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
@@ -7,7 +6,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {UsersService} from '@core/services/users.service';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 
 @Component({
@@ -104,22 +103,16 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.memberCtrl.setValue('');
     }
 
-    addMember(e) {
+    addMember() {
 
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
-        console.log(this.groupChatDetailsForm.value)
-        this.subscriptions.push(this.chatService.addGroupMembers(
-            this.groupChatDetailsForm.value
-        ).subscribe(dt => {
+        this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
             this.groupMembers = dt?.chat_group_members;
             this.selectedGroup = dt;
             this.socketService.inviteToNewGroup({
                 invited_members: this.inputGroupMembers,
-                // group_id: this.selectedGroup.id,
-                // group_name: this.selectedGroup.name,
-                from_id: this.authUser.id,
-                sender_name: this.authUser.first_name + ' ' + this.authUser.last_name,
+                inviter: this.authUser,
                 group: this.selectedGroup
             });
             this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);

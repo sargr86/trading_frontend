@@ -33,6 +33,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getGroupMembers();
         this.getChatNotifications();
+        this.getLeftGroup();
     }
 
     getGroupMembers() {
@@ -58,6 +59,16 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getChatNotifications() {
         this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
             this.socketGroupsUsers = data.groupsUsers;
+        }));
+    }
+
+    getLeftGroup() {
+        this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
+            const {leftMembers, group, username} = data;
+            const membersBeforeLeave = this.selectedGroup.chat_group_members;
+
+            this.selectedGroup.chat_group_members = membersBeforeLeave.filter(m => leftMembers.find(lm => lm.username === m.username));
+            this.groupsMessagesStore.changeGroup(this.selectedGroup);
         }));
     }
 

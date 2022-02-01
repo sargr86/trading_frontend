@@ -50,10 +50,10 @@ export class GroupChatActionsComponent implements OnInit {
             if (confirmed) {
                 this.chatService.leaveGroup({
                     member_id: this.authUser.id,
-                    group_id: this.selectedGroup.id
+                    group_id: this.selectedGroup.id,
                 }).subscribe(dt => {
                     this.groupsMessagesStore.setGroupsMessages(dt);
-                    this.socketService.leaveGroup({group: this.selectedGroup.name, username: this.authUser.username});
+                    this.socketService.leaveGroup({group: this.selectedGroup, user: this.authUser});
                     this.selectedGroup = null;
                 });
             }

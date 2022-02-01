@@ -36,7 +36,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        if (this.auth.loggedIn()) {
+        if (this.authUser) {
             this.getNotifications();
             this.getConnectWithUser();
             this.getAcceptedDeclinedRequests();
@@ -83,19 +83,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
         this.notificationsStore.setAllNotifications(this.notifications);
-    }
-
-    confirmGroupJoin(notification) {
-        console.log(notification)
-
-        // this.socketService.acceptJoinToGroup({
-        //     group: this.selectedGroup.name,
-        //     username: this.authUser.username
-        // });
-    }
-
-    declineGroupJoin(notification) {
-
     }
 
     getConnectWithUser() {
@@ -169,6 +156,12 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             // console.log(dt, 'cancelled')
             this.getNotifications();
         });
+    }
+
+    onNotificationClick(type) {
+        if (type === 'group_join_invitation') {
+            this.router.navigate(['chat/messages']);
+        }
     }
 
     ngOnDestroy(): void {

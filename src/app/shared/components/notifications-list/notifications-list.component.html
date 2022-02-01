@@ -2,7 +2,8 @@
     <h3>Notifications</h3>
 
     <div>
-        <p class="mark-as-read" *ngIf="notificationsStore.allNotifications.length > 0" (click)="markAllAsRead()">Mark all
+        <p class="mark-as-read" *ngIf="notificationsStore.allNotifications.length > 0" (click)="markAllAsRead()">Mark
+            all
             as read</p>
         <p class="remove-all" *ngIf="notificationsStore.allNotifications.length > 0"
            (click)="removeAll()">Remove all notifications</p>
@@ -24,7 +25,7 @@
     <li *ngFor="let notification of filterByCategory(notificationsStore.allNotifications, notificationsCategory)"
         class="notification" [class.unread]="notification?.read===0"
         [class.flex-wrap]="notification?.notification_type?.name === 'users_connection_request'"
-    >
+    (click)="onNotificationClick(notification?.notification_type?.name)">
 
         <div class="left d-flex pl-2" (click)="readNotification(notification)">
             <div class="avatar-container">
@@ -45,17 +46,6 @@
                     <span>Confirm</span>
                 </button>
                 <button class="decline-connection-btn" (click)="declineConnection(notification)">
-                    <mat-icon>close</mat-icon>
-                    <span>Decline</span>
-                </button>
-            </div>
-            <div class="group-join-actions"
-                 *ngIf="notification?.notification_type?.name === 'group_join_invitation'">
-                <button class="confirm-connection-btn" (click)="confirmGroupJoin(notification)">
-                    <mat-icon>check</mat-icon>
-                    <span>Confirm</span>
-                </button>
-                <button class="decline-connection-btn" (click)="declineGroupJoin(notification)">
                     <mat-icon>close</mat-icon>
                     <span>Decline</span>
                 </button>

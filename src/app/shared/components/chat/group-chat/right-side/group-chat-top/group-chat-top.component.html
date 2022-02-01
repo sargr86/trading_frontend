@@ -1,8 +1,11 @@
+<app-group-chat-join-invitation [selectedGroup]="selectedGroupMessages"
+                                [authUser]="authUser"></app-group-chat-join-invitation>
 <div class="chat-top">
     <div class="chat-about">
         <app-group-avatar-handler [selectedGroup]="selectedGroupMessages"
                                   [authUser]="authUser"></app-group-avatar-handler>
-        <app-group-chat-members [selectedGroup]="selectedGroupMessages" [authUser]="authUser" *ngIf="authUser"></app-group-chat-members>
+        <app-group-chat-members [selectedGroup]="selectedGroupMessages" [authUser]="authUser"
+                                *ngIf="authUser"></app-group-chat-members>
         <app-group-chat-actions [selectedGroup]="selectedGroupMessages" [authUser]="authUser"></app-group-chat-actions>
     </div>
 </div>

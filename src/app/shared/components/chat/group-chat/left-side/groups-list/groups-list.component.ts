@@ -32,7 +32,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getGroupsMessages();
         this.getGroupFormValue();
-        this.getGroupJoinInvitation();
     }
 
     getGroupsMessages() {
@@ -66,19 +65,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     ifConfirmedToJoinTheGroup(group) {
         return group?.chat_group_members.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
-    }
-
-    getGroupJoinInvitation() {
-        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            console.log(data)
-            // this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
-            //
-            //     this.groupsMessages = dt;
-            //     this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
-            //     this.haveGroupJoinInvitation = true;
-            //     console.log(this.selectedGroup)
-            // });
-        }));
     }
 
     isSeenByAuthUser(messages) {

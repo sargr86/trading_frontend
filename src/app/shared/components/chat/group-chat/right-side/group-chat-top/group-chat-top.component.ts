@@ -9,9 +9,6 @@ export class GroupChatTopComponent implements OnInit {
     @Input() authUser;
     @Input() selectedGroupMessages;
 
-    constructor() {
-    }
-
     ngOnInit(): void {
     }
 

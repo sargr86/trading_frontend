@@ -63,7 +63,9 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     getGroupMembers() {
         this.groupMembers = this.selectedGroup.chat_group_members;
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            this.selectedGroup = dt;
             this.groupMembers = dt.chat_group_members;
+            this.groupChatDetailsForm.patchValue({group_id: dt.id});
         });
     }
 
@@ -106,7 +108,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
 
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
-
+        console.log(this.groupChatDetailsForm.value)
         this.subscriptions.push(this.chatService.addGroupMembers(
             this.groupChatDetailsForm.value
         ).subscribe(dt => {
@@ -114,10 +116,11 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
             this.selectedGroup = dt;
             this.socketService.inviteToNewGroup({
                 invited_members: this.inputGroupMembers,
-                group_id: this.selectedGroup.id,
-                group_name: this.selectedGroup.name,
+                // group_id: this.selectedGroup.id,
+                // group_name: this.selectedGroup.name,
                 from_id: this.authUser.id,
-                sender_name: this.authUser.first_name + ' ' + this.authUser.last_name
+                sender_name: this.authUser.first_name + ' ' + this.authUser.last_name,
+                group: this.selectedGroup
             });
             this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);
             this.groupsMessagesStore.showMembersForm = false;

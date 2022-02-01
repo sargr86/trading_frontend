@@ -6,6 +6,7 @@ import {ChatService} from '@core/services/chat.service';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-members-list',
@@ -17,18 +18,21 @@ export class MembersListComponent implements OnInit, OnDestroy {
     @Input() modalMode = false;
 
     groupMembers = [];
+    socketGroupsUsers = [];
     subscriptions: Subscription[] = [];
 
 
     constructor(
         private dialog: MatDialog,
         private chatService: ChatService,
+        private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }
 
     ngOnInit(): void {
         this.getGroupMembers();
+        this.getChatNotifications();
     }
 
     getGroupMembers() {
@@ -44,11 +48,16 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.chatService.removeGroupMember({group_id: this.selectedGroup.id, member_id}).subscribe(dt => {
-                    // this.groupMembers = dt?.chat_group_members;
                     this.selectedGroup = dt;
                     this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);
                 });
             }
+        }));
+    }
+
+    getChatNotifications() {
+        this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
+            this.socketGroupsUsers = data.groupsUsers;
         }));
     }
 

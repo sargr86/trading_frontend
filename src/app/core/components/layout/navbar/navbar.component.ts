@@ -96,6 +96,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getConnectWithUser();
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();
+            this.getGroupJoinInvitation();
             this.getDisconnected();
         }
 
@@ -189,10 +190,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }));
     }
 
+    getGroupJoinInvitation() {
+        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
+            console.log(data)
+            this.setNotifications(data);
+            // this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
+            //
+            //     this.groupsMessages = dt;
+            //     this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
+            //     this.haveGroupJoinInvitation = true;
+            //     console.log(this.selectedGroup)
+            // });
+        }));
+    }
+
     setNotifications(dt) {
         const notifications = this.notificationsStore.allNotifications;
         notifications.unshift(dt);
         this.notificationsStore.setAllNotifications(notifications);
+        console.log(this.notificationsStore.allNotifications)
     }
 
     getAuthenticatedUser() {

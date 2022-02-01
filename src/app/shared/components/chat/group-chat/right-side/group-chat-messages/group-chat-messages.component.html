@@ -1,6 +1,6 @@
 <ul class="chat-history" id="group-messages" #groupMessagesList>
     <div [hidden]="selectedGroupMessages?.length === 0">
-        <div *ngFor="let msg of selectedGroupMessages.group_messages">
+        <div *ngFor="let msg of selectedGroupMessages?.group_messages">
 
             <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
             <ng-container *ngFor="let m of msg.value;let ind = index">

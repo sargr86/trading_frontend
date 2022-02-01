@@ -85,6 +85,19 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.notificationsStore.setAllNotifications(this.notifications);
     }
 
+    confirmGroupJoin(notification) {
+        console.log(notification)
+
+        // this.socketService.acceptJoinToGroup({
+        //     group: this.selectedGroup.name,
+        //     username: this.authUser.username
+        // });
+    }
+
+    declineGroupJoin(notification) {
+
+    }
+
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             this.getNotifications();

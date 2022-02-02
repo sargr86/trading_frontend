@@ -20,7 +20,7 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     }
 
     ngOnInit(): void {
-        console.log(this.selectedGroupMessages)
+        // console.log(this.selectedGroupMessages)
     }
 
     ngAfterViewChecked() {

@@ -52,7 +52,7 @@ export class ShowMessagesComponent implements OnInit {
             this.groupsMessages = dt;
             this.groupsLoaded = true;
             const newMessagesSource = dt.filter(fm => fm.new_messages_count > 0);
-            console.log(newMessagesSource)
+            // console.log(newMessagesSource)
             this.newMessagesCountInGroups = newMessagesSource.length;
             this.subject.setNewMessagesSourceData({source: newMessagesSource, type: 'group'});
         }));

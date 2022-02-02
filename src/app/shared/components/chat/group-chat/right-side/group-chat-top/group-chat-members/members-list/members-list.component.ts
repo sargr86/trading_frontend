@@ -42,8 +42,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.groupMembers = this.selectedGroup.chat_group_members;
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.groupMembers = this.modalMode
-                ? dt.chat_group_members
-                : dt?.chat_group_members.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
+                ? dt?.chat_group_members
+                : dt?.chat_group_members?.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
+            // console.log(dt)
         });
     }
 
@@ -66,16 +67,17 @@ export class MembersListComponent implements OnInit, OnDestroy {
 
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
-            const {group} = data;
-            this.selectedGroup.chat_group_members = group.chat_group_members;
+            const {groupMembers} = data;
+            this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            // console.log(this.groupsMessagesStore.selectedGroupMessages.chat_group_members)
         }));
     }
 
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {groupMembers} = data;
-            console.log('declined', groupMembers)
+            // console.log('declined', groupMembers)
             this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
         }));

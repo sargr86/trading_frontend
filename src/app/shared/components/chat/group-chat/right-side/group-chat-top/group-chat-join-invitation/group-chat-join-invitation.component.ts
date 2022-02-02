@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
@@ -13,8 +13,11 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() selectedGroup;
 
+    @Output() updateInvitations = new EventEmitter();
+
     subscriptions: Subscription[] = [];
-    haveGroupJoinInvitation = false;
+
+    invitationRowHidden = true;
 
     constructor(
         private chatService: ChatService,
@@ -24,24 +27,13 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getGroupJoinInvitation();
-    }
-
-    getGroupJoinInvitation() {
-        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            // console.log(data)
-            // this.chatService.getGroupsMessages({user_id: this.authUser.id}).subscribe(dt => {
-            const groupsMessages = this.groupMessagesStore.groupsMessages;
-            groupsMessages.unshift(data.group_details);
-            this.groupMessagesStore.setGroupsMessages(groupsMessages)
-            // console.log(data)
-            //
-            //     this.groupsMessages = dt;
-            //     this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
-            this.haveGroupJoinInvitation = true;
-            //     console.log(this.selectedGroup)
-            // });
-        }));
+        this.invitationRowHidden = this.ifConfirmedToJoinTheGroup(this.selectedGroup);
+        this.groupMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            this.selectedGroup = dt;
+            // console.log(this.selectedGroup)
+            this.invitationRowHidden = this.ifConfirmedToJoinTheGroup(this.selectedGroup);
+            // console.log(dt.chat_group_members, this.invitationRowHidden);
+        });
     }
 
     acceptGroupJoin() {
@@ -55,7 +47,7 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
 
                 this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
                 this.groupMessagesStore.setGroupsMessages(dt);
-                this.haveGroupJoinInvitation = false;
+                // this.haveGroupJoinInvitation = false;
                 this.socketService.acceptJoinToGroup({
                     group: this.selectedGroup,
                     user: this.authUser
@@ -85,7 +77,7 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
 
 
     ifConfirmedToJoinTheGroup(group) {
-        return group?.chat_group_members.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
+        return group?.chat_group_members?.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
     }
 
     ngOnDestroy(): void {

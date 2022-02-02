@@ -31,21 +31,10 @@ export class MembersListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getGroupMembers();
         this.getChatNotifications();
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinGroup();
         this.getLeftGroup();
-    }
-
-    getGroupMembers() {
-        // this.groupMembers = this.selectedGroup.chat_group_members;
-        // this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
-        //     this.selectedGroup.chat_group_members = this.modalMode
-        //         ? this.selectedGroup?.chat_group_members
-        //         : this.selectedGroup?.chat_group_members?.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
-        //     console.log(dt)
-        // });
     }
 
     removeSavedMember(member_id) {
@@ -67,31 +56,22 @@ export class MembersListComponent implements OnInit, OnDestroy {
 
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
-            const {groupMembers} = data;
-            this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
-            this.groupsMessagesStore.changeGroup(this.selectedGroup);
-            // console.log('accepted', this.groupsMessagesStore.selectedGroupMessages.chat_group_members)
+            const {group} = data;
+            this.groupsMessagesStore.changeGroup(group);
         }));
     }
 
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
-            const {groupMembers} = data;
-            console.log('declined', groupMembers)
-            this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
-            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            const {group} = data;
+            this.groupsMessagesStore.changeGroup(group);
         }));
     }
 
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
-            const {leftMembers, group, username} = data;
-
-            if (this.selectedGroup) {
-                const membersBeforeLeave = this.selectedGroup.chat_group_members;
-                this.selectedGroup.chat_group_members = membersBeforeLeave.filter(m => leftMembers.find(lm => lm.username === m.username));
-                this.groupsMessagesStore.changeGroup(this.selectedGroup);
-            }
+            const {group} = data;
+            this.groupsMessagesStore.changeGroup(group);
         }));
     }
 

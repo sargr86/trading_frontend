@@ -24,7 +24,6 @@ export class GroupChatRightSideHolderComponent implements OnInit {
     getSelectedGroup() {
         this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroupMessages = dt;
-            // console.log(dt?.chat_group_members)
         }));
     }
 }

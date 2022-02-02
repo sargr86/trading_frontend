@@ -36,10 +36,13 @@ export class GroupsMessagesSubjectService {
 
     changeGroup(groupMessages: any) {
         const selectedGroup = this.groupsMessages.find(gm => gm.id === groupMessages.id);
-        // console.log('CHANGE GROUP:', selectedGroup)
+        // console.log('CHANGE GROUP:', groupMessages.id, this.selectedGroupMessages.id)
         if (selectedGroup) {
             selectedGroup.chat_group_members = groupMessages?.chat_group_members;
-            this.selectedGroupMessagesSource.next(selectedGroup);
+
+            if (groupMessages.id === this.selectedGroupMessages.id) {
+                this.selectedGroupMessagesSource.next(selectedGroup);
+            }
         }
         // console.log(this.selectedGroupMessages)
     }
@@ -53,8 +56,12 @@ export class GroupsMessagesSubjectService {
     // }
 
 
-    changeGroupMembers(group) {
-        this.selectedGroupMessagesSource.next(group);
+    changeGroupMembers(groupMessages) {
+        const selectedGroup = this.groupsMessages.find(gm => gm.id === groupMessages.id);
+        console.log('CHANGE GROUP:', selectedGroup)
+        if (selectedGroup) {
+            selectedGroup.chat_group_members = groupMessages?.chat_group_members;
+        }
     }
 
 

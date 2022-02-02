@@ -39,8 +39,9 @@ export class GroupsMessagesSubjectService {
         // console.log('CHANGE GROUP:', selectedGroup)
         if (selectedGroup) {
             selectedGroup.chat_group_members = groupMessages?.chat_group_members;
+            this.selectedGroupMessagesSource.next(selectedGroup);
         }
-        // console.log(selectedGroup)
+        // console.log(this.selectedGroupMessages)
     }
 
     // changeUserMessages(id, messages) {

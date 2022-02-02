@@ -44,6 +44,8 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
+
         this.initForm();
 
         this.getUserContacts();
@@ -63,8 +65,8 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
             if (this.selectedGroup) {
-                this.groupMembers = dt.chat_group_members;
-                this.groupChatDetailsForm.patchValue({group_id: dt.id});
+                this.groupMembers = this.selectedGroup.chat_group_members;
+                this.groupChatDetailsForm.patchValue({group_id: this.selectedGroup.id});
             }
         });
     }
@@ -81,6 +83,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     getContactsFilteredBySearch() {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
             if (search) {
+                console.log(this.userContacts, this.groupMembers)
                 this.filteredContacts = this.userContacts.filter(fc => {
                     const fullNameLowerCased = (fc.first_name + ' ' + fc.last_name).toLowerCase();
                     if (fullNameLowerCased.includes(search)) {
@@ -116,7 +119,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
                 inviter: this.authUser,
                 group: this.selectedGroup
             });
-            this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);
+            this.groupsMessagesStore.changeGroup(this.selectedGroup);
             this.groupsMessagesStore.showMembersForm = false;
             this.inputGroupMembers = [];
         }));

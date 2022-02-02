@@ -1,4 +1,4 @@
-<div class="confirm-joining-group" [hidden]="selectedGroup?.length === 0 || invitationRowHidden">
+<div class="confirm-joining-group" [hidden]="!selectedGroup ||selectedGroup?.length === 0 || invitationRowHidden">
     <p>Please accept or decline joining to the <strong>{{selectedGroup?.name}}</strong> group</p>
     <div class="actions">
         <button class="accept-btn" (click)="acceptGroupJoin()">Accept</button>

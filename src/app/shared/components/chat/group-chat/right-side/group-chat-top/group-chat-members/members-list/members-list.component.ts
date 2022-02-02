@@ -39,13 +39,13 @@ export class MembersListComponent implements OnInit, OnDestroy {
     }
 
     getGroupMembers() {
-        this.groupMembers = this.selectedGroup.chat_group_members;
-        this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
-            this.groupMembers = this.modalMode
-                ? dt?.chat_group_members
-                : dt?.chat_group_members?.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
-            // console.log(dt)
-        });
+        // this.groupMembers = this.selectedGroup.chat_group_members;
+        // this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+        //     this.selectedGroup.chat_group_members = this.modalMode
+        //         ? this.selectedGroup?.chat_group_members
+        //         : this.selectedGroup?.chat_group_members?.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
+        //     console.log(dt)
+        // });
     }
 
     removeSavedMember(member_id) {
@@ -70,14 +70,14 @@ export class MembersListComponent implements OnInit, OnDestroy {
             const {groupMembers} = data;
             this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
-            // console.log(this.groupsMessagesStore.selectedGroupMessages.chat_group_members)
+            // console.log('accepted', this.groupsMessagesStore.selectedGroupMessages.chat_group_members)
         }));
     }
 
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {groupMembers} = data;
-            // console.log('declined', groupMembers)
+            console.log('declined', groupMembers)
             this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
         }));
@@ -92,8 +92,6 @@ export class MembersListComponent implements OnInit, OnDestroy {
                 this.selectedGroup.chat_group_members = membersBeforeLeave.filter(m => leftMembers.find(lm => lm.username === m.username));
                 this.groupsMessagesStore.changeGroup(this.selectedGroup);
             }
-
-
         }));
     }
 

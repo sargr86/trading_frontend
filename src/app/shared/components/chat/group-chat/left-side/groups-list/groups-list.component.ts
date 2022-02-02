@@ -36,10 +36,10 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     getGroupsMessages() {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
-            console.log('groups changed')
+            console.log('groups changed', dt)
             this.filteredGroupsMessages = dt;
             this.selectedGroup = dt[0];
-            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            this.groupsMessagesStore.selectGroup(this.selectedGroup);
         });
     }
 
@@ -53,7 +53,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.chatService.addGroup(formValue).subscribe(dt => {
             this.selectedGroup = dt.find(d => formValue.name === d.name);
             this.groupsMessagesStore.setGroupsMessages(dt);
-            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            this.groupsMessagesStore.selectGroup(this.selectedGroup);
             this.socketService.setNewGroup(formValue);
         }));
     }
@@ -61,7 +61,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     makeGroupActive(group) {
         this.selectedGroup = group;
-        this.groupsMessagesStore.changeGroup(group);
+        this.groupsMessagesStore.selectGroup(group);
     }
 
     ifConfirmedToJoinTheGroup(group) {

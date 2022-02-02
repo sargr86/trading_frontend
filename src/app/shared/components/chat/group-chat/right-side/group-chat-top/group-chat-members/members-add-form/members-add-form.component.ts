@@ -84,7 +84,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     getContactsFilteredBySearch() {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
             if (search) {
-                console.log(this.userContacts, this.groupMembers)
+                // console.log(this.userContacts, this.groupMembers)
                 this.filteredContacts = this.userContacts.filter(fc => {
                     const fullNameLowerCased = (fc.first_name + ' ' + fc.last_name).toLowerCase();
                     if (fullNameLowerCased.includes(search)) {

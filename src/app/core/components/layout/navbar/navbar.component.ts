@@ -130,7 +130,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     addUserToSocket() {
-        this.socketService.addNewUser({...this.authUser, group: false});
+        this.socketService.addNewUser({...this.authUser, group: true});
     }
 
     getConnectWithUser() {
@@ -208,7 +208,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         const notifications = this.notificationsStore.allNotifications;
         notifications.unshift(dt);
         this.notificationsStore.setAllNotifications(notifications);
-        console.log(this.notificationsStore.allNotifications)
+        // console.log(this.notificationsStore.allNotifications)
     }
 
     getAuthenticatedUser() {

@@ -145,10 +145,27 @@ export class SocketIoService {
         this.socket.emit('acceptJoinGroup', data);
     }
 
+    getAcceptedJoinGroup() {
+        return new Observable(observer => {
+            this.socket.on('acceptedJoinGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     declineJoinToGroup(data) {
         this.setupSocketConnection();
         this.socket.emit('declineJoinGroup', data);
     }
+
+    getDeclinedJoinGroup() {
+        return new Observable(observer => {
+            this.socket.on('getDeclinedJoinGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 
     getChatNotifications() {
         return new Observable(observer => {

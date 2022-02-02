@@ -62,8 +62,10 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.groupMembers = this.selectedGroup.chat_group_members;
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
-            this.groupMembers = dt.chat_group_members;
-            this.groupChatDetailsForm.patchValue({group_id: dt.id});
+            if (this.selectedGroup) {
+                this.groupMembers = dt.chat_group_members;
+                this.groupChatDetailsForm.patchValue({group_id: dt.id});
+            }
         });
     }
 

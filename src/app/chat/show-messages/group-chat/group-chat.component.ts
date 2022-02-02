@@ -106,7 +106,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         this.addUserToSocket();
 
         this.getUserContacts();
-        this.getGroupJoinInvitation();
+        // this.getGroupJoinInvitation();
         this.getChatNotifications();
         this.getMessagesFromSocket();
 
@@ -302,17 +302,17 @@ export class GroupChatComponent implements OnInit, OnDestroy {
         return group?.chat_group_members.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
     }
 
-    getGroupJoinInvitation() {
-        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
-
-                this.groupsMessages = dt;
-                this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
-                this.haveGroupJoinInvitation = true;
-                console.log(this.selectedGroup)
-            });
-        }));
-    }
+    // getGroupJoinInvitation() {
+    //     this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
+    //         this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
+    //
+    //             this.groupsMessages = dt;
+    //             this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
+    //             this.haveGroupJoinInvitation = true;
+    //             console.log(this.selectedGroup)
+    //         });
+    //     }));
+    // }
 
     acceptGroupJoin() {
         this.subscriptions.push(

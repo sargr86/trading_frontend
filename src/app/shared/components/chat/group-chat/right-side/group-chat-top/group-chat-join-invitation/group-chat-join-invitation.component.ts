@@ -29,12 +29,12 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
 
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            console.log(data)
+            // console.log(data)
             // this.chatService.getGroupsMessages({user_id: this.authUser.id}).subscribe(dt => {
             const groupsMessages = this.groupMessagesStore.groupsMessages;
             groupsMessages.unshift(data.group_details);
             this.groupMessagesStore.setGroupsMessages(groupsMessages)
-            console.log(data)
+            // console.log(data)
             //
             //     this.groupsMessages = dt;
             //     this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
@@ -50,13 +50,15 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
                 group_id: this.selectedGroup.id,
                 member_id: this.authUser.id
             }).subscribe(dt => {
-                // this.groupsMessages = dt;
-                // this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
+
+                console.log('accept', dt)
+
+                this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
                 this.groupMessagesStore.setGroupsMessages(dt);
                 this.haveGroupJoinInvitation = false;
                 this.socketService.acceptJoinToGroup({
-                    group: this.selectedGroup.name,
-                    username: this.authUser.username
+                    group: this.selectedGroup,
+                    user: this.authUser
                 });
             })
         );
@@ -68,10 +70,13 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
                 group_id: this.selectedGroup.id,
                 member_id: this.authUser.id
             }).subscribe(dt => {
+                // this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
+                // console.log(this.selectedGroup)
+                // this.selectedGroup = dt;
                 this.groupMessagesStore.setGroupsMessages(dt);
                 this.socketService.declineJoinToGroup({
-                    group: this.selectedGroup?.name,
-                    username: this.authUser.username
+                    group: this.selectedGroup,
+                    user: this.authUser
                 });
                 // this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
             })

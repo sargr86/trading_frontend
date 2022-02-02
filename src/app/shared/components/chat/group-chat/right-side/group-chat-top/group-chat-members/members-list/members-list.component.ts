@@ -33,6 +33,8 @@ export class MembersListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getGroupMembers();
         this.getChatNotifications();
+        this.getAcceptedJoinGroup();
+        this.getDeclinedJoinGroup();
         this.getLeftGroup();
     }
 
@@ -41,7 +43,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.groupMembers = this.modalMode
                 ? dt.chat_group_members
-                : dt.chat_group_members.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
+                : dt?.chat_group_members.filter((m, index) => index < ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP);
         });
     }
 
@@ -62,13 +64,34 @@ export class MembersListComponent implements OnInit, OnDestroy {
         }));
     }
 
+    getAcceptedJoinGroup() {
+        this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
+            const {group} = data;
+            this.selectedGroup.chat_group_members = group.chat_group_members;
+            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+        }));
+    }
+
+    getDeclinedJoinGroup() {
+        this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
+            const {groupMembers} = data;
+            console.log('declined', groupMembers)
+            this.selectedGroup.chat_group_members = groupMembers.chat_group_members;
+            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+        }));
+    }
+
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
             const {leftMembers, group, username} = data;
-            const membersBeforeLeave = this.selectedGroup.chat_group_members;
 
-            this.selectedGroup.chat_group_members = membersBeforeLeave.filter(m => leftMembers.find(lm => lm.username === m.username));
-            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            if (this.selectedGroup) {
+                const membersBeforeLeave = this.selectedGroup.chat_group_members;
+                this.selectedGroup.chat_group_members = membersBeforeLeave.filter(m => leftMembers.find(lm => lm.username === m.username));
+                this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            }
+
+
         }));
     }
 

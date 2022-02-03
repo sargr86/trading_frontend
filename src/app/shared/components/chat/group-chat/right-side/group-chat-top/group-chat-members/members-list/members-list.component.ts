@@ -8,7 +8,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
-import {SetNotificationsPipe} from "@shared/pipes/set-notifications.pipe";
+import {SetNotificationsPipe} from '@shared/pipes/set-notifications.pipe';
 
 @Component({
     selector: 'app-members-list',
@@ -20,9 +20,10 @@ export class MembersListComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() modalMode = false;
 
-    groupMembers = [];
     socketGroupsUsers = [];
     subscriptions: Subscription[] = [];
+
+    membersCountLimit;
 
 
     constructor(
@@ -41,6 +42,11 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.getDeclinedJoinGroup();
         this.getRemovedSavedMember();
         this.getLeftGroup();
+        this.getMembersCountDelimiter();
+    }
+
+    getMembersCountDelimiter() {
+        return this.modalMode ? this.selectedGroup.chat_group_members.length : ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP;
     }
 
     removeSavedMember(member) {

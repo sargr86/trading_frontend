@@ -4,6 +4,7 @@
             *ngFor="let m of selectedGroup.chat_group_members| slice:0: getMembersCountDelimiter(); let i=index"
             [class.modal-mode]="modalMode"
             [class.pending]="!m.chat_groups_members.confirmed">
+
             <div class="avatar-status-wrap">
                 <img class="avatar" [matTooltip]="m.name" [src]="m.avatar|getImgPath: 'user_avatars'">
                 <mat-icon *ngIf="ifRemoveMemberShown(m)" (click)="removeSavedMember(m)">cancel</mat-icon>
@@ -21,7 +22,5 @@
             </ng-container>
         </li>
     </ul>
-    <a id="show-more-members" (click)="openAllMembersModal()" *ngIf="!modalMode">
-        Show more
-    </a>
+    <a id="show-more-members" (click)="openAllMembersModal()" *ngIf="!modalMode">Show more</a>
 </div>

@@ -87,7 +87,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {group} = data;
-            console.log('accepted', data)
+            // console.log('accepted', data)
             if (data.from_id !== this.authUser.id) {
                 this.setNotifications.transform(data);
             }

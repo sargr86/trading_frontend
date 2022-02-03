@@ -32,6 +32,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getGroupsMessages();
         this.getGroupFormValue();
+        this.removeGroupNotify();
     }
 
     getGroupsMessages() {
@@ -55,6 +56,22 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             this.groupsMessagesStore.setGroupsMessages(dt);
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
             this.socketService.setNewGroup(formValue);
+        }));
+    }
+
+    removeGroupNotify() {
+        this.subscriptions.push(this.socketService.removeGroupNotify().subscribe((data: any) => {
+            console.log('notified', data)
+            this.refreshGroupsMessages();
+        }));
+    }
+
+    refreshGroupsMessages() {
+        this.subscriptions.push(this.chatService.getGroupsMessages({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.groupsMessagesStore.setGroupsMessages(dt);
         }));
     }
 

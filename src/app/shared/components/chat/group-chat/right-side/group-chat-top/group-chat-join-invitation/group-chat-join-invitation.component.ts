@@ -30,9 +30,9 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
         this.invitationRowHidden = this.ifConfirmedToJoinTheGroup(this.selectedGroup);
         this.groupMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
-            console.log(this.selectedGroup)
+            // console.log(this.selectedGroup)
             this.invitationRowHidden = this.ifConfirmedToJoinTheGroup(this.selectedGroup);
-            console.log(this.invitationRowHidden)
+            // console.log(this.invitationRowHidden)
             // console.log(dt.chat_group_members, this.invitationRowHidden);
         });
     }

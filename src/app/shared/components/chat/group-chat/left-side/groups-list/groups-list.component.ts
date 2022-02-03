@@ -6,6 +6,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {SetNotificationsPipe} from "@shared/pipes/set-notifications.pipe";
 
 @Component({
     selector: 'app-groups-list',
@@ -26,6 +27,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private setNotifications: SetNotificationsPipe
     ) {
     }
 
@@ -61,6 +63,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     removeGroupNotify() {
         this.subscriptions.push(this.socketService.removeGroupNotify().subscribe((data: any) => {
+            // this.setNotifications.transform(data);
             this.refreshGroupsMessages();
         }));
     }

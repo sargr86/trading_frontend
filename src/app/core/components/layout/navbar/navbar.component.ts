@@ -137,7 +137,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
-            console.log('get connect with user', dt)
+            // console.log('get connect with user', dt)
             // if (dt) {
             this.notifications.push(dt);
             this.notificationsStore.setAllNotifications(this.notifications);
@@ -158,7 +158,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt)
+            // console.log('accepted', dt)
             this.userMessagesStore.setUserMessages(dt.users_messages);
             if (dt.receiver_id === this.authUser.id) {
                 this.notifications.push(dt);

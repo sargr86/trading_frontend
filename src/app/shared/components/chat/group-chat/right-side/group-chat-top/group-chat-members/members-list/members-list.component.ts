@@ -66,6 +66,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
             console.log(data)
+            this.setNotifications.transform(data);
             if (member.id === this.authUser.id) {
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
             }
@@ -82,7 +83,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {group} = data;
             console.log('accepted', data)
-            this.setNotifications.transform(data);
+            if (data.from_id !== this.authUser.id) {
+                this.setNotifications.transform(data);
+            }
             this.groupsMessagesStore.changeGroup(group);
         }));
     }
@@ -90,7 +93,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {group} = data;
-            this.setNotifications.transform(data);
+            if (data.from_id !== this.authUser.id) {
+                this.setNotifications.transform(data);
+            }
             this.groupsMessagesStore.changeGroup(group);
         }));
     }

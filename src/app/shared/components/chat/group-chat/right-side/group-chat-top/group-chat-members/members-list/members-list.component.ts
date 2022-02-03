@@ -65,7 +65,6 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getRemovedSavedMember() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
-            console.log(data)
             this.setNotifications.transform(data);
             if (member.id === this.authUser.id) {
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
@@ -123,6 +122,11 @@ export class MembersListComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(dt => {
 
         }));
+    }
+
+    ifRemoveMemberShown(m) {
+        return this.authUser.id === this.selectedGroup?.creator_id
+            && m.id !== this.selectedGroup?.creator_id && !this.modalMode;
     }
 
     ngOnDestroy(): void {

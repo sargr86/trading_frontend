@@ -3,11 +3,8 @@
         <li class="group-member" *ngFor="let m of selectedGroup.chat_group_members" [class.modal-mode]="modalMode"
             [class.pending]="!m.chat_groups_members.confirmed">
             <div class="avatar-status-wrap">
-                <img class="avatar" [matTooltip]="m.name"
-                     [src]="m.avatar|getImgPath: 'user_avatars'">
-                <mat-icon *ngIf="m.id !== selectedGroup?.creator_id && !modalMode"
-                          (click)="removeSavedMember(m)">cancel
-                </mat-icon>
+                <img class="avatar" [matTooltip]="m.name" [src]="m.avatar|getImgPath: 'user_avatars'">
+                <mat-icon *ngIf="ifRemoveMemberShown(m)" (click)="removeSavedMember(m)">cancel</mat-icon>
                 <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
             </div>
 

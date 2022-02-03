@@ -63,7 +63,6 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     getGroupMembers() {
         this.groupMembers = this.selectedGroup.chat_group_members;
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
-            // console.log('group changed', dt)
             this.selectedGroup = dt;
             if (this.selectedGroup) {
                 this.groupMembers = this.selectedGroup.chat_group_members;

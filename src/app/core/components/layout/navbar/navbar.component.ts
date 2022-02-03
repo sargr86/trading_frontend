@@ -25,6 +25,7 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {SetNotificationsPipe} from '@shared/pipes/set-notifications.pipe';
 
 @Component({
     selector: 'app-navbar',
@@ -75,7 +76,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private userMessagesStore: UserMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
-        private chatService: ChatService
+        private chatService: ChatService,
+        private setNotifications: SetNotificationsPipe
     ) {
 
     }
@@ -175,7 +177,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getDisconnected() {
         this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe((dt: any) => {
             console.log('disconnected', dt);
-            this.setNotifications(dt);
+            this.setNotifications.transform(dt);
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
@@ -184,7 +186,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
             console.log('get block/unblock', dt)
             if (dt.initiator_id !== this.authUser.id) {
-                this.setNotifications(dt);
+                this.setNotifications.transform(dt);
             }
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
@@ -193,7 +195,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             if (this.authUser.id === data.to_id) {
-                this.setNotifications(data);
+                this.setNotifications.transform(data);
             }
             // this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
             //
@@ -203,13 +205,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             //     console.log(this.selectedGroup)
             // });
         }));
-    }
-
-    setNotifications(dt) {
-        const notifications = this.notificationsStore.allNotifications;
-        notifications.unshift(dt);
-        this.notificationsStore.setAllNotifications(notifications);
-        // console.log(this.notificationsStore.allNotifications)
     }
 
     getAuthenticatedUser() {

@@ -36,7 +36,7 @@ export class GroupsMessagesSubjectService {
 
     changeGroup(groupMessages: any) {
         const selectedGroup = this.groupsMessages.find(gm => gm.id === groupMessages.id);
-        console.log('CHANGE GROUP:', groupMessages.name, this.selectedGroupMessages.name)
+        // console.log('CHANGE GROUP:', groupMessages.name, this.selectedGroupMessages.name)
         if (selectedGroup) {
             selectedGroup.chat_group_members = groupMessages?.chat_group_members;
 
@@ -45,23 +45,6 @@ export class GroupsMessagesSubjectService {
             }
         }
         // console.log(this.selectedGroupMessages)
-    }
-
-    // changeUserMessages(id, messages) {
-    //     const userMessages = this.userMessages.find(um => um.id === id);
-    //     if (userMessages) {
-    //         userMessages.direct_messages = messages;
-    //     }
-    //
-    // }
-
-
-    changeGroupMembers(groupMessages) {
-        const selectedGroup = this.groupsMessages.find(gm => gm.id === groupMessages.id);
-        console.log('CHANGE GROUP:', selectedGroup)
-        if (selectedGroup) {
-            selectedGroup.chat_group_members = groupMessages?.chat_group_members;
-        }
     }
 
 

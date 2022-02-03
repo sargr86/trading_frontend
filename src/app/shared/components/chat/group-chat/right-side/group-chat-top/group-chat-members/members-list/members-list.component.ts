@@ -7,11 +7,13 @@ import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-g
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
+import {SetNotificationsPipe} from "@shared/pipes/set-notifications.pipe";
 
 @Component({
     selector: 'app-members-list',
     templateUrl: './members-list.component.html',
-    styleUrls: ['./members-list.component.scss']
+    styleUrls: ['./members-list.component.scss'],
 })
 export class MembersListComponent implements OnInit, OnDestroy {
     @Input() selectedGroup;
@@ -27,7 +29,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private chatService: ChatService,
         private socketService: SocketIoService,
-        private groupsMessagesStore: GroupsMessagesSubjectService
+        private groupsMessagesStore: GroupsMessagesSubjectService,
+        private notificationsStore: NotificationsSubjectStoreService,
+        private setNotifications: SetNotificationsPipe
     ) {
     }
 
@@ -78,6 +82,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {group} = data;
             console.log('accepted', data)
+            this.setNotifications.transform(data);
             this.groupsMessagesStore.changeGroup(group);
         }));
     }
@@ -85,6 +90,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {group} = data;
+            this.setNotifications.transform(data);
             this.groupsMessagesStore.changeGroup(group);
         }));
     }
@@ -92,6 +98,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
             const {group} = data;
+            this.setNotifications.transform(data);
             this.groupsMessagesStore.changeGroup(group);
         }));
     }

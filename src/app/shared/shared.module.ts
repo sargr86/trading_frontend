@@ -54,21 +54,22 @@ import {GetDateTextForMessagesPipe} from './pipes/get-date-text-for-messages.pip
 import {GetElegantDatePipe} from './pipes/get-elegant-date.pipe';
 import {NotificationsListComponent} from '@shared/components/notifications-list/notifications-list.component';
 import {MobxAngularModule} from 'mobx-angular';
-import { ChatFormComponent } from './components/chat-form/chat-form.component';
+import {ChatFormComponent} from './components/chat-form/chat-form.component';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {UsersListComponent} from '@shared/components/chat/direct-chat/users-list/users-list.component';
-import { GroupsListComponent } from './components/chat/group-chat/left-side/groups-list/groups-list.component';
-import { GroupFormComponent } from './components/chat/group-chat/left-side/group-form/group-form.component';
+import {GroupsListComponent} from './components/chat/group-chat/left-side/groups-list/groups-list.component';
+import {GroupFormComponent} from './components/chat/group-chat/left-side/group-form/group-form.component';
 import {GroupChatMessagesComponent} from '@shared/components/chat/group-chat/right-side/group-chat-messages/group-chat-messages.component';
-import { GroupChatTopComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-top.component';
-import { GroupAvatarHandlerComponent } from './components/chat/group-chat/right-side/group-chat-top/group-avatar-handler/group-avatar-handler.component';
-import { GroupChatActionsComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-actions/group-chat-actions.component';
-import { GroupChatMembersComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/group-chat-members.component';
-import { MembersListComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-list/members-list.component';
-import { MembersAddFormComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-add-form/members-add-form.component';
-import { GroupChatRightSideHolderComponent } from './components/chat/group-chat/right-side/group-chat-right-side-holder.component';
+import {GroupChatTopComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-top.component';
+import {GroupAvatarHandlerComponent} from './components/chat/group-chat/right-side/group-chat-top/group-avatar-handler/group-avatar-handler.component';
+import {GroupChatActionsComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-actions/group-chat-actions.component';
+import {GroupChatMembersComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/group-chat-members.component';
+import {MembersListComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-list/members-list.component';
+import {MembersAddFormComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-add-form/members-add-form.component';
+import {GroupChatRightSideHolderComponent} from './components/chat/group-chat/right-side/group-chat-right-side-holder.component';
 import {GroupChatLeftSideHolderComponent} from "@shared/components/chat/group-chat/left-side/group-chat-left-side-holder.component";
-import { GroupChatJoinInvitationComponent } from './components/chat/group-chat/right-side/group-chat-top/group-chat-join-invitation/group-chat-join-invitation.component';
+import {GroupChatJoinInvitationComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-join-invitation/group-chat-join-invitation.component';
+import {SetNotificationsPipe} from './pipes/set-notifications.pipe';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -138,6 +139,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GroupChatRightSideHolderComponent,
         GroupChatLeftSideHolderComponent,
         GroupChatJoinInvitationComponent,
+        SetNotificationsPipe,
     ],
     imports: [
         CommonModule,
@@ -172,6 +174,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetDateTextForMessagesPipe,
         GroupByPipe,
         GetElegantDatePipe,
+        SetNotificationsPipe,
         {
             provide: DROPZONE_CONFIG,
             useValue: DEFAULT_DROPZONE_CONFIG

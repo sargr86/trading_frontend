@@ -187,6 +187,18 @@ export class SocketIoService {
         });
     }
 
+    removeFromGroup(data) {
+        this.socket.emit('removeFromGroup', data);
+    }
+
+    removeFromGroupNotify() {
+        return new Observable(observer => {
+            this.socket.on('removeFromGroupNotify', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     removeGroup(data) {
         this.socket.emit('removeGroup', data);
     }

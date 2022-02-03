@@ -15,6 +15,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 })
 export class MembersListComponent implements OnInit, OnDestroy {
     @Input() selectedGroup;
+    @Input() authUser;
     @Input() modalMode = false;
 
     groupMembers = [];
@@ -34,16 +35,35 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.getChatNotifications();
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinGroup();
+        this.getRemovedSavedMember();
         this.getLeftGroup();
     }
 
-    removeSavedMember(member_id) {
+    removeSavedMember(member) {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
-                this.chatService.removeGroupMember({group_id: this.selectedGroup.id, member_id}).subscribe(dt => {
+                this.chatService.removeGroupMember({
+                    group_id: this.selectedGroup.id,
+                    member_id: member.id
+                }).subscribe(dt => {
                     this.selectedGroup = dt;
-                    this.groupsMessagesStore.changeGroupMembers(this.selectedGroup);
+                    this.groupsMessagesStore.changeGroup(this.selectedGroup);
+                    this.socketService.removeFromGroup({
+                        member,
+                        initiator: this.authUser,
+                        group: this.selectedGroup
+                    });
                 });
+            }
+        }));
+    }
+
+    getRemovedSavedMember() {
+        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+            const {group, member, leftGroups} = data;
+            console.log(data)
+            if (member.id === this.authUser.id) {
+                this.groupsMessagesStore.setGroupsMessages(leftGroups);
             }
         }));
     }

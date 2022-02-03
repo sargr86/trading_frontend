@@ -6,7 +6,7 @@
                 <img class="avatar" [matTooltip]="m.name"
                      [src]="m.avatar|getImgPath: 'user_avatars'">
                 <mat-icon *ngIf="m.id !== selectedGroup?.creator_id && !modalMode"
-                          (click)="removeSavedMember(m.id)">cancel
+                          (click)="removeSavedMember(m)">cancel
                 </mat-icon>
                 <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
             </div>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="actions">
                     <i class="fa fa-ban" *ngIf="m.id !== selectedGroup?.creator_id"
-                       (click)="removeSavedMember(m.id)"></i>
+                       (click)="removeSavedMember(m)"></i>
                 </div>
             </ng-container>
         </li>

@@ -1,8 +1,12 @@
-@import '../../../../../../../../assets/styles/chat-messages-container';
+@import 'assets/styles/chat-messages-container';
 
 .group-avatar {
     margin-right: 16px !important;
     width: 42px !important;
     height: 42px;
-    border-radius: 50%;
+    border-radius: 10px;
+}
+
+label[for="group-avatar-input"] {
+    margin-bottom: 0 !important;
 }

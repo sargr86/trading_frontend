@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
@@ -11,7 +11,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
     templateUrl: './group-chat-actions.component.html',
     styleUrls: ['./group-chat-actions.component.scss']
 })
-export class GroupChatActionsComponent implements OnInit {
+export class GroupChatActionsComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() selectedGroup;
 
@@ -58,6 +58,10 @@ export class GroupChatActionsComponent implements OnInit {
                 });
             }
         }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

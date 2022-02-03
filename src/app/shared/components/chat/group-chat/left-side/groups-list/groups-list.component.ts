@@ -61,7 +61,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     removeGroupNotify() {
         this.subscriptions.push(this.socketService.removeGroupNotify().subscribe((data: any) => {
-            console.log('notified', data)
             this.refreshGroupsMessages();
         }));
     }

@@ -36,7 +36,7 @@ export class GroupsMessagesSubjectService {
 
     changeGroup(groupMessages: any) {
         const selectedGroup = this.groupsMessages.find(gm => gm.id === groupMessages.id);
-        // console.log('CHANGE GROUP:', groupMessages.id, this.selectedGroupMessages.id)
+        console.log('CHANGE GROUP:', groupMessages.name, this.selectedGroupMessages.name)
         if (selectedGroup) {
             selectedGroup.chat_group_members = groupMessages?.chat_group_members;
 

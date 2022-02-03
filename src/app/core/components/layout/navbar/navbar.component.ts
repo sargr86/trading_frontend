@@ -192,8 +192,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            // console.log(data)
-            this.setNotifications(data);
+            if (this.authUser.id === data.to_id) {
+                this.setNotifications(data);
+            }
             // this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
             //
             //     this.groupsMessages = dt;
@@ -319,6 +320,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getInviteNotifications() {
         this.socketService.inviteToGroupSent().subscribe((data: any) => {
             // this.toastr.success(msg);
+            console.log(data)
             this.notifications.push({type: 'invitation-to-join-group', msg: data.msg});
             this.notificationsStore.setAllNotifications(this.notifications);
         });

@@ -44,15 +44,10 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
                 member_id: this.authUser.id
             }).subscribe(dt => {
 
-                console.log('accept', dt)
-
                 this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
-                this.groupMessagesStore.setGroupsMessages(dt);
                 // this.haveGroupJoinInvitation = false;
-                this.socketService.acceptJoinToGroup({
-                    group: this.selectedGroup,
-                    user: this.authUser
-                });
+                this.socketService.acceptJoinToGroup({group: this.selectedGroup, user: this.authUser});
+                this.groupMessagesStore.setGroupsMessages(dt);
             })
         );
     }

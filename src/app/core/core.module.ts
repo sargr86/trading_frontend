@@ -34,7 +34,7 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-plan.component';
 import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purchase-coins.component';
 import { ShowChatGroupMembersComponent } from './components/modals/show-chat-group-members/show-chat-group-members.component';
-import {MobxAngularModule} from 'mobx-angular';
+
 import { RightSidebarComponent } from './components/layout/right-sidebar/right-sidebar.component';
 
 
@@ -80,7 +80,6 @@ import { RightSidebarComponent } from './components/layout/right-sidebar/right-s
         SharedModule,
 
         CreditCardDirectivesModule,
-        MobxAngularModule
     ],
     exports: [
         NavbarComponent,

@@ -53,7 +53,7 @@ import {GroupByPipe} from './pipes/group-by.pipe';
 import {GetDateTextForMessagesPipe} from './pipes/get-date-text-for-messages.pipe';
 import {GetElegantDatePipe} from './pipes/get-elegant-date.pipe';
 import {NotificationsListComponent} from '@shared/components/notifications-list/notifications-list.component';
-import {MobxAngularModule} from 'mobx-angular';
+
 import {ChatFormComponent} from './components/chat-form/chat-form.component';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {UsersListComponent} from '@shared/components/chat/direct-chat/users-list/users-list.component';
@@ -156,7 +156,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         CreditCardDirectivesModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
         DropzoneModule,
-        MobxAngularModule
     ],
     providers: [
         GetAuthUserPipe,

@@ -67,7 +67,7 @@ import {GroupChatMembersComponent} from './components/chat/group-chat/right-side
 import {MembersListComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-list/members-list.component';
 import {MembersAddFormComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-members/members-add-form/members-add-form.component';
 import {GroupChatRightSideHolderComponent} from './components/chat/group-chat/right-side/group-chat-right-side-holder.component';
-import {GroupChatLeftSideHolderComponent} from "@shared/components/chat/group-chat/left-side/group-chat-left-side-holder.component";
+import {GroupChatLeftSideHolderComponent} from '@shared/components/chat/group-chat/left-side/group-chat-left-side-holder.component';
 import {GroupChatJoinInvitationComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-join-invitation/group-chat-join-invitation.component';
 import {SetNotificationsPipe} from './pipes/set-notifications.pipe';
 import { GetFileBaseNamePipe } from './pipes/get-file-base-name.pipe';

@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CarouselModule} from 'ngx-owl-carousel-o';
 import {VideoJsComponent} from './components/video-js/video-js.component';
 import {VideoJsRecordComponent} from './components/video-js-record/video-js-record.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -33,7 +32,6 @@ import {FixTextLineBreaksPipe} from './pipes/fix-text-line-breaks.pipe';
 import {VideoRegularPlayerComponent} from './components/video-regular-player/video-regular-player.component';
 import {StocksMarqueeComponent} from './components/stocks-marquee/stocks-marquee.component';
 import {CompletePurchaseModalComponent} from './components/complete-purchase-modal/complete-purchase-modal.component';
-import {NgxPayPalModule} from 'ngx-paypal';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
@@ -143,14 +141,12 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ],
     imports: [
         CommonModule,
-        CarouselModule,
         FormsModule,
         ReactiveFormsModule,
         PickerModule,
         MaterialModule,
         DragDropModule,
         NgxChartsModule,
-        NgxPayPalModule,
         CreditCardDirectivesModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
         DropzoneModule,
@@ -183,7 +179,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     exports: [
         FormsModule,
         ReactiveFormsModule,
-        CarouselModule,
         PickerModule,
         MaterialModule,
         NgxStripeModule,

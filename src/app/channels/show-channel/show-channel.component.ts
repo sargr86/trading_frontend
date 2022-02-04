@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {API_URL, OWL_OPTIONS, PROFILE_PAGE_TABS} from '@core/constants/global';
+import {API_URL, PROFILE_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';

@@ -1,15 +1,12 @@
 import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
-import {switchMap} from 'rxjs/operators';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {StripeElementsOptions, loadStripe} from '@stripe/stripe-js';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {API_URL, STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {STRIPE_CARD_OPTIONS, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {UsersService} from '@core/services/users.service';
 import {CardsService} from '@core/services/cards.service';
-import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
 import {ToastrService} from 'ngx-toastr';
@@ -36,7 +33,6 @@ export class CompletePurchaseModalComponent implements OnInit, OnDestroy {
     // Stripe
     cardOptions = STRIPE_CARD_OPTIONS;
     elementsOptions: StripeElementsOptions = {locale: 'en'};
-    payPalConfig?: IPayPalConfig;
 
     reviewedPurchase = false;
     selectedCard;

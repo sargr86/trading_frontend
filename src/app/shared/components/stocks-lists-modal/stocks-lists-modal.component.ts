@@ -1,5 +1,4 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {BsModalService} from 'ngx-bootstrap/modal';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -32,7 +31,6 @@ export class StocksListsModalComponent implements OnInit, OnDestroy {
 
 
     constructor(
-        private modalService: BsModalService,
         private dialog: MatDialog,
         private matDialogRef: MatDialogRef<StocksListsModalComponent>,
         private stocksService: StocksService,
@@ -66,7 +64,6 @@ export class StocksListsModalComponent implements OnInit, OnDestroy {
     }
 
     closeModal() {
-        this.modalService.hide();
         this.matDialogRef.close();
         this.selectedStockType = null;
         this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});

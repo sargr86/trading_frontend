@@ -1259,7 +1259,7 @@ mat-error {
 }
 
 .mat-tab-body.mat-tab-body-active {
-    overflow-y: hidden !important;
+    overflow-y: auto !important;
 }
 
 .mat-menu-item {

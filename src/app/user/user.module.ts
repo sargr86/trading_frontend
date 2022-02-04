@@ -19,7 +19,6 @@ import {PublisherFlowComponent} from './publisher-flow/publisher-flow.component'
 import {SubscriberFlowComponent} from './subscriber-flow/subscriber-flow.component';
 import {CollectStreamingDetailsFormComponent} from './publisher-flow/collect-streaming-details-form/collect-streaming-details-form.component';
 import {JoinVideoStreamingComponent} from './subscriber-flow/join-video-streaming/join-video-streaming.component';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
@@ -60,7 +59,6 @@ import {ShowNotificationsComponent} from "@app/user/show-notifications/show-noti
         UserRoutingModule,
         OpenviduSessionModule,
         NgxPhotoEditorModule,
-        // BsDatepickerModule.forRoot(),
         SharedModule
     ],
 

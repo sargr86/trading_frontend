@@ -26,13 +26,14 @@
                     <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
                     E-mail is <strong>invalid</strong>
                 </span>
+                    <!--@todo change to mat-datepicker-->
                     <label>Date of birth</label>
-                    <input type="text"
-                           class="login-input form-control"
-                           placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"
-                           [maxDate]="maxBirthDate" (bsValueChange)="dateChanged($event)"
-                           bsDatepicker [value]="this.authUser.birthday| date: 'MM/dd/yyyy'"
-                    >
+<!--                    <input type="text"-->
+<!--                           class="login-input form-control"-->
+<!--                           placeholder="Date of birth" [bsConfig]="{maxDate:maxBirthDate, showWeekNumbers: false}"-->
+<!--                           [maxDate]="maxBirthDate" (bsValueChange)="dateChanged($event)"-->
+<!--                           bsDatepicker [value]="this.authUser.birthday| date: 'MM/dd/yyyy'"-->
+<!--                    >-->
                     <div formGroupName="dob">
                         <input type="hidden" formControlName="day">
                         <input type="hidden" formControlName="month">

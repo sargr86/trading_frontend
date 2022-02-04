@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ICreateOrderRequest, IPayPalConfig} from 'ngx-paypal';
 import {switchMap} from 'rxjs/operators';
@@ -15,7 +15,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {ToastrService} from 'ngx-toastr';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {LoaderService} from '@core/services/loader.service';
-import {cardsStore} from '@shared/stores/cards-store';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -23,7 +23,7 @@ import {cardsStore} from '@shared/stores/cards-store';
     templateUrl: './complete-purchase-modal.component.html',
     styleUrls: ['./complete-purchase-modal.component.scss']
 })
-export class CompletePurchaseModalComponent implements OnInit {
+export class CompletePurchaseModalComponent implements OnInit, OnDestroy {
     authUser;
 
     purchase;
@@ -45,7 +45,7 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
-    cardsStore = cardsStore;
+    subscriptions: Subscription[] = [];
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -72,8 +72,9 @@ export class CompletePurchaseModalComponent implements OnInit {
         this.authUser = this.getAuthUser.transform();
         this.selectedCard = this.authUser?.users_cards.find(t => t.primary) || this.authUser?.users_cards[0];
 
-
-        this.userCards = this.cardsStore.cards;
+        this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
+            this.userCards = dt;
+        }));
         this.selectedCard = this.userCards.find(t => t.primary) || this.userCards[0];
 
 
@@ -123,6 +124,10 @@ export class CompletePurchaseModalComponent implements OnInit {
 
     closeModal(dt) {
         this.matDialogRef.close(dt);
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

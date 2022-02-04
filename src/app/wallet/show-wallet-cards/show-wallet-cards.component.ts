@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CustomersService} from '@core/services/wallet/customers.service';
-import {cardsStore} from '@shared/stores/cards-store';
-import {AuthService} from "@core/services/auth.service";
+import {AuthService} from '@core/services/auth.service';
+import {SubjectService} from "@core/services/subject.service";
 
 @Component({
     selector: 'app-show-wallet-cards',
@@ -12,11 +12,11 @@ import {AuthService} from "@core/services/auth.service";
 export class ShowWalletCardsComponent implements OnInit {
     authUser;
     userCards;
-    cardsStore = cardsStore;
 
     constructor(
         private getAuthUser: GetAuthUserPipe,
         private customersService: CustomersService,
+        private subject: SubjectService,
         public auth: AuthService
     ) {
     }
@@ -31,8 +31,7 @@ export class ShowWalletCardsComponent implements OnInit {
     getCards() {
         this.customersService.getUserCards({user_id: this.authUser.id}).subscribe(dt => {
             this.userCards = dt;
-            this.cardsStore.setCards(dt);
-            console.log(this.cardsStore.cards)
+            this.subject.changeUserCards(dt);
         });
     }
 
@@ -45,7 +44,7 @@ export class ShowWalletCardsComponent implements OnInit {
         };
         this.customersService.removeStripeCard(params).subscribe((dt: any) => {
             this.userCards = dt;
-            this.cardsStore.setCards(dt);
+            this.subject.changeUserCards(dt);
         });
     }
 

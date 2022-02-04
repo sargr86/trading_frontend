@@ -1,7 +1,7 @@
-<div *mobxAutorun>
-    {{cardsStore.cards.length}}
+<div>
+    {{userCards.cards.length}}
     <ul>
-        <li *ngFor="let card of cardsStore.cards">
+        <li *ngFor="let card of userCards.cards">
             <p>**** **** **** {{card.last4}}</p>
             <mat-icon (click)="removeCard(card)">cancel</mat-icon>
         </li>

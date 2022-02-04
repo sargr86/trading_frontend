@@ -9,7 +9,6 @@ import {SubjectService} from '@core/services/subject.service';
 import {filter} from 'rxjs/operators';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {PaymentsService} from '@core/services/wallet/payments.service';
-import {cardsStore} from '@shared/stores/cards-store';
 
 @Component({
     selector: 'app-show-wallet',
@@ -26,7 +25,6 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
     selectedTabIndex = 0;
     defaultExtAccount;
 
-    cardsStore = cardsStore;
 
     @ViewChild('tabGroup', {static: false}) tabGroup;
 

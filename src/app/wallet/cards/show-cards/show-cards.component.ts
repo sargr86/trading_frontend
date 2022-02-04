@@ -9,7 +9,6 @@ import * as moment from 'moment';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {MAX_CARDS_PER_USER} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {cardsStore} from '@shared/stores/cards-store';
 
 @Component({
     selector: 'app-show-cards',
@@ -27,7 +26,6 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
     maxCardsPerUser = MAX_CARDS_PER_USER;
     makingPrimary = false;
 
-    cardsStore = cardsStore;
 
     constructor(
         public loader: LoaderService,
@@ -41,8 +39,7 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        console.log(this.cardsStore.cards)
-        // this.getCustomerCards();
+        this.getCustomerCards();
     }
 
     getCustomerCards() {
@@ -99,7 +96,6 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.customersService.removeStripeCard(params).subscribe((dt: any) => {
             this.subject.changeUserCards(dt);
             this.userCards = dt;
-            this.cardsStore.setCards(dt);
             this.loader.dataLoading = false;
         }));
     }

@@ -18,7 +18,6 @@ import {CustomersService} from '@core/services/wallet/customers.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
-import {cardsStore} from '@shared/stores/cards-store';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
@@ -55,8 +54,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     userCards = [];
     totals;
-
-    cardsStore = cardsStore;
 
     constructor(
         public router: Router,
@@ -238,9 +235,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.stripeCustomersService.getUserCards({user_id: this.authUser.id})
                 .subscribe((dt: Card[]) => {
                     this.userCards = dt;
-                    this.cardsStore.setCards(dt);
                     // console.log(this.userCards)
-                    // this.subject.changeUserCards(dt);
+                    this.subject.changeUserCards(dt);
                     this.getAllPaymentsHistory();
                 }));
     }
@@ -304,7 +300,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     checkIfUserHasCard() {
-        if (this.cardsStore.cards?.length > 0) {
+        if (this.userCards?.length > 0) {
             this.showPurchaseBits = true;
         } else {
             this.toastr.error('Please add at least one card first', 'No cards');

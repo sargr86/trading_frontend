@@ -2,8 +2,7 @@
     <ul class="list">
         <li class="list-chat-group" [class.active]="group.id===selectedGroup?.id"
             *ngFor="let group of filteredGroupsMessages"
-            [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)"
-            (click)="makeGroupActive(group)">
+            [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)">
 
             <ng-container
                 [ngTemplateOutlet]="groupTemplate"
@@ -11,7 +10,7 @@
             </ng-container>
 
             <ng-template #groupTemplate let-messages="messages" let-group="group">
-                <div class="left">
+                <div class="left" (click)="makeGroupActive(group)">
                     <img class="img group-avatar" [src]="group.avatar|getImgPath:'group_avatars'">
                     <div class="text">
                         <div class="name">{{group.name}}</div>

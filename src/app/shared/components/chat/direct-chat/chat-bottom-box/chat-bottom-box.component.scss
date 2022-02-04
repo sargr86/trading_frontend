@@ -29,8 +29,16 @@
         margin-top: -12px;
     }
 
-    .close-box {
-        cursor: pointer;
+    .close-chat-box-btn-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .close-box {
+            width: 13px;
+            height: 13px;
+            cursor: pointer;
+        }
     }
 
     .group-avatar {

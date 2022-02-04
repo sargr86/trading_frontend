@@ -297,7 +297,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         return stock.changesPercentage.replace(/[(%)]/g, '');
     }
 
-
     goToChannelPage() {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             this.router.navigate(['channels/show'], {queryParams: {username: this.authUser.username}})

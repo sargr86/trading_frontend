@@ -1,7 +1,14 @@
 <div class="left">
-    <label for="group-avatar-input">
-        <img class="img group-avatar" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
-    </label>
+    <div class="group-avatar-wrap" (mouseenter)="removeAvatarShown = true"
+         (mouseleave)="removeAvatarShown = false">
+
+        <label for="group-avatar-input">
+            <img class="img group-avatar" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
+        </label>
+        <mat-icon id="remove-group-avatar" (click)="changeAvatar()"
+                  [hidden]="!removeAvatarShown || !selectedGroup?.avatar">cancel
+        </mat-icon>
+    </div>
     <input id="group-avatar-input" type="file" [hidden]="true" (change)="changeAvatar($event)">
     <div class="group-name">{{selectedGroup?.name}}</div>
 </div>

@@ -18,10 +18,22 @@
                         <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:' '}}</span>
                     </div>
                 </div>
-                <div class="right" *ngIf="messages">
-                    <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)">
+                <div class="right" *ngIf="authUser.id !== selectedGroup?.creator_id && sidebarMode">
+                    <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)" *ngIf="messages">
                         <strong>{{isSeenByAuthUser(messages)}}</strong>
                     </button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!--        <button mat-menu-item (click)="showMembersInput = !showMembersInput">-->
+                        <!--            Add members-->
+                        <!--        </button>-->
+                        <button mat-menu-item (click)="leaveGroup()"
+                                *ngIf="authUser.id !== selectedGroup?.creator_id">
+                            Leave group
+                        </button>
+                    </mat-menu>
                 </div>
             </ng-template>
         </li>

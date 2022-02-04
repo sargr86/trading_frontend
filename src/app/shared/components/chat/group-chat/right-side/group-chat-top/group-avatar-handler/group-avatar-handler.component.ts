@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
@@ -8,36 +8,41 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
     templateUrl: './group-avatar-handler.component.html',
     styleUrls: ['./group-avatar-handler.component.scss']
 })
-export class GroupAvatarHandlerComponent implements OnInit {
+export class GroupAvatarHandlerComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() selectedGroup;
 
     subscriptions: Subscription[] = [];
+    removeAvatarShown = false;
 
     constructor(
         private chatService: ChatService,
-        private groupsMessagesStore: GroupsMessagesSubjectService
+        private groupsMessagesStore: GroupsMessagesSubjectService,
     ) {
     }
 
     ngOnInit(): void {
     }
 
-    changeAvatar(e) {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        if (file) {
+    changeAvatar(e = null) {
+        const file = e?.target.files[0];
 
-            formData.append('avatar', file.name);
-            formData.append('group_id', this.selectedGroup.id);
-            formData.append('member_id', this.authUser.id);
+        const formData = new FormData();
+        formData.append('avatar', file?.name || '');
+        formData.append('group_id', this.selectedGroup.id);
+        formData.append('member_id', this.authUser.id);
+
+        if (file) {
             formData.append('group_avatar_file', file);
-            // console.log({avatar: e.target.files[0].name})
-            this.subscriptions.push(this.chatService.changeGroupAvatar(formData).subscribe(dt => {
-                this.groupsMessagesStore.setGroupsMessages(dt);
-                // this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
-            }));
         }
+
+        this.subscriptions.push(this.chatService.changeGroupAvatar(formData).subscribe(dt => {
+            this.groupsMessagesStore.setGroupsMessages(dt);
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

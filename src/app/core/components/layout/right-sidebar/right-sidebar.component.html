@@ -8,5 +8,5 @@
     <app-users-list *ngIf="usersMessages" [authUser]="authUser"
                     [sidebarMode]="true" (openBottomChatBox)="openBottomChatBox.emit($event)"></app-users-list>
     <h4 class="groups-delimiter">Groups</h4>
-    <app-groups-list [authUser]="authUser"></app-groups-list>
+    <app-groups-list [authUser]="authUser" [sidebarMode]="true"></app-groups-list>
 </ng-container>

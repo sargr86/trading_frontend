@@ -70,6 +70,7 @@ import {GroupChatRightSideHolderComponent} from './components/chat/group-chat/ri
 import {GroupChatLeftSideHolderComponent} from "@shared/components/chat/group-chat/left-side/group-chat-left-side-holder.component";
 import {GroupChatJoinInvitationComponent} from './components/chat/group-chat/right-side/group-chat-top/group-chat-join-invitation/group-chat-join-invitation.component';
 import {SetNotificationsPipe} from './pipes/set-notifications.pipe';
+import { GetFileBaseNamePipe } from './pipes/get-file-base-name.pipe';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -140,6 +141,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GroupChatLeftSideHolderComponent,
         GroupChatJoinInvitationComponent,
         SetNotificationsPipe,
+        GetFileBaseNamePipe,
     ],
     imports: [
         CommonModule,
@@ -173,6 +175,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ApplyDiscountToPricePipe,
         GetDateTextForMessagesPipe,
         GroupByPipe,
+        GetFileBaseNamePipe,
         GetElegantDatePipe,
         SetNotificationsPipe,
         {

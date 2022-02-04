@@ -16,6 +16,7 @@ import {SetNotificationsPipe} from "@shared/pipes/set-notifications.pipe";
 })
 export class GroupsListComponent implements OnInit, OnDestroy {
     @Input() authUser;
+    @Input() sidebarMode = false;
 
 
     subscriptions: Subscription[] = [];
@@ -27,7 +28,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private setNotifications: SetNotificationsPipe
+        private dialog: MatDialog
     ) {
     }
 
@@ -95,6 +96,21 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             }
             return found;
         }).length;
+    }
+
+    leaveGroup() {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.chatService.leaveGroup({
+                    member_id: this.authUser.id,
+                    group_id: this.selectedGroup.id,
+                }).subscribe(dt => {
+                    this.groupsMessagesStore.setGroupsMessages(dt);
+                    this.socketService.leaveGroup({group: this.selectedGroup, user: this.authUser});
+                    this.selectedGroup = null;
+                });
+            }
+        }));
     }
 
     ngOnDestroy(): void {

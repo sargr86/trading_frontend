@@ -1,12 +1,45 @@
 @import 'assets/styles/chat-messages-container';
 
-.group-avatar {
-    margin-right: 16px !important;
+
+.group-avatar-wrap {
+    position: relative;
     width: 42px !important;
     height: 42px;
     border-radius: 10px;
-}
+    margin-right: 16px !important;
 
-label[for="group-avatar-input"] {
-    margin-bottom: 0 !important;
+    #remove-group-avatar {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+
+    .group-avatar {
+        width: 100% !important;
+        height: 42px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    label[for="group-avatar-input"] {
+        width: 100%;
+        margin-bottom: 0 !important;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+
+
+        mat-icon {
+            display: block;
+        }
+
+        img {
+            opacity: 0.5;
+        }
+    }
 }

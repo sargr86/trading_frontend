@@ -5,7 +5,6 @@ import {LeftSidebarComponent} from '@core/components/layout/left-sidebar/left-si
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
-import {ModalModule} from 'ngx-bootstrap/modal';
 import {PurchaseBitsComponent} from '@core/components/modals/purchase-bits/purchase-bits.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NotFoundComponent} from '@core/components/ungrouped/not-found/not-found.component';
@@ -73,7 +72,6 @@ import { RightSidebarComponent } from './components/layout/right-sidebar/right-s
         DragDropModule,
         HttpClientModule,
         ToastrModule.forRoot(),
-        ModalModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,

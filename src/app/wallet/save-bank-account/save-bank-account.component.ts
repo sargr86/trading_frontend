@@ -16,7 +16,6 @@ import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {AccountsService} from '@core/services/wallet/accounts.service';
 import {LoaderService} from '@core/services/loader.service';
 import {SubjectService} from '@core/services/subject.service';
-import {cardsStore} from '@shared/stores/cards-store';
 
 @Component({
     selector: 'app-save-bank-account',
@@ -49,8 +48,6 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     defaultCountry = DEFAULT_COUNTRY;
 
     stripeAccountExists = 0;
-
-    cardsStore = cardsStore;
 
     constructor(
         private fb: FormBuilder,
@@ -160,7 +157,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 formValue = {
                     ...restData,
                     external_account: result.token.id,
-                    customer_id: this.cardsStore.cards?.[0].customer
+                    customer_id: this.subject.currentUserCards?.[0].customer
                 };
                 this.addExternalAccount(formValue);
             });
@@ -168,7 +165,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
             this.stripeService.createToken('bank_account', formValue.external_account).subscribe(result => {
                 this.addExternalAccount({
                     external_account: result.token.id,
-                    customer_id: this.cardsStore.cards?.[0].customer,
+                    customer_id: this.subject.currentUserCards?.[0].customer,
                     ...this.stripeBankAccountForm.getRawValue()
                 });
             });

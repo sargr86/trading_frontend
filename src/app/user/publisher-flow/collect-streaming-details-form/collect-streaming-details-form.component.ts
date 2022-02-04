@@ -53,7 +53,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         this.selectedPrivacy = this.privacyTypes[0];
         this.initForm();
         this.getVideoCategories();
-        this.getVideoTags();
+        // this.getVideoTags();
 
         // this.startStreamingForm.get('tags').statusChanges.subscribe(
         //     status => this.tagList.errorState = this.tags.length > 3

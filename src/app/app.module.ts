@@ -43,7 +43,6 @@ export function tokenGetter() {
                 blacklistedRoutes: ['localhost:3000/auth/', 'localhost:3001/auth/', 'metl.tv/auth/']
             }
         }),
-        NgbModule,
         UserModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
         SharedModule

@@ -60,7 +60,7 @@ import {ShowNotificationsComponent} from "@app/user/show-notifications/show-noti
         UserRoutingModule,
         OpenviduSessionModule,
         NgxPhotoEditorModule,
-        BsDatepickerModule.forRoot(),
+        // BsDatepickerModule.forRoot(),
         SharedModule
     ],
 

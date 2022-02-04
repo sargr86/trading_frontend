@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             // ],
             // confirm_password: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
             // confirm_password: ['', Validators.required],
-            birthday: ['', Validators.required],
+            birthday: [''], // Validators.required
             avatar: ['']
         });
     }

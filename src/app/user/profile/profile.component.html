@@ -19,13 +19,13 @@
                     Please write alphabetical characters before numbers for username
                 </span>
 
-        <div class="register-block birthday-block">
-            <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday"
-                   class="login-input"
-                   placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}"
-                   [maxDate]="maxDate"
-                   bsDatepicker>
-        </div>
+<!--        <div class="register-block birthday-block">-->
+<!--            <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday"-->
+<!--                   class="login-input"-->
+<!--                   placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}"-->
+<!--                   [maxDate]="maxDate"-->
+<!--                   bsDatepicker>-->
+<!--        </div>-->
 
         <input class="login-input" placeholder="Email" formControlName="email">
         <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>

@@ -22,5 +22,7 @@
             </ng-container>
         </li>
     </ul>
-    <a id="show-more-members" (click)="openAllMembersModal()" *ngIf="!modalMode">Show more</a>
+    <button id="show-more-members" (click)="openAllMembersModal()" *ngIf="!modalMode">
+        <i class="fas fa-ellipsis-h"></i>
+    </button>
 </div>

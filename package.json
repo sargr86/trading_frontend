@@ -9,7 +9,8 @@
         "staging": "ng build --configuration staging",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "source-map-explorer": "source-map-explorer ../backend/dist/**/*.js"
     },
     "private": true,
     "dependencies": {
@@ -54,6 +55,7 @@
         "popper.js": "^1.16.1",
         "rxjs": "~6.5.4",
         "socket.io-client": "^4.2.0",
+        "source-map-explorer": "^2.5.2",
         "tslib": "^1.10.0",
         "video.js": "^7.8.4",
         "videojs-contrib-quality-levels": "^2.0.9",

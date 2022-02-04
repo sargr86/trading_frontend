@@ -13,7 +13,6 @@ import {Base64ToFilePipe} from './pipes/base64-to-file.pipe';
 import {CategoriesComponent} from '@shared/components/categories/categories.component';
 import {FilterDevicesPipe} from './pipes/filter-devices.pipe';
 import {GetThumbPathPipe} from './pipes/get-thumb-path.pipe';
-import {VideoCarouselHolderComponent} from './components/video-carousel-holder/video-carousel-holder.component';
 import {GetSelectedVideosToBeAddedToPlaylistPipe} from './pipes/get-selected-videos-to-be-added-to-playlist.pipe';
 import {VideoFiltersComponent} from '@shared/components/video-filters/video-filters.component';
 import {DateFromNowPipe} from './pipes/date-from-now.pipe';
@@ -93,7 +92,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         Base64ToFilePipe,
         FilterDevicesPipe,
         GetThumbPathPipe,
-        VideoCarouselHolderComponent,
         GetSelectedVideosToBeAddedToPlaylistPipe,
         DateFromNowPipe,
         FilterOutFalsyValuesFromObjectPipe,
@@ -195,7 +193,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         CategoriesComponent,
         FilterDevicesPipe,
         GetThumbPathPipe,
-        VideoCarouselHolderComponent,
         VideoFiltersComponent,
         DateFromNowPipe,
         UserTagsComponent,

@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CoreModule} from '@core/core.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CarouselModule} from 'ngx-owl-carousel-o';
 import {JwtModule} from '@auth0/angular-jwt';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RequestInterceptor} from '@core/helpers/http.interceptor';
@@ -34,7 +33,6 @@ export function tokenGetter() {
         BrowserAnimationsModule,
         AppRoutingModule,
         CoreModule,
-        CarouselModule,
         MatDialogModule,
         MaterialModule,
         NgxChartsModule,

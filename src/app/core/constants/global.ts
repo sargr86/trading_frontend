@@ -1,4 +1,3 @@
-import {OwlOptions} from 'ngx-owl-carousel-o';
 import {environment} from '@env';
 import * as moment from 'moment';
 import {StripeCardElementOptions} from '@stripe/stripe-js';
@@ -13,28 +12,6 @@ export const USER_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
 export const GROUP_DEFAULT_AVATARS_PATH = 'assets/img/default-group-people-icon_light.jpg';
 export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
-
-
-export const OWL_OPTIONS: OwlOptions = {
-    loop: false,
-    margin: 25,
-    nav: true,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['<i class=\'fa fa-chevron-left\'></i>', '<i class=\'fa fa-chevron-right\'></i>'],
-    responsive: {
-        0: {
-            items: 1
-        },
-        516: {
-            items: 2
-        },
-        867: {
-            items: 3.05
-        }
-    }
-};
 
 export const PROFILE_PAGE_TABS = [
     {name: 'Watchlist', link: 'pWatch'},

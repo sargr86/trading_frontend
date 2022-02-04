@@ -42,7 +42,7 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        // this.getUserCards();
+        this.getUserCards();
         this.getTransfersHistory({});
         this.getSavedActiveTab();
     }
@@ -108,5 +108,4 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
-
 }

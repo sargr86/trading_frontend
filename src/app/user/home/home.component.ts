@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {API_URL, OWL_OPTIONS} from '@core/constants/global';
+import {API_URL} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
@@ -15,7 +15,6 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    owlOptions = OWL_OPTIONS;
     videos = [];
     apiUrl = API_URL;
     authUser;

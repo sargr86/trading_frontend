@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
-import {API_URL, OWL_OPTIONS} from '@core/constants/global';
+import {API_URL} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {VideoService} from '@core/services/video.service';
 import {SubjectService} from '@core/services/subject.service';
@@ -13,7 +12,6 @@ import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy
 })
 export class VideosTabComponent implements OnInit {
 
-    owlOptions: OwlOptions = OWL_OPTIONS;
     apiUrl = API_URL;
     showFilters = false;
     search = '';

@@ -1,18 +1,27 @@
 <div class="bottom-chat">
     <div class="w-100 h-100 position-relative">
         <div class="channel-user-name-container">
+            <ng-container *ngIf="chatBoxType === 'direct'">
+                <div>
+                    <img class="avatar" id="profile-image" alt="channel-user-avatar"
+                         [src]="channelUser?.channel?.avatar|getImgPath: 'avatars'">
+                    <span>{{channelUser?.first_name + ' ' + channelUser?.last_name}}</span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="chatBoxType === 'group'">
+                <div>
+                    <img class="img group-avatar" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
+                    <span class="group-name">{{selectedGroup?.name}}</span>
+                </div>
+            </ng-container>
+
             <div>
-                <img class="avatar" id="profile-image" alt="channel-user-avatar"
-                     [src]="channelUser?.channel?.avatar|getImgPath: 'avatars'">
-                <span>{{channelUser?.first_name + ' ' + channelUser?.last_name}}</span>
-            </div>
-            <div>
-                <img src="../../../../../../assets/img/x.svg" class="close-box" alt="close-chat-box" (click)="closeChatBox()">
+                <img src="assets/img/x.svg" class="close-box" alt="close-chat-box" (click)="closeChatBox()">
             </div>
         </div>
 
         <div class="chat-messages-container">
-            <app-direct-chat-messages *ngIf="messages.length > 0" [authUser]="authUser"
+            <app-direct-chat-messages *ngIf="messages.length > 0 && chatBoxType==='direct'" [authUser]="authUser"
                                       [embedMode]="true"></app-direct-chat-messages>
         </div>
     </div>

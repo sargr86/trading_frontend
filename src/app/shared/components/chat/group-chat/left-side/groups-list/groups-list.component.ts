@@ -82,6 +82,9 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     makeGroupActive(group) {
         this.selectedGroup = group;
         this.groupsMessagesStore.selectGroup(group);
+        if (this.sidebarMode) {
+            this.groupsMessagesStore.showBottomChatBox = true;
+        }
     }
 
     ifConfirmedToJoinTheGroup(group) {

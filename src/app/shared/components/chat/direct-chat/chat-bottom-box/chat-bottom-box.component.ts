@@ -18,6 +18,7 @@ import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 @Component({
     selector: 'app-chat-bottom-box',
@@ -33,6 +34,8 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     @Input() channelUser;
+    @Input() selectedGroup;
+    @Input() chatBoxType = 'direct';
     @Input() isOpenedFromChannelPage = false;
     @Output() closeBox = new EventEmitter();
 
@@ -43,14 +46,17 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private usersService: UsersService,
-        private userMessagesStore: UserMessagesSubjectService
+        private userMessagesStore: UserMessagesSubjectService,
+        private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         // this.addUserToSocket();
-        this.getUsersMessages();
+        if (this.chatBoxType === 'direct') {
+            this.getUsersMessages();
+        }
     }
 
     addUserToSocket() {
@@ -81,6 +87,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
 
     closeChatBox() {
         this.closeBox.emit();
+        this.groupsMessagesStore.showBottomChatBox = false;
     }
 
     ngOnDestroy() {

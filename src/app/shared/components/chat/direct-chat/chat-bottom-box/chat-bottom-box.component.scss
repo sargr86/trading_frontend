@@ -32,6 +32,17 @@
     .close-box {
         cursor: pointer;
     }
+
+    .group-avatar {
+        margin-right: 16px !important;
+        width: 42px !important;
+        height: 42px;
+        border-radius: 50%;
+    }
+
+    .group-name {
+        text-transform: capitalize;
+    }
 }
 
 

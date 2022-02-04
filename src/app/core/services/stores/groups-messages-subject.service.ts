@@ -12,7 +12,9 @@ export class GroupsMessagesSubjectService {
     selectedGroupsMessages$ = this.selectedGroupMessagesSource.asObservable();
 
     private addGroupFormValue$ = new Subject<any>();
+
     showMembersForm = false;
+    showBottomChatBox = false;
 
     constructor() {
     }

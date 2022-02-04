@@ -12,6 +12,7 @@ import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChatService} from '@core/services/chat.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 @Component({
     selector: 'app-root',
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
+        private groupChatStore: GroupsMessagesSubjectService
 
     ) {
 

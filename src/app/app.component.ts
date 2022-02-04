@@ -38,7 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
-        private groupChatStore: GroupsMessagesSubjectService
+        public groupChatStore: GroupsMessagesSubjectService
 
     ) {
 

@@ -144,10 +144,6 @@ nav {
     display: flex;
     align-items: center;
 
-    @media screen and (min-width: 568px) and (max-width: 1200px) {
-        display: none !important;
-    }
-
     #top-row-toggle {
         background: none;
 

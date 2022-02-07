@@ -30,6 +30,10 @@ html, body, p, h1, h2, h3, h4, ul {
     margin-bottom: 0 !important;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .mat-tab-label-content {
     font: normal normal 600 16px/24px "Muli-Bold" !important;
 }

@@ -746,7 +746,7 @@ select {
 
         margin-right: 3px;
 
-        &.bordered{
+        &.bordered {
             box-shadow: 0 0 6px #0000000F;
         }
 
@@ -1265,7 +1265,7 @@ mat-error {
     text-align: center !important;
 }
 
-mat-sidenav-container{
+mat-sidenav-container {
     //height: 100vh!important; // gotta think about this more
 }
 
@@ -1289,6 +1289,12 @@ mat-sidenav-container{
 
 @media screen and (min-width: 991px) {
     .middle-search-form {
+        display: none !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .right-side-actions {
         display: none !important;
     }
 }

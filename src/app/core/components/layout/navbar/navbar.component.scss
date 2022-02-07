@@ -5,7 +5,7 @@ nav {
     background: $white;
     opacity: 1;
     z-index: 9999;
-    width: 80%;
+    width: 100%;
 
     .navbar-brand {
         margin-right: 30px;
@@ -144,6 +144,10 @@ nav {
     display: flex;
     align-items: center;
 
+    @media screen and (min-width: 568px) and (max-width: 1200px) {
+        display: none !important;
+    }
+
     #top-row-toggle {
         background: none;
 
@@ -174,5 +178,18 @@ nav {
         &:hover {
             background-color: #d3d3d3;
         }
+    }
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 0.25rem;
+
+    mat-icon {
+        color: rgba(0, 0, 0, .5)
     }
 }

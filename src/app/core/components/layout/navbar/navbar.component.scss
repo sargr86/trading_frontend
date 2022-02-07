@@ -1,5 +1,6 @@
 @import 'variables';
 
+
 nav {
     position: fixed;
     background: $white;
@@ -14,7 +15,7 @@ nav {
     &.home-header {
         min-height: 80px;
         display: flex;
-        justify-content: space-between;
+        //justify-content: space-between;
         align-items: center;
         padding: 0 200px;
         box-shadow: 0 0 6px #0000002E;
@@ -25,6 +26,8 @@ nav {
         }
         @media screen and (max-width: 992px) {
             padding: 5px 40px;
+            display: flex;
+            justify-content: space-between;
         }
         @media screen and (max-width: 560px) {
             padding: 15px 15px;
@@ -119,6 +122,17 @@ nav {
     }
 }
 
+.navbar-collapse {
+    width: 100%;
+}
+
+
+@media screen and (max-width: 992px) {
+    .navbar-collapse {
+        display: none;
+    }
+}
+
 
 .header-right {
     display: flex;
@@ -143,10 +157,6 @@ nav {
 .right-side-actions {
     display: flex;
     align-items: center;
-
-    @media screen and (min-width: 568px) and (max-width: 1200px) {
-        display: none !important;
-    }
 
     #top-row-toggle {
         background: none;
@@ -191,5 +201,11 @@ nav {
 
     mat-icon {
         color: rgba(0, 0, 0, .5)
+    }
+}
+
+@media screen and (min-width: 992px) {
+    app-search-videos-form {
+        display: none !important;
     }
 }

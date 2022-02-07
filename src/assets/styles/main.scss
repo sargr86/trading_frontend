@@ -20,6 +20,10 @@
 //@import "plyr-custom";
 @import 'dropzone-custom';
 
+*{
+    box-sizing: border-box !important;
+}
+
 html, body, p, h1, h2, h3, h4, ul {
     margin: 0;
     padding: 0;
@@ -690,7 +694,10 @@ select {
 
     .nav-tabs {
         border-bottom: 0;
-
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        list-style: none;
         .nav-item {
             color: #FFFFFF !important;
             font-size: 12px;
@@ -1296,6 +1303,12 @@ mat-sidenav-container {
 @media (min-width: 992px) {
     .right-side-actions {
         display: none !important;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .header-right app-search-videos-form {
+        display: none;
     }
 }
 

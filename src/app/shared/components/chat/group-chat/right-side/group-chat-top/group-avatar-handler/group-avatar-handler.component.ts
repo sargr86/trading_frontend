@@ -22,6 +22,11 @@ export class GroupAvatarHandlerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
+            // console.log('groups changed', dt)
+            // this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages || dt[0];
+            // console.log(this.groupsMessagesStore.selectedGroupMessages)
+        });
     }
 
     changeAvatar(e = null) {
@@ -37,7 +42,13 @@ export class GroupAvatarHandlerComponent implements OnInit, OnDestroy {
         }
 
         this.subscriptions.push(this.chatService.changeGroupAvatar(formData).subscribe(dt => {
+            // console.log(dt.find(d => this.selectedGroup.id === d.id))
+            // this.groupsMessagesStore.changeGroup(dt.find(d => this.selectedGroup.id === d.id));
             this.groupsMessagesStore.setGroupsMessages(dt);
+            // console.log(this.groupsMessagesStore.selectedGroupMessages)
+            this.selectedGroup = dt.find(d => this.selectedGroup.id === d.id)
+            // console.log(this.selectedGroup)
+            // this.groupsMessagesStore.selectGroup(this.selectedGroup);
         }));
     }
 

@@ -7,6 +7,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {SetNotificationsPipe} from "@shared/pipes/set-notifications.pipe";
+import {CheckForEmptyObjectPipe} from "@shared/pipes/check-for-empty-object.pipe";
 
 @Component({
     selector: 'app-groups-list',
@@ -28,7 +29,8 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private isEmptyObj: CheckForEmptyObjectPipe
     ) {
     }
 
@@ -42,7 +44,9 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
             // console.log('groups changed', dt)
             this.filteredGroupsMessages = dt;
-            this.selectedGroup = dt[0];
+            const storeGroups = this.groupsMessagesStore.selectedGroupMessages;
+
+            this.selectedGroup = this.isEmptyObj.transform(storeGroups) ? dt[0] : storeGroups;
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
         });
     }

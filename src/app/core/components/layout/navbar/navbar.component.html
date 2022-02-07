@@ -71,39 +71,41 @@
 
                 <div class="user-dropdown nav-item dropdown">
 
-                    <button mat-icon-button [matMenuTriggerFor]="menu1" class="dotes" >
+                    <button mat-icon-button [matMenuTriggerFor]="menu1" class="dotes">
                         <img src="assets/img/user.svg" class="user-icon">
                     </button>
                     <mat-menu #menu1="matMenu">
-                        <span class="dropdown-item" *ngIf="toggleMyProfileLink()"
-                              (click)="router.navigate(['user/profile'])">My Profile</span>
-                        <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"
-                              (click)="router.navigate(['wallet/cards'])">My Cards</span>
-                        <span class="dropdown-item" *ngIf="toggleMyChannelLink()"
-                              (click)="goToChannelPage()">My Channel</span>
-                        <span class="dropdown-item"
-                              (click)="router.navigate(['user/connections'])">My Connections</span>
+                        <div class="user-links">
+                            <p class="user-link" *ngIf="toggleMyProfileLink()"
+                               (click)="router.navigate(['user/profile'])">My Profile</p>
+                            <p class="user-link" *ngIf="!routerUrl?.includes('cards')"
+                               (click)="router.navigate(['wallet/cards'])">My Cards</p>
+                            <p class="user-link" *ngIf="toggleMyChannelLink()"
+                               (click)="goToChannelPage()">My Channel</p>
+                            <p class="user-link"
+                               (click)="router.navigate(['user/connections'])">My Connections</p>
 
-                        <span class="dropdown-item" (click)="logout()">Logout</span>
+                            <p class="user-link" (click)="logout()">Logout</p>
+                        </div>
                     </mat-menu>
                 </div>
 
 
-<!--                <div class="nav-item dropdown" *ngIf="auth.loggedIn()">-->
-<!--                    <img src="assets/img/user.svg" data-toggle="dropdown" class="user-icon dropdown-toggle">-->
-<!--                    <div class="dropdown-menu">-->
-<!--                    <span class="dropdown-item" *ngIf="toggleMyProfileLink()"-->
-<!--                          (click)="router.navigate(['user/profile'])">My Profile</span>-->
-<!--                        <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"-->
-<!--                              (click)="router.navigate(['wallet/cards'])">My Cards</span>-->
-<!--                        <span class="dropdown-item" *ngIf="toggleMyChannelLink()"-->
-<!--                              (click)="goToChannelPage()">My Channel</span>-->
-<!--                        <span class="dropdown-item"-->
-<!--                              (click)="router.navigate(['user/connections'])">My Connections</span>-->
+                <!--                <div class="nav-item dropdown" *ngIf="auth.loggedIn()">-->
+                <!--                    <img src="assets/img/user.svg" data-toggle="dropdown" class="user-icon dropdown-toggle">-->
+                <!--                    <div class="dropdown-menu">-->
+                <!--                    <span class="dropdown-item" *ngIf="toggleMyProfileLink()"-->
+                <!--                          (click)="router.navigate(['user/profile'])">My Profile</span>-->
+                <!--                        <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"-->
+                <!--                              (click)="router.navigate(['wallet/cards'])">My Cards</span>-->
+                <!--                        <span class="dropdown-item" *ngIf="toggleMyChannelLink()"-->
+                <!--                              (click)="goToChannelPage()">My Channel</span>-->
+                <!--                        <span class="dropdown-item"-->
+                <!--                              (click)="router.navigate(['user/connections'])">My Connections</span>-->
 
-<!--                        <span class="dropdown-item" (click)="logout()">Logout</span>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                        <span class="dropdown-item" (click)="logout()">Logout</span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
 
                 <div class="dotes">
                     <button mat-icon-button [matMenuTriggerFor]="menu">

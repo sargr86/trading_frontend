@@ -8,7 +8,7 @@
         <app-search-videos-form class="mb-0  middle-search-form"
                                 (search)="searchVideos($event)"></app-search-videos-form>
     </div>
-    <div class="right-side-actions d-sm-flex d-md-flex d-lg-none align-items-end">
+    <div class="right-side-actions">
         <button class="navbar-toggler" type="button" [class.disabled]="router.url.includes('publish')"
                 (click)="closeSidenav.emit(false)">
             <span class="navbar-toggler-icon"></span>
@@ -67,11 +67,16 @@
                     <img src="assets/img/wallet-nav-icon.svg" class="wallet-icon"
                          (click)="openWalletPage()">
                 </div>
-                <div class="nav-item dropdown" *ngIf="auth.loggedIn()">
-                    <img src="assets/img/user.svg" data-toggle="dropdown" class="user-icon dropdown-toggle">
-                    <div class="dropdown-menu">
-                    <span class="dropdown-item" *ngIf="toggleMyProfileLink()"
-                          (click)="router.navigate(['user/profile'])">My Profile</span>
+
+
+                <div class="user-dropdown nav-item dropdown">
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu1" class="dotes" >
+                        <img src="assets/img/user.svg" class="user-icon">
+                    </button>
+                    <mat-menu #menu1="matMenu">
+                        <span class="dropdown-item" *ngIf="toggleMyProfileLink()"
+                              (click)="router.navigate(['user/profile'])">My Profile</span>
                         <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"
                               (click)="router.navigate(['wallet/cards'])">My Cards</span>
                         <span class="dropdown-item" *ngIf="toggleMyChannelLink()"
@@ -80,8 +85,25 @@
                               (click)="router.navigate(['user/connections'])">My Connections</span>
 
                         <span class="dropdown-item" (click)="logout()">Logout</span>
-                    </div>
+                    </mat-menu>
                 </div>
+
+
+<!--                <div class="nav-item dropdown" *ngIf="auth.loggedIn()">-->
+<!--                    <img src="assets/img/user.svg" data-toggle="dropdown" class="user-icon dropdown-toggle">-->
+<!--                    <div class="dropdown-menu">-->
+<!--                    <span class="dropdown-item" *ngIf="toggleMyProfileLink()"-->
+<!--                          (click)="router.navigate(['user/profile'])">My Profile</span>-->
+<!--                        <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"-->
+<!--                              (click)="router.navigate(['wallet/cards'])">My Cards</span>-->
+<!--                        <span class="dropdown-item" *ngIf="toggleMyChannelLink()"-->
+<!--                              (click)="goToChannelPage()">My Channel</span>-->
+<!--                        <span class="dropdown-item"-->
+<!--                              (click)="router.navigate(['user/connections'])">My Connections</span>-->
+
+<!--                        <span class="dropdown-item" (click)="logout()">Logout</span>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="dotes">
                     <button mat-icon-button [matMenuTriggerFor]="menu">

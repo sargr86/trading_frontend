@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
@@ -14,6 +14,8 @@ export class GroupAvatarHandlerComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
     removeAvatarShown = false;
+
+    @ViewChild('avatarInput') avatarInput: ElementRef;
 
     constructor(
         private chatService: ChatService,
@@ -39,6 +41,8 @@ export class GroupAvatarHandlerComponent implements OnInit, OnDestroy {
 
         if (file) {
             formData.append('group_avatar_file', file);
+        } else {
+            this.avatarInput.nativeElement.value = '';
         }
 
         this.subscriptions.push(this.chatService.changeGroupAvatar(formData).subscribe(dt => {

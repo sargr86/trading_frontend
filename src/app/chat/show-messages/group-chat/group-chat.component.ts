@@ -24,7 +24,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
-import {environment} from "@env";
+import {environment} from '@env';
 
 @Component({
     selector: 'app-group-chat',

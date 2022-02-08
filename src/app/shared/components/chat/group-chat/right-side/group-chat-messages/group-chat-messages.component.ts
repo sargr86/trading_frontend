@@ -1,6 +1,8 @@
 import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import * as moment from "moment";
-import {Subscription} from "rxjs";
+import * as moment from 'moment';
+import {Subscription} from 'rxjs';
+import {ChatService} from '@core/services/chat.service';
+import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 
 @Component({
     selector: 'app-group-chat-messages',
@@ -14,22 +16,30 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
     subscriptions: Subscription[] = [];
+    groupsMessages = [];
 
 
-    constructor() {
+    constructor(
+        private chatService: ChatService,
+        private groupByDate: GroupByPipe
+    ) {
     }
 
     ngOnInit(): void {
-        // console.log(this.selectedGroupMessages)
+        console.log(this.selectedGroupMessages)
     }
+
+    getMessagesByDate(dt) {
+        return this.groupByDate.transform(dt, 'created_at');
+    }
+
 
     ngAfterViewChecked() {
         this.scrollMsgsToBottom();
     }
 
-    getMessageClass(user) {
-        this.scrollMsgsToBottom();
-        return user.id === this.authUser.id ? 'my-message' : 'other-message';
+    getMessageClass(user_id) {
+        return user_id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
     getSeenTooltip(message) {
@@ -42,10 +52,14 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
 
     scrollMsgsToBottom() {
         try {
-            this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight;
+            this.messagesList.nativeElement.scrollTop = this.messagesList?.nativeElement.scrollHeight;
         } catch (err) {
             console.log(err);
         }
+    }
+
+    identifyDateKey(index, item) {
+        return item.key;
     }
 
     ngOnDestroy(): void {

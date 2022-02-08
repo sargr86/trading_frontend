@@ -1,9 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {environment} from '@env';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Subscription} from 'rxjs';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {FixTextLineBreaksPipe} from "@shared/pipes/fix-text-line-breaks.pipe";
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 @Component({
     selector: 'app-chat-form',
@@ -17,7 +19,9 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     authUser;
 
     selectedUser = null;
+    selectedGroup = null;
     @Input() embed = false;
+    @Input() chatType = 'direct';
     @Output() sent = new EventEmitter();
     @Output() typing = new EventEmitter();
     @Output() seen = new EventEmitter();
@@ -26,12 +30,24 @@ export class ChatFormComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
         private userMessagesStore: UserMessagesSubjectService,
+        private groupMessagesStore: GroupsMessagesSubjectService,
+        private fixLineBreaks: FixTextLineBreaksPipe
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.initForm();
+
+        if (this.chatType === 'direct') {
+            this.getSelectedUserChanges();
+        } else {
+            this.getSelectedGroupChanges();
+        }
+
+    }
+
+    getSelectedUserChanges() {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.selectedUser = dt;
             this.chatForm.patchValue({
@@ -42,43 +58,79 @@ export class ChatFormComponent implements OnInit, OnDestroy {
         }));
     }
 
-
-    initForm() {
-        this.chatForm = this.fb.group({
-            from_username: [this.authUser.username],
-            from_id: [this.authUser.id],
-            connection_id: [''],
-            to_id: [''],
-            avatar: [this.authUser?.avatar],
-            from_user: [this.authUser],
-            // to_user: [null],
-            to_username: [null],
-            message: ['', Validators.required],
-            personal: [1]
-        });
+    getSelectedGroupChanges() {
+        this.subscriptions.push(this.groupMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            this.selectedGroup = dt;
+            this.chatForm.patchValue({
+                group_id: this.selectedGroup.id,
+                group_name: this.selectedGroup.name
+            });
+        }));
     }
 
-    setTyping() {
-        this.typing.emit({
-            from_id: this.chatForm.value.from_id,
-            from_first_name: this.authUser.first_name,
-            from_username: this.chatForm.value.from_username,
-            to_username: this.chatForm.value.to_username,
-            message: this.chatForm.value.message
-        });
+
+    initForm() {
+
+        const mainFields = {
+            from_username: [this.authUser.username],
+            from_id: [this.authUser.id],
+
+            // to_user: [null],
+            message: ['', Validators.required],
+
+        };
+
+        const directChatFields = {
+            connection_id: [''],
+            from_user: [this.authUser],
+            to_id: [''],
+            to_username: [null],
+            avatar: [this.authUser?.avatar],
+            personal: [1],
+            seen: false,
+            seen_at: ''
+        };
+
+        const groupChatFields = {
+            group_id: [''],
+            group_name: [''],
+            from_first_name: [this.authUser.first_name],
+            from_last_name: [this.authUser.last_name],
+            from_avatar: [this.authUser?.avatar]
+        };
+
+        const mergedFields = this.chatType === 'direct' ?
+            {...mainFields, ...directChatFields} : {...mainFields, ...groupChatFields};
+
+
+        this.chatForm = this.fb.group(mergedFields);
     }
 
     setSeen() {
         this.seen.emit({
-            from_id: this.chatForm.value.from_id,
-            to_id: this.chatForm.value.to_id,
-            from_username: this.chatForm.value.from_username,
-            to_username: this.chatForm.value.to_username,
-            connection_id: this.chatForm.value.connection_id
+            // from_username: this.chatForm.value.from_username,
+            // from_id: this.chatForm.value.from_id,
+            // to_username: this.chatForm.value.to_username,
+            // to_id: this.chatForm.value.to_id,
+            // connection_id: this.chatForm.value.connection_id
+            ...this.chatForm.value
+        });
+    }
+
+    setTyping() {
+
+        this.typing.emit({
+            // from_username: this.chatForm.value.from_username,
+            // from_id: this.chatForm.value.from_id,
+            // to_username: this.chatForm.value.to_username,
+            // message: this.chatForm.value.message,
+            ...this.chatForm.value,
+            from_first_name: this.authUser.first_name
         });
     }
 
     sendMessageOnEnter(e) {
+        this.chatForm.value.message = this.fixLineBreaks.transform(this.chatForm.value.message);
         if (e.keyCode === 13 && !e.shiftKey) {
             this.sendMessage();
         }
@@ -87,14 +139,14 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     sendMessage() {
         if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
             this.sent.emit({
-                from_id: this.chatForm.value.from_id,
-                from_username: this.chatForm.value.from_username,
-                to_id: this.chatForm.value.to_id,
-                connection_id: this.chatForm.value.connection_id,
-                message: this.chatForm.value.message,
-                to_username: this.chatForm.value.to_username,
-                seen: false,
-                seen_at: ''
+                // from_username: this.chatForm.value.from_username,
+                // from_id: this.chatForm.value.from_id,
+                // to_id: this.chatForm.value.to_id,
+                // connection_id: this.chatForm.value.connection_id,
+                // to_username: this.chatForm.value.to_username,
+                // message: this.fixLineBreaks.transform(this.chatForm.value.message),
+                ...this.chatForm.value,
+
             });
             this.chatForm.patchValue({message: ''});
         }

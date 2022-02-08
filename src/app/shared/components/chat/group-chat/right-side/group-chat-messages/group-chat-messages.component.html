@@ -14,9 +14,7 @@
                     </div>
                     <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
                 </div>
-                <div class="message" [innerHTML]="m.message">
-                    <!--                                {{m.message}}-->
-                </div>
+                <div class="message" [innerHTML]="m.message"></div>
                 <div class="seen">
                     <ng-container *ngFor="let seen of m.seen_by">
                         <img class="seen-avatar"
@@ -28,3 +26,9 @@
         </ng-container>
     </ng-container>
 </ul>
+
+<div class="chat-form">
+    <small class="text-center font-italic d-block">{{typingText}}</small>
+    <app-chat-form [embed]="embedMode" [chatType]="'group'" (seen)="setSeen($event)" (typing)="setTyping($event)" (sent)="sendMessage($event)">
+    </app-chat-form>
+</div>

@@ -330,14 +330,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log('new message', dt)
+            // console.log('new message', dt)
             const {from_id, to_id, direct_messages} = dt;
             if (from_id === this.authUser.id) {
                 this.userMessagesStore.changeUserMessages(to_id, direct_messages);
             } else if (to_id === this.authUser.id) {
                 this.userMessagesStore.changeUserMessages(from_id, direct_messages);
             }
-            console.log(this.userMessagesStore.userMessages)
+            // console.log(this.userMessagesStore.userMessages)
         }));
     }
 

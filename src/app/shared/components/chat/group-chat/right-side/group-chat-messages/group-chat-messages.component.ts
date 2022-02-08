@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
+import {SocketIoService} from "@core/services/socket-io.service";
 
 @Component({
     selector: 'app-group-chat-messages',
@@ -12,21 +13,25 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnDestroy {
     @Input() authUser;
     @Input() selectedGroupMessages;
+    @Input() embedMode = false;
 
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
     subscriptions: Subscription[] = [];
     groupsMessages = [];
 
+    typingText;
+
 
     constructor(
         private chatService: ChatService,
-        private groupByDate: GroupByPipe
+        private groupByDate: GroupByPipe,
+        private socketService: SocketIoService
     ) {
     }
 
     ngOnInit(): void {
-        console.log(this.selectedGroupMessages)
+        // console.log(this.selectedGroupMessages)
     }
 
     getMessagesByDate(dt) {
@@ -56,6 +61,19 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         } catch (err) {
             console.log(err);
         }
+    }
+
+    setSeen(e) {
+        // console.log(e)
+    }
+
+    setTyping(e) {
+        // console.log(e)
+    }
+
+    sendMessage(e) {
+        console.log(e)
+        this.socketService.sendMessage(e);
     }
 
     identifyDateKey(index, item) {

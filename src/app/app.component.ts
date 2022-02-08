@@ -110,7 +110,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     getSidenavMode(sidenav) {
         // sidenav.toggle();
-        if (screen.width <= 991 && !this.router.url.includes('auth')) {
+        // console.log(screen.width, window.innerWidth)
+        if (window.innerWidth <= 991 && !this.router.url.includes('auth')) {
             return 'over';
         } else {
             return 'side';

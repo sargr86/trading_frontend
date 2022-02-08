@@ -31,6 +31,7 @@ nav {
         }
         @media screen and (max-width: 560px) {
             padding: 15px 15px;
+            flex-wrap: wrap;
         }
     }
 
@@ -44,6 +45,7 @@ nav {
         img {
             margin-right: 10px;
             cursor: pointer;
+            display: flex;
         }
 
     }

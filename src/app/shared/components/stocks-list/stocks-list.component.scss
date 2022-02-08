@@ -106,4 +106,13 @@
 
 #dropdown-menu-btn {
     cursor: pointer;
+    display: flex;
+}
+
+.fa-sort-down:before{
+    margin-left: 5px;
+}
+
+.order-type{
+    margin-left: 5px;
 }

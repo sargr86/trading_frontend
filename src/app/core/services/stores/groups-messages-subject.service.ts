@@ -38,17 +38,25 @@ export class GroupsMessagesSubjectService {
 
     changeGroup(groupMessages: any) {
         let selectedGroup = this.groupsMessages.find(gm => gm.id === groupMessages.id);
-        // console.log('CHANGE GROUP:', groupMessages.name, this.selectedGroupMessages.name)
+        console.log(groupMessages)
+        console.log('CHANGE GROUP:', groupMessages.name, this.selectedGroupMessages.name)
         if (selectedGroup) {
             // selectedGroup.chat_group_members = groupMessages?.chat_group_members;
             // selectedGroup.avatar = groupMessages.avatar;
             selectedGroup = groupMessages;
-
+            console.log(groupMessages)
             if (groupMessages.id === this.selectedGroupMessages.id) {
                 this.selectedGroupMessagesSource.next(selectedGroup);
             }
         }
         // console.log(this.selectedGroupMessages)
+    }
+
+    changeGroupMessages(group_id, messages) {
+        const groupMessages = this.groupsMessages.find(um => um.id === group_id);
+        if (groupMessages) {
+            groupMessages.group_messages = messages;
+        }
     }
 
 

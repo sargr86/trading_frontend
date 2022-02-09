@@ -28,7 +28,8 @@
 </ul>
 
 <div class="chat-form">
-    <small class="text-center font-italic d-block">{{typingText}}</small>
-    <app-chat-form [embed]="embedMode" [chatType]="'group'" (seen)="setSeen($event)" (typing)="setTyping($event)" (sent)="sendMessage($event)">
+    <small class="text-center font-italic d-block">{{typingText.text}}</small>
+    <app-chat-form [embed]="embedMode" [chatType]="'group'" (seen)="setSeen($event)" (typing)="setTyping($event)"
+                   (sent)="sendMessage($event)">
     </app-chat-form>
 </div>

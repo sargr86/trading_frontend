@@ -3,7 +3,8 @@ import * as moment from 'moment';
 import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
-import {SocketIoService} from "@core/services/socket-io.service";
+import {SocketIoService} from '@core/services/socket-io.service';
+import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
 @Component({
     selector: 'app-group-chat-messages',
@@ -20,18 +21,27 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     subscriptions: Subscription[] = [];
     groupsMessages = [];
 
-    typingText;
+    typingText = {
+        group: false,
+        text: ''
+    };
 
 
     constructor(
         private chatService: ChatService,
         private groupByDate: GroupByPipe,
-        private socketService: SocketIoService
+        private socketService: SocketIoService,
+        private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }
 
     ngOnInit(): void {
-        // console.log(this.selectedGroupMessages)
+        this.getTyping();
+        this.getMessagesFromSocket();
+        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+            // console.log(dt)
+            this.selectedGroupMessages = dt;
+        }));
     }
 
     getMessagesByDate(dt) {
@@ -63,17 +73,79 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         }
     }
 
-    setSeen(e) {
-        // console.log(e)
+    setSeen(formValue) {
+        console.log(formValue)
+
+        const messages = this.selectedGroupMessages.group_messages;
+        const lastMessage = messages[messages.length - 1];
+        const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
+        if (!isOwnLastMessage) {
+            this.socketService.setSeen({
+                message_id: lastMessage?._id,
+                seen: 1,
+                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a'),
+                ...formValue
+            });
+        }
     }
 
-    setTyping(e) {
+    setTyping(formValue) {
         // console.log(e)
+        this.socketService.setTyping(formValue);
+    }
+
+    getTyping() {
+        this.socketService.getTyping().subscribe((dt: any) => {
+            // console.log(dt.group_name, this.selectedGroupMessages?.name)
+            this.getTypingTextStatus(dt);
+        });
+    }
+
+    getTypingTextStatus(dt) {
+        const sameGroupTyping = dt.from_id !== this.authUser.id && dt.group_name === this.selectedGroupMessages.name && dt.message;
+        // console.log(sameGroupTyping)
+        this.typingText = {
+            group: sameGroupTyping ? this.selectedGroupMessages?.name === dt.group_name : null,
+            text: sameGroupTyping ? `${dt.from_username} is typing...` : null
+        };
     }
 
     sendMessage(e) {
-        console.log(e)
         this.socketService.sendMessage(e);
+    }
+
+    getMessagesFromSocket() {
+        this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
+            // console.log('new message group chat!!!', dt);
+
+            const {group_id, group_messages} = dt;
+
+            // if (this.selectedGroupMessages.id === dt.group_id){
+            this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
+            this.resetTyping();
+            // }
+
+            // const newMessage = {...dt, name: dt.group_name, id: dt.group_id};
+            // if (this.selectedGroupMessages.id === dt.group_id) {
+            //     const groupMessages = this.groupsMessagesStore.selectedGroupMessages;
+            //     groupMessages.group_messages.push(newMessage);
+            //     this.groupsMessagesStore.changeGroup(groupMessages);
+            //     this.resetTyping();
+            // }
+
+            // console.log(this.groupsMessagesStore.selectedGroupMessages)
+        }));
+    }
+
+    setMessages() {
+
+    }
+
+    resetTyping() {
+        this.typingText = {
+            group: false,
+            text: ''
+        };
     }
 
     identifyDateKey(index, item) {

@@ -51,9 +51,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     showPurchaseBits = false;
+    showNavbarResponsiveRow = true;
 
     userCards = [];
     totals;
+
+
 
     constructor(
         public router: Router,

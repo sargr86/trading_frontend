@@ -30,6 +30,7 @@ export class SubjectService {
     private userCardsData = new Subject<any>();
     private allPaymentsData = new Subject<any>();
     private newMessageSourcesData = new Subject<any>();
+    private selectedChatType = new Subject<string>();
 
     private userStocksSource = new BehaviorSubject(this.userStocks);
     private userCardsSource = new BehaviorSubject(this.userCards);
@@ -110,6 +111,16 @@ export class SubjectService {
     getStocksData(): Observable<any> {
         return this.stocksData.asObservable();
     }
+
+    setChatType(value) {
+        this.selectedChatType.next(value);
+    }
+
+    getChatType(): Observable<any> {
+        return this.selectedChatType.asObservable();
+    }
+
+
 
     setIndicesData(value) {
         this.indicesData.next(value);

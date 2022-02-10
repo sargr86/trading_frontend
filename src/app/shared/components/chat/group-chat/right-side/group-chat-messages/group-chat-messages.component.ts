@@ -45,7 +45,10 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
             // console.log(dt)
             this.selectedGroupMessages = dt;
         }));
-        this.setNewMessageSources();
+
+        if (!this.embedMode) {
+            this.setNewMessageSources();
+        }
     }
 
     getMessagesByDate(dt) {

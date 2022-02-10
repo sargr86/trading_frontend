@@ -2,14 +2,14 @@
     <div class="w-100 h-100 position-relative">
         <div class="channel-user-name-container">
             <ng-container *ngIf="chatBoxType === 'direct'">
-                <div>
+                <div class="avatar-container">
                     <img class="avatar" id="profile-image" alt="channel-user-avatar"
                          [src]="channelUser?.channel?.avatar|getImgPath: 'avatars'">
                     <span>{{channelUser?.first_name + ' ' + channelUser?.last_name}}</span>
                 </div>
             </ng-container>
             <ng-container *ngIf="chatBoxType === 'group'">
-                <div>
+                <div class="avatar-container">
                     <img class="img group-avatar" [src]="selectedGroup?.avatar|getImgPath:'group_avatars'">
                     <span class="group-name">{{selectedGroup?.name}}</span>
                 </div>
@@ -20,9 +20,11 @@
             </div>
         </div>
 
-        <div class="chat-messages-container">
+        <div class="chat-messages-container" [ngClass]="chatBoxType">
             <app-direct-chat-messages *ngIf="messages.length > 0 && chatBoxType==='direct'" [authUser]="authUser"
                                       [embedMode]="true"></app-direct-chat-messages>
+            <app-group-chat-messages *ngIf="chatBoxType==='group'" [authUser]="authUser"
+                                     [embedMode]="true"></app-group-chat-messages>
         </div>
     </div>
 </div>

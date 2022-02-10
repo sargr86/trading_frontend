@@ -21,7 +21,7 @@
         </div>
 
         <div class="chat-messages-container" [ngClass]="chatBoxType">
-            <app-direct-chat-messages *ngIf="messages.length > 0 && chatBoxType==='direct'" [authUser]="authUser"
+            <app-direct-chat-messages *ngIf="chatBoxType==='direct'" [authUser]="authUser"
                                       [embedMode]="true"></app-direct-chat-messages>
             <app-group-chat-messages *ngIf="chatBoxType==='group'" [authUser]="authUser"
                                      [embedMode]="true"></app-group-chat-messages>

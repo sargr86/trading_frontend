@@ -21,7 +21,7 @@
     </div>
 
     <!--     Search videos for normal mode-->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" [hidden]="showNavbarResponsiveRow">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [hidden]="!showNavbarResponsiveRow">
         <div class="header-right nav-menu flex-sm-nowrap flex-wrap">
             <app-search-videos-form class="d-none d-lg-block" *ngIf="!routerUrl?.includes('analytics')"
                                     (search)="searchVideos($event)"></app-search-videos-form>

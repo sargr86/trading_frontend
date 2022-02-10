@@ -83,17 +83,20 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     setSeen(formValue) {
 
         const messages = this.selectedGroupMessages.group_messages;
-        const lastMessage = messages[messages.length - 1];
-        const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
-        console.log(lastMessage)
-        if (!isOwnLastMessage && lastMessage) {
-            this.socketService.setSeen({
-                message_id: lastMessage?._id,
-                // seen: 1,
-                seen_at: moment().format('YYYY-MM-DD, hh:mm:ss'),
-                ...formValue
-            });
+        if (messages) {
+            const lastMessage = messages[messages?.length - 1];
+            const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
+            console.log(lastMessage)
+            if (!isOwnLastMessage && lastMessage) {
+                this.socketService.setSeen({
+                    message_id: lastMessage?._id,
+                    // seen: 1,
+                    seen_at: moment().format('YYYY-MM-DD, hh:mm:ss'),
+                    ...formValue
+                });
+            }
         }
+
     }
 
     getSeen() {
@@ -163,21 +166,19 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     }
 
     setNewMessageSources(fromSeen = false) {
-        let sources = this.groupsMessagesStore.groupsMessages
-            .filter(m => m.group_messages.filter(d => m.from_id !== this.authUser.id && !d.seen.find(s => s.seen_by.id !== this.authUser.id)).length > 0);
 
-        sources = this.groupsMessagesStore.groupsMessages.filter(st => {
-            const groupReceivedMessages = st.group_messages.filter(gm => gm.from_id !== this.authUser.id);
+        const sources = this.groupsMessagesStore.groupsMessages?.filter(st => {
+            const groupReceivedMessages = st.group_messages?.filter(gm => gm.from_id !== this.authUser.id);
             // console.log(groupReceivedMessages)
-            const notSeenMessages = groupReceivedMessages.filter(rm => {
+            const notSeenMessages = groupReceivedMessages?.filter(rm => {
                 const isSeen = !!rm.seen.find(s => {
                     return s.seen_by.id === this.authUser.id;
                 });
                 // console.log(rm.message, isSeen)
                 return isSeen === false;
             });
-            console.log(notSeenMessages, notSeenMessages.length)
-            return notSeenMessages.length !== 0;
+            console.log(notSeenMessages, notSeenMessages?.length)
+            return notSeenMessages?.length !== 0;
         });
 
 

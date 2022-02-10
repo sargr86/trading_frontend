@@ -96,7 +96,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     }
 
     isSeenByAuthUser(messages) {
-        return messages.filter(message => {
+        return messages?.filter(message => {
             let found = false;
             if (message.from_id !== this.authUser.id) {
                 found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);

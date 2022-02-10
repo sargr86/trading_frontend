@@ -117,14 +117,14 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
-            // console.log(dt.group_name, this.selectedGroupMessages?.name)
+            console.log(dt.group_name, this.selectedGroupMessages?.name)
             this.getTypingTextStatus(dt);
         });
     }
 
     getTypingTextStatus(dt) {
         const sameGroupTyping = dt.from_id !== this.authUser.id && dt.group_name === this.selectedGroupMessages.name && dt.message;
-        // console.log(sameGroupTyping)
+        console.log(sameGroupTyping)
         this.typingText = {
             group: sameGroupTyping ? this.selectedGroupMessages?.name === dt.group_name : null,
             text: sameGroupTyping ? `${dt.from_username} is typing...` : null

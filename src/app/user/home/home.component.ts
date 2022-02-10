@@ -35,10 +35,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.videos = dt.videos;
         }));
         this.authUser = this.getAuthUser.transform();
-        if (this.authUser) {
-            this.socketService.addNewUser(this.authUser);
-
-        }
     }
 
     async getVideosByTag(name) {
@@ -48,7 +44,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
-
-
-
 }

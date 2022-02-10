@@ -57,7 +57,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     totals;
 
 
-
     constructor(
         public router: Router,
         public auth: AuthService,
@@ -132,6 +131,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     addUserToSocket() {
+        console.log('add user to socket!!!!');
         this.socketService.addNewUser({...this.authUser, group: true});
     }
 
@@ -347,7 +347,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getUnreadMessagesCount() {
         return this.userMessagesStore.userMessages
-            .filter(m => m.direct_messages.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
+            ?.filter(m => m.direct_messages.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
 
     }
 

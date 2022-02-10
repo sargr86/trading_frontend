@@ -53,16 +53,13 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        // this.addUserToSocket();
         // console.log(this.chatBoxType)
         if (this.chatBoxType === 'direct') {
             // this.getUsersMessages();
         }
     }
 
-    addUserToSocket() {
-        this.socketService.addNewUser(this.authUser);
-    }
+
 
     getUsersMessages() {
         // const selectedContact = this.userMessagesStore.userMessages.find(d => d.id === this.channelUser.id);

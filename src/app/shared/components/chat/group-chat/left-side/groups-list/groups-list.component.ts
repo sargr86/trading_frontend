@@ -42,7 +42,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     getGroupsMessages() {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
-            // console.log('groups changed', dt)
+            console.log('groups changed', dt)
             this.filteredGroupsMessages = dt;
             const storeGroups = this.groupsMessagesStore.selectedGroupMessages;
 
@@ -99,7 +99,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         return messages.filter(message => {
             let found = false;
             if (message.from_id !== this.authUser.id) {
-                found = !message.seen_by.find(sb => sb.id === this.authUser.id);
+                found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);
             }
             return found;
         }).length;

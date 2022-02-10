@@ -6,10 +6,11 @@
 
             <ng-container
                 [ngTemplateOutlet]="groupTemplate"
-                [ngTemplateOutletContext]="{messages: group?.chat_group_messages, group: group}">
+                [ngTemplateOutletContext]="{messages: group?.group_messages, group: group}">
             </ng-container>
 
             <ng-template #groupTemplate let-messages="messages" let-group="group">
+
                 <div class="left" (click)="makeGroupActive(group)">
                     <img class="img group-avatar" [src]="group.avatar|getImgPath:'group_avatars'">
                     <div class="text">
@@ -17,7 +18,8 @@
                         <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:' '}}</span>
                     </div>
                 </div>
-                <div class="right" *ngIf="authUser.id !== selectedGroup?.creator_id && sidebarMode">
+
+                <div class="right" *ngIf="authUser.id !== selectedGroup?.creator_id">
                     <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)" *ngIf="messages">
                         <strong>{{isSeenByAuthUser(messages)}}</strong>
                     </button>

@@ -39,19 +39,18 @@ export class SectionLinksComponent implements OnInit, OnDestroy {
         let directNewMessagesCount = 0;
         let groupNewMessagesCount = 0;
         this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
+            console.log('new messages from ' + data.type + ':' + this.newMessageSources)
             if (data.type === 'direct') {
 
                 directNewMessagesCount = data.sources;
             } else {
-                groupNewMessagesCount = data.source.filter(d => d.new_messages_count > 0)?.length;
+                groupNewMessagesCount = data.sources || 0;
+                console.log(groupNewMessagesCount)
             }
             this.newMessageSources = directNewMessagesCount + groupNewMessagesCount;
             // console.log('received:', directNewMessagesCount, groupNewMessagesCount)
-            // console.log('new messages from ' + data.type + ':' + this.newMessageSources)
         }));
     }
-
-
 
 
     changePage(route, params = {}) {

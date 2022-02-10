@@ -36,7 +36,7 @@ export class ShowMessagesComponent implements OnInit {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        this.getGroupsMessages();
+        // this.getGroupsMessages();
     }
 
 

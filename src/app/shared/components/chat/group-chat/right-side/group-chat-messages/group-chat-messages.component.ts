@@ -171,18 +171,18 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
             // console.log(groupReceivedMessages)
             const notSeenMessages = groupReceivedMessages.filter(rm => {
                 const isSeen = !!rm.seen.find(s => {
-                    return s.seen_by.id === this.authUser.id
+                    return s.seen_by.id === this.authUser.id;
                 });
                 // console.log(rm.message, isSeen)
                 return isSeen === false;
             });
-            // console.log(notSeenMessages, notSeenMessages.length)
+            console.log(notSeenMessages, notSeenMessages.length)
             return notSeenMessages.length !== 0;
         });
 
 
         // console.log(this.groupsMessagesStore.groupsMessages)
-        // console.log(sources)
+        console.log(sources)
 
         this.subject.setNewMessagesSourceData({sources: sources.length, type: 'group'});
     }

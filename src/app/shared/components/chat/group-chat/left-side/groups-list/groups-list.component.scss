@@ -26,3 +26,12 @@
     border-radius: 10px;
 }
 
+.seen-circle {
+    font-family: Roboto, sans-serif;
+    background-color: $red !important;
+    color: $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 12px;
+}

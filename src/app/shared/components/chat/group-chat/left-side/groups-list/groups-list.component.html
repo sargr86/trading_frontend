@@ -19,22 +19,26 @@
                     </div>
                 </div>
 
-                <div class="right" *ngIf="authUser.id !== selectedGroup?.creator_id">
+                <div class="right">
                     <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)" *ngIf="messages">
                         <strong>{{isSeenByAuthUser(messages)}}</strong>
                     </button>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <!--        <button mat-menu-item (click)="showMembersInput = !showMembersInput">-->
-                        <!--            Add members-->
-                        <!--        </button>-->
-                        <button mat-menu-item (click)="leaveGroup()"
-                                *ngIf="authUser.id !== selectedGroup?.creator_id">
-                            Leave group
+
+                    <div class="three-dots-container" [hidden]="isSeenByAuthUser(messages)"
+                         *ngIf="authUser.id !== selectedGroup?.creator_id && sidebarMode">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
-                    </mat-menu>
+                        <mat-menu #menu="matMenu">
+                            <!--        <button mat-menu-item (click)="showMembersInput = !showMembersInput">-->
+                            <!--            Add members-->
+                            <!--        </button>-->
+                            <button mat-menu-item (click)="leaveGroup()"
+                            >
+                                Leave group
+                            </button>
+                        </mat-menu>
+                    </div>
                 </div>
             </ng-template>
         </li>

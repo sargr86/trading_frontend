@@ -141,10 +141,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
-            // if (dt) {
-            this.notifications.push(dt);
-            this.notificationsStore.setAllNotifications(this.notifications);
-            // }
+            if (dt.from_id !== this.authUser.id) {
+                this.notificationsStore.addToNotifications(dt);
+                // this.notifications.push(dt);
+                // this.notificationsStore.setAllNotifications(this.notifications);
+            }
         }));
     }
 

@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from "@core/services/stores/notifications-subject-store.service";
+import {UserMessagesSubjectService} from "@core/services/user-messages-subject.service";
 
 @Component({
     selector: 'app-channel-profile',
@@ -49,6 +50,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
+        private usersConnectionsStore: UserMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,
@@ -66,10 +68,44 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.checkIfUsersConnected();
             this.getAcceptedDeclinedRequests();
             this.getConnectWithUser();
-            this.getDisconnectUser();
+            this.getDisconnectUsers();
             this.cancelledUsersConnecting();
             this.getBlockUnblockUser();
+            this.getConnectionsChanges();
         }
+    }
+
+    getConnectionsChanges() {
+        // this.subscriptions.push(this.usersConnectionsStore.userMessages$.subscribe((dt: any) => {
+        //     console.log('connection changed!!!', dt, this.channelUser.id)
+        //
+        //     if (dt.filter(d => d.id === this.channelUser.id)) {
+        //         this.usersConnectionStatus = 'connected';
+        //         this.isBlocked = false;
+        //     }
+        // }));
+    }
+
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log('accepted', dt)
+            console.log(dt.receiver_id, this.channelUser.id)
+            if ((dt.receiver_id === this.authUser.id && dt.initiator_id === this.channelUser.id)
+                || (dt.receiver_id === this.channelUser.id && dt.initiator_id === this.authUser.id)) {
+                this.usersConnectionStatus = 'connected';
+                this.isBlocked = false;
+            }
+
+            if (dt.receiver_id === this.authUser.id) {
+                this.notificationsStore.addToNotifications(dt);
+                // this.getNotifications();
+            }
+        }));
+
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+            console.log('declined')
+            this.usersConnectionStatus = 'idle';
+        }));
     }
 
 
@@ -254,28 +290,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-    getAcceptedDeclinedRequests() {
-        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt)
-            console.log(dt.receiver_id, this.channelUser.id)
-            if ((dt.receiver_id === this.authUser.id && dt.initiator_id === this.channelUser.id)
-                || (dt.receiver_id === this.channelUser.id && dt.initiator_id === this.authUser.id)) {
-                this.usersConnectionStatus = 'connected';
-                this.isBlocked = false;
-            }
-
-            if (dt.receiver_id === this.authUser.id) {
-                this.notificationsStore.addToNotifications(dt);
-                // this.getNotifications();
-            }
-        }));
-
-        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined')
-            this.usersConnectionStatus = 'idle';
-        }));
-    }
-
 
     disconnectUser() {
         // console.log(this.usersConnection)
@@ -290,10 +304,11 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.usersConnectionStatus = 'idle';
     }
 
-    getDisconnectUser() {
+    getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe(dt => {
-            // console.log('disconnected', dt)
+            console.log('disconnected', dt)
             this.usersConnectionStatus = 'idle';
+            this.notificationsStore.addToNotifications(dt);
         }));
     }
 

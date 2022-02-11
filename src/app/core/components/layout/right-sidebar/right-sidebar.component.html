@@ -1,7 +1,7 @@
-<ng-container *ngIf="shownItems==='notifications'">
+<div [hidden]="shownItems!=='notifications'">
     <app-notifications-list [shownInSidebar]="true" [notificationsCategory]="'new'"></app-notifications-list>
-    <app-notifications-list [shownInSidebar]="true" [notificationsCategory]="'early'"></app-notifications-list>
-</ng-container>
+<!--    <app-notifications-list [shownInSidebar]="true" [notificationsCategory]="'early'"></app-notifications-list>-->
+</div>
 
 <ng-container *ngIf="shownItems==='messages'">
     <h4 class="contacts-delimiter">Contacts</h4>

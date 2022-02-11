@@ -9,7 +9,7 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
     styleUrls: ['./right-sidebar.component.scss']
 })
 export class RightSidebarComponent implements OnInit {
-    @Input() shownItems;
+    @Input() shownItems = 'notifications';
     @Output('closeSidenav') closeSidenav = new EventEmitter();
     @Output() openBottomChatBox = new EventEmitter();
     authUser;

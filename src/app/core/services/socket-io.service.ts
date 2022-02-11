@@ -19,7 +19,7 @@ export class SocketIoService {
     }
 
     addNewUser(user) {
-        this.setupSocketConnection();
+        // this.setupSocketConnection();
         // console.log('add to socket!!!', user)
         // console.log(this.socket)
         this.socket.emit('newUser', user);
@@ -32,6 +32,7 @@ export class SocketIoService {
     getConnectWithUser() {
         return new Observable(observer => {
             this.socket.on('getConnectWithUser', msg => {
+                console.log('get connect')
                 observer.next(msg);
             });
         });
@@ -43,7 +44,9 @@ export class SocketIoService {
 
     getDisconnectUsers() {
         return new Observable(observer => {
+
             this.socket.on('getDisconnectUsers', msg => {
+                console.log('disconnect')
                 observer.next(msg);
             });
         });
@@ -142,7 +145,7 @@ export class SocketIoService {
     }
 
     acceptJoinToGroup(data) {
-        this.setupSocketConnection();
+        // this.setupSocketConnection();
         this.socket.emit('acceptJoinGroup', data);
     }
 
@@ -155,7 +158,7 @@ export class SocketIoService {
     }
 
     declineJoinToGroup(data) {
-        this.setupSocketConnection();
+        // this.setupSocketConnection();
         this.socket.emit('declineJoinGroup', data);
     }
 
@@ -230,6 +233,7 @@ export class SocketIoService {
         // this.setupSocketConnection();
         return new Observable(observer => {
             this.socket.on('acceptedConnection', msg => {
+                console.log('accept')
                 observer.next(msg);
             });
         });

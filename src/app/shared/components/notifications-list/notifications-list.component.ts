@@ -41,10 +41,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         if (this.authUser) {
             this.getNotifications();
             this.getConnectWithUser();
-            this.getAcceptedDeclinedRequests();
             this.cancelledUsersConnecting();
-            this.getDisconnectUsers();
         }
+        this.getAcceptedDeclinedRequests();
+        this.getDisconnectUsers();
 
     }
 
@@ -56,12 +56,12 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     filterByCategory(notifications, category) {
-        const filteredNotifications = notifications.filter(n => {
-            const diff = moment().diff(n?.created_at, 'hours');
-            return category === 'early' ? diff > 0 : diff <= 0;
-        });
+        // const filteredNotifications = notifications.filter(n => {
+        //     const diff = moment().diff(n?.created_at, 'hours');
+        //     return category === 'early' ? diff > 0 : diff <= 0;
+        // });
         // console.log(filteredNotifications, category);
-        return filteredNotifications;
+        return notifications;
     }
 
     confirmConnection(notification) {
@@ -90,6 +90,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
+            console.log(dt)
             this.getNotifications();
         }));
     }

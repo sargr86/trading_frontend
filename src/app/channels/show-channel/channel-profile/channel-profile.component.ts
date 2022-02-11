@@ -271,9 +271,10 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
 
     disconnectUser() {
-        console.log(this.usersConnection)
+        // console.log(this.usersConnection)
         this.socketService.disconnectUsers({
             to_username: this.channelUser.username,
+            from_username: this.authUser.username,
             connection_id: this.usersConnection.id,
             from_id: this.usersConnection.from_id,
             to_id: this.usersConnection.to_id,
@@ -283,7 +284,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     getDisconnectUser() {
-        this.subscriptions.push(this.socketService.getDisconnectUsers({}).subscribe(dt => {
+        this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe(dt => {
             console.log('disconnected', dt)
             this.usersConnectionStatus = 'idle';
         }));

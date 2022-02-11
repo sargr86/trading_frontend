@@ -41,6 +41,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             this.getConnectWithUser();
             this.getAcceptedDeclinedRequests();
             this.cancelledUsersConnecting();
+            this.getDisconnectUsers();
         }
 
     }
@@ -110,6 +111,15 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
             // this.notificationsStore.setNotifications(this.notifications);
             this.getNotifications();
+        }));
+    }
+
+    getDisconnectUsers() {
+        this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
+            console.log('disconnected', dt);
+            this.getNotifications();
+            // this.setNotifications.transform(dt);
+            // this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 

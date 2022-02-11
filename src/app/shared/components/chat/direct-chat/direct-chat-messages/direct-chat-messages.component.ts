@@ -50,8 +50,10 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     ngOnInit(): void {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+            console.log('user changed!');
             this.selectedUserMessages = dt;
             this.typingText = null;
+            // this.setTyping({});
         }));
 
         this.setNewMessageSources();
@@ -99,6 +101,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     getTyping() {
         this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
+            console.log(dt)
             if (dt.from_id !== this.authUser.id && this.selectedUserMessages.id === dt.from_id) {
                 this.typingText = dt.message ? `${dt.from_first_name} is typing...` : null;
             }

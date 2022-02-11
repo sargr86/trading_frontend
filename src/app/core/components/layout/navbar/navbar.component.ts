@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (this.authUser) {
             this.getInviteNotifications();
             this.getAuthUserNotifications();
-            this.getAcceptedDeclinedRequests();
+            // this.getAcceptedDeclinedRequests();
             this.getUserCards();
             this.getDailyStocks();
             this.getMessagesFromSocket();
@@ -159,23 +159,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
         );
     }
 
-    getAcceptedDeclinedRequests() {
-        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt)
-            this.userMessagesStore.setUserMessages(dt.users_messages);
-            if (dt.receiver_id === this.authUser.id) {
-                this.notifications.push(dt);
-                this.notificationsStore.setAllNotifications(this.notifications);
-            }
-        }));
-
-        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined')
-
-            this.notifications.push(dt);
-            this.notificationsStore.setAllNotifications(this.notifications);
-        }));
-    }
+    // getAcceptedDeclinedRequests() {
+    //     this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+    //         console.log('accepted', dt)
+    //         // this.userMessagesStore.setUserMessages(dt.users_messages);
+    //         // if (dt.receiver_id === this.authUser.id) {
+    //         //     this.notifications.push(dt);
+    //         //     this.notificationsStore.setAllNotifications(this.notifications);
+    //         // }
+    //     }));
+    //
+    //     this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
+    //         console.log('declined')
+    //
+    //         this.notifications.push(dt);
+    //         this.notificationsStore.setAllNotifications(this.notifications);
+    //     }));
+    // }
 
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {

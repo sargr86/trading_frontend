@@ -75,7 +75,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             this.socketService.setSeen({
                 message_id: lastMessage?._id,
                 seen: 1,
-                seen_at: moment().format('YYYY-MM-DD, h:mm:ss a'),
                 ...e
             });
         }

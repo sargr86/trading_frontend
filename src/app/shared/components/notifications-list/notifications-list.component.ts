@@ -96,7 +96,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt);
+            // console.log('accepted', dt);
             // console.log(dt.receiver_id, this.authUser.id)
             // console.log(this.notificationsStore.notifications, this.notifications)
             this.userMessagesStore.setUserMessages(dt.users_messages);
@@ -109,7 +109,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined', dt);
+            // console.log('declined', dt);
             // this.notifications.push(dt);
             // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
             // this.notificationsStore.setNotifications(this.notifications);
@@ -119,7 +119,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
-            console.log('disconnected', dt);
+            // console.log('disconnected', dt);
             this.getNotifications();
             // this.setNotifications.transform(dt);
             this.userMessagesStore.setUserMessages(dt.users_messages);

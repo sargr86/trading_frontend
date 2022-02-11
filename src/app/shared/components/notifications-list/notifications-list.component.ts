@@ -96,7 +96,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            // console.log('accepted', dt);
+            console.log('accepted', dt);
             // console.log(dt.receiver_id, this.authUser.id)
             // console.log(this.notificationsStore.notifications, this.notifications)
             this.userMessagesStore.setUserMessages(dt.users_messages);

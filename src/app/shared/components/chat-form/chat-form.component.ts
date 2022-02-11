@@ -61,10 +61,12 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     getSelectedGroupChanges() {
         this.subscriptions.push(this.groupMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
-            this.chatForm.patchValue({
-                group_id: this.selectedGroup.id,
-                group_name: this.selectedGroup.name
-            });
+            if (this.selectedGroup) {
+                this.chatForm.patchValue({
+                    group_id: this.selectedGroup.id,
+                    group_name: this.selectedGroup.name
+                });
+            }
         }));
     }
 

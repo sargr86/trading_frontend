@@ -82,8 +82,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
         const params = {
             connection_id: usersMessages.users_connections?.[0].id,
             message_ids: lastReceivedMessages.map(m => m._id),
-            to_user: usersMessages.username,
-            from_user: this.authUser.username,
+            to_username: usersMessages.username,
+            from_username: this.authUser.username,
             from_id: this.authUser.id,
             to_id: usersMessages.id
         };

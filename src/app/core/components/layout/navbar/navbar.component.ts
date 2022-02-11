@@ -89,7 +89,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         if (this.auth.loggedIn()) {
             this.getInviteNotifications();
-            this.addUserToSocket();
             this.getAuthUserNotifications();
             this.getAcceptedDeclinedRequests();
             this.getUserCards();
@@ -125,14 +124,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
             blocked: 0
         }).subscribe(dt => {
+            const userGroups = dt.map(d => d.name);
             this.groupsMessagesStore.setGroupsMessages(dt);
+            this.addUserToSocket(userGroups);
         }));
     }
 
 
-    addUserToSocket() {
+    addUserToSocket(userGroups) {
         console.log('add user to socket!!!!');
-        this.socketService.addNewUser({...this.authUser, group: true});
+        this.socketService.addNewUser({...this.authUser, chat_groups: userGroups});
     }
 
     getConnectWithUser() {

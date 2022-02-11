@@ -35,6 +35,11 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        // this.getStripeProducts();
+
+    }
+
+    getStripeProducts(){
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
             this.bitProducts = dt;
         }));

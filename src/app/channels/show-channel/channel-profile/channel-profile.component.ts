@@ -10,6 +10,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {NotificationsSubjectStoreService} from "@core/services/stores/notifications-subject-store.service";
 
 @Component({
     selector: 'app-channel-profile',
@@ -48,6 +49,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
+        private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,
         private fb: FormBuilder
@@ -263,6 +265,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             }
 
             if (dt.receiver_id === this.authUser.id) {
+                this.notificationsStore.addToNotifications(dt);
                 // this.getNotifications();
             }
         }));

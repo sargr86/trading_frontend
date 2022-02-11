@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {sortTableData} from "@core/helpers/sort-table-data-by-column";
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,12 @@ export class NotificationsSubjectStoreService {
 
     setAllNotifications(messages: any) {
         this.allNotificationsSource.next([...messages]);
+    }
+
+    addToNotifications(notification) {
+        this.allNotifications.push(notification);
+        const notifications = sortTableData(this.allNotifications, 'created_at', 'desc');
+        this.setAllNotifications(notifications);
     }
 
     get allNotifications() {

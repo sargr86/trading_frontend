@@ -95,7 +95,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getInviteNotifications();
             this.getAuthUserNotifications();
             // this.getAcceptedDeclinedRequests();
-            this.getUserCards();
+            // this.getUserCards();
             this.getDailyStocks();
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();

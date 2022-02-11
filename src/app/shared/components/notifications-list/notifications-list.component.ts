@@ -8,6 +8,7 @@ import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
+import {UserMessagesSubjectService} from "@core/services/user-messages-subject.service";
 
 @Component({
     selector: 'app-notifications-list',
@@ -29,6 +30,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         public notificationsStore: NotificationsSubjectStoreService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        private userMessagesStore: UserMessagesSubjectService,
         public auth: AuthService,
         public router: Router
     ) {
@@ -94,9 +96,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            // console.log('accepted', dt);
+            console.log('accepted', dt);
             // console.log(dt.receiver_id, this.authUser.id)
             // console.log(this.notificationsStore.notifications, this.notifications)
+            this.userMessagesStore.setUserMessages(dt.users_messages);
             if (dt.receiver_id === this.authUser.id) {
                 // this.notifications.push(dt);
                 // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
@@ -119,7 +122,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             console.log('disconnected', dt);
             this.getNotifications();
             // this.setNotifications.transform(dt);
-            // this.userMessagesStore.setUserMessages(dt.users_messages);
+            this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 

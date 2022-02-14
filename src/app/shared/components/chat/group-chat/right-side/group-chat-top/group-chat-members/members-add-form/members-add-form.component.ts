@@ -120,6 +120,8 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
                 group: this.selectedGroup
             });
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
+            console.log(this.groupsMessagesStore.groupsMessages)
+            console.log(this.groupsMessagesStore.selectedGroupMessages)
             this.groupsMessagesStore.showMembersForm = false;
             this.inputGroupMembers = [];
         }));

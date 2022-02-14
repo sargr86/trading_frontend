@@ -40,7 +40,7 @@
 
                             <div class="img user-avatar">
                                 <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
-                                <div class="status" [hidden]="onlineUsers.length === 0"
+                                <div class="status"
                                      [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
                             </div>
                             <div class="text">

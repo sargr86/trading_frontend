@@ -4,6 +4,7 @@ import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {User} from "@shared/models/user";
 
 @Component({
     selector: 'app-users-list',
@@ -38,6 +39,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
             this.getUserMessages();
             this.getOnlineUsers();
             this.getSeen();
+            this.onLogout();
         }
     }
 
@@ -97,6 +99,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.socketService.getConnectedUsers({username: this.authUser.username});
 
         this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
+            console.log('online users', dt)
             this.onlineUsers = dt;
         }));
     }
@@ -132,6 +135,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
                 this.userMessagesStore.changeUserMessages(to_id, direct_messages);
             }
         }));
+    }
+
+    onLogout() {
+        this.socketService.onLogout().subscribe((user: User) => {
+            this.onlineUsers = this.onlineUsers.filter(u => u !== user.username);
+            console.log('logout', this.onlineUsers)
+        });
     }
 
     getUserLastMessage(messages) {

@@ -125,7 +125,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
             blocked: 0
         }).subscribe(dt => {
-            console.log(dt)
+            console.log('groups', dt)
             const userGroups = dt.map(d => {
                 const confirmed = !!d.chat_group_members.find(m => m.chat_groups_members.confirmed);
                 return d.name;
@@ -137,7 +137,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     addUserToSocket(userGroups) {
-        console.log('add user to socket!!!!');
+        console.log('add user to socket!!!!', {...this.authUser, chat_groups: userGroups});
         this.socketService.addNewUser({...this.authUser, chat_groups: userGroups});
     }
 
@@ -202,16 +202,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             if (this.authUser.id === data.to_id) {
+                console.log('aaa')
                 this.setNotifications.transform(data);
             }
         }));
     }
 
     getAuthenticatedUser() {
-        // this.subscriptions.push(this.subject.authUser.subscribe(dt => {
-        //     this.authUser = dt;
-        // }));
+        this.subscriptions.push(this.subject.authUser.subscribe(dt => {
+            // this.authUser = dt;
+            // this.addUserToSocket([]);
+        }));
     }
+
 
     getRouterUrlParams() {
         this.subscriptions.push(this.router.events.subscribe(ev => {
@@ -261,7 +264,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.auth.logout().subscribe(async () => {
             localStorage.removeItem('token');
             await this.router.navigate(['/']);
-            this.socketService.disconnect({username: this.authUser.username, leavingGroup: true});
+            this.socketService.disconnect({...this.authUser, leavingGroup: true});
         }));
     }
 

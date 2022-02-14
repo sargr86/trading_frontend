@@ -47,11 +47,14 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
                 localStorage.setItem('token', dt?.token || '');
                 this.subject.changeAuthUser(jwtDecode(dt?.token || ''));
+
                 console.log(jwtDecode(dt?.token || ''))
                 await this.router.navigateByUrl(this.authGuard.redirectUrl || '/');
             }));
         }
     }
+
+
 
     get email(): AbstractControl {
         return this.loginForm.get('email');

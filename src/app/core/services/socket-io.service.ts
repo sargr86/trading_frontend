@@ -19,8 +19,8 @@ export class SocketIoService {
     }
 
     addNewUser(user) {
-        // this.setupSocketConnection();
-        // console.log('add to socket!!!', user)
+        this.setupSocketConnection();
+        console.log('add to socket!!!', user)
         // console.log(this.socket)
         this.socket.emit('newUser', user);
     }
@@ -66,7 +66,7 @@ export class SocketIoService {
 
     userOnlineFeedback() {
         return new Observable(observer => {
-            this.socket.on('userConnected', msg => {
+            this.socket.on('onGetOnlineUsers', msg => {
                 observer.next(msg);
             });
         });
@@ -215,9 +215,6 @@ export class SocketIoService {
         });
     }
 
-    disconnect(data) {
-        this.socket.emit('forceDisconnect', data);
-    }
 
     acceptConnection(data) {
         // this.setupSocketConnection();
@@ -256,6 +253,18 @@ export class SocketIoService {
         // this.setupSocketConnection();
         return new Observable(observer => {
             this.socket.on('cancelledUsersConnection', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    disconnect(data) {
+        this.socket.emit('forceDisconnect', data);
+    }
+
+    onLogout() {
+        return new Observable(observer => {
+            this.socket.on('onLogout', msg => {
                 observer.next(msg);
             });
         });

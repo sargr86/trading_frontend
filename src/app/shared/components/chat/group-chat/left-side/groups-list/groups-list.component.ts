@@ -6,8 +6,8 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {SetNotificationsPipe} from "@shared/pipes/set-notifications.pipe";
-import {CheckForEmptyObjectPipe} from "@shared/pipes/check-for-empty-object.pipe";
+import {SetNotificationsPipe} from '@shared/pipes/set-notifications.pipe';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-groups-list',
@@ -42,12 +42,14 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     getGroupsMessages() {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
-            console.log('groups changed', dt)
+            console.log('groups changed', dt);
             this.filteredGroupsMessages = dt;
             const storeGroups = this.groupsMessagesStore.selectedGroupMessages;
 
-            this.selectedGroup = this.isEmptyObj.transform(storeGroups) ? dt[0] : storeGroups;
-            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            if (dt.length > 0) {
+                this.selectedGroup = this.isEmptyObj.transform(storeGroups) ? dt[0] : storeGroups;
+                this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            }
         });
     }
 
@@ -60,6 +62,8 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     addGroup(formValue) {
         this.subscriptions.push(this.chatService.addGroup(formValue).subscribe(dt => {
             this.selectedGroup = dt.find(d => formValue.name === d.name);
+            // console.log(dt)
+            // console.log(this.selectedGroup)
             this.groupsMessagesStore.setGroupsMessages(dt);
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
             this.socketService.setNewGroup(formValue);

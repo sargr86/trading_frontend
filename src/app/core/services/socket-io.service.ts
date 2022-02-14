@@ -32,7 +32,7 @@ export class SocketIoService {
     getConnectWithUser() {
         return new Observable(observer => {
             this.socket.on('getConnectWithUser', msg => {
-                console.log('get connect')
+                // console.log('get connect')
                 observer.next(msg);
             });
         });
@@ -46,7 +46,7 @@ export class SocketIoService {
         return new Observable(observer => {
 
             this.socket.on('getDisconnectUsers', msg => {
-                console.log('disconnect')
+                // console.log('disconnect')
                 observer.next(msg);
             });
         });

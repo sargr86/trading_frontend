@@ -76,14 +76,14 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     getConnectionsChanges() {
-        // this.subscriptions.push(this.usersConnectionsStore.userMessages$.subscribe((dt: any) => {
-        //     console.log('connection changed!!!', dt, this.channelUser.id)
+        this.subscriptions.push(this.usersConnectionsStore.userMessages$.subscribe((dt: any) => {
+            console.log('connection changed!!!', dt, this.channelUser.id)
         //
         //     if (dt.filter(d => d.id === this.channelUser.id)) {
         //         this.usersConnectionStatus = 'connected';
         //         this.isBlocked = false;
         //     }
-        // }));
+        }));
     }
 
     getAcceptedDeclinedRequests() {
@@ -97,7 +97,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             }
 
             if (dt.receiver_id === this.authUser.id) {
-                this.notificationsStore.addToNotifications(dt);
+                // this.notificationsStore.addToNotifications(dt);
                 // this.getNotifications();
             }
         }));

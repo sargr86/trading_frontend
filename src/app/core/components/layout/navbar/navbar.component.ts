@@ -92,7 +92,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         // }
 
         if (this.authUser) {
-            this.getInviteNotifications();
             this.getAuthUserNotifications();
             // this.getAcceptedDeclinedRequests();
             // this.getUserCards();
@@ -126,7 +125,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
             blocked: 0
         }).subscribe(dt => {
-            const userGroups = dt.map(d => d.name);
+            console.log(dt)
+            const userGroups = dt.map(d => {
+                const confirmed = !!d.chat_group_members.find(m => m.chat_groups_members.confirmed);
+                return d.name;
+            });
             this.groupsMessagesStore.setGroupsMessages(dt);
             this.addUserToSocket(userGroups);
         }));
@@ -201,13 +204,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             if (this.authUser.id === data.to_id) {
                 this.setNotifications.transform(data);
             }
-            // this.chatService.getChatGroups({user_id: this.authUser.id}).subscribe(dt => {
-            //
-            //     this.groupsMessages = dt;
-            //     this.selectedGroup = this.groupsMessages.find(group => data.group_id === group.id);
-            //     this.haveGroupJoinInvitation = true;
-            //     console.log(this.selectedGroup)
-            // });
         }));
     }
 
@@ -314,14 +310,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    getInviteNotifications() {
-        this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            // this.toastr.success(msg);
-            console.log(data)
-            this.notifications.push({type: 'invitation-to-join-group', ...data});
-            this.notificationsStore.setAllNotifications(this.notifications);
-        });
-    }
+    // getInviteNotifications() {
+    //     this.socketService.inviteToGroupSent().subscribe((data: any) => {
+    //         // this.toastr.success(msg);
+    //         console.log(data)
+    //         this.notifications.push({type: 'invitation-to-join-group', ...data});
+    //         this.notificationsStore.setAllNotifications(this.notifications);
+    //     });
+    // }
 
     notificationClicked() {
         this.closeRightSidenav.emit('notifications');

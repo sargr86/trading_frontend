@@ -29,11 +29,12 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.invitationRowHidden = this.ifConfirmedToJoinTheGroup(this.selectedGroup);
-        console.log(this.invitationRowHidden)
+        this.invitationRowHidden = this.isInvitationRowHidden(this.selectedGroup);
         this.groupMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
-            this.invitationRowHidden = !this.ifConfirmedToJoinTheGroup(this.selectedGroup);
+
+            this.invitationRowHidden = this.isInvitationRowHidden(this.selectedGroup);
+            console.log(this.invitationRowHidden)
         });
     }
 
@@ -73,12 +74,14 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
     }
 
 
-    ifConfirmedToJoinTheGroup(group) {
-        if (this.isEmptyObj.transform(group)) {
-            return !!group?.chat_group_members?.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
+    isInvitationRowHidden(group) {
+        if (!this.isEmptyObj.transform(group)) {
+            // console.log(group?.chat_group_members)
+            return !!group?.chat_group_members?.
+            find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
         }
 
-        return false;
+        return true;
     }
 
     ngOnDestroy(): void {

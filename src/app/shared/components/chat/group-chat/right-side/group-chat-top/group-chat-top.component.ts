@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {CheckForEmptyObjectPipe} from "@shared/pipes/check-for-empty-object.pipe";
 
 @Component({
     selector: 'app-group-chat-top',
@@ -21,7 +22,8 @@ export class GroupChatTopComponent implements OnInit, OnDestroy {
     constructor(
         private chatService: ChatService,
         private socketService: SocketIoService,
-        private groupMessagesStore: GroupsMessagesSubjectService
+        private groupMessagesStore: GroupsMessagesSubjectService,
+        private isEmptyObj: CheckForEmptyObjectPipe
     ) {
 
     }
@@ -37,6 +39,10 @@ export class GroupChatTopComponent implements OnInit, OnDestroy {
             groupsMessages.unshift(data.group_details);
             this.groupMessagesStore.setGroupsMessages(groupsMessages);
         }));
+    }
+
+    isChatTopShown() {
+        return this.isEmptyObj.transform(this.selectedGroup);
     }
 
     ngOnDestroy(): void {

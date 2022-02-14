@@ -47,7 +47,7 @@ export class GroupChatActionsComponent implements OnInit, OnDestroy {
 
     leaveGroup() {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
-            if (confirmed) {
+            if (confirmed && this.selectedGroup) {
                 this.chatService.leaveGroup({
                     member_id: this.authUser.id,
                     group_id: this.selectedGroup.id,

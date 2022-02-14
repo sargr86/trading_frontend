@@ -76,7 +76,7 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
 
     isInvitationRowHidden(group) {
         if (!this.isEmptyObj.transform(group)) {
-            // console.log(group?.chat_group_members)
+            console.log(group?.chat_group_members)
             return !!group?.chat_group_members?.
             find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
         }

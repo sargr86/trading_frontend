@@ -16,9 +16,6 @@ export class GroupChatTopComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
 
-    groupJoinInvitations = [];
-    invitationRowHidden = true;
-
     constructor(
         private chatService: ChatService,
         private socketService: SocketIoService,
@@ -34,7 +31,6 @@ export class GroupChatTopComponent implements OnInit, OnDestroy {
 
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            this.groupJoinInvitations.push(data.group_id);
             const groupsMessages = this.groupMessagesStore.groupsMessages;
             groupsMessages.unshift(data.group_details);
             this.groupMessagesStore.setGroupsMessages(groupsMessages);

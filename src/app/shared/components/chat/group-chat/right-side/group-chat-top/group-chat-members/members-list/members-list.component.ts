@@ -98,10 +98,13 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {group} = data;
-            if (data.from_id !== this.authUser.id) {
+            console.log('declined', data.initiator_id, this.authUser.id)
+            if (data.initiator_id !== this.authUser.id) {
                 this.setNotifications.transform(data);
+                this.groupsMessagesStore.changeGroup(group)
+            } else {
+                this.groupsMessagesStore.selectGroup({});
             }
-            this.groupsMessagesStore.changeGroup(group);
         }));
     }
 

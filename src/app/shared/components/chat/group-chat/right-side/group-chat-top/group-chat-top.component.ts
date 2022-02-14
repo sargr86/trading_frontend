@@ -26,15 +26,7 @@ export class GroupChatTopComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getGroupJoinInvitation();
-    }
 
-    getGroupJoinInvitation() {
-        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            const groupsMessages = this.groupMessagesStore.groupsMessages;
-            groupsMessages.unshift(data.group_details);
-            this.groupMessagesStore.setGroupsMessages(groupsMessages);
-        }));
     }
 
     isChatTopShown() {

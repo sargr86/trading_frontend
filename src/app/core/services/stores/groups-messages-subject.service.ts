@@ -42,10 +42,11 @@ export class GroupsMessagesSubjectService {
         console.log(groupMessages)
         console.log('CHANGE GROUP:', groupMessages.name, this.selectedGroupMessages.name)
         if (selectedGroup) {
-            // selectedGroup.chat_group_members = groupMessages?.chat_group_members;
-            // selectedGroup.avatar = groupMessages.avatar;
             selectedGroup = groupMessages;
+            selectedGroup.chat_group_members = groupMessages?.chat_group_members;
+            // selectedGroup.avatar = groupMessages.avatar;
             console.log(groupMessages)
+            console.log(groupMessages.id, this.selectedGroupMessages.id)
             if (groupMessages.id === this.selectedGroupMessages.id) {
                 this.selectedGroupMessagesSource.next(selectedGroup);
             }

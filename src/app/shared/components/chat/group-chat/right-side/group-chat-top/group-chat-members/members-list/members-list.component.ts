@@ -74,6 +74,12 @@ export class MembersListComponent implements OnInit, OnDestroy {
             this.setNotifications.transform(data);
             if (member.id === this.authUser.id) {
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
+                this.groupsMessagesStore.selectGroup({});
+            } else {
+                // console.log(group)
+                this.groupsMessagesStore.changeGroup(group)
+                console.log(this.groupsMessagesStore.selectedGroupMessages)
+                console.log(this.groupsMessagesStore.groupsMessages)
             }
         }));
     }
@@ -99,11 +105,11 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {group} = data;
             console.log('declined', data.initiator_id, this.authUser.id)
-            if (data.initiator_id !== this.authUser.id) {
+            if (data.initiator_id === this.authUser.id) {
+                this.groupsMessagesStore.selectGroup({});
+            } else {
                 this.setNotifications.transform(data);
                 this.groupsMessagesStore.changeGroup(group)
-            } else {
-                this.groupsMessagesStore.selectGroup({});
             }
         }));
     }

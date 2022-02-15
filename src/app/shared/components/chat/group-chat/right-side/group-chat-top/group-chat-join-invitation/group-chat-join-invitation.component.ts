@@ -51,7 +51,8 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.chatService.acceptGroupJoin({
                 group_id: this.selectedGroup.id,
-                member_id: this.authUser.id
+                member_id: this.authUser.id,
+                from_user: this.authUser
             }).subscribe(dt => {
 
                 this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);

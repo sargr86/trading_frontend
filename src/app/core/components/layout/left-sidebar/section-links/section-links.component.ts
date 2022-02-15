@@ -45,7 +45,7 @@ export class SectionLinksComponent implements OnInit, OnDestroy {
                 directNewMessagesCount = data.sources;
             } else {
                 groupNewMessagesCount = data.sources || 0;
-                console.log(groupNewMessagesCount)
+                // console.log(groupNewMessagesCount)
             }
             this.newMessageSources = directNewMessagesCount + groupNewMessagesCount;
             // console.log('received:', directNewMessagesCount, groupNewMessagesCount)

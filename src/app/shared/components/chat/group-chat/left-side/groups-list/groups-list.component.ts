@@ -75,9 +75,9 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             // this.setNotifications.transform(data);
             console.log('removed group', data)
             if (data.initiator.id === this.authUser.id) {
-                this.groupsMessagesStore.selectGroup({});
             }
             this.refreshGroupsMessages();
+            this.groupsMessagesStore.selectGroup({});
         }));
     }
 

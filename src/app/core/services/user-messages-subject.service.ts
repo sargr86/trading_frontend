@@ -29,15 +29,31 @@ export class UserMessagesSubjectService {
     }
 
     get selectedUserMessages() {
-        return this.selectedUserMessagesSource.getValue();
+        return this.selectedUserMessagesSource.getValue() as any;
     }
 
-    changeUserMessages(id, messages) {
-        const userMessages = this.userMessages.find(um => um.id === id);
-        if (userMessages) {
-            userMessages.direct_messages = messages;
-        }
+    // changeUserMessages(id, messages) {
+    //     const userMessages = this.userMessages.find(um => um.id === id);
+    //     if (userMessages) {
+    //         userMessages.direct_messages = messages;
+    //     }
+    //
+    //
+    //
+    // }
 
+    changeUserMessages(userMessages){
+        const allUserMessages = [...this.userMessages];
+        const selectedUserIndex = allUserMessages.findIndex(gm => gm.id === userMessages.id);
+
+
+        allUserMessages[selectedUserIndex] = userMessages;
+        this.setUserMessages(allUserMessages);
+        if (userMessages.id === this.selectedUserMessages.id) {
+            this.changeUser(userMessages);
+            console.log(this.selectedUserMessages)
+            console.log(this.userMessages)
+        }
     }
 
 

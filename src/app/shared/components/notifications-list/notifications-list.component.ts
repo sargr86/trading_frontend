@@ -64,7 +64,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         return notifications;
     }
 
-    confirmConnection(notification) {
+    acceptConnection(notification) {
         this.socketService.acceptConnection({
             notification_id: notification.id,
             connection_id: notification.connection_id,

@@ -85,9 +85,9 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             const {from_id, to_id, direct_messages} = dt;
             // console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
             if (this.selectedUserMessages.id === to_id) {
-                this.userMessagesStore.changeUserMessages(to_id, direct_messages);
+                this.userMessagesStore.changeUserMessages(dt);
             } else if (this.selectedUserMessages.id === from_id) {
-                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
+                this.userMessagesStore.changeUserMessages(dt);
             }
             this.setNewMessageSources();
         }));
@@ -118,9 +118,9 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             // console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
             this.typingText = null;
             if (from_id === this.authUser.id || (to_id === this.authUser.id && from_id === this.selectedUserMessages.id)) {
-                this.userMessagesStore.changeUserMessages(this.selectedUserMessages.id, direct_messages);
+                this.userMessagesStore.changeUserMessages(dt);
             } else {
-                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
+                this.userMessagesStore.changeUserMessages(dt);
             }
             this.scrollMsgsToBottom();
             this.setNewMessageSources();

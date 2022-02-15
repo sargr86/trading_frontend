@@ -43,7 +43,7 @@
 
                  *ngIf="notification?.notification_type?.name === 'users_connection_request' || notification.type=== 'users_connection_request'">
 
-                <button class="confirm-connection-btn" (click)="confirmConnection(notification)">
+                <button class="confirm-connection-btn" (click)="acceptConnection(notification)">
                     <mat-icon>check</mat-icon>
                     <span>Confirm</span>
                 </button>

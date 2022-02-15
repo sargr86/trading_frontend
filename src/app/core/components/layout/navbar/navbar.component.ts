@@ -339,9 +339,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
             // console.log('new message', dt)
             const {from_id, to_id, direct_messages} = dt;
             if (from_id === this.authUser.id) {
-                this.userMessagesStore.changeUserMessages(to_id, direct_messages);
+                this.userMessagesStore.changeUserMessages(dt);
             } else if (to_id === this.authUser.id) {
-                this.userMessagesStore.changeUserMessages(from_id, direct_messages);
+                this.userMessagesStore.changeUserMessages(dt);
             }
             // console.log(this.userMessagesStore.userMessages)
         }));

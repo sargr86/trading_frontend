@@ -18,8 +18,10 @@ export class SocketIoService {
         this.socket = io(SOCKET_URL);
     }
 
-    addNewUser(user) {
-        this.setupSocketConnection();
+    addNewUser(user, login = false) {
+        if (login) {
+            this.setupSocketConnection();
+        }
         console.log('add to socket!!!', user)
         // console.log(this.socket)
         this.socket.emit('newUser', user);

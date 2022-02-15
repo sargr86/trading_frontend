@@ -41,7 +41,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     getGroupsMessages() {
         this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
-            console.log('groups changed', dt);
+            // console.log('groups changed', dt);
             this.filteredGroupsMessages = dt;
             const storeGroups = this.groupsMessagesStore.selectedGroupMessages;
 

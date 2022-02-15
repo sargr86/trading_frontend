@@ -27,10 +27,13 @@ export class NotificationsSubjectStoreService {
     updateNotifications(notification) {
 
         let allNotifications = [...this.allNotifications];
-        const selectedGroupIndex = allNotifications.findIndex(gm => gm.id === notification.id);
+        // const selectedGroupIndex = allNotifications.findIndex(gm => gm.id === notification.id);
+        // console.log(allNotifications, selectedGroupIndex)
+        //
+        // allNotifications[selectedGroupIndex] = notification;
+        // console.log(allNotifications)
 
-
-        allNotifications[selectedGroupIndex] = notification;
+        allNotifications.unshift(notification);
         allNotifications = sortTableData(allNotifications, 'created_at', 'desc');
         this.allNotificationsSource.next([...allNotifications]);
     }

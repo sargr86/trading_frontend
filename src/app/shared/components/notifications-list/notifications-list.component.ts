@@ -92,7 +92,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log(dt)
-            this.getNotifications();
+            // this.getNotifications();
         }));
     }
 

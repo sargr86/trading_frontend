@@ -202,8 +202,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             if (this.authUser.id === data.to_id) {
-                console.log('aaa')
+                console.log('aaa', data)
                 this.notificationsStore.updateNotifications(data);
+                console.log(this.notificationsStore.allNotifications)
                 // this.setNotifications.transform(data);
             }
         }));

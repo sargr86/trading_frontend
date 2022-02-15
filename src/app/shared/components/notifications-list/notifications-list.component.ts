@@ -9,6 +9,8 @@ import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {ChatService} from '@core/services/chat.service';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -28,9 +30,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     constructor(
         private notificationsService: NotificationsService,
         public notificationsStore: NotificationsSubjectStoreService,
+        private userMessagesStore: UserMessagesSubjectService,
+        private groupMessagesStore: GroupsMessagesSubjectService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
-        private userMessagesStore: UserMessagesSubjectService,
+        private chatService: ChatService,
         public auth: AuthService,
         public router: Router
     ) {
@@ -177,10 +181,32 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     acceptGroupJoin(notification) {
         console.log(notification)
+        // this.subscriptions.push(
+        //     this.chatService.acceptGroupJoin({
+        //         group_id: notification.group_id,
+        //         member_id: this.authUser.id,
+        //         from_user: this.authUser
+        //     }).subscribe(dt => {
+        //
+        //         this.socketService.acceptJoinToGroup({group: this.selectedGroup, user: this.authUser});
+        //         this.groupMessagesStore.setGroupsMessages(dt);
+        //     })
+        // );
     }
 
     declineGroupJoin(notification) {
-
+        // this.subscriptions.push(
+        //     this.chatService.declineGroupJoin({
+        //         group_id: notification.group_id,
+        //         member_id: this.authUser.id
+        //     }).subscribe(dt => {
+        //         this.socketService.declineJoinToGroup({
+        //             group: this.selectedGroup,
+        //             user: this.authUser
+        //         });
+        //         this.groupMessagesStore.setGroupsMessages(dt);
+        //     })
+        // );
     }
 
     ngOnDestroy(): void {

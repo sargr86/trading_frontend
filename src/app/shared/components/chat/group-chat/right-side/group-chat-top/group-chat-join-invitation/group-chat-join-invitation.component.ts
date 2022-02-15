@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
-import {CheckForEmptyObjectPipe} from "@shared/pipes/check-for-empty-object.pipe";
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-group-chat-join-invitation',
@@ -47,41 +47,7 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
         }));
     }
 
-    acceptGroupJoin() {
-        this.subscriptions.push(
-            this.chatService.acceptGroupJoin({
-                group_id: this.selectedGroup.id,
-                member_id: this.authUser.id,
-                from_user: this.authUser
-            }).subscribe(dt => {
 
-                this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
-                // this.haveGroupJoinInvitation = false;
-                this.socketService.acceptJoinToGroup({group: this.selectedGroup, user: this.authUser});
-                this.groupMessagesStore.setGroupsMessages(dt);
-            })
-        );
-    }
-
-    declineGroupJoin() {
-        console.log(this.selectedGroup)
-        // this.subscriptions.push(
-        //     this.chatService.declineGroupJoin({
-        //         group_id: this.selectedGroup.id,
-        //         member_id: this.authUser.id
-        //     }).subscribe(dt => {
-        //         // this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
-        //         // console.log(this.selectedGroup)
-        //         // this.selectedGroup = dt;
-        //         this.socketService.declineJoinToGroup({
-        //             group: this.selectedGroup,
-        //             user: this.authUser
-        //         });
-        //         this.groupMessagesStore.setGroupsMessages(dt);
-        //         // this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
-        //     })
-        // );
-    }
 
 
     isInvitationRowHidden(group) {

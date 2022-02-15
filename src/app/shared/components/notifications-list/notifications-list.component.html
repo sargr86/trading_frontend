@@ -24,13 +24,13 @@
 <ul [class.sidebar-notifications]="shownInSidebar">
     <li *ngFor="let notification of filterByCategory(notificationsStore.allNotifications, notificationsCategory)"
         class="notification" [class.unread]="notification?.read===0"
-        [class.flex-wrap]="notification?.notification_type?.name === 'users_connection_request'"
-        (click)="onNotificationClick(notification?.notification_type?.name)">
+        [class.flex-wrap]="notification?.type === 'users_connection_request'"
+        (click)="onNotificationClick(notification?.type)">
 
         <div class="left d-flex pl-2" (click)="readNotification(notification)">
             <div class="avatar-container">
                 <img class="avatar" id="profile-image"
-                     [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+                     [src]="notification.from_avatar|getImgPath: 'user_avatars'">
             </div>
             <div class="notification-body">
                 <p class="notification-text" [innerHTML]="notification.msg"></p>
@@ -41,7 +41,7 @@
         <div class="additional-actions">
             <div class="connection-actions"
 
-                 *ngIf="notification?.notification_type?.name === 'users_connection_request' || notification.type=== 'users_connection_request'">
+                 *ngIf="notification?.type === 'users_connection_request' || notification.type=== 'users_connection_request'">
 
                 <button class="confirm-connection-btn" (click)="acceptConnection(notification)">
                     <mat-icon>check</mat-icon>
@@ -53,7 +53,7 @@
                 </button>
             </div>
             <div class="regular-notification-actions"
-                 *ngIf="notification?.notification_type?.name !== 'users_connection_request'">
+                 *ngIf="notification?.type!== 'users_connection_request'">
                 <div class="dotes" [hidden]="true">
                     <button mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true"
                             aria-label="Example icon-button with a menu">

@@ -64,23 +64,23 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
     }
 
     declineGroupJoin() {
-        // console.log(this.selectedGroup)
-        this.subscriptions.push(
-            this.chatService.declineGroupJoin({
-                group_id: this.selectedGroup.id,
-                member_id: this.authUser.id
-            }).subscribe(dt => {
-                // this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
-                // console.log(this.selectedGroup)
-                // this.selectedGroup = dt;
-                this.socketService.declineJoinToGroup({
-                    group: this.selectedGroup,
-                    user: this.authUser
-                });
-                this.groupMessagesStore.setGroupsMessages(dt);
-                // this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
-            })
-        );
+        console.log(this.selectedGroup)
+        // this.subscriptions.push(
+        //     this.chatService.declineGroupJoin({
+        //         group_id: this.selectedGroup.id,
+        //         member_id: this.authUser.id
+        //     }).subscribe(dt => {
+        //         // this.selectedGroup = dt.find(group => this.selectedGroup.id === group.id);
+        //         // console.log(this.selectedGroup)
+        //         // this.selectedGroup = dt;
+        //         this.socketService.declineJoinToGroup({
+        //             group: this.selectedGroup,
+        //             user: this.authUser
+        //         });
+        //         this.groupMessagesStore.setGroupsMessages(dt);
+        //         // this.selectedGroup = this.groupsMessages.find(group => this.selectedGroup.id === group.id);
+        //     })
+        // );
     }
 
 

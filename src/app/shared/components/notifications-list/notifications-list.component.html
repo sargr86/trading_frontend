@@ -51,6 +51,19 @@
                     <span>Decline</span>
                 </button>
             </div>
+            <div class="connection-actions"
+
+                 *ngIf="notification?.type === 'group_join_invitation'">
+
+                <button class="confirm-connection-btn" (click)="acceptGroupJoin(notification)">
+                    <mat-icon>check</mat-icon>
+                    <span>Accept</span>
+                </button>
+                <button class="decline-connection-btn" (click)="declineGroupJoin(notification)">
+                    <mat-icon>close</mat-icon>
+                    <span>Decline</span>
+                </button>
+            </div>
             <div class="regular-notification-actions"
                  *ngIf="notification?.type!== 'users_connection_request'">
                 <div class="dotes" [hidden]="true">

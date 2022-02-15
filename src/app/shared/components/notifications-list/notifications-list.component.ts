@@ -175,6 +175,14 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }
     }
 
+    acceptGroupJoin(notification) {
+        console.log(notification)
+    }
+
+    declineGroupJoin(notification) {
+
+    }
+
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }

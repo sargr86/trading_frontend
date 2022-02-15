@@ -262,8 +262,10 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.attemptedToConnect = true;
         this.usersConnectionStatus = 'pending';
         this.socketService.connectWithUser({
-            authUser: this.authUser,
-            channelUser: this.channelUser
+            from_user: this.authUser,
+            to_user: this.channelUser,
+            msg: `<strong>${ this.authUser.first_name + ' ' +  this.authUser.last_name}</strong>
+                has sent a connection request to you`
         });
     }
 

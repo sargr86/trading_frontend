@@ -66,11 +66,13 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     acceptConnection(notification) {
+        console.log(notification)
         this.socketService.acceptConnection({
             notification_id: notification._id,
             connection_id: notification.connection_id,
             to_user: notification.from_user,
             from_user: notification.to_user,
+            msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted your connection request`
         });
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
 
@@ -84,6 +86,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             connection_id: notification.connection_id,
             to_user: notification.from_user,
             from_user: notification.to_user,
+            msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined your connection request`
         });
 
         this.notifications = this.notifications.filter(n => n.id !== notification.id);

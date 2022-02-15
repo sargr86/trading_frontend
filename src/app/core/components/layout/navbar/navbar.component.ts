@@ -191,7 +191,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
             console.log('get block/unblock', dt)
-            if (dt.initiator_id !== this.authUser.id) {
+            if (dt.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
                 // this.setNotifications.transform(dt);
             }

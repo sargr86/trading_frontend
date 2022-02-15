@@ -23,7 +23,7 @@
 <p *ngIf="notificationsCategory==='new' && notificationsStore.allNotifications.length === 0">No notifications found</p>
 <ul [class.sidebar-notifications]="shownInSidebar">
     <li *ngFor="let notification of filterByCategory(notificationsStore.allNotifications, notificationsCategory)"
-        class="notification" [class.unread]="notification?.read===0"
+        class="notification" [class.unread]="!notification?.read"
         [class.flex-wrap]="notification?.type === 'users_connection_request'"
         (click)="onNotificationClick(notification?.type)">
 

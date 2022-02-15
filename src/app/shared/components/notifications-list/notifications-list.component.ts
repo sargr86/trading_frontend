@@ -52,7 +52,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
             this.notificationsStore.setInitialNotifications(dt);
             this.notifications = this.notificationsStore.allNotifications;
-            console.log(this.notifications);
+            // console.log(this.notifications);
         }));
     }
 
@@ -78,7 +78,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     declineConnection(notification) {
-        console.log(notification)
         this.socketService.declineConnection({
             notification_id: notification.id,
             connection_id: notification.connection_id,
@@ -95,32 +94,20 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (this.authUser.id === dt.notification.to_user.id) {
                 this.notificationsStore.updateNotifications(dt.notification);
             }
-            console.log(dt.notification)
-            // this.getNotifications();
         }));
     }
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt);
-            // console.log(dt.receiver_id, this.authUser.id)
-            // console.log(this.notificationsStore.notifications, this.notifications)
             this.userMessagesStore.setUserMessages(dt.users_messages);
             if (dt.to_user.id === this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
-                // this.notifications.push(dt);
-                // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
-                // this.notificationsStore.setNotifications(this.notifications);
-                this.getNotifications();
             }
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            // console.log('declined', dt);
-            // this.notifications.push(dt);
-            // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
-            // this.notificationsStore.setNotifications(this.notifications);
-            this.getNotifications();
+            this.notificationsStore.updateNotifications(dt);
         }));
     }
 
@@ -135,8 +122,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     readNotification(n) {
         this.subscriptions.push(this.notificationsService.readNotification({
-            id: n.id,
-            type: n.notification_type.name
+            id: n._id,
+            type: n.type
         }).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
             console.log(dt);
@@ -145,7 +132,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     markAllAsRead() {
-        const ids = this.notificationsStore.allNotifications.map(n => n.id);
+        const ids = this.notificationsStore.allNotifications.map(n => n._id);
         this.notificationsService.markNotificationsAsRead({ids, user_id: this.authUser.id}).subscribe(dt => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
             this.notificationsStore.setAllNotifications(dt);

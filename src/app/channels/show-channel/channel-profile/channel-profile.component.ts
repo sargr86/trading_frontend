@@ -294,11 +294,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     disconnectUser() {
         // console.log(this.usersConnection)
         this.socketService.disconnectUsers({
-            to_username: this.channelUser.username,
-            from_username: this.authUser.username,
+            to_user: this.channelUser,
+            from_user: this.authUser,
             connection_id: this.usersConnection.id,
-            from_id: this.usersConnection.from_id,
-            to_id: this.usersConnection.to_id,
             msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has broken the connection between you two`,
         });
         this.usersConnectionStatus = 'idle';

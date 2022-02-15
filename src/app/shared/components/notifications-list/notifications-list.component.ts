@@ -78,6 +78,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     declineConnection(notification) {
+        console.log(notification)
         this.socketService.declineConnection({
             notification_id: notification.id,
             connection_id: notification.connection_id,
@@ -91,7 +92,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
-            console.log(dt)
+            if (this.authUser.id === dt.notification.to_user.id) {
+                this.notificationsStore.updateNotifications(dt.notification);
+            }
+            console.log(dt.notification)
             // this.getNotifications();
         }));
     }
@@ -102,7 +106,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             // console.log(dt.receiver_id, this.authUser.id)
             // console.log(this.notificationsStore.notifications, this.notifications)
             this.userMessagesStore.setUserMessages(dt.users_messages);
-            if (dt.receiver_id === this.authUser.id) {
+            if (dt.to_user.id === this.authUser.id) {
+                this.notificationsStore.updateNotifications(dt);
                 // this.notifications.push(dt);
                 // this.notifications = sortTableData(this.notifications, 'created_at', 'desc');
                 // this.notificationsStore.setNotifications(this.notifications);

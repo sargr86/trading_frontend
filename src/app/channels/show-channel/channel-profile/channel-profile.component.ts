@@ -78,11 +78,11 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     getConnectionsChanges() {
         this.subscriptions.push(this.usersConnectionsStore.userMessages$.subscribe((dt: any) => {
             console.log('connection changed!!!', dt, this.channelUser.id)
-        //
-        //     if (dt.filter(d => d.id === this.channelUser.id)) {
-        //         this.usersConnectionStatus = 'connected';
-        //         this.isBlocked = false;
-        //     }
+            //
+            //     if (dt.filter(d => d.id === this.channelUser.id)) {
+            //         this.usersConnectionStatus = 'connected';
+            //         this.isBlocked = false;
+            //     }
         }));
     }
 
@@ -90,8 +90,8 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt)
             console.log(dt.receiver_id, this.channelUser.id)
-            if ((dt.receiver_id === this.authUser.id && dt.initiator_id === this.channelUser.id)
-                || (dt.receiver_id === this.channelUser.id && dt.initiator_id === this.authUser.id)) {
+            if ((dt.to_user.id === this.authUser.id && dt.from_user.id === this.channelUser.id)
+                || (dt.to_user.id === this.channelUser.id && dt.from_user.id === this.authUser.id)) {
                 this.usersConnectionStatus = 'connected';
                 this.isBlocked = false;
             }
@@ -268,9 +268,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     getConnectWithUser() {
-        this.socketService.getConnectWithUser().subscribe(dt => {
+        this.socketService.getConnectWithUser().subscribe((dt: any) => {
             // console.log('get connect', dt)
-            this.usersConnection = dt;
+            this.usersConnection = dt.connection;
 
         });
     }

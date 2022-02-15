@@ -141,9 +141,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
-            console.log('get connect with user', dt)
+            // console.log('get connect with user', dt)
             if (dt.from_id !== this.authUser.id) {
-                this.notificationsStore.updateNotifications(dt);
+                // this.notificationsStore.updateNotifications(dt);
                 // this.notifications.push(dt);
                 // this.notificationsStore.setAllNotifications(this.notifications);
             }
@@ -333,7 +333,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUnreadNotificationsCount() {
-        return this.notificationsStore.allNotifications.filter(n => n?.read === 0).length;
+        return this.notificationsStore.allNotifications.filter(n => !n?.read).length;
     }
 
     getMessagesFromSocket() {

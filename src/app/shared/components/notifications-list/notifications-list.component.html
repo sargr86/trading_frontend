@@ -20,9 +20,9 @@
            (click)="router.navigate(['user/notifications'])">View more</p>
     </div>
 </div>
-<p *ngIf="notificationsCategory==='new' && notificationsStore.allNotifications?.length === 0">No notifications found</p>
+<p *ngIf="notificationsCategory==='new' && notifications.length === 0">No notifications found</p>
 <ul [class.sidebar-notifications]="shownInSidebar">
-    <li *ngFor="let notification of filterByCategory(notificationsStore.allNotifications, notificationsCategory)"
+    <li *ngFor="let notification of filterByCategory(notifications, notificationsCategory)"
         class="notification" [class.unread]="notification?.read===0"
         [class.flex-wrap]="notification?.notification_type?.name === 'users_connection_request'"
         (click)="onNotificationClick(notification?.notification_type?.name)">

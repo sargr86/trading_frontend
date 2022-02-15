@@ -22,7 +22,7 @@ export class SocketIoService {
         if (login) {
             this.setupSocketConnection();
         }
-        console.log('add to socket!!!', user)
+        // console.log('add to socket!!!', user)
         // console.log(this.socket)
         this.socket.emit('newUser', user);
     }
@@ -95,7 +95,7 @@ export class SocketIoService {
     getTyping() {
         return new Observable(observer => {
             this.socket.on('getTyping', msg => {
-                console.log('typing')
+                // console.log('typing')
                 observer.next(msg);
             });
         });

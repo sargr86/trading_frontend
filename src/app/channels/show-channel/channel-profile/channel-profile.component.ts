@@ -308,7 +308,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe(dt => {
             console.log('disconnected', dt)
             this.usersConnectionStatus = 'idle';
-            this.notificationsStore.addToNotifications(dt);
+            this.notificationsStore.updateNotifications(dt);
         }));
     }
 

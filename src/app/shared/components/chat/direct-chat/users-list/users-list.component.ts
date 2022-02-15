@@ -45,7 +45,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     getUserMessages() {
         this.userMessagesStore.userMessages$.subscribe(dt => {
-            console.log('users list!!!', dt)
+            // console.log('users list!!!', dt)
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
             this.selectedUserMessages = this.filteredUsersMessages[0];
             this.userMessagesStore.changeUser(this.selectedUserMessages);
@@ -99,7 +99,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.socketService.getConnectedUsers({username: this.authUser.username});
 
         this.subscriptions.push(this.socketService.userOnlineFeedback().subscribe((dt: any) => {
-            console.log('online users', dt)
+            // console.log('online users', dt)
             this.onlineUsers = dt;
         }));
     }

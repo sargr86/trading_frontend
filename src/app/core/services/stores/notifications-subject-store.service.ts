@@ -15,14 +15,24 @@ export class NotificationsSubjectStoreService {
     constructor() {
     }
 
-    setAllNotifications(messages: any) {
-        this.allNotificationsSource.next([...messages]);
+    setInitialNotifications(notifications: any) {
+        const sortedNotifications = sortTableData(notifications, 'created_at', 'desc');
+        this.allNotificationsSource.next([...sortedNotifications]);
     }
 
-    addToNotifications(notification) {
-        this.allNotifications.push(notification);
-        const notifications = sortTableData(this.allNotifications, 'created_at', 'desc');
-        this.setAllNotifications(notifications);
+    setAllNotifications(notifications) {
+        this.allNotificationsSource.next([...notifications]);
+    }
+
+    updateNotifications(notification) {
+
+        let allNotifications = [...this.allNotifications];
+        const selectedGroupIndex = allNotifications.findIndex(gm => gm.id === notification.id);
+
+
+        allNotifications[selectedGroupIndex] = notification;
+        allNotifications = sortTableData(allNotifications, 'created_at', 'desc');
+        this.allNotificationsSource.next([...allNotifications]);
     }
 
     get allNotifications() {

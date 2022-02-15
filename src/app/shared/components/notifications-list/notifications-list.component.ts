@@ -8,7 +8,7 @@ import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
-import {UserMessagesSubjectService} from "@core/services/user-messages-subject.service";
+import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -50,8 +50,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
-            this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setAllNotifications(dt);
+            this.notificationsStore.setInitialNotifications(dt);
+            this.notifications = this.notificationsStore.allNotifications;
+            console.log(this.notifications);
         }));
     }
 
@@ -73,7 +74,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         });
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
 
-        this.notificationsStore.setAllNotifications(this.notifications);
+        this.notificationsStore.setInitialNotifications(this.notifications);
     }
 
     declineConnection(notification) {

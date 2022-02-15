@@ -92,7 +92,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         // }
 
         if (this.authUser) {
-            this.getAuthUserNotifications();
+            // this.getAuthUserNotifications();
             // this.getAcceptedDeclinedRequests();
             // this.getUserCards();
             this.getDailyStocks();
@@ -125,7 +125,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
             blocked: 0
         }).subscribe(dt => {
-            console.log('groups', dt)
+            // console.log('groups', dt)
             const userGroups = dt.map(d => {
                 const confirmed = !!d.chat_group_members.find(m => m.chat_groups_members.confirmed);
                 return d.name;
@@ -137,7 +137,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     addUserToSocket(userGroups) {
-        console.log('add user to socket!!!!', {...this.authUser, chat_groups: userGroups});
+        // console.log('add user to socket!!!!');
         this.socketService.addNewUser({...this.authUser, chat_groups: userGroups});
     }
 
@@ -145,23 +145,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
             console.log('get connect with user', dt)
             if (dt.from_id !== this.authUser.id) {
-                this.notificationsStore.addToNotifications(dt);
+                this.notificationsStore.updateNotifications(dt);
                 // this.notifications.push(dt);
                 // this.notificationsStore.setAllNotifications(this.notifications);
             }
         }));
     }
 
-    getAuthUserNotifications() {
-        this.subscriptions.push(
-            this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
-                dt.map(d => {
-                    this.notifications.push(d);
-                });
-                this.notificationsStore.setAllNotifications(this.notifications);
-            })
-        );
-    }
+    // getAuthUserNotifications() {
+    //     this.subscriptions.push(
+    //         this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
+    //             dt.map(d => {
+    //                 this.notifications.push(d);
+    //             });
+    //             this.notificationsStore.setAllNotifications(this.notifications);
+    //         })
+    //     );
+    // }
 
     // getAcceptedDeclinedRequests() {
     //     this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {

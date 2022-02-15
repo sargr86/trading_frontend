@@ -24,7 +24,6 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
-import {SetNotificationsPipe} from '@shared/pipes/set-notifications.pipe';
 
 @Component({
     selector: 'app-navbar',
@@ -76,7 +75,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService,
-        private setNotifications: SetNotificationsPipe
     ) {
 
     }
@@ -184,7 +182,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
             console.log('disconnected', dt);
-            this.setNotifications.transform(dt);
+            // this.setNotifications.transform(dt);
+            this.notificationsStore.updateNotifications(dt);
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
@@ -193,7 +192,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
             console.log('get block/unblock', dt)
             if (dt.initiator_id !== this.authUser.id) {
-                this.setNotifications.transform(dt);
+                this.notificationsStore.updateNotifications(dt);
+                // this.setNotifications.transform(dt);
             }
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
@@ -203,7 +203,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             if (this.authUser.id === data.to_id) {
                 console.log('aaa')
-                this.setNotifications.transform(data);
+                this.notificationsStore.updateNotifications(data);
+                // this.setNotifications.transform(data);
             }
         }));
     }

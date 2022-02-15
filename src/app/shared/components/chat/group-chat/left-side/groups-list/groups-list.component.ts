@@ -6,7 +6,6 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {SetNotificationsPipe} from '@shared/pipes/set-notifications.pipe';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
@@ -72,7 +71,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
     removeGroupNotify() {
         this.subscriptions.push(this.socketService.removeGroupNotify().subscribe((data: any) => {
-            // this.setNotifications.transform(data);
             console.log('removed group', data)
             if (data.initiator.id === this.authUser.id) {
             }

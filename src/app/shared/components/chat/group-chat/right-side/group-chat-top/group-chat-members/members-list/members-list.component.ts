@@ -8,7 +8,6 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
-import {SetNotificationsPipe} from '@shared/pipes/set-notifications.pipe';
 
 @Component({
     selector: 'app-members-list',
@@ -32,7 +31,6 @@ export class MembersListComponent implements OnInit, OnDestroy {
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
-        private setNotifications: SetNotificationsPipe
     ) {
     }
 
@@ -71,15 +69,15 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getRemovedSavedMember() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
-            this.setNotifications.transform(data);
+            this.notificationsStore.updateNotifications(data);
             if (member.id === this.authUser.id) {
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
                 this.groupsMessagesStore.selectGroup({});
             } else {
                 // console.log(group)
-                this.groupsMessagesStore.changeGroup(group)
-                console.log(this.groupsMessagesStore.selectedGroupMessages)
-                console.log(this.groupsMessagesStore.groupsMessages)
+                this.groupsMessagesStore.changeGroup(group);
+                // console.log(this.groupsMessagesStore.selectedGroupMessages)
+                // console.log(this.groupsMessagesStore.groupsMessages)
             }
         }));
     }
@@ -95,7 +93,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
             const {group} = data;
             // console.log('accepted', data)
             if (data.from_id !== this.authUser.id) {
-                this.setNotifications.transform(data);
+                this.notificationsStore.updateNotifications(data);
             }
             this.groupsMessagesStore.changeGroup(group);
         }));
@@ -104,12 +102,12 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getDeclinedJoinGroup() {
         this.subscriptions.push(this.socketService.getDeclinedJoinGroup().subscribe((data: any) => {
             const {group} = data;
-            console.log('declined', data.initiator_id, this.authUser.id)
+            console.log('declined', data.initiator_id, this.authUser.id);
             if (data.initiator_id === this.authUser.id) {
                 this.groupsMessagesStore.selectGroup({});
             } else {
-                this.setNotifications.transform(data);
-                this.groupsMessagesStore.changeGroup(group)
+                this.notificationsStore.updateNotifications(data);
+                this.groupsMessagesStore.changeGroup(group);
             }
         }));
     }
@@ -117,7 +115,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
             const {group} = data;
-            this.setNotifications.transform(data);
+            this.notificationsStore.updateNotifications(data);
             this.groupsMessagesStore.changeGroup(group);
         }));
     }

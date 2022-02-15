@@ -67,7 +67,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     acceptConnection(notification) {
         this.socketService.acceptConnection({
-            notification_id: notification.id,
+            notification_id: notification._id,
             connection_id: notification.connection_id,
             to_user: notification.from_user,
             from_user: notification.to_user,
@@ -78,8 +78,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     declineConnection(notification) {
+        console.log(notification)
         this.socketService.declineConnection({
-            notification_id: notification.id,
+            notification_id: notification._id,
             connection_id: notification.connection_id,
             to_user: notification.from_user,
             from_user: notification.to_user,

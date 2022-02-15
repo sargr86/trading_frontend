@@ -116,11 +116,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
             this.socketService.blockUnblockUser({
                 connection_id: user.users_connections?.[0].id,
                 block: +!this.showBlockedUsers,
-                from_id: this.authUser.id,
-                to_id: user.id,
+                from_user: this.authUser,
+                to_user: user,
                 msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> has blocked the connection between you two`,
-                contact_username: user.username,
-                from_username: this.authUser.username
             });
         }));
     }

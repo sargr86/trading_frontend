@@ -126,11 +126,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-
-            if (this.selectedUserMessages.id === from_id) {
-                this.userMessagesStore.changeUserMessages(dt);
+            // console.log('get seen from users list', this.selectedUserMessages.id, to_id)
+            // console.log(dt)
+            if (this.selectedUserMessages.id === to_id) {
+                this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
             } else {
-                this.userMessagesStore.changeUserMessages(dt);
+                this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
             }
         }));
     }

@@ -49,6 +49,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     getSelectedUserChanges() {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+            console.log('chat form change')
             this.chatForm.patchValue({message: ''});
             this.setTyping();
 

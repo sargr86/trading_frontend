@@ -188,10 +188,13 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 group_id: selectedGroup.id,
                 member_id: this.authUser.id,
                 from_user: this.authUser,
-                notification_id: notification._id
             }).subscribe(dt => {
 
-                this.socketService.acceptJoinToGroup({group: selectedGroup, user: this.authUser});
+                this.socketService.acceptJoinToGroup({
+                    group: selectedGroup,
+                    user: this.authUser,
+                    notification_id: notification._id
+                });
                 this.groupMessagesStore.setGroupsMessages(dt);
 
                 this.notifications = this.notifications.filter(n => n.id !== notification.id);
@@ -223,7 +226,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     isNotificationRead(notification) {
-        // console.log(!notification?.read || !!notification.read.find(r => r.id === this.authUser.id))
         return notification?.read;
     }
 

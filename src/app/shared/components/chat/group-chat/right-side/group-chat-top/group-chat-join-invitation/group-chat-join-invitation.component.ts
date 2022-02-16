@@ -47,6 +47,14 @@ export class GroupChatJoinInvitationComponent implements OnInit, OnDestroy {
         }));
     }
 
+    acceptGroupJoin(){
+
+    }
+
+    declineGroupJoin(){
+
+    }
+
 
 
 

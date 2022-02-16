@@ -180,33 +180,44 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     acceptGroupJoin(notification) {
-        console.log(notification)
-        // this.subscriptions.push(
-        //     this.chatService.acceptGroupJoin({
-        //         group_id: notification.group_id,
-        //         member_id: this.authUser.id,
-        //         from_user: this.authUser
-        //     }).subscribe(dt => {
-        //
-        //         this.socketService.acceptJoinToGroup({group: this.selectedGroup, user: this.authUser});
-        //         this.groupMessagesStore.setGroupsMessages(dt);
-        //     })
-        // );
+        const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        this.subscriptions.push(
+            this.chatService.acceptGroupJoin({
+                group_id: selectedGroup.id,
+                member_id: this.authUser.id,
+                from_user: this.authUser,
+                notification_id: notification._id
+            }).subscribe(dt => {
+
+                this.socketService.acceptJoinToGroup({group: selectedGroup, user: this.authUser});
+                this.groupMessagesStore.setGroupsMessages(dt);
+
+                this.notifications = this.notifications.filter(n => n.id !== notification.id);
+                this.notificationsStore.setInitialNotifications(this.notifications);
+
+            })
+        );
     }
 
     declineGroupJoin(notification) {
-        // this.subscriptions.push(
-        //     this.chatService.declineGroupJoin({
-        //         group_id: notification.group_id,
-        //         member_id: this.authUser.id
-        //     }).subscribe(dt => {
-        //         this.socketService.declineJoinToGroup({
-        //             group: this.selectedGroup,
-        //             user: this.authUser
-        //         });
-        //         this.groupMessagesStore.setGroupsMessages(dt);
-        //     })
-        // );
+        const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        this.subscriptions.push(
+            this.chatService.declineGroupJoin({
+                group_id: notification.group_id,
+                member_id: this.authUser.id
+            }).subscribe(dt => {
+                this.socketService.declineJoinToGroup({
+                    group: selectedGroup,
+                    user: this.authUser,
+                    notification_id: notification._id
+                });
+
+                this.notifications = this.notifications.filter(n => n.id !== notification.id);
+                this.notificationsStore.setInitialNotifications(this.notifications);
+
+                this.groupMessagesStore.setGroupsMessages(dt);
+            })
+        );
     }
 
     ngOnDestroy(): void {

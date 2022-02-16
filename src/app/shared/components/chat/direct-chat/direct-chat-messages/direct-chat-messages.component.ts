@@ -107,6 +107,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         }));
     }
 
+
     sendMessage(e) {
         // console.log('sent', e);
         this.socketService.sendMessage(e);

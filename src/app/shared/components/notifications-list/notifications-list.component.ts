@@ -131,17 +131,19 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     readNotification(n) {
         this.subscriptions.push(this.notificationsService.readNotification({
             id: n._id,
-            type: n.type
+            type: n.type,
+            read_by: this.authUser
         }).subscribe((dt: any) => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
-            console.log(dt);
             this.notificationsStore.setAllNotifications(dt);
         }));
     }
 
     markAllAsRead() {
         const ids = this.notificationsStore.allNotifications.map(n => n._id);
-        this.notificationsService.markNotificationsAsRead({ids, user_id: this.authUser.id}).subscribe(dt => {
+        this.notificationsService.markNotificationsAsRead({
+            ids, user_id: this.authUser.id, read_by: this.authUser
+        }).subscribe(dt => {
             this.notifications = sortTableData(dt, 'created_at', 'desc');
             this.notificationsStore.setAllNotifications(dt);
         });
@@ -218,6 +220,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 this.groupMessagesStore.setGroupsMessages(dt);
             })
         );
+    }
+
+    isNotificationRead(notification) {
+        // console.log(!notification?.read || !!notification.read.find(r => r.id === this.authUser.id))
+        return notification?.read;
     }
 
     ngOnDestroy(): void {

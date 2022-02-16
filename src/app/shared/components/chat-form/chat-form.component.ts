@@ -4,8 +4,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Subscription} from 'rxjs';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
-import {FixTextLineBreaksPipe} from "@shared/pipes/fix-text-line-breaks.pipe";
-import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
+import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-chat-form',
@@ -49,7 +49,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     getSelectedUserChanges() {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
-            console.log('chat form change')
             this.chatForm.patchValue({message: ''});
             this.setTyping();
 
@@ -115,11 +114,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     setSeen() {
         this.seen.emit({
-            // from_username: this.chatForm.value.from_username,
-            // from_id: this.chatForm.value.from_id,
-            // to_username: this.chatForm.value.to_username,
-            // to_id: this.chatForm.value.to_id,
-            // connection_id: this.chatForm.value.connection_id
             ...this.chatForm.value
         });
     }
@@ -127,10 +121,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     setTyping() {
 
         this.typing.emit({
-            // from_username: this.chatForm.value.from_username,
-            // from_id: this.chatForm.value.from_id,
-            // to_username: this.chatForm.value.to_username,
-            // message: this.chatForm.value.message,
             ...this.chatForm.value,
             from_first_name: this.authUser.first_name
         });
@@ -146,12 +136,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     sendMessage() {
         if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
             this.sent.emit({
-                // from_username: this.chatForm.value.from_username,
-                // from_id: this.chatForm.value.from_id,
-                // to_id: this.chatForm.value.to_id,
-                // connection_id: this.chatForm.value.connection_id,
-                // to_username: this.chatForm.value.to_username,
-                // message: this.fixLineBreaks.transform(this.chatForm.value.message),
                 ...this.chatForm.value,
 
             });

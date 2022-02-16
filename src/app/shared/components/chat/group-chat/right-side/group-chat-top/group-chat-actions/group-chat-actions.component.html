@@ -1,5 +1,6 @@
 <div class="right">
-    <button mat-icon-button [disableRipple]="true" (click)="toggleMembersForm()">
+    <button mat-icon-button [disableRipple]="true" (click)="toggleMembersForm()"
+            *ngIf="authUser.id === selectedGroup?.creator_id">
         <i class="fas fa-user-plus"></i>
     </button>
     <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">

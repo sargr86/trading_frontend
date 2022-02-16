@@ -47,6 +47,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.userMessagesStore.userMessages$.subscribe(dt => {
             // console.log('users list!!!', dt)
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
+            console.log(this.filteredUsersMessages)
             this.selectedUserMessages = this.filteredUsersMessages[0];
             this.userMessagesStore.changeUser(this.selectedUserMessages);
         });
@@ -144,7 +145,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     getUserLastMessage(messages) {
-        return messages[messages.length - 1];
+        return messages ? messages[messages.length - 1] : {};
     }
 
     getUserCurrentStatus(username) {
@@ -172,7 +173,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     getUnseenMessagesCount(userMessages) {
-        return userMessages.direct_messages.filter(um => !um.seen).length;
+        return userMessages.direct_messages?.filter(um => !um.seen).length;
     }
 
     ngOnDestroy() {

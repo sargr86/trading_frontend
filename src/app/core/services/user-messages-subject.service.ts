@@ -49,7 +49,7 @@ export class UserMessagesSubjectService {
 
         allUserMessages[selectedUserIndex] = userMessages;
         this.setUserMessages(allUserMessages);
-        console.log(userMessages.id, this.selectedUserMessages.id)
+        // console.log(userMessages.id, this.selectedUserMessages.id)
         if (userMessages.id === this.selectedUserMessages.id) {
             this.changeUser(userMessages);
             // console.log(this.selectedUserMessages)
@@ -58,11 +58,11 @@ export class UserMessagesSubjectService {
     }
 
     changeOneUserMessages(id, messages) {
-        // console.log(id)
+        // console.log(id, messages)
         // console.log(this.userMessages)
         const userMessages = this.userMessages.find(um => um.id === id);
         // console.log(userMessages)
-        if (userMessages) {
+        if (userMessages && id && messages) {
             userMessages.direct_messages = messages;
         }
     }

@@ -84,7 +84,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-            console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
+            // console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
             // if (this.selectedUserMessages.id === to_id) {
             //     this.userMessagesStore.changeUserMessages(dt);
             // } else if (this.selectedUserMessages.id === from_id) {
@@ -92,11 +92,11 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             // }
 
 
-            // if (this.selectedUserMessages.id === to_id) {
-            //     this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
-            // } else if (this.selectedUserMessages.id === from_id) {
-            //     this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
-            // }
+            if (this.selectedUserMessages.id === to_id) {
+                this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
+            } else if (this.selectedUserMessages.id === from_id) {
+                this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
+            }
 
             this.setNewMessageSources();
         }));
@@ -125,7 +125,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-            console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
+            // console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
             this.typingText = null;
 
             if (from_id === this.authUser.id) {
@@ -140,6 +140,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     }
 
     setNewMessageSources() {
+        // console.log(this.userMessagesStore.userMessages)
         const sources = this.userMessagesStore.userMessages
             .filter(m => m.direct_messages.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0);
         this.subject.setNewMessagesSourceData({sources: sources.length, type: 'direct'});

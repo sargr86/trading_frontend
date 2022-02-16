@@ -352,7 +352,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getUnreadMessagesCount() {
         return this.userMessagesStore.userMessages
-            ?.filter(m => m.direct_messages.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
+            ?.filter(m => m.direct_messages?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
 
     }
 

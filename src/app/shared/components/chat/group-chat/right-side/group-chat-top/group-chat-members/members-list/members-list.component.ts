@@ -115,8 +115,12 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
             const {group} = data;
-            this.notificationsStore.updateNotifications(data);
-            this.groupsMessagesStore.changeGroup(group);
+            if (data.from_user.id === this.authUser.id) {
+                this.groupsMessagesStore.selectGroup({});
+            } else {
+                this.notificationsStore.updateNotifications(data);
+                this.groupsMessagesStore.changeGroup(group);
+            }
         }));
     }
 

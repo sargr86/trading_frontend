@@ -271,9 +271,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     getConnectWithUser() {
         this.socketService.getConnectWithUser().subscribe((dt: any) => {
-            // console.log('get connect', dt)
             this.usersConnection = dt.connection;
-
         });
     }
 

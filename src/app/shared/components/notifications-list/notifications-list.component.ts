@@ -49,6 +49,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }
         this.getAcceptedDeclinedRequests();
         this.getDisconnectUsers();
+        this.getGroupJoinInvitation();
 
     }
 
@@ -70,7 +71,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     acceptConnection(notification) {
-        console.log(notification)
         this.socketService.acceptConnection({
             notification_id: notification._id,
             connection_id: notification.connection_id,
@@ -84,7 +84,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     declineConnection(notification) {
-        console.log(notification)
         this.socketService.declineConnection({
             notification_id: notification._id,
             connection_id: notification.connection_id,
@@ -182,6 +181,17 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         if (type === 'group_join_invitation') {
             this.router.navigate(['chat/messages']);
         }
+    }
+
+    getGroupJoinInvitation() {
+        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
+            if (this.authUser.id === data.to_id) {
+                console.log('aaa', data);
+                this.notificationsStore.updateNotifications(data);
+                console.log(this.notificationsStore.allNotifications)
+                // this.setNotifications.transform(data);
+            }
+        }));
     }
 
     acceptGroupJoin(notification) {

@@ -87,10 +87,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         this.authUser = this.getAuthUser.transform();
 
-        // if (this.auth.loggedIn()) {
-        //
-        // }
-
         if (this.authUser) {
             // this.getAuthUserNotifications();
             // this.getAcceptedDeclinedRequests();
@@ -98,16 +94,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getDailyStocks();
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();
-            this.getGroupJoinInvitation();
             // console.log(this.authUser)
             this.getUsersMessages();
             this.getGroupsMessages();
-
         }
-        // this.getConnectWithUser();
-        // this.getDisconnectUsers();
-
-
     }
 
     getUsersMessages() {
@@ -141,48 +131,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.socketService.addNewUser({...this.authUser, chat_groups: userGroups});
     }
 
-    // getConnectWithUser() {
-    //     this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
-    //         // console.log('get connect with user', dt)
-    //         if (dt.from_id !== this.authUser.id) {
-    //             // this.notificationsStore.updateNotifications(dt);
-    //             // this.notifications.push(dt);
-    //             // this.notificationsStore.setAllNotifications(this.notifications);
-    //         }
-    //     }));
-    // }
-
-    // getAuthUserNotifications() {
-    //     this.subscriptions.push(
-    //         this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
-    //             dt.map(d => {
-    //                 this.notifications.push(d);
-    //             });
-    //             this.notificationsStore.setAllNotifications(this.notifications);
-    //         })
-    //     );
-    // }
-
-    // getAcceptedDeclinedRequests() {
-    //     this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-    //         console.log('accepted', dt)
-    //         // this.userMessagesStore.setUserMessages(dt.users_messages);
-    //         // if (dt.receiver_id === this.authUser.id) {
-    //         //     this.notifications.push(dt);
-    //         //     this.notificationsStore.setAllNotifications(this.notifications);
-    //         // }
-    //     }));
-    //
-    //     this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-    //         console.log('declined')
-    //
-    //         this.notifications.push(dt);
-    //         this.notificationsStore.setAllNotifications(this.notifications);
-    //     }));
-    // }
-
-
-
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
             console.log('get block/unblock', dt)
@@ -194,16 +142,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getGroupJoinInvitation() {
-        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            if (this.authUser.id === data.to_id) {
-                console.log('aaa', data);
-                this.notificationsStore.updateNotifications(data);
-                console.log(this.notificationsStore.allNotifications)
-                // this.setNotifications.transform(data);
-            }
-        }));
-    }
+
 
     getAuthenticatedUser() {
         this.subscriptions.push(this.subject.authUser.subscribe(dt => {
@@ -211,7 +150,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             // this.addUserToSocket([]);
         }));
     }
-
 
     getRouterUrlParams() {
         this.subscriptions.push(this.router.events.subscribe(ev => {
@@ -310,15 +248,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    // getInviteNotifications() {
-    //     this.socketService.inviteToGroupSent().subscribe((data: any) => {
-    //         // this.toastr.success(msg);
-    //         console.log(data)
-    //         this.notifications.push({type: 'invitation-to-join-group', ...data});
-    //         this.notificationsStore.setAllNotifications(this.notifications);
-    //     });
-    // }
-
     notificationClicked() {
         this.closeRightSidenav.emit('notifications');
     }
@@ -345,7 +274,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             }
         }));
     }
-
 
     getUnreadMessagesCount() {
         return this.unreadMessagesHelper.getUnreadMessagesCount();

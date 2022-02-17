@@ -28,7 +28,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
     }
 
     getUsersMessages() {
-        this.subscriptions.push(this.userMessagesStore.userMessages$.subscribe(dt =>{
+        this.subscriptions.push(this.userMessagesStore.usersMessages$.subscribe(dt =>{
             this.usersMessages = dt;
         }));
     }

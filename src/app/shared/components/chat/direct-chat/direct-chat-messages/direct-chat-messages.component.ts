@@ -127,12 +127,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
             this.typingText = null;
 
-            if (from_id === this.authUser.id) {
-                this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
-            } else if (to_id === this.authUser.id) {
-                this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
-            }
-
             this.scrollMsgsToBottom();
             this.setNewMessageSources();
         }));

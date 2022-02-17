@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {Subscription} from 'rxjs';
 

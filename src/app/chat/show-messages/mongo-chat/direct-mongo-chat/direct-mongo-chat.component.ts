@@ -3,7 +3,7 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Subscription} from 'rxjs';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
 
     constructor(
         private chatService: ChatService,
-        private userMessagesStore: UserMessagesSubjectService
+        private userMessagesStore: UsersMessagesSubjectService
     ) {
     }
 

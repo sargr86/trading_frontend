@@ -3,7 +3,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {User} from "@shared/models/user";
 
 @Component({
@@ -29,7 +29,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     constructor(
         private socketService: SocketIoService,
         private usersService: UsersService,
-        private userMessagesStore: UserMessagesSubjectService,
+        private userMessagesStore: UsersMessagesSubjectService,
         public mobileHelper: MobileResponsiveHelper,
     ) {
     }

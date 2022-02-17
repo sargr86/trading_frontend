@@ -16,7 +16,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import * as moment from 'moment';
 import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
@@ -46,7 +46,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private usersService: UsersService,
-        private userMessagesStore: UserMessagesSubjectService,
+        private userMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }

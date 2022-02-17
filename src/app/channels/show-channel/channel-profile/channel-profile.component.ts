@@ -11,7 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from "@core/services/stores/notifications-subject-store.service";
-import {UserMessagesSubjectService} from "@core/services/stores/user-messages-subject.service";
+import {UsersMessagesSubjectService} from "@core/services/stores/user-messages-subject.service";
 
 @Component({
     selector: 'app-channel-profile',
@@ -50,7 +50,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
-        private usersConnectionsStore: UserMessagesSubjectService,
+        private usersConnectionsStore: UsersMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,

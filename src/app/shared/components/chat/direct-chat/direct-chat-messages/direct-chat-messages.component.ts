@@ -1,5 +1,5 @@
 import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
@@ -25,7 +25,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     typingText = null;
 
     constructor(
-        private userMessagesStore: UserMessagesSubjectService,
+        private userMessagesStore: UsersMessagesSubjectService,
         private subject: SubjectService,
         private socketService: SocketIoService,
         private chatService: ChatService,

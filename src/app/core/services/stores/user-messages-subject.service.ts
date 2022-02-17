@@ -4,7 +4,7 @@ import {BehaviorSubject} from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class UserMessagesSubjectService {
+export class UsersMessagesSubjectService {
 
 
     protected userMessagesSource = new BehaviorSubject([]);

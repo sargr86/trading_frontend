@@ -1,4 +1,4 @@
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Injectable} from '@angular/core';
@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
 export class UnreadMessagesCounter {
     authUser;
     constructor(
-        private usersMessagesStore: UserMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private getAuthUser: GetAuthUserPipe
     ) {

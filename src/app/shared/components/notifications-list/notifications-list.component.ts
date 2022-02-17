@@ -8,7 +8,7 @@ import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
-import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
@@ -30,7 +30,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     constructor(
         private notificationsService: NotificationsService,
         public notificationsStore: NotificationsSubjectStoreService,
-        private userMessagesStore: UserMessagesSubjectService,
+        private userMessagesStore: UsersMessagesSubjectService,
         private groupMessagesStore: GroupsMessagesSubjectService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,

@@ -19,6 +19,7 @@ import * as moment from 'moment';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
 import {SubjectService} from '@core/services/subject.service';
+import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
 
 @Component({
     selector: 'app-direct-chat-messages',
@@ -45,24 +46,21 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         public mobileHelper: MobileResponsiveHelper,
         private getElegantDate: GetElegantDatePipe,
         private groupByDate: GroupByPipe,
+        private sharedChatHelper: SharedChatHelper
     ) {
     }
 
     ngOnInit(): void {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
-            // console.log('user changed!', dt);
             this.selectedUserMessages = dt;
             this.typingText = null;
-            // this.setTyping({});
         }));
 
-        this.setNewMessageSources();
         this.getSeen();
         this.getTyping();
         this.getMessagesFromSocket();
     }
 
-    //
     ngAfterViewChecked() {
         this.scrollMsgsToBottom();
     }
@@ -83,13 +81,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     getSeen() {
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-            // console.log('get seen', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`);
-            // if (this.selectedUserMessages.id === to_id) {
-            //     this.userMessagesStore.changeUserMessages(dt);
-            // } else if (this.selectedUserMessages.id === from_id) {
-            //     this.userMessagesStore.changeUserMessages(dt);
-            // }
-
 
             if (this.selectedUserMessages.id === to_id) {
                 this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
@@ -97,18 +88,15 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
                 this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
             }
 
-            this.setNewMessageSources();
         }));
     }
 
     setTyping(e) {
-        // console.log('typing', e)
         this.socketService.setTyping(e);
     }
 
     getTyping() {
         this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
-            // console.log(dt)
             if (dt.from_id !== this.authUser.id && this.selectedUserMessages.id === dt.from_id) {
                 this.typingText = dt.message ? `${dt.from_first_name} is typing...` : null;
             }
@@ -117,7 +105,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
 
     sendMessage(e) {
-        // console.log('sent', e);
         this.socketService.sendMessage(e);
     }
 
@@ -126,14 +113,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             this.typingText = null;
 
             this.scrollMsgsToBottom();
-            this.setNewMessageSources();
         }));
-    }
-
-    setNewMessageSources() {
-        const sources = this.userMessagesStore.userMessages
-            .filter(m => m.direct_messages.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0);
-        this.subject.setNewMessagesSourceData({sources: sources.length, type: 'direct'});
     }
 
     getMessagesByDate(dt) {
@@ -141,10 +121,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     }
 
     getSeenTooltip(message) {
-        const user = this.selectedUserMessages;
-        const seenDate = this.getElegantDate.transform(message.seen_at);
-
-        return `${user.first_name} ${user.last_name} at ${seenDate}`;
+        return this.sharedChatHelper.getSeenTooltip(this.selectedUserMessages, message);
     }
 
     isContactBlocked(user) {

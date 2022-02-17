@@ -6,6 +6,7 @@ import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {SubjectService} from '@core/services/subject.service';
+import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
 
 @Component({
     selector: 'app-group-chat-messages',
@@ -33,7 +34,8 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         private groupByDate: GroupByPipe,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private sharedChatHelper: SharedChatHelper
     ) {
     }
 
@@ -45,10 +47,6 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
             // console.log(dt)
             this.selectedGroupMessages = dt;
         }));
-
-        if (!this.embedMode) {
-            this.setNewMessageSources();
-        }
     }
 
     getMessagesByDate(dt) {
@@ -65,11 +63,7 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     }
 
     getSeenTooltip(message) {
-        const seenDate = message.seen_at;
-        const thisWeekDate = moment(seenDate, 'YYYY-MM-DD, hh:mm:ss').isSame(new Date(), 'week');
-        const seenDateFormatted = moment(seenDate, 'YYYY-MM-DD, hh:mm:ss').format(thisWeekDate ? 'ddd HH:mm' : 'MMM DD, YYYY HH:mm');
-
-        return `${message.seen_by.first_name} ${message.seen_by.last_name} at ${seenDateFormatted}`;
+        return this.sharedChatHelper.getSeenTooltip(message.seen_by, message)
     }
 
     scrollMsgsToBottom() {
@@ -86,7 +80,6 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         if (messages) {
             const lastMessage = messages[messages?.length - 1];
             const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
-            console.log(lastMessage)
             if (!isOwnLastMessage && lastMessage) {
                 this.socketService.setSeen({
                     message_id: lastMessage?._id,
@@ -102,13 +95,10 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     getSeen() {
 
         this.subscriptions.push(this.socketService.getSeen().subscribe((dt: any) => {
-            // console.log('get seen', dt)
-            // console.log(this.selectedGroup)
             const {group_id, group_messages} = dt;
 
             // if (this.selectedGroupMessages.id === dt.group_id){
             this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
-            this.setNewMessageSources(true);
             // }
         }));
     }
@@ -145,32 +135,31 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
 
             this.resetTyping();
             this.scrollMsgsToBottom();
-            this.setNewMessageSources();
         }));
     }
 
-    setNewMessageSources(fromSeen = false) {
-
-        const sources = this.groupsMessagesStore.groupsMessages?.filter(st => {
-            const groupReceivedMessages = st.group_messages?.filter(gm => gm.from_id !== this.authUser.id);
-            // console.log(groupReceivedMessages)
-            const notSeenMessages = groupReceivedMessages?.filter(rm => {
-                const isSeen = !!rm.seen.find(s => {
-                    return s.seen_by.id === this.authUser.id;
-                });
-                // console.log(rm.message, isSeen)
-                return isSeen === false;
-            });
-            // console.log(notSeenMessages, notSeenMessages?.length)
-            return notSeenMessages?.length !== 0;
-        });
-
-
-        // console.log(this.groupsMessagesStore.groupsMessages)
-        // console.log(sources)
-
-        this.subject.setNewMessagesSourceData({sources: sources.length, type: 'group'});
-    }
+    // setNewMessageSources(fromSeen = false) {
+    //
+    //     const sources = this.groupsMessagesStore.groupsMessages?.filter(st => {
+    //         const groupReceivedMessages = st.group_messages?.filter(gm => gm.from_id !== this.authUser.id);
+    //         // console.log(groupReceivedMessages)
+    //         const notSeenMessages = groupReceivedMessages?.filter(rm => {
+    //             const isSeen = !!rm.seen.find(s => {
+    //                 return s.seen_by.id === this.authUser.id;
+    //             });
+    //             // console.log(rm.message, isSeen)
+    //             return isSeen === false;
+    //         });
+    //         // console.log(notSeenMessages, notSeenMessages?.length)
+    //         return notSeenMessages?.length !== 0;
+    //     });
+    //
+    //
+    //     // console.log(this.groupsMessagesStore.groupsMessages)
+    //     // console.log(sources)
+    //
+    //     this.subject.setNewMessagesSourceData({sources: sources.length, type: 'group'});
+    // }
 
     setMessages() {
 

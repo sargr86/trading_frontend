@@ -13,9 +13,9 @@ export class GetElegantDatePipe implements PipeTransform {
         const isToday = moment(date).isSame(Date.now(), 'day');
         const isYesterday = moment(date).isSame(moment().subtract(1, 'day'), 'day');
         if (isToday) {
-            result = 'Today at ' + moment(date).format('HH:mm');
+            result = 'Today ' + moment(date).format('HH:mm');
         } else if (isYesterday) {
-            result = 'Yesterday at ' + moment(date).format('HH:mm');
+            result = 'Yesterday ' + moment(date).format('HH:mm');
         }
 
         return result;

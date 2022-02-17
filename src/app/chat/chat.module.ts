@@ -7,6 +7,7 @@ import {ShowMessagesComponent} from './show-messages/show-messages.component';
 import {SharedModule} from '@shared/shared.module';
 import {DirectMongoChatComponent} from './show-messages/mongo-chat/direct-mongo-chat/direct-mongo-chat.component';
 import { GroupMongoChatComponent } from './show-messages/mongo-chat/group-mongo-chat/group-mongo-chat.component';
+import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
 
 
 @NgModule({
@@ -20,6 +21,9 @@ import { GroupMongoChatComponent } from './show-messages/mongo-chat/group-mongo-
         CommonModule,
         ChatRoutingModule,
         SharedModule
+    ],
+    providers: [
+        {provide: SharedChatHelper, useClass: SharedChatHelper},
     ]
 })
 export class ChatModule {

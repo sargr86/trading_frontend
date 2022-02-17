@@ -7,29 +7,29 @@ import {BehaviorSubject} from 'rxjs';
 export class UsersMessagesSubjectService {
 
 
-    protected userMessagesSource = new BehaviorSubject([]);
-    protected selectedUserMessagesSource = new BehaviorSubject([]);
+    protected usersMessagesSource = new BehaviorSubject([]);
+    protected selectedUsersMessagesSource = new BehaviorSubject([]);
 
-    userMessages$ = this.userMessagesSource.asObservable();
-    selectedUserMessages$ = this.selectedUserMessagesSource.asObservable();
+    userMessages$ = this.usersMessagesSource.asObservable();
+    selectedUserMessages$ = this.selectedUsersMessagesSource.asObservable();
 
     constructor() {
     }
 
     setUserMessages(messages: any) {
-        this.userMessagesSource.next([...messages]);
+        this.usersMessagesSource.next([...messages]);
     }
 
     changeUser(userMessages: any) {
-        this.selectedUserMessagesSource.next(userMessages);
+        this.selectedUsersMessagesSource.next(userMessages);
     }
 
     get userMessages() {
-        return this.userMessagesSource.getValue();
+        return this.usersMessagesSource.getValue();
     }
 
     get selectedUserMessages() {
-        return this.selectedUserMessagesSource.getValue() as any;
+        return this.selectedUsersMessagesSource.getValue() as any;
     }
 
     // changeUserMessages(id, messages) {

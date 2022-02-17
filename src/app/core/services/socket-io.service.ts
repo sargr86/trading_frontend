@@ -48,7 +48,6 @@ export class SocketIoService {
         return new Observable(observer => {
 
             this.socket.on('getDisconnectUsers', msg => {
-                // console.log('disconnect')
                 observer.next(msg);
             });
         });

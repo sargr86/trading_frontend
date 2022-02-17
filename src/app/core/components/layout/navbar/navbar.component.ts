@@ -104,8 +104,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getGroupsMessages();
 
         }
-        this.getConnectWithUser();
-        this.getDisconnectUsers();
+        // this.getConnectWithUser();
+        // this.getDisconnectUsers();
 
 
     }
@@ -141,16 +141,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.socketService.addNewUser({...this.authUser, chat_groups: userGroups});
     }
 
-    getConnectWithUser() {
-        this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
-            // console.log('get connect with user', dt)
-            if (dt.from_id !== this.authUser.id) {
-                // this.notificationsStore.updateNotifications(dt);
-                // this.notifications.push(dt);
-                // this.notificationsStore.setAllNotifications(this.notifications);
-            }
-        }));
-    }
+    // getConnectWithUser() {
+    //     this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
+    //         // console.log('get connect with user', dt)
+    //         if (dt.from_id !== this.authUser.id) {
+    //             // this.notificationsStore.updateNotifications(dt);
+    //             // this.notifications.push(dt);
+    //             // this.notificationsStore.setAllNotifications(this.notifications);
+    //         }
+    //     }));
+    // }
 
     // getAuthUserNotifications() {
     //     this.subscriptions.push(
@@ -181,14 +181,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     //     }));
     // }
 
-    getDisconnectUsers() {
-        this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
-            console.log('disconnected', dt);
-            // this.setNotifications.transform(dt);
-            this.notificationsStore.updateNotifications(dt);
-            this.userMessagesStore.setUserMessages(dt.users_messages);
-        }));
-    }
+
 
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
@@ -204,7 +197,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             if (this.authUser.id === data.to_id) {
-                console.log('aaa', data)
+                console.log('aaa', data);
                 this.notificationsStore.updateNotifications(data);
                 console.log(this.notificationsStore.allNotifications)
                 // this.setNotifications.transform(data);
@@ -224,7 +217,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
-                this.getConnectWithUser();
+                // this.getConnectWithUser();
             } else if (ev instanceof ActivationEnd) {
                 this.passedUsername = ev.snapshot.queryParams.username;
             }
@@ -340,7 +333,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log('new message', dt)
             const {from_id, to_id, direct_messages, group_id, group_messages} = dt;
             if (direct_messages) {
                 if (from_id === this.authUser.id) {
@@ -351,31 +343,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
             } else if (group_messages) {
                 this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
             }
-            // console.log(this.userMessagesStore.userMessages)
         }));
     }
 
 
     getUnreadMessagesCount() {
         return this.unreadMessagesHelper.getUnreadMessagesCount();
-
-
-        // const directMessages = this.userMessagesStore.userMessages
-        //     ?.filter(m => m.direct_messages
-        //         ?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
-        //
-        // const groupMessages = this.groupsMessagesStore.groupsMessages
-        //     ?.filter(m => {
-        //         return m.group_messages
-        //             ?.find(message => {
-        //                 let found = false;
-        //                 if (message.from_id !== this.authUser.id) {
-        //                     found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);
-        //                 }
-        //                 return found;
-        //             });
-        //     }).length;
-        // return directMessages + groupMessages;
     }
 
     isMessagesIconHidden() {

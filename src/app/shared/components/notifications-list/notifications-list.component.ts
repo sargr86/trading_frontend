@@ -121,9 +121,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
-            console.log('disconnected', dt.users_messages);
-            this.getNotifications();
-            // this.setNotifications.transform(dt);
+            console.log('disconnected', dt);
+            if (dt.to_user.id === this.authUser.id) {
+                this.notificationsStore.updateNotifications(dt);
+            }
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
     }

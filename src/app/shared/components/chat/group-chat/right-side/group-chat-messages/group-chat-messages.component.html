@@ -2,7 +2,7 @@
     <ul class="chat-history" id="group-messages" #groupMessagesList
         [hidden]="selectedGroupMessages?.length === 0">
         <ng-container
-            *ngFor="let msg of getMessagesByDate(selectedGroupMessages?.group_messages);trackBy:identifyDateKey">
+            *ngFor="let msg of getMessagesByDate(selectedGroupMessages?.group_messages);trackBy:sHelper.identifyDateKey">
 
             <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
             <ng-container *ngFor="let m of msg.value;let ind = index">
@@ -20,7 +20,7 @@
                     <div class="seen">
                         <ng-container *ngFor="let seen of m.seen">
                             <img class="seen-avatar"
-                                 [matTooltip]="getSeenTooltip(seen)"
+                                 [matTooltip]="sHelper.getSeenTooltip(seen.seen_by, seen)"
                                  [src]="seen?.seen_by.avatar|getImgPath: 'user_avatars'">
                         </ng-container>
                     </div>

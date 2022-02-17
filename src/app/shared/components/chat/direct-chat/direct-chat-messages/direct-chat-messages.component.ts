@@ -46,7 +46,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         public mobileHelper: MobileResponsiveHelper,
         private getElegantDate: GetElegantDatePipe,
         private groupByDate: GroupByPipe,
-        private sharedChatHelper: SharedChatHelper
+        public sHelper: SharedChatHelper
     ) {
     }
 
@@ -61,15 +61,11 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         this.getMessagesFromSocket();
     }
 
-    ngAfterViewChecked() {
-        this.scrollMsgsToBottom();
-    }
+
 
     setSeen(e) {
-        const messages = this.selectedUserMessages.direct_messages;
-        const lastMessage = messages[messages.length - 1];
-        const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
-        if (!isOwnLastMessage) {
+        const {owned, lastMessage} = this.sHelper.isLastMsgOwn(this.selectedUserMessages.direct_messages);
+        if (!owned) {
             this.socketService.setSeen({
                 message_id: lastMessage?._id,
                 seen: 1,
@@ -112,16 +108,12 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             this.typingText = null;
 
-            this.scrollMsgsToBottom();
+            this.sHelper.scrollMsgsToBottom(this.messagesList);
         }));
     }
 
     getMessagesByDate(dt) {
         return this.groupByDate.transform(dt, 'created_at');
-    }
-
-    getSeenTooltip(message) {
-        return this.sharedChatHelper.getSeenTooltip(this.selectedUserMessages, message);
     }
 
     isContactBlocked(user) {
@@ -140,20 +132,12 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         this.selectedUserMessages = null;
     }
 
-    scrollMsgsToBottom() {
-        try {
-            this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight;
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    identifyDateKey(index, item) {
-        return item.key;
-    }
-
     identifyMessage(index, item) {
         return item._id;
+    }
+
+    ngAfterViewChecked() {
+        this.sHelper.scrollMsgsToBottom(this.messagesList);
     }
 
     ngOnDestroy() {

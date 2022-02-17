@@ -34,8 +34,7 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         private groupByDate: GroupByPipe,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private subject: SubjectService,
-        private sharedChatHelper: SharedChatHelper
+        public sHelper: SharedChatHelper
     ) {
     }
 
@@ -43,8 +42,11 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         this.getSeen();
         this.getTyping();
         this.getMessagesFromSocket();
+        this.trackGroupMessagesChange();
+    }
+
+    trackGroupMessagesChange() {
         this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
-            // console.log(dt)
             this.selectedGroupMessages = dt;
         }));
     }
@@ -53,41 +55,19 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         return this.groupByDate.transform(dt, 'created_at');
     }
 
-
-    ngAfterViewChecked() {
-        this.scrollMsgsToBottom();
-    }
-
     getMessageClass(user_id) {
         return user_id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
-    getSeenTooltip(message) {
-        return this.sharedChatHelper.getSeenTooltip(message.seen_by, message)
-    }
-
-    scrollMsgsToBottom() {
-        try {
-            this.messagesList.nativeElement.scrollTop = this.messagesList?.nativeElement.scrollHeight;
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
     setSeen(formValue) {
+        const {owned, lastMessage} = this.sHelper.isLastMsgOwn(this.selectedGroupMessages.group_messages);
 
-        const messages = this.selectedGroupMessages.group_messages;
-        if (messages) {
-            const lastMessage = messages[messages?.length - 1];
-            const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
-            if (!isOwnLastMessage && lastMessage) {
-                this.socketService.setSeen({
-                    message_id: lastMessage?._id,
-                    // seen: 1,
-                    seen_at: moment().format('YYYY-MM-DD, hh:mm:ss'),
-                    ...formValue
-                });
-            }
+        if (!owned && lastMessage) {
+            this.socketService.setSeen({
+                message_id: lastMessage?._id,
+                seen_at: moment().format('YYYY-MM-DD, hh:mm:ss'),
+                ...formValue
+            });
         }
 
     }
@@ -104,20 +84,17 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     }
 
     setTyping(formValue) {
-        // console.log(e)
         this.socketService.setTyping(formValue);
     }
 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
-            // console.log(dt.group_name, this.selectedGroupMessages?.name)
             this.getTypingTextStatus(dt);
         });
     }
 
     getTypingTextStatus(dt) {
         const sameGroupTyping = dt.from_id !== this.authUser.id && dt.group_name === this.selectedGroupMessages.name && dt.message;
-        // console.log(sameGroupTyping)
         this.typingText = {
             group: sameGroupTyping ? this.selectedGroupMessages?.name === dt.group_name : null,
             text: sameGroupTyping ? `${dt.from_username} is typing...` : null
@@ -125,44 +102,14 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     }
 
     sendMessage(formValue) {
-        console.log(formValue)
         this.socketService.sendMessage(formValue);
     }
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
-            console.log('new message group chat!!!', dt);
-
             this.resetTyping();
-            this.scrollMsgsToBottom();
+            this.sHelper.scrollMsgsToBottom(this.messagesList);
         }));
-    }
-
-    // setNewMessageSources(fromSeen = false) {
-    //
-    //     const sources = this.groupsMessagesStore.groupsMessages?.filter(st => {
-    //         const groupReceivedMessages = st.group_messages?.filter(gm => gm.from_id !== this.authUser.id);
-    //         // console.log(groupReceivedMessages)
-    //         const notSeenMessages = groupReceivedMessages?.filter(rm => {
-    //             const isSeen = !!rm.seen.find(s => {
-    //                 return s.seen_by.id === this.authUser.id;
-    //             });
-    //             // console.log(rm.message, isSeen)
-    //             return isSeen === false;
-    //         });
-    //         // console.log(notSeenMessages, notSeenMessages?.length)
-    //         return notSeenMessages?.length !== 0;
-    //     });
-    //
-    //
-    //     // console.log(this.groupsMessagesStore.groupsMessages)
-    //     // console.log(sources)
-    //
-    //     this.subject.setNewMessagesSourceData({sources: sources.length, type: 'group'});
-    // }
-
-    setMessages() {
-
     }
 
     resetTyping() {
@@ -172,8 +119,8 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         };
     }
 
-    identifyDateKey(index, item) {
-        return item.key;
+    ngAfterViewChecked() {
+        this.sHelper.scrollMsgsToBottom(this.messagesList);
     }
 
     ngOnDestroy(): void {

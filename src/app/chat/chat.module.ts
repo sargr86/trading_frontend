@@ -23,7 +23,6 @@ import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
         SharedModule
     ],
     providers: [
-        {provide: SharedChatHelper, useClass: SharedChatHelper},
     ]
 })
 export class ChatModule {

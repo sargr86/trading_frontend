@@ -8,10 +8,10 @@ export class UsersMessagesSubjectService {
 
 
     protected usersMessagesSource = new BehaviorSubject([]);
-    protected selectedUsersMessagesSource = new BehaviorSubject([]);
+    protected selectedUserMessagesSource = new BehaviorSubject([]);
 
     userMessages$ = this.usersMessagesSource.asObservable();
-    selectedUserMessages$ = this.selectedUsersMessagesSource.asObservable();
+    selectedUserMessages$ = this.selectedUserMessagesSource.asObservable();
 
     constructor() {
     }
@@ -21,7 +21,7 @@ export class UsersMessagesSubjectService {
     }
 
     changeUser(userMessages: any) {
-        this.selectedUsersMessagesSource.next(userMessages);
+        this.selectedUserMessagesSource.next(userMessages);
     }
 
     get userMessages() {
@@ -29,7 +29,7 @@ export class UsersMessagesSubjectService {
     }
 
     get selectedUserMessages() {
-        return this.selectedUsersMessagesSource.getValue() as any;
+        return this.selectedUserMessagesSource.getValue() as any;
     }
 
     // changeUserMessages(id, messages) {

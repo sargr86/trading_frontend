@@ -47,10 +47,10 @@ $dark_theme: mat-dark-theme($primary, $accent);
 // Include all theme styles for the components.
 //@include angular-material-theme($dark_theme);
 
-.light-theme{
+.light-theme {
     @include angular-material-theme($light_theme);
 }
 
-.dark-theme{
+.dark-theme {
     @include angular-material-theme($dark_theme);
 }

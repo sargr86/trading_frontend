@@ -11,7 +11,7 @@ import {environment} from '@env';
 import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChatService} from '@core/services/chat.service';
-import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {DOCUMENT} from '@angular/common';
 

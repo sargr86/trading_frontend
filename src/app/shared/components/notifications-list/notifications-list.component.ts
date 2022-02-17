@@ -8,7 +8,7 @@ import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
-import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 

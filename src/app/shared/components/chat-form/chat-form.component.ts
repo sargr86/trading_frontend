@@ -3,7 +3,7 @@ import {environment} from '@env';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Subscription} from 'rxjs';
-import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 

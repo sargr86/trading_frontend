@@ -67,6 +67,4 @@ export class UserMessagesSubjectService {
             // this.changeUser(userMessages);
         }
     }
-
-
 }

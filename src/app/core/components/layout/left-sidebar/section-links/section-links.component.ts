@@ -17,7 +17,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
 import {SubjectService} from '@core/services/subject.service';
 import {Subscription} from 'rxjs';
-import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 

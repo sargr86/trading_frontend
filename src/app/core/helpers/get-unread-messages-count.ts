@@ -1,4 +1,4 @@
-import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
+import {UserMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Injectable} from '@angular/core';

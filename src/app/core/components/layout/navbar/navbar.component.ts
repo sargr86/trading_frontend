@@ -24,6 +24,7 @@ import {UserMessagesSubjectService} from '@core/services/user-messages-subject.s
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 
 @Component({
     selector: 'app-navbar',
@@ -75,6 +76,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService,
+        private unreadMessagesHelper: UnreadMessagesCounter
     ) {
 
     }
@@ -355,23 +357,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     getUnreadMessagesCount() {
+        return this.unreadMessagesHelper.getUnreadMessagesCount();
 
-        const directMessages = this.userMessagesStore.userMessages
-            ?.filter(m => m.direct_messages
-                ?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
 
-        const groupMessages = this.groupsMessagesStore.groupsMessages
-            ?.filter(m => {
-                return m.group_messages
-                    ?.find(message => {
-                        let found = false;
-                        if (message.from_id !== this.authUser.id) {
-                            found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);
-                        }
-                        return found;
-                    });
-            }).length;
-        return directMessages + groupMessages;
+        // const directMessages = this.userMessagesStore.userMessages
+        //     ?.filter(m => m.direct_messages
+        //         ?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
+        //
+        // const groupMessages = this.groupsMessagesStore.groupsMessages
+        //     ?.filter(m => {
+        //         return m.group_messages
+        //             ?.find(message => {
+        //                 let found = false;
+        //                 if (message.from_id !== this.authUser.id) {
+        //                     found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);
+        //                 }
+        //                 return found;
+        //             });
+        //     }).length;
+        // return directMessages + groupMessages;
     }
 
     isMessagesIconHidden() {

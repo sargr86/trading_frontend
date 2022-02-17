@@ -19,6 +19,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {Subscription} from 'rxjs';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 
 @Component({
     selector: 'app-section-links',
@@ -44,27 +45,13 @@ export class SectionLinksComponent implements OnInit, OnDestroy, AfterViewChecke
         private chatService: ChatService,
         private usersMessagesStore: UserMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private unreadMessagesHelper: UnreadMessagesCounter,
         private cdr: ChangeDetectorRef
     ) {
     }
 
     ngOnInit(): void {
         this.envName = environment.envName;
-        // let directNewMessagesCount = 0;
-        // let groupNewMessagesCount = 0;
-        // this.subscriptions.push(this.subject.getNewMessagesSourceData().subscribe(data => {
-        //     // console.log('new messages from ' + data.type + ':' + this.newMessageSources)
-        //     if (data.type === 'direct') {
-        //
-        //         directNewMessagesCount = data.sources;
-        //     } else {
-        //         groupNewMessagesCount = data.sources || 0;
-        //         // console.log(groupNewMessagesCount)
-        //     }
-        //     this.newMessageSources = directNewMessagesCount + groupNewMessagesCount;
-        //     // console.log('received:', directNewMessagesCount, groupNewMessagesCount)
-        // }));
-
     }
 
 
@@ -75,28 +62,8 @@ export class SectionLinksComponent implements OnInit, OnDestroy, AfterViewChecke
         );
     }
 
-    getUnreadMessagesCount() {
-
-        const directMessages = this.usersMessagesStore.userMessages
-            ?.filter(m => m.direct_messages
-                ?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
-
-        const groupMessages = this.groupsMessagesStore.groupsMessages
-            ?.filter(m => {
-                return m.group_messages
-                    ?.find(message => {
-                        let found = false;
-                        if (message.from_id !== this.authUser.id) {
-                            found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);
-                        }
-                        return found;
-                    });
-            }).length;
-        return directMessages + groupMessages;
-    }
-
     ngAfterViewChecked() {
-        this.newMessageSources = this.getUnreadMessagesCount();
+        this.newMessageSources = this.unreadMessagesHelper.getUnreadMessagesCount();
         this.cdr.detectChanges();
     }
 

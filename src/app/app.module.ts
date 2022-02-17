@@ -18,6 +18,8 @@ import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
 import {SharedModule} from '@shared/shared.module';
+import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
+import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -56,6 +58,7 @@ export function tokenGetter() {
         },
         CurrencyPipe,
         {provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: {disabled: true}},
+        // {provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper},
     ],
     bootstrap: [AppComponent]
 })

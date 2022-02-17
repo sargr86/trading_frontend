@@ -34,6 +34,10 @@ export class SharedChatHelper {
         }
     }
 
+    getMessageClass(from_id) {
+        return from_id === this.authUser.id ? 'my-message' : 'other-message';
+    }
+
     isLastMsgOwn(messages) {
         if (messages) {
 

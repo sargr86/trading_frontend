@@ -25,7 +25,7 @@
                 <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
 
                 <ng-container *ngFor="let m of msg.value;trackBy:identifyMessage">
-                    <li class="message-container" [ngClass]="isOwnMessage(m.from_id)">
+                    <li class="message-container" [ngClass]="sHelper.getMessageClass(m.from_id)">
                         <div class="message-date">
                             <p class="date">{{m.created_at | date: 'HH:mm' }}</p>
                         </div>

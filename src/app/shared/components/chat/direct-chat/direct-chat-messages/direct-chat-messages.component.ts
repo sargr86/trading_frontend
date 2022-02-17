@@ -1,21 +1,7 @@
-import {
-    AfterViewChecked,
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild
-} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
-import {GetElegantDatePipe} from '@shared/pipes/get-elegant-date.pipe';
-import {GroupByPipe} from '@shared/pipes/group-by.pipe';
-import * as moment from 'moment';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
 import {SubjectService} from '@core/services/subject.service';
@@ -44,8 +30,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         private socketService: SocketIoService,
         private chatService: ChatService,
         public mobileHelper: MobileResponsiveHelper,
-        private getElegantDate: GetElegantDatePipe,
-        private groupByDate: GroupByPipe,
         public sHelper: SharedChatHelper
     ) {
     }
@@ -60,7 +44,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         this.getTyping();
         this.getMessagesFromSocket();
     }
-
 
 
     setSeen(e) {
@@ -112,16 +95,8 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         }));
     }
 
-    getMessagesByDate(dt) {
-        return this.groupByDate.transform(dt, 'created_at');
-    }
-
     isContactBlocked(user) {
         return user?.users_connections?.[0]?.is_blocked;
-    }
-
-    isOwnMessage(from_id) {
-        return from_id === this.authUser.id ? 'my-message' : 'other-message';
     }
 
     isSeenByOtherUser(msg) {

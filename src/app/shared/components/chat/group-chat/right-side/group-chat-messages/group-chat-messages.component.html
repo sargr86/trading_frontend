@@ -6,7 +6,7 @@
 
             <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
             <ng-container *ngFor="let m of msg.value;let ind = index">
-                <li class="message-container" [ngClass]="getMessageClass(m.from_id)">
+                <li class="message-container" [ngClass]="sHelper.getMessageClass(m.from_id)">
                     <div class="message-date">
                         <div class="avatar-wrapper">
                             <div class="img">

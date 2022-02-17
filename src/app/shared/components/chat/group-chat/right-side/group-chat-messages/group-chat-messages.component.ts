@@ -55,10 +55,6 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         return this.groupByDate.transform(dt, 'created_at');
     }
 
-    getMessageClass(user_id) {
-        return user_id === this.authUser.id ? 'my-message' : 'other-message';
-    }
-
     setSeen(formValue) {
         const {owned, lastMessage} = this.sHelper.isLastMsgOwn(this.selectedGroupMessages.group_messages);
 

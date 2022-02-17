@@ -120,14 +120,14 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
 
     getTyping() {
         this.socketService.getTyping().subscribe((dt: any) => {
-            console.log(dt.group_name, this.selectedGroupMessages?.name)
+            // console.log(dt.group_name, this.selectedGroupMessages?.name)
             this.getTypingTextStatus(dt);
         });
     }
 
     getTypingTextStatus(dt) {
         const sameGroupTyping = dt.from_id !== this.authUser.id && dt.group_name === this.selectedGroupMessages.name && dt.message;
-        console.log(sameGroupTyping)
+        // console.log(sameGroupTyping)
         this.typingText = {
             group: sameGroupTyping ? this.selectedGroupMessages?.name === dt.group_name : null,
             text: sameGroupTyping ? `${dt.from_username} is typing...` : null
@@ -143,25 +143,9 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             console.log('new message group chat!!!', dt);
 
-            // const {group_id, group_messages} = dt;
-            // this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
-
-            // if (this.selectedGroupMessages.id === dt.group_id){
             this.resetTyping();
             this.scrollMsgsToBottom();
             this.setNewMessageSources();
-            // this.setNewMessageSources();
-            // }
-
-            // const newMessage = {...dt, name: dt.group_name, id: dt.group_id};
-            // if (this.selectedGroupMessages.id === dt.group_id) {
-            //     const groupMessages = this.groupsMessagesStore.selectedGroupMessages;
-            //     groupMessages.group_messages.push(newMessage);
-            //     this.groupsMessagesStore.changeGroup(groupMessages);
-            //     this.resetTyping();
-            // }
-
-            // console.log(this.groupsMessagesStore.selectedGroupMessages)
         }));
     }
 

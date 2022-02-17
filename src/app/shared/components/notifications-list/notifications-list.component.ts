@@ -8,7 +8,7 @@ import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
@@ -30,7 +30,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     constructor(
         private notificationsService: NotificationsService,
         public notificationsStore: NotificationsSubjectStoreService,
-        private userMessagesStore: UsersMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private groupMessagesStore: GroupsMessagesSubjectService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
@@ -108,7 +108,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             console.log('accepted', dt);
-            this.userMessagesStore.setUserMessages(dt.users_messages);
+            this.usersMessagesStore.setUserMessages(dt.users_messages);
             if (dt.to_user.id === this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
             }
@@ -125,7 +125,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (dt.to_user.id === this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
             }
-            this.userMessagesStore.setUserMessages(dt.users_messages);
+            this.usersMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 

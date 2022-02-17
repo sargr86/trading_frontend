@@ -1,4 +1,4 @@
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Injectable} from '@angular/core';
@@ -16,7 +16,7 @@ export class UnreadMessagesCounter {
     }
 
     getUnreadMessagesCount() {
-        const directMessages = this.usersMessagesStore.userMessages
+        const directMessages = this.usersMessagesStore.usersMessages
             ?.filter(m => m.direct_messages
                 ?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
 

@@ -3,7 +3,7 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Subscription} from 'rxjs';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
 
     constructor(
         private chatService: ChatService,
-        private userMessagesStore: UsersMessagesSubjectService
+        private usersMessagesStore: UsersMessagesSubjectService
     ) {
     }
 
@@ -28,7 +28,7 @@ export class DirectMongoChatComponent implements OnInit, OnDestroy {
     }
 
     getUsersMessages() {
-        this.subscriptions.push(this.userMessagesStore.usersMessages$.subscribe(dt =>{
+        this.subscriptions.push(this.usersMessagesStore.usersMessages$.subscribe(dt =>{
             this.usersMessages = dt;
         }));
     }

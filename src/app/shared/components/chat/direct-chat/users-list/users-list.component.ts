@@ -3,7 +3,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {User} from "@shared/models/user";
 
 @Component({
@@ -29,27 +29,27 @@ export class UsersListComponent implements OnInit, OnDestroy {
     constructor(
         private socketService: SocketIoService,
         private usersService: UsersService,
-        private userMessagesStore: UsersMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         public mobileHelper: MobileResponsiveHelper,
     ) {
     }
 
     ngOnInit(): void {
         if (this.authUser) {
-            this.getUserMessages();
+            this.getUsersMessages();
             this.getOnlineUsers();
             this.getSeen();
             this.onLogout();
         }
     }
 
-    getUserMessages() {
-        this.userMessagesStore.usersMessages$.subscribe(dt => {
+    getUsersMessages() {
+        this.usersMessagesStore.usersMessages$.subscribe(dt => {
             console.log('users list!!!', dt)
             this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
             // console.log(this.filteredUsersMessages)
             this.selectedUserMessages = this.filteredUsersMessages[0];
-            this.userMessagesStore.changeUser(this.selectedUserMessages);
+            this.usersMessagesStore.changeUser(this.selectedUserMessages);
         });
     }
 
@@ -58,16 +58,16 @@ export class UsersListComponent implements OnInit, OnDestroy {
             this.openBottomChatBox.emit(userMessages);
         }
         this.selectedUserMessages = userMessages;
-        this.userMessagesStore.changeUser(userMessages);
+        this.usersMessagesStore.changeUser(userMessages);
     }
 
     toggleBlockedUsers(show) {
         this.showBlockedUsers = show;
-        this.filteredUsersMessages = this.userMessagesStore.userMessages.filter(d => {
+        this.filteredUsersMessages = this.usersMessagesStore.usersMessages.filter(d => {
             return !!d.users_connections?.[0].is_blocked === show;
         });
         this.selectedUserMessages = this.filteredUsersMessages[0];
-        this.userMessagesStore.changeUser(this.selectedUserMessages);
+        this.usersMessagesStore.changeUser(this.selectedUserMessages);
     }
 
     unreadLastMessages(usersMessages) {
@@ -130,9 +130,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
             // console.log('get seen from users list', this.selectedUserMessages.id, to_id)
             // console.log(dt)
             if (this.selectedUserMessages.id === to_id) {
-                this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
+                this.usersMessagesStore.changeOneUserMessages(to_id, direct_messages);
             } else {
-                this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
+                this.usersMessagesStore.changeOneUserMessages(from_id, direct_messages);
             }
         }));
     }
@@ -153,7 +153,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     ifContactsListActionsShown() {
-        return this.userMessagesStore.userMessages.length > 0;
+        return this.usersMessagesStore.usersMessages.length > 0;
     }
 
     ifContactBlocked(user) {

@@ -18,7 +18,7 @@ import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsService} from '@core/services/notifications.service';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private stripeCustomersService: CustomersService,
         private countTotals: CountPurchasedTransferredTotalsPipe,
         private notificationsService: NotificationsService,
-        private userMessagesStore: UsersMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService,
@@ -101,7 +101,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
             blocked: 0
         }).subscribe(dt => {
-            this.userMessagesStore.setUserMessages(dt);
+            this.usersMessagesStore.setUserMessages(dt);
         }));
     }
 
@@ -132,7 +132,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             if (dt.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
             }
-            this.userMessagesStore.setUserMessages(dt.users_messages);
+            this.usersMessagesStore.setUserMessages(dt.users_messages);
         }));
     }
 
@@ -258,9 +258,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
             const {from_id, to_id, direct_messages, group_id, group_messages} = dt;
             if (direct_messages) {
                 if (from_id === this.authUser.id) {
-                    this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
+                    this.usersMessagesStore.changeOneUserMessages(to_id, direct_messages);
                 } else if (to_id === this.authUser.id) {
-                    this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
+                    this.usersMessagesStore.changeOneUserMessages(from_id, direct_messages);
                 }
             } else if (group_messages) {
                 this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);

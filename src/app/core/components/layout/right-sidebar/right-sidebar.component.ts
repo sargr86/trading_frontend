@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChatService} from '@core/services/chat.service';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 
 @Component({
     selector: 'app-right-sidebar',
@@ -19,7 +19,7 @@ export class RightSidebarComponent implements OnInit {
     constructor(
         private getAuthUser: GetAuthUserPipe,
         private chatService: ChatService,
-        private userMessagesStore: UsersMessagesSubjectService
+        private usersMessagesStore: UsersMessagesSubjectService
     ) {
     }
 
@@ -36,8 +36,8 @@ export class RightSidebarComponent implements OnInit {
             user_id: this.authUser.id,
         }).subscribe(dt => {
             this.usersMessages = dt;
-            this.userMessagesStore.setUserMessages(dt);
-            console.log(this.userMessagesStore.userMessages)
+            this.usersMessagesStore.setUserMessages(dt);
+            console.log(this.usersMessagesStore.usersMessages)
         }));
 
     }

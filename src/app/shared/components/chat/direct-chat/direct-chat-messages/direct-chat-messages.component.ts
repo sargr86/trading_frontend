@@ -1,5 +1,5 @@
 import {AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
@@ -25,7 +25,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     typingText = null;
 
     constructor(
-        private userMessagesStore: UsersMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private subject: SubjectService,
         private socketService: SocketIoService,
         private chatService: ChatService,
@@ -42,7 +42,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     }
 
     trackUsersMessagesChange(){
-        this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+        this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.selectedUserMessages = dt;
             this.typingText = null;
         }));
@@ -64,9 +64,9 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
             const {from_id, to_id, direct_messages} = dt;
 
             if (this.selectedUserMessages.id === to_id) {
-                this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
+                this.usersMessagesStore.changeOneUserMessages(to_id, direct_messages);
             } else if (this.selectedUserMessages.id === from_id) {
-                this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
+                this.usersMessagesStore.changeOneUserMessages(from_id, direct_messages);
             }
 
         }));

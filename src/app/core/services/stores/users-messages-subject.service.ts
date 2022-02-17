@@ -23,7 +23,7 @@ export class UsersMessagesSubjectService {
         this.selectedUserMessagesSource.next(userMessages);
     }
 
-    get userMessages() {
+    get usersMessages() {
         return this.usersMessagesSource.getValue();
     }
 
@@ -42,12 +42,12 @@ export class UsersMessagesSubjectService {
     // }
 
     changeUserMessages(userMessages) {
-        const allUserMessages = [...this.userMessages];
-        const selectedUserIndex = allUserMessages.findIndex(gm => gm.id === userMessages.id);
+        const allUsersMessages = [...this.usersMessages];
+        const selectedUserIndex = allUsersMessages.findIndex(gm => gm.id === userMessages.id);
 
 
-        allUserMessages[selectedUserIndex] = userMessages;
-        this.setUserMessages(allUserMessages);
+        allUsersMessages[selectedUserIndex] = userMessages;
+        this.setUserMessages(allUsersMessages);
         // console.log(userMessages.id, this.selectedUserMessages.id)
         if (userMessages.id === this.selectedUserMessages.id) {
             this.changeUser(userMessages);
@@ -59,7 +59,7 @@ export class UsersMessagesSubjectService {
     changeOneUserMessages(id, messages) {
         // console.log(id, messages)
         // console.log(this.userMessages)
-        const userMessages = this.userMessages.find(um => um.id === id);
+        const userMessages = this.usersMessages.find(um => um.id === id);
         // console.log(userMessages)
         if (userMessages && id && messages) {
             userMessages.direct_messages = messages;

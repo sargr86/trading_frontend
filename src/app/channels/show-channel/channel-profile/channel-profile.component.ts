@@ -11,7 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from "@core/services/stores/notifications-subject-store.service";
-import {UsersMessagesSubjectService} from "@core/services/stores/user-messages-subject.service";
+import {UsersMessagesSubjectService} from "@core/services/stores/users-messages-subject.service";
 
 @Component({
     selector: 'app-channel-profile',

@@ -3,7 +3,7 @@ import {environment} from '@env';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Subscription} from 'rxjs';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
@@ -29,7 +29,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     constructor(
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
-        private userMessagesStore: UsersMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private groupMessagesStore: GroupsMessagesSubjectService,
         private fixLineBreaks: FixTextLineBreaksPipe
     ) {
@@ -48,7 +48,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     getSelectedUserChanges() {
-        this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+        this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.chatForm.patchValue({message: ''});
             this.setTyping();
 

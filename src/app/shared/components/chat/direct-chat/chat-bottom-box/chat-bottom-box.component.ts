@@ -16,7 +16,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import * as moment from 'moment';
 import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
-import {UsersMessagesSubjectService} from '@core/services/stores/user-messages-subject.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
 
@@ -46,7 +46,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private usersService: UsersService,
-        private userMessagesStore: UsersMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService
     ) {
     }
@@ -73,11 +73,11 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
             user_id: this.authUser.id,
         }).subscribe(dt => {
             this.messages = dt;
-            this.userMessagesStore.setUserMessages(dt);
-            console.log(this.userMessagesStore.userMessages)
-            this.userMessagesStore.changeUser(dt.find(d => d.id === this.channelUser.id));
+            this.usersMessagesStore.setUserMessages(dt);
+            console.log(this.usersMessagesStore.usersMessages)
+            this.usersMessagesStore.changeUser(dt.find(d => d.id === this.channelUser.id));
             // this.userMessagesStore.changeUser(dt[0]);
-            console.log(this.userMessagesStore.selectedUserMessages)
+            console.log(this.usersMessagesStore.selectedUserMessages)
         }));
 
     }

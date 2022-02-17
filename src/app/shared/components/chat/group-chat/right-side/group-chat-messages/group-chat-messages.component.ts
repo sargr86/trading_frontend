@@ -143,10 +143,10 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             console.log('new message group chat!!!', dt);
 
-            const {group_id, group_messages} = dt;
+            // const {group_id, group_messages} = dt;
+            // this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
 
             // if (this.selectedGroupMessages.id === dt.group_id){
-            this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
             this.resetTyping();
             this.scrollMsgsToBottom();
             this.setNewMessageSources();

@@ -339,11 +339,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             console.log('new message', dt)
-            const {from_id, to_id, direct_messages} = dt;
-            if (from_id === this.authUser.id) {
-                this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
-            } else if (to_id === this.authUser.id) {
-                this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
+            const {from_id, to_id, direct_messages, group_id, group_messages} = dt;
+            if (direct_messages) {
+                if (from_id === this.authUser.id) {
+                    this.userMessagesStore.changeOneUserMessages(to_id, direct_messages);
+                } else if (to_id === this.authUser.id) {
+                    this.userMessagesStore.changeOneUserMessages(from_id, direct_messages);
+                }
+            } else if (group_messages) {
+                this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
             }
             // console.log(this.userMessagesStore.userMessages)
         }));
@@ -351,9 +355,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     getUnreadMessagesCount() {
-        return this.userMessagesStore.userMessages
-            ?.filter(m => m.direct_messages?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
 
+        const directMessages = this.userMessagesStore.userMessages
+            ?.filter(m => m.direct_messages
+                ?.filter(d => !d.seen && d.from_id !== this.authUser.id).length > 0).length;
+
+        const groupMessages = this.groupsMessagesStore.groupsMessages
+            ?.filter(m => {
+                return m.group_messages
+                    ?.find(message => {
+                        let found = false;
+                        if (message.from_id !== this.authUser.id) {
+                            found = !message.seen.find(sb => sb.seen_by.id === this.authUser.id);
+                        }
+                        return found;
+                    });
+            }).length;
+        return directMessages + groupMessages;
     }
 
     isMessagesIconHidden() {

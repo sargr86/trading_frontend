@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostBinding, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
@@ -12,7 +12,8 @@ import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChatService} from '@core/services/chat.service';
 import {UserMessagesSubjectService} from '@core/services/user-messages-subject.service';
-import {GroupsMessagesSubjectService} from "@core/services/stores/groups-messages-subject.service";
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -29,6 +30,13 @@ export class AppComponent implements OnInit, OnDestroy {
     rightSidenavFor;
 
     chatBoxUser;
+    // @todo use this for dark mode toggling
+    isDarkModeEnabled = false;
+
+    @HostBinding('class')
+    get themeMode() {
+        return this.isDarkModeEnabled ? 'dark-theme' : 'light-theme';
+    }
 
     constructor(
         public router: Router,
@@ -38,8 +46,9 @@ export class AppComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
-        public groupChatStore: GroupsMessagesSubjectService
-
+        public groupChatStore: GroupsMessagesSubjectService,
+        @Inject(DOCUMENT) private document: Document,
+        private renderer: Renderer2
     ) {
 
     }
@@ -49,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.logInProduction();
         this.setPageTitle();
         this.getStockTypes();
-
+        this.renderer.setAttribute(this.document.body, 'class', this.themeMode);
     }
 
     logInProduction() {

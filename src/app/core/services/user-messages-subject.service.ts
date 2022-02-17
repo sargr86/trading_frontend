@@ -64,6 +64,7 @@ export class UserMessagesSubjectService {
         // console.log(userMessages)
         if (userMessages && id && messages) {
             userMessages.direct_messages = messages;
+            // this.changeUser(userMessages);
         }
     }
 

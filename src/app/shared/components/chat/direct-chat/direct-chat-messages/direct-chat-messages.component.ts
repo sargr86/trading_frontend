@@ -50,7 +50,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     ngOnInit(): void {
         this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
-            console.log('user changed!', dt);
+            // console.log('user changed!', dt);
             this.selectedUserMessages = dt;
             this.typingText = null;
             // this.setTyping({});
@@ -68,7 +68,6 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     }
 
     setSeen(e) {
-        console.log('set seen', e)
         const messages = this.selectedUserMessages.direct_messages;
         const lastMessage = messages[messages.length - 1];
         const isOwnLastMessage = lastMessage?.from_id === this.authUser.id;
@@ -125,7 +124,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             const {from_id, to_id, direct_messages} = dt;
-            // console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
+            console.log('new message direct chat!!!', `SELECTED USER:${this.selectedUserMessages.id} ,FROM_ID:${from_id}, to_ID ${to_id}`)
             this.typingText = null;
 
             if (from_id === this.authUser.id) {

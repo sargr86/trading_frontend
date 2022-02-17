@@ -7,7 +7,6 @@ import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
 import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
-import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import IsResponsive from '@core/helpers/is-responsive';
 import trackByElement from '@core/helpers/track-by-element';
 import {Subscription} from 'rxjs';
@@ -15,7 +14,6 @@ import {ToastrService} from 'ngx-toastr';
 import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
 import {CustomersService} from '@core/services/wallet/customers.service';
-import {MatTableDataSource} from '@angular/material/table';
 import {PaymentsService} from '@core/services/wallet/payments.service';
 import {CountPurchasedTransferredTotalsPipe} from '@shared/pipes/count-purchased-transfered-totals.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
@@ -88,13 +86,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
 
         if (this.authUser) {
-            // this.getAuthUserNotifications();
-            // this.getAcceptedDeclinedRequests();
             // this.getUserCards();
             this.getDailyStocks();
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();
-            // console.log(this.authUser)
             this.getUsersMessages();
             this.getGroupsMessages();
         }
@@ -136,7 +131,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             console.log('get block/unblock', dt)
             if (dt.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
-                // this.setNotifications.transform(dt);
             }
             this.userMessagesStore.setUserMessages(dt.users_messages);
         }));
@@ -155,7 +149,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
-                // this.getConnectWithUser();
             } else if (ev instanceof ActivationEnd) {
                 this.passedUsername = ev.snapshot.queryParams.username;
             }
@@ -248,7 +241,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    notificationClicked() {
+    notificationIconClicked() {
         this.closeRightSidenav.emit('notifications');
     }
 

@@ -78,6 +78,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             from_user: notification.to_user,
             msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted your connection request`
         });
+
         this.notifications = this.notifications.filter(n => n.id !== notification.id);
 
         this.notificationsStore.setInitialNotifications(this.notifications);
@@ -210,7 +211,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 });
                 this.groupMessagesStore.setGroupsMessages(dt);
 
-                this.notifications = this.notifications.filter(n => n.id !== notification.id);
+                this.notifications = this.notifications.filter(n => n.id !== notification._id);
                 this.notificationsStore.setInitialNotifications(this.notifications);
 
             })
@@ -230,7 +231,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     notification_id: notification._id
                 });
 
-                this.notifications = this.notifications.filter(n => n.id !== notification.id);
+                this.notifications = this.notifications.filter(n => n.id !== notification._id);
                 this.notificationsStore.setInitialNotifications(this.notifications);
 
                 this.groupMessagesStore.setGroupsMessages(dt);

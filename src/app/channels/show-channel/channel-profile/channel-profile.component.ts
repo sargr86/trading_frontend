@@ -95,11 +95,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
                 this.usersConnectionStatus = 'connected';
                 this.isBlocked = false;
             }
-
-            if (dt.receiver_id === this.authUser.id) {
-                // this.notificationsStore.addToNotifications(dt);
-                // this.getNotifications();
-            }
         }));
 
         this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {

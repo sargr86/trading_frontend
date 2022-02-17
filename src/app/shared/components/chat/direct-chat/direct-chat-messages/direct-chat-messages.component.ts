@@ -35,24 +35,26 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     }
 
     ngOnInit(): void {
-        this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
-            this.selectedUserMessages = dt;
-            this.typingText = null;
-        }));
-
+        this.trackUsersMessagesChange();
         this.getSeen();
         this.getTyping();
         this.getMessagesFromSocket();
     }
 
+    trackUsersMessagesChange(){
+        this.subscriptions.push(this.userMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+            this.selectedUserMessages = dt;
+            this.typingText = null;
+        }));
+    }
 
-    setSeen(e) {
+    setSeen(formValue) {
         const {owned, lastMessage} = this.sHelper.isLastMsgOwn(this.selectedUserMessages.direct_messages);
         if (!owned) {
             this.socketService.setSeen({
                 message_id: lastMessage?._id,
                 seen: 1,
-                ...e
+                ...formValue
             });
         }
     }
@@ -70,8 +72,8 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         }));
     }
 
-    setTyping(e) {
-        this.socketService.setTyping(e);
+    setTyping(formValue) {
+        this.socketService.setTyping(formValue);
     }
 
     getTyping() {
@@ -82,15 +84,13 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         }));
     }
 
-
-    sendMessage(e) {
-        this.socketService.sendMessage(e);
+    sendMessage(formValue) {
+        this.socketService.sendMessage(formValue);
     }
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
             this.typingText = null;
-
             this.sHelper.scrollMsgsToBottom(this.messagesList);
         }));
     }

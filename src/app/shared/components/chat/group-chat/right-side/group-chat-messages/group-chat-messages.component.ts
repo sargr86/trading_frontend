@@ -5,7 +5,6 @@ import {ChatService} from '@core/services/chat.service';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
-import {SubjectService} from '@core/services/subject.service';
 import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
 
 @Component({

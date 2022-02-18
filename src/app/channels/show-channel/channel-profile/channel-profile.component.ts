@@ -13,6 +13,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {Router} from '@angular/router';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-channel-profile',
@@ -51,6 +52,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private channelService: ChannelsService,
         private subject: SubjectService,
         private usersConnectionsStore: UsersMessagesSubjectService,
+        private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,
@@ -252,6 +254,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         const foundUserMessages = this.usersConnectionsStore.usersMessages.find(um => um.id === this.channelUser.id);
         if (foundUserMessages) {
             this.usersConnectionsStore.showBottomChatBox = true;
+            this.groupsMessagesStore.showBottomChatBox = false;
             this.usersConnectionsStore.changeUser(foundUserMessages);
         }
     }

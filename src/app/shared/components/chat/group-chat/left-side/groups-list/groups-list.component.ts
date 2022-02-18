@@ -7,6 +7,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 
 @Component({
     selector: 'app-groups-list',
@@ -28,6 +29,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private usersMessagesStore: UsersMessagesSubjectService,
         private dialog: MatDialog,
         private isEmptyObj: CheckForEmptyObjectPipe
     ) {
@@ -93,6 +95,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         this.selectedGroup = group;
         this.groupsMessagesStore.selectGroup(group);
         if (this.sidebarMode) {
+            this.usersMessagesStore.showBottomChatBox = false;
             this.groupsMessagesStore.showBottomChatBox = true;
         }
     }

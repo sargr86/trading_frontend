@@ -5,6 +5,7 @@ import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {User} from "@shared/models/user";
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-users-list',
@@ -30,6 +31,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         private socketService: SocketIoService,
         private usersService: UsersService,
         private usersMessagesStore: UsersMessagesSubjectService,
+        private groupsMessagesStore: GroupsMessagesSubjectService,
         public mobileHelper: MobileResponsiveHelper,
     ) {
     }
@@ -60,6 +62,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         // }
         if (this.sidebarMode) {
             this.usersMessagesStore.showBottomChatBox = true;
+            this.groupsMessagesStore.showBottomChatBox = false;
         }
         this.selectedUserMessages = userMessages;
         this.usersMessagesStore.changeUser(userMessages);

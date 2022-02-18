@@ -1,5 +1,4 @@
 <form [formGroup]="channelForm">
-    <!--    <ng-container *ngIf="channelUser">-->
     <div class="profile-block">
         <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
             <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
@@ -123,5 +122,4 @@
             </button>
         </div>
     </div>
-    <!--    </ng-container>-->
 </form>

@@ -12,6 +12,8 @@ export class UsersMessagesSubjectService {
     usersMessages$ = this.usersMessagesSource.asObservable();
     selectedUserMessages$ = this.selectedUserMessagesSource.asObservable();
 
+    showBottomChatBox = false;
+
     constructor() {
     }
 

@@ -54,8 +54,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     selectUserMessages(userMessages, lastMsg) {
+        // if (this.sidebarMode) {
+        //     this.openBottomChatBox.emit(userMessages);
+        //
+        // }
         if (this.sidebarMode) {
-            this.openBottomChatBox.emit(userMessages);
+            this.usersMessagesStore.showBottomChatBox = true;
         }
         this.selectedUserMessages = userMessages;
         this.usersMessagesStore.changeUser(userMessages);

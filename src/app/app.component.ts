@@ -47,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private stocksService: StocksService,
         private getAuthUser: GetAuthUserPipe,
         public groupChatStore: GroupsMessagesSubjectService,
+        public usersMessagesStore: UsersMessagesSubjectService,
         @Inject(DOCUMENT) private document: Document,
         private renderer: Renderer2
     ) {

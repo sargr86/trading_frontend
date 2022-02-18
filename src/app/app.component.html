@@ -25,8 +25,8 @@
                     <router-outlet></router-outlet>
                 </div>
                 <div class="bottom-chat-box">
-                    <app-chat-bottom-box [channelUser]="chatBoxUser" (closeBox)="chatBoxUser = $event"
-                                         *ngIf="chatBoxUser">
+                    <app-chat-bottom-box *ngIf="usersMessagesStore.showBottomChatBox"
+                                         [channelUser]="usersMessagesStore.selectedUserMessages">
                     </app-chat-bottom-box>
                     <app-chat-bottom-box *ngIf="groupChatStore.showBottomChatBox" [chatBoxType]="'group'"
                                          [selectedGroup]="groupChatStore.selectedGroupMessages"></app-chat-bottom-box>

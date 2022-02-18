@@ -14,6 +14,7 @@ import {ChatService} from '@core/services/chat.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {DOCUMENT} from '@angular/common';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(
         public router: Router,
         private subject: SubjectService,
+        public auth: AuthService,
         public loader: LoaderService,
         private titleService: Title,
         private route: ActivatedRoute,
@@ -111,7 +113,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     isRightSidebarShown() {
-        return !/auth|chat/.test(this.router.url) && this.rightSidenavOpened && this.rightSidenavFor;
+        return !/auth|chat/.test(this.router.url) && this.rightSidenavOpened && this.rightSidenavFor && this.auth.loggedIn();
     }
 
     checkIfPolicyPage() {

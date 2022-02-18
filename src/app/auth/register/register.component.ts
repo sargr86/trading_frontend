@@ -18,6 +18,7 @@ import {PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH} from '@core/constants/global';
 import {LoaderService} from '@core/services/loader.service';
 import {SubjectService} from '@core/services/subject.service';
 import moment from 'moment';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-register',
@@ -38,7 +39,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private datePipe: DatePipe,
         private dialog: MatDialog,
         public loader: LoaderService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private userStore: UserStoreService
     ) {
 
         // Age-restriction of 18
@@ -75,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.subscriptions.push(this.auth.register(this.registerForm.value).subscribe(async (dt: any) => {
                 this.loader.formProcessing = false;
                 localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-                this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
+                this.userStore.setAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
                 await this.router.navigate(['/']);
             }));
         }

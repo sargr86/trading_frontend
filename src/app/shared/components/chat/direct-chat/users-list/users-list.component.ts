@@ -16,7 +16,6 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 export class UsersListComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() sidebarMode = false;
-    @Output() openBottomChatBox = new EventEmitter();
 
     subscriptions: Subscription[] = [];
     filteredUsersMessages = [];
@@ -56,10 +55,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     selectUserMessages(userMessages, lastMsg) {
-        // if (this.sidebarMode) {
-        //     this.openBottomChatBox.emit(userMessages);
-        //
-        // }
         if (this.sidebarMode) {
             this.usersMessagesStore.showBottomChatBox = true;
             this.groupsMessagesStore.showBottomChatBox = false;

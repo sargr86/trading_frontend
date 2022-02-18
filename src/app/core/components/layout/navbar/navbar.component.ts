@@ -23,6 +23,7 @@ import {NotificationsSubjectStoreService} from '@core/services/stores/notificati
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-navbar',
@@ -56,6 +57,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
     constructor(
+        private userStore: UserStoreService,
         public router: Router,
         public auth: AuthService,
         private getAuthUser: GetAuthUserPipe,
@@ -83,7 +85,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
 
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
+        // console.log(this.authUser)
 
         if (this.authUser) {
             // this.getUserCards();
@@ -137,10 +140,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
 
-
     getAuthenticatedUser() {
-        this.subscriptions.push(this.subject.authUser.subscribe(dt => {
-            // this.authUser = dt;
+        this.subscriptions.push(this.userStore.authUser$.subscribe(dt => {
+            this.authUser = dt;
             // this.addUserToSocket([]);
         }));
     }

@@ -10,7 +10,8 @@ import {VerifyEmailComponent} from '@core/components/modals/verify-email/verify-
 import {MatDialog} from '@angular/material/dialog';
 import {SubjectService} from '@core/services/subject.service';
 import jwtDecode from 'jwt-decode';
-import {SocketIoService} from "@core/services/socket-io.service";
+import {SocketIoService} from '@core/services/socket-io.service';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-login',
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private authGuard: AuthGuard,
         private dialog: MatDialog,
         private subject: SubjectService,
+        private userStore: UserStoreService,
         private socketService: SocketIoService
     ) {
         this.loginForm = this.fb.group({
@@ -45,15 +47,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isSubmitted = true;
         if (this.loginForm.valid) {
             this.subscriptions.push(this.auth.login(this.loginForm.value).subscribe(async (dt: any) => {
-                localStorage.setItem('token', dt?.token || '');
-                this.subject.changeAuthUser(jwtDecode(dt?.token || ''));
+                const token = dt?.token;
+                if (token) {
+                    localStorage.setItem('token', token);
+                    this.userStore.setAuthUser(token);
+                }
 
-                console.log(jwtDecode(dt?.token || ''))
                 await this.router.navigateByUrl(this.authGuard.redirectUrl || '/');
             }));
         }
     }
-
 
 
     get email(): AbstractControl {

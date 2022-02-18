@@ -14,6 +14,7 @@ import {NotificationsSubjectStoreService} from '@core/services/stores/notificati
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {Router} from '@angular/router';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-channel-profile',
@@ -47,6 +48,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     constructor(
         private usersService: UsersService,
+        private userStore: UserStoreService,
         private base64ToFile: Base64ToFilePipe,
         private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
@@ -227,7 +229,14 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;
         this.changingImage = false;
-        this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
+
+        const token = dt.hasOwnProperty('token') ? dt?.token : '';
+        if (token) {
+            localStorage.setItem('token', token);
+            this.userStore.setAuthUser(token);
+        }
+
+
         // this.loader.dataLoading = false;
         // console.log(this.channelUser)
     }

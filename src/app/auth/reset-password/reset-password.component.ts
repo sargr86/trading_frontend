@@ -10,6 +10,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {ToastrService} from 'ngx-toastr';
 import {LoaderService} from '@core/services/loader.service';
 import {SubjectService} from '@core/services/subject.service';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-reset-password',
@@ -32,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
         private jwtHelper: JwtHelperService,
         private toastr: ToastrService,
         public loader: LoaderService,
-        private subject: SubjectService
+        private userStore: UserStoreService
     ) {
 
         this.email = this.route.snapshot?.queryParams?.email;
@@ -58,11 +59,15 @@ export class ResetPasswordComponent implements OnInit {
     changePassword() {
         this.isSubmitted = true;
         if (this.resetPassForm.valid) {
-            this.auth.resetPass(this.resetPassForm.value).subscribe(dt => {
-                localStorage.setItem('token', (dt?.hasOwnProperty('token') ? dt.token : ''));
-                this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
-                this.router.navigate(['/']);
-            });
+            this.auth.resetPass(this.resetPassForm.value).subscribe((async (dt) => {
+                const token = dt.hasOwnProperty('token') ? dt?.token : '';
+                if (token) {
+                    localStorage.setItem('token', token);
+                    this.userStore.setAuthUser(token);
+                    await this.router.navigate(['/']);
+                }
+
+            }));
         }
     }
 

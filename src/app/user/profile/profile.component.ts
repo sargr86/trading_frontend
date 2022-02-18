@@ -21,6 +21,7 @@ import {AuthService} from '@core/services/auth.service';
 import * as  moment from 'moment';
 import {ToastrService} from 'ngx-toastr';
 import {SubjectService} from '@core/services/subject.service';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-profile',
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private getAuthUser: GetAuthUserPipe,
         private toastr: ToastrService,
-        private subject: SubjectService,
+        private userStore: UserStoreService,
         public router: Router
     ) {
         this.initForm();
@@ -126,14 +127,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
     saveChanges() {
         const formData = this.buildFormData();
         this.usersService.saveProfileChanges(formData).subscribe(async (dt) => {
-            localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-            this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
-            this.toastr.success('The changes are saved successfully');
-            await this.router.navigateByUrl('');
+
+            const token = dt.hasOwnProperty('token') ? dt?.token : '';
+            if (token) {
+                localStorage.setItem('token', token);
+                this.userStore.setAuthUser(token);
+                this.toastr.success('The changes are saved successfully');
+                await this.router.navigateByUrl('');
+            }
+
         });
     }
 
-     get firstName(): AbstractControl {
+    get firstName(): AbstractControl {
         return this.profileForm.get('first_name');
     }
 

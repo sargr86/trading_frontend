@@ -173,7 +173,6 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         this.stocksService.updateUserStocksPriority(sendData).subscribe(dt => {
             this.selectedSortType = this.stocksSortTypes[0];
             localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
-            // this.subject.changeAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
             this.subject.changeUserStocks({stocks: e.stocks});
         });
     }

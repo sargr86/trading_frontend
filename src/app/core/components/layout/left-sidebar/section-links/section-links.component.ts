@@ -63,7 +63,7 @@ export class SectionLinksComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     ngAfterViewChecked() {
-        this.newMessageSources = this.unreadMessagesHelper.getUnreadMessagesCount();
+        this.newMessageSources = this.unreadMessagesHelper.getUnreadMessagesCount(this.authUser);
         this.cdr.detectChanges();
     }
 

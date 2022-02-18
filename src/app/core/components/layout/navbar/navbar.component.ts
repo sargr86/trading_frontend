@@ -269,7 +269,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getUnreadMessagesCount() {
-        return this.unreadMessagesHelper.getUnreadMessagesCount();
+        return this.unreadMessagesHelper.getUnreadMessagesCount(this.authUser);
     }
 
     isMessagesIconHidden() {

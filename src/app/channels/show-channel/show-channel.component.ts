@@ -22,6 +22,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {ToastrService} from 'ngx-toastr';
 import trackByElement from '@core/helpers/track-by-element';
 import {ChatService} from '@core/services/chat.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -82,6 +83,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         public loader: LoaderService,
         private updateStocks: UpdateUserStocksPipe,
         private stocksService: StocksService,
+        public usersMessagesStore: UsersMessagesSubjectService,
         private toastr: ToastrService,
         private chatService: ChatService
     ) {
@@ -210,13 +212,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         }
 
     }
-
-    toggleChatBox() {
-        this.showChatBox = !this.showChatBox;
-    }
-
-
-
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

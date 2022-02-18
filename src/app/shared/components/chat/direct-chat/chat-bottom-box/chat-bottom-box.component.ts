@@ -8,6 +8,7 @@ import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-chat-bottom-box',
@@ -21,6 +22,8 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     messages = [];
 
     subscriptions: Subscription[] = [];
+    isChannelPage = false;
+
 
     @Input() channelUser;
     @Input() selectedGroup;
@@ -35,11 +38,13 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
         private socketService: SocketIoService,
         private usersService: UsersService,
         private usersMessagesStore: UsersMessagesSubjectService,
-        private groupsMessagesStore: GroupsMessagesSubjectService
+        private groupsMessagesStore: GroupsMessagesSubjectService,
+        public router: Router
     ) {
     }
 
     ngOnInit(): void {
+        this.isChannelPage = this.router.url.includes('channels/show');
         this.authUser = this.getAuthUser.transform();
     }
 

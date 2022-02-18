@@ -10,8 +10,9 @@ import {LoaderService} from '@core/services/loader.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {NotificationsSubjectStoreService} from "@core/services/stores/notifications-subject-store.service";
-import {UsersMessagesSubjectService} from "@core/services/stores/users-messages-subject.service";
+import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-channel-profile',
@@ -39,10 +40,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     isBlocked = false;
     usersConnectionStatus = 'idle';
 
+
     @Input('channelUser') channelUser;
     @Input('authUser') authUser;
-
-    @Output() toggleChatBox = new EventEmitter();
 
     constructor(
         private usersService: UsersService,
@@ -54,13 +54,14 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
     ) {
 
 
     }
 
     ngOnInit(): void {
+
         if (this.channelUser) {
             this.checkChannelSubscription();
             this.initChannelForm();
@@ -88,8 +89,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            console.log('accepted', dt)
-            console.log(dt.receiver_id, this.channelUser.id)
             if ((dt.to_user.id === this.authUser.id && dt.from_user.id === this.channelUser.id)
                 || (dt.to_user.id === this.channelUser.id && dt.from_user.id === this.authUser.id)) {
                 this.usersConnectionStatus = 'connected';
@@ -250,7 +249,11 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     toggleBottomChatBox() {
-        this.toggleChatBox.emit(this.channelUser);
+        const foundUserMessages = this.usersConnectionsStore.usersMessages.find(um => um.id === this.channelUser.id);
+        if (foundUserMessages) {
+            this.usersConnectionsStore.showBottomChatBox = true;
+            this.usersConnectionsStore.changeUser(foundUserMessages);
+        }
     }
 
     connectWithUser() {
@@ -259,7 +262,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.socketService.connectWithUser({
             from_user: this.authUser,
             to_user: this.channelUser,
-            msg: `<strong>${ this.authUser.first_name + ' ' +  this.authUser.last_name}</strong>
+            msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
                 has sent a connection request to you`
         });
     }

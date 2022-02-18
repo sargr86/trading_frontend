@@ -3,8 +3,8 @@
         <div class="channel-user-name-container">
             <ng-container *ngIf="chatBoxType === 'direct'">
                 <div class="avatar-container">
-                    <img class="avatar" id="profile-image" alt="channel-user-avatar"
-                         [src]="channelUser?.channel?.avatar|getImgPath: 'avatars'">
+                    <img class="avatar user-avatar" alt="channel-user-avatar"
+                         [src]="channelUser.avatar|getImgPath: 'user_avatars'">
                     <span>{{channelUser?.first_name + ' ' + channelUser?.last_name}}</span>
                 </div>
             </ng-container>

@@ -23,7 +23,7 @@
     margin-right: 16px;
 }
 
-.waiting-for-confirmation-btn{
+.waiting-for-confirmation-btn {
     @include regularButton;
     width: 210px;
     background-color: $light_gray;
@@ -91,10 +91,17 @@ label[for="cover-image-input"] {
 .avatar-container {
     position: relative;
 
+    label {
+        margin-bottom: 0;
+    }
+
     .remove-avatar-btn {
+        width: 13px;
+        height: 13px;
         position: absolute;
-        right: 20px;
-        top: 13px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         //background-color: #000000;
         color: #000000;
         font-size: 16px;
@@ -104,4 +111,9 @@ label[for="cover-image-input"] {
 
 .subscribed {
     background-color: #b3b3b3 !important;
+}
+
+#channel-name-avatar, #connection-status-buttons {
+    display: flex;
+    align-items: center;
 }

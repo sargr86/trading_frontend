@@ -3,8 +3,7 @@
     <!--    <app-categories></app-categories>-->
     <ng-container *ngIf="channelUser">
         <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
-        <app-channel-profile [channelUser]="channelUser" [authUser]="authUser" *ngIf="channelUser"
-                             (toggleChatBox)="toggleChatBox()"></app-channel-profile>
+        <app-channel-profile [channelUser]="channelUser" [authUser]="authUser" *ngIf="channelUser"></app-channel-profile>
         <div class="stocks-watchlist pWatchlist">
             <div class="profile-list user-profile-block">
                 <ul class="nav nav-tabs" id="channel-tabs-list" role="tablist">
@@ -69,5 +68,6 @@
         <p>Channel with such name is not found</p>
     </div>
 </div>
-<app-chat-bottom-box *ngIf="showChatBox && channelUser" [channelUser]="channelUser"
-                     (closeBox)="showChatBox = false"></app-chat-bottom-box>
+
+<!--<app-chat-bottom-box *ngIf="usersMessagesStore.showBottomChatBox && channelUser" [channelUser]="channelUser"-->
+<!--                     ></app-chat-bottom-box>-->

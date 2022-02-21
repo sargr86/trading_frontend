@@ -32,11 +32,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     chatBoxUser;
     // @todo use this for dark mode toggling
-    isDarkModeEnabled = false;
+    isDarkModeEnabled = true;
 
     @HostBinding('class')
     get themeMode() {
-        return this.isDarkModeEnabled ? 'dark-theme' : 'light-theme';
+        return '';
+        // return this.isDarkModeEnabled ? 'theme-dark' : 'theme-light';
     }
 
     constructor(

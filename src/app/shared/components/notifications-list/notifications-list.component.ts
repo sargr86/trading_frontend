@@ -187,9 +187,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
             if (this.authUser.id === data.to_id) {
-                console.log('aaa', data);
+                // console.log('aaa', data);
                 this.notificationsStore.updateNotifications(data);
-                console.log(this.notificationsStore.allNotifications)
+                // console.log(this.notificationsStore.allNotifications)
                 // this.setNotifications.transform(data);
             }
         }));
@@ -203,7 +203,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 member_id: this.authUser.id,
                 from_user: this.authUser,
             }).subscribe(dt => {
-
                 this.socketService.acceptJoinToGroup({
                     group: selectedGroup,
                     user: this.authUser,

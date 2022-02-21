@@ -28,7 +28,6 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     @Input() channelUser;
     @Input() selectedGroup;
     @Input() chatBoxType = 'direct';
-    @Input() isOpenedFromChannelPage = false;
 
 
     constructor(
@@ -44,8 +43,18 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
         this.isChannelPage = this.router.url.includes('channels/show');
         this.authUser = this.getAuthUser.transform();
+        this.trackSelectedUser();
+    }
+
+    trackSelectedUser() {
+        this.usersMessagesStore.selectedUserMessages$.subscribe(selectedUser => {
+            if (!selectedUser) {
+                this.closeChatBox();
+            }
+        });
     }
 
     closeChatBox() {

@@ -125,6 +125,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
             console.log('disconnected', dt);
+            console.log(this.usersMessagesStore.selectedUserMessages)
             if (dt.to_user.id === this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
             }
@@ -189,7 +190,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-                console.log('aaa', data);
+            console.log('aaa', data);
             if (this.authUser.id === data.to_id) {
                 this.notificationsStore.updateNotifications(data);
                 // console.log(this.notificationsStore.allNotifications)

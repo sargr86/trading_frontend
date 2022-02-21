@@ -82,7 +82,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     getConnectionsChanges() {
         this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe((dt: any) => {
-            console.log('connection changed!!!', dt, this.channelUser.id)
+            // console.log('connection changed!!!', dt, this.channelUser.id)
             //
             //     if (dt.filter(d => d.id === this.channelUser.id)) {
             //         this.usersConnectionStatus = 'connected';
@@ -93,8 +93,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            if ((dt.to_user.id === this.authUser.id && dt.from_user.id === this.channelUser.id)
-                || (dt.to_user.id === this.channelUser.id && dt.from_user.id === this.authUser.id)) {
+            const {notification} = dt;
+            if ((notification.to_user.id === this.authUser.id && notification.from_user.id === this.channelUser.id)
+                || (notification.to_user.id === this.channelUser.id && notification.from_user.id === this.authUser.id)) {
                 this.usersConnectionStatus = 'connected';
                 this.isBlocked = false;
             }

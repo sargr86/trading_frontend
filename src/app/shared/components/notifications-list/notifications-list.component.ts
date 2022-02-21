@@ -5,7 +5,6 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Router} from '@angular/router';
 import {sortTableData} from '@core/helpers/sort-table-data-by-column';
-import * as moment from 'moment';
 import {AuthService} from '@core/services/auth.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
@@ -20,8 +19,6 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 export class NotificationsListComponent implements OnInit, OnDestroy {
 
     authUser;
-    notifications = [];
-
     subscriptions: Subscription[] = [];
 
     @Input() shownInSidebar = false;
@@ -56,8 +53,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getNotifications() {
         this.subscriptions.push(this.notificationsService.getAuthUserNotifications({user_id: this.authUser.id}).subscribe((dt: any) => {
             this.notificationsStore.setInitialNotifications(dt);
-            this.notifications = this.notificationsStore.allNotifications;
-            // console.log(this.notifications);
         }));
     }
 
@@ -79,10 +74,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted your connection request`
         });
 
-        console.log(this.notificationsStore.allNotifications, this.notifications, notification._id)
-        this.notifications = this.notifications.filter(n => n._id !== notification._id);
-        console.log(this.notifications)
-        this.notificationsStore.setInitialNotifications(this.notifications);
+        console.log(this.notificationsStore.allNotifications, notification._id)
+        const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+        console.log(notifications)
+        this.notificationsStore.setInitialNotifications(notifications);
     }
 
     declineConnection(notification) {
@@ -94,8 +89,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined your connection request`
         });
 
-        this.notifications = this.notifications.filter(n => n._id !== notification._id);
-        this.notificationsStore.setAllNotifications(this.notifications);
+        const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+        this.notificationsStore.setInitialNotifications(notifications);
     }
 
     getConnectWithUser() {
@@ -139,8 +134,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             type: n.type,
             read_by: this.authUser
         }).subscribe((dt: any) => {
-            this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setAllNotifications(dt);
+            const notifications = sortTableData(dt, 'created_at', 'desc');
+            this.notificationsStore.setAllNotifications(notifications);
         }));
     }
 
@@ -151,8 +146,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.notificationsService.markNotificationsAsRead({
             notifications, user_id: this.authUser.id, read_by: this.authUser
         }).subscribe(dt => {
-            this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setAllNotifications(dt);
+            const allNotifications = sortTableData(dt, 'created_at', 'desc');
+            this.notificationsStore.setAllNotifications(allNotifications);
         });
     }
 
@@ -161,8 +156,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             id: n.id,
             type: n.notification_type.name
         }).subscribe((dt: any) => {
-            this.notifications = sortTableData(dt, 'created_at', 'desc');
-            this.notificationsStore.setAllNotifications(dt);
+            const notifications = sortTableData(dt, 'created_at', 'desc');
+            this.notificationsStore.setAllNotifications(notifications);
         }));
     }
 
@@ -170,8 +165,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.notificationsService.removeAllNotifications({
             user_id: this.authUser.id
         }).subscribe((dt: any) => {
-            this.notifications = dt;
-            this.notificationsStore.setAllNotifications(dt);
+            const notifications = sortTableData(dt, 'created_at', 'desc');
+            this.notificationsStore.setAllNotifications(notifications);
         }));
     }
 
@@ -182,9 +177,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         });
     }
 
-    onNotificationClick(type) {
+    async onNotificationClick(type) {
         if (type === 'group_join_invitation') {
-            this.router.navigate(['chat/messages']);
+            await this.router.navigate(['chat/messages']);
         }
     }
 
@@ -214,8 +209,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 });
                 this.groupMessagesStore.setGroupsMessages(dt);
 
-                this.notifications = this.notifications.filter(n => n.id !== notification._id);
-                this.notificationsStore.setInitialNotifications(this.notifications);
+                const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+                this.notificationsStore.setInitialNotifications(notifications);
 
             })
         );
@@ -235,8 +230,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 });
 
                 console.log(notification)
-                this.notifications = this.notifications.filter(n => n.id !== notification._id);
-                this.notificationsStore.setInitialNotifications(this.notifications);
+                const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+                this.notificationsStore.setInitialNotifications(notifications);
 
                 this.groupMessagesStore.setGroupsMessages(dt);
             })

@@ -69,6 +69,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getRemovedSavedMember() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
+            console.log('removed from group', data)
             this.notificationsStore.updateNotifications(data);
             if (member.id === this.authUser.id) {
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);

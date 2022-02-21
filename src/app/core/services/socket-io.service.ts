@@ -199,6 +199,7 @@ export class SocketIoService {
     removeFromGroupNotify() {
         return new Observable(observer => {
             this.socket.on('removeFromGroupNotify', msg => {
+                console.log('remove from group')
                 observer.next(msg);
             });
         });

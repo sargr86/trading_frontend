@@ -37,6 +37,7 @@ export class GroupChatActionsComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.chatService.removeGroup({group_id: this.selectedGroup.id}).subscribe(dt => {
+                    console.log(dt)
                     this.socketService.removeGroup({group: this.selectedGroup, initiator: this.authUser});
                     this.groupsMessagesStore.setGroupsMessages(dt);
                     this.selectedGroup = null;

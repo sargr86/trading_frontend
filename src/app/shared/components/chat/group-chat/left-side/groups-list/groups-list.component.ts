@@ -38,6 +38,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getGroupsMessages();
         this.getGroupFormValue();
+        this.removeFromGroupNotify();
         this.removeGroupNotify();
     }
 
@@ -78,6 +79,17 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             }
             this.refreshGroupsMessages();
             this.groupsMessagesStore.selectGroup({});
+        }));
+    }
+
+    removeFromGroupNotify(){
+        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+            const {group, member, leftGroups} = data;
+            console.log('removed from group', member)
+            if (member.id === this.authUser.id) {
+                this.groupsMessagesStore.setGroupsMessages(leftGroups);
+                this.groupsMessagesStore.selectGroup({});
+            }
         }));
     }
 

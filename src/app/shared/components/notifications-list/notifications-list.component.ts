@@ -234,6 +234,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     notification_id: notification._id
                 });
 
+                console.log(notification)
                 this.notifications = this.notifications.filter(n => n.id !== notification._id);
                 this.notificationsStore.setInitialNotifications(this.notifications);
 

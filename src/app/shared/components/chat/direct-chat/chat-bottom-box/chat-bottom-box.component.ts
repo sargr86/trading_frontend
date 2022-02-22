@@ -9,6 +9,7 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {DirectChatMessagesComponent} from '@shared/components/chat/direct-chat/direct-chat-messages/direct-chat-messages.component';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {Router} from '@angular/router';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-chat-bottom-box',
@@ -38,6 +39,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private isEmptyObj: CheckForEmptyObjectPipe,
         public router: Router
     ) {
     }
@@ -47,11 +49,21 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
         this.isChannelPage = this.router.url.includes('channels/show');
         this.authUser = this.getAuthUser.transform();
         this.trackSelectedUser();
+        this.trackSelectedGroup();
     }
 
     trackSelectedUser() {
         this.usersMessagesStore.selectedUserMessages$.subscribe(selectedUser => {
             if (!selectedUser) {
+                this.closeChatBox();
+            }
+        });
+    }
+
+    trackSelectedGroup() {
+        this.groupsMessagesStore.selectedGroupsMessages$.subscribe(selectedGroup => {
+            console.log('track', selectedGroup)
+            if (this.isEmptyObj.transform(selectedGroup)) {
                 this.closeChatBox();
             }
         });

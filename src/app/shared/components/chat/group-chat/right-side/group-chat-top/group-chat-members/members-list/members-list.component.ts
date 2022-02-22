@@ -8,6 +8,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
+import {User} from '@shared/models/user';
 
 @Component({
     selector: 'app-members-list',
@@ -19,7 +20,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() modalMode = false;
 
-    socketGroupsUsers = [];
+    onlineMembers = [];
     subscriptions: Subscription[] = [];
 
     membersCountLimit;
@@ -35,12 +36,13 @@ export class MembersListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.getChatNotifications();
+        this.getOnlineMembers();
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinGroup();
         this.getRemovedSavedMember();
         this.getLeftGroup();
         this.getMembersCountDelimiter();
+        this.onLogout();
     }
 
     getMembersCountDelimiter() {
@@ -83,9 +85,26 @@ export class MembersListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getChatNotifications() {
-        this.subscriptions.push(this.socketService.getChatNotifications().subscribe((data: any) => {
-            this.socketGroupsUsers = data.groupsUsers;
+    getOnlineMembers() {
+        // console.log(this.selectedGroup.name)
+        this.socketService.getConnectedGroupMembers({
+            group_name: this.selectedGroup.name,
+            username: this.authUser.username
+        });
+
+        this.subscriptions.push(this.socketService.membersOnlineFeedback().subscribe((dt: any) => {
+            const {group, members} = dt;
+            // console.log('online members', dt)
+            // console.log('selected group', this.selectedGroup.name)
+            // console.log('group', group)
+            if (group === this.selectedGroup.name) {
+                this.onlineMembers = members;
+            }
+        }));
+
+        this.subscriptions.push(this.socketService.usersOnlineFeedback().subscribe((dt: any) => {
+            // console.log('online users', dt)
+            // this.onlineMembers = dt;
         }));
     }
 
@@ -128,11 +147,18 @@ export class MembersListComponent implements OnInit, OnDestroy {
         }));
     }
 
+    onLogout() {
+        this.socketService.onLogout().subscribe((user: User) => {
+            this.onlineMembers = this.onlineMembers.filter(u => u !== user.username);
+            // console.log('logout', this.onlineMembers)
+        });
+    }
+
     getUserCurrentStatus(groupMember) {
         const groupName = this.groupsMessagesStore.groupsMessages.find(gm => gm.id === groupMember?.chat_groups_members?.group_id)?.name;
-        // if (this.socketGroupsUsers && groupName === this.selectedGroup?.name) {
-        //     return !!this.socketGroupsUsers.find(sGroupUser => sGroupUser.group === groupName && groupMember.username === sGroupUser.username);
-        // }
+        if (this.onlineMembers && groupName === this.selectedGroup?.name) {
+            return !!this.onlineMembers.find(m => groupMember.username === m);
+        }
         return false;
     }
 

@@ -4,7 +4,7 @@ import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
-import {User} from "@shared/models/user";
+import {User} from '@shared/models/user';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
@@ -142,7 +142,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     onLogout() {
         this.socketService.onLogout().subscribe((user: User) => {
             this.onlineUsers = this.onlineUsers.filter(u => u !== user.username);
-            console.log('logout', this.onlineUsers)
+            // console.log('logout', this.onlineUsers)
         });
     }
 

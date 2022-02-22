@@ -73,6 +73,20 @@ export class SocketIoService {
         });
     }
 
+    getConnectedGroupMembers(data) {
+        this.socket.emit('getConnectedGroupMembers', data);
+    }
+
+    membersOnlineFeedback() {
+        return new Observable(observer => {
+            this.socket.on('onGetOnlineMembers', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+
+
     // EMITTER example
     sendMessage(data: any) {
         this.socket.emit('sendMessage', data);

@@ -62,7 +62,6 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
 
     trackSelectedGroup() {
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe(selectedGroup => {
-            console.log('track', selectedGroup)
             if (this.isEmptyObj.transform(selectedGroup)) {
                 this.closeChatBox();
             }

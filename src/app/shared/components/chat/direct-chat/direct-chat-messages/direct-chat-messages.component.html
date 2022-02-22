@@ -1,6 +1,6 @@
-<ng-container
-    [ngTemplateOutlet]="itemTemplate"
-    [ngTemplateOutletContext]="{uMessages: selectedUserMessages}">
+<ng-container *ngIf="!isBlockedUser"
+              [ngTemplateOutlet]="itemTemplate"
+              [ngTemplateOutletContext]="{uMessages: selectedUserMessages}">
 </ng-container>
 
 <ng-template let-uMessages="uMessages" #itemTemplate>

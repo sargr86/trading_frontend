@@ -9,14 +9,15 @@
                 </div>
 
                 <div class="sort-types-dropdown dropdown" *ngIf="sorting">
-                    <div class="dropdown-toggle" id="dropdown-menu-btn" [matMenuTriggerFor]="menu1" *ngIf="!editStocksList">
+                    <div class="dropdown-toggle" id="dropdown-menu-btn" [matMenuTriggerFor]="menu1"
+                         *ngIf="!editStocksList">
                         Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>
                         <i class="fas fa-sort-down"></i>
                     </div>
                     <div class="dropdown-menu">
 
                         <mat-menu #menu1="matMenu">
-                               <a mat-menu-item *ngFor="let sortType of stocksSortTypes;trackBy: trackByElement"
+                            <a mat-menu-item *ngFor="let sortType of stocksSortTypes;trackBy: trackByElement"
                                [class.red]="selectedSortType?.name === sortType.name"
                                (click)="sortStocks(sortType)">{{sortType.name}}</a>
                         </mat-menu>
@@ -58,8 +59,10 @@
                     </ng-container>
 
                     <ng-template let-d="details" #itemTemplate>
-                        <div class="indices-small-chart-container" *ngIf="stock.hasOwnProperty('series')">
-                            <ngx-charts-line-chart [scheme]="getColorScheme(stock)" [animations]="false"
+                        <div class="indices-small-chart-container">
+                            <ngx-charts-line-chart [scheme]="getColorScheme(stock)"
+                                                   *ngIf="stock.hasOwnProperty('series')"
+                                                   [animations]="false"
                                                    [results]="[stock]" [autoScale]="true"
                                                    [view]="stockChartSettings.view"
                                                    [tooltipDisabled]="stockChartSettings.tooltipDisabled"

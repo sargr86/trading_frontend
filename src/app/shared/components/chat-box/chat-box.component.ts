@@ -4,6 +4,7 @@ import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {API_URL} from '@core/constants/global';
 import {ChatService} from '@core/services/chat.service';
+import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 
 @Component({
     selector: 'app-chat-box',
@@ -43,6 +44,7 @@ export class ChatBoxComponent implements OnInit {
         private subject: SubjectService,
         private getAuthUser: GetAuthUserPipe,
         private chatService: ChatService,
+        private fixLineBreaks: FixTextLineBreaksPipe
     ) {
         this.authUser = this.getAuthUser.transform();
         if (!this.videoRecordingState) {
@@ -124,6 +126,8 @@ export class ChatBoxComponent implements OnInit {
     sendMessage(e) {
         // Getting video id for publisher and subscriber differently
         if (this.videoId && this.chatForm.valid) {
+            const message = this.fixLineBreaks.transform(this.chatForm.value.message, e.target);
+            this.chatForm.patchValue({message});
             const data = {video_id: this.videoId, ...this.chatForm.value};
             // console.log(data)
             this.messages.push(data);

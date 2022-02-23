@@ -76,13 +76,15 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.removeGroupNotify().subscribe((data: any) => {
             console.log('removed group', data)
             if (data.initiator.id === this.authUser.id) {
+                this.groupsMessagesStore.setGroupsMessages(data.groupsUsers);
+            } else {
+                this.refreshGroupsMessages();
             }
-            this.refreshGroupsMessages();
             this.groupsMessagesStore.selectGroup({});
         }));
     }
 
-    removeFromGroupNotify(){
+    removeFromGroupNotify() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
             console.log('removed from group', member)

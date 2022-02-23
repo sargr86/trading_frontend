@@ -36,6 +36,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.trackGroupChanges();
         this.getOnlineMembers();
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinGroup();
@@ -43,6 +44,13 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.getLeftGroup();
         this.getMembersCountDelimiter();
         this.onLogout();
+    }
+
+    trackGroupChanges() {
+        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((sGroup: any) => {
+            this.selectedGroup = sGroup;
+            this.getOnlineMembers();
+        }));
     }
 
     getMembersCountDelimiter() {
@@ -101,22 +109,17 @@ export class MembersListComponent implements OnInit, OnDestroy {
                 this.onlineMembers = members;
             }
         }));
-
-        this.subscriptions.push(this.socketService.usersOnlineFeedback().subscribe((dt: any) => {
-            // console.log('online users', dt)
-            // this.onlineMembers = dt;
-        }));
     }
 
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
-            console.log('accepted', data)
-            console.log(this.notificationsStore.allNotifications)
+            // console.log('accepted', data)
+            // console.log(this.notificationsStore.allNotifications)
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
-            console.log(this.notificationsStore.allNotifications)
+            // console.log(this.notificationsStore.allNotifications)
             this.groupsMessagesStore.changeGroup(rest.group);
         }));
     }

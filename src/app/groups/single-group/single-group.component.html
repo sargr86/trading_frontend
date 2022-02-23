@@ -1,5 +1,49 @@
 <app-user-tags></app-user-tags>
-<div class="group-cover-image">
-    <img [src]="selectedGroup?.cover|getImgPath:'group_covers'">
+<div id="group-wrap">
+    <div id="group-cover-image">
+        <img [src]="selectedGroup?.cover|getImgPath:'group_covers'">
+    </div>
+
+    <div class="row">
+        <div id="group-details">
+            <div class="details-row">
+                <strong id="group-name">{{selectedGroup.name}}</strong>
+            </div>
+
+            <div class="details-row">
+                <div id="group-type">
+                    <mat-icon>public</mat-icon>
+                    <span>Public</span>
+                </div>
+                <div id="members-count">
+                    <strong>
+                        <span>{{selectedGroup.chat_group_members.length}}</span>
+                        members
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <div id="group-actions">
+            <button [matMenuTriggerFor]="menu">
+                Join
+            </button>
+
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <i class="fas fa-users"></i>
+                    Unfollow group
+                </button>
+                <button mat-menu-item>
+                    <i class="fas fa-users"></i>
+                    Leave group
+                </button>
+            </mat-menu>
+
+            <button id="invite-to-group-btn">
+                <mat-icon>add</mat-icon>
+                Invite
+            </button>
+        </div>
+    </div>
 </div>
-<strong>{{selectedGroup.name}}</strong>

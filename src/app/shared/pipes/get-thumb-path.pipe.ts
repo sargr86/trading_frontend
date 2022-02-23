@@ -48,6 +48,7 @@ export class GetThumbPathPipe implements PipeTransform {
                 p = GROUP_DEFAULT_AVATARS_PATH;
                 break;
             case 'covers':
+            case 'group_covers':
                 p = VIDEO_DEFAULT_COVERS_PATH;
         }
 

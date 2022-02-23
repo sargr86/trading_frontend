@@ -45,8 +45,10 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     trackUsersMessagesChange() {
         this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.selectedUserMessages = dt;
-            this.isBlockedUser = !!dt.users_connections[0].is_blocked;
-            this.typingText = null;
+            if (dt) {
+                this.isBlockedUser = !!dt.users_connections[0].is_blocked;
+                this.typingText = null;
+            }
         }));
     }
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {environment} from '@env';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -31,7 +31,8 @@ export class ChatFormComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupMessagesStore: GroupsMessagesSubjectService,
-        private fixLineBreaks: FixTextLineBreaksPipe
+        private fixLineBreaks: FixTextLineBreaksPipe,
+        private renderer: Renderer2
     ) {
     }
 
@@ -127,8 +128,11 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     sendMessageOnEnter(e) {
-        this.chatForm.value.message = this.fixLineBreaks.transform(this.chatForm.value.message);
+
+        const message = this.fixLineBreaks.transform(this.chatForm.value.message, e.target);
         if (e.keyCode === 13 && !e.shiftKey) {
+
+            this.chatForm.patchValue({message});
             this.sendMessage();
         }
     }

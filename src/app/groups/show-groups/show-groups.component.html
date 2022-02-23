@@ -1,1 +1,11 @@
-<p>show-groups works!</p>
+<ul>
+    <li class="group-wrap" *ngFor="let group of groupsMessagesStore.groupsMessages"
+        [routerLink]="'/groups/'+group.id">
+        <div class="img-wrap">
+            <img [src]="group.avatar|getImgPath:'group_avatars'">
+        </div>
+        <div class="group-name-wrap">
+            <strong>{{group.name}}</strong>
+        </div>
+    </li>
+</ul>

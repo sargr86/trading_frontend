@@ -59,6 +59,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'groups',
+        loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'playlists',
         loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule),
     },

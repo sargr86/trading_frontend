@@ -1,0 +1,20 @@
+@import 'variables';
+
+ul {
+    display: flex;
+
+    .group-wrap {
+        width: 200px;
+        text-align: center;
+        text-transform: capitalize;
+        cursor: pointer;
+
+        &:hover {
+            color: $metl-green;
+        }
+
+        img {
+            width: 200px;
+        }
+    }
+}

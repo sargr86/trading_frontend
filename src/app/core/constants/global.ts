@@ -102,7 +102,7 @@ export const MAIN_SECTIONS = [
         auth: true,
         production: true
     },
-    {name: 'Home', img: '', icon: 'home.png', link: '/', auth: false, production: true},
+    {name: 'Home', img: '', icon: 'home', link: '/', auth: false, production: true},
     {name: 'Trending', img: 'item-9.png', icon: '', link: '/trending', separator: true, auth: false, production: true},
     {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},
     {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true},

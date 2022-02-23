@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
   selector: 'app-show-groups',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShowGroupsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+      public groupsMessagesStore: GroupsMessagesSubjectService
+  ) { }
 
   ngOnInit(): void {
   }

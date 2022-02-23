@@ -1,1 +1,5 @@
-<p>single-group works!</p>
+<app-user-tags></app-user-tags>
+<div class="group-cover-image">
+    <img [src]="selectedGroup?.cover|getImgPath:'group_covers'">
+</div>
+<strong>{{selectedGroup.name}}</strong>

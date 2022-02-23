@@ -130,7 +130,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     sendMessageOnEnter(e) {
 
         const message = this.fixLineBreaks.transform(this.chatForm.value.message, e.target);
-        if (e.keyCode === 13 && !e.shiftKey) {
+        if (e.key === 'Enter' && !e.shiftKey) {
 
             this.chatForm.patchValue({message});
             this.sendMessage();

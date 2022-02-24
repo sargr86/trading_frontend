@@ -51,8 +51,8 @@
 
     <div class="row">
         <div id="group-tabs">
-            <ul class="nav-tabs" *ngIf="selectedGroup">
-                <li class="nav-item" *ngFor="let tab of groupTabs" (click)="selectedTab = tab">
+            <ul class="nav-tabs">
+                <li class="nav-item" *ngFor="let tab of groupTabs">
                     <a class="nav-link" [routerLink]="'/groups/'+id+'/'+tab.link"
                        routerLinkActive="active"
                     >{{tab.name}}</a>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div class="tab-content">
-        <router-outlet></router-outlet>
+    <div class="tab-content" *ngIf="selectedGroup">
+        <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
     </div>
 </div>

@@ -20,7 +20,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     isOwnGroup = false;
     id: number;
     groupTabs = GROUP_PAGE_TABS;
-    selectedTab = this.groupTabs[0];
 
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
@@ -42,15 +41,24 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     getSelectedGroup() {
         this.route.params.subscribe((params: Params) => {
-            console.log(params)
             this.id = +params.id;
             this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => g.id === this.id);
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
+            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            console.log(this.groupsMessagesStore.selectedGroupMessages)
         });
     }
 
     showJoinBtn() {
         return !this.isOwnGroup;
+    }
+
+    onOutletLoaded(component) {
+        if (this.selectedGroup) {
+            component.selectedGroup = this.selectedGroup;
+            component.isOwnGroup = this.isOwnGroup;
+            component.authUser = this.authUser;
+        }
     }
 
     ngOnDestroy(): void {

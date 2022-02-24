@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-media-tab',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediaTabComponent implements OnInit {
 
-  constructor() { }
+    @Input() selectedGroup;
+    @Input() isOwnGroup;
 
-  ngOnInit(): void {
-  }
+    constructor() {
+    }
 
+    ngOnInit(): void {
+        console.log(this.selectedGroup)
+    }
 }

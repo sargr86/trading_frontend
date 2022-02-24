@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-about-tab',
-  templateUrl: './about-tab.component.html',
-  styleUrls: ['./about-tab.component.scss']
+    selector: 'app-about-tab',
+    templateUrl: './about-tab.component.html',
+    styleUrls: ['./about-tab.component.scss']
 })
 export class AboutTabComponent implements OnInit {
 
-  constructor() { }
+    @Input() selectedGroup;
+    @Input() isOwnGroup;
 
-  ngOnInit(): void {
-  }
+    constructor() {
+    }
+
+    ngOnInit(): void {
+        console.log(this.isOwnGroup)
+    }
 
 }

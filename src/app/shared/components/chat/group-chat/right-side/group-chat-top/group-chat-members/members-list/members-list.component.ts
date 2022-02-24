@@ -9,6 +9,7 @@ import {ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP} from '@core/constants/chat';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {User} from '@shared/models/user';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-members-list',
@@ -32,6 +33,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
         private socketService: SocketIoService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private notificationsStore: NotificationsSubjectStoreService,
+        private isEmptyObj: CheckForEmptyObjectPipe
     ) {
     }
 
@@ -49,6 +51,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     trackGroupChanges() {
         this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((sGroup: any) => {
             this.selectedGroup = sGroup;
+            console.log(sGroup)
             this.getOnlineMembers();
         }));
     }

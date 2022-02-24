@@ -1,1 +1,43 @@
-<strong>Members</strong>
+<div class="tab-container">
+    <!--    <ng-container *ngIf="!isOwnGroup">-->
+    <!--        <h3>Members</h3>-->
+    <!--        <hr>-->
+    <!--    </ng-container>-->
+
+    <div id="all-members-wrap">
+        <div id="admins" *ngIf="!isOwnGroup">
+            <strong>Admins</strong>
+
+            <ul [class.bordered]="!isOwnGroup">
+                <li *ngFor="let admin of admins">
+                    <img class="avatar" [src]="admin.avatar|getImgPath: 'user_avatars'">
+                    <strong>{{admin.name}}</strong>
+                </li>
+            </ul>
+        </div>
+
+        <div id="members">
+            <strong>Members</strong>
+
+<!--            <app-members-list [selectedGroup]="getGroup('members')" [authUser]="authUser"></app-members-list>-->
+
+            <ul [class.bordered]="isOwnGroup">
+                <li *ngFor="let member of members">
+                    <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                    <strong>{{member.name}}</strong>
+                </li>
+            </ul>
+        </div>
+
+        <div id="member-requests" *ngIf="isOwnGroup">
+            <strong>Requests</strong>
+
+                        <ul>
+                            <li *ngFor="let member of requestedMembers" class="group-member pending">
+                                <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                                <strong>{{member.name}}</strong>
+                            </li>
+                        </ul>
+        </div>
+    </div>
+</div>

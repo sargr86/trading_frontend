@@ -15,7 +15,7 @@
                     <img class="img group-avatar" [src]="group.avatar|getImgPath:'group_avatars'">
                     <div class="text">
                         <div class="name">{{group.name}}</div>
-                        <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:' '}}</span>
+                        <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:'':' '}}</span>
                     </div>
                 </div>
 

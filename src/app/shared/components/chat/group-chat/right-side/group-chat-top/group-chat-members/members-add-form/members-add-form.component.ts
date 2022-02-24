@@ -118,7 +118,8 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
             this.socketService.inviteToNewGroup({
                 invited_members: this.inputGroupMembers,
                 from_user: this.authUser,
-                group: this.selectedGroup
+                group: this.selectedGroup,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has sent an invitation to join the <strong>${this.selectedGroup.name}</strong> group`,
             });
             this.groupsMessagesStore.changeGroup(this.selectedGroup);
             console.log(this.groupsMessagesStore.groupsMessages)

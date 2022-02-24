@@ -177,10 +177,18 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         });
     }
 
-    async onNotificationClick(type) {
-        if (type === 'group_join_invitation') {
-            await this.router.navigate(['chat/messages']);
+    async onNotificationClick(notification) {
+        const type = notification?.type;
+
+        this.readNotification(notification);
+        if (type === 'accept_group_invitation') {
+            console.log(notification.link, decodeURI(notification.link))
+            await this.router.navigateByUrl(notification.link);
+            // this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+            //     await this.router.navigate(['channels/show'], {queryParams: {username}})
+            // );
         }
+
     }
 
     getGroupJoinInvitation() {
@@ -205,7 +213,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 this.socketService.acceptJoinToGroup({
                     group: selectedGroup,
                     user: this.authUser,
-                    notification_id: notification._id
+                    notification_id: notification._id,
+                    msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
+                    link: `/channels/show?username=${this.authUser.username}`,
                 });
                 this.groupMessagesStore.setGroupsMessages(dt);
 

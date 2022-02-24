@@ -1,10 +1,14 @@
 @import 'variables';
 
+.groups-type-title {
+    border-bottom: 1px solid $light_gray;
+    margin: 20px;
+}
+
 ul {
     display: flex;
 
-    .group-wrap {
-        width: 200px;
+    .group-item-wrap {
         text-align: center;
         text-transform: capitalize;
         cursor: pointer;

@@ -25,8 +25,8 @@
     <li *ngFor="let notification of notificationsStore.allNotifications"
         class="notification" [class.unread]="!isNotificationRead(notification)"
         [class.flex-wrap]="notification?.type === 'users_connection_request'"
-        (click)="onNotificationClick(notification?.type)">
-        <div class="left d-flex pl-2" (click)="readNotification(notification)">
+        >
+        <div class="left d-flex pl-2" (click)="onNotificationClick(notification)">
             <div class="avatar-container">
                 <img class="avatar" id="profile-image"
                      [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">

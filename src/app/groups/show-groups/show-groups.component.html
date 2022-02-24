@@ -1,11 +1,12 @@
+<h3 class="groups-type-title">Groups you manage</h3>
 <ul>
-    <li class="group-wrap" *ngFor="let group of groupsMessagesStore.groupsMessages"
-        [routerLink]="'/groups/'+group.id">
-        <div class="img-wrap">
-            <img [src]="group.avatar|getImgPath:'group_avatars'">
-        </div>
-        <div class="group-name-wrap">
-            <strong>{{group.name}}</strong>
-        </div>
+    <li class="group-item-wrap" *ngFor="let group of filterGroups('managed')">
+        <app-group-item [group]="group"></app-group-item>
+    </li>
+</ul>
+<h3 class="groups-type-title">Groups you've joined</h3>
+<ul>
+    <li class="group-item-wrap" *ngFor="let group of filterGroups('joined')">
+        <app-group-item [group]="group"></app-group-item>
     </li>
 </ul>

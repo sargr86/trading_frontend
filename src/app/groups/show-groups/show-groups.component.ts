@@ -17,9 +17,12 @@ export class ShowGroupsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getAuthUser();
+    }
+
+    getAuthUser() {
         this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
-            console.log(user)
         });
     }
 

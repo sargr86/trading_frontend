@@ -24,21 +24,29 @@
             </div>
         </div>
 
-        <div id="group-actions">
-            <button [matMenuTriggerFor]="menu">
-                Join
-            </button>
+        <div id="group-tabs">
+            <ul>
+                <li class="tab" *ngFor="let tab of groupTabs">{{tab.name}}</li>
+            </ul>
+        </div>
 
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    <i class="fas fa-users"></i>
-                    Unfollow group
+        <div id="group-actions">
+            <ng-container *ngIf="showJoinBtn()">
+                <button [matMenuTriggerFor]="menu">
+                    Join
                 </button>
-                <button mat-menu-item>
-                    <i class="fas fa-users"></i>
-                    Leave group
-                </button>
-            </mat-menu>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <i class="fas fa-users"></i>
+                        Unfollow group
+                    </button>
+                    <button mat-menu-item>
+                        <i class="fas fa-users"></i>
+                        Leave group
+                    </button>
+                </mat-menu>
+            </ng-container>
 
             <button id="invite-to-group-btn">
                 <mat-icon>add</mat-icon>

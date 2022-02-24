@@ -20,6 +20,13 @@ export const PROFILE_PAGE_TABS = [
     {name: 'About', link: 'pAbout'},
 ];
 
+export const GROUP_PAGE_TABS = [
+    {name: 'About'},
+    {name: 'Posts'},
+    {name: 'People'},
+    {name: 'Media'},
+];
+
 export const NAVBAR_ADDITIONAL_LINKS = [
     {name: 'Accessibility assessment', link: 'accessibility-assessment'},
     {name: 'About Metl', link: 'about-us'},

@@ -28,6 +28,7 @@ import { ConnectionRequestsTabComponent } from './show-connections/connection-re
 import { SubscribersTabComponent } from './show-connections/subscribers-tab/subscribers-tab.component';
 import { SubscriptionsTabComponent } from './show-connections/subscriptions-tab/subscriptions-tab.component';
 import {ShowNotificationsComponent} from "@app/user/show-notifications/show-notifications.component";
+import { ShowProfileComponent } from './show-profile/show-profile.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import {ShowNotificationsComponent} from "@app/user/show-notifications/show-noti
         ConnectionRequestsTabComponent,
         SubscribersTabComponent,
         SubscriptionsTabComponent,
-        ShowNotificationsComponent
+        ShowNotificationsComponent,
+        ShowProfileComponent
     ],
     imports: [
         CommonModule,

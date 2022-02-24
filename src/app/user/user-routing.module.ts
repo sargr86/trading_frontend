@@ -12,6 +12,7 @@ import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 import {ShowConnectionsComponent} from '@app/user/show-connections/show-connections.component';
 import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
+import {ShowProfileComponent} from '@app/user/show-profile/show-profile.component';
 
 const routes: Routes = [
     {
@@ -90,6 +91,15 @@ const routes: Routes = [
         path: 'notifications',
         component: ShowNotificationsComponent
     },
+    {
+        path: ':id', component: ShowProfileComponent,
+        children: [
+            {path: 'connections', component: ShowConnectionsComponent},
+            // {path: ''},
+            // {path: ''},
+            // {path: ''},
+        ]
+    }
 ];
 
 

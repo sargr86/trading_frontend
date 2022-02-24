@@ -1,0 +1,39 @@
+@import 'mixins';
+
+#profile-cover-image {
+    margin-bottom: 20px;
+
+    img {
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+#details-block {
+    display: flex;
+    align-items: center;
+}
+
+#user-full-name {
+    display: block;
+}
+
+.connections-count {
+    margin-top: 4px;
+    color: #545454;
+    font-size: 14px;
+    font-family: "Muli-Light", sans-serif;
+}
+
+
+.details-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#edit-profile {
+    @include regularButton;
+    width: 170px;
+}

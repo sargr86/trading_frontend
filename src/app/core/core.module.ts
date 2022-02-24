@@ -35,6 +35,7 @@ import { PurchaseCoinsComponent } from './components/modals/purchase-coins/purch
 import { ShowChatGroupMembersComponent } from './components/modals/show-chat-group-members/show-chat-group-members.component';
 
 import { RightSidebarComponent } from './components/layout/right-sidebar/right-sidebar.component';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -76,7 +77,7 @@ import { RightSidebarComponent } from './components/layout/right-sidebar/right-s
         ReactiveFormsModule,
         MaterialModule,
         SharedModule,
-
+        RouterModule,
         CreditCardDirectivesModule,
     ],
     exports: [

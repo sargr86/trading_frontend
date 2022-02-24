@@ -61,7 +61,7 @@
                     <mat-menu #menu1="matMenu">
                         <div class="user-links">
                             <p class="user-link" *ngIf="toggleMyProfileLink()"
-                               (click)="router.navigate(['user/profile'])">My Profile</p>
+                               [routerLink]="'/user/'+authUser.id+''">My Profile</p>
                             <p class="user-link" *ngIf="!routerUrl?.includes('cards')"
                                (click)="router.navigate(['wallet/cards'])">My Cards</p>
                             <p class="user-link" *ngIf="toggleMyChannelLink()"

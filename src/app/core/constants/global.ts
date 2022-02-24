@@ -21,10 +21,10 @@ export const PROFILE_PAGE_TABS = [
 ];
 
 export const GROUP_PAGE_TABS = [
-    {name: 'About'},
-    {name: 'Posts'},
-    {name: 'People'},
-    {name: 'Media'},
+    {name: 'About', link: 'about'},
+    {name: 'Posts', link: 'posts'},
+    {name: 'People', link: 'people'},
+    {name: 'Media', link: 'media'},
 ];
 
 export const NAVBAR_ADDITIONAL_LINKS = [

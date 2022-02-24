@@ -20,7 +20,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     isOwnGroup = false;
     id: number;
     groupTabs = GROUP_PAGE_TABS;
-
+    selectedTab = this.groupTabs[0];
 
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
@@ -42,7 +42,9 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     getSelectedGroup() {
         this.route.params.subscribe((params: Params) => {
-            this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => g.id === +params.id);
+            console.log(params)
+            this.id = +params.id;
+            this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => g.id === this.id);
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
         });
     }

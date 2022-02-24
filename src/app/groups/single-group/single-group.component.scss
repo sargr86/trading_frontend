@@ -24,17 +24,12 @@
         #group-name {
             font-size: 16px;
             font-family: "Muli-Bold", sans-serif;
+            text-transform: capitalize;
             margin-bottom: 4px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
-        }
-
-        #group-type {
-            color: #545454;
-            font-size: 14px;
-            font-family: "Muli-Light", sans-serif;
         }
     }
 
@@ -44,6 +39,9 @@
         #group-type {
             display: flex;
             align-items: center;
+            color: #545454;
+            font-size: 14px;
+            font-family: "Muli-Light", sans-serif;
 
             span {
                 margin-left: 10px;

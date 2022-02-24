@@ -19,7 +19,7 @@
         <div id="members">
             <strong>Members</strong>
 
-<!--            <app-members-list [selectedGroup]="getGroup('members')" [authUser]="authUser"></app-members-list>-->
+            <!--            <app-members-list [selectedGroup]="getGroup('members')" [authUser]="authUser"></app-members-list>-->
 
             <ul [class.bordered]="isOwnGroup">
                 <li *ngFor="let member of members">
@@ -32,12 +32,15 @@
         <div id="member-requests" *ngIf="isOwnGroup">
             <strong>Requests</strong>
 
-                        <ul>
-                            <li *ngFor="let member of requestedMembers" class="group-member pending">
-                                <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
-                                <strong>{{member.name}}</strong>
-                            </li>
-                        </ul>
+            <ul>
+                <li *ngFor="let member of requestedMembers" class="group-member pending">
+                    <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                    <strong>{{member.name}}</strong>
+
+                    <button class="approve-request">Approve</button>
+                    <button class="ignore-request">Ignore</button>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

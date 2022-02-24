@@ -10,5 +10,5 @@
         </mat-icon>
     </div>
     <input id="group-avatar-input" type="file" #avatarInput [hidden]="true" (change)="changeAvatar($event)">
-    <div class="group-name">{{selectedGroup?.name}}</div>
+    <div class="group-name" [routerLink]="'/groups/'+selectedGroup.id+'/about'">{{selectedGroup?.name}}</div>
 </div>

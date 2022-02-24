@@ -66,6 +66,7 @@ import {MembersAddFormComponent} from './components/chat/group-chat/right-side/g
 import {GroupChatRightSideHolderComponent} from './components/chat/group-chat/right-side/group-chat-right-side-holder.component';
 import {GroupChatLeftSideHolderComponent} from '@shared/components/chat/group-chat/left-side/group-chat-left-side-holder.component';
 import { GetFileBaseNamePipe } from './pipes/get-file-base-name.pipe';
+import {RouterModule} from '@angular/router';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -146,6 +147,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         CreditCardDirectivesModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
         DropzoneModule,
+        RouterModule,
     ],
     providers: [
         GetAuthUserPipe,

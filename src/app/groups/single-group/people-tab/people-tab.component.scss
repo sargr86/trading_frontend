@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 .tab-container {
     padding-left: 20px;
@@ -38,6 +39,21 @@
 
         #members {
             padding-left: 20px;
+        }
+
+        #member-requests {
+            button {
+                @include regularButton;
+            }
+
+            .ignore-request {
+                background-color: $light-gray;
+                margin-left: 20px;
+            }
+
+            .approve-request {
+                margin-left: 30px;
+            }
         }
     }
 }

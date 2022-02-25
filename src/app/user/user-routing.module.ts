@@ -47,7 +47,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'profile',
+        path: 'edit-profile',
         component: ProfileFormComponent,
         data: {
             title: 'User profile-form',
@@ -91,7 +91,7 @@ const routes: Routes = [
         component: ShowNotificationsComponent
     },
     {
-        path: ':id', component: ShowProfileComponent,
+        path: 'profile/:id', component: ShowProfileComponent,
         children: [
             {path: 'watchlist', component: WatchlistTabComponent},
             {path: 'connections', component: ConnectionsTabComponent},

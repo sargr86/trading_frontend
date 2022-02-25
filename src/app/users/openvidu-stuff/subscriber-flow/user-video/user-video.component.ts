@@ -20,7 +20,7 @@ export class UserVideoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getNicknameTag() { // Gets the nickName of the user
+  getNicknameTag() { // Gets the nickName of the users
     const from = JSON.parse(this.streamManager.stream.connection.data.replace(/}%\/%{/g, ','));
     // this.toastr.success(from.clientData.myUserName + 'joined the session');
     // console.log(from)

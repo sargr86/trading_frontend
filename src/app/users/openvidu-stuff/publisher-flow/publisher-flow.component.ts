@@ -28,7 +28,7 @@ export class PublisherFlowComponent implements OnInit {
         this.subject.setSessionData(this.sessionData);
         localStorage.setItem('session', JSON.stringify(this.sessionData));
         localStorage.setItem('video_settings', JSON.stringify(this.videoSettings));
-        await this.router.navigate(['user/video/publish']);
+        await this.router.navigate(['users/video/publish']);
     }
 
 }

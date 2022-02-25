@@ -185,7 +185,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // console.log('device is ready!');
         });
 
-        // user clicked the record button and started recording
+        // users clicked the record button and started recording
         this.player.on('startRecord', (aa) => {
             // console.log(this.openViduToken)
             this.recordingState = 'active';
@@ -221,10 +221,10 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         });
 
 
-        // user completed recording and stream is available
+        // users completed recording and stream is available
         this.player.on('finishRecord', () => {
             // recordedData is a blob object containing the recorded data that
-            // can be downloaded by the user, stored on server etc.
+            // can be downloaded by the users, stored on server etc.
             // console.log('finished recording: ', this.player);
             // console.log(document.getElementsByTagName('video')[0].duration)
             // console.log('end timestamp:' + this.player.currentTimestamp)
@@ -259,7 +259,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         // converter ready and stream is available
         this.player.on('finishConvert', () => {
             // the convertedData object contains the converted data that
-            // can be downloaded by the user, stored on server etc.
+            // can be downloaded by the users, stored on server etc.
             console.log('finished converting: ', this.player.convertedData);
         });
 

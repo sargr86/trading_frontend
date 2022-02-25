@@ -207,7 +207,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     toggleMyProfileLink() {
-        return !this.router.url.includes('user/profile');
+        return !this.router.url.includes('users/profile');
     }
 
     toggleMyChannelLink() {

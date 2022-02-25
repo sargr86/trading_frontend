@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import {VideoComponent} from '@app/user/openvidu-stuff/publisher-flow/video/video.component';
+import {VideoComponent} from '@app/users/openvidu-stuff/publisher-flow/video/video.component';
 
 @Injectable({
   providedIn: 'root'

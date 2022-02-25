@@ -22,7 +22,7 @@ export class SocketIoService {
         if (login) {
             this.setupSocketConnection();
         }
-        // console.log('add to socket!!!', user)
+        // console.log('add to socket!!!', users)
         // console.log(this.socket)
         this.socket.emit('newUser', user);
     }

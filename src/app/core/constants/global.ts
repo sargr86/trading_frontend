@@ -114,7 +114,7 @@ export const MAIN_SECTIONS = [
         name: 'Start live video',
         img: '',
         icon: 'video_call',
-        link: '/user/video/start-live-video',
+        link: '/users/video/start-live-video',
         auth: true,
         production: true
     },

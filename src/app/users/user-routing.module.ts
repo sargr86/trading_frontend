@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ProfileFormComponent} from './show-profile/profile-form/profile-form.component';
-import {VideoComponent} from '@app/user/openvidu-stuff/publisher-flow/video/video.component';
-import {VideoLibraryComponent} from '@app/user/openvidu-stuff/openvidu-test/video-library/video-library.component';
-import {PublisherFlowComponent} from '@app/user/openvidu-stuff/publisher-flow/publisher-flow.component';
-import {SubscriberFlowComponent} from '@app/user/openvidu-stuff/subscriber-flow/subscriber-flow.component';
+import {VideoComponent} from '@app/users/openvidu-stuff/publisher-flow/video/video.component';
+import {VideoLibraryComponent} from '@app/users/openvidu-stuff/openvidu-test/video-library/video-library.component';
+import {PublisherFlowComponent} from '@app/users/openvidu-stuff/publisher-flow/publisher-flow.component';
+import {SubscriberFlowComponent} from '@app/users/openvidu-stuff/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
-import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
-import {ShowProfileComponent} from '@app/user/show-profile/show-profile.component';
-import {ConnectionsTabComponent} from '@app/user/show-profile/connections-tab/connections-tab.component';
-import {ConnectionRequestsTabComponent} from '@app/user/show-profile/connection-requests-tab/connection-requests-tab.component';
-import {WatchlistTabComponent} from '@app/user/show-profile/watchlist-tab/watchlist-tab.component';
-import {CardsTabComponent} from '@app/user/show-profile/cards-tab/cards-tab.component';
+import {ShowNotificationsComponent} from '@app/users/show-notifications/show-notifications.component';
+import {ShowProfileComponent} from '@app/users/show-profile/show-profile.component';
+import {ConnectionsTabComponent} from '@app/users/show-profile/connections-tab/connections-tab.component';
+import {ConnectionRequestsTabComponent} from '@app/users/show-profile/connection-requests-tab/connection-requests-tab.component';
+import {WatchlistTabComponent} from '@app/users/show-profile/watchlist-tab/watchlist-tab.component';
+import {CardsTabComponent} from '@app/users/show-profile/cards-tab/cards-tab.component';
 
 const routes: Routes = [
     {

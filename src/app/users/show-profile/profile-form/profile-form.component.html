@@ -59,7 +59,7 @@
         <div class="userImg">
 
 
-            <!-- Showing drop zone for non-authenticated user and for a user without a profile-form image -->
+            <!-- Showing drop zone for non-authenticated users and for a users without a profile-form image -->
             <dropzone [config]="dropzoneConfig" *ngIf="!profileImg" (removedFile)="removeImage()"
                       id="dropzone" class="profileImgDropzone single" #dropzone (thumbnail)="onAddedFile($event)"
                       [message]="'Click or drag an image to upload'">

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './user/home/home.component';
+import {HomeComponent} from './users/home/home.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {NonAuthGuard} from '@core/guards/non-auth.guard';
 import {NotFoundComponent} from '@core/components/docs/not-found/not-found.component';
@@ -12,8 +12,8 @@ import {SecurityComponent} from '@core/components/docs/security/security.compone
 import {HelpComponent} from '@core/components/docs/help/help.component';
 import {ContactUsComponent} from '@core/components/docs/contact-us/contact-us.component';
 import {PageLoadingComponent} from '@core/components/docs/page-loading/page-loading.component';
-import {PaymentSuccessComponent} from '@app/user/payment-success/payment-success.component';
-import {PaymentCancelComponent} from '@app/user/payment-cancel/payment-cancel.component';
+import {PaymentSuccessComponent} from '@app/users/payment-success/payment-success.component';
+import {PaymentCancelComponent} from '@app/users/payment-cancel/payment-cancel.component';
 import {TurboPlanComponent} from '@core/components/docs/turbo-plan/turbo-plan.component';
 
 
@@ -37,7 +37,7 @@ const routes: Routes = [
     },
     {
         path: 'user',
-        loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+        loadChildren: () => import('./users/user.module').then(m => m.UserModule),
         canActivate: [AuthGuard]
     },
     {

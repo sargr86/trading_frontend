@@ -4,14 +4,15 @@
             <div class="left">
 
                 <div class="thumbnail">
-                    <img class=src="assets/img/iconTV.png" alt="">
+                    <!--                    <img class=src="assets/img/iconTV.png" alt="">-->
+                    <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'">
                 </div>
                 <div class="info">
                     <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
                     <div class="shortened-details">
                         <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
                     </div>
-<!--                    <p>{{channel.description}}</p>-->
+                    <!--                    <p>{{channel.description}}</p>-->
                 </div>
             </div>
             <div class="right">

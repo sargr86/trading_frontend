@@ -98,9 +98,9 @@ const routes: Routes = [
     {
         path: ':id', component: ShowProfileComponent,
         children: [
+            {path: 'watchlist', component: WatchlistTabComponent},
             {path: 'connections', component: ConnectionsTabComponent},
             {path: 'requests', component: ConnectionRequestsTabComponent},
-            {path: 'watchlist', component: WatchlistTabComponent},
             {path: 'cards', component: CardsTabComponent},
         ]
     }

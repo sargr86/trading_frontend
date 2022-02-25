@@ -25,6 +25,7 @@ export const CHANNEL_PAGE_TABS = [
     {name: 'Watchlist', link: 'pWatch'},
     {name: 'Videos', link: 'pVideos'},
     {name: 'Playlists', link: 'pPlaylists'},
+    {name: 'People', link: 'pWatch'},
     {name: 'About', link: 'pAbout'},
 ];
 

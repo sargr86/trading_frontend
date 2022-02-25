@@ -10,6 +10,9 @@ import {WatchlistTabComponent} from './show-channel/watchlist-tab/watchlist-tab.
 import {VideosTabComponent} from './show-channel/videos-tab/videos-tab.component';
 import {PlaylistsTabComponent} from './show-channel/playlists-tab/playlists-tab.component';
 import {AboutTabComponent} from './show-channel/about-tab/about-tab.component';
+import {PeopleTabComponent} from './show-channel/people-tab/people-tab.component';
+import {SubscriptionsTabComponent} from '@app/channels/show-channel/people-tab/subscriptions-tab/subscriptions-tab.component';
+import {SubscribersTabComponent} from '@app/channels/show-channel/people-tab/subscribers-tab/subscribers-tab.component';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import {AboutTabComponent} from './show-channel/about-tab/about-tab.component';
         WatchlistTabComponent,
         VideosTabComponent,
         PlaylistsTabComponent,
-        AboutTabComponent
+        AboutTabComponent,
+        PeopleTabComponent,
+        SubscriptionsTabComponent,
+        SubscribersTabComponent
     ],
     imports: [
         CommonModule,

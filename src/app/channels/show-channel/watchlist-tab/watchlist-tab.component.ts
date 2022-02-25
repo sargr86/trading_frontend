@@ -31,7 +31,7 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     stocksLoading = 'idle';
 
 
-    @Input('channelUser') channelUser;
+    @Input() channelUser;
 
     constructor(
         private videoService: VideoService,

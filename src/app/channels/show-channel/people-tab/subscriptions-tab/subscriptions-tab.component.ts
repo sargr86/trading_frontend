@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {Subscription} from 'rxjs';
 import {ChannelsService} from '@core/services/channels.service';
@@ -13,7 +13,7 @@ import trackByElement from '@core/helpers/track-by-element';
     templateUrl: './subscriptions-tab.component.html',
     styleUrls: ['./subscriptions-tab.component.scss']
 })
-export class SubscriptionsTabComponent implements OnInit {
+export class SubscriptionsTabComponent implements OnInit, OnDestroy {
 
     @Input() authUser;
     userChannels;
@@ -41,6 +41,7 @@ export class SubscriptionsTabComponent implements OnInit {
     getUserChannelSubscriptions() {
         this.subscriptions.push(this.channelsService.getSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
             this.userChannels = dt;
+            console.log(this.userChannels)
         }));
     }
 

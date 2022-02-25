@@ -25,9 +25,7 @@ import { PaymentCancelComponent } from './payment-cancel/payment-cancel.componen
 import { ShowConnectionsComponent } from './show-connections/show-connections.component';
 import { ConnectionsTabComponent } from './show-connections/connections-tab/connections-tab.component';
 import { ConnectionRequestsTabComponent } from './show-connections/connection-requests-tab/connection-requests-tab.component';
-import { SubscribersTabComponent } from './show-connections/subscribers-tab/subscribers-tab.component';
-import { SubscriptionsTabComponent } from './show-connections/subscriptions-tab/subscriptions-tab.component';
-import {ShowNotificationsComponent} from "@app/user/show-notifications/show-notifications.component";
+import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
 import { ShowProfileComponent } from './show-profile/show-profile.component';
 import { WatchlistTabComponent } from './show-profile/watchlist-tab/watchlist-tab.component';
 import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component';
@@ -53,12 +51,10 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
         ShowConnectionsComponent,
         ConnectionsTabComponent,
         ConnectionRequestsTabComponent,
-        SubscribersTabComponent,
-        SubscriptionsTabComponent,
         ShowNotificationsComponent,
         ShowProfileComponent,
         WatchlistTabComponent,
-        CardsTabComponent
+        CardsTabComponent,
     ],
     imports: [
         CommonModule,
@@ -67,7 +63,6 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
         NgxPhotoEditorModule,
         SharedModule
     ],
-
     exports: []
 })
 export class UserModule {

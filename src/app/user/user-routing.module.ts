@@ -15,6 +15,8 @@ import {ShowNotificationsComponent} from '@app/user/show-notifications/show-noti
 import {ShowProfileComponent} from '@app/user/show-profile/show-profile.component';
 import {ConnectionsTabComponent} from '@app/user/show-connections/connections-tab/connections-tab.component';
 import {ConnectionRequestsTabComponent} from '@app/user/show-connections/connection-requests-tab/connection-requests-tab.component';
+import {WatchlistTabComponent} from '@app/user/show-profile/watchlist-tab/watchlist-tab.component';
+import {CardsTabComponent} from '@app/user/show-profile/cards-tab/cards-tab.component';
 
 const routes: Routes = [
     {
@@ -98,8 +100,8 @@ const routes: Routes = [
         children: [
             {path: 'connections', component: ConnectionsTabComponent},
             {path: 'requests', component: ConnectionRequestsTabComponent},
-            // {path: ''},
-            // {path: ''},
+            {path: 'watchlist', component: WatchlistTabComponent},
+            {path: 'cards', component: CardsTabComponent},
         ]
     }
 ];

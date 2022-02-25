@@ -14,7 +14,7 @@ export class ConnectionsTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.connections)
+        // console.log(this.connections)
     }
 
 

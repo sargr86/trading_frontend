@@ -11,6 +11,7 @@ import {Tab} from '@shared/models/tab';
 import {MINI_GRAPHS_TABS} from '@core/constants/global';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import {MatDialog} from '@angular/material/dialog';
+import {StocksStoreService} from '@core/services/stores/stocks-store.service';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -52,6 +53,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         private subject: SubjectService,
         private stocksService: StocksService,
+        private stocksStore: StocksStoreService,
         private cdr: ChangeDetectorRef,
         public loader: LoaderService,
         private dialog: MatDialog
@@ -127,6 +129,7 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
             this.selectedSortType = dt?.stocks_order_type;
             this.userStocks = dt?.user_stocks || [];
             this.loader.stocksLoading.status = 'finished';
+            this.stocksStore.setUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.subject.changeUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
         }));
     }

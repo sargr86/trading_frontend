@@ -74,9 +74,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted your connection request`
         });
 
-        console.log(this.notificationsStore.allNotifications, notification._id)
+        // console.log(this.notificationsStore.allNotifications, notification._id)
         const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
-        console.log(notifications)
+        // console.log(notifications)
         this.notificationsStore.setInitialNotifications(notifications);
     }
 

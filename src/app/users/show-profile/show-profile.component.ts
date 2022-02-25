@@ -3,6 +3,7 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {PROFILE_PAGE_TABS} from '@core/constants/global';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-show-profile',
@@ -20,7 +21,8 @@ export class ShowProfileComponent implements OnInit {
 
     constructor(
         private userStore: UserStoreService,
-        private usersConnectionsStore: UsersMessagesSubjectService
+        private usersConnectionsStore: UsersMessagesSubjectService,
+        public router: Router
     ) {
     }
 

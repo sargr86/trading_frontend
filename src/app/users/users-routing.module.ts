@@ -63,6 +63,10 @@ const routes: Routes = [
         path: ':id',
         children: [
             {
+                path: '',
+                component: ShowProfileComponent
+            },
+            {
                 path: 'edit',
                 component: ProfileFormComponent,
                 pathMatch: 'full',

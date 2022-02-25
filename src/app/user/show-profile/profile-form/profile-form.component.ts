@@ -25,10 +25,10 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+    templateUrl: './profile-form.component.html',
+    styleUrls: ['./profile-form.component.scss']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileFormComponent implements OnInit, OnDestroy {
     profileForm: FormGroup;
     isSubmitted = false;
     subscriptions: Subscription[] = [];

@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ProfileComponent} from './profile/profile.component';
-import {VideoComponent} from '@app/user/publisher-flow/video/video.component';
-import {VideoLibraryComponent} from '@app/user/openvidu-test/video-library/video-library.component';
+import {ProfileFormComponent} from './show-profile/profile-form/profile-form.component';
+import {VideoComponent} from '@app/user/openvidu-stuff/publisher-flow/video/video.component';
+import {VideoLibraryComponent} from '@app/user/openvidu-stuff/openvidu-test/video-library/video-library.component';
 import {AccessibilityStatementComponent} from '@core/components/ungrouped/accessibility-statement/accessibility-statement.component';
 import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';
 import {HelpComponent} from '@core/components/ungrouped/help/help.component';
 import {AboutComponent} from '@core/components/ungrouped/about/about.component';
-import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
-import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
+import {PublisherFlowComponent} from '@app/user/openvidu-stuff/publisher-flow/publisher-flow.component';
+import {SubscriberFlowComponent} from '@app/user/openvidu-stuff/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
 import {ShowProfileComponent} from '@app/user/show-profile/show-profile.component';
@@ -48,9 +48,9 @@ const routes: Routes = [
     },
     {
         path: 'profile',
-        component: ProfileComponent,
+        component: ProfileFormComponent,
         data: {
-            title: 'User profile',
+            title: 'User profile-form',
         }
     },
     {

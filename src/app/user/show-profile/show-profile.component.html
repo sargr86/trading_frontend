@@ -24,7 +24,7 @@
                 </div>
 
                 <div id="profile-actions-block">
-                    <button type="button" id="edit-profile" routerLink="/user/edit-profile">
+                    <button type="button" id="edit-profile" [routerLink]="'/user/profile/'+this.authUser.id+'/edit'">
                         <mat-icon>edit</mat-icon>
                         Edit profile
                     </button>

@@ -19,7 +19,6 @@ import {PublisherFlowComponent} from './openvidu-stuff/publisher-flow/publisher-
 import {SubscriberFlowComponent} from './openvidu-stuff/subscriber-flow/subscriber-flow.component';
 import {CollectStreamingDetailsFormComponent} from './openvidu-stuff/publisher-flow/collect-streaming-details-form/collect-streaming-details-form.component';
 import {JoinVideoStreamingComponent} from './openvidu-stuff/subscriber-flow/join-video-streaming/join-video-streaming.component';
-import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
 import { ConnectionsTabComponent } from './show-profile/connections-tab/connections-tab.component';

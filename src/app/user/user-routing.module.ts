@@ -3,10 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {ProfileFormComponent} from './show-profile/profile-form/profile-form.component';
 import {VideoComponent} from '@app/user/openvidu-stuff/publisher-flow/video/video.component';
 import {VideoLibraryComponent} from '@app/user/openvidu-stuff/openvidu-test/video-library/video-library.component';
-import {AccessibilityStatementComponent} from '@core/components/ungrouped/accessibility-statement/accessibility-statement.component';
-import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';
-import {HelpComponent} from '@core/components/ungrouped/help/help.component';
-import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {PublisherFlowComponent} from '@app/user/openvidu-stuff/publisher-flow/publisher-flow.component';
 import {SubscriberFlowComponent} from '@app/user/openvidu-stuff/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
@@ -19,72 +15,43 @@ import {CardsTabComponent} from '@app/user/show-profile/cards-tab/cards-tab.comp
 
 const routes: Routes = [
     {
-        path: 'about',
-        component: AboutComponent,
-        data: {
-            title: 'About',
-        }
-    },
-    {
-        path: 'help',
-        component: HelpComponent,
-        data: {
-            title: 'Help',
-        }
-    },
-    {
-        path: 'cookie-policy',
-        component: CookiePolicyComponent,
-        data: {
-            title: 'Cookie policy',
-        }
-    },
-    {
-        path: 'accessibility-statement',
-        component: AccessibilityStatementComponent,
-        data: {
-            title: 'Accessibility statement',
-        }
-    },
-    {
-        path: 'edit-profile',
-        component: ProfileFormComponent,
-        data: {
-            title: 'User profile-form',
-        }
-    },
-    {
-        path: 'video/check-streaming-requirements',
-        component: PublisherFlowComponent,
-        data: {
-            title: 'Streaming requirements check',
-        }
-    },
-    {
-        path: 'video/start-live-video',
-        component: PublisherFlowComponent,
-        data: {
-            title: 'Devices and requirements check',
-        }
-    },
-    {
-        path: 'video/publish',
-        component: VideoComponent,
-        canDeactivate: [DoNotLeavePageGuard],
-        data: {
-            title: 'Start live streaming',
-        }
-    },
-    {
-        path: 'video/watch',
-        component: SubscriberFlowComponent,
-        data: {
-            title: 'Watch live stream',
-        }
-    },
-    {
-        path: 'video-library',
-        component: VideoLibraryComponent
+        path: 'video',
+        children: [
+            {
+                path: 'check-streaming-requirements',
+                component: PublisherFlowComponent,
+                data: {
+                    title: 'Streaming requirements check',
+                }
+            },
+            {
+                path: 'start-live-video',
+                component: PublisherFlowComponent,
+                data: {
+                    title: 'Devices and requirements check',
+                }
+            },
+            {
+                path: 'publish',
+                component: VideoComponent,
+                canDeactivate: [DoNotLeavePageGuard],
+                data: {
+                    title: 'Start live streaming',
+                }
+            },
+            {
+                path: 'watch',
+                component: SubscriberFlowComponent,
+                data: {
+                    title: 'Watch live stream',
+                }
+            },
+            {
+                path: 'openvidu-test',
+                component: VideoLibraryComponent
+            },
+
+        ]
     },
     {
         path: 'notifications',
@@ -97,6 +64,13 @@ const routes: Routes = [
             {path: 'connections', component: ConnectionsTabComponent},
             {path: 'requests', component: ConnectionRequestsTabComponent},
             {path: 'cards', component: CardsTabComponent},
+            {
+                path: 'edit',
+                component: ProfileFormComponent,
+                data: {
+                    title: 'User profile-form',
+                }
+            },
         ]
     }
 ];

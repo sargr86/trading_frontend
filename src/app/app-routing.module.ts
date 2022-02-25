@@ -3,18 +3,18 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './user/home/home.component';
 import {AuthGuard} from '@core/guards/auth.guard';
 import {NonAuthGuard} from '@core/guards/non-auth.guard';
-import {NotFoundComponent} from '@core/components/ungrouped/not-found/not-found.component';
-import {AccessibilityStatementComponent} from '@app/core/components/ungrouped/accessibility-statement/accessibility-statement.component';
-import {AboutComponent} from '@core/components/ungrouped/about/about.component';
-import {CookiePolicyComponent} from '@core/components/ungrouped/cookie-policy/cookie-policy.component';
-import {PrivacyPolicyComponent} from '@core/components/ungrouped/privacy-policy/privacy-policy.component';
-import {SecurityComponent} from '@core/components/ungrouped/security/security.component';
-import {HelpComponent} from '@core/components/ungrouped/help/help.component';
-import {ContactUsComponent} from '@core/components/ungrouped/contact-us/contact-us.component';
-import {PageLoadingComponent} from '@core/components/ungrouped/page-loading/page-loading.component';
+import {NotFoundComponent} from '@core/components/docs/not-found/not-found.component';
+import {AccessibilityStatementComponent} from '@app/core/components/docs/accessibility-statement/accessibility-statement.component';
+import {AboutComponent} from '@core/components/docs/about/about.component';
+import {CookiePolicyComponent} from '@core/components/docs/cookie-policy/cookie-policy.component';
+import {PrivacyPolicyComponent} from '@core/components/docs/privacy-policy/privacy-policy.component';
+import {SecurityComponent} from '@core/components/docs/security/security.component';
+import {HelpComponent} from '@core/components/docs/help/help.component';
+import {ContactUsComponent} from '@core/components/docs/contact-us/contact-us.component';
+import {PageLoadingComponent} from '@core/components/docs/page-loading/page-loading.component';
 import {PaymentSuccessComponent} from '@app/user/payment-success/payment-success.component';
 import {PaymentCancelComponent} from '@app/user/payment-cancel/payment-cancel.component';
-import {TurboPlanComponent} from '@core/components/ungrouped/turbo-plan/turbo-plan.component';
+import {TurboPlanComponent} from '@core/components/docs/turbo-plan/turbo-plan.component';
 
 
 const routes: Routes = [

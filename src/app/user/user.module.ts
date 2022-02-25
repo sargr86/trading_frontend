@@ -29,6 +29,7 @@ import { SubscribersTabComponent } from './show-connections/subscribers-tab/subs
 import { SubscriptionsTabComponent } from './show-connections/subscriptions-tab/subscriptions-tab.component';
 import {ShowNotificationsComponent} from "@app/user/show-notifications/show-notifications.component";
 import { ShowProfileComponent } from './show-profile/show-profile.component';
+import { WatchlistTabComponent } from './show-profile/watchlist-tab/watchlist-tab.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { ShowProfileComponent } from './show-profile/show-profile.component';
         SubscribersTabComponent,
         SubscriptionsTabComponent,
         ShowNotificationsComponent,
-        ShowProfileComponent
+        ShowProfileComponent,
+        WatchlistTabComponent
     ],
     imports: [
         CommonModule,

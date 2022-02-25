@@ -41,7 +41,6 @@ export class ShowProfileComponent implements OnInit {
             this.connectionsCount = dt.length;
             this.connections = dt.filter(d => d.users_connections[0].confirmed === 1);
             this.connectionRequests = dt.filter(d => d.users_connections[0].confirmed === 0);
-            console.log(dt, this.connections, this.connectionRequests)
         });
     }
 
@@ -51,10 +50,6 @@ export class ShowProfileComponent implements OnInit {
             component.connectionRequests = this.connectionRequests;
             component.authUser = this.authUser;
         }
-    }
-
-    detectImageChange() {
-
     }
 
 }

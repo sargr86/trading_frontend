@@ -10,15 +10,12 @@ export class ConnectionsTabComponent implements OnInit {
     @Input() connections;
 
 
-    constructor(
-
-    ) {
+    constructor() {
     }
 
     ngOnInit(): void {
-
+        console.log(this.connections)
     }
-
 
 
 }

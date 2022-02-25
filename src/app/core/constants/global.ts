@@ -14,6 +14,14 @@ export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
 
 export const PROFILE_PAGE_TABS = [
+    {name: 'Watchlist', link: 'watchlist'},
+    {name: 'Connections', link: 'connections'},
+    {name: 'Connection requests', link: 'requests'},
+    {name: 'Cards', link: 'cards'},
+];
+
+
+export const CHANNEL_PAGE_TABS = [
     {name: 'Watchlist', link: 'pWatch'},
     {name: 'Videos', link: 'pVideos'},
     {name: 'Playlists', link: 'pPlaylists'},

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {API_URL, PROFILE_PAGE_TABS} from '@core/constants/global';
+import {API_URL, CHANNEL_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -34,7 +34,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     authUser;
 
     activeTab;
-    allTabs = PROFILE_PAGE_TABS;
+    allTabs = CHANNEL_PAGE_TABS;
 
     apiUrl = API_URL;
 
@@ -96,7 +96,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         // localStorage.setItem('search', '');
-        this.activeTab = PROFILE_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || PROFILE_PAGE_TABS[0];
+        this.activeTab = CHANNEL_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || CHANNEL_PAGE_TABS[0];
         this.getUserInfo();
 
         this.subject.currentUserStocks.subscribe((dt: any) => {

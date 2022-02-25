@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="tab-content" *ngIf="authUser">
+    <div class="tab-content" *ngIf="authUser && connections.length > 0">
         <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
     </div>
 </div>

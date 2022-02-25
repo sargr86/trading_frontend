@@ -13,6 +13,8 @@ import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
 import {ShowConnectionsComponent} from '@app/user/show-connections/show-connections.component';
 import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
 import {ShowProfileComponent} from '@app/user/show-profile/show-profile.component';
+import {ConnectionsTabComponent} from '@app/user/show-connections/connections-tab/connections-tab.component';
+import {ConnectionRequestsTabComponent} from '@app/user/show-connections/connection-requests-tab/connection-requests-tab.component';
 
 const routes: Routes = [
     {
@@ -83,10 +85,10 @@ const routes: Routes = [
         path: 'video-library',
         component: VideoLibraryComponent
     },
-    {
-        path: 'connections',
-        component: ShowConnectionsComponent
-    },
+    // {
+    //     path: 'connections',
+    //     component: ShowConnectionsComponent
+    // },
     {
         path: 'notifications',
         component: ShowNotificationsComponent
@@ -94,8 +96,8 @@ const routes: Routes = [
     {
         path: ':id', component: ShowProfileComponent,
         children: [
-            {path: 'connections', component: ShowConnectionsComponent},
-            // {path: ''},
+            {path: 'connections', component: ConnectionsTabComponent},
+            {path: 'requests', component: ConnectionRequestsTabComponent},
             // {path: ''},
             // {path: ''},
         ]

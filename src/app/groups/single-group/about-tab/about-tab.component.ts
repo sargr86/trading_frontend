@@ -14,7 +14,7 @@ export class AboutTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.isOwnGroup)
+        // console.log(this.isOwnGroup)
     }
 
 }

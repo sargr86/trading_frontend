@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
+import {PROFILE_PAGE_TABS} from '@core/constants/global';
 
 @Component({
     selector: 'app-show-profile',
@@ -10,10 +11,12 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 })
 export class ShowProfileComponent implements OnInit {
     authUser;
-    profileTabs = [];
+    profileTabs = PROFILE_PAGE_TABS;
     subscriptions: Subscription[] = [];
 
     connectionsCount = 0;
+    connections = [];
+    connectionRequests = [];
 
     constructor(
         private userStore: UserStoreService,
@@ -36,12 +39,18 @@ export class ShowProfileComponent implements OnInit {
     trackUserConnections() {
         this.usersConnectionsStore.usersMessages$.subscribe(dt => {
             this.connectionsCount = dt.length;
-            console.log(dt)
+            this.connections = dt.filter(d => d.users_connections[0].confirmed === 1);
+            this.connectionRequests = dt.filter(d => d.users_connections[0].confirmed === 0);
+            console.log(dt, this.connections, this.connectionRequests)
         });
     }
 
     onOutletLoaded(component) {
-
+        if (this.connections) {
+            component.connections = this.connections;
+            component.connectionRequests = this.connectionRequests;
+            component.authUser = this.authUser;
+        }
     }
 
     detectImageChange() {

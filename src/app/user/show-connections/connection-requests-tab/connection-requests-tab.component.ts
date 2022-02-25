@@ -13,6 +13,7 @@ export class ConnectionRequestsTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.connectionRequests)
     }
 
     confirmConnection(connection) {

@@ -14,7 +14,7 @@ export class PostsTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.selectedGroup)
+        // console.log(this.selectedGroup)
     }
 
 }

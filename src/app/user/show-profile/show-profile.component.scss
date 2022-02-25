@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'page-tabs';
 
 #profile-cover-image {
     margin-bottom: 20px;
@@ -36,4 +37,8 @@
 #edit-profile {
     @include regularButton;
     width: 170px;
+}
+
+#user-details {
+    width: 100%;
 }

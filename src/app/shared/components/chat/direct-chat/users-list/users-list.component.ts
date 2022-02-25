@@ -47,7 +47,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
     getUsersMessages() {
         this.usersMessagesStore.usersMessages$.subscribe(dt => {
             console.log('users list!!!', dt)
-            this.filteredUsersMessages = dt.filter(d => !!d.users_connections[0].is_blocked === this.showBlockedUsers);
+            this.filteredUsersMessages = dt.filter(d => {
+                const connection = d.users_connections[0];
+                return !!connection.is_blocked === this.showBlockedUsers && !!connection.confirmed;
+            });
             // console.log(this.filteredUsersMessages)
             this.selectedUserMessages = this.filteredUsersMessages[0];
             this.usersMessagesStore.changeUser(this.selectedUserMessages);
@@ -66,7 +69,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
     toggleBlockedUsers(show) {
         this.showBlockedUsers = show;
         this.filteredUsersMessages = this.usersMessagesStore.usersMessages.filter(d => {
-            return !!d.users_connections?.[0].is_blocked === show;
+            const connection = d.users_connections[0];
+            return !!connection.is_blocked === show && !!connection.confirmed;
         });
         this.selectedUserMessages = this.filteredUsersMessages[0];
         this.usersMessagesStore.changeUser(this.selectedUserMessages);

@@ -11,16 +11,19 @@ import {PostsTabComponent} from '@app/groups/single-group/posts-tab/posts-tab.co
 const routes: Routes = [
     {
         path: '',
-        component: ShowGroupsComponent
+        component: ShowGroupsComponent,
+        data: {
+            title: 'Groups'
+        },
     },
     {
         path: ':id',
         component: SingleGroupComponent,
         children: [
-            {path: 'people', component: PeopleTabComponent},
-            {path: 'about', component: AboutTabComponent},
-            {path: 'media', component: MediaTabComponent},
-            {path: 'posts', component: PostsTabComponent}
+            {path: 'people', component: PeopleTabComponent, data: {title: 'Group page | People tab'}},
+            {path: 'about', component: AboutTabComponent, data: {title: 'Group page | About tab'}},
+            {path: 'media', component: MediaTabComponent, data: {title: 'Group page | Media tab'}},
+            {path: 'posts', component: PostsTabComponent, data: {title: 'Group page | Posts tab'}}
         ]
     }
 ];

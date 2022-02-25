@@ -62,5 +62,5 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
     ],
     exports: []
 })
-export class UserModule {
+export class UsersModule {
 }

@@ -13,7 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from '@core/modules/material.module';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {UserModule} from '@app/users/user.module';
+import {UsersModule} from '@app/users/users.module';
 import {NgxStripeModule} from 'ngx-stripe';
 import {STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {MAT_RIPPLE_GLOBAL_OPTIONS} from '@angular/material/core';
@@ -45,7 +45,7 @@ export function tokenGetter() {
                 blacklistedRoutes: ['localhost:3000/auth/', 'localhost:3001/auth/', 'metl.tv/auth/']
             }
         }),
-        UserModule,
+        UsersModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
         SharedModule
     ],

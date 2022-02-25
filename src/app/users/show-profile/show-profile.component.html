@@ -1,6 +1,6 @@
-<div id="profile-wrap">
+<div id="profile-wrap" *ngIf="profileUser">
     <div id="profile-cover-image">
-        <img [src]="authUser?.cover|getImgPath:'covers'">
+        <img [src]="profileUser?.cover|getImgPath:'covers'">
     </div>
 
     <div class="row">
@@ -13,18 +13,19 @@
                     <div class="avatar-container">
                         <label for="profile-image-input">
                             <img class="avatar" id="profile-image"
-                                 [src]="authUser.avatar|getImgPath: 'user_avatars'">
+                                 [src]="profileUser.avatar|getImgPath: 'user_avatars'">
                         </label>
                     </div>
 
                     <div>
-                        <strong id="user-full-name">{{authUser?.first_name + ' ' + authUser?.last_name}}</strong>
+                        <strong id="user-full-name">{{profileUser?.first_name + ' ' + profileUser?.last_name}}</strong>
                         <p class="connections-count">{{connectionsCount + ' connection' + (connectionsCount === 1 ? '' : 's')}} </p>
                     </div>
                 </div>
 
                 <div id="profile-actions-block">
-                    <button type="button" id="edit-profile" [routerLink]="'/users/'+this.authUser.id+'/edit'">
+                    <button type="button" id="edit-profile" *ngIf="ownProfile"
+                            [routerLink]="'/users/'+this.authUser.id+'/edit'">
                         <mat-icon>edit</mat-icon>
                         Edit profile
                     </button>
@@ -51,7 +52,7 @@
         <div id="group-tabs">
             <ul class="nav-tabs">
                 <li class="nav-item" *ngFor="let tab of profileTabs">
-                    <a class="nav-link" [routerLink]="'/users/'+this.authUser.id+'/tab/'+tab.link"
+                    <a class="nav-link" [routerLink]="'/users/'+this.profileUser.id+'/tab/'+tab.link"
                        routerLinkActive="active"
                     >{{tab.name}}</a>
                 </li>

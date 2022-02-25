@@ -60,7 +60,7 @@ const routes: Routes = [
 
 
     {
-        path: ':id',
+        path: ':username',
         children: [
             {
                 path: '',

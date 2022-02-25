@@ -91,7 +91,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         this.passedUsername = this.route.snapshot.queryParams.username;
         this.passedTab = this.route.snapshot.queryParams.tab;
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
-
     }
 
     ngOnInit(): void {

@@ -3,7 +3,8 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {PROFILE_PAGE_TABS} from '@core/constants/global';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UsersService} from '@core/services/users.service';
 
 @Component({
     selector: 'app-show-profile',
@@ -12,16 +13,22 @@ import {Router} from '@angular/router';
 })
 export class ShowProfileComponent implements OnInit {
     authUser;
+    profileUser;
     profileTabs = PROFILE_PAGE_TABS;
     subscriptions: Subscription[] = [];
 
     connectionsCount = 0;
     connections = [];
     connectionRequests = [];
+    passedUsername: string;
+
+    ownProfile = false;
 
     constructor(
         private userStore: UserStoreService,
         private usersConnectionsStore: UsersMessagesSubjectService,
+        private usersService: UsersService,
+        private route: ActivatedRoute,
         public router: Router
     ) {
     }
@@ -29,6 +36,7 @@ export class ShowProfileComponent implements OnInit {
     ngOnInit(): void {
         this.getAuthUser();
         this.trackUserConnections();
+        this.getUserInfo();
         console.log(this.usersConnectionsStore.usersMessages)
     }
 
@@ -36,6 +44,21 @@ export class ShowProfileComponent implements OnInit {
         this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
         }));
+    }
+
+    getUserInfo() {
+        this.passedUsername = this.route.snapshot.params.username;
+        this.ownProfile = this.authUser.username === this.passedUsername;
+        if (this.passedUsername) {
+            this.usersService.getUserInfo({
+                username: this.passedUsername,
+                own_channel: this.ownProfile
+            }).subscribe(dt => {
+                if (dt) {
+                    this.profileUser = dt;
+                }
+            });
+        }
     }
 
     trackUserConnections() {

@@ -10,11 +10,10 @@ import {AboutComponent} from '@core/components/ungrouped/about/about.component';
 import {PublisherFlowComponent} from '@app/user/publisher-flow/publisher-flow.component';
 import {SubscriberFlowComponent} from '@app/user/subscriber-flow/subscriber-flow.component';
 import {DoNotLeavePageGuard} from '@core/guards/do-not-leave-page.guard';
-import {ShowConnectionsComponent} from '@app/user/show-connections/show-connections.component';
 import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
 import {ShowProfileComponent} from '@app/user/show-profile/show-profile.component';
-import {ConnectionsTabComponent} from '@app/user/show-connections/connections-tab/connections-tab.component';
-import {ConnectionRequestsTabComponent} from '@app/user/show-connections/connection-requests-tab/connection-requests-tab.component';
+import {ConnectionsTabComponent} from '@app/user/show-profile/connections-tab/connections-tab.component';
+import {ConnectionRequestsTabComponent} from '@app/user/show-profile/connection-requests-tab/connection-requests-tab.component';
 import {WatchlistTabComponent} from '@app/user/show-profile/watchlist-tab/watchlist-tab.component';
 import {CardsTabComponent} from '@app/user/show-profile/cards-tab/cards-tab.component';
 
@@ -87,10 +86,6 @@ const routes: Routes = [
         path: 'video-library',
         component: VideoLibraryComponent
     },
-    // {
-    //     path: 'connections',
-    //     component: ShowConnectionsComponent
-    // },
     {
         path: 'notifications',
         component: ShowNotificationsComponent

@@ -22,9 +22,8 @@ import {JoinVideoStreamingComponent} from './subscriber-flow/join-video-streamin
 import {DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule} from 'ngx-dropzone-wrapper';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentCancelComponent } from './payment-cancel/payment-cancel.component';
-import { ShowConnectionsComponent } from './show-connections/show-connections.component';
-import { ConnectionsTabComponent } from './show-connections/connections-tab/connections-tab.component';
-import { ConnectionRequestsTabComponent } from './show-connections/connection-requests-tab/connection-requests-tab.component';
+import { ConnectionsTabComponent } from './show-profile/connections-tab/connections-tab.component';
+import { ConnectionRequestsTabComponent } from './show-profile/connection-requests-tab/connection-requests-tab.component';
 import {ShowNotificationsComponent} from '@app/user/show-notifications/show-notifications.component';
 import { ShowProfileComponent } from './show-profile/show-profile.component';
 import { WatchlistTabComponent } from './show-profile/watchlist-tab/watchlist-tab.component';
@@ -48,7 +47,6 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
         JoinVideoStreamingComponent,
         PaymentSuccessComponent,
         PaymentCancelComponent,
-        ShowConnectionsComponent,
         ConnectionsTabComponent,
         ConnectionRequestsTabComponent,
         ShowNotificationsComponent,

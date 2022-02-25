@@ -95,13 +95,12 @@
                         font-size: 14px;
                     }
                     .confirm-connection-btn{
-                        background: #18B587 0% 0% no-repeat padding-box;
+                        background: #18B587 0 0 no-repeat padding-box;
                         opacity: 1;
                         text-align: left;
                         font: normal normal normal 13px/19px "Muli-Regular";
-                        letter-spacing: 0px;
+                        letter-spacing: 0;
                         color: #FFFFFF;
-                        opacity: 1;
                         @media only screen and  (max-width: 500px) {
                             padding: 15px 25px!important;
                             width:60px!important;

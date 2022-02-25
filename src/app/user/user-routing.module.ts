@@ -58,8 +58,9 @@ const routes: Routes = [
         component: ShowNotificationsComponent
     },
 
+
     {
-        path: ':id', component: ShowProfileComponent,
+        path: ':id',
         children: [
             {
                 path: 'edit',
@@ -71,6 +72,7 @@ const routes: Routes = [
             },
             {
                 path: 'tab',
+                component: ShowProfileComponent,
                 children: [
                     {path: 'watchlist', component: WatchlistTabComponent},
                     {path: 'connections', component: ConnectionsTabComponent},

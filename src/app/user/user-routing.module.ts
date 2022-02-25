@@ -57,22 +57,30 @@ const routes: Routes = [
         path: 'notifications',
         component: ShowNotificationsComponent
     },
+
     {
-        path: 'profile/:id', component: ShowProfileComponent,
+        path: ':id', component: ShowProfileComponent,
         children: [
-            {path: 'watchlist', component: WatchlistTabComponent},
-            {path: 'connections', component: ConnectionsTabComponent},
-            {path: 'requests', component: ConnectionRequestsTabComponent},
-            {path: 'cards', component: CardsTabComponent},
             {
                 path: 'edit',
                 component: ProfileFormComponent,
+                pathMatch: 'full',
                 data: {
                     title: 'User profile-form',
                 }
             },
+            {
+                path: 'tab',
+                children: [
+                    {path: 'watchlist', component: WatchlistTabComponent},
+                    {path: 'connections', component: ConnectionsTabComponent},
+                    {path: 'requests', component: ConnectionRequestsTabComponent},
+                    {path: 'cards', component: CardsTabComponent},
+                ]
+            },
         ]
-    }
+    },
+
 ];
 
 

@@ -24,7 +24,7 @@
                 </div>
 
                 <div id="profile-actions-block">
-                    <button type="button" id="edit-profile" [routerLink]="'/user/profile/'+this.authUser.id+'/edit'">
+                    <button type="button" id="edit-profile" [routerLink]="'/user/'+this.authUser.id+'/edit'">
                         <mat-icon>edit</mat-icon>
                         Edit profile
                     </button>
@@ -51,7 +51,7 @@
         <div id="group-tabs">
             <ul class="nav-tabs">
                 <li class="nav-item" *ngFor="let tab of profileTabs">
-                    <a class="nav-link" [routerLink]="'/user/'+this.authUser.id+'/'+tab.link"
+                    <a class="nav-link" [routerLink]="'/user/'+this.authUser.id+'/tab/'+tab.link"
                        routerLinkActive="active"
                     >{{tab.name}}</a>
                 </li>

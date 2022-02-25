@@ -61,7 +61,7 @@
                     <mat-menu #menu1="matMenu">
                         <div class="user-links">
                             <p class="user-link" *ngIf="toggleMyProfileLink()"
-                               [routerLink]="'/user/profile/'+authUser.id+''">My Profile</p>
+                               [routerLink]="'/user/'+authUser.id+'/tab/watchlist'">My Profile</p>
                             <p class="user-link" *ngIf="!routerUrl?.includes('groups')"
                                (click)="router.navigate(['groups'])">My groups</p>
                             <p class="user-link" *ngIf="toggleMyChannelLink()"

@@ -189,6 +189,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
     }
 
+    async openProfilePage() {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
+            await this.router.navigate(['users/' + this.authUser.username])
+        );
+    }
+
 
     logout() {
         this.subscriptions.push(this.auth.logout().subscribe(async () => {

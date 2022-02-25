@@ -5,7 +5,7 @@
 
                 <div class="thumbnail">
                     <!--                    <img class=src="assets/img/iconTV.png" alt="">-->
-                    <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'">
+                    <img class="channel-avatar" [src]="channel.avatar|getImgPath:'avatars'">
                 </div>
                 <div class="info">
                     <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>

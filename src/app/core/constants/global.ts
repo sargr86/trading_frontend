@@ -14,10 +14,10 @@ export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
 
 export const PROFILE_PAGE_TABS = [
-    {name: 'Watchlist', link: 'watchlist'},
-    {name: 'Connections', link: 'connections'},
-    {name: 'Connection requests', link: 'requests'},
-    {name: 'Cards', link: 'cards'},
+    {name: 'Watchlist', link: 'watchlist', ownPageOnly: false},
+    {name: 'Connections', link: 'connections', ownPageOnly: false},
+    {name: 'Connection requests', link: 'requests', ownPageOnly: true},
+    {name: 'Cards', link: 'cards', ownPageOnly: true},
 ];
 
 
@@ -25,7 +25,7 @@ export const CHANNEL_PAGE_TABS = [
     {name: 'Watchlist', link: 'pWatch'},
     {name: 'Videos', link: 'pVideos'},
     {name: 'Playlists', link: 'pPlaylists'},
-    {name: 'People', link: 'pWatch'},
+    {name: 'Contacts', link: 'pWatch'},
     {name: 'About', link: 'pAbout'},
 ];
 
@@ -122,7 +122,15 @@ export const MAIN_SECTIONS = [
     {name: 'Trending', img: 'item-9.png', icon: '', link: '/trending', separator: true, auth: false, production: true},
     {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},
     {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true},
-    {name: 'News feed', img: 'item-8.png', icon: '', link: '/chat/rooms', separator: true, production: false, auth: true},
+    {
+        name: 'News feed',
+        img: 'item-8.png',
+        icon: '',
+        link: '/chat/rooms',
+        separator: true,
+        production: false,
+        auth: true
+    },
     {name: 'Saved videos', img: 'saved-videos.svg', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11.png', icon: '', link: '/videos', auth: true, separator: false, production: true},
     {name: 'Clipz', img: 'item-11.png', icon: '', link: '/clipz', auth: true, separator: true, production: true},

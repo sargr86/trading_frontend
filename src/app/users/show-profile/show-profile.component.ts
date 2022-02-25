@@ -34,10 +34,11 @@ export class ShowProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.passedUsername = this.route.snapshot.params.username;
         this.getAuthUser();
         this.trackUserConnections();
         this.getUserInfo();
-        console.log(this.usersConnectionsStore.usersMessages)
+        console.log(this.passedUsername)
     }
 
     getAuthUser() {
@@ -47,7 +48,6 @@ export class ShowProfileComponent implements OnInit {
     }
 
     getUserInfo() {
-        this.passedUsername = this.route.snapshot.params.username;
         this.ownProfile = this.authUser.username === this.passedUsername;
         if (this.passedUsername) {
             this.usersService.getUserInfo({

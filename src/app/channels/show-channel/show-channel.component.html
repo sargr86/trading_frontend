@@ -62,7 +62,7 @@
             <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser"
                                [authUser]="authUser"></app-playlists-tab>
             <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>
-            <app-people-tab *ngIf="activeTab.name === 'People'" [channelUser]="channelUser" [authUser]="authUser"></app-people-tab>
+            <app-people-tab *ngIf="activeTab.name === 'Contacts'" [channelUser]="channelUser" [authUser]="authUser"></app-people-tab>
         </div>
     </ng-container>
     <div class="channel-not-found" *ngIf="!channelUser && loader.channelLoading.status==='finished'">

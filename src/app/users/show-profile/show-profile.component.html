@@ -25,7 +25,7 @@
 
                 <div id="profile-actions-block">
                     <button type="button" id="edit-profile" *ngIf="ownProfile"
-                            [routerLink]="'/users/'+this.authUser.id+'/edit'">
+                            [routerLink]="'/users/'+this.authUser.username+'/edit'">
                         <mat-icon>edit</mat-icon>
                         Edit profile
                     </button>
@@ -51,8 +51,8 @@
     <div class="row">
         <div id="group-tabs">
             <ul class="nav-tabs">
-                <li class="nav-item" *ngFor="let tab of profileTabs">
-                    <a class="nav-link" [routerLink]="'/users/'+this.profileUser.id+'/tab/'+tab.link"
+                <li class="nav-item" *ngFor="let tab of profileTabs" [hidden]="!ownProfile && tab.ownPageOnly">
+                    <a class="nav-link" [routerLink]="'/users/'+this.profileUser.username+'/tab/'+tab.link"
                        routerLinkActive="active"
                     >{{tab.name}}</a>
                 </li>

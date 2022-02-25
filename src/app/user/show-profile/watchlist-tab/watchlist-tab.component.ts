@@ -3,6 +3,7 @@ import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
 import {StocksStoreService} from '@core/services/stores/stocks-store.service';
 import {filter} from 'rxjs/operators';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-watchlist-tab',
@@ -18,7 +19,8 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     stocksLoading = false;
 
     constructor(
-        private stocksStore: StocksStoreService
+        private stocksStore: StocksStoreService,
+        private stocksService: StocksService,
     ) {
     }
 
@@ -39,7 +41,16 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     saveUpdatedStocksList(stocks) {
-
+        // this.stocksLoading = 'loading';
+        this.subscriptions.push(this.stocksService.updateFollowedStocks({
+            user_id: this.authUser.id,
+            ...{stocks}
+        }).subscribe(dt => {
+            this.userStocks = dt?.user_stocks || [];
+            this.stocksStore.setUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
+            // this.stocksLoading = 'finished';
+            // this.cdr.detectChanges();
+        }));
     }
 
     updateStocksPriority(stocks) {

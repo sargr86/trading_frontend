@@ -7,6 +7,7 @@ import {updateStockDetails} from '@core/helpers/update-stock-details';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {ToastrService} from 'ngx-toastr';
+import {StocksStoreService} from '@core/services/stores/stocks-store.service';
 
 @Component({
     selector: 'app-stocks-lists',
@@ -37,6 +38,7 @@ export class StocksListsModalComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         public loader: LoaderService,
+        private stocksStore: StocksStoreService,
         private toastr: ToastrService,
         private cdr: ChangeDetectorRef
     ) {
@@ -143,6 +145,7 @@ export class StocksListsModalComponent implements OnInit, OnDestroy {
             // type_id: this.selectedStockType.id
         }).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
+            this.stocksStore.setUserStocks({stocks: this.userStocks, empty: this.userStocks.length === 0});
             this.loader.stocksLoading.status = 'finished';
         }));
 

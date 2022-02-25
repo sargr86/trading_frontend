@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {UserRoutingModule} from './user-routing.module';
+import {UsersRoutingModule} from './users-routing.module';
 import {ProfileFormComponent} from './show-profile/profile-form/profile-form.component';
 import {SharedModule} from '@shared/shared.module';
 import {NgxPhotoEditorModule} from 'ngx-photo-editor';
@@ -55,7 +55,7 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
     ],
     imports: [
         CommonModule,
-        UserRoutingModule,
+        UsersRoutingModule,
         OpenviduSessionModule,
         NgxPhotoEditorModule,
         SharedModule

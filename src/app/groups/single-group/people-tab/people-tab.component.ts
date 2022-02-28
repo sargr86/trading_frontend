@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {GroupsService} from '@core/services/groups.service';
 import {Subscription} from 'rxjs';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-people-tab',
@@ -21,12 +22,14 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     constructor(
         private groupsService: GroupsService,
-        private groupsMessagesStore: GroupsMessagesSubjectService
+        private groupsMessagesStore: GroupsMessagesSubjectService,
+        private socketService: SocketIoService
     ) {
     }
 
     ngOnInit(): void {
         this.trackGroupsMessages();
+        this.getAcceptedJoinGroup();
     }
 
     trackGroupsMessages() {
@@ -36,6 +39,14 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             this.members = [];
             this.requestedMembers = [];
             this.filterMembers();
+        }));
+    }
+
+    getAcceptedJoinGroup() {
+        this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
+            const {rest} = data;
+            console.log('accepted')
+            this.groupsMessagesStore.changeGroup(rest.group);
         }));
     }
 
@@ -54,13 +65,21 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     confirmJoinGroup(member) {
+        console.log(member)
         this.subscriptions.push(this.groupsService.confirmGroupJoin({
             member_id: member.id,
             group_id: this.selectedGroup.id
         }).subscribe(dt => {
-            console.log(dt)
             const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
             this.groupsMessagesStore.changeGroup(selectedGroup);
+
+            this.socketService.confirmJoinGroup({
+                group: selectedGroup,
+                user: this.authUser,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
+                has confirmed  <strong>${member.name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
+                link: `/channels/show?username=${this.authUser.username}`,
+            });
         }));
     }
 
@@ -69,7 +88,6 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             member_id: member.id,
             group_id: this.selectedGroup.id
         }).subscribe(dt => {
-            console.log(dt)
             const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
             this.groupsMessagesStore.changeGroup(selectedGroup);
         }));

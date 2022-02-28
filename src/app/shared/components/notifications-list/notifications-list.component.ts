@@ -108,7 +108,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             this.usersMessagesStore.setUserMessages(users_messages);
             if (notification.to_user.id === this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
-
             }
         }));
 

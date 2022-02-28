@@ -39,15 +39,20 @@ export class GroupsMessagesSubjectService {
 
     changeGroup(groupMessages: any) {
         const allGroupMessages = [...this.groupsMessages];
-        const selectedGroupIndex = allGroupMessages.findIndex(gm => gm.id === groupMessages.id);
+        let selectedGroupIndex = allGroupMessages.findIndex(gm => gm.id === groupMessages.id);
 
+        console.log(allGroupMessages)
+        console.log(selectedGroupIndex)
+
+        if (selectedGroupIndex === -1) {
+            selectedGroupIndex = 0;
+        }
 
         allGroupMessages[selectedGroupIndex] = groupMessages;
         this.setGroupsMessages(allGroupMessages);
         if (groupMessages.id === this.selectedGroupMessages.id) {
             this.selectGroup(groupMessages);
         }
-        // console.log(allGroupMessages)
         // console.log(this.groupsMessages)
 
 

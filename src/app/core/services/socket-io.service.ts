@@ -185,6 +185,18 @@ export class SocketIoService {
         });
     }
 
+    confirmJoinGroup(data) {
+        this.socket.emit('confirmJoinGroup', data);
+    }
+
+    getConfirmedJoinGroup() {
+        return new Observable(observer => {
+            this.socket.on('confirmedJoinGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 
     getChatNotifications() {
         return new Observable(observer => {

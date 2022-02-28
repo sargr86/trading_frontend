@@ -42,6 +42,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.getOnlineMembers();
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinGroup();
+        this.getConfirmedJoinGroup();
         this.getRemovedSavedMember();
         this.getLeftGroup();
         this.getMembersCountDelimiter();
@@ -117,13 +118,27 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
-            // console.log('accepted', data)
+            console.log('accepted in members list', data)
             // console.log(this.notificationsStore.allNotifications)
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
             // console.log(this.notificationsStore.allNotifications)
             this.groupsMessagesStore.changeGroup(rest.group);
+        }));
+    }
+
+    getConfirmedJoinGroup() {
+        this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
+            const {notification, rest} = data;
+            console.log('confirmed in members list', data)
+            // console.log(this.notificationsStore.allNotifications)
+            if (notification.from_user.id !== this.authUser.id) {
+                this.notificationsStore.updateNotifications(notification);
+            }
+            // console.log(this.notificationsStore.allNotifications)
+            this.groupsMessagesStore.changeGroup(rest.group);
+            console.log(this.groupsMessagesStore.groupsMessages)
         }));
     }
 

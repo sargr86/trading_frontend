@@ -93,6 +93,8 @@ export class ChatService {
         return this.httpClient.put<any>(`${API_URL}chat/group/decline-join-group`, params);
     }
 
+
+
     changeGroupAvatar(params) {
         return this.httpClient.post<any>(`${API_URL}chat/group/change-group-avatar`, params);
     }

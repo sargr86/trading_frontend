@@ -45,7 +45,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => g.id === this.id);
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
-            console.log(this.groupsMessagesStore.selectedGroupMessages)
+            // console.log(this.groupsMessagesStore.selectedGroupMessages)
         });
     }
 

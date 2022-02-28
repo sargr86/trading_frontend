@@ -1,11 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {GroupsService} from '@core/services/groups.service';
+import {Subscription} from 'rxjs';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 @Component({
     selector: 'app-people-tab',
     templateUrl: './people-tab.component.html',
     styleUrls: ['./people-tab.component.scss']
 })
-export class PeopleTabComponent implements OnInit {
+export class PeopleTabComponent implements OnInit, OnDestroy {
     @Input() selectedGroup;
     @Input() isOwnGroup;
     @Input() authUser;
@@ -14,11 +17,26 @@ export class PeopleTabComponent implements OnInit {
     members = [];
     requestedMembers = [];
 
-    constructor() {
+    subscriptions: Subscription[] = [];
+
+    constructor(
+        private groupsService: GroupsService,
+        private groupsMessagesStore: GroupsMessagesSubjectService
+    ) {
     }
 
     ngOnInit(): void {
-        this.filterMembers();
+        this.trackGroupsMessages();
+    }
+
+    trackGroupsMessages() {
+        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe(dt => {
+            this.selectedGroup = dt;
+            this.admins = [];
+            this.members = [];
+            this.requestedMembers = [];
+            this.filterMembers();
+        }));
     }
 
     filterMembers() {
@@ -28,11 +46,26 @@ export class PeopleTabComponent implements OnInit {
             } else {
                 if (m.chat_groups_members.confirmed) {
                     this.members.push(m);
-                } else {
+                } else if (m.chat_groups_members.accepted) {
                     this.requestedMembers.push(m);
                 }
             }
         });
+    }
+
+    confirmJoinGroup(member) {
+        this.subscriptions.push(this.groupsService.confirmGroupJoin({
+            member_id: member.id,
+            group_id: this.selectedGroup.id
+        }).subscribe(dt => {
+            console.log(dt)
+            const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
+            this.groupsMessagesStore.changeGroup(selectedGroup);
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

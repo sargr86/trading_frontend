@@ -25,7 +25,7 @@ export class RightSidebarComponent implements OnInit {
 
     getAuthenticatedUser() {
         this.subscriptions.push(this.userStore.authUser$.subscribe(dt => {
-            console.log('AUTH USER', dt)
+            // console.log('AUTH USER', dt)
             this.authUser = dt;
         }));
     }

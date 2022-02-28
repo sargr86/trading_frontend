@@ -64,6 +64,17 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         }));
     }
 
+    ignoreJoinGroup(member) {
+        this.subscriptions.push(this.groupsService.ignoreGroupJoin({
+            member_id: member.id,
+            group_id: this.selectedGroup.id
+        }).subscribe(dt => {
+            console.log(dt)
+            const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
+            this.groupsMessagesStore.changeGroup(selectedGroup);
+        }));
+    }
+
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }

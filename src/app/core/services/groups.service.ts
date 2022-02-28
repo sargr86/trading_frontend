@@ -15,4 +15,8 @@ export class GroupsService {
     confirmGroupJoin(params) {
         return this.httpClient.put<any>(`${API_URL}chat/group/confirm-join-group`, params);
     }
+
+    ignoreGroupJoin(params) {
+        return this.httpClient.put<any>(`${API_URL}chat/group/ignore-join-group`, params);
+    }
 }

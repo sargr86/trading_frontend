@@ -42,7 +42,7 @@ export class GroupsMessagesSubjectService {
         let selectedGroupIndex = allGroupMessages.findIndex(gm => gm.id === groupMessages.id);
 
         console.log(allGroupMessages)
-        console.log(selectedGroupIndex)
+        // console.log(selectedGroupIndex)
 
         if (selectedGroupIndex === -1) {
             selectedGroupIndex = 0;

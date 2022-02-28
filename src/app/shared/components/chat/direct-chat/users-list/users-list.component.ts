@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersService} from '@core/services/users.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
@@ -32,6 +32,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         public mobileHelper: MobileResponsiveHelper,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -64,6 +65,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }
         this.selectedUserMessages = userMessages;
         this.usersMessagesStore.changeUser(userMessages);
+        console.log(this.usersMessagesStore.showBottomChatBox)
+        this.cdr.markForCheck();
     }
 
     toggleBlockedUsers(show) {

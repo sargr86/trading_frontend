@@ -42,18 +42,21 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         }));
     }
 
-    isAuthUserMemberOfGroup() {
-        return this.selectedGroup.chat_group_members.find(m => m.id === this.authUser.id);
-    }
-
     getSelectedGroup() {
         this.route.params.subscribe((params: Params) => {
             this.id = +params.id;
             this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => g.id === this.id);
-            this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
-            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            if (this.selectedGroup) {
+                console.log(this.id)
+                this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
+                this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            }
             // console.log(this.groupsMessagesStore.selectedGroupMessages)
         });
+    }
+
+    isAuthUserMemberOfGroup() {
+        return this.selectedGroup.chat_group_members.find(m => m.id === this.authUser.id);
     }
 
     showJoinBtn() {

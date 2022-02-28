@@ -288,6 +288,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     cancelUsersConnecting(connection) {
+        console.log(connection)
         this.socketService.cancelUsersConnecting({
             authUser: this.authUser,
             channelUser: this.channelUser,

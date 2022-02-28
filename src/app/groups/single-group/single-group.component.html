@@ -1,71 +1,74 @@
-<app-user-tags></app-user-tags>
-<div id="group-wrap">
-    <div id="group-cover-image">
-        <img [src]="selectedGroup?.cover|getImgPath:'group_covers'">
-    </div>
+<ng-container *ngIf="selectedGroup">
+    <app-user-tags></app-user-tags>
+    <div id="group-wrap">
+        <div id="group-cover-image">
+            <img [src]="selectedGroup?.cover|getImgPath:'group_covers'">
+        </div>
 
-    <div class="row">
-        <div id="group-details">
-            <div class="details-row">
-                <strong id="group-name">{{selectedGroup?.name}}</strong>
+        <div class="row">
+            <div id="group-details">
+                <div class="details-row">
+                    <strong id="group-name">{{selectedGroup?.name}}</strong>
+                </div>
+
+                <div class="details-row">
+                    <div id="group-type">
+                        <mat-icon>public</mat-icon>
+                        <span>Public</span>
+                    </div>
+                    <div id="members-count">
+                        <strong>
+                            <span>{{selectedGroup?.chat_group_members.length}}</span>
+                            members
+                        </strong>
+                    </div>
+                </div>
             </div>
 
-            <div class="details-row">
-                <div id="group-type">
-                    <mat-icon>public</mat-icon>
-                    <span>Public</span>
-                </div>
-                <div id="members-count">
-                    <strong>
-                        <span>{{selectedGroup?.chat_group_members.length}}</span>
-                        members
-                    </strong>
-                </div>
+            <div id="group-actions">
+                <ng-container *ngIf="showJoinBtn()">
+                    <button id="join-group-btn" *ngIf="!isAuthUserMemberOfGroup()">
+                        Join
+                    </button>
+                    <button id="joined-group-btn" [matMenuTriggerFor]="menu" [hidden]="!isAuthUserMemberOfGroup()">
+                        <span>Joined</span>
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <i class="fas fa-users"></i>
+                            Unfollow group
+                        </button>
+                        <button mat-menu-item>
+                            <i class="fas fa-users"></i>
+                            Leave group
+                        </button>
+                    </mat-menu>
+                </ng-container>
+
+                <button id="invite-to-group-btn" (click)="openMembersModal()">
+                    <mat-icon>add</mat-icon>
+                    Invite
+                </button>
             </div>
         </div>
 
-        <div id="group-actions">
-            <ng-container *ngIf="showJoinBtn()">
-                <button id="join-group-btn" *ngIf="!isAuthUserMemberOfGroup()">
-                    Join
-                </button>
-                <button id="joined-group-btn" [matMenuTriggerFor]="menu" [hidden]="!isAuthUserMemberOfGroup()">
-                    <span>Joined</span>
-                    <mat-icon>arrow_drop_down</mat-icon>
-                </button>
+        <div class="row">
+            <div id="group-tabs">
+                <ul class="nav-tabs">
+                    <li class="nav-item" *ngFor="let tab of groupTabs">
+                        <a class="nav-link" [routerLink]="'/groups/'+id+'/'+tab.link"
+                           routerLinkActive="active"
+                        >{{tab.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <i class="fas fa-users"></i>
-                        Unfollow group
-                    </button>
-                    <button mat-menu-item>
-                        <i class="fas fa-users"></i>
-                        Leave group
-                    </button>
-                </mat-menu>
-            </ng-container>
-
-            <button id="invite-to-group-btn" (click)="openMembersModal()">
-                <mat-icon>add</mat-icon>
-                Invite
-            </button>
+        <div class="tab-content" *ngIf="selectedGroup">
+            <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
         </div>
     </div>
-
-    <div class="row">
-        <div id="group-tabs">
-            <ul class="nav-tabs">
-                <li class="nav-item" *ngFor="let tab of groupTabs">
-                    <a class="nav-link" [routerLink]="'/groups/'+id+'/'+tab.link"
-                       routerLinkActive="active"
-                    >{{tab.name}}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="tab-content" *ngIf="selectedGroup">
-        <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
-    </div>
-</div>
+</ng-container>
+<span *ngIf="!selectedGroup">The group is not found</span>

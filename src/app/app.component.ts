@@ -1,4 +1,4 @@
-import {Component, HostBinding, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {AfterViewChecked, Component, HostBinding, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
@@ -21,7 +21,7 @@ import {AuthService} from '@core/services/auth.service';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     title = '';
     subscriptions: Subscription[] = [];
     pageTitle;
@@ -160,6 +160,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.stocksService.getStocksSortTypes({}).subscribe(dt => {
             this.subject.changeStockSortTypes(dt);
         });
+    }
+
+    ngAfterViewChecked() {
+        console.log('after view checked', this.usersMessagesStore.showBottomChatBox)
     }
 
     ngOnDestroy(): void {

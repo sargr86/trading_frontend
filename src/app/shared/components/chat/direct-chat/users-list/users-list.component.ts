@@ -32,7 +32,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         public mobileHelper: MobileResponsiveHelper,
-        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -65,8 +64,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }
         this.selectedUserMessages = userMessages;
         this.usersMessagesStore.changeUser(userMessages);
-        console.log(this.usersMessagesStore.showBottomChatBox)
-        this.cdr.markForCheck();
     }
 
     toggleBlockedUsers(show) {

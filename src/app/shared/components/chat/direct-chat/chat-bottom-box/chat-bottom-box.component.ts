@@ -55,7 +55,7 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     trackSelectedUser() {
         this.usersMessagesStore.selectedUserMessages$.subscribe(selectedUser => {
             if (!selectedUser) {
-                this.closeChatBox();
+                this.usersMessagesStore.showBottomChatBox = false;
             }
         });
     }
@@ -63,14 +63,18 @@ export class ChatBottomBoxComponent implements OnInit, OnDestroy {
     trackSelectedGroup() {
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe(selectedGroup => {
             if (this.isEmptyObj.transform(selectedGroup)) {
-                this.closeChatBox();
+                this.groupsMessagesStore.showBottomChatBox = false;
             }
         });
     }
 
     closeChatBox() {
-        this.usersMessagesStore.showBottomChatBox = false;
-        this.groupsMessagesStore.showBottomChatBox = false;
+        if (this.chatBoxType === 'direct') {
+            this.usersMessagesStore.showBottomChatBox = false;
+        } else {
+            this.groupsMessagesStore.showBottomChatBox = false;
+        }
+
     }
 
     ngOnDestroy() {

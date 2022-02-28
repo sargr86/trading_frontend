@@ -163,7 +163,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        console.log('after view checked', this.usersMessagesStore.showBottomChatBox)
+        // console.log('after view checked', this.usersMessagesStore.showBottomChatBox)
     }
 
     ngOnDestroy(): void {

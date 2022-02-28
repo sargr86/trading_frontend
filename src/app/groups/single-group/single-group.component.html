@@ -26,8 +26,12 @@
 
         <div id="group-actions">
             <ng-container *ngIf="showJoinBtn()">
-                <button [matMenuTriggerFor]="menu">
+                <button id="join-group-btn" *ngIf="!isAuthUserMemberOfGroup()">
                     Join
+                </button>
+                <button id="joined-group-btn" [matMenuTriggerFor]="menu" [hidden]="!isAuthUserMemberOfGroup()">
+                    <span>Joined</span>
+                    <mat-icon>arrow_drop_down</mat-icon>
                 </button>
 
                 <mat-menu #menu="matMenu">
@@ -42,7 +46,7 @@
                 </mat-menu>
             </ng-container>
 
-            <button id="invite-to-group-btn">
+            <button id="invite-to-group-btn" (click)="openMembersModal()">
                 <mat-icon>add</mat-icon>
                 Invite
             </button>

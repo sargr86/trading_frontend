@@ -53,7 +53,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     trackGroupChanges() {
         this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((sGroup: any) => {
             this.selectedGroup = sGroup;
-            console.log(sGroup)
+            // console.log(sGroup)
             this.getOnlineMembers();
         }));
     }
@@ -84,8 +84,8 @@ export class MembersListComponent implements OnInit, OnDestroy {
     getRemovedSavedMember() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
-            console.log('removed from group', data)
-            this.notificationsStore.updateNotifications(data);
+            // console.log('removed from group', data)
+            // this.notificationsStore.updateNotifications(data);
             if (member.id === this.authUser.id) {
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
                 this.groupsMessagesStore.selectGroup({});
@@ -134,9 +134,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
             const {notification, rest} = data;
             console.log('confirmed in members list', data)
             // console.log(this.notificationsStore.allNotifications)
-            if (notification.from_user.id !== this.authUser.id) {
-                this.notificationsStore.updateNotifications(notification);
-            }
+            // if (notification.from_user.id !== this.authUser.id) {
+            //     this.notificationsStore.updateNotifications(notification);
+            // }
             // console.log(this.notificationsStore.allNotifications)
             this.groupsMessagesStore.changeGroup(rest.group);
             console.log(this.groupsMessagesStore.groupsMessages)

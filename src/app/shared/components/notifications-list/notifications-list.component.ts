@@ -49,7 +49,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.getIgnoredJoinGroup();
         this.getDisconnectUsers();
         this.getGroupJoinInvitation();
-
+        this.getRemovedFromGroup();
     }
 
     getNotifications() {
@@ -268,6 +268,15 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
+        }));
+    }
+
+    getRemovedFromGroup() {
+        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+            const {currentUserNotifications} = data;
+            console.log(currentUserNotifications)
+            this.notificationsStore.setAllNotifications(currentUserNotifications);
+            // console.log(this.notificationsStore.allNotifications)
         }));
     }
 

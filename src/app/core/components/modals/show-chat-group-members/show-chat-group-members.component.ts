@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
-import {GetAuthUserPipe} from "@shared/pipes/get-auth-user.pipe";
+import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 
 @Component({
     selector: 'app-show-chat-group-members',

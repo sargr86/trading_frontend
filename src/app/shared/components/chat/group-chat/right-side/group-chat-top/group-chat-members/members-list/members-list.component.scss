@@ -8,9 +8,9 @@
     }
 
     ul {
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: horizontal;
+        display: flex;
+        //-webkit-line-clamp: 1;
+        //-webkit-box-orient: horizontal;
         overflow: hidden;
         @media only screen and (max-width: 374px) {
             margin-bottom: 10px !important;

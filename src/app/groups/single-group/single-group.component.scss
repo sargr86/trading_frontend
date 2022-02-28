@@ -69,6 +69,11 @@
         @include regularButton;
     }
 
+    #joined-group-btn{
+        background-color: $light-gray;
+        justify-content: space-between;
+    }
+
     #invite-to-group-btn {
         margin-left: 25px;
     }

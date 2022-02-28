@@ -5,6 +5,8 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
 import {User} from '@shared/models/user';
 import {GROUP_PAGE_TABS} from '@core/constants/global';
+import {MatDialog} from '@angular/material/dialog';
+import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 
 @Component({
     selector: 'app-single-group',
@@ -24,7 +26,8 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private route: ActivatedRoute,
-        private userStore: UserStoreService
+        private userStore: UserStoreService,
+        private dialog: MatDialog
     ) {
     }
 
@@ -37,6 +40,10 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
         }));
+    }
+
+    isAuthUserMemberOfGroup() {
+        return this.selectedGroup.chat_group_members.find(m => m.id === this.authUser.id);
     }
 
     getSelectedGroup() {
@@ -59,6 +66,15 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             component.isOwnGroup = this.isOwnGroup;
             component.authUser = this.authUser;
         }
+    }
+
+    openMembersModal() {
+        this.subscriptions.push(this.dialog.open(ShowChatGroupMembersComponent, {
+            height: '548px',
+            width: '548px'
+        }).afterClosed().subscribe(dt => {
+
+        }));
     }
 
     ngOnDestroy(): void {

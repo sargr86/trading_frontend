@@ -10,6 +10,7 @@ import {NotificationsSubjectStoreService} from '@core/services/stores/notificati
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -18,18 +19,18 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 })
 export class NotificationsListComponent implements OnInit, OnDestroy {
 
-    authUser;
     subscriptions: Subscription[] = [];
 
     @Input() shownInSidebar = false;
     @Input() notificationsCategory = 'new';
+    @Input() authUser;
 
     constructor(
         private notificationsService: NotificationsService,
         public notificationsStore: NotificationsSubjectStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupMessagesStore: GroupsMessagesSubjectService,
-        private getAuthUser: GetAuthUserPipe,
+        private userStore: UserStoreService,
         private socketService: SocketIoService,
         private chatService: ChatService,
         public auth: AuthService,
@@ -38,7 +39,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        console.log(this.authUser)
         if (this.authUser) {
             this.getNotifications();
             this.getConnectWithUser();
@@ -193,8 +194,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
-            console.log('aaa', data);
-            if (this.authUser.id === data.to_id) {
+            console.log('aaa', this.authUser);
+            if (this.authUser?.id === data.to_id) {
                 this.notificationsStore.updateNotifications(data);
                 // console.log(this.notificationsStore.allNotifications)
                 // this.setNotifications.transform(data);

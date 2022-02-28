@@ -15,22 +15,18 @@ export class RightSidebarComponent implements OnInit {
     usersMessages = [];
 
     constructor(
-        private getAuthUser: GetAuthUserPipe,
         private userStore: UserStoreService
     ) {
     }
 
     ngOnInit(): void {
         this.getAuthenticatedUser();
-        this.authUser = this.getAuthUser.transform();
-        // console.log(this.authUser)
     }
 
     getAuthenticatedUser() {
         this.subscriptions.push(this.userStore.authUser$.subscribe(dt => {
-            // console.log('AUTH USER', dt)
+            console.log('AUTH USER', dt)
             this.authUser = dt;
-            // this.addUserToSocket([]);
         }));
     }
 

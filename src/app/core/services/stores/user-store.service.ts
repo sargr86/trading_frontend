@@ -17,7 +17,6 @@ export class UserStoreService {
 
     get authUser() {
         return this.authUserSource.getValue();
-
     }
 
     setAuthUser(token) {

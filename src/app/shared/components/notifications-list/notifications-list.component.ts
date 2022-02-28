@@ -45,6 +45,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             this.cancelledUsersConnecting();
         }
         this.getAcceptedDeclinedRequests();
+        this.getConfirmedJoinGroup();
+        this.getIgnoredJoinGroup();
         this.getDisconnectUsers();
         this.getGroupJoinInvitation();
 
@@ -238,13 +240,35 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     notification_id: notification._id
                 });
 
-                console.log(notification)
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
                 this.notificationsStore.setInitialNotifications(notifications);
 
                 this.groupMessagesStore.setGroupsMessages(dt);
             })
         );
+    }
+
+    getConfirmedJoinGroup() {
+        this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
+            const {notification, rest} = data;
+            console.log('confirmed in notifications', data)
+            // console.log(this.notificationsStore.allNotifications)
+            if (notification.from_user.id !== this.authUser.id) {
+                this.notificationsStore.updateNotifications(notification);
+            }
+        }));
+    }
+
+    getIgnoredJoinGroup() {
+        this.subscriptions.push(this.socketService.getIgnoredJoinGroup().subscribe((data: any) => {
+            const {notification, rest} = data;
+            console.log('ignored in notifications list', data)
+            // console.log(this.notificationsStore.allNotifications)
+            // console.log(this.notificationsStore.allNotifications)
+            if (notification.from_user.id !== this.authUser.id) {
+                this.notificationsStore.updateNotifications(notification);
+            }
+        }));
     }
 
     isNotificationRead(notification) {

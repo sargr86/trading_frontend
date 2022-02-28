@@ -86,7 +86,6 @@ export class SocketIoService {
     }
 
 
-
     // EMITTER example
     sendMessage(data: any) {
         this.socket.emit('sendMessage', data);
@@ -192,6 +191,18 @@ export class SocketIoService {
     getConfirmedJoinGroup() {
         return new Observable(observer => {
             this.socket.on('confirmedJoinGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    ignoreJoinGroup(data) {
+        this.socket.emit('ignoreJoinGroup', data);
+    }
+
+    getIgnoredJoinGroup() {
+        return new Observable(observer => {
+            this.socket.on('ignoredJoinGroup', msg => {
                 observer.next(msg);
             });
         });

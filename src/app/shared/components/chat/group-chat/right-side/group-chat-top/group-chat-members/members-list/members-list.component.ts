@@ -43,6 +43,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinGroup();
         this.getConfirmedJoinGroup();
+        this.getIgnoredJoinGroup();
         this.getRemovedSavedMember();
         this.getLeftGroup();
         this.getMembersCountDelimiter();
@@ -124,7 +125,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
                 this.notificationsStore.updateNotifications(notification);
             }
             // console.log(this.notificationsStore.allNotifications)
-            this.groupsMessagesStore.changeGroup(rest.group);
+            // this.groupsMessagesStore.changeGroup(rest.group);
         }));
     }
 
@@ -138,6 +139,17 @@ export class MembersListComponent implements OnInit, OnDestroy {
             }
             // console.log(this.notificationsStore.allNotifications)
             this.groupsMessagesStore.changeGroup(rest.group);
+            console.log(this.groupsMessagesStore.groupsMessages)
+        }));
+    }
+
+    getIgnoredJoinGroup() {
+        this.subscriptions.push(this.socketService.getIgnoredJoinGroup().subscribe((data: any) => {
+            const {notification, rest} = data;
+            console.log('ignored in members list', data)
+            // console.log(this.notificationsStore.allNotifications)
+            // console.log(this.notificationsStore.allNotifications)
+            // this.groupsMessagesStore.changeGroup(rest.group);
             console.log(this.groupsMessagesStore.groupsMessages)
         }));
     }

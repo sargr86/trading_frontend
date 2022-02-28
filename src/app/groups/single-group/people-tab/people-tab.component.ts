@@ -65,7 +65,6 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     confirmJoinGroup(member) {
-        console.log(member)
         this.subscriptions.push(this.groupsService.confirmGroupJoin({
             member_id: member.id,
             group_id: this.selectedGroup.id
@@ -90,6 +89,15 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
             this.groupsMessagesStore.changeGroup(selectedGroup);
+
+            this.socketService.ignoreJoinGroup({
+                group: selectedGroup,
+                user: this.authUser,
+                member,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
+                has declined  <strong>${member.name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
+                link: `/channels/show?username=${this.authUser.username}`,
+            });
         }));
     }
 

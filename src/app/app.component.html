@@ -37,6 +37,6 @@
 
     <mat-sidenav [mode]="'side'" #rightSidenav position="end" id="right-sidenav"
                  [opened]="isRightSidebarShown()">
-        <app-right-sidebar [shownItems]="rightSidenavFor" (closeSidenav)="closeSidenav($event, rightSidenav)"></app-right-sidebar>
+        <app-right-sidebar  [shownItems]="rightSidenavFor" (closeSidenav)="closeSidenav($event, rightSidenav)"></app-right-sidebar>
     </mat-sidenav>
 </mat-sidenav-container>

@@ -24,6 +24,7 @@ import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-navbar',
@@ -85,10 +86,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.getAuthenticatedUser();
         this.getRouterUrlParams();
 
-        // this.authUser = this.getAuthUser.transform();
-        // console.log(this.authUser)
-
-        if (this.authUser) {
+        if (this.userStore.isAuthenticated()) {
             // this.getUserCards();
             this.getDailyStocks();
             this.getMessagesFromSocket();

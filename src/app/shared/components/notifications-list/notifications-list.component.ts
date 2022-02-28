@@ -39,8 +39,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        console.log(this.authUser)
-        if (this.authUser) {
+        if (this.userStore.isAuthenticated()) {
             this.getNotifications();
             this.getConnectWithUser();
             this.cancelledUsersConnecting();

@@ -58,7 +58,7 @@
             <div id="group-tabs">
                 <ul class="nav-tabs">
                     <li class="nav-item" *ngFor="let tab of groupTabs">
-                        <a class="nav-link" [routerLink]="'/groups/'+id+'/'+tab.link"
+                        <a class="nav-link" [routerLink]="'/groups/'+passedGroupName+'/'+tab.link"
                            routerLinkActive="active"
                         >{{tab.name}}</a>
                     </li>

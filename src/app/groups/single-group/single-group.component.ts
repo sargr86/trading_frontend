@@ -7,6 +7,7 @@ import {User} from '@shared/models/user';
 import {GROUP_PAGE_TABS} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
+import {LowercaseRemoveSpacesPipe} from '@shared/pipes/lowercase-remove-spaces.pipe';
 
 @Component({
     selector: 'app-single-group',
@@ -20,14 +21,15 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     selectedGroup;
     isOwnGroup = false;
-    id: number;
+    passedGroupName: string;
     groupTabs = GROUP_PAGE_TABS;
 
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private route: ActivatedRoute,
         private userStore: UserStoreService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private lowerCaseRemoveSpaces: LowercaseRemoveSpacesPipe
     ) {
     }
 
@@ -44,10 +46,12 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     getSelectedGroup() {
         this.route.params.subscribe((params: Params) => {
-            this.id = +params.id;
-            this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => g.id === this.id);
+            this.passedGroupName = params.name;
+            this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => {
+                const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
+                return groupName === this.passedGroupName;
+            });
             if (this.selectedGroup) {
-                console.log(this.id)
                 this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
                 this.groupsMessagesStore.selectGroup(this.selectedGroup);
             }

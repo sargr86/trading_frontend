@@ -17,7 +17,7 @@ const routes: Routes = [
         },
     },
     {
-        path: ':id',
+        path: ':name',
         component: SingleGroupComponent,
         children: [
             {path: 'people', component: PeopleTabComponent, data: {title: 'Group page | People tab'}},

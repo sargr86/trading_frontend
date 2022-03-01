@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
 import {StocksStoreService} from '@core/services/stores/stocks-store.service';
@@ -11,7 +11,10 @@ import {StocksService} from '@core/services/stocks.service';
     styleUrls: ['./watchlist-tab.component.scss']
 })
 export class WatchlistTabComponent implements OnInit, OnDestroy {
-    authUser: User;
+    @Input() authUser: User;
+    @Input() profileUser: User;
+    @Input() profileUserStocks;
+
     subscriptions: Subscription[] = [];
 
     userStocks = [];
@@ -25,7 +28,11 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.trackUserStocks();
+        if (this.authUser.id === this.profileUser.id) {
+            this.trackUserStocks();
+        } else {
+            this.getProfileUserStocks();
+        }
     }
 
     trackUserStocks() {
@@ -38,6 +45,13 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
                     this.filteredStocks = this.userStocks;
                     this.stocksLoading = false;
                 }));
+    }
+
+    getProfileUserStocks() {
+        console.log('OK', this.profileUserStocks)
+        this.userStocks = this.profileUserStocks;
+        this.filteredStocks = this.userStocks;
+        this.stocksLoading = false;
     }
 
     saveUpdatedStocksList(stocks) {

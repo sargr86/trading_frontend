@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from '@core/services/users.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {StocksService} from '@core/services/stocks.service';
 
 @Component({
     selector: 'app-show-profile',
@@ -32,12 +33,15 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     attemptedToConnect = false;
     isBlocked = false;
 
+    profileUserStocks;
+
     constructor(
         private userStore: UserStoreService,
         private usersConnectionsStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private usersService: UsersService,
         private socketService: SocketIoService,
+        private stocksService: StocksService,
         private route: ActivatedRoute,
         public router: Router
     ) {
@@ -46,8 +50,10 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.passedUsername = this.route.snapshot.params.username;
         this.trackAuthUserChanges();
-        this.trackUserConnections();
         this.getUserInfo();
+        if (this.ownProfile) {
+            this.trackUserConnections();
+        }
     }
 
     trackAuthUserChanges() {
@@ -72,6 +78,10 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
                     this.cancelledUsersConnecting();
                     this.getBlockUnblockUser();
                     this.getConnectionsChanges();
+
+                    if (!this.ownProfile) {
+                        this.getProfileUserStocks();
+                    }
                 }
             }));
         }
@@ -122,6 +132,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.usersConnection = dt;
             if (dt) {
+                this.connections = dt.connection_users;
                 this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
                 // console.log(this.usersConnectionStatus)
                 this.isBlocked = !!dt.is_blocked;
@@ -200,11 +211,19 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     }
 
 
+    getProfileUserStocks() {
+        this.stocksService.getUserStocks({user_id: this.profileUser.id}).subscribe(dt => {
+            this.profileUserStocks = dt.user_stocks;
+        });
+    }
+
     onOutletLoaded(component) {
         if (this.connections) {
             component.connections = this.connections;
             component.connectionRequests = this.connectionRequests;
             component.authUser = this.authUser;
+            component.profileUser = this.profileUser;
+            component.profileUserStocks = this.profileUserStocks;
         }
     }
 

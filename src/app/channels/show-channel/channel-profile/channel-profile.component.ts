@@ -67,9 +67,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         if (this.channelUser) {
-            this.checkChannelSubscription();
             this.initChannelForm();
-            // this.detectImageChange();
+            this.checkChannelSubscription();
+
             this.checkIfUsersConnected();
             this.getAcceptedDeclinedRequests();
             this.getConnectWithUser();
@@ -79,37 +79,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.getConnectionsChanges();
         }
     }
-
-    getConnectionsChanges() {
-        this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe((dt: any) => {
-            console.log('connection changed!!!', dt, this.channelUser.id)
-            this.usersConnection = dt.find(d => d.id === this.channelUser.id)?.users_connections[0];
-            console.log(this.usersConnection)
-            //
-            //     if (dt.filter(d => d.id === this.channelUser.id)) {
-            //         this.usersConnectionStatus = 'connected';
-            //         this.isBlocked = false;
-            //     }
-        }));
-    }
-
-    getAcceptedDeclinedRequests() {
-        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            const {notification} = dt;
-            console.log(notification)
-            if ((notification.to_user.id === this.authUser.id && notification.from_user.id === this.channelUser.id)
-                || (notification.to_user.id === this.channelUser.id && notification.from_user.id === this.authUser.id)) {
-                this.usersConnectionStatus = 'connected';
-                this.isBlocked = false;
-            }
-        }));
-
-        this.subscriptions.push(this.socketService.declinedConnection().subscribe((dt: any) => {
-            console.log('declined')
-            this.usersConnectionStatus = 'idle';
-        }));
-    }
-
 
     initChannelForm() {
         this.channelForm = this.fb.group({
@@ -129,17 +98,14 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-    checkIfUsersConnected() {
-        this.usersService.checkIfUsersConnected({
+    checkChannelSubscription() {
+        this.subscriptions.push(this.channelService.checkChannelSubscription({
             user_id: this.authUser.id,
-            channel_user_id: this.channelUser.id
+            channel_id: this.channelUser.channel.id
         }).subscribe(dt => {
-            this.usersConnection = dt;
-            if (dt) {
-                this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
-                this.isBlocked = !!dt.is_blocked;
-            }
-        });
+            this.subscribedToChannel = dt.status === 'Subscribed';
+            this.subscribersCount = dt.subscribers_count;
+        }));
     }
 
     coverChangeEvent(event: any) {
@@ -161,7 +127,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         }
         // });
     }
-
 
     profileCropped(event: CroppedEvent) {
         // this.loader.dataLoading = true;
@@ -217,15 +182,30 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         }));
     }
 
-    checkChannelSubscription() {
-        // console.log(this.channelUser)
-        this.subscriptions.push(this.channelService.checkChannelSubscription({
-            user_id: this.authUser.id,
-            channel_id: this.channelUser.channel.id
-        }).subscribe(dt => {
-            this.subscribedToChannel = dt.status === 'Subscribed';
-            this.subscribersCount = dt.subscribers_count;
-        }));
+    toggleEditMode() {
+        this.editMode = !this.editMode;
+    }
+
+    saveChanges() {
+        console.log('save changes!!!');
+        console.log(this.channelForm.value);
+        console.log('save changes!!!');
+
+        if (this.channelForm.valid) {
+            this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
+                this.editMode = false;
+                this.changeAuthUserInfo(dt);
+            })));
+        }
+    }
+
+    toggleBottomChatBox() {
+        const foundUserMessages = this.usersConnectionsStore.usersMessages.find(um => um.id === this.channelUser.id);
+        if (foundUserMessages) {
+            this.usersConnectionsStore.showBottomChatBox = true;
+            this.groupsMessagesStore.showBottomChatBox = false;
+            this.usersConnectionsStore.changeUser(foundUserMessages);
+        }
     }
 
     changeAuthUserInfo(dt) {
@@ -245,31 +225,47 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         // console.log(this.channelUser)
     }
 
-    toggleEditMode() {
-        this.editMode = !this.editMode;
+    getConnectionsChanges() {
+        this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe((dt: any) => {
+            console.log('connection changed!!!', dt, this.channelUser.id);
+            this.usersConnection = dt.find(d => d.id === this.channelUser.id)?.users_connections[0];
+            console.log(this.usersConnection);
+            //
+            //     if (dt.filter(d => d.id === this.channelUser.id)) {
+            //         this.usersConnectionStatus = 'connected';
+            //         this.isBlocked = false;
+            //     }
+        }));
     }
 
+    getAcceptedDeclinedRequests() {
+        this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            const {notification} = dt;
+            console.log(notification);
+            if ((notification.to_user.id === this.authUser.id && notification.from_user.id === this.channelUser.id)
+                || (notification.to_user.id === this.channelUser.id && notification.from_user.id === this.authUser.id)) {
+                this.usersConnectionStatus = 'connected';
+                this.isBlocked = false;
+            }
+        }));
 
-    saveChanges() {
-        console.log('save changes!!!')
-        console.log(this.channelForm.value)
-        console.log('save changes!!!')
-
-        if (this.channelForm.valid) {
-            this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
-                this.editMode = false;
-                this.changeAuthUserInfo(dt);
-            })));
-        }
+        this.subscriptions.push(this.socketService.declinedConnection().subscribe(() => {
+            console.log('declined');
+            this.usersConnectionStatus = 'idle';
+        }));
     }
 
-    toggleBottomChatBox() {
-        const foundUserMessages = this.usersConnectionsStore.usersMessages.find(um => um.id === this.channelUser.id);
-        if (foundUserMessages) {
-            this.usersConnectionsStore.showBottomChatBox = true;
-            this.groupsMessagesStore.showBottomChatBox = false;
-            this.usersConnectionsStore.changeUser(foundUserMessages);
-        }
+    checkIfUsersConnected() {
+        this.usersService.checkIfUsersConnected({
+            user_id: this.authUser.id,
+            channel_user_id: this.channelUser.id
+        }).subscribe(dt => {
+            this.usersConnection = dt;
+            if (dt) {
+                this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
+                this.isBlocked = !!dt.is_blocked;
+            }
+        });
     }
 
     connectWithUser() {

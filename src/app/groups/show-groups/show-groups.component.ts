@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-show-groups',
@@ -9,6 +10,9 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 })
 export class ShowGroupsComponent implements OnInit {
     authUser;
+    groups = [];
+
+    subscriptions: Subscription[] = [];
 
     constructor(
         public groupsMessagesStore: GroupsMessagesSubjectService,
@@ -18,6 +22,13 @@ export class ShowGroupsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAuthUser();
+        this.trackGroups();
+    }
+
+    trackGroups() {
+        this.subscriptions.push(this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
+            this.groups = dt;
+        }));
     }
 
     getAuthUser() {
@@ -27,7 +38,7 @@ export class ShowGroupsComponent implements OnInit {
     }
 
     filterGroups(type) {
-        return this.groupsMessagesStore.groupsMessages.filter(g => {
+        return this.groups.filter(g => {
             return type === 'managed' ?
                 g.creator_id === this.authUser.id :
                 g.creator_id !== this.authUser.id;

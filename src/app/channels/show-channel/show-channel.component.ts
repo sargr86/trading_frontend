@@ -89,7 +89,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     ) {
         this.authUser = this.getAuthUser.transform();
         this.passedUsername = this.route.snapshot.queryParams.username;
-        console.log(this.passedUsername)
+        // console.log(this.passedUsername)
         this.passedTab = this.route.snapshot.queryParams.tab;
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
     }

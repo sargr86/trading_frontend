@@ -29,7 +29,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         private notificationsService: NotificationsService,
         public notificationsStore: NotificationsSubjectStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
-        private groupMessagesStore: GroupsMessagesSubjectService,
+        private groupsMessagesStore: GroupsMessagesSubjectService,
         private userStore: UserStoreService,
         private socketService: SocketIoService,
         private chatService: ChatService,
@@ -218,7 +218,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
                     link: `/channels/show?username=${this.authUser.username}`,
                 });
-                this.groupMessagesStore.setGroupsMessages(dt);
+                this.groupsMessagesStore.setGroupsMessages(dt);
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
                 this.notificationsStore.setInitialNotifications(notifications);
@@ -243,7 +243,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
                 this.notificationsStore.setInitialNotifications(notifications);
 
-                this.groupMessagesStore.setGroupsMessages(dt);
+                this.groupsMessagesStore.setGroupsMessages(dt);
             })
         );
     }
@@ -256,6 +256,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
+            this.groupsMessagesStore.changeGroup(rest.group);
         }));
     }
 
@@ -273,9 +274,15 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getRemovedFromGroup() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
-            const {currentUserNotifications} = data;
-            console.log(currentUserNotifications)
+            const {currentUserNotifications, member, leftGroups} = data;
+            // console.log(currentUserNotifications)
             this.notificationsStore.setAllNotifications(currentUserNotifications);
+
+            if (member.id === this.authUser.id) {
+                this.groupsMessagesStore.setGroupsMessages(leftGroups);
+                this.groupsMessagesStore.selectGroup({});
+            }
+
             // console.log(this.notificationsStore.allNotifications)
         }));
     }

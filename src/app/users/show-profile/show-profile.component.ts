@@ -48,16 +48,6 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
         this.trackAuthUserChanges();
         this.trackUserConnections();
         this.getUserInfo();
-
-        if (this.profileUser) {
-            this.checkIfUsersConnected();
-            this.getAcceptedDeclinedRequests();
-            this.getConnectWithUser();
-            this.getDisconnectUsers();
-            this.cancelledUsersConnecting();
-            this.getBlockUnblockUser();
-            this.getConnectionsChanges();
-        }
     }
 
     trackAuthUserChanges() {
@@ -75,6 +65,13 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
             }).subscribe(dt => {
                 if (dt) {
                     this.profileUser = dt;
+                    this.checkIfUsersConnected();
+                    this.getAcceptedDeclinedRequests();
+                    this.getConnectWithUser();
+                    this.getDisconnectUsers();
+                    this.cancelledUsersConnecting();
+                    this.getBlockUnblockUser();
+                    this.getConnectionsChanges();
                 }
             }));
         }
@@ -90,9 +87,9 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     getConnectionsChanges() {
         this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe((dt: any) => {
-            console.log('connection changed!!!', dt, this.profileUser.id);
+            // console.log('connection changed!!!', dt, this.profileUser.id);
             this.usersConnection = dt.find(d => d.id === this.profileUser.id)?.users_connections[0];
-            console.log(this.usersConnection);
+            // console.log(this.usersConnection);
             //
             //     if (dt.filter(d => d.id === this.channelUser.id)) {
             //         this.usersConnectionStatus = 'connected';
@@ -126,6 +123,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
             this.usersConnection = dt;
             if (dt) {
                 this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
+                // console.log(this.usersConnectionStatus)
                 this.isBlocked = !!dt.is_blocked;
             }
         });

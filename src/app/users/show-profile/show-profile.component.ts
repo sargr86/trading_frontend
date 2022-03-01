@@ -81,6 +81,8 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
                     if (!this.ownProfile) {
                         this.getProfileUserStocks();
+                        this.connectionsCount = this.profileUser.users_connections.filter(uc => uc.confirmed).length;
+                        console.log(this.profileUser)
                     } else {
                         this.profileUserStocks = [];
                     }
@@ -91,7 +93,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     trackUserConnections() {
         this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe(dt => {
-            this.connectionsCount = dt.length;
+            this.connectionsCount = dt.filter(d => d.users_connections[0].confirmed === 1).length;
             this.connections = dt.filter(d => d.users_connections[0].confirmed === 1);
             this.connectionRequests = dt.filter(d => d.users_connections[0].confirmed === 0);
         }));
@@ -113,7 +115,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
             const {notification} = dt;
-            console.log(notification);
+            console.log(dt);
             if ((notification.to_user.id === this.authUser.id && notification.from_user.id === this.profileUser.id)
                 || (notification.to_user.id === this.profileUser.id && notification.from_user.id === this.authUser.id)) {
                 this.usersConnectionStatus = 'connected';
@@ -187,7 +189,10 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     }
 
     getDisconnectUsers() {
-        this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe(dt => {
+        this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
+            const {to_user} = dt;
+            console.log(to_user.users_connections)
+            this.connectionsCount = to_user.users_connections.length;
             this.usersConnectionStatus = 'idle';
         }));
     }

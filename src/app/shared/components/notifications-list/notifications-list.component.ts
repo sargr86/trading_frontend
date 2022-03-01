@@ -50,6 +50,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.getDisconnectUsers();
         this.getGroupJoinInvitation();
         this.getRemovedFromGroup();
+        this.getLeftGroup();
     }
 
     getNotifications() {
@@ -284,6 +285,19 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             }
 
             // console.log(this.notificationsStore.allNotifications)
+        }));
+    }
+
+    getLeftGroup() {
+        this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
+            const {group} = data;
+            console.log('left', data)
+            if (data.from_user.id === this.authUser.id) {
+                this.groupsMessagesStore.selectGroup({});
+            } else {
+                this.notificationsStore.updateNotifications(data);
+                this.groupsMessagesStore.changeGroup(group);
+            }
         }));
     }
 

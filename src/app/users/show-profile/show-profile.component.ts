@@ -81,6 +81,8 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
                     if (!this.ownProfile) {
                         this.getProfileUserStocks();
+                    } else {
+                        this.profileUserStocks = [];
                     }
                 }
             }));
@@ -132,7 +134,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
         }).subscribe(dt => {
             this.usersConnection = dt;
             if (dt) {
-                this.connections = dt.connection_users;
+                this.connections = dt.connection_users.filter(cu => cu.id !== this.authUser.id);
                 this.usersConnectionStatus = dt.confirmed ? 'connected' : 'pending';
                 // console.log(this.usersConnectionStatus)
                 this.isBlocked = !!dt.is_blocked;
@@ -213,17 +215,20 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     getProfileUserStocks() {
         this.stocksService.getUserStocks({user_id: this.profileUser.id}).subscribe(dt => {
-            this.profileUserStocks = dt.user_stocks;
+            this.profileUserStocks = dt?.user_stocks;
         });
     }
 
     onOutletLoaded(component) {
         if (this.connections) {
+            console.log('STOCKS:', this.profileUserStocks)
             component.connections = this.connections;
             component.connectionRequests = this.connectionRequests;
             component.authUser = this.authUser;
             component.profileUser = this.profileUser;
-            component.profileUserStocks = this.profileUserStocks;
+            if (this.profileUserStocks) {
+                component.profileUserStocks = this.profileUserStocks;
+            }
         }
     }
 

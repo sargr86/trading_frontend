@@ -21,8 +21,46 @@
                 </div>
 
                 <div id="profile-actions-block">
+
+                    <a class="add-friend-btn" (click)="connectWithUser()"
+                       *ngIf="usersConnectionStatus==='idle'">
+                        <mat-icon>person_add</mat-icon>
+                        <span>Connect</span>
+                    </a>
+
+                    <a class="waiting-for-confirmation-btn"
+                       *ngIf="usersConnectionStatus==='pending'" [matMenuTriggerFor]="pendingMenu">
+                        <mat-icon>check</mat-icon>
+                        <span>Waiting for confirmation</span>
+                    </a>
+
+                    <mat-menu #pendingMenu="matMenu">
+                        <button mat-menu-item (click)="cancelUsersConnecting(usersConnection)">
+                            <mat-icon>close</mat-icon>
+                            <span>Cancel</span>
+                        </button>
+                    </mat-menu>
+
+                    <button class="users-connected-btn" *ngIf="usersConnectionStatus==='connected' "
+                            [matMenuTriggerFor]="menu">
+                        <mat-icon>check</mat-icon>
+                        <span>Connected</span>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="disconnectUser()">
+                            <mat-icon>close</mat-icon>
+                            <span>Disconnect</span>
+                        </button>
+                    </mat-menu>
+
+                    <a (click)="toggleBottomChatBox()" class="toggle-chat-box-btn" *ngIf="isMessageBtnShown()">
+                        <mat-icon>chat</mat-icon>
+                        <span>Message</span>
+                    </a>
+
                     <button type="button" id="edit-profile" *ngIf="ownProfile"
-                            [routerLink]="'/users/'+this.authUser.username+'/edit'">
+                            [routerLink]="'/users/'+authUser.username+'/edit'">
                         <mat-icon>edit</mat-icon>
                         Edit profile
                     </button>

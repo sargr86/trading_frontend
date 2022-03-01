@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
@@ -11,7 +11,7 @@ import {UsersService} from '@core/services/users.service';
     templateUrl: './show-profile.component.html',
     styleUrls: ['./show-profile.component.scss']
 })
-export class ShowProfileComponent implements OnInit {
+export class ShowProfileComponent implements OnInit, OnDestroy {
     authUser;
     profileUser;
     profileTabs = PROFILE_PAGE_TABS;
@@ -36,9 +36,8 @@ export class ShowProfileComponent implements OnInit {
     ngOnInit(): void {
         this.passedUsername = this.route.snapshot.params.username;
         this.getAuthUser();
-        this.trackUserConnections();
         this.getUserInfo();
-        console.log(this.passedUsername)
+        this.trackUserConnections();
     }
 
     getAuthUser() {
@@ -50,23 +49,23 @@ export class ShowProfileComponent implements OnInit {
     getUserInfo() {
         this.ownProfile = this.authUser.username === this.passedUsername;
         if (this.passedUsername) {
-            this.usersService.getUserInfo({
+            this.subscriptions.push(this.usersService.getUserInfo({
                 username: this.passedUsername,
                 own_channel: this.ownProfile
             }).subscribe(dt => {
                 if (dt) {
                     this.profileUser = dt;
                 }
-            });
+            }));
         }
     }
 
     trackUserConnections() {
-        this.usersConnectionsStore.usersMessages$.subscribe(dt => {
+        this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe(dt => {
             this.connectionsCount = dt.length;
             this.connections = dt.filter(d => d.users_connections[0].confirmed === 1);
             this.connectionRequests = dt.filter(d => d.users_connections[0].confirmed === 0);
-        });
+        }));
     }
 
     onOutletLoaded(component) {
@@ -75,6 +74,10 @@ export class ShowProfileComponent implements OnInit {
             component.connectionRequests = this.connectionRequests;
             component.authUser = this.authUser;
         }
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

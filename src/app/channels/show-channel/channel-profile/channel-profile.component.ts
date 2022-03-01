@@ -82,7 +82,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     getConnectionsChanges() {
         this.subscriptions.push(this.usersConnectionsStore.usersMessages$.subscribe((dt: any) => {
-            // console.log('connection changed!!!', dt, this.channelUser.id)
+            console.log('connection changed!!!', dt, this.channelUser.id)
+            this.usersConnection = dt.find(d => d.id === this.channelUser.id)?.users_connections[0];
+            console.log(this.usersConnection)
             //
             //     if (dt.filter(d => d.id === this.channelUser.id)) {
             //         this.usersConnectionStatus = 'connected';
@@ -305,7 +307,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
 
     disconnectUser() {
-        // console.log(this.usersConnection)
+        console.log(this.usersConnection)
         this.socketService.disconnectUsers({
             to_user: this.channelUser,
             from_user: this.authUser,

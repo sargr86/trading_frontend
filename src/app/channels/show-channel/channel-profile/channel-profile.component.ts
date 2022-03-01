@@ -301,7 +301,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-
     disconnectUser() {
         console.log(this.usersConnection)
         this.socketService.disconnectUsers({
@@ -329,7 +328,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     isMessageBtnShown() {
         return /connected|test/.test(this.usersConnectionStatus) && !this.isBlocked;
     }
-
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

@@ -35,12 +35,12 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.passedUsername = this.route.snapshot.params.username;
-        this.getAuthUser();
         this.getUserInfo();
+        this.trackAuthUserChanges();
         this.trackUserConnections();
     }
 
-    getAuthUser() {
+    trackAuthUserChanges() {
         this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
         }));

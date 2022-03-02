@@ -63,7 +63,7 @@
                             <p class="user-link" *ngIf="toggleMyProfileLink()"
                                (click)="openProfilePage()">My Profile</p>
                             <p class="user-link" *ngIf="!routerUrl?.includes('groups')"
-                               (click)="router.navigate(['groups'])">My groups</p>
+                               (click)="router.navigate(['groups'])">My Groups</p>
                             <p class="user-link" *ngIf="toggleMyChannelLink()"
                                (click)="goToChannelPage()">My Channel</p>
                             <p class="user-link" (click)="logout()">Logout</p>

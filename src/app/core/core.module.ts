@@ -36,6 +36,7 @@ import { ShowChatGroupMembersComponent } from './components/modals/show-chat-gro
 
 import { RightSidebarComponent } from './components/layout/right-sidebar/right-sidebar.component';
 import {RouterModule} from '@angular/router';
+import { GroupMembersInvitationDialogComponent } from './components/modals/group-members-invitation-dialog/group-members-invitation-dialog.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import {RouterModule} from '@angular/router';
         PurchaseCoinsComponent,
         ShowChatGroupMembersComponent,
         RightSidebarComponent,
+        GroupMembersInvitationDialogComponent,
         // ChatBottomBoxComponent
     ],
     imports: [

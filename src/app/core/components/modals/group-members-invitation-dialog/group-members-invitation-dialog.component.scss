@@ -1,0 +1,96 @@
+@import 'variables';
+@import 'mixins';
+
+h3 {
+    margin: 30px 20px;
+    font-family: "Muli-Bold", sans-serif;
+}
+
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+
+    &:checked + span {
+        background-color: $metl-green !important;
+    }
+}
+
+#group-members-wrap {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 0 25px;
+
+    #suggested-contacts {
+        border-top: 1px solid #EFEFEF;
+        border-bottom: 1px solid #EFEFEF;
+
+        #contact-search-wrap {
+            margin-top: 15px;
+
+            input {
+                position: relative;
+                z-index: 1;
+                width: 90%;
+                padding: 8px 32px 8px 16px !important;
+                font-family: "Muli-Light", sans-serif;
+                background: #EFEFEF;
+                color: #545454;
+                font-size: 16px;
+            }
+        }
+    }
+
+    #selected-contacts {
+        background-color: #c8c8c873;
+    }
+
+    > div {
+        flex: 50%;
+        height: 500px;
+        overflow: auto;
+
+        ul {
+            margin-top: 20px;
+            height: 400px;
+
+            &.bordered {
+                border-right: 1px solid $light_gray;
+            }
+
+            li {
+                display: flex;
+                max-width: 340px;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 20px;
+
+
+                .details {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+#dialog-actions {
+    display: flex;
+    justify-content: end;
+    padding: 25px;
+
+    #send-invites {
+        @include regularButton;
+        padding: 0;
+        margin-right: 10px;
+    }
+
+    #close-dialog {
+        background-color: transparent;
+        padding: 0 20px;
+        font-size: 16px;
+        font-family: "Muli-Light", sans-serif;
+    }
+}

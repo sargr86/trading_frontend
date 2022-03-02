@@ -8,6 +8,7 @@ import {GROUP_PAGE_TABS} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
 import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 import {LowercaseRemoveSpacesPipe} from '@shared/pipes/lowercase-remove-spaces.pipe';
+import {GroupMembersInvitationDialogComponent} from '@core/components/modals/group-members-invitation-dialog/group-members-invitation-dialog.component';
 
 @Component({
     selector: 'app-single-group',
@@ -76,9 +77,10 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     openMembersModal() {
-        this.subscriptions.push(this.dialog.open(ShowChatGroupMembersComponent, {
-            height: '548px',
-            width: '548px'
+        this.subscriptions.push(this.dialog.open(GroupMembersInvitationDialogComponent, {
+            height: '670px',
+            width: '810px',
+            data: this.authUser
         }).afterClosed().subscribe(dt => {
 
         }));

@@ -13,6 +13,7 @@ import {UsersService} from '@core/services/users.service';
 export class GroupMembersInvitationDialogComponent implements OnInit {
     selectedGroup;
     userContacts: User[] = [];
+    selectedContacts: User[] = [];
 
     subscriptions: Subscription[] = [];
 
@@ -35,6 +36,15 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         }).subscribe((dt: User[]) => {
             this.userContacts = dt;
         }));
+    }
+
+    selectContact(event: Event, contact: User) {
+        const isChecked = (event.target as HTMLInputElement).checked;
+        if (isChecked) {
+            this.selectedContacts.push(contact);
+        } else {
+            this.selectedContacts = this.selectedContacts.filter(c => c.id !== contact.id);
+        }
     }
 
     filteredMembers() {

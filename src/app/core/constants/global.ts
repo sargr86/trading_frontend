@@ -120,17 +120,18 @@ export const MAIN_SECTIONS = [
     },
     {name: 'Home', img: '', icon: 'home', link: '/', auth: false, production: true},
     {name: 'Trending', img: 'item-9.png', icon: '', link: '/trending', separator: true, auth: false, production: true},
-    {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},
-    {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true},
     {
         name: 'News feed',
         img: 'item-8.png',
         icon: '',
         link: '/chat/rooms',
-        separator: true,
+
         production: false,
         auth: true
     },
+    {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},
+    {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true, separator: true,},
+
     {name: 'Saved videos', img: 'saved-videos.svg', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11.png', icon: '', link: '/videos', auth: true, separator: false, production: true},
     {name: 'Clipz', img: 'item-11.png', icon: '', link: '/clipz', auth: true, separator: true, production: true},

@@ -24,29 +24,42 @@ input[type="checkbox"] {
     #suggested-contacts {
         border-top: 1px solid #EFEFEF;
         border-bottom: 1px solid #EFEFEF;
+        flex: 60%;
 
         #contact-search-wrap {
+            position: relative;
+            width: 93%;
             margin-top: 15px;
 
             input {
                 position: relative;
                 z-index: 1;
-                width: 90%;
+                width: 100%;
                 padding: 8px 32px 8px 16px !important;
                 font-family: "Muli-Light", sans-serif;
                 background: #EFEFEF;
                 color: #545454;
                 font-size: 16px;
             }
+
+            i {
+                position: absolute;
+                color: #6A6A6A;
+                right: 11px;
+                top: 10px;
+                z-index: 333;
+                cursor: pointer;
+            }
         }
     }
 
     #selected-contacts {
         background-color: #c8c8c873;
+        flex: 40%;
     }
 
     > div {
-        flex: 50%;
+
         height: 500px;
         overflow: auto;
 
@@ -60,7 +73,7 @@ input[type="checkbox"] {
 
             li {
                 display: flex;
-                max-width: 340px;
+                max-width: 414px;
                 width: 100%;
                 align-items: center;
                 justify-content: space-between;
@@ -68,8 +81,13 @@ input[type="checkbox"] {
 
 
                 .details {
-                    display: flex;
-                    align-items: center;
+                    width: 100%;
+
+                    label {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                    }
                 }
             }
         }
@@ -78,7 +96,7 @@ input[type="checkbox"] {
 
 #dialog-actions {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding: 25px;
 
     #send-invites {

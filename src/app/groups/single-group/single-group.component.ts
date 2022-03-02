@@ -78,7 +78,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     openMembersModal() {
         this.subscriptions.push(this.dialog.open(GroupMembersInvitationDialogComponent, {
-            height: '670px',
+            height: '690px',
             width: '950px',
             data: this.authUser
         }).afterClosed().subscribe(dt => {

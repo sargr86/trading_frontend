@@ -1,4 +1,9 @@
-<h3>Invite contacts to this group</h3>
+<div id="dialog-header">
+    <h3>Invite contacts to this group</h3>
+    <div>
+        <img src="assets/img/x.svg" alt="close-dialog" class="close-box" (click)="closeDialog()">
+    </div>
+</div>
 <div id="group-members-wrap">
     <div id="suggested-contacts">
         <div id="contact-search-wrap">
@@ -36,6 +41,6 @@
     </div>
 </div>
 <div id="dialog-actions">
-    <button id="close-dialog">Cancel</button>
-    <button id="send-invites">Send invites</button>
+    <button id="close-dialog" (click)="closeDialog()">Cancel</button>
+    <button id="send-invites" (click)="sendInvitationsToContacts()">Send invites</button>
 </div>

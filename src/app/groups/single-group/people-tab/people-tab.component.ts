@@ -45,7 +45,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {rest} = data;
-            console.log('accepted')
+            console.log('accepted', rest.group)
             this.groupsMessagesStore.changeGroup(rest.group);
         }));
     }

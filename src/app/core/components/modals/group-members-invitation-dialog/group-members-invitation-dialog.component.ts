@@ -1,9 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
 import {UsersService} from '@core/services/users.service';
+import {ChatService} from '@core/services/chat.service';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-group-members-invitation-dialog',
@@ -20,7 +22,10 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public authUser: User,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private chatService: ChatService,
+        private socketService: SocketIoService,
+        private dialog: MatDialogRef<GroupMembersInvitationDialogComponent>
     ) {
     }
 
@@ -47,8 +52,25 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         }
     }
 
-    filteredMembers() {
-        return this.selectedGroup.chat_group_members.filter(m => m.id !== this.authUser.id)
+    sendInvitationsToContacts() {
+
+        this.subscriptions.push(this.chatService.addGroupMembers({
+            group_id: this.selectedGroup.id,
+            member_ids: this.selectedContacts.map(c => c.id)
+        }).subscribe(dt => {
+
+            this.socketService.inviteToNewGroup({
+                invited_members: this.selectedContacts,
+                from_user: this.authUser,
+                group: this.selectedGroup,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has sent an invitation to join the <strong>${this.selectedGroup.name}</strong> group`,
+            });
+            this.groupsMessagesStore.changeGroup(this.selectedGroup);
+        }));
+    }
+
+    closeDialog() {
+        this.dialog.close();
     }
 
 }

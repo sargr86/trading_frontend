@@ -1,9 +1,19 @@
 @import 'variables';
 @import 'mixins';
 
-h3 {
+#dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin: 30px 20px;
-    font-family: "Muli-Bold", sans-serif;
+
+    h3 {
+        font-family: "Muli-Bold", sans-serif;
+    }
+
+    .close-box {
+        cursor: pointer;
+    }
 }
 
 input[type="checkbox"] {

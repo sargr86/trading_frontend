@@ -20,7 +20,9 @@
                     </label>
                 </div>
                 <div class="state">
-                    <input type="checkbox" [id]="contact.id+'_'+i" (change)="selectContact($event,contact)">
+                    <input type="checkbox" *ngIf="!ifUnconfirmedMember(contact)" [id]="contact.id+'_'+i"
+                           (change)="selectContact($event,contact)">
+                    <span *ngIf="ifUnconfirmedMember(contact)">Invitation sent</span>
                 </div>
             </li>
         </ul>

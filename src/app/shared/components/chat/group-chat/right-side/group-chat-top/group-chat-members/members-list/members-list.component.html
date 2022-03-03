@@ -6,14 +6,14 @@
             [class.pending]="!m.chat_groups_members.confirmed">
 
             <div class="avatar-status-wrap">
-                <img class="avatar" [matTooltip]="m.name" [src]="m.avatar|getImgPath: 'user_avatars'">
+                <img class="avatar" [matTooltip]="m.first_name+ ' '+m.last_name" [src]="m.avatar|getImgPath: 'user_avatars'">
                 <mat-icon *ngIf="ifRemoveMemberShown(m)" (click)="removeSavedMember(m)">cancel</mat-icon>
                 <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
             </div>
 
             <ng-container *ngIf="modalMode">
                 <div class="member-name">
-                    <span>{{m.name}}</span>
+                    <span>{{m.first_name+ ' '+m.last_name}}</span>
                 </div>
                 <div class="actions">
                     <i class="fa fa-ban" *ngIf="m.id !== selectedGroup?.creator_id"

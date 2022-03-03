@@ -18,7 +18,7 @@
 
             ul {
                 margin-top: 20px;
-                height: 400px;
+                display: flex;
 
                 &.bordered {
                     border-right: 1px solid $light_gray;
@@ -28,6 +28,7 @@
                     display: flex;
                     align-items: center;
                     margin-bottom: 20px;
+
                 }
             }
         }
@@ -39,6 +40,18 @@
 
         #members {
             padding-left: 20px;
+
+            li {
+                margin-right: 10px;
+                border: 1px solid #d3d3d3;
+                padding: 5px;
+                border-radius: 35px;
+
+                .details {
+                    display: flex;
+                    align-items: center;
+                }
+            }
         }
 
         #member-requests {
@@ -56,4 +69,11 @@
             }
         }
     }
+}
+
+
+.remove-member-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: $red;
 }

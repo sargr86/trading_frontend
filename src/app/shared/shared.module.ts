@@ -68,6 +68,7 @@ import {GroupChatLeftSideHolderComponent} from '@shared/components/chat/group-ch
 import {GetFileBaseNamePipe} from './pipes/get-file-base-name.pipe';
 import {RouterModule} from '@angular/router';
 import {LowercaseRemoveSpacesPipe} from './pipes/lowercase-remove-spaces.pipe';
+import { GetTwoArrayOfObjectsDifferencePipe } from './pipes/get-two-array-of-objects-difference.pipe';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -137,6 +138,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GroupChatLeftSideHolderComponent,
         GetFileBaseNamePipe,
         LowercaseRemoveSpacesPipe,
+        GetTwoArrayOfObjectsDifferencePipe,
     ],
     imports: [
         CommonModule,
@@ -171,6 +173,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GetFileBaseNamePipe,
         GetElegantDatePipe,
         LowercaseRemoveSpacesPipe,
+        GetTwoArrayOfObjectsDifferencePipe,
         {
             provide: DROPZONE_CONFIG,
             useValue: DEFAULT_DROPZONE_CONFIG

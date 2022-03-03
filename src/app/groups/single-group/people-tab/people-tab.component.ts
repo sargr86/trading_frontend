@@ -3,6 +3,9 @@ import {GroupsService} from '@core/services/groups.service';
 import {Subscription} from 'rxjs';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-people-tab',
@@ -23,7 +26,9 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     constructor(
         private groupsService: GroupsService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private socketService: SocketIoService
+        private socketService: SocketIoService,
+        private chatService: ChatService,
+        private dialog: MatDialog
     ) {
     }
 
@@ -98,6 +103,25 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
                 has declined  <strong>${member.name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
                 link: `/channels/show?username=${this.authUser.username}`,
             });
+        }));
+    }
+
+    removeMember(member) {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.chatService.removeGroupMember({
+                    group_id: this.selectedGroup.id,
+                    member_id: member.id
+                }).subscribe(dt => {
+                    this.selectedGroup = dt;
+                    this.groupsMessagesStore.changeGroup(this.selectedGroup);
+                    this.socketService.removeFromGroup({
+                        member,
+                        initiator: this.authUser,
+                        group: this.selectedGroup
+                    });
+                });
+            }
         }));
     }
 

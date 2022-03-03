@@ -6,6 +6,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
+import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 
 @Component({
     selector: 'app-people-tab',
@@ -28,7 +29,8 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private socketService: SocketIoService,
         private chatService: ChatService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private isEmptyObj: CheckForEmptyObjectPipe,
     ) {
     }
 
@@ -44,7 +46,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             this.members = [];
             this.requestedMembers = [];
             console.log(this.selectedGroup)
-            if (this.selectedGroup) {
+            if (!this.isEmptyObj.transform(this.selectedGroup)) {
                 this.filterMembers();
             }
         }));

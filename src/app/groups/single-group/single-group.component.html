@@ -27,12 +27,18 @@
 
             <div id="group-actions">
                 <ng-container *ngIf="showJoinBtn()">
-                    <button id="join-group-btn" *ngIf="!isAuthUserMemberOfGroup()">
+                    <button id="join-group-btn" *ngIf="userGroupConnStatus === 'not connected'">
                         Join
                     </button>
-                    <button id="joined-group-btn" [matMenuTriggerFor]="menu" [hidden]="!isAuthUserMemberOfGroup()">
+                    <button id="joined-group-btn" [matMenuTriggerFor]="menu"
+                            *ngIf="userGroupConnStatus === 'confirmed'">
                         <span>Joined</span>
                         <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+
+                    <button id="waiting-for-confirmation-btn" *ngIf="userGroupConnStatus === 'unconfirmed'">
+                        <mat-icon>check</mat-icon>
+                        <span>Waiting for confirmation</span>
                     </button>
 
                     <mat-menu #menu="matMenu">

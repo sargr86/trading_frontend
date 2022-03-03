@@ -220,6 +220,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
                     link: `/channels/show?username=${this.authUser.username}`,
                 });
+                console.log("ACCEPTED", dt)
                 this.groupsMessagesStore.setGroupsMessages(dt);
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);

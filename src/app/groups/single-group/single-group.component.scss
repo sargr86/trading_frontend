@@ -78,5 +78,13 @@
         margin-left: 25px;
     }
 
+    #waiting-for-confirmation-btn {
+        @include regularButton;
+        width: 210px;
+        background-color: $light_gray;
+        padding: 0;
+        margin-right: 16px;
+    }
+
 
 }

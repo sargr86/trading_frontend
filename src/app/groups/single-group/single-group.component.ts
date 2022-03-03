@@ -6,9 +6,9 @@ import {Subscription} from 'rxjs';
 import {User} from '@shared/models/user';
 import {GROUP_PAGE_TABS} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
-import {ShowChatGroupMembersComponent} from '@core/components/modals/show-chat-group-members/show-chat-group-members.component';
 import {LowercaseRemoveSpacesPipe} from '@shared/pipes/lowercase-remove-spaces.pipe';
 import {GroupMembersInvitationDialogComponent} from '@core/components/modals/group-members-invitation-dialog/group-members-invitation-dialog.component';
+import {GroupsService} from '@core/services/groups.service';
 
 @Component({
     selector: 'app-single-group',
@@ -27,6 +27,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsService: GroupsService,
         private route: ActivatedRoute,
         private userStore: UserStoreService,
         private dialog: MatDialog,
@@ -48,16 +49,35 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getSelectedGroup() {
         this.route.params.subscribe((params: Params) => {
             this.passedGroupName = params.name;
-            this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => {
-                const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
-                return groupName === this.passedGroupName;
-            });
-            if (this.selectedGroup) {
-                this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
-                this.groupsMessagesStore.selectGroup(this.selectedGroup);
+
+            if (!this.getGroupFromStore()) {
+                this.getGroupFromServer();
             }
-            // console.log(this.groupsMessagesStore.selectedGroupMessages)
         });
+    }
+
+    getGroupFromStore() {
+        this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => {
+            const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
+            return groupName === this.passedGroupName;
+        });
+        if (this.selectedGroup) {
+            this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
+            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+        }
+        return !!this.selectedGroup;
+    }
+
+    getGroupFromServer() {
+        this.groupsService.getGroupByCustomName({custom_name: this.passedGroupName}).subscribe(dt => {
+            this.selectedGroup = dt;
+            this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
+            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+        });
+    }
+
+    getConfirmedMembersCount() {
+        return this.selectedGroup?.chat_group_members?.filter(m => !!m.chat_groups_members.confirmed).length;
     }
 
     isAuthUserMemberOfGroup() {

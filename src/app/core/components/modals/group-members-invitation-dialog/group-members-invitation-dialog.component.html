@@ -20,9 +20,12 @@
                     </label>
                 </div>
                 <div class="state">
-                    <input type="checkbox" *ngIf="contact.connectionWithGroup === 'not joined'"
-                           [id]="contact.id+'_'+i"
-                           (change)="selectContact($event,contact)">
+                    <label *ngIf="contact.connectionWithGroup === 'not joined'">
+                        <input type="checkbox"
+                               [id]="contact.id+'_'+i"
+                               (change)="selectContact($event,contact)">
+                        <span></span>
+                    </label>
                     <span *ngIf="contact.connectionWithGroup === 'invited'" class="invited-contact">
                         <i class="fas fa-paper-plane" [matTooltip]="'Invitation sent'"></i>
                     </span>

@@ -43,7 +43,10 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             this.admins = [];
             this.members = [];
             this.requestedMembers = [];
-            this.filterMembers();
+            console.log(this.selectedGroup)
+            if (this.selectedGroup) {
+                this.filterMembers();
+            }
         }));
     }
 
@@ -81,7 +84,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
                 group: selectedGroup,
                 user: this.authUser,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
-                has confirmed  <strong>${member.name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
+                has confirmed  <strong>${member.first_name + ' ' + member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
                 link: `/channels/show?username=${this.authUser.username}`,
             });
         }));

@@ -11,6 +11,7 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import {group} from '@angular/animations';
 
 @Component({
     selector: 'app-notifications-list',
@@ -276,12 +277,21 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getRemovedFromGroup() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {currentUserNotifications, member, leftGroups} = data;
-            // console.log(currentUserNotifications)
+            console.log(data)
             this.notificationsStore.setAllNotifications(currentUserNotifications);
 
             if (member.id === this.authUser.id) {
+                console.log('here')
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
-                this.groupsMessagesStore.selectGroup({});
+                if (this.router.url.includes('chat/messages')) {
+                    this.groupsMessagesStore.selectGroup({});
+                } else {
+                    console.log('OK')
+                    this.groupsMessagesStore.changeGroup(data.group);
+                }
+            } else if (!this.router.url.includes('chat/messages')) {
+                this.groupsMessagesStore.changeGroup(data.group);
+                console.log(this.groupsMessagesStore.selectedGroupMessages)
             }
 
             // console.log(this.notificationsStore.allNotifications)

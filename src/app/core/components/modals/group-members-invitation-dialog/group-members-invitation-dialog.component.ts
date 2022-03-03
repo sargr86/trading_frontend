@@ -35,23 +35,26 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages;
-        console.log(this.usersMessagesStore.usersMessages)
-        console.log(this.selectedGroup)
-        this.getUserContacts();
+
+        this.getUserContactsFiltered();
     }
 
-    getUserContacts() {
-        this.subscriptions.push(this.usersService.getUserContacts({
-            user_id: this.authUser.id,
-            blocked: 0
-        }).subscribe((allContacts: User[]) => {
-            const groupMembers = this.filterOutAuthUser();
-            console.log(groupMembers)
-            this.filterUnconfirmedMembers(allContacts, groupMembers);
-            // this.userContacts = this.getArraysDifference.transform(allContacts, groupMembers);
-            console.log(this.userContacts)
-        }));
+    getUserContactsFiltered() {
+        this.usersMessagesStore.usersMessages.map(contact => {
+            let connectionWithGroup = '';
+            const foundInGroup = this.selectedGroup.chat_group_members.find(m => m.id === contact.id);
+            if (foundInGroup) {
+                const confirmationStatus = !!foundInGroup.chat_groups_members.confirmed;
+                connectionWithGroup = confirmationStatus ? 'joined' : 'invited';
+            } else {
+                connectionWithGroup = 'not joined';
+            }
+            this.userContacts.push({...contact, connectionWithGroup});
+        });
+
+        console.log(this.userContacts)
     }
+
 
     filterOutAuthUser() {
         return this.selectedGroup.chat_group_members.filter(m => m.id !== this.authUser.id);

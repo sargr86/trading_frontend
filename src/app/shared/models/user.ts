@@ -15,5 +15,6 @@ export class User {
     token?: string;
     roles?: string[];
     videos?: any[];
+    connectionWithGroup?: string;
 }
 

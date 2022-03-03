@@ -1,6 +1,6 @@
-<div [routerLink]="getUrl()">
+<div appNavigateToFixedGroupUrl [name]="group.name">
     <div class="img-wrap">
-        <img [src]="group.avatar|getImgPath:'group_avatars'">
+        <img  [src]="group.avatar|getImgPath:'group_avatars'">
     </div>
     <div class="group-name-wrap">
         <strong>{{group.name}}</strong>

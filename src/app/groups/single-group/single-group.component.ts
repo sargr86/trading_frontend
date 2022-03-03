@@ -55,6 +55,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getAuthUser() {
         this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
+            console.log(this.authUser)
         }));
     }
 
@@ -62,7 +63,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe(dt => {
             console.log('SELECTED GROUP: ', dt)
             this.selectedGroup = dt;
-            if (!this.isEmptyObj.transform(dt)) {
+            if (!this.isEmptyObj.transform(dt) && this.authUser) {
                 this.getUserGroupConnStatus();
             }
         }));
@@ -134,7 +135,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     getRemovedSavedMember() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
-            const {group, member, leftGroups} = data;
+            const {member, leftGroups} = data;
             console.log('removed from group in group page', data)
             // this.notificationsStore.updateNotifications(data);
             // if (member.id === this.authUser.id) {
@@ -142,7 +143,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             //     this.groupsMessagesStore.selectGroup({});
             // } else {
             // console.log(group)
-            this.groupsMessagesStore.changeGroup(group);
+            this.groupsMessagesStore.changeGroup(data.group);
             if (member.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';
             }
@@ -153,6 +154,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getUserGroupConnStatus() {
+        console.log(this.authUser)
         this.selectedGroup.chat_group_members.map(m => {
             if (m.id === this.authUser.id) {
                 if (m.chat_groups_members.confirmed === 1) {

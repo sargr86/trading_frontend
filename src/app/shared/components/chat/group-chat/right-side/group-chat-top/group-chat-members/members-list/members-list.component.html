@@ -22,7 +22,7 @@
             </ng-container>
         </li>
     </ul>
-    <button id="show-more-members" [routerLink]="'/groups/'+selectedGroup.id+'/people'" *ngIf="!modalMode">
+    <button id="show-more-members" [routerLink]="'/groups/'+selectedGroup.name+'/people'" *ngIf="!modalMode">
         <i class="fas fa-ellipsis-h"></i>
     </button>
 </div>

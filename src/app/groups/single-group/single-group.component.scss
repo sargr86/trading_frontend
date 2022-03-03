@@ -69,7 +69,7 @@
         @include regularButton;
     }
 
-    #joined-group-btn{
+    #joined-group-btn {
         background-color: $light-gray;
         justify-content: space-between;
     }
@@ -87,4 +87,10 @@
     }
 
 
+}
+
+#unfollow-group, #leave-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }

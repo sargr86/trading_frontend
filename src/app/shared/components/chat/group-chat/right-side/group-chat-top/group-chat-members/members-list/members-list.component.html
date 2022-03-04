@@ -23,7 +23,7 @@
             </ng-container>
         </li>
     </ul>
-    <button id="show-more-members" appNavigateToFixedGroupUrl [name]="selectedGroup.name" *ngIf="!modalMode">
+    <button id="show-more-members" (click)="openAllMembersModal()" [name]="selectedGroup.name" *ngIf="!modalMode">
         <i class="fas fa-ellipsis-h"></i>
     </button>
 </div>

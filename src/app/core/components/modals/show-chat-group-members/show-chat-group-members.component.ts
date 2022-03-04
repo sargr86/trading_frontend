@@ -11,6 +11,8 @@ export class ShowChatGroupMembersComponent implements OnInit {
     selectedGroup;
     authUser;
 
+    activeTab = 'All members';
+
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private getAuthUser: GetAuthUserPipe
@@ -24,6 +26,10 @@ export class ShowChatGroupMembersComponent implements OnInit {
 
     getGroupMembers() {
         this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages;
+    }
+
+    changeActiveTab(tab) {
+
     }
 
 }

@@ -18,7 +18,7 @@ export class FixGroupPageUrlDirective {
     @HostListener('click', ['$event'])
     async onClick() {
         console.log('OK');
-        const url = '/groups/' + this.name.replace(' /g', '_') + '/about';
+        const url = '/groups/' + this.name.replace(' /g', '_') + '/people';
         await this.router.navigate([this.lowerCaseRemoveSpaces.transform(url)]);
     }
 

@@ -201,8 +201,8 @@ export class MembersListComponent implements OnInit, OnDestroy {
 
     openAllMembersModal() {
         this.subscriptions.push(this.dialog.open(ShowChatGroupMembersComponent, {
-            width: '700px',
-            height: '500px',
+            width: '500px',
+            height: '600px',
         }).afterClosed().subscribe(dt => {
 
         }));

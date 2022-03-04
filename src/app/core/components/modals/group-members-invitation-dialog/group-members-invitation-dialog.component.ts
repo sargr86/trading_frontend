@@ -8,6 +8,7 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GetTwoArrayOfObjectsDifferencePipe} from '@shared/pipes/get-two-array-of-objects-difference.pipe';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
+import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-group-members-invitation-dialog',
@@ -21,6 +22,8 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     subscriptions: Subscription[] = [];
 
+    contactsInviteForm: FormGroup;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public authUser: User,
         private groupsMessagesStore: GroupsMessagesSubjectService,
@@ -29,14 +32,51 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         private chatService: ChatService,
         private socketService: SocketIoService,
         private dialog: MatDialogRef<GroupMembersInvitationDialogComponent>,
-        private getArraysDifference: GetTwoArrayOfObjectsDifferencePipe
+        private getArraysDifference: GetTwoArrayOfObjectsDifferencePipe,
+        private fb: FormBuilder
     ) {
     }
 
     ngOnInit(): void {
         this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages;
-
         this.getUserContactsFiltered();
+        this.initForm();
+    }
+
+    initForm() {
+        this.contactsInviteForm = this.fb.group({
+            suggested_contacts: this.fb.array(this.getContactsFormGroup()),
+            // selected_contacts: this.fb.array([])
+        });
+
+        this.contactsInviteForm.patchValue({
+            suggested_contacts: this.selectedGroup.chat_group_members
+        });
+
+        // console.log(this.contactsInviteForm.value)
+    }
+
+    getContactsFormGroup() {
+        const ret = [];
+        this.usersMessagesStore.usersMessages.map((c, index) => {
+            const found = this.selectedContacts.find(sc => sc.id === c.id);
+            const foundInGroup = this.selectedGroup.chat_group_members.find(m => m.id === c.id);
+            let connectionWithGroup = 'not joined';
+
+            if (foundInGroup) {
+                connectionWithGroup = !!foundInGroup.chat_groups_members.confirmed ? 'joined' : 'invited';
+            }
+
+            console.log('FOUND', found)
+            ret.push(this.fb.group({
+                name: 'contact_' + c.id,
+                checked: !!found,
+                status: connectionWithGroup,
+                ...c
+            }));
+        });
+        // console.log(ret)
+        return ret;
     }
 
     getUserContactsFiltered() {
@@ -67,13 +107,19 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         console.log(this.userContacts)
     }
 
-    selectContact(event: Event, contact: User) {
+    selectContact(event: Event, control: AbstractControl) {
         const isChecked = (event.target as HTMLInputElement).checked;
         if (isChecked) {
-            this.selectedContacts.push(contact);
+            this.selectedContacts.push(control.value);
         } else {
-            this.selectedContacts = this.selectedContacts.filter(c => c.id !== contact.id);
+            this.selectedContacts = this.selectedContacts.filter(c => c.id !== control.value.id);
         }
+        console.log(this.contactCtrls.value)
+    }
+
+    removeContactFromSelected(control: AbstractControl) {
+        const foundControl = this.contactCtrls.controls.find(c => c.value.id === control.value.id);
+        foundControl.patchValue({checked: false});
     }
 
     sendInvitationsToContacts() {
@@ -102,6 +148,18 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     closeDialog() {
         this.dialog.close();
+    }
+
+    filteredControls() {
+        return this.contactCtrls.controls.filter(c => c.value.checked);
+    }
+
+    get contactCtrls() {
+        return this.contactsInviteForm.controls.suggested_contacts as FormArray;
+    }
+
+    get checkedContactCtrls() {
+        return this.contactCtrls.controls.filter(c => c.value.checked);
     }
 
 }

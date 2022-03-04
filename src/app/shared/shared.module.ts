@@ -231,7 +231,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         GroupChatLeftSideHolderComponent,
         MembersListComponent,
         MembersAddFormComponent,
-        FixGroupPageUrlDirective
+        FixGroupPageUrlDirective,
     ],
 })
 export class SharedModule {

@@ -27,7 +27,7 @@
 
             <div id="group-actions">
                 <ng-container *ngIf="showJoinBtn()">
-                    <button id="join-group-btn" *ngIf="userGroupConnStatus === 'not connected'">
+                    <button id="join-group-btn" (click)="joinGroup()" *ngIf="userGroupConnStatus === 'not connected'">
                         Join
                     </button>
                     <button id="joined-group-btn" [matMenuTriggerFor]="menu"

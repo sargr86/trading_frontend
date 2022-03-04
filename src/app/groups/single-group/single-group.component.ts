@@ -12,6 +12,7 @@ import {GroupsService} from '@core/services/groups.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {group} from '@angular/animations';
+import {ChatService} from '@core/services/chat.service';
 
 @Component({
     selector: 'app-single-group',
@@ -39,7 +40,8 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private lowerCaseRemoveSpaces: LowercaseRemoveSpacesPipe,
         private isEmptyObj: CheckForEmptyObjectPipe,
-        private socketService: SocketIoService
+        private socketService: SocketIoService,
+        private chatService: ChatService
     ) {
     }
 
@@ -96,6 +98,25 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             this.selectedGroup = dt;
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
+        });
+    }
+
+    joinGroup() {
+        this.groupsService.joinGroup({
+            member_ids: [this.authUser.id],
+            group_id: this.selectedGroup.id,
+            accepted: 1
+        }).subscribe(dt => {
+            this.userGroupConnStatus = 'unconfirmed';
+// @todo here needs to be a separate joinGroup socket event implemented on Monday
+            this.socketService.acceptJoinToGroup({
+                group: this.selectedGroup,
+                user: this.authUser,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> wants to to join the <strong>${this.selectedGroup.name}</strong> group`,
+                link: `/channels/show?username=${this.authUser.username}`,
+            });
+            console.log(dt)
+            this.groupsMessagesStore.changeGroup(dt);
         });
     }
 

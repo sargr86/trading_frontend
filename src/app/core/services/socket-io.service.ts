@@ -158,6 +158,11 @@ export class SocketIoService {
         });
     }
 
+    joinGroup(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('joinGroup', data);
+    }
+
     acceptJoinToGroup(data) {
         // this.setupSocketConnection();
         this.socket.emit('acceptJoinGroup', data);

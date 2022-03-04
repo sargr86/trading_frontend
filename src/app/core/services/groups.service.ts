@@ -12,6 +12,10 @@ export class GroupsService {
     ) {
     }
 
+    joinGroup(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/group/join-group`, params);
+    }
+
     confirmGroupJoin(params) {
         return this.httpClient.put<any>(`${API_URL}chat/group/confirm-join-group`, params);
     }

@@ -56,7 +56,8 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     initForm() {
         this.groupChatDetailsForm = this.fb.group({
             group_id: [this.selectedGroup.id],
-            member_ids: ['', Validators.required]
+            member_ids: ['', Validators.required],
+            accepted: [0]
         });
     }
 

@@ -85,6 +85,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             this.socketService.confirmJoinGroup({
                 group: selectedGroup,
                 user: this.authUser,
+                member,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
                 has confirmed  <strong>${member.first_name + ' ' + member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
                 link: `/channels/show?username=${this.authUser.username}`,

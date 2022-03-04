@@ -70,6 +70,7 @@ import {RouterModule} from '@angular/router';
 import {LowercaseRemoveSpacesPipe} from './pipes/lowercase-remove-spaces.pipe';
 import {GetTwoArrayOfObjectsDifferencePipe} from './pipes/get-two-array-of-objects-difference.pipe';
 import {FixGroupPageUrlDirective} from './directives/fix-group-page-url.directive';
+import { DisableControlProperlyDirective } from './directives/disable-control-properly.directive';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -141,6 +142,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         LowercaseRemoveSpacesPipe,
         GetTwoArrayOfObjectsDifferencePipe,
         FixGroupPageUrlDirective,
+        DisableControlProperlyDirective,
     ],
     imports: [
         CommonModule,
@@ -232,6 +234,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         MembersListComponent,
         MembersAddFormComponent,
         FixGroupPageUrlDirective,
+        DisableControlProperlyDirective
     ],
 })
 export class SharedModule {

@@ -8,7 +8,7 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GetTwoArrayOfObjectsDifferencePipe} from '@shared/pipes/get-two-array-of-objects-difference.pipe';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
-import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-group-members-invitation-dialog',
@@ -114,7 +114,6 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         } else {
             this.selectedContacts = this.selectedContacts.filter(c => c.id !== control.value.id);
         }
-        console.log(this.contactCtrls.value)
     }
 
     removeContactFromSelected(control: AbstractControl) {
@@ -128,7 +127,7 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
             group_id: this.selectedGroup.id,
             member_ids: this.selectedContacts.map(c => c.id)
         }).subscribe(dt => {
-            console.log(dt)
+            // console.log(dt)
             this.socketService.inviteToNewGroup({
                 invited_members: this.selectedContacts,
                 from_user: this.authUser,
@@ -154,12 +153,20 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         return this.contactCtrls.controls.filter(c => c.value.checked);
     }
 
+    checkJoinedMember(status) {
+        return status === 'invited' || status === 'joined';
+    }
+
     get contactCtrls() {
         return this.contactsInviteForm.controls.suggested_contacts as FormArray;
     }
 
     get checkedContactCtrls() {
         return this.contactCtrls.controls.filter(c => c.value.checked);
+    }
+
+    getCheckBoxControl(control) {
+        return control.controls.checked;
     }
 
 }

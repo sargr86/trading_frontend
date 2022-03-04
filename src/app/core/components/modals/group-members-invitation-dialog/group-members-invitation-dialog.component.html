@@ -36,6 +36,7 @@
                             <input type="checkbox" formControlName="checked"
                                    [id]="'contact_'+control.value.id"
                                    (change)="selectContact($event,control)"
+                                [disableControl]="{condition:checkJoinedMember(control.value.status ),control: getCheckBoxControl(control)}"
                             >
                             <span></span>
                         </label>

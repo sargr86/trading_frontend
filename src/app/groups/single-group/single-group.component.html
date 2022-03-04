@@ -12,9 +12,9 @@
                 </div>
 
                 <div class="details-row">
-                    <div id="group-type">
-                        <mat-icon>public</mat-icon>
-                        <span>Public</span>
+                    <div id="privacy-type">
+                        <mat-icon>{{groupPrivacy === 'public' ? groupPrivacy : 'lock' }}</mat-icon>
+                        <span>{{groupPrivacy}}</span>
                     </div>
                     <div id="members-count">
                         <strong>

@@ -27,6 +27,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     isOwnGroup = false;
     passedGroupName: string;
     groupTabs = GROUP_PAGE_TABS;
+    groupPrivacy = 'public';
 
     userGroupConnStatus = 'not connected';
 
@@ -60,9 +61,9 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     trackSelectedGroup() {
-        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe(dt => {
-            console.log('SELECTED GROUP: ', dt)
+        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
+            this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
             if (!this.isEmptyObj.transform(dt) && this.authUser) {
                 this.getUserGroupConnStatus();
             }
@@ -84,6 +85,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
             return groupName === this.passedGroupName;
         });
+        console.log(this.groupsMessagesStore.groupsMessages)
         if (this.selectedGroup) {
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
@@ -154,7 +156,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getUserGroupConnStatus() {
-        console.log(this.authUser)
         this.selectedGroup.chat_group_members.map(m => {
             if (m.id === this.authUser.id) {
                 if (m.chat_groups_members.confirmed === 1) {

@@ -1,3 +1,6 @@
+<div class="row">
+    <button id="create-group-btn" (click)="openModal()">Create new group</button>
+</div>
 <h3 class="groups-type-title">Groups you manage</h3>
 <ul>
     <li class="group-item-wrap" *ngFor="let group of filterGroups('managed')">

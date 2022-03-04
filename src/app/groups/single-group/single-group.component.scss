@@ -37,7 +37,7 @@
     &:last-of-type {
         margin-top: 2px;
 
-        #group-type {
+        #privacy-type {
             display: flex;
             align-items: center;
             color: #545454;
@@ -46,6 +46,7 @@
 
             span {
                 margin-left: 10px;
+                text-transform: capitalize;
             }
         }
 

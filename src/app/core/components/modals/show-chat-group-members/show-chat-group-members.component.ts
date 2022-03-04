@@ -28,6 +28,10 @@ export class ShowChatGroupMembersComponent implements OnInit {
         this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages;
     }
 
+    getOnlyJoinedMembers() {
+        return this.selectedGroup.chat_group_members.filter(m => m.chat_groups_members.confirmed);
+    }
+
     changeActiveTab(tab) {
 
     }

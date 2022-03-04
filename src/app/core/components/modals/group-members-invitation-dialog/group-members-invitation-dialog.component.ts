@@ -8,7 +8,7 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GetTwoArrayOfObjectsDifferencePipe} from '@shared/pipes/get-two-array-of-objects-difference.pipe';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-group-members-invitation-dialog',
@@ -39,27 +39,19 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages;
-        this.getUserContactsFiltered();
         this.initForm();
     }
 
     initForm() {
         this.contactsInviteForm = this.fb.group({
-            suggested_contacts: this.fb.array(this.getContactsFormGroup()),
-            // selected_contacts: this.fb.array([])
+            contacts: this.fb.array(this.getContactsFormGroup()),
         });
-
-        this.contactsInviteForm.patchValue({
-            suggested_contacts: this.selectedGroup.chat_group_members
-        });
-
-        // console.log(this.contactsInviteForm.value)
     }
 
     getContactsFormGroup() {
-        const ret = [];
+        const formArray = [];
         this.usersMessagesStore.usersMessages.map((c, index) => {
-            const found = this.selectedContacts.find(sc => sc.id === c.id);
+            const foundInSelected = this.selectedContacts.find(sc => sc.id === c.id);
             const foundInGroup = this.selectedGroup.chat_group_members.find(m => m.id === c.id);
             let connectionWithGroup = 'not joined';
 
@@ -67,44 +59,14 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
                 connectionWithGroup = !!foundInGroup.chat_groups_members.confirmed ? 'joined' : 'invited';
             }
 
-            console.log('FOUND', found)
-            ret.push(this.fb.group({
-                name: 'contact_' + c.id,
-                checked: !!found,
+            formArray.push(this.fb.group({
+                name: 'contact_' + index,
+                checked: !!foundInSelected,
                 status: connectionWithGroup,
                 ...c
             }));
         });
-        // console.log(ret)
-        return ret;
-    }
-
-    getUserContactsFiltered() {
-        this.usersMessagesStore.usersMessages.map(contact => {
-            let connectionWithGroup = '';
-            const foundInGroup = this.selectedGroup.chat_group_members.find(m => m.id === contact.id);
-            if (foundInGroup) {
-                const confirmationStatus = !!foundInGroup.chat_groups_members.confirmed;
-                connectionWithGroup = confirmationStatus ? 'joined' : 'invited';
-            } else {
-                connectionWithGroup = 'not joined';
-            }
-            this.userContacts.push({...contact, connectionWithGroup});
-        });
-
-        console.log(this.userContacts)
-    }
-
-
-    filterOutAuthUser() {
-        return this.selectedGroup.chat_group_members.filter(m => m.id !== this.authUser.id);
-    }
-
-    filterUnconfirmedMembers(allContacts, groupMembers) {
-        const unconfirmedMembers = groupMembers.filter(m => m.chat_groups_members.confirmed === 0);
-        console.log(unconfirmedMembers)
-        this.userContacts = [...this.getArraysDifference.transform(allContacts, groupMembers), ...unconfirmedMembers];
-        console.log(this.userContacts)
+        return formArray;
     }
 
     selectContact(event: Event, control: AbstractControl) {
@@ -122,12 +84,10 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
     }
 
     sendInvitationsToContacts() {
-
         this.subscriptions.push(this.chatService.addGroupMembers({
             group_id: this.selectedGroup.id,
             member_ids: this.selectedContacts.map(c => c.id)
         }).subscribe(dt => {
-            // console.log(dt)
             this.socketService.inviteToNewGroup({
                 invited_members: this.selectedContacts,
                 from_user: this.authUser,
@@ -139,26 +99,12 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         }));
     }
 
-    ifUnconfirmedMember(contact) {
-        // const memberDetails = contact.users_connections[0];
-        // return memberDetails.confirmed === 0 && this.selectedGroup.id === memberDetails.group_id;
-        return false;
-    }
-
-    closeDialog() {
-        this.dialog.close();
-    }
-
-    filteredControls() {
-        return this.contactCtrls.controls.filter(c => c.value.checked);
-    }
-
     checkJoinedMember(status) {
         return status === 'invited' || status === 'joined';
     }
 
     get contactCtrls() {
-        return this.contactsInviteForm.controls.suggested_contacts as FormArray;
+        return this.contactsInviteForm.controls.contacts as FormArray;
     }
 
     get checkedContactCtrls() {
@@ -167,6 +113,10 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     getCheckBoxControl(control) {
         return control.controls.checked;
+    }
+
+    closeDialog() {
+        this.dialog.close();
     }
 
 }

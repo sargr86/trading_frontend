@@ -4,7 +4,7 @@
         <img src="assets/img/x.svg" alt="close-dialog" class="close-box" (click)="closeDialog()">
     </div>
 </div>
-<form [formGroup]="contactsInviteForm" *ngIf="userContacts.length > 0">
+<form [formGroup]="contactsInviteForm">
     <div id="group-members-wrap">
         <div id="suggested-contacts">
             <div id="contact-search-wrap">
@@ -12,11 +12,11 @@
                 <i class="fas fa-search"></i>
             </div>
 
-            <ul formArrayName="suggested_contacts">
+            <ul formArrayName="contacts">
                 <li *ngFor="let control of contactCtrls.controls;let i = index" [formGroupName]="i"
                     [class.used-contact]="control.value.status === 'invited' || control.value.status === 'joined'">
                     <div class="details">
-                        <label [for]="'contact_'+control.value.id">
+                        <label [for]="'contact_'+control.value.i">
                             <div class="avatar-wrap">
                                 <img class="avatar"
 
@@ -46,7 +46,7 @@
         </div>
 
         <div id="selected-contacts">
-            <ul formArrayName="suggested_contacts">
+            <ul formArrayName="contacts">
                 <li *ngFor="let control of checkedContactCtrls;let i = index" [formGroupName]="i">
                     <div class="details">
                         <label [for]="control.value.id+'_'+i">

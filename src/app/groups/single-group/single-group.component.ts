@@ -56,7 +56,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getAuthUser() {
         this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
-            console.log(this.authUser)
         }));
     }
 
@@ -85,7 +84,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
             return groupName === this.passedGroupName;
         });
-        console.log(this.groupsMessagesStore.groupsMessages)
         if (this.selectedGroup) {
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
             this.groupsMessagesStore.selectGroup(this.selectedGroup);

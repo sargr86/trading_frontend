@@ -107,7 +107,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
                 user: this.authUser,
                 member,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
-                has declined  <strong>${member.first_name}</strong> <strong>${member.last_name}</strong>to join the <strong>${selectedGroup.name}</strong> group`,
+                has declined  <strong>${member.first_name}</strong> <strong>${member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
                 link: `/channels/show?username=${this.authUser.username}`,
             });
         }));

@@ -45,7 +45,6 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             this.admins = [];
             this.members = [];
             this.requestedMembers = [];
-            console.log(this.selectedGroup)
             if (!this.isEmptyObj.transform(this.selectedGroup)) {
                 this.filterMembers();
             }
@@ -61,7 +60,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     filterMembers() {
-        this.selectedGroup.chat_group_members.map(m => {
+        this.selectedGroup?.chat_group_members?.map(m => {
             if (this.selectedGroup.creator_id === m.id) {
                 this.admins.push(m);
             } else {

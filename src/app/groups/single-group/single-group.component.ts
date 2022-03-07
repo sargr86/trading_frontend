@@ -130,7 +130,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getConfirmedMembersCount() {
-        return this.selectedGroup?.chat_group_members?.filter(m => !!m.chat_groups_members.confirmed).length;
+        return this.selectedGroup?.group_members?.filter(m => !!m.groups_members.confirmed).length || 0;
     }
 
     getAcceptedJoinGroup() {
@@ -178,7 +178,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getUserGroupConnStatus() {
-        this.selectedGroup.chat_group_members.map(m => {
+        this.selectedGroup.chat_group_members?.map(m => {
             if (m.id === this.authUser.id) {
                 if (m.chat_groups_members.confirmed === 1) {
                     this.userGroupConnStatus = 'confirmed';

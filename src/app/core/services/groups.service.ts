@@ -12,6 +12,14 @@ export class GroupsService {
     ) {
     }
 
+    getGroupByCustomName(params) {
+        return this.httpClient.get<any>(`${API_URL}groups/get-group-by-name`, {params});
+    }
+
+    get(params) {
+        return this.httpClient.get<any>(`${API_URL}groups/get-regular-groups`, {params});
+    }
+
     addGroup(params) {
         return this.httpClient.post<any>(`${API_URL}groups/create-group`, params);
     }
@@ -56,7 +64,5 @@ export class GroupsService {
         return this.httpClient.put<any>(`${API_URL}groups/ignore-join-group`, params);
     }
 
-    getGroupByCustomName(params) {
-        return this.httpClient.get<any>(`${API_URL}groups/get-group-by-name`, {params});
-    }
+
 }

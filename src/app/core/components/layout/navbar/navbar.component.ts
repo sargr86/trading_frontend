@@ -25,6 +25,8 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {GroupsService} from '@core/services/groups.service';
 
 @Component({
     selector: 'app-navbar',
@@ -75,6 +77,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private notificationsService: NotificationsService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsStore: GroupsStoreService,
+        private groupsService: GroupsService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService,
         private unreadMessagesHelper: UnreadMessagesCounter
@@ -93,6 +97,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getBlockUnblockUser();
             this.getUsersMessages();
             this.getGroupsMessages();
+            this.getRegularGroups();
         }
     }
 
@@ -118,6 +123,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
             this.groupsMessagesStore.setGroupsMessages(dt);
             this.addUserToSocket(userGroups);
+        }));
+    }
+
+    getRegularGroups() {
+        this.subscriptions.push(this.groupsService.get({
+            user_id: this.authUser.id,
+            blocked: 0
+        }).subscribe(dt => {
+            this.groupsStore.setGroups(dt);
         }));
     }
 

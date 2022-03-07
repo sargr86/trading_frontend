@@ -22,8 +22,10 @@
                         <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
                         <strong>{{member.first_name + ' ' + member.last_name}}</strong>
                     </div>
-                    <div *ngIf="isOwnGroup" class="remove-member-btn">
-                        <i class="fas fa-times" (click)="removeMember(member)"></i>
+                    <div>
+                        <button class="remove-member-btn" *ngIf="isOwnGroup">
+                            <i class="fas fa-times" (click)="removeMember(member)"></i>
+                        </button>
                     </div>
                 </li>
             </ul>

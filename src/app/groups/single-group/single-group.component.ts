@@ -52,6 +52,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.getAcceptedJoinGroup();
         this.getConfirmedJoinGroup();
         this.getIgnoredJoinGroup();
+        this.getJoinGroup();
         this.getRemovedSavedMember();
     }
 
@@ -108,16 +109,24 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             accepted: 1
         }).subscribe(dt => {
             this.userGroupConnStatus = 'unconfirmed';
-// @todo here needs to be a separate joinGroup socket event implemented on Monday
-            this.socketService.acceptJoinToGroup({
+
+            this.socketService.joinGroup({
                 group: this.selectedGroup,
                 user: this.authUser,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> wants to to join the <strong>${this.selectedGroup.name}</strong> group`,
                 link: `/channels/show?username=${this.authUser.username}`,
             });
-            console.log(dt)
+
             this.groupsMessagesStore.changeGroup(dt);
         });
+    }
+
+    getJoinGroup() {
+        this.subscriptions.push(this.socketService.getJoinGroup().subscribe((data: any) => {
+            const {rest} = data;
+            console.log('get joined', rest.group)
+            this.groupsMessagesStore.changeGroup(rest.group);
+        }));
     }
 
     getConfirmedMembersCount() {

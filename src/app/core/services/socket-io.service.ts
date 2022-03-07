@@ -163,6 +163,14 @@ export class SocketIoService {
         this.socket.emit('joinGroup', data);
     }
 
+    getJoinGroup() {
+        return new Observable(observer => {
+            this.socket.on('getJoinGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     acceptJoinToGroup(data) {
         // this.setupSocketConnection();
         this.socket.emit('acceptJoinGroup', data);

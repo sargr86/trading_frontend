@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Router} from '@angular/router';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Component({
     selector: 'app-show-groups',
@@ -20,7 +21,7 @@ export class ShowGroupsComponent implements OnInit {
     subscriptions: Subscription[] = [];
 
     constructor(
-        public groupsMessagesStore: GroupsMessagesSubjectService,
+        public groupsStore: GroupsStoreService,
         private chatService: ChatService,
         private userStore: UserStoreService,
         private socketService: SocketIoService,
@@ -35,7 +36,7 @@ export class ShowGroupsComponent implements OnInit {
     }
 
     trackGroups() {
-        this.subscriptions.push(this.groupsMessagesStore.groupsMessages$.subscribe(dt => {
+        this.subscriptions.push(this.groupsStore.groups$.subscribe(dt => {
             this.groups = dt;
         }));
     }

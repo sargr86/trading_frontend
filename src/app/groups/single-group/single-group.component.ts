@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
@@ -11,8 +10,8 @@ import {GroupMembersInvitationDialogComponent} from '@core/components/modals/gro
 import {GroupsService} from '@core/services/groups.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {group} from '@angular/animations';
 import {ChatService} from '@core/services/chat.service';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Component({
     selector: 'app-single-group',
@@ -33,7 +32,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     userGroupConnStatus = 'not connected';
 
     constructor(
-        private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsStore: GroupsStoreService,
         private groupsService: GroupsService,
         private route: ActivatedRoute,
         private userStore: UserStoreService,
@@ -63,7 +62,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     trackSelectedGroup() {
-        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
+        this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe((dt: any) => {
             this.selectedGroup = dt;
             this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
             console.log(this.selectedGroup, this.groupPrivacy)
@@ -84,13 +83,13 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getGroupFromStore() {
-        this.selectedGroup = this.groupsMessagesStore.groupsMessages.find(g => {
+        this.selectedGroup = this.groupsStore.groups.find(g => {
             const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
             return groupName === this.passedGroupName;
         });
         if (this.selectedGroup) {
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
-            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            this.groupsStore.selectGroup(this.selectedGroup);
         }
         return !!this.selectedGroup;
     }
@@ -99,7 +98,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.groupsService.getGroupByCustomName({custom_name: this.passedGroupName}).subscribe(dt => {
             this.selectedGroup = dt;
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
-            this.groupsMessagesStore.selectGroup(this.selectedGroup);
+            this.groupsStore.selectGroup(this.selectedGroup);
         });
     }
 
@@ -118,7 +117,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
                 link: `/channels/show?username=${this.authUser.username}`,
             });
 
-            this.groupsMessagesStore.changeGroup(dt);
+            this.groupsStore.changeGroup(dt);
         });
     }
 
@@ -126,7 +125,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getJoinGroup().subscribe((data: any) => {
             const {rest} = data;
             console.log('get joined', rest.group)
-            this.groupsMessagesStore.changeGroup(rest.group);
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 
@@ -138,7 +137,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {rest} = data;
             console.log('accepted', rest.group)
-            this.groupsMessagesStore.changeGroup(rest.group);
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 
@@ -146,8 +145,8 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
             console.log('confirmed in group page', data)
-            this.groupsMessagesStore.changeGroup(rest.group);
-            console.log(this.groupsMessagesStore.groupsMessages)
+            this.groupsStore.changeGroup(rest.group);
+            console.log(this.groupsStore.groups)
         }));
     }
 
@@ -156,11 +155,11 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             const {rest} = data;
             console.log('ignored in group page', rest)
             if (rest.member.id === this.authUser.id) {
-                this.groupsMessagesStore.setGroupsMessages(rest.leftGroups);
-                this.groupsMessagesStore.selectGroup(rest.group);
+                this.groupsStore.setGroupsMessages(rest.leftGroups);
+                this.groupsStore.selectGroup(rest.group);
                 this.userGroupConnStatus = 'not connected';
             }
-            console.log(this.groupsMessagesStore.groupsMessages)
+            console.log(this.groupsStore.groups)
         }));
     }
 
@@ -174,7 +173,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             //     this.groupsMessagesStore.selectGroup({});
             // } else {
             // console.log(group)
-            this.groupsMessagesStore.changeGroup(data.group);
+            this.groupsStore.changeGroup(data.group);
             if (member.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';
             }

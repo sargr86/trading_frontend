@@ -6,10 +6,10 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class GroupsStoreService {
     protected groupsSource = new BehaviorSubject([]);
-    protected selectedGroupsSource = new BehaviorSubject({});
+    protected selectedGroupSource = new BehaviorSubject({});
 
     groups$ = this.groupsSource.asObservable();
-    selectedGroups$ = this.selectedGroupsSource.asObservable();
+    selectedGroup$ = this.selectedGroupSource.asObservable();
 
     constructor() {
     }
@@ -23,11 +23,11 @@ export class GroupsStoreService {
     }
 
     get selectedGroup() {
-        return this.selectedGroupsSource.getValue() as any;
+        return this.selectedGroupSource.getValue() as any;
     }
 
     selectGroup(group: any) {
-        this.selectedGroupsSource.next(group);
+        this.selectedGroupSource.next(group);
     }
 
     changeGroup(group: any) {

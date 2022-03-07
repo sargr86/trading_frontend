@@ -7,6 +7,7 @@ import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Component({
     selector: 'app-people-tab',
@@ -26,7 +27,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     constructor(
         private groupsService: GroupsService,
-        private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsStore: GroupsStoreService,
         private socketService: SocketIoService,
         private chatService: ChatService,
         private dialog: MatDialog,
@@ -40,7 +41,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     trackGroupsMessages() {
-        this.subscriptions.push(this.groupsMessagesStore.selectedGroupsMessages$.subscribe(dt => {
+        this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe(dt => {
             this.selectedGroup = dt;
             this.admins = [];
             this.members = [];
@@ -56,7 +57,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
             const {rest} = data;
             console.log('accepted', rest.group)
-            this.groupsMessagesStore.changeGroup(rest.group);
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 
@@ -80,7 +81,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             group_id: this.selectedGroup.id
         }).subscribe(dt => {
             const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
-            this.groupsMessagesStore.changeGroup(selectedGroup);
+            this.groupsStore.changeGroup(selectedGroup);
 
             this.socketService.confirmJoinGroup({
                 group: selectedGroup,
@@ -100,7 +101,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             group_id: this.selectedGroup.id
         }).subscribe(dt => {
             const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
-            this.groupsMessagesStore.changeGroup(selectedGroup);
+            this.groupsStore.changeGroup(selectedGroup);
 
             this.socketService.ignoreJoinGroup({
                 group: selectedGroup,
@@ -121,7 +122,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
                     member_id: member.id
                 }).subscribe(dt => {
                     this.selectedGroup = dt;
-                    this.groupsMessagesStore.changeGroup(this.selectedGroup);
+                    this.groupsStore.changeGroup(this.selectedGroup);
                     this.socketService.removeFromGroup({
                         member,
                         initiator: this.authUser,

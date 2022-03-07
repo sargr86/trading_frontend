@@ -2,11 +2,11 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '@shared/models/user';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Subscription} from 'rxjs';
 import {LowercaseRemoveSpacesPipe} from '@shared/pipes/lowercase-remove-spaces.pipe';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {GroupsService} from '@core/services/groups.service';
 
 @Component({
     selector: 'app-create-new-group-dialog',
@@ -21,7 +21,7 @@ export class CreateNewGroupDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public authUser: User,
         private fb: FormBuilder,
         private dialog: MatDialogRef<CreateNewGroupDialogComponent>,
-        private chatService: ChatService,
+        private groupsService: GroupsService,
         private socketService: SocketIoService,
         private groupsStore: GroupsStoreService,
         private lowerCaseRemoveSpaces: LowercaseRemoveSpacesPipe
@@ -46,7 +46,7 @@ export class CreateNewGroupDialogComponent implements OnInit {
         this.groupForm.patchValue({custom_name: this.lowerCaseRemoveSpaces.transform(this.groupForm.value.name)});
         const formValue = this.groupForm.value;
         if (this.groupForm.valid) {
-            this.subscriptions.push(this.chatService.addGroup(formValue).subscribe(async (dt) => {
+            this.subscriptions.push(this.groupsService.addGroup(formValue).subscribe(async (dt) => {
                 const selectedGroup = dt.find(d => formValue.name === d.name);
                 this.groupsStore.setGroups(dt);
                 this.groupsStore.selectGroup(selectedGroup);

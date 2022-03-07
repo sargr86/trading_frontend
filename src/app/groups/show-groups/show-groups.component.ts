@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
 import {CreateNewGroupDialogComponent} from '@core/components/modals/create-new-group-dialog/create-new-group-dialog.component';

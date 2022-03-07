@@ -155,7 +155,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             const {rest} = data;
             console.log('ignored in group page', rest)
             if (rest.member.id === this.authUser.id) {
-                this.groupsStore.setGroupsMessages(rest.leftGroups);
+                this.groupsStore.setGroups(rest.leftGroups);
                 this.groupsStore.selectGroup(rest.group);
                 this.userGroupConnStatus = 'not connected';
             }
@@ -167,12 +167,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {member, leftGroups} = data;
             console.log('removed from group in group page', data)
-            // this.notificationsStore.updateNotifications(data);
-            // if (member.id === this.authUser.id) {
-            //     this.groupsMessagesStore.setGroupsMessages(leftGroups);
-            //     this.groupsMessagesStore.selectGroup({});
-            // } else {
-            // console.log(group)
             this.groupsStore.changeGroup(data.group);
             if (member.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';

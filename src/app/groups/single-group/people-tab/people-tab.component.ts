@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {GroupsService} from '@core/services/groups.service';
 import {Subscription} from 'rxjs';
-import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -36,11 +35,11 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.trackGroupsMessages();
+        this.trackGroups();
         this.getAcceptedJoinGroup();
     }
 
-    trackGroupsMessages() {
+    trackGroups() {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe(dt => {
             this.selectedGroup = dt;
             this.admins = [];

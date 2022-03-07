@@ -61,7 +61,7 @@ export class ShowGroupsComponent implements OnInit {
             data: this.authUser
         }).afterClosed().subscribe(async (selectedGroup) => {
             if (selectedGroup) {
-                await this.router.navigateByUrl('/groups/' + selectedGroup.name + '/people');
+                await this.router.navigateByUrl('/groups/' + selectedGroup.custom_name + '/people');
             }
         });
     }

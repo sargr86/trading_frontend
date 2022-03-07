@@ -50,7 +50,7 @@ export class CreateNewGroupDialogComponent implements OnInit {
                 const selectedGroup = dt.find(d => formValue.name === d.name);
                 this.groupsStore.setGroups(dt);
                 this.groupsStore.selectGroup(selectedGroup);
-                this.socketService.setNewGroup(formValue);
+                // this.socketService.setNewGroup(formValue);
                 this.dialog.close(this.groupForm.value);
             }));
         }

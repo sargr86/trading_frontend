@@ -136,7 +136,12 @@ export class GroupsListComponent implements OnInit, OnDestroy {
                     group_id: this.selectedGroup.id,
                 }).subscribe(dt => {
                     this.groupsMessagesStore.setGroupsMessages(dt);
-                    this.socketService.leaveGroup({group: this.selectedGroup, user: this.authUser});
+                    this.socketService.leaveGroup({
+                        group: this.selectedGroup,
+                        from_user: this.authUser,
+                        group_type: 'chat',
+                        msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has left the <strong>${this.selectedGroup.name}</strong> group`
+                    });
                     this.selectedGroup = null;
                 });
             }

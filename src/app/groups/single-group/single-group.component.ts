@@ -11,6 +11,7 @@ import {GroupsService} from '@core/services/groups.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'app-single-group',
@@ -51,6 +52,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.getIgnoredJoinGroup();
         this.getJoinGroup();
         this.getRemovedSavedMember();
+        this.getLeftGroup();
     }
 
     getAuthUser() {
@@ -101,6 +103,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     joinGroup() {
+        console.log(this.selectedGroup)
         this.groupsService.joinGroup({
             member_ids: [this.authUser.id],
             group_id: this.selectedGroup.id,
@@ -124,6 +127,39 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             const {rest} = data;
             console.log('get joined', rest.group)
             this.groupsStore.changeGroup(rest.group);
+        }));
+    }
+
+    leaveGroup() {
+        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.groupsService.leaveGroup({
+                    member_id: this.authUser.id,
+                    group_id: this.selectedGroup.id,
+                }).subscribe(dt => {
+                    this.groupsStore.setGroups(dt);
+                    this.socketService.leaveGroup({
+                        group: this.selectedGroup,
+                        from_user: this.authUser,
+                        group_type: 'page',
+                        msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has left the <strong>${this.selectedGroup.name}</strong> group`
+                    });
+                });
+            }
+        }));
+    }
+
+    getLeftGroup() {
+        this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
+            const {group} = data;
+
+            if (data.from_user.id === this.authUser.id) {
+                this.userGroupConnStatus = 'not connected';
+                console.log(this.selectedGroup)
+                // this.groupsStore.selectGroup({});
+            } else {
+                this.groupsStore.changeGroup(group);
+            }
         }));
     }
 

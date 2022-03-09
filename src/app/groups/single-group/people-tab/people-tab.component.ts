@@ -104,7 +104,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
             this.socketService.ignoreJoinGroup({
                 group: selectedGroup,
-                user: this.authUser,
+                from_user: this.authUser,
                 member,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
                 has declined  <strong>${member.first_name}</strong> <strong>${member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,

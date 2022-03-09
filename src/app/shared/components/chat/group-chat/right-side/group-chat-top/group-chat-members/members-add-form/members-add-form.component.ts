@@ -62,6 +62,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     }
 
     getGroupMembers() {
+        console.log(this.selectedGroup)
         this.groupMembers = this.selectedGroup.chat_group_members;
         this.groupsMessagesStore.selectedGroupsMessages$.subscribe((dt: any) => {
             this.selectedGroup = dt;
@@ -84,11 +85,11 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
     getContactsFilteredBySearch() {
         this.subscriptions.push(this.memberCtrl.valueChanges.subscribe(search => {
             if (search) {
-                // console.log(this.userContacts, this.groupMembers)
+                console.log(this.userContacts, this.groupMembers)
                 this.filteredContacts = this.userContacts.filter(fc => {
                     const fullNameLowerCased = (fc.first_name + ' ' + fc.last_name).toLowerCase();
                     if (fullNameLowerCased.includes(search)) {
-                        return !this.groupMembers.find(gm => gm.name.toLowerCase() === fullNameLowerCased);
+                        return !this.groupMembers.find(gm => (gm.first_name + ' ' + gm.last_name).toLowerCase() === fullNameLowerCased);
                     }
                     return false;
                 });
@@ -101,7 +102,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
 
         if (!this.inputGroupMembers.find(gm => gm.id === value)) {
             this.inputGroupMembers.push(e.option.value);
-            this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers});
+            this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers.map(gm => gm.id)});
         }
 
         // console.log(this.)
@@ -136,7 +137,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
 
         if (index >= 0) {
             this.inputGroupMembers.splice(index, 1);
-            this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers});
+            this.groupChatDetailsForm.patchValue({member_ids: this.inputGroupMembers.map(gm => gm.id)});
         }
     }
 

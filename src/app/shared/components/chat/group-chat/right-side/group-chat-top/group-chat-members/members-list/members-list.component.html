@@ -3,7 +3,7 @@
         <li class="group-member"
             *ngFor="let m of selectedGroup.chat_group_members| slice:0: getMembersCountDelimiter(); let i=index"
             [class.modal-mode]="modalMode"
-            [class.pending]="!m.chat_groups_members.confirmed">
+            [class.pending]="!m.chat_groups_members.accepted">
 
             <div class="avatar-status-wrap">
                 <img class="avatar" [matTooltip]="m.first_name+ ' '+m.last_name"

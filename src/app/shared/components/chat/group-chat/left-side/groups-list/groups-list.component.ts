@@ -115,7 +115,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     }
 
     ifConfirmedToJoinTheGroup(group) {
-        return group?.chat_group_members.find(member => member.id === this.authUser.id && member.chat_groups_members.confirmed);
+        return group?.chat_group_members.find(member => member.id === this.authUser.id && member.chat_groups_members.accepted);
     }
 
     isSeenByAuthUser(messages) {

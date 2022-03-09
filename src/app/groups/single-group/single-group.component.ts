@@ -112,7 +112,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
             this.socketService.joinGroup({
                 group: this.selectedGroup,
-                user: this.authUser,
+                from_user: this.authUser,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> wants to to join the <strong>${this.selectedGroup.name}</strong> group`,
                 link: `/channels/show?username=${this.authUser.username}`,
             });

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -9,7 +9,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
 import IsResponsive from '@core/helpers/is-responsive';
 import trackByElement from '@core/helpers/track-by-element';
-import {Subscription} from 'rxjs';
+import {from, Subscription, zip} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
@@ -28,12 +28,15 @@ import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 import {GroupsService} from '@core/services/groups.service';
 
+import {Observable, forkJoin} from 'rxjs';
+import {combineLatest} from 'rxjs/operators';
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     authUser;
     routerUrl;
     isSmallScreen = IsResponsive.isSmallScreen();
@@ -57,6 +60,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     userCards = [];
     totals;
+
+    chatGroups = [];
+    pageGroups = [];
+
+    chatGroupsLoaded = false;
+    pageGroupsLoaded = false;
 
 
     constructor(
@@ -96,8 +105,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();
             this.getUsersMessages();
-            this.getGroupsMessages();
-            this.getRegularGroups();
+
+            this.getAllGroupsLoaded();
         }
     }
 
@@ -112,33 +121,67 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     getGroupsMessages() {
-        this.subscriptions.push(this.chatService.getGroupsMessages({
+        return this.chatService.getGroupsMessages({
             user_id: this.authUser.id,
             blocked: 0
-        }).subscribe(dt => {
-            // console.log('groups', dt)
-            const userGroups = dt.map(d => {
-                const confirmed = !!d.chat_group_members.find(m => m.chat_groups_members.confirmed);
-                return d.name;
+        });
+        //     .subscribe(dt => {
+        //     // console.log('groups', dt)
+        //     this.chatGroups = dt;
+        //     this.chatGroupsLoaded = true;
+        //     const userGroups = dt.map(d => {
+        //         const confirmed = !!d.chat_group_members.find(m => m.chat_groups_members.confirmed);
+        //         return d.name;
+        //     });
+        //     this.groupsMessagesStore.setGroupsMessages(dt);
+        //
+        // }));
+    }
+
+    getAllGroupsLoaded() {
+        const tasks$ = [];
+        const chatGroups$ = this.getGroupsMessages();
+        const pageGroups$ = this.getPageGroups();
+        console.log('OK!!!', tasks$)
+        forkJoin(tasks$).subscribe(results => {
+            console.log(results);
+        });
+
+
+        zip(chatGroups$, pageGroups$, (chatGroups: any, pageGroups: any) => ({chatGroups, pageGroups}))
+            .subscribe(pair => {
+                this.addUserToSocket(pair);
+                this.groupsStore.setGroups(pair.pageGroups);
+                this.groupsMessagesStore.setGroupsMessages(pair.chatGroups);
             });
-            this.groupsMessagesStore.setGroupsMessages(dt);
-            this.addUserToSocket(userGroups);
-        }));
+
     }
 
-    getRegularGroups() {
-        this.subscriptions.push(this.groupsService.get({
+
+    getPageGroups() {
+        // this.subscriptions.push(this.groupsService.get({
+        //     user_id: this.authUser.id,
+        //     blocked: 0
+        // }).subscribe(dt => {
+        //     this.pageGroupsLoaded = true;
+        //     this.pageGroups = dt;
+        //     this.groupsStore.setGroups(dt);
+        // }));
+
+        return this.groupsService.get({
             user_id: this.authUser.id,
             blocked: 0
-        }).subscribe(dt => {
-            this.groupsStore.setGroups(dt);
-        }));
+        });
     }
 
 
-    addUserToSocket(userGroups) {
-        // console.log('add user to socket!!!!');
-        this.socketService.addNewUser({...this.authUser, chat_groups: userGroups});
+    addUserToSocket(pair) {
+        console.log('add user to socket!!!!');
+        this.socketService.addNewUser({
+            ...this.authUser,
+            chat_groups: pair.chatGroups.map(cg => cg.name),
+            page_groups: pair.pageGroups.map(pg => pg.name)
+        });
     }
 
     getBlockUnblockUser() {
@@ -302,6 +345,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     async openWalletPage() {
         await this.router.navigate(['wallet/show']);
+    }
+
+    ngAfterViewInit() {
+        // console.log('after view init', this.chatGroupsLoaded, this.pageGroupsLoaded)
+        // if (this.chatGroupsLoaded && this.pageGroupsLoaded) {
+        //     this.addUserToSocket();
+        // }
     }
 
     ngOnDestroy(): void {

@@ -73,8 +73,11 @@ export class MembersListComponent implements OnInit, OnDestroy {
                     this.groupsMessagesStore.changeGroup(this.selectedGroup);
                     this.socketService.removeFromGroup({
                         member,
-                        initiator: this.authUser,
-                        group: this.selectedGroup
+                        from_user: this.authUser,
+                        group: this.selectedGroup,
+                        group_type: 'page',
+                        msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> removed  <strong>${member.first_name + ' ' + member.last_name}</strong>
+                       from <strong>${this.selectedGroup.name}</strong> group`,
                     });
                 });
             }

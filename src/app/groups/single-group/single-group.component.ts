@@ -157,9 +157,8 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
                 this.userGroupConnStatus = 'not connected';
                 console.log(this.selectedGroup)
                 // this.groupsStore.selectGroup({});
-            } else {
-                this.groupsStore.changeGroup(group);
             }
+            this.groupsStore.changeGroup(group);
         }));
     }
 

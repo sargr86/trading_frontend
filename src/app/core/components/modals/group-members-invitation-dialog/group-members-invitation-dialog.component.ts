@@ -1,21 +1,22 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
 import {UsersService} from '@core/services/users.service';
-import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GetTwoArrayOfObjectsDifferencePipe} from '@shared/pipes/get-two-array-of-objects-difference.pipe';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {GroupsService} from '@core/services/groups.service';
 
 @Component({
     selector: 'app-group-members-invitation-dialog',
     templateUrl: './group-members-invitation-dialog.component.html',
     styleUrls: ['./group-members-invitation-dialog.component.scss']
 })
-export class GroupMembersInvitationDialogComponent implements OnInit {
+export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy {
     selectedGroup;
     userContacts: User[] = [];
     selectedContacts: User[] = [];
@@ -26,11 +27,11 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public authUser: User,
-        private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsStore: GroupsStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private usersService: UsersService,
-        private chatService: ChatService,
         private socketService: SocketIoService,
+        private groupsService: GroupsService,
         private dialog: MatDialogRef<GroupMembersInvitationDialogComponent>,
         private getArraysDifference: GetTwoArrayOfObjectsDifferencePipe,
         private fb: FormBuilder
@@ -38,7 +39,8 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.selectedGroup = this.groupsMessagesStore.selectedGroupMessages;
+        this.selectedGroup = this.groupsStore.selectedGroup;
+        console.log(this.selectedGroup)
         this.initForm();
     }
 
@@ -52,11 +54,11 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
         const formArray = [];
         this.usersMessagesStore.usersMessages.map((c, index) => {
             const foundInSelected = this.selectedContacts.find(sc => sc.id === c.id);
-            const foundInGroup = this.selectedGroup.chat_group_members.find(m => m.id === c.id);
+            const foundInGroup = this.selectedGroup.group_members.find(m => m.id === c.id);
             let connectionWithGroup = 'not joined';
 
             if (foundInGroup) {
-                connectionWithGroup = !!foundInGroup.chat_groups_members.confirmed ? 'joined' : 'invited';
+                connectionWithGroup = !!foundInGroup.groups_members.confirmed ? 'joined' : 'invited';
             }
 
             formArray.push(this.fb.group({
@@ -84,7 +86,7 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
     }
 
     sendInvitationsToContacts() {
-        this.subscriptions.push(this.chatService.addGroupMembers({
+        this.subscriptions.push(this.groupsService.addGroupMembers({
             group_id: this.selectedGroup.id,
             member_ids: this.selectedContacts.map(c => c.id)
         }).subscribe(dt => {
@@ -92,9 +94,11 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
                 invited_members: this.selectedContacts,
                 from_user: this.authUser,
                 group: this.selectedGroup,
-                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has sent an invitation to join the <strong>${this.selectedGroup.name}</strong> group`,
+                group_type: 'page',
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
+                    has sent an invitation to join the <strong>${this.selectedGroup.name}</strong> group`,
             });
-            this.groupsMessagesStore.changeGroup(dt);
+            this.groupsStore.changeGroup(dt);
             this.closeDialog();
         }));
     }
@@ -117,6 +121,10 @@ export class GroupMembersInvitationDialogComponent implements OnInit {
 
     closeDialog() {
         this.dialog.close();
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

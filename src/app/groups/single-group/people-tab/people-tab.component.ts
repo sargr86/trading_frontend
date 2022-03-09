@@ -45,6 +45,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             this.admins = [];
             this.members = [];
             this.requestedMembers = [];
+
             if (!this.isEmptyObj.transform(this.selectedGroup)) {
                 this.filterMembers();
             }
@@ -60,13 +61,13 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     filterMembers() {
-        this.selectedGroup?.chat_group_members?.map(m => {
+        this.selectedGroup?.group_members?.map(m => {
             if (this.selectedGroup.creator_id === m.id) {
                 this.admins.push(m);
             } else {
-                if (m.chat_groups_members.confirmed) {
+                if (m.groups_members.confirmed) {
                     this.members.push(m);
-                } else if (m.chat_groups_members.accepted) {
+                } else if (m.groups_members.accepted) {
                     this.requestedMembers.push(m);
                 }
             }
@@ -83,7 +84,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
             this.socketService.confirmJoinGroup({
                 group: selectedGroup,
-                user: this.authUser,
+                from_user: this.authUser,
                 member,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
                 has confirmed  <strong>${member.first_name + ' ' + member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,

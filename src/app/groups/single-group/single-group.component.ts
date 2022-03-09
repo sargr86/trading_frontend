@@ -10,7 +10,6 @@ import {GroupMembersInvitationDialogComponent} from '@core/components/modals/gro
 import {GroupsService} from '@core/services/groups.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {ChatService} from '@core/services/chat.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Component({
@@ -40,7 +39,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         private lowerCaseRemoveSpaces: LowercaseRemoveSpacesPipe,
         private isEmptyObj: CheckForEmptyObjectPipe,
         private socketService: SocketIoService,
-        private chatService: ChatService
     ) {
     }
 
@@ -145,6 +143,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
             console.log('confirmed in group page', data)
+            this.userGroupConnStatus = 'confirmed';
             this.groupsStore.changeGroup(rest.group);
             console.log(this.groupsStore.groups)
         }));
@@ -178,12 +177,12 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getUserGroupConnStatus() {
-        this.selectedGroup.chat_group_members?.map(m => {
+        this.selectedGroup.group_members?.map(m => {
             if (m.id === this.authUser.id) {
-                if (m.chat_groups_members.confirmed === 1) {
+                if (m.groups_members.confirmed === 1) {
                     this.userGroupConnStatus = 'confirmed';
                 } else {
-                    if (m.chat_groups_members.accepted === 1) {
+                    if (m.groups_members.accepted === 1) {
                         this.userGroupConnStatus = 'unconfirmed';
                     } else {
                         this.userGroupConnStatus = 'not connected';

@@ -134,7 +134,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         const chatGroups$ = this.getGroupsMessages();
         const pageGroups$ = this.getPageGroups();
 
-        zip(chatGroups$, pageGroups$, (chatGroups: any, pageGroups: any) => ({chatGroups, pageGroups}))
+        forkJoin(chatGroups$, pageGroups$, (chatGroups: any, pageGroups: any) => ({chatGroups, pageGroups}))
             .subscribe(pair => {
                 this.addUserToSocket(pair);
                 this.groupsStore.setGroups(pair.pageGroups);

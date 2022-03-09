@@ -64,10 +64,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     chatGroups = [];
     pageGroups = [];
 
-    chatGroupsLoaded = false;
-    pageGroupsLoaded = false;
-
-
     constructor(
         private userStore: UserStoreService,
         public router: Router,
@@ -125,28 +121,18 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
             user_id: this.authUser.id,
             blocked: 0
         });
-        //     .subscribe(dt => {
-        //     // console.log('groups', dt)
-        //     this.chatGroups = dt;
-        //     this.chatGroupsLoaded = true;
-        //     const userGroups = dt.map(d => {
-        //         const confirmed = !!d.chat_group_members.find(m => m.chat_groups_members.confirmed);
-        //         return d.name;
-        //     });
-        //     this.groupsMessagesStore.setGroupsMessages(dt);
-        //
-        // }));
+    }
+
+    getPageGroups() {
+        return this.groupsService.get({
+            user_id: this.authUser.id,
+            blocked: 0
+        });
     }
 
     getAllGroupsLoaded() {
-        const tasks$ = [];
         const chatGroups$ = this.getGroupsMessages();
         const pageGroups$ = this.getPageGroups();
-        console.log('OK!!!', tasks$)
-        forkJoin(tasks$).subscribe(results => {
-            console.log(results);
-        });
-
 
         zip(chatGroups$, pageGroups$, (chatGroups: any, pageGroups: any) => ({chatGroups, pageGroups}))
             .subscribe(pair => {
@@ -155,23 +141,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.groupsMessagesStore.setGroupsMessages(pair.chatGroups);
             });
 
-    }
-
-
-    getPageGroups() {
-        // this.subscriptions.push(this.groupsService.get({
-        //     user_id: this.authUser.id,
-        //     blocked: 0
-        // }).subscribe(dt => {
-        //     this.pageGroupsLoaded = true;
-        //     this.pageGroups = dt;
-        //     this.groupsStore.setGroups(dt);
-        // }));
-
-        return this.groupsService.get({
-            user_id: this.authUser.id,
-            blocked: 0
-        });
     }
 
 

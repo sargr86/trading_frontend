@@ -206,7 +206,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    acceptGroupJoin(notification) {
+    acceptChatGroupJoin(notification) {
         const selectedGroup = {id: notification.group_id, name: notification.group_name};
         this.subscriptions.push(
             this.chatService.acceptGroupJoin({
@@ -231,7 +231,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         );
     }
 
-    declineGroupJoin(notification) {
+    declineChatGroupJoin(notification) {
         const selectedGroup = {id: notification.group_id, name: notification.group_name};
         this.subscriptions.push(
             this.chatService.declineGroupJoin({

@@ -55,11 +55,11 @@
 
                  *ngIf="notification?.type === 'group_join_invitation'">
 
-                <button class="confirm-connection-btn" (click)="acceptGroupJoin(notification)">
+                <button class="confirm-connection-btn" (click)="acceptChatGroupJoin(notification)">
                     <mat-icon>check</mat-icon>
                     <span>Accept</span>
                 </button>
-                <button class="decline-connection-btn" (click)="declineGroupJoin(notification)">
+                <button class="decline-connection-btn" (click)="declineChatGroupJoin(notification)">
                     <mat-icon>close</mat-icon>
                     <span>Decline</span>
                 </button>

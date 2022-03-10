@@ -12,6 +12,7 @@ import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {group} from '@angular/animations';
+import {GroupsService} from '@core/services/groups.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -31,6 +32,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         public notificationsStore: NotificationsSubjectStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsService: GroupsService,
         private userStore: UserStoreService,
         private socketService: SocketIoService,
         private chatService: ChatService,
@@ -124,7 +126,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
             console.log('disconnected', dt);
-            console.log(this.usersMessagesStore.selectedUserMessages)
+            console.log(this.usersMessagesStore.selectedUserMessages);
             if (dt.to_user.id === this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
             }
@@ -186,7 +188,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
         this.readNotification(notification);
         if (type === 'accept_group_invitation') {
-            console.log(notification.link, decodeURI(notification.link))
+            console.log(notification.link, decodeURI(notification.link));
             await this.router.navigateByUrl(notification.link);
             // this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
             //     await this.router.navigate(['channels/show'], {queryParams: {username}})
@@ -195,8 +197,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     }
 
+    // ---------------- GROUPS STUFF-----------------------------------------------------------
     getGroupJoinInvitation() {
-        this.subscriptions.push(this.socketService.inviteToGroupSent().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.inviteToChatGroupSent().subscribe((data: any) => {
             console.log('aaa', this.authUser);
             if (this.authUser?.id === data.to_id) {
                 this.notificationsStore.updateNotifications(data);
@@ -216,10 +219,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             }).subscribe(dt => {
                 this.socketService.acceptJoinToGroup({
                     group: selectedGroup,
-                    user: this.authUser,
+                    from_user: this.authUser,
                     notification_id: notification._id,
                     msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
                     link: `/channels/show?username=${this.authUser.username}`,
+                    group_type: 'page'
                 });
                 console.log('ACCEPTED', dt)
                 this.groupsMessagesStore.setGroupsMessages(dt);
@@ -240,7 +244,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             }).subscribe(dt => {
                 this.socketService.declineJoinToGroup({
                     group: selectedGroup,
-                    user: this.authUser,
+                    from_user: this.authUser,
                     notification_id: notification._id
                 });
 
@@ -250,6 +254,37 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 this.groupsMessagesStore.setGroupsMessages(dt);
             })
         );
+    }
+
+    acceptPageGroupJoin(notification) {
+        console.log(notification)
+        const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        this.subscriptions.push(
+            this.groupsService.acceptGroupJoin({
+                group_id: selectedGroup.id,
+                member_id: this.authUser.id,
+                from_user: this.authUser
+            }).subscribe(dt => {
+                this.socketService.acceptJoinToGroup({
+                    group: selectedGroup,
+                    from_user: this.authUser,
+                    notification_id: notification._id,
+                    msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
+                    link: `/channels/show?username=${this.authUser.username}`,
+                    group_type: 'page'
+                });
+                console.log('ACCEPTED', dt)
+                this.groupsMessagesStore.setGroupsMessages(dt);
+
+                const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+                this.notificationsStore.setInitialNotifications(notifications);
+
+            })
+        );
+    }
+
+    declinePageGroupJoin(notification) {
+
     }
 
     getJoinGroup() {

@@ -146,13 +146,25 @@ export class SocketIoService {
         this.socket.emit('setNewGroup', data);
     }
 
-    inviteToNewGroup(data) {
-        this.socket.emit('inviteToNewGroup', data);
+    inviteToNewChatGroup(data) {
+        this.socket.emit('inviteToNewChatGroup', data);
     }
 
-    inviteToGroupSent() {
+    inviteToChatGroupSent() {
         return new Observable(observer => {
-            this.socket.on('inviteToGroupSent', msg => {
+            this.socket.on('inviteToChatGroupSent', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    inviteToNewPageGroup(data) {
+        this.socket.emit('inviteToNewPageGroup', data);
+    }
+
+    inviteToPageGroupSent() {
+        return new Observable(observer => {
+            this.socket.on('inviteToChatGroupSent', msg => {
                 observer.next(msg);
             });
         });

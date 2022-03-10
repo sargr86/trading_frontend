@@ -118,7 +118,7 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
             this.groupMembers = dt?.chat_group_members;
             this.selectedGroup = dt;
-            this.socketService.inviteToNewGroup({
+            this.socketService.inviteToNewChatGroup({
                 invited_members: this.inputGroupMembers,
                 from_user: this.authUser,
                 group: this.selectedGroup,

@@ -90,7 +90,7 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
             group_id: this.selectedGroup.id,
             member_ids: this.selectedContacts.map(c => c.id)
         }).subscribe(dt => {
-            this.socketService.inviteToNewGroup({
+            this.socketService.inviteToNewPageGroup({
                 invited_members: this.selectedContacts,
                 from_user: this.authUser,
                 group: this.selectedGroup,

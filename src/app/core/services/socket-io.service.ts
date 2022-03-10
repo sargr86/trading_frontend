@@ -269,13 +269,25 @@ export class SocketIoService {
         });
     }
 
-    leaveGroup(data) {
-        this.socket.emit('leaveGroup', data);
+    leaveChatGroup(data) {
+        this.socket.emit('leaveChatGroup', data);
     }
 
-    leaveGroupNotify() {
+    leaveChatGroupNotify() {
         return new Observable(observer => {
-            this.socket.on('leaveGroupNotify', msg => {
+            this.socket.on('leaveChatGroupNotify', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    leavePageGroup(data) {
+        this.socket.emit('leavePageGroup', data);
+    }
+
+    leavePageGroupNotify() {
+        return new Observable(observer => {
+            this.socket.on('leavePageGroupNotify', msg => {
                 observer.next(msg);
             });
         });

@@ -65,7 +65,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe((dt: any) => {
             this.selectedGroup = dt;
             this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
-            console.log(this.selectedGroup, this.groupPrivacy)
+            console.log(this.selectedGroup, this.groupPrivacy);
             if (!this.isEmptyObj.transform(dt) && this.authUser) {
                 this.getUserGroupConnStatus();
             }
@@ -103,7 +103,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     joinGroup() {
-        console.log(this.selectedGroup)
+        console.log(this.selectedGroup);
         this.groupsService.joinGroup({
             member_ids: [this.authUser.id],
             group_id: this.selectedGroup.id,
@@ -125,7 +125,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getJoinGroup() {
         this.subscriptions.push(this.socketService.getJoinGroup().subscribe((data: any) => {
             const {rest} = data;
-            console.log('get joined', rest.group)
+            console.log('get joined', rest.group);
             this.groupsStore.changeGroup(rest.group);
         }));
     }
@@ -138,7 +138,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
                     group_id: this.selectedGroup.id,
                 }).subscribe(dt => {
                     this.groupsStore.setGroups(dt);
-                    this.socketService.leaveGroup({
+                    this.socketService.leavePageGroup({
                         group: this.selectedGroup,
                         from_user: this.authUser,
                         group_type: 'page',
@@ -150,12 +150,12 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getLeftGroup() {
-        this.subscriptions.push(this.socketService.leaveGroupNotify().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.leavePageGroupNotify().subscribe((data: any) => {
             const {group} = data;
 
             if (data.from_user.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';
-                console.log(this.selectedGroup)
+                console.log(this.selectedGroup);
                 // this.groupsStore.selectGroup({});
             }
             this.groupsStore.changeGroup(group);
@@ -169,7 +169,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getAcceptedJoinGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
             const {rest} = data;
-            console.log('accepted', rest.group)
+            console.log('accepted', rest.group);
             this.groupsStore.changeGroup(rest.group);
         }));
     }
@@ -177,30 +177,30 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getConfirmedJoinGroup() {
         this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
-            console.log('confirmed in group page', data)
+            console.log('confirmed in group page', data);
             this.userGroupConnStatus = 'confirmed';
             this.groupsStore.changeGroup(rest.group);
-            console.log(this.groupsStore.groups)
+            console.log(this.groupsStore.groups);
         }));
     }
 
     getIgnoredJoinGroup() {
         this.subscriptions.push(this.socketService.getIgnoredJoinGroup().subscribe((data: any) => {
             const {rest} = data;
-            console.log('ignored in group page', rest)
+            console.log('ignored in group page', rest);
             if (rest.member.id === this.authUser.id) {
                 this.groupsStore.setGroups(rest.leftGroups);
                 this.groupsStore.selectGroup(rest.group);
                 this.userGroupConnStatus = 'not connected';
             }
-            console.log(this.groupsStore.groups)
+            console.log(this.groupsStore.groups);
         }));
     }
 
     getRemovedSavedMember() {
         this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
             const {member, leftGroups} = data;
-            console.log('removed from group in group page', data)
+            console.log('removed from group in group page', data);
             this.groupsStore.changeGroup(data.group);
             if (member.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';

@@ -55,7 +55,7 @@ export class GroupChatActionsComponent implements OnInit, OnDestroy {
                 }).subscribe(dt => {
                     console.log('leave group', dt, this.selectedGroup)
                     this.groupsMessagesStore.setGroupsMessages(dt);
-                    this.socketService.leaveGroup({
+                    this.socketService.leaveChatGroup({
                         group: this.selectedGroup,
                         from_user: this.authUser,
                         group_type: 'chat',

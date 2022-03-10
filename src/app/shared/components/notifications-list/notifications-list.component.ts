@@ -13,6 +13,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {group} from '@angular/animations';
 import {GroupsService} from '@core/services/groups.service';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Component({
     selector: 'app-notifications-list',
@@ -32,6 +33,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         public notificationsStore: NotificationsSubjectStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
+        private groupsStore: GroupsStoreService,
         private groupsService: GroupsService,
         private userStore: UserStoreService,
         private socketService: SocketIoService,
@@ -52,7 +54,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.getJoinGroup();
         this.getIgnoredJoinGroup();
         this.getDisconnectUsers();
-        this.getGroupJoinInvitation();
+        this.getChatGroupJoinInvitation();
+        this.getPageGroupJoinInvitation();
+        this.getAcceptedJoinPageGroup();
+        this.getDeclinedJoinPageGroup();
         this.getRemovedFromGroup();
         this.getLeftGroup();
     }
@@ -198,13 +203,18 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     // ---------------- GROUPS STUFF-----------------------------------------------------------
-    getGroupJoinInvitation() {
+    getChatGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToChatGroupSent().subscribe((data: any) => {
-            console.log('aaa', this.authUser);
             if (this.authUser?.id === data.to_id) {
                 this.notificationsStore.updateNotifications(data);
-                // console.log(this.notificationsStore.allNotifications)
-                // this.setNotifications.transform(data);
+            }
+        }));
+    }
+
+    getPageGroupJoinInvitation() {
+        this.subscriptions.push(this.socketService.inviteToPageGroupSent().subscribe((data: any) => {
+            if (this.authUser?.id === data.to_id) {
+                this.notificationsStore.updateNotifications(data);
             }
         }));
     }
@@ -266,7 +276,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 member_id: this.authUser.id,
                 from_user: this.authUser
             }).subscribe(dt => {
-                this.socketService.acceptJoinToPageGroup({
+                this.socketService.acceptJoinPageGroup({
                     group: selectedGroup,
                     from_user: this.authUser,
                     notification_id: notification._id,
@@ -275,7 +285,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     group_type: 'page'
                 });
                 console.log('ACCEPTED', dt)
-                this.groupsMessagesStore.setGroupsMessages(dt);
+                this.groupsStore.setGroups(dt);
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
                 this.notificationsStore.setInitialNotifications(notifications);
@@ -291,19 +301,35 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 group_id: notification.group_id,
                 member_id: this.authUser.id
             }).subscribe(dt => {
-                this.socketService.declineJoinToPageGroup({
+                this.socketService.declineJoinPageGroup({
                     group: selectedGroup,
                     from_user: this.authUser,
                     notification_id: notification._id,
-                    message: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined joining the <strong>${selectedGroup.name}</strong> group`,
+                    msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined joining the <strong>${selectedGroup.name}</strong> group`,
                 });
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
                 this.notificationsStore.setInitialNotifications(notifications);
 
-                this.groupsMessagesStore.setGroupsMessages(dt);
+                this.groupsStore.setGroups(dt);
             })
         );
+    }
+
+    getAcceptedJoinPageGroup() {
+        this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
+            const {notification} = data;
+            this.notificationsStore.updateNotifications(notification);
+            console.log('accepted', notification);
+        }));
+    }
+
+    getDeclinedJoinPageGroup() {
+        this.subscriptions.push(this.socketService.getDeclinedJoinPageGroup().subscribe((data: any) => {
+            const {notification} = data;
+            this.notificationsStore.updateNotifications(notification);
+            console.log('declined', notification);
+        }));
     }
 
     getJoinGroup() {

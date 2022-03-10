@@ -47,7 +47,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.trackSelectedGroup();
         this.getAuthUser();
         this.getSelectedGroup();
-        this.getAcceptedJoinGroup();
+        this.getAcceptedJoinPageGroup();
         this.getConfirmedJoinGroup();
         this.getIgnoredJoinGroup();
         this.getJoinGroup();
@@ -166,7 +166,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         return this.selectedGroup?.group_members?.filter(m => !!m.groups_members.confirmed).length || 0;
     }
 
-    getAcceptedJoinGroup() {
+    getAcceptedJoinPageGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
             const {rest} = data;
             console.log('accepted', rest.group);

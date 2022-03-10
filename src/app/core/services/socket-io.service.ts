@@ -164,7 +164,7 @@ export class SocketIoService {
 
     inviteToPageGroupSent() {
         return new Observable(observer => {
-            this.socket.on('inviteToChatGroupSent', msg => {
+            this.socket.on('inviteToPageGroupSent', msg => {
                 observer.next(msg);
             });
         });
@@ -183,9 +183,9 @@ export class SocketIoService {
         });
     }
 
-    acceptJoinToPageGroup(data) {
+    acceptJoinPageGroup(data) {
         // this.setupSocketConnection();
-        this.socket.emit('acceptJoinToPageGroup', data);
+        this.socket.emit('acceptJoinPageGroup', data);
     }
 
     getAcceptedJoinPageGroup() {
@@ -209,7 +209,7 @@ export class SocketIoService {
         });
     }
 
-    declineJoinToPageGroup(data) {
+    declineJoinPageGroup(data) {
         // this.setupSocketConnection();
         this.socket.emit('declineJoinPageGroup', data);
     }

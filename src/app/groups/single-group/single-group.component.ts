@@ -176,11 +176,10 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     getConfirmedJoinGroup() {
         this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
-            const {notification, rest} = data;
+            const {rest} = data;
             console.log('confirmed in group page', data);
             this.userGroupConnStatus = 'confirmed';
             this.groupsStore.changeGroup(rest.group);
-            console.log(this.groupsStore.groups);
         }));
     }
 

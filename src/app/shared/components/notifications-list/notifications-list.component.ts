@@ -140,6 +140,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     readNotification(n) {
+        console.log(n)
         this.subscriptions.push(this.notificationsService.readNotification({
             id: n._id,
             type: n.type,

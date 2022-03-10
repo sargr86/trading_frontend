@@ -31,15 +31,17 @@ export class GroupsStoreService {
     }
 
     changeGroup(group: any) {
-        const allGroupMessages = [...this.groups];
-        let selectedGroupIndex = allGroupMessages.findIndex(gm => gm.id === group.id);
+        const allGroups = [...this.groups];
+        let selectedGroupIndex = allGroups.findIndex(gm => {
+            return gm.id === group?.id;
+        });
 
         if (selectedGroupIndex === -1) {
             selectedGroupIndex = 0;
         }
 
-        allGroupMessages[selectedGroupIndex] = group;
-        this.setGroups(allGroupMessages);
+        allGroups[selectedGroupIndex] = group;
+        this.setGroups(allGroups);
         if (group.id === this.selectedGroup.id) {
             this.selectGroup(group);
         }

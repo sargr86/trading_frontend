@@ -42,8 +42,6 @@ export class MembersListComponent implements OnInit, OnDestroy {
         this.getOnlineMembers();
         this.getAcceptedJoinGroup();
         this.getDeclinedJoinChatGroup();
-        this.getConfirmedJoinGroup();
-        this.getIgnoredJoinGroup();
         this.getRemovedSavedMember();
         this.getLeftGroup();
         this.getMembersCountDelimiter();
@@ -129,35 +127,6 @@ export class MembersListComponent implements OnInit, OnDestroy {
             }
             // console.log(this.notificationsStore.allNotifications)
             this.groupsMessagesStore.changeGroup(rest.group);
-        }));
-    }
-
-    getConfirmedJoinGroup() {
-        this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
-            const {notification, rest} = data;
-            console.log('confirmed in members list', data)
-            // console.log(this.notificationsStore.allNotifications)
-            // if (notification.from_user.id !== this.authUser.id) {
-            //     this.notificationsStore.updateNotifications(notification);
-            // }
-            // console.log(this.notificationsStore.allNotifications)
-            this.groupsMessagesStore.changeGroup(rest.group);
-            console.log(this.groupsMessagesStore.groupsMessages)
-        }));
-    }
-
-    getIgnoredJoinGroup() {
-        this.subscriptions.push(this.socketService.getIgnoredJoinGroup().subscribe((data: any) => {
-            const {rest} = data;
-            console.log('ignored in members list', rest)
-            // console.log(this.notificationsStore.allNotifications)
-            // console.log(this.notificationsStore.allNotifications)
-            // this.groupsMessagesStore.changeGroup(rest.group);
-            if (rest.member.id === this.authUser.id) {
-                this.groupsMessagesStore.setGroupsMessages(rest.leftGroups);
-                this.groupsMessagesStore.selectGroup({});
-            }
-            console.log(this.groupsMessagesStore.groupsMessages)
         }));
     }
 

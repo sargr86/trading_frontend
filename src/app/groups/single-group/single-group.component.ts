@@ -65,7 +65,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe((dt: any) => {
             this.selectedGroup = dt;
             this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
-            console.log(this.selectedGroup, this.groupPrivacy);
+            // console.log(this.selectedGroup, this.groupPrivacy);
             if (!this.isEmptyObj.transform(dt) && this.authUser) {
                 this.getUserGroupConnStatus();
             }
@@ -155,7 +155,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
             if (data.from_user.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';
-                console.log(this.selectedGroup);
+                // console.log(this.selectedGroup);
                 // this.groupsStore.selectGroup({});
             }
             this.groupsStore.changeGroup(group);
@@ -170,7 +170,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
             const {rest} = data;
             console.log('accepted', rest.group);
-            this.groupsStore.changeGroup(rest.group);
+            // this.groupsStore.changeGroup(rest.group);
         }));
     }
 
@@ -243,7 +243,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.dialog.open(GroupMembersInvitationDialogComponent, {
             height: '690px',
             width: '950px',
-            data: this.authUser
+            data: {user: this.authUser, group: this.selectedGroup},
         }).afterClosed().subscribe(dt => {
 
         }));

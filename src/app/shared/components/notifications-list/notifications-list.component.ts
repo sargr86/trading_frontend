@@ -318,9 +318,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getAcceptedJoinPageGroup() {
         this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
-            const {notification} = data;
+            const {notification, rest} = data;
+            console.log('accepted', rest.group);
             this.notificationsStore.updateNotifications(notification);
-            console.log('accepted', notification);
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 
@@ -328,7 +329,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getDeclinedJoinPageGroup().subscribe((data: any) => {
             const {notification} = data;
             this.notificationsStore.updateNotifications(notification);
-            console.log('declined', notification);
+            this.groupsStore.changeGroup(data.group);
+            console.log('declined', data.group);
         }));
     }
 
@@ -338,7 +340,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
-            this.groupsMessagesStore.changeGroup(rest.group);
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 
@@ -350,7 +352,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
-            this.groupsMessagesStore.changeGroup(rest.group);
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 

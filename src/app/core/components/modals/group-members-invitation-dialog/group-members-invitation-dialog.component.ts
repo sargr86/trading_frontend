@@ -24,9 +24,10 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
     subscriptions: Subscription[] = [];
 
     contactsInviteForm: FormGroup;
+    authUser;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public authUser: User,
+        @Inject(MAT_DIALOG_DATA) public userGroup,
         private groupsStore: GroupsStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private usersService: UsersService,
@@ -36,13 +37,17 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
         private getArraysDifference: GetTwoArrayOfObjectsDifferencePipe,
         private fb: FormBuilder
     ) {
+
     }
 
     ngOnInit(): void {
-        this.selectedGroup = this.groupsStore.selectedGroup;
+        this.authUser = this.userGroup.user;
+        this.selectedGroup = this.userGroup.group;
         console.log(this.selectedGroup)
+        // this.selectedGroup = this.groupsStore.selectedGroup;
         this.initForm();
     }
+
 
     initForm() {
         this.contactsInviteForm = this.fb.group({

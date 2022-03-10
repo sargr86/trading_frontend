@@ -14,12 +14,11 @@
 
             <ul formArrayName="contacts">
                 <li *ngFor="let control of contactCtrls.controls;let i = index" [formGroupName]="i"
-                    [class.used-contact]="control.value.status === 'invited' || control.value.status === 'joined'">
+                    [class.processed-contact]="isProcessedContact(control.value.status)">
                     <div class="details">
                         <label [for]="'contact_'+control.value.i">
                             <div class="avatar-wrap">
                                 <img class="avatar"
-
                                      [src]="control.value.avatar|getImgPath: 'user_avatars'">
                             </div>
                             <div>
@@ -36,7 +35,7 @@
                             <input type="checkbox" formControlName="checked"
                                    [id]="'contact_'+control.value.id"
                                    (change)="selectContact($event,control)"
-                                [disableControl]="{condition:checkJoinedMember(control.value.status ),control: getCheckBoxControl(control)}"
+                                   [disableControl]="{condition:isProcessedContact(control.value.status ),control: getCheckBoxControl(control)}"
                             >
                             <span></span>
                         </label>

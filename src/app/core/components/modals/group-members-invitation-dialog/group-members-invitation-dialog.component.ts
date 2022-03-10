@@ -63,7 +63,11 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
             let connectionWithGroup = 'not joined';
 
             if (foundInGroup) {
+                console.log(foundInGroup.groups_members)
                 connectionWithGroup = !!foundInGroup.groups_members.confirmed ? 'joined' : 'invited';
+                if (foundInGroup.groups_members.accepted && !foundInGroup.groups_members.confirmed) {
+                    connectionWithGroup = 'accepted';
+                }
             }
 
             formArray.push(this.fb.group({
@@ -108,8 +112,8 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
         }));
     }
 
-    checkJoinedMember(status) {
-        return status === 'invited' || status === 'joined';
+    isProcessedContact(status) {
+        return ['invited', 'joined', 'accepted'].indexOf(status) !== -1;
     }
 
     get contactCtrls() {

@@ -11,7 +11,6 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
-import {group} from '@angular/animations';
 import {GroupsService} from '@core/services/groups.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
@@ -140,7 +139,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     readNotification(n) {
-        console.log(n)
         this.subscriptions.push(this.notificationsService.readNotification({
             id: n._id,
             type: n.type,

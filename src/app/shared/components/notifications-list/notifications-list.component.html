@@ -63,7 +63,7 @@
                 </button>
             </div>
             <div class="connection-actions"
-                 *ngIf="notification?.type === 'page_group_join_request'">
+                 *ngIf="notification?.type === 'page_group_join_invitation'">
                 <button class="confirm-connection-btn" (click)="acceptPageGroupJoin(notification)">
                     <mat-icon>check</mat-icon>
                     <span>Accept</span>

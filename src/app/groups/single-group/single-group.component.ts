@@ -167,7 +167,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getAcceptedJoinGroup() {
-        this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
             const {rest} = data;
             console.log('accepted', rest.group)
             this.groupsStore.changeGroup(rest.group);

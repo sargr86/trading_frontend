@@ -170,6 +170,58 @@ export class SocketIoService {
         });
     }
 
+    acceptJoinToChatGroup(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('acceptJoinToChatGroup', data);
+    }
+
+    getAcceptedJoinChatGroup() {
+        return new Observable(observer => {
+            this.socket.on('acceptedJoinChatGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    acceptJoinToPageGroup(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('acceptJoinToPageGroup', data);
+    }
+
+    getAcceptedJoinPageGroup() {
+        return new Observable(observer => {
+            this.socket.on('acceptedJoinPageGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    declineJoinToChatGroup(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('declineJoinChatGroup', data);
+    }
+
+    getDeclinedJoinChatGroup() {
+        return new Observable(observer => {
+            this.socket.on('getDeclinedJoinChatGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    declineJoinToPageGroup(data) {
+        // this.setupSocketConnection();
+        this.socket.emit('declineJoinPageGroup', data);
+    }
+
+    getDeclinedJoinPageGroup() {
+        return new Observable(observer => {
+            this.socket.on('getDeclinedJoinPageGroup', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     joinGroup(data) {
         // this.setupSocketConnection();
         this.socket.emit('joinGroup', data);
@@ -183,31 +235,6 @@ export class SocketIoService {
         });
     }
 
-    acceptJoinToGroup(data) {
-        // this.setupSocketConnection();
-        this.socket.emit('acceptJoinGroup', data);
-    }
-
-    getAcceptedJoinGroup() {
-        return new Observable(observer => {
-            this.socket.on('acceptedJoinGroup', msg => {
-                observer.next(msg);
-            });
-        });
-    }
-
-    declineJoinToGroup(data) {
-        // this.setupSocketConnection();
-        this.socket.emit('declineJoinGroup', data);
-    }
-
-    getDeclinedJoinGroup() {
-        return new Observable(observer => {
-            this.socket.on('getDeclinedJoinGroup', msg => {
-                observer.next(msg);
-            });
-        });
-    }
 
     confirmJoinGroup(data) {
         this.socket.emit('confirmJoinGroup', data);

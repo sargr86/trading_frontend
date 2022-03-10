@@ -36,7 +36,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.trackGroups();
-        this.getAcceptedJoinGroup();
+        this.getAcceptedJoinPageGroup();
     }
 
     trackGroups() {
@@ -53,10 +53,10 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getAcceptedJoinGroup() {
-        this.subscriptions.push(this.socketService.getAcceptedJoinGroup().subscribe((data: any) => {
+    getAcceptedJoinPageGroup() {
+        this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
             const {rest} = data;
-            console.log('accepted', rest.group)
+            console.log('accepted', rest.group);
             this.groupsStore.changeGroup(rest.group);
         }));
     }

@@ -217,7 +217,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 member_id: this.authUser.id,
                 from_user: this.authUser,
             }).subscribe(dt => {
-                this.socketService.acceptJoinToGroup({
+                this.socketService.acceptJoinToChatGroup({
                     group: selectedGroup,
                     from_user: this.authUser,
                     notification_id: notification._id,
@@ -242,10 +242,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 group_id: notification.group_id,
                 member_id: this.authUser.id
             }).subscribe(dt => {
-                this.socketService.declineJoinToGroup({
+                this.socketService.declineJoinToChatGroup({
                     group: selectedGroup,
                     from_user: this.authUser,
-                    notification_id: notification._id
+                    notification_id: notification._id,
+                    message: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined joining the <strong>${selectedGroup.name}</strong> group`,
                 });
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
@@ -265,7 +266,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 member_id: this.authUser.id,
                 from_user: this.authUser
             }).subscribe(dt => {
-                this.socketService.acceptJoinToGroup({
+                this.socketService.acceptJoinToPageGroup({
                     group: selectedGroup,
                     from_user: this.authUser,
                     notification_id: notification._id,
@@ -284,7 +285,25 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     declinePageGroupJoin(notification) {
+        const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        this.subscriptions.push(
+            this.groupsService.declineGroupJoin({
+                group_id: notification.group_id,
+                member_id: this.authUser.id
+            }).subscribe(dt => {
+                this.socketService.declineJoinToPageGroup({
+                    group: selectedGroup,
+                    from_user: this.authUser,
+                    notification_id: notification._id,
+                    message: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined joining the <strong>${selectedGroup.name}</strong> group`,
+                });
 
+                const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+                this.notificationsStore.setInitialNotifications(notifications);
+
+                this.groupsMessagesStore.setGroupsMessages(dt);
+            })
+        );
     }
 
     getJoinGroup() {

@@ -24,10 +24,9 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
     subscriptions: Subscription[] = [];
 
     contactsInviteForm: FormGroup;
-    authUser;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public userGroup,
+        @Inject(MAT_DIALOG_DATA) public authUser: User,
         private groupsStore: GroupsStoreService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private usersService: UsersService,
@@ -41,10 +40,8 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
     }
 
     ngOnInit(): void {
-        this.authUser = this.userGroup.user;
-        this.selectedGroup = this.userGroup.group;
+        this.selectedGroup = this.groupsStore.selectedGroup;
         console.log(this.selectedGroup)
-        // this.selectedGroup = this.groupsStore.selectedGroup;
         this.initForm();
     }
 
@@ -63,12 +60,16 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
             let connectionWithGroup = 'not joined';
 
             if (foundInGroup) {
-                console.log(foundInGroup.groups_members)
-                connectionWithGroup = !!foundInGroup.groups_members.confirmed ? 'joined' : 'invited';
-                if (foundInGroup.groups_members.accepted && !foundInGroup.groups_members.confirmed) {
-                    connectionWithGroup = 'accepted';
+                const connectionContainer = foundInGroup.groups_members;
+
+                if (foundInGroup) {
+                    connectionWithGroup = !!connectionContainer.confirmed ? 'joined' : 'invited';
+                    if (connectionContainer.accepted && !connectionContainer.confirmed) {
+                        connectionWithGroup = 'accepted';
+                    }
                 }
             }
+
 
             formArray.push(this.fb.group({
                 name: 'contact_' + index,
@@ -103,7 +104,6 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
                 invited_members: this.selectedContacts,
                 from_user: this.authUser,
                 group: this.selectedGroup,
-                group_type: 'page',
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
                     has sent an invitation to join the <strong>${this.selectedGroup.name}</strong> group`,
             });

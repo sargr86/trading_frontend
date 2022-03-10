@@ -341,7 +341,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     getRemovedFromGroup() {
-        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.removeFromChatGroupNotify().subscribe((data: any) => {
             const {currentUserNotifications, member, leftGroups} = data;
             console.log(data)
             this.notificationsStore.setAllNotifications(currentUserNotifications);

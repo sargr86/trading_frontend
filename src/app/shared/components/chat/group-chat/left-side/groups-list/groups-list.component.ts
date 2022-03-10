@@ -85,7 +85,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
     }
 
     removeFromGroupNotify() {
-        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.removeFromChatGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
             console.log('removed from group', member)
             if (member.id === this.authUser.id) {

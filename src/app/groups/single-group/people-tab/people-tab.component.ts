@@ -41,7 +41,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     trackGroups() {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe(dt => {
-            console.log(dt)
+            console.log(dt);
             this.selectedGroup = dt;
             this.admins = [];
             this.members = [];
@@ -95,7 +95,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     }
 
     ignoreJoinGroup(member) {
-        console.log(member)
+        console.log(member);
         this.subscriptions.push(this.groupsService.ignoreGroupJoin({
             member_id: member.id,
             group_id: this.selectedGroup.id
@@ -123,7 +123,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
                 }).subscribe(dt => {
                     this.selectedGroup = dt;
                     this.groupsStore.changeGroup(this.selectedGroup);
-                    this.socketService.removeFromGroup({
+                    this.socketService.removeFromPageGroup({
                         member,
                         from_user: this.authUser,
                         group: this.selectedGroup,

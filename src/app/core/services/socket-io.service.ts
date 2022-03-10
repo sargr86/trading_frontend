@@ -293,13 +293,26 @@ export class SocketIoService {
         });
     }
 
-    removeFromGroup(data) {
-        this.socket.emit('removeFromGroup', data);
+    removeFromPageGroup(data) {
+        this.socket.emit('removeFromPageGroup', data);
     }
 
-    removeFromGroupNotify() {
+    removeFromPageGroupNotify() {
         return new Observable(observer => {
-            this.socket.on('removeFromGroupNotify', msg => {
+            this.socket.on('removeFromPageGroupNotify', msg => {
+                console.log('remove from group')
+                observer.next(msg);
+            });
+        });
+    }
+
+    removeFromChatGroup(data) {
+        this.socket.emit('removeFromChatGroup', data);
+    }
+
+    removeFromChatGroupNotify() {
+        return new Observable(observer => {
+            this.socket.on('removeFromChatGroupNotify', msg => {
                 console.log('remove from group')
                 observer.next(msg);
             });

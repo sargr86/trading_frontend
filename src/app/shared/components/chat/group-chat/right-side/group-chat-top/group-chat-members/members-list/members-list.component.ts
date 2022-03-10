@@ -71,7 +71,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
                 }).subscribe(dt => {
                     this.selectedGroup = dt;
                     this.groupsMessagesStore.changeGroup(this.selectedGroup);
-                    this.socketService.removeFromGroup({
+                    this.socketService.removeFromChatGroup({
                         member,
                         from_user: this.authUser,
                         group: this.selectedGroup,
@@ -85,7 +85,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
     }
 
     getRemovedSavedMember() {
-        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.removeFromChatGroupNotify().subscribe((data: any) => {
             const {group, member, leftGroups} = data;
             // console.log('removed from group', data)
             // this.notificationsStore.updateNotifications(data);

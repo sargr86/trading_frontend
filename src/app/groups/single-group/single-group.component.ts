@@ -198,7 +198,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     }
 
     getRemovedSavedMember() {
-        this.subscriptions.push(this.socketService.removeFromGroupNotify().subscribe((data: any) => {
+        this.subscriptions.push(this.socketService.removeFromPageGroupNotify().subscribe((data: any) => {
             const {member, leftGroups} = data;
             console.log('removed from group in group page', data);
             this.groupsStore.changeGroup(data.group);

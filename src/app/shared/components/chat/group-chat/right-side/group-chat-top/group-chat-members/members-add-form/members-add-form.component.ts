@@ -111,11 +111,11 @@ export class MembersAddFormComponent implements OnInit, OnDestroy {
         this.memberCtrl.setValue('');
     }
 
-    addMember() {
+    inviteMembers() {
 
         this.chipsInput.nativeElement.value = '';
         this.memberCtrl.setValue('');
-        this.subscriptions.push(this.chatService.addGroupMembers(this.groupChatDetailsForm.value).subscribe(dt => {
+        this.subscriptions.push(this.chatService.inviteMembers(this.groupChatDetailsForm.value).subscribe(dt => {
             this.groupMembers = dt?.chat_group_members;
             this.selectedGroup = dt;
             this.socketService.inviteToNewChatGroup({

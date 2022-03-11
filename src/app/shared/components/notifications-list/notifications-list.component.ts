@@ -204,7 +204,9 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     // ---------------- GROUPS STUFF-----------------------------------------------------------
     getChatGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToChatGroupSent().subscribe((data: any) => {
-            if (this.authUser?.id === data.to_id) {
+            console.log('chat group invite', data)
+            const {notification} = data;
+            if (this.authUser?.id === data.to_user.id) {
                 this.notificationsStore.updateNotifications(data);
             }
         }));
@@ -212,6 +214,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getPageGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToPageGroupSent().subscribe((data: any) => {
+            console.log('page group invite', data)
             if (this.authUser?.id === data.to_id) {
                 this.notificationsStore.updateNotifications(data);
             }

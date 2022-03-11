@@ -69,8 +69,8 @@ export class ChatService {
         return this.httpClient.get<any>(`${API_URL}chat/group/get-group-members`, {params});
     }
 
-    addGroupMembers(params) {
-        return this.httpClient.post<any>(`${API_URL}chat/group/add-group-members`, params);
+    inviteMembers(params) {
+        return this.httpClient.post<any>(`${API_URL}chat/group/invite-group-members`, params);
     }
 
     removeGroupMember(params) {
@@ -92,7 +92,6 @@ export class ChatService {
     declineGroupJoin(params) {
         return this.httpClient.put<any>(`${API_URL}chat/group/decline-join-group`, params);
     }
-
 
 
     changeGroupAvatar(params) {

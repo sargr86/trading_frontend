@@ -204,7 +204,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     // ---------------- GROUPS STUFF-----------------------------------------------------------
     getChatGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToChatGroupSent().subscribe((data: any) => {
-            console.log('chat group invite', data)
             const {notification} = data;
             if (this.authUser?.id === data.to_user.id) {
                 this.notificationsStore.updateNotifications(data);
@@ -237,7 +236,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     link: `/channels/show?username=${this.authUser.username}`,
                     group_type: 'page'
                 });
-                console.log('ACCEPTED', dt)
                 this.groupsMessagesStore.setGroupsMessages(dt);
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
@@ -258,7 +256,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     group: selectedGroup,
                     from_user: this.authUser,
                     notification_id: notification._id,
-                    message: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined joining the <strong>${selectedGroup.name}</strong> group`,
+                    msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined joining the <strong>${selectedGroup.name}</strong> group`,
                 });
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);

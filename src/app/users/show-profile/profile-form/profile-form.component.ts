@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CroppedEvent} from 'ngx-photo-editor';
 import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
 import {User} from '@shared/models/user';
@@ -93,7 +92,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     onAddedFile(e) {
         this.dropzoneFiles.push(e[0]);
         this.profileForm.patchValue({avatar: e[0].name});
-        console.log(e)
+        console.log(e);
     }
 
     buildFormData() {

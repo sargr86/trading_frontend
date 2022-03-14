@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {UsersRoutingModule} from './users-routing.module';
 import {ProfileFormComponent} from './show-profile/profile-form/profile-form.component';
 import {SharedModule} from '@shared/shared.module';
-import {NgxPhotoEditorModule} from 'ngx-photo-editor';
 import {VideoComponent} from '@app/users/openvidu-stuff/publisher-flow/video/video.component';
 import {PublisherComponent} from './openvidu-stuff/openvidu-test/publisher/publisher.component';
 import {SubscriberComponent} from './openvidu-stuff/openvidu-test/subscriber/subscriber.component';
@@ -57,7 +56,6 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
         CommonModule,
         UsersRoutingModule,
         OpenviduSessionModule,
-        NgxPhotoEditorModule,
         SharedModule
     ],
     exports: []

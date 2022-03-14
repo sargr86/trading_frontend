@@ -3,11 +3,11 @@
         <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
             <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
             <input type="hidden" formControlName="cover">
-            <ngx-photo-editor
-                [imageChanedEvent]="coverChangedEvent"
-                (imageCropped)="coverCropped($event)"
-                [autoCrop]="false"
-                [viewMode]="3"></ngx-photo-editor>
+<!--            <ngx-photo-editor-->
+<!--                [imageChanedEvent]="coverChangedEvent"-->
+<!--                (imageCropped)="coverCropped($event)"-->
+<!--                [autoCrop]="false"-->
+<!--                [viewMode]="3"></ngx-photo-editor>-->
         </div>
 
         <div class="cover-image-container">
@@ -39,12 +39,12 @@
             <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
                 <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
                 <input type="hidden" formControlName="avatar">
-                <ngx-photo-editor
-                    [imageChanedEvent]="profileChangedEvent"
-                    (imageCropped)="profileCropped($event)"
-                    [aspectRatio]="4/3"
-                    [viewMode]="1"
-                    [resizeToWidth]="500"></ngx-photo-editor>
+<!--                <ngx-photo-editor-->
+<!--                    [imageChanedEvent]="profileChangedEvent"-->
+<!--                    (imageCropped)="profileCropped($event)"-->
+<!--                    [aspectRatio]="4/3"-->
+<!--                    [viewMode]="1"-->
+<!--                    [resizeToWidth]="500"></ngx-photo-editor>-->
 
             </div>
             <div>

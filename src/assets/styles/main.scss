@@ -333,56 +333,6 @@ li {
     bottom: 0;
 }
 
-
-ngb-modal-window {
-
-    .modal-dialog {
-        height: calc(100% - 56px);
-        display: flex;
-        align-items: center;
-    }
-
-    .modal-content {
-        max-width: 548px;
-        margin: auto;
-
-        .modal-body {
-            background-color: #FFFFFF !important;
-
-            > h5 {
-                color: #545454 !important;
-                font-size: 16px;
-            }
-        }
-
-        .ngx-photo-editor-icons-container {
-            background-color: #ffffff;
-            color: #545454;
-        }
-
-        .ngx-photo-editor-custom-modal-footer {
-            padding: 16px 16px 32px;
-            background-color: #FFFFFF !important;
-            display: flex;
-            justify-content: center;
-
-            button {
-                padding: 8px 18px !important;
-                border-radius: 0;
-                border: 0;
-
-                &.btn-primary {
-                    background: #18B587;
-                }
-
-                &.btn-outline-light {
-                    background: #C9C9C9;
-                }
-            }
-        }
-    }
-}
-
 .mat-chip.mat-standard-chip {
     background-color: unset !important;
     border: 1px solid #e0e0e0 !important;

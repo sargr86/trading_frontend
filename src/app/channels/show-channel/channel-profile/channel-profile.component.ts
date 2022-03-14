@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {API_URL} from '@core/constants/global';
-import {CroppedEvent} from 'ngx-photo-editor';
 import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -119,7 +118,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         // });
     }
 
-    profileCropped(event: CroppedEvent) {
+    profileCropped(event) {
         // this.loader.dataLoading = true;
 
         this.changingImage = true;
@@ -135,7 +134,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         }));
     }
 
-    coverCropped(event: CroppedEvent) {
+    coverCropped(event) {
         this.coverBase64 = event.base64;
         this.changingImage = true;
         const fd = new FormData();

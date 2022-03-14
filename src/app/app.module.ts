@@ -10,7 +10,6 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {RequestInterceptor} from '@core/helpers/http.interceptor';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MaterialModule} from '@core/modules/material.module';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {UsersModule} from '@app/users/users.module';
@@ -45,7 +44,7 @@ export function tokenGetter() {
                 blacklistedRoutes: ['localhost:3000/auth/', 'localhost:3001/auth/', 'metl.tv/auth/']
             }
         }),
-        UsersModule,
+        // UsersModule,
         NgxStripeModule.forRoot(STRIPE_PUBLISHABLE_KEY),
         SharedModule
     ],

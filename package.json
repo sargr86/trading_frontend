@@ -40,7 +40,6 @@
         "moment": "^2.29.1",
         "ng-phone-number": "^1.0.15",
         "ngx-dropzone-wrapper": "^10.0.1",
-        "ngx-photo-editor": "^0.3.2",
         "ngx-stripe": "^9.3.0",
         "ngx-toastr": "^12.1.0",
         "openvidu-angular": "^2.15.0",

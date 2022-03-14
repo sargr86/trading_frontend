@@ -182,7 +182,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     cancelledUsersConnecting() {
         this.socketService.cancelledUsersConnecting().subscribe(dt => {
-            // console.log(dt, 'cancelled')
+            console.log(dt, 'cancelled')
             this.getNotifications();
         });
     }

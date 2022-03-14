@@ -73,7 +73,6 @@ export class MembersListComponent implements OnInit, OnDestroy {
                         member,
                         from_user: this.authUser,
                         group: this.selectedGroup,
-                        group_type: 'page',
                         msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> removed  <strong>${member.first_name + ' ' + member.last_name}</strong>
                        from <strong>${this.selectedGroup.name}</strong> group`,
                     });

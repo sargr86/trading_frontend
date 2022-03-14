@@ -193,9 +193,9 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
-            const {to_user} = dt;
+            const {to_user, profile_user_contacts} = dt;
             console.log(to_user.users_connections)
-            this.connectionsCount = to_user.users_connections.length;
+            this.connectionsCount = profile_user_contacts.length;
             this.usersConnectionStatus = 'idle';
         }));
     }

@@ -114,12 +114,15 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
-            const {notification} = dt;
-            console.log(dt);
+            const {notification, profile_user_contacts} = dt;
             if ((notification.to_user.id === this.authUser.id && notification.from_user.id === this.profileUser.id)
                 || (notification.to_user.id === this.profileUser.id && notification.from_user.id === this.authUser.id)) {
                 this.usersConnectionStatus = 'connected';
                 this.isBlocked = false;
+            }
+
+            if (notification.from_user.id !== this.authUser.id) {
+                this.connectionsCount = profile_user_contacts.length;
             }
         }));
 

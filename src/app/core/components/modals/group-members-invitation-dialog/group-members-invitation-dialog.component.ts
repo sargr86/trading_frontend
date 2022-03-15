@@ -41,7 +41,6 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
 
     ngOnInit(): void {
         this.selectedGroup = this.groupsStore.selectedGroup;
-        console.log(this.selectedGroup)
         this.initForm();
     }
 
@@ -92,6 +91,7 @@ export class GroupMembersInvitationDialogComponent implements OnInit, OnDestroy 
 
     removeContactFromSelected(control: AbstractControl) {
         const foundControl = this.contactCtrls.controls.find(c => c.value.id === control.value.id);
+        this.selectedContacts = this.selectedContacts.filter(c => c.id !== control.value.id);
         foundControl.patchValue({checked: false});
     }
 

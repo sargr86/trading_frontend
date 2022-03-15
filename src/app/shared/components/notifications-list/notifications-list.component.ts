@@ -57,7 +57,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.getPageGroupJoinInvitation();
         this.getAcceptedJoinPageGroup();
         this.getDeclinedJoinPageGroup();
-        this.getRemovedFromGroup();
+        this.getRemovedFromChatGroup();
+        this.getRemovedFromPageGroup();
         this.getLeftGroup();
     }
 
@@ -347,12 +348,10 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getConfirmedJoinGroup() {
         this.subscriptions.push(this.socketService.getConfirmedJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
-            console.log('confirmed in notifications', data)
-            // console.log(this.notificationsStore.allNotifications)
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
-            this.groupsStore.changeGroup(rest.group);
+            this.groupsStore.setGroups([...[rest.group], ...this.groupsStore.groups]);
         }));
     }
 
@@ -368,7 +367,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getRemovedFromGroup() {
+    getRemovedFromChatGroup() {
         this.subscriptions.push(this.socketService.removeFromChatGroupNotify().subscribe((data: any) => {
             const {currentUserNotifications, member, leftGroups, notification} = data;
             console.log(data)
@@ -390,6 +389,17 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             }
 
             // console.log(this.notificationsStore.allNotifications)
+        }));
+    }
+
+    getRemovedFromPageGroup() {
+        this.subscriptions.push(this.socketService.removeFromPageGroupNotify().subscribe((data: any) => {
+            const {member, leftGroups} = data;
+            console.log('removed from group in group page', data);
+            this.groupsStore.setGroups(data.leftGroups);
+            // console.log(this.groupsMessagesStore.selectedGroupMessages)
+            // console.log(this.groupsMessagesStore.groupsMessages)
+            // }
         }));
     }
 

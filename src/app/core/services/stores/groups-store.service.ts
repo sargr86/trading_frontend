@@ -18,8 +18,8 @@ export class GroupsStoreService {
         return this.groupsSource.getValue();
     }
 
-    setGroups(messages: any) {
-        this.groupsSource.next([...messages]);
+    setGroups(groups: any) {
+        this.groupsSource.next([...groups]);
     }
 
     get selectedGroup() {
@@ -32,6 +32,7 @@ export class GroupsStoreService {
 
     changeGroup(group: any) {
         const allGroups = [...this.groups];
+        console.log(allGroups, this.groups, group.id)
         let selectedGroupIndex = allGroups.findIndex(gm => {
             return gm.id === group?.id;
         });
@@ -41,6 +42,7 @@ export class GroupsStoreService {
         }
 
         allGroups[selectedGroupIndex] = group;
+        console.log(allGroups, this.groups)
         this.setGroups(allGroups);
         if (group.id === this.selectedGroup.id) {
             this.selectGroup(group);

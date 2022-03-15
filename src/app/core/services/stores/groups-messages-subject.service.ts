@@ -28,7 +28,6 @@ export class GroupsMessagesSubjectService {
     }
 
     get selectedGroupMessages() {
-        // console.log(this.selectedGroupMessagesSource.getValue())
         return this.selectedGroupMessagesSource.getValue() as any;
     }
 

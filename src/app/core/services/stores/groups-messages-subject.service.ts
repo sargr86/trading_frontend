@@ -62,6 +62,7 @@ export class GroupsMessagesSubjectService {
         const groupMessages = this.groupsMessages.find(um => um.id === group_id);
         if (groupMessages) {
             groupMessages.group_messages = messages;
+            this.changeGroup(groupMessages)
         }
     }
 

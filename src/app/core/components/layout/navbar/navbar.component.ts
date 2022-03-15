@@ -295,6 +295,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.usersMessagesStore.changeOneUserMessages(from_id, direct_messages);
                 }
             } else if (group_messages) {
+                console.log('message received')
                 this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
             }
         }));

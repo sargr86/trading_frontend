@@ -38,7 +38,8 @@ export class GroupsStoreService {
         });
 
         if (selectedGroupIndex === -1) {
-            selectedGroupIndex = 0;
+            console.log(allGroups.length)
+            selectedGroupIndex = allGroups.length;
         }
 
         allGroups[selectedGroupIndex] = group;

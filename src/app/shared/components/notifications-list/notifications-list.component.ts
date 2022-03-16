@@ -351,7 +351,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
             if (notification.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(notification);
             }
-            this.groupsStore.setGroups([...[rest.group], ...this.groupsStore.groups]);
+
+            this.groupsStore.changeGroup(rest.group);
         }));
     }
 

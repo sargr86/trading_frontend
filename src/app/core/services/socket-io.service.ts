@@ -117,7 +117,6 @@ export class SocketIoService {
         this.socket.emit('setSeen', data);
     }
 
-
     getSeen() {
         return new Observable(observer => {
             this.socket.on('getSeen', msg => {
@@ -142,8 +141,12 @@ export class SocketIoService {
         });
     }
 
-    setNewGroup(data) {
-        this.socket.emit('setNewGroup', data);
+    setNewPageGroup(data) {
+        this.socket.emit('setNewPageGroup', data);
+    }
+
+    setNewChatGroup(data) {
+        this.socket.emit('setNewChatGroup', data);
     }
 
     inviteToNewChatGroup(data) {

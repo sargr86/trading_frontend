@@ -23,9 +23,26 @@
                         <strong>{{member.first_name + ' ' + member.last_name}}</strong>
                     </div>
                     <div>
-                        <button class="remove-member-btn" *ngIf="isOwnGroup">
-                            <i class="fas fa-times" (click)="removeMember(member)"></i>
+                        <button [matMenuTriggerFor]="menu" class="show-actions" *ngIf="isOwnGroup">
+                            <i class="fas fa-ellipsis-h"></i>
                         </button>
+
+                        <mat-menu #menu="matMenu">
+                            <button id="make-admin" mat-menu-item>
+                                <i class="fas fa-check" (click)="makeAdmin(member)"></i>
+                                <span>Make admin</span>
+                            </button>
+                            <button id="make-moderator" mat-menu-item>
+                                <i class="fas fa-check" (click)="makeModerator(member)"></i>
+                                <span>Make moderator</span>
+                            </button>
+                            <button id="remove-member-btn" mat-menu-item *ngIf="isOwnGroup" [disableRipple]="true">
+                                <i class="fas fa-times" (click)="removeMember(member)"></i>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu>
+
+
                     </div>
                 </li>
             </ul>

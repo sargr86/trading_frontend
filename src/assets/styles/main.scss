@@ -1140,7 +1140,13 @@ mat-error {
 }
 
 .mat-menu-item {
+    display: flex !important;;
+    align-items: center !important;;
     text-align: center !important;
+
+    span {
+        margin-left: 20px;
+    }
 }
 
 mat-sidenav-container {

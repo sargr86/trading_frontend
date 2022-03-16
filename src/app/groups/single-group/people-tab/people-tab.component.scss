@@ -74,9 +74,19 @@
     }
 }
 
+.show-actions {
+    background-color: unset;
+    margin-left: 40px;
 
-.remove-member-btn {
-    margin-left: 10px;
-    cursor: pointer;
-    color: $red;
+    button {
+        span {
+            margin-left: 20px;
+        }
+    }
+
+    .remove-member-btn {
+        margin-left: 10px;
+        cursor: pointer;
+        color: $red;
+    }
 }

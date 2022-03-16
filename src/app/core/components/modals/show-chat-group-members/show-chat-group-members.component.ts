@@ -33,7 +33,7 @@ export class ShowChatGroupMembersComponent implements OnInit {
     }
 
     changeActiveTab(tab) {
-
+        this.activeTab = tab;
     }
 
 }

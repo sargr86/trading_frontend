@@ -114,6 +114,14 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         }));
     }
 
+    makeAdmin(member) {
+
+    }
+
+    makeModerator(member) {
+
+    }
+
     removeMember(member) {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {

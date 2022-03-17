@@ -25,7 +25,7 @@
     <li *ngFor="let notification of notificationsStore.allNotifications"
         class="notification" [class.unread]="!isNotificationRead(notification)"
         [class.flex-wrap]="notification?.type === 'users_connection_request'"
-        >
+    >
         <div class="left d-flex pl-2" (click)="onNotificationClick(notification)">
             <div class="avatar-container">
                 <img class="avatar" id="profile-image"
@@ -69,6 +69,16 @@
                     <span>Accept</span>
                 </button>
                 <button class="decline-connection-btn" (click)="declinePageGroupJoin(notification)">
+                    <mat-icon>close</mat-icon>
+                    <span>Decline</span>
+                </button>
+            </div>
+            <div class="connection-actions" *ngIf="notification?.type === 'page_group_admin_request'">
+                <button class="confirm-connection-btn" (click)="acceptPageGroupAdminRequest(notification)">
+                    <mat-icon>check</mat-icon>
+                    <span>Accept</span>
+                </button>
+                <button class="decline-connection-btn" (click)="declinePageGroupAdminRequest(notification)">
                     <mat-icon>close</mat-icon>
                     <span>Decline</span>
                 </button>

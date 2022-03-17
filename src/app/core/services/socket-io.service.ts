@@ -377,6 +377,42 @@ export class SocketIoService {
         });
     }
 
+    sendMakeAdminRequest(data) {
+        this.socket.emit('sendMakeAdminRequest', data);
+    }
+
+    getMakeAdminRequest() {
+        return new Observable(observer => {
+            this.socket.on('getMakeAdminRequest', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    acceptPageGroupAdminRequest(data) {
+        this.socket.emit('acceptPageGroupAdminRequest', data);
+    }
+
+    getAcceptedPageGroupAdminRequest() {
+        return new Observable(observer => {
+            this.socket.on('getAcceptedPageGroupAdminRequest', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
+    declinePageGroupAdminRequest(data) {
+        this.socket.emit('declinePageGroupAdminRequest', data);
+    }
+
+    getDeclinedPageGroupAdminRequest() {
+        return new Observable(observer => {
+            this.socket.on('getDeclinedPageGroupAdminRequest', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     disconnect(data) {
         this.socket.emit('forceDisconnect', data);
     }

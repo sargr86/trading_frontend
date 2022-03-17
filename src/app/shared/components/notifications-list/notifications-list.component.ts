@@ -60,6 +60,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.getRemovedFromChatGroup();
         this.getRemovedFromPageGroup();
         this.getLeftGroup();
+        this.getMakeAdminRequest();
     }
 
     getNotifications() {
@@ -269,7 +270,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     acceptPageGroupJoin(notification) {
-        console.log(notification)
         const selectedGroup = {id: notification.group_id, name: notification.group_name};
         this.subscriptions.push(
             this.groupsService.acceptGroupJoin({
@@ -283,7 +283,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     notification_id: notification._id,
                     msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
                     link: `/channels/show?username=${this.authUser.username}`,
-                    group_type: 'page'
                 });
                 console.log('ACCEPTED', dt)
                 this.groupsStore.setGroups(dt);
@@ -415,6 +414,39 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 this.groupsMessagesStore.changeGroup(group);
             }
         }));
+    }
+
+    getMakeAdminRequest() {
+        this.subscriptions.push(this.socketService.getMakeAdminRequest().subscribe((data: any) => {
+            const {group, notification} = data;
+            this.notificationsStore.updateNotifications(notification);
+            console.log('getMakeAdminRequest', data)
+        }));
+    }
+
+    acceptPageGroupAdminRequest(notification) {
+        const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        this.subscriptions.push(this.groupsService.makeAdmin({
+            member_id: this.authUser.id,
+            group_id: selectedGroup.id
+        }).subscribe(dt => {
+            this.socketService.acceptPageGroupAdminRequest({
+                group: selectedGroup,
+                from_user: this.authUser,
+                notification_id: notification._id,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
+                link: `/channels/show?username=${this.authUser.username}`,
+            });
+
+            const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+            this.notificationsStore.setInitialNotifications(notifications)
+        }));
+
+;
+    }
+
+    declinePageGroupAdminRequest() {
+        this.socketService.declinePageGroupAdminRequest({});
     }
 
     isNotificationRead(notification) {

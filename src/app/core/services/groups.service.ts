@@ -64,5 +64,13 @@ export class GroupsService {
         return this.httpClient.put<any>(`${API_URL}groups/ignore-join-group`, params);
     }
 
+    makeAdmin(params) {
+        return this.httpClient.put<any>(`${API_URL}groups/make-member-admin`, params);
+    }
+
+    makeModerator(params) {
+        return this.httpClient.put<any>(`${API_URL}groups/make-member-moderator`, params);
+    }
+
 
 }

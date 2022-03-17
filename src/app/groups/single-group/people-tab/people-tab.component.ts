@@ -116,6 +116,13 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     makeAdmin(member) {
 
+        this.socketService.sendMakeAdminRequest({
+            from_user: this.authUser,
+            group: this.selectedGroup,
+            member,
+            msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
+                wants to make you to an admin for the <strong>${this.selectedGroup.name}</strong> group`
+        });
     }
 
     makeModerator(member) {

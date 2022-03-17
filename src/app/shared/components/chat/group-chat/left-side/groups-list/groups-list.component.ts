@@ -68,7 +68,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             // console.log(this.selectedGroup)
             this.groupsMessagesStore.setGroupsMessages(dt);
             this.groupsMessagesStore.selectGroup(this.selectedGroup);
-            this.socketService.setNewGroup(formValue);
+            this.socketService.setNewChatGroup(formValue);
         }));
     }
 

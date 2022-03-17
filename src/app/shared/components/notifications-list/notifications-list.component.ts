@@ -434,19 +434,27 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 group: selectedGroup,
                 from_user: this.authUser,
                 notification_id: notification._id,
-                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
+                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted becoming the <strong>${selectedGroup.name}</strong> group admin`,
                 link: `/channels/show?username=${this.authUser.username}`,
             });
 
             const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
             this.notificationsStore.setInitialNotifications(notifications)
         }));
-
-;
     }
 
-    declinePageGroupAdminRequest() {
-        this.socketService.declinePageGroupAdminRequest({});
+    declinePageGroupAdminRequest(notification) {
+        const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        this.socketService.declinePageGroupAdminRequest({
+            group: selectedGroup,
+            from_user: this.authUser,
+            notification_id: notification._id,
+            msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has declined becoming the <strong>${selectedGroup.name}</strong> group admin`,
+            link: `/channels/show?username=${this.authUser.username}`,
+        });
+
+        const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
+        this.notificationsStore.setInitialNotifications(notifications)
     }
 
     isNotificationRead(notification) {

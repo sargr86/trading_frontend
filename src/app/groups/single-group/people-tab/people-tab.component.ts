@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 
 @Component({
     selector: 'app-people-tab',
@@ -24,9 +25,12 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
 
+    adminRequestSent = false;
+
     constructor(
         private groupsService: GroupsService,
         private groupsStore: GroupsStoreService,
+        private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         private chatService: ChatService,
         private dialog: MatDialog,
@@ -37,6 +41,8 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.trackGroups();
         this.getAcceptedJoinPageGroup();
+        this.getAcceptedPageGroupAdminRequest();
+        this.getDeclinedPageGroupAdminRequest();
     }
 
     trackGroups() {
@@ -121,13 +127,45 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             group: this.selectedGroup,
             member,
             msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
-                wants to make you to an admin for the <strong>${this.selectedGroup.name}</strong> group`
+                invites you to become an admin for the <strong>${this.selectedGroup.name}</strong> group`
         });
+
+        this.adminRequestSent = true;
+    }
+
+    removeAdminPrivileges(member) {
+        this.subscriptions.push(this.groupsService.removeAdminPrivileges({
+            member_id: member.id,
+            group_id: this.selectedGroup.id
+        }).subscribe(dt => {
+            this.groupsStore.changeGroup(dt);
+        }));
     }
 
     makeModerator(member) {
 
     }
+
+    getAcceptedPageGroupAdminRequest() {
+        this.subscriptions.push(this.socketService.getAcceptedPageGroupAdminRequest().subscribe((data: any) => {
+            const {notification, ...rest} = data;
+            this.adminRequestSent = false;
+            this.notificationsStore.updateNotifications(notification);
+            this.groupsStore.changeGroup(rest.group);
+            console.log(this.groupsStore.groups);
+        }));
+    }
+
+    getDeclinedPageGroupAdminRequest() {
+        this.subscriptions.push(this.socketService.getDeclinedPageGroupAdminRequest().subscribe((data: any) => {
+            const {notification, ...rest} = data;
+            this.adminRequestSent = false;
+            this.notificationsStore.updateNotifications(notification);
+            this.groupsStore.changeGroup(rest.group);
+            console.log(this.groupsStore.groups);
+        }));
+    }
+
 
     removeMember(member) {
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {

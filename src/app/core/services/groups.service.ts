@@ -72,5 +72,13 @@ export class GroupsService {
         return this.httpClient.put<any>(`${API_URL}groups/make-member-moderator`, params);
     }
 
+    declineMakeAdmin(params) {
+        return this.httpClient.put<any>(`${API_URL}groups/decline-make-member-admin`, params);
+    }
+
+    removeAdminPrivileges(params) {
+        return this.httpClient.put<any>(`${API_URL}groups/remove-admin-privileges`, params);
+    }
+
 
 }

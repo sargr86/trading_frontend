@@ -28,9 +28,16 @@
                         </button>
 
                         <mat-menu #menu="matMenu">
-                            <button id="make-admin" mat-menu-item (click)="makeAdmin(member)" [disableRipple]="true">
+                            <button id="make-admin" mat-menu-item
+                                    *ngIf="!member.groups_members.is_admin && !adminRequestSent"
+                                    (click)="makeAdmin(member)" [disableRipple]="true">
                                 <i class="fas fa-check"></i>
                                 <span>Make admin</span>
+                            </button>
+                            <button id="remove-make-admin" mat-menu-item *ngIf="member.groups_members.is_admin"
+                                    (click)="removeAdminPrivileges(member)" [disableRipple]="true">
+                                <i class="fas fa-check"></i>
+                                <span>Remove group admin privileges</span>
                             </button>
                             <button id="make-moderator" mat-menu-item (click)="makeModerator(member)"
                                     [disableRipple]="true">

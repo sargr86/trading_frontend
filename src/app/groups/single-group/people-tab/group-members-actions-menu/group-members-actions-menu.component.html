@@ -5,23 +5,24 @@
 
     <mat-menu #menu="matMenu">
         <button id="make-admin" mat-menu-item
-                *ngIf="!member.groups_members.is_admin && !adminRequestSent"
+                *ngIf="!isAdmin(member) && !adminRequestSent"
                 (click)="makeAdmin(member)" [disableRipple]="true">
             <i class="fas fa-check"></i>
             <span>Make admin</span>
         </button>
-        <button id="remove-make-admin" mat-menu-item *ngIf="member.groups_members.is_admin"
+        <button id="remove-make-admin" mat-menu-item *ngIf="isAdmin(member)"
                 (click)="removeAdminPrivileges(member)" [disableRipple]="true">
-            <i class="fas fa-check"></i>
+            <i class="fas fa-times"></i>
             <span>Remove group admin privileges</span>
         </button>
         <button id="remove-make-moderator" mat-menu-item
-                *ngIf="member.groups_members.is_moderator"
+                *ngIf="isModerator(member)"
                 (click)="removeAdminPrivileges(member)" [disableRipple]="true">
-            <i class="fas fa-check"></i>
+            <i class="fas fa-times"></i>
             <span>Remove group moderator privileges</span>
         </button>
-        <button id="make-moderator" *ngIf="!moderatorRequestSent" mat-menu-item (click)="makeAdmin(member,'moderator')"
+        <button id="make-moderator" *ngIf="!isModerator(member) && !moderatorRequestSent" mat-menu-item
+                (click)="makeAdmin(member,'moderator')"
                 [disableRipple]="true">
             <i class="fas fa-check"></i>
             <span>Make moderator</span>

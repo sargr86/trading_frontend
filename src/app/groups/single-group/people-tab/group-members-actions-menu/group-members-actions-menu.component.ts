@@ -91,15 +91,14 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
 
     }
 
-    // getAcceptedPageGroupAdminRequest() {
-    //     this.subscriptions.push(this.socketService.getAcceptedPageGroupAdminRequest().subscribe((data: any) => {
-    //         const {notification, ...rest} = data;
-    //         // this.adminRequestSent = false;
-    //         this.notificationsStore.updateNotifications(notification);
-    //         this.groupsStore.changeGroup(rest.group);
-    //         console.log(this.groupsStore.groups);
-    //     }));
-    // }
+    isAdmin(member) {
+        return member.groups_members.is_admin;
+    }
+
+    isModerator(member) {
+        return member.groups_members.is_moderator;
+    }
+
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

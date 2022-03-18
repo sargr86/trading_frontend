@@ -33,12 +33,14 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     }
 
 
-
     getAcceptedPageGroupAdminRequest() {
         this.subscriptions.push(this.socketService.getAcceptedPageGroupAdminRequest().subscribe((data: any) => {
             const {notification, ...rest} = data;
             // this.adminRequestSent = false;
-            this.notificationsStore.updateNotifications(notification);
+            console.log(notification)
+            if (notification.from_user.id !== this.authUser.id) {
+                this.notificationsStore.updateNotifications(notification);
+            }
             this.groupsStore.changeGroup(rest.group);
             console.log(this.groupsStore.groups);
         }));

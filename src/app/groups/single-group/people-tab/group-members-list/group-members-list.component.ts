@@ -18,8 +18,6 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     @Input() isOwnGroup;
 
     subscriptions: Subscription[] = [];
-    adminRequestSent = false;
-
 
     constructor(
         private socketService: SocketIoService,
@@ -39,7 +37,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     getAcceptedPageGroupAdminRequest() {
         this.subscriptions.push(this.socketService.getAcceptedPageGroupAdminRequest().subscribe((data: any) => {
             const {notification, ...rest} = data;
-            this.adminRequestSent = false;
+            // this.adminRequestSent = false;
             this.notificationsStore.updateNotifications(notification);
             this.groupsStore.changeGroup(rest.group);
             console.log(this.groupsStore.groups);
@@ -49,7 +47,7 @@ export class GroupMembersListComponent implements OnInit, OnDestroy {
     getDeclinedPageGroupAdminRequest() {
         this.subscriptions.push(this.socketService.getDeclinedPageGroupAdminRequest().subscribe((data: any) => {
             const {notification, ...rest} = data;
-            this.adminRequestSent = false;
+            // this.adminRequestSent = false;
             this.notificationsStore.updateNotifications(notification);
             this.groupsStore.changeGroup(rest.group);
             console.log(this.groupsStore.groups);

@@ -19,6 +19,7 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
     @Input() isOwnGroup;
 
     subscriptions: Subscription[] = [];
+    adminRequestSent = false;
 
     constructor(
         private socketService: SocketIoService,
@@ -29,10 +30,11 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
     }
 
     makeAdmin(member, type = 'admin') {
-        console.log('make admin')
+        console.log('make admin', member)
         this.socketService.sendMakeAdminRequest({
             from_user: this.authUser,
             group: this.selectedGroup,

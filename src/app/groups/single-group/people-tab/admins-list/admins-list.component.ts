@@ -15,6 +15,23 @@ export class AdminsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.admins)
+    }
+
+    isGroupCreator(admin) {
+        return admin.id === this.selectedGroup.creator_id;
+    }
+
+    getRoleName(admin) {
+        if (this.isGroupCreator(admin)) {
+            return 'Group creator';
+        } else {
+            if (admin.groups_members.is_admin) {
+                return 'Admin';
+            } else {
+                return 'Moderator';
+            }
+        }
     }
 
 }

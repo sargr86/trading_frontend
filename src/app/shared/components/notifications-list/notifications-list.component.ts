@@ -184,7 +184,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     cancelledUsersConnecting() {
         this.socketService.cancelledUsersConnecting().subscribe(dt => {
-            console.log(dt, 'cancelled')
+            console.log(dt, 'cancelled');
             this.getNotifications();
         });
     }
@@ -215,7 +215,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getPageGroupJoinInvitation() {
         this.subscriptions.push(this.socketService.inviteToPageGroupSent().subscribe((data: any) => {
-            console.log('page group invite', data)
+            console.log('page group invite', data);
             if (this.authUser?.id === data.to_id) {
                 this.notificationsStore.updateNotifications(data);
             }
@@ -284,7 +284,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                     msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted to join the <strong>${selectedGroup.name}</strong> group`,
                     link: `/channels/show?username=${this.authUser.username}`,
                 });
-                console.log('ACCEPTED', dt)
+                console.log('ACCEPTED', dt);
                 this.groupsStore.setGroups(dt);
 
                 const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
@@ -358,7 +358,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getIgnoredJoinGroup() {
         this.subscriptions.push(this.socketService.getIgnoredJoinGroup().subscribe((data: any) => {
             const {notification, rest} = data;
-            console.log('ignored in notifications list', data)
+            console.log('ignored in notifications list', data);
             // console.log(this.notificationsStore.allNotifications)
             // console.log(this.notificationsStore.allNotifications)
             if (notification.from_user.id !== this.authUser.id) {
@@ -370,22 +370,21 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getRemovedFromChatGroup() {
         this.subscriptions.push(this.socketService.removeFromChatGroupNotify().subscribe((data: any) => {
             const {currentUserNotifications, member, leftGroups, notification} = data;
-            console.log(data)
+            console.log(data);
             this.notificationsStore.updateNotifications(notification);
             // this.notificationsStore.setAllNotifications(currentUserNotifications);
 
             if (member.id === this.authUser.id) {
-                console.log('here')
                 this.groupsMessagesStore.setGroupsMessages(leftGroups);
                 if (this.router.url.includes('chat/messages')) {
                     this.groupsMessagesStore.selectGroup({});
                 } else {
-                    console.log('OK')
+                    console.log('OK');
                     this.groupsMessagesStore.changeGroup(data.group);
                 }
             } else if (!this.router.url.includes('chat/messages')) {
                 this.groupsMessagesStore.changeGroup(data.group);
-                console.log(this.groupsMessagesStore.selectedGroupMessages)
+                console.log(this.groupsMessagesStore.selectedGroupMessages);
             }
 
             // console.log(this.notificationsStore.allNotifications)
@@ -406,7 +405,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leaveChatGroupNotify().subscribe((data: any) => {
             const {group} = data;
-            console.log('left', data)
+            console.log('left', data);
             if (data.from_user.id === this.authUser.id) {
                 this.groupsMessagesStore.selectGroup({});
             } else {
@@ -420,15 +419,17 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.socketService.getMakeAdminRequest().subscribe((data: any) => {
             const {group, notification} = data;
             this.notificationsStore.updateNotifications(notification);
-            console.log('getMakeAdminRequest', data)
+            console.log('getMakeAdminRequest', data);
         }));
     }
 
     acceptPageGroupAdminRequest(notification) {
         const selectedGroup = {id: notification.group_id, name: notification.group_name};
+        const adminType = notification.type === 'page_group_admin_request' ? 'admin' : 'moderator'
         this.subscriptions.push(this.groupsService.makeAdmin({
             member_id: this.authUser.id,
-            group_id: selectedGroup.id
+            group_id: selectedGroup.id,
+            type: adminType
         }).subscribe(dt => {
             this.socketService.acceptPageGroupAdminRequest({
                 group: selectedGroup,
@@ -436,10 +437,11 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
                 notification_id: notification._id,
                 msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> has accepted becoming the <strong>${selectedGroup.name}</strong> group admin`,
                 link: `/channels/show?username=${this.authUser.username}`,
+                type: adminType
             });
 
             const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
-            this.notificationsStore.setInitialNotifications(notifications)
+            this.notificationsStore.setInitialNotifications(notifications);
         }));
     }
 
@@ -454,7 +456,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         });
 
         const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
-        this.notificationsStore.setInitialNotifications(notifications)
+        this.notificationsStore.setInitialNotifications(notifications);
     }
 
     isNotificationRead(notification) {

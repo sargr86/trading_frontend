@@ -22,6 +22,15 @@ ul {
         .details {
             display: flex;
             align-items: center;
+
+            .full-name {
+
+            }
+
+            .role {
+                font-family: "Muli-Light", sans-serif;
+                font-size: 12px;
+            }
         }
     }
 }

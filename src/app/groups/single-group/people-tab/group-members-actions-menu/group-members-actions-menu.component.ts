@@ -65,7 +65,6 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
                         member,
                         from_user: this.authUser,
                         group: this.selectedGroup,
-                        group_type: 'page',
                         msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> removed  <strong>${member.first_name + ' ' + member.last_name}</strong>
                        from <strong>${this.selectedGroup.name}</strong> group`,
                     });
@@ -81,6 +80,13 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
                     member_id: member.id,
                     group_id: this.selectedGroup.id
                 }).subscribe(dt => {
+                    this.socketService.removePageGroupAdminPrivileges({
+                        member,
+                        from_user: this.authUser,
+                        group: this.selectedGroup,
+                        msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> removed ${type}  privileges of <strong>${member.first_name + ' ' + member.last_name}</strong>
+                       for the <strong>${this.selectedGroup.name}</strong> group`,
+                    });
                     this.groupsStore.changeGroup(dt);
                 }));
             }

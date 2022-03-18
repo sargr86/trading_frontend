@@ -1,5 +1,5 @@
 <div id="admins">
-    <strong>Admins</strong>
+    <strong>Admins & moderators</strong>
 
     <ul class="bordered">
         <li *ngFor="let admin of admins">
@@ -11,7 +11,8 @@
                 </div>
             </div>
 
-            <app-group-members-actions-menu *ngIf="!isGroupCreator(admin)" [member]="admin"
+            <app-group-members-actions-menu *ngIf="showActionsMenu(admin)"
+                                            [member]="admin"
                                             [authUser]="authUser" [selectedGroup]="selectedGroup"
                                             [isOwnGroup]="isOwnGroup"></app-group-members-actions-menu>
         </li>

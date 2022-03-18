@@ -26,7 +26,6 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
 
-
     constructor(
         private groupsService: GroupsService,
         private groupsStore: GroupsStoreService,
@@ -40,6 +39,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.trackGroups();
         this.getAcceptedJoinPageGroup();
+        this.getRemovedPageGroupAdminPrivileges();
     }
 
     trackGroups() {
@@ -55,7 +55,6 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
             }
         }));
     }
-
 
 
     filterMembers() {
@@ -80,9 +79,14 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         }));
     }
 
-
-
-
+    getRemovedPageGroupAdminPrivileges() {
+        this.subscriptions.push(this.socketService.getRemovedPageGroupAdminPrivileges().subscribe((data: any) => {
+            const {notification, member, group} = data;
+            this.notificationsStore.updateNotifications(notification);
+            console.log('removed privileges', group);
+            this.groupsStore.changeGroup(group);
+        }));
+    }
 
 
     ngOnDestroy(): void {

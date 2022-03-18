@@ -413,6 +413,18 @@ export class SocketIoService {
         });
     }
 
+    removePageGroupAdminPrivileges(data) {
+        this.socket.emit('removePageGroupAdminPrivileges', data);
+    }
+
+    getRemovedPageGroupAdminPrivileges() {
+        return new Observable(observer => {
+            this.socket.on('getRemovedPageGroupAdminPrivileges', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     disconnect(data) {
         this.socket.emit('forceDisconnect', data);
     }

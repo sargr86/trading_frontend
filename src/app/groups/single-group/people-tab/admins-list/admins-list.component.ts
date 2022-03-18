@@ -22,6 +22,15 @@ export class AdminsListComponent implements OnInit {
         return admin.id === this.selectedGroup.creator_id;
     }
 
+    isGroupAdmin(admin) {
+        return !!admin.groups_members.is_admin;
+    }
+
+    showActionsMenu(admin) {
+        // console.log(admin.first_name + ' ' + admin.last_name, !this.isGroupCreator(admin), (!this.isOwnGroup && this.isGroupAdmin(admin)))
+        // return !this.isGroupCreator(admin) || this.isGroupAdmin(admin) && admin.id === this.authUser.id;
+    }
+
     getRoleName(admin) {
         if (this.isGroupCreator(admin)) {
             return 'Group creator';

@@ -73,7 +73,8 @@
                     <span>Decline</span>
                 </button>
             </div>
-            <div class="connection-actions" *ngIf="notification?.type === 'page_group_admin_request'">
+            <div class="connection-actions"
+                 *ngIf="notification?.type === 'page_group_admin_request' ||notification?.type === 'page_group_moderator_request' ">
                 <button class="confirm-connection-btn" (click)="acceptPageGroupAdminRequest(notification)">
                     <mat-icon>check</mat-icon>
                     <span>Accept</span>

@@ -25,7 +25,7 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
 
-    adminRequestSent = false;
+
 
     constructor(
         private groupsService: GroupsService,
@@ -33,7 +33,6 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         private chatService: ChatService,
-        private dialog: MatDialog,
         private isEmptyObj: CheckForEmptyObjectPipe,
     ) {
     }
@@ -41,13 +40,11 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.trackGroups();
         this.getAcceptedJoinPageGroup();
-        this.getAcceptedPageGroupAdminRequest();
-        this.getDeclinedPageGroupAdminRequest();
     }
 
     trackGroups() {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe(dt => {
-            // console.log(dt);
+            console.log(dt);
             this.selectedGroup = dt;
             this.admins = [];
             this.members = [];
@@ -59,17 +56,11 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         }));
     }
 
-    getAcceptedJoinPageGroup() {
-        this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
-            const {rest} = data;
-            console.log('accepted', rest.group);
-            // this.groupsStore.changeGroup(rest.group);
-        }));
-    }
+
 
     filterMembers() {
         this.selectedGroup?.group_members?.map(m => {
-            if (this.selectedGroup.creator_id === m.id) {
+            if (this.selectedGroup.creator_id === m.id || m.groups_members.is_admin || m.groups_members.is_moderator) {
                 this.admins.push(m);
             } else {
                 if (m.groups_members.confirmed) {
@@ -81,113 +72,18 @@ export class PeopleTabComponent implements OnInit, OnDestroy {
         });
     }
 
-    confirmJoinGroup(member) {
-        this.subscriptions.push(this.groupsService.confirmGroupJoin({
-            member_id: member.id,
-            group_id: this.selectedGroup.id
-        }).subscribe(dt => {
-            const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
-            this.groupsStore.changeGroup(selectedGroup);
-
-            this.socketService.confirmJoinGroup({
-                group: selectedGroup,
-                from_user: this.authUser,
-                member,
-                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
-                has confirmed  <strong>${member.first_name + ' ' + member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
-                link: `/channels/show?username=${this.authUser.username}`,
-            });
-        }));
-    }
-
-    ignoreJoinGroup(member) {
-        console.log(member);
-        this.subscriptions.push(this.groupsService.ignoreGroupJoin({
-            member_id: member.id,
-            group_id: this.selectedGroup.id
-        }).subscribe(dt => {
-            const selectedGroup = dt.find(d => d.id === this.selectedGroup.id);
-            this.groupsStore.changeGroup(selectedGroup);
-
-            this.socketService.ignoreJoinGroup({
-                group: selectedGroup,
-                from_user: this.authUser,
-                member,
-                msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
-                has declined  <strong>${member.first_name}</strong> <strong>${member.last_name}</strong> to join the <strong>${selectedGroup.name}</strong> group`,
-                link: `/channels/show?username=${this.authUser.username}`,
-            });
-        }));
-    }
-
-    makeAdmin(member) {
-
-        this.socketService.sendMakeAdminRequest({
-            from_user: this.authUser,
-            group: this.selectedGroup,
-            member,
-            msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
-                invites you to become an admin for the <strong>${this.selectedGroup.name}</strong> group`
-        });
-
-        this.adminRequestSent = true;
-    }
-
-    removeAdminPrivileges(member) {
-        this.subscriptions.push(this.groupsService.removeAdminPrivileges({
-            member_id: member.id,
-            group_id: this.selectedGroup.id
-        }).subscribe(dt => {
-            this.groupsStore.changeGroup(dt);
-        }));
-    }
-
-    makeModerator(member) {
-
-    }
-
-    getAcceptedPageGroupAdminRequest() {
-        this.subscriptions.push(this.socketService.getAcceptedPageGroupAdminRequest().subscribe((data: any) => {
-            const {notification, ...rest} = data;
-            this.adminRequestSent = false;
-            this.notificationsStore.updateNotifications(notification);
-            this.groupsStore.changeGroup(rest.group);
-            console.log(this.groupsStore.groups);
-        }));
-    }
-
-    getDeclinedPageGroupAdminRequest() {
-        this.subscriptions.push(this.socketService.getDeclinedPageGroupAdminRequest().subscribe((data: any) => {
-            const {notification, ...rest} = data;
-            this.adminRequestSent = false;
-            this.notificationsStore.updateNotifications(notification);
-            this.groupsStore.changeGroup(rest.group);
-            console.log(this.groupsStore.groups);
+    getAcceptedJoinPageGroup() {
+        this.subscriptions.push(this.socketService.getAcceptedJoinPageGroup().subscribe((data: any) => {
+            const {rest} = data;
+            console.log('accepted', rest.group);
+            // this.groupsStore.changeGroup(rest.group);
         }));
     }
 
 
-    removeMember(member) {
-        this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
-            if (confirmed) {
-                this.groupsService.removeGroupMember({
-                    group_id: this.selectedGroup.id,
-                    member_id: member.id
-                }).subscribe(dt => {
-                    this.selectedGroup = dt;
-                    this.groupsStore.changeGroup(this.selectedGroup);
-                    this.socketService.removeFromPageGroup({
-                        member,
-                        from_user: this.authUser,
-                        group: this.selectedGroup,
-                        group_type: 'page',
-                        msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong> removed  <strong>${member.first_name + ' ' + member.last_name}</strong>
-                       from <strong>${this.selectedGroup.name}</strong> group`,
-                    });
-                });
-            }
-        }));
-    }
+
+
+
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

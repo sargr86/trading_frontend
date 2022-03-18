@@ -1,0 +1,41 @@
+@import 'variables';
+
+#members {
+    padding-left: 20px;
+
+    ul {
+        display: flex;
+    }
+
+    li {
+        margin-right: 10px;
+        padding: 5px;
+
+        &.rounded {
+            border: 1px solid #d3d3d3;
+            border-radius: 35px;
+        }
+
+
+        .details {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+
+ul {
+    margin-top: 20px;
+
+    &.bordered {
+        border-right: 1px solid $light_gray;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+}

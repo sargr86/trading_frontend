@@ -8,85 +8,18 @@
 
     #all-members-wrap {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         margin-top: 20px;
-
-        > div {
-            flex: 50%;
-            padding-left: 20px;
-
-
-            ul {
-                margin-top: 20px;
-
-                &.bordered {
-                    border-right: 1px solid $light_gray;
-                }
-
-                li {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 20px;
-
-                }
-            }
-        }
-
-        #admins {
-
-
-        }
-
-        #members {
-            padding-left: 20px;
-
-            ul {
-                display: flex;
-            }
-
-            li {
-                margin-right: 10px;
-                border: 1px solid #d3d3d3;
-                padding: 5px;
-                border-radius: 35px;
-
-                .details {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-        }
-
-        #member-requests {
-            button {
-                @include regularButton;
-            }
-
-            .ignore-request {
-                background-color: $light-gray;
-                margin-left: 20px;
-            }
-
-            .confirm-request {
-                margin-left: 30px;
-            }
-        }
     }
 }
 
-.show-actions {
-    background-color: unset;
-    margin-left: 40px;
+app-group-members-list, app-member-requests-list {
+    flex: 30%;
+    width: 30%;
+    max-width: 35%;
+    padding-left: 20px;
+}
 
-    button {
-        span {
-            margin-left: 20px;
-        }
-    }
-
-    .remove-member-btn {
-        margin-left: 10px;
-        cursor: pointer;
-        color: $red;
-    }
+app-admins-list {
+    width: 30%;
 }

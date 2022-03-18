@@ -1,0 +1,33 @@
+@import 'variables';
+@import 'mixins';
+
+
+ul {
+    margin-top: 20px;
+
+    &.bordered {
+        border-right: 1px solid $light_gray;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+    }
+}
+
+#member-requests {
+    button {
+        @include regularButton;
+    }
+
+    .ignore-request {
+        background-color: $light-gray;
+        margin-left: 20px;
+    }
+
+    .confirm-request {
+        margin-left: 30px;
+    }
+}

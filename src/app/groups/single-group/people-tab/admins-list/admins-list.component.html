@@ -1,0 +1,16 @@
+<div id="admins">
+    <strong>Admins</strong>
+
+    <ul class="bordered">
+        <li *ngFor="let admin of admins">
+            <div class="details">
+                <img class="avatar" [src]="admin.avatar|getImgPath: 'user_avatars'">
+                <strong>{{admin.first_name + ' ' + admin.last_name}}</strong>
+            </div>
+
+            <app-group-members-actions-menu *ngIf="admin.id !== selectedGroup.creator_id" [member]="admin"
+                                            [authUser]="authUser" [selectedGroup]="selectedGroup"
+                                            [isOwnGroup]="isOwnGroup"></app-group-members-actions-menu>
+        </li>
+    </ul>
+</div>

@@ -20,11 +20,13 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
     adminRequestSent = false;
+    moderatorRequestSent = false;
 
     constructor(
         private socketService: SocketIoService,
         private groupsService: GroupsService,
         private groupsStore: GroupsStoreService,
+        private notificationsStore: NotificationsSubjectStoreService,
         private dialog: MatDialog,
     ) {
     }
@@ -45,7 +47,8 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
                  for the <strong>${this.selectedGroup.name}</strong> group`
         });
 
-        // this.adminRequestSent = true;
+        this.adminRequestSent = type === 'admin';
+        this.moderatorRequestSent = type === 'moderator';
     }
 
     removeMember(member) {
@@ -87,6 +90,16 @@ export class GroupMembersActionsMenuComponent implements OnInit, OnDestroy {
     makeModerator(member) {
 
     }
+
+    // getAcceptedPageGroupAdminRequest() {
+    //     this.subscriptions.push(this.socketService.getAcceptedPageGroupAdminRequest().subscribe((data: any) => {
+    //         const {notification, ...rest} = data;
+    //         // this.adminRequestSent = false;
+    //         this.notificationsStore.updateNotifications(notification);
+    //         this.groupsStore.changeGroup(rest.group);
+    //         console.log(this.groupsStore.groups);
+    //     }));
+    // }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

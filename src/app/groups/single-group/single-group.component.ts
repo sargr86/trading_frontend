@@ -65,7 +65,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe((dt: any) => {
             this.selectedGroup = dt;
             this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
-            // console.log(this.selectedGroup, this.groupPrivacy);
+            console.log(this.selectedGroup, this.groupPrivacy);
             if (!this.isEmptyObj.transform(dt) && this.authUser) {
                 this.getUserGroupConnStatus();
             }

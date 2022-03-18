@@ -15,7 +15,7 @@ export class AdminsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.admins)
+        console.log(this.authUserGroupConnection)
     }
 
     isGroupCreator(admin) {
@@ -26,21 +26,36 @@ export class AdminsListComponent implements OnInit {
         return !!admin.groups_members.is_admin;
     }
 
+
+    getUserGroupConnection(user) {
+        let connection;
+        this.admins.map(a => {
+            if (a.id === user.id) {
+                connection = a.groups_members.is_admin ? 'Admin' : 'Moderator';
+
+                if (this.isGroupCreator(user)) {
+                    connection = 'Group creator';
+                }
+            }
+        });
+        return connection;
+    }
+
     showActionsMenu(admin) {
-        // console.log(admin.first_name + ' ' + admin.last_name, !this.isGroupCreator(admin), (!this.isOwnGroup && this.isGroupAdmin(admin)))
-        // return !this.isGroupCreator(admin) || this.isGroupAdmin(admin) && admin.id === this.authUser.id;
+        if (this.authUserGroupConnection === 'Admin') {
+            return !this.isGroupCreator(admin) && (admin.id === this.authUser.id || admin.groups_members.is_moderator);
+        } else if (this.authUserGroupConnection === 'Group creator') {
+            return !this.isGroupCreator(admin);
+        }
+        return false;
     }
 
     getRoleName(admin) {
-        if (this.isGroupCreator(admin)) {
-            return 'Group creator';
-        } else {
-            if (admin.groups_members.is_admin) {
-                return 'Admin';
-            } else {
-                return 'Moderator';
-            }
-        }
+        return this.getUserGroupConnection(admin);
+    }
+
+    get authUserGroupConnection(): string {
+        return this.getUserGroupConnection(this.authUser);
     }
 
 }

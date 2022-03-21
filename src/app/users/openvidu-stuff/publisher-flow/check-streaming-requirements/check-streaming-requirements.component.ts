@@ -48,11 +48,12 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
         // }
     }
 
-    ngAfterViewInit() {
-        this.getConnectedDevices(true);
+    async ngAfterViewInit() {
+        await this.getConnectedDevices(true);
     }
 
     async getConnectedDevices(pageLoad = false) {
+        console.log(navigator.mediaDevices)
         navigator.mediaDevices.getUserMedia({audio: true, video: true}).then(() => {
             this.deviceStatus = 'loading';
             navigator.mediaDevices.enumerateDevices()
@@ -65,6 +66,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
                     this.deviceRecognitionForm.patchValue({audio_device: this.defaultAudioDevice?.label});
                 })
                 .catch((err) => {
+
                     this.deviceRecognitionForm.patchValue({
                         audio_device: '',
                         video_device: '',
@@ -72,6 +74,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
                     this.toastr.error(err.message);
                 });
         }).catch((err) => {
+            console.log(err)
             this.deviceStatus = 'failed';
             this.deviceRecognitionForm.patchValue({
                 audio_device: '',

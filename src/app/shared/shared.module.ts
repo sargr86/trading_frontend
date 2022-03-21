@@ -72,7 +72,7 @@ import {GetTwoArrayOfObjectsDifferencePipe} from './pipes/get-two-array-of-objec
 import {FixGroupPageUrlDirective} from './directives/fix-group-page-url.directive';
 import {DisableControlProperlyDirective} from './directives/disable-control-properly.directive';
 import {PostItemComponent} from './components/posts/post-item/post-item.component';
-import { PostFormComponent } from './components/posts/post-form/post-form.component';
+import { PostFormPlaceholderComponent } from './components/posts/post-form-placeholder/post-form-placeholder.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     url: '{no_url}',
@@ -146,7 +146,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         FixGroupPageUrlDirective,
         DisableControlProperlyDirective,
         PostItemComponent,
-        PostFormComponent,
+        PostFormPlaceholderComponent,
     ],
     imports: [
         CommonModule,
@@ -239,7 +239,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         MembersAddFormComponent,
         FixGroupPageUrlDirective,
         DisableControlProperlyDirective,
-        PostItemComponent
+        PostItemComponent,
+        PostFormPlaceholderComponent
     ],
 })
 export class SharedModule {

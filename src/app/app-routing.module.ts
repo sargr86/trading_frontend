@@ -73,6 +73,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'posts',
+        loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'about-us',
         component: AboutComponent,
         data: {

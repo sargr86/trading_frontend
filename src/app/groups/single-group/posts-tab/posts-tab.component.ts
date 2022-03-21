@@ -30,4 +30,8 @@ export class PostsTabComponent implements OnInit {
     getGroupPosts() {
         this.posts = this.postsService.get({group_id: this.selectedGroup.id});
     }
+
+    addPost(formValue) {
+        this.posts = this.postsService.add(formValue);
+    }
 }

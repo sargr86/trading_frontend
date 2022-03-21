@@ -16,4 +16,8 @@ export class PostsService {
     get(params) {
         return this.http.get<Post[]>(`${API_URL}posts/get`, {params});
     }
+
+    add(params) {
+        return this.http.post<Post[]>(`${API_URL}posts/add`, params);
+    }
 }

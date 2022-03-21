@@ -1096,6 +1096,10 @@ mat-error {
     background-color: $metl-green !important;
 }
 
+.toast-error {
+    background-color: $red !important;
+}
+
 .mat-tab-body-content {
     @media only screen and (max-width: 768px) {
         margin-top: 20px !important;

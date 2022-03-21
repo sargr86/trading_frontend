@@ -8,7 +8,8 @@
                 <strong>{{member.first_name + ' ' + member.last_name}}</strong>
             </div>
             <app-group-members-actions-menu [member]="member" [authUser]="authUser" [selectedGroup]="selectedGroup"
-                                            [isOwnGroup]="isOwnGroup"></app-group-members-actions-menu>
+                                            *ngIf="isOwnGroup" [isOwnGroup]="isOwnGroup">
+            </app-group-members-actions-menu>
         </li>
     </ul>
 </div>

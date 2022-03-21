@@ -1,20 +1,33 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {PostsService} from '@core/services/posts.service';
+import {Observable, Subscription} from 'rxjs';
+import {Post} from '@shared/models/post';
+import trackByElement from '@core/helpers/track-by-element';
 
 @Component({
-  selector: 'app-posts-tab',
-  templateUrl: './posts-tab.component.html',
-  styleUrls: ['./posts-tab.component.scss']
+    selector: 'app-posts-tab',
+    templateUrl: './posts-tab.component.html',
+    styleUrls: ['./posts-tab.component.scss']
 })
 export class PostsTabComponent implements OnInit {
 
     @Input() selectedGroup;
     @Input() isOwnGroup;
 
-    constructor() {
+    posts: Observable<Post[]>;
+    subscriptions: Subscription[] = [];
+    trackByElement = trackByElement;
+
+    constructor(
+        private postsService: PostsService
+    ) {
     }
 
     ngOnInit(): void {
-        // console.log(this.selectedGroup)
+        this.getGroupPosts();
     }
 
+    getGroupPosts() {
+        this.posts = this.postsService.get({group_id: this.selectedGroup.id});
+    }
 }

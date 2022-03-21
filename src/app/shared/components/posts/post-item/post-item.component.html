@@ -1,0 +1,33 @@
+<div class="post-item" *ngIf="post">
+    <div class="posted">
+        <p>Posted by<span>{{post.post_author.username}}</span></p>
+        <p>{{post.created_at| dateFromNow}}</p>
+    </div>
+
+    <div class="info">
+        <div class="left-wrap">
+            <div class="voting-container">
+                <button class="vote-up-btn active">
+                    <span class="material-icons">forward</span>
+                </button>
+                <div class="vote-count">{{post.votes}}</div>
+                <button class="vote-down-btn">
+                    <span class="material-icons">forward</span>
+                </button>
+            </div>
+        </div>
+        <div class="right-wrap">
+            <p>{{post.description}}</p>
+
+            <img class="post-cover" [src]="post.cover_img|getImgPath: 'post_covers'">
+
+            <div class="post-menu">
+                <div class="menu">
+                    <a href=""><span class="material-icons">chat_bubble</span>Comments</a>
+                    <a href=""><span class="material-icons">share</span>Share</a>
+                </div>
+                <div class="dotes"><span class="material-icons">more_vert</span></div>
+            </div>
+        </div>
+    </div>
+</div>

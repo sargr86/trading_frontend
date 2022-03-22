@@ -12,11 +12,15 @@ export class PostsStoreService {
     private userPostsSource = new BehaviorSubject([]);
     userPosts$ = this.userPostsSource.asObservable();
 
+    get allPosts() {
+        return this.allPostsSource.getValue();
+    }
+
 
     constructor() {
     }
 
-    setPosts(posts: Post[]) {
+    setAllPosts(posts: Post[]) {
         this.allPostsSource.next(posts);
     }
 }

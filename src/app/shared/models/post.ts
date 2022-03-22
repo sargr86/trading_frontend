@@ -10,6 +10,7 @@ export interface Post {
     views: number;
     privacy: number;
     post_author: User;
+    post_group: any;
     created_at: Date;
     updated_at: Date;
 }

@@ -8,16 +8,18 @@ import {Post} from '@shared/models/post';
 })
 export class PostItemComponent implements OnInit, AfterViewInit {
     @Input() post: Post;
+    @Input() group;
+    @Input() accessedFromGroup = false;
 
     constructor() {
     }
 
     ngOnInit(): void {
-        console.log(this.post)
+        // console.log(this.post)
     }
 
     ngAfterViewInit() {
-        console.log(this.post)
+        // console.log(this.post)
     }
 
 }

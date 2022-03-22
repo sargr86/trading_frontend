@@ -124,7 +124,7 @@ export const MAIN_SECTIONS = [
         name: 'News feed',
         img: 'item-8.png',
         icon: '',
-        link: '/chat/rooms',
+        link: '/posts/news-feed',
 
         production: false,
         auth: true

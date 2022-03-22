@@ -19,10 +19,14 @@ export class PostsService {
 
     getGroupPosts(params) {
         return this.http.get<Post[]>(`${API_URL}posts/get`, {params})
-            // .pipe(shareReplay(1))
-            // .subscribe((posts: Post[]) => {
-            //     this.postsStore.setUserPosts(posts);
-            // });
+    }
+
+    getAllPosts(params) {
+        return this.http.get<Post[]>(`${API_URL}posts/get`, {params})
+        .pipe(shareReplay(1))
+        .subscribe((posts: Post[]) => {
+            this.postsStore.setAllPosts(posts);
+        });
     }
 
     add(params) {

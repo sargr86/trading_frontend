@@ -4,6 +4,7 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PostsService} from '@core/services/posts.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-post-form',
@@ -18,10 +19,11 @@ export class PostFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         public userStore: UserStoreService,
-        private groupsStore: GroupsStoreService,
+        public groupsStore: GroupsStoreService,
         private route: ActivatedRoute,
         private router: Router,
-        private postsService: PostsService
+        private postsService: PostsService,
+        private _location: Location
     ) {
     }
 
@@ -37,17 +39,18 @@ export class PostFormComponent implements OnInit {
             description: ['', Validators.required],
             username: [this.userStore.authUser.username],
             author_id: [this.userStore.authUser?.id],
-            group_id: [queryParams.group_id],
+            group_id: [queryParams.group_id || ''],
             votes: 1
         });
     }
 
     async savePost() {
         // this.formReady.emit(this.postForm.value);
-        // this.postForm.reset('description');
         console.log(this.postForm.value, this.selectedGroup)
+        this._location.back();
         this.postsService.add(this.postForm.value).subscribe();
-        await this.router.navigateByUrl('/groups/test_1/posts');
+        this.postForm.reset('description');
+        // await this.router.navigateByUrl('/groups/test_1/posts');
     }
 
 }

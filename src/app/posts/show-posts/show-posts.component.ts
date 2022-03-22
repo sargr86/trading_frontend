@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PostsService} from '@core/services/posts.service';
+import trackByElement from '@core/helpers/track-by-element';
+import {UserStoreService} from '@core/services/stores/user-store.service';
+import {PostsStoreService} from '@core/services/stores/posts-store.service';
 
 @Component({
     selector: 'app-show-posts',
@@ -8,17 +11,21 @@ import {PostsService} from '@core/services/posts.service';
 })
 export class ShowPostsComponent implements OnInit {
     posts = [];
+    trackByElement = trackByElement;
 
     constructor(
-        private postsService: PostsService
+        private postsService: PostsService,
+        public postsStore: PostsStoreService,
+        private userStore: UserStoreService
     ) {
     }
 
     ngOnInit(): void {
+        this.getAllPosts();
     }
 
-    getPosts() {
-
+    getAllPosts() {
+        this.postsService.getAllPosts({user_id: this.userStore.authUser.id});
     }
 
 }

@@ -1,3 +1,3 @@
 <app-post-form-placeholder [selectedGroup]="selectedGroup"></app-post-form-placeholder>
-<app-post-item *ngFor="let post of posts|async; trackBy: trackByElement" [post]="post">
+<app-post-item *ngFor="let post of groupPosts$|async; trackBy: trackByElement" [post]="post">
 </app-post-item>

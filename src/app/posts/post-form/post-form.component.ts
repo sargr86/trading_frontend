@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PostsService} from '@core/services/posts.service';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Component({
     selector: 'app-post-form',
@@ -17,6 +18,7 @@ export class PostFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         public userStore: UserStoreService,
+        private groupsStore: GroupsStoreService,
         private route: ActivatedRoute,
         private router: Router,
         private postsService: PostsService
@@ -24,8 +26,10 @@ export class PostFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.initForm(this.route.snapshot.queryParams);
-        console.log(this.postForm.value)
+        const queryParams = this.route.snapshot.queryParams;
+        console.log(queryParams.group_id)
+        this.initForm(queryParams);
+        this.selectedGroup = this.groupsStore.groups.find(g => g.id === +queryParams.group_id);
     }
 
     initForm(queryParams) {
@@ -41,9 +45,9 @@ export class PostFormComponent implements OnInit {
     async savePost() {
         // this.formReady.emit(this.postForm.value);
         // this.postForm.reset('description');
-        console.log(this.postForm.value)
+        console.log(this.postForm.value, this.selectedGroup)
         this.postsService.add(this.postForm.value).subscribe();
-        await this.router.navigateByUrl('/posts/groups/' + this.selectedGroup.custom_name + '/posts');
+        await this.router.navigateByUrl('/groups/test_1/posts');
     }
 
 }

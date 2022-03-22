@@ -13,13 +13,13 @@ export class PostsTabComponent implements OnInit {
 
     @Input() selectedGroup;
     @Input() isOwnGroup;
+    groupPosts$: Observable<Post[]>;
 
-    posts: Observable<Post[]>;
-    subscriptions: Subscription[] = [];
+
     trackByElement = trackByElement;
 
     constructor(
-        private postsService: PostsService
+        private postsService: PostsService,
     ) {
     }
 
@@ -28,10 +28,8 @@ export class PostsTabComponent implements OnInit {
     }
 
     getGroupPosts() {
-        this.posts = this.postsService.get({group_id: this.selectedGroup.id});
+        this.groupPosts$ = this.postsService.getGroupPosts({group_id: this.selectedGroup.id});
     }
 
-    addPost(formValue) {
-        this.posts = this.postsService.add(formValue);
-    }
+
 }

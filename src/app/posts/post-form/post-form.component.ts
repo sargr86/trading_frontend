@@ -7,6 +7,7 @@ import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 import {Location} from '@angular/common';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {CK_EDITOR_CONFIG} from '@core/constants/global';
+import {SocketIoService} from '@core/services/socket-io.service';
 
 @Component({
     selector: 'app-post-form',
@@ -15,6 +16,7 @@ import {CK_EDITOR_CONFIG} from '@core/constants/global';
 })
 export class PostFormComponent implements OnInit {
     postForm: FormGroup;
+    authUser;
     Editor = ClassicEditor;
 
     @Input() selectedGroup;
@@ -24,6 +26,7 @@ export class PostFormComponent implements OnInit {
         private fb: FormBuilder,
         public userStore: UserStoreService,
         public groupsStore: GroupsStoreService,
+        private socketService: SocketIoService,
         private route: ActivatedRoute,
         private router: Router,
         private postsService: PostsService,
@@ -33,6 +36,7 @@ export class PostFormComponent implements OnInit {
 
     ngOnInit(): void {
         const queryParams = this.route.snapshot.queryParams;
+        this.authUser = this.userStore.authUser;
         ClassicEditor.defaultConfig = CK_EDITOR_CONFIG;
 
         // console.log(queryParams.group_id)
@@ -55,9 +59,16 @@ export class PostFormComponent implements OnInit {
 
         if (this.postForm.valid) {
             console.log(this.postForm.value, this.selectedGroup)
-            this._location.back();
-            this.postsService.add(this.postForm.value).subscribe();
-            this.postForm.reset('description');
+            this.postsService.add(this.postForm.value).subscribe(() => {
+                this.socketService.postAdded({
+                    from_user: this.authUser,
+                    ...this.postForm.value,
+                    group: this.selectedGroup,
+                    msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> added a new post`
+                });
+                this._location.back();
+                this.postForm.reset();
+            });
             // await this.router.navigateByUrl('/groups/test_1/posts');
         }
     }

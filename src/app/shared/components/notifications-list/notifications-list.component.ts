@@ -61,6 +61,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
         this.getRemovedFromPageGroup();
         this.getLeftGroup();
         this.getMakeAdminRequest();
+        this.getPostAdded();
     }
 
     getNotifications() {
@@ -457,6 +458,14 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
         const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
         this.notificationsStore.setInitialNotifications(notifications);
+    }
+
+    getPostAdded() {
+        this.subscriptions.push(this.socketService.getPostAdded().subscribe((data: any) => {
+            const {group, notification} = data;
+            this.notificationsStore.updateNotifications(notification);
+            console.log('get post added', data)
+        }));
     }
 
     isNotificationRead(notification) {

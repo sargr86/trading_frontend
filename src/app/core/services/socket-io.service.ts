@@ -425,6 +425,18 @@ export class SocketIoService {
         });
     }
 
+    postAdded(data) {
+        this.socket.emit('postAdded', data);
+    }
+
+    getPostAdded() {
+        return new Observable(observer => {
+            this.socket.on('getPostAdded', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
     disconnect(data) {
         this.socket.emit('forceDisconnect', data);
     }

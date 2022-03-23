@@ -208,3 +208,37 @@ export const ALLOWED_COUNTRIES = ['us'];
 export const DEFAULT_COUNTRY = 'us';
 
 export const COIN_WORTH = 0.0199;
+
+export const CK_EDITOR_CONFIG =
+    {
+        removePlugins: 'toolbar',
+        toolbar: {
+            items: [
+                'bold',
+                'italic',
+                'link',
+                '|',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'insertTable',
+                '|',
+                'imageUpload',
+                '|',
+                'undo',
+                'redo'
+            ]
+        },
+        image: {
+            toolbar: [
+                'imageStyle:full',
+                'imageStyle:side',
+                '|',
+                'imageTextAlternative'
+            ]
+        },
+        table: {
+            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+        },
+        language: 'en'
+    };

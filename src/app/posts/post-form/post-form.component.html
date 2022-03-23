@@ -1,4 +1,5 @@
 <div id="post-form-container">
+    <h1>Create a post</h1>
     <form [formGroup]="postForm">
         <div class="choose-group">
             <select formControlName="group_id">
@@ -7,19 +8,14 @@
                         [value]="group.id">{{group.name}}</option>
             </select>
         </div>
-        <div class="user-avatar" *ngIf="(userStore.authUser$|async) as authUser">
-            <img class="avatar" [src]="authUser.avatar|getImgPath: 'user_avatars'">
-        </div>
 
         <div class="form-controls">
-            <textarea formControlName="description" placeholder="Create a public post..."></textarea>
+            <ckeditor [editor]="Editor" [config]="{removePlugins : [['format']]}"
+                      [formControlName]="'description'"></ckeditor>
+            <!--            <textarea formControlName="description" placeholder="Create a public post..."></textarea>-->
 
             <div class="action-btn-wrap">
-                <button>
-                    <img src="assets/img/photo-green-small.svg">
-                    <span>Add photo/video</span>
-                </button>
-                <button (click)="savePost()">Add post</button>
+                <button (click)="savePost()" id="add-post">Post</button>
             </div>
         </div>
     </form>

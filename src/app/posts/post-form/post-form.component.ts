@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PostsService} from '@core/services/posts.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 import {Location} from '@angular/common';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {CK_EDITOR_CONFIG} from '@core/constants/global';
 
 @Component({
     selector: 'app-post-form',
@@ -13,6 +15,8 @@ import {Location} from '@angular/common';
 })
 export class PostFormComponent implements OnInit {
     postForm: FormGroup;
+    Editor = ClassicEditor;
+
     @Input() selectedGroup;
     @Output() formReady = new EventEmitter();
 
@@ -29,7 +33,9 @@ export class PostFormComponent implements OnInit {
 
     ngOnInit(): void {
         const queryParams = this.route.snapshot.queryParams;
-        console.log(queryParams.group_id)
+        ClassicEditor.defaultConfig = CK_EDITOR_CONFIG;
+
+        // console.log(queryParams.group_id)
         this.initForm(queryParams);
         this.selectedGroup = this.groupsStore.groups.find(g => g.id === +queryParams.group_id);
     }
@@ -46,11 +52,14 @@ export class PostFormComponent implements OnInit {
 
     async savePost() {
         // this.formReady.emit(this.postForm.value);
-        console.log(this.postForm.value, this.selectedGroup)
-        this._location.back();
-        this.postsService.add(this.postForm.value).subscribe();
-        this.postForm.reset('description');
-        // await this.router.navigateByUrl('/groups/test_1/posts');
+
+        if (this.postForm.valid) {
+            console.log(this.postForm.value, this.selectedGroup)
+            this._location.back();
+            this.postsService.add(this.postForm.value).subscribe();
+            this.postForm.reset('description');
+            // await this.router.navigateByUrl('/groups/test_1/posts');
+        }
     }
 
 }

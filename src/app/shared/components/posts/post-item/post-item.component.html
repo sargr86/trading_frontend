@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="right-wrap">
-            <p>{{post.description}}</p>
+            <p [innerHTML]="post.description"></p>
 
             <img class="post-cover" [src]="post.cover_img|getImgPath: 'post_covers'">
 

@@ -70,7 +70,7 @@ button:active, button:focus {
     outline: none !important;
 }
 
-li {
+li:not(.post-item li) {
     padding: 0;
     list-style-type: none;
 }
@@ -1155,6 +1155,10 @@ mat-error {
 
 mat-sidenav-container {
     //height: 100vh!important; // gotta think about this more
+}
+
+.ck.ck-editor__main > .ck-editor__editable {
+    height: 300px !important;
 }
 
 @media screen and (max-width: 545px) {

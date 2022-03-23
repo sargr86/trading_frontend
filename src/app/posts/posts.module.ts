@@ -5,6 +5,7 @@ import {PostsRoutingModule} from './posts-routing.module';
 import {ShowPostsComponent} from './show-posts/show-posts.component';
 import {PostFormComponent} from '@app/posts/post-form/post-form.component';
 import {SharedModule} from '@shared/shared.module';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {SharedModule} from '@shared/shared.module';
     imports: [
         CommonModule,
         PostsRoutingModule,
-        SharedModule
+        SharedModule,
+        CKEditorModule
     ]
 })
 export class PostsModule {

@@ -54,6 +54,12 @@ export class PostFormComponent implements OnInit {
         });
     }
 
+    selectGroup(e) {
+        console.log(e.target.value);
+        this.selectedGroup = this.groupsStore.groups.find(g => g.id === +e.target.value);
+
+    }
+
     async savePost() {
         // this.formReady.emit(this.postForm.value);
 
@@ -64,13 +70,25 @@ export class PostFormComponent implements OnInit {
                     from_user: this.authUser,
                     ...this.postForm.value,
                     group: this.selectedGroup,
-                    msg: `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> added a new post`
+                    msg: this.getPostNotificationText()
                 });
                 this._location.back();
                 this.postForm.reset();
             });
             // await this.router.navigateByUrl('/groups/test_1/posts');
         }
+
+
+    }
+
+    getPostNotificationText() {
+        let msg = `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> added a new post`;
+        if (this.selectedGroup) {
+            msg = `<strong>${this.authUser.first_name} ${this.authUser.last_name}</strong> posted in
+                    <strong>${this.selectedGroup.name}</strong> group`;
+        }
+
+        return msg;
     }
 
 }

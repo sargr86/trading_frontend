@@ -2,7 +2,7 @@
     <h1>Create a post</h1>
     <form [formGroup]="postForm">
         <div class="choose-group">
-            <select formControlName="group_id">
+            <select formControlName="group_id" (change)="selectGroup($event)">
                 <option value="" selected disabled>Select a group</option>
                 <option *ngFor="let group of groupsStore.groups"
                         [value]="group.id">{{group.name}}</option>

@@ -4,7 +4,7 @@
 .trending-text {
     color: $red;
     font-size: 18px;
-    font-family: "Muli-Bold";
+    font-family: "Muli-Bold", sans-serif;
     margin-bottom: 24px;
 }
 
@@ -21,6 +21,7 @@
         height: 225px;
         max-width: 400px;
         cursor: pointer;
+        object-fit: cover;
     }
 
     @media (max-width: 992px) {

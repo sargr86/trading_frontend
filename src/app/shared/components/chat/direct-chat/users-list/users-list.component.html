@@ -1,4 +1,4 @@
-<div class="people-groups-container" [hidden]="mobileHelper.isChatUsersListSize()" [class.sidebar-mode]="sidebarMode"
+<div class="people-groups-container" [class.sidebar-mode]="sidebarMode"
      [class.responsive-list]="mobileHelper.isChatUsersListSize()">
     <div id="people-list" class="list-wrap">
         <div class="top-actions" *ngIf="!sidebarMode">
@@ -36,7 +36,7 @@
 
                 <ng-template #itemTemplate let-user="user" let-lastMsg="lastMsg">
                     <div class="d-flex user-last-msg align-items-center justify-content-between">
-                        <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)" >
+                        <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)">
 
                             <div class="img user-avatar">
                                 <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">

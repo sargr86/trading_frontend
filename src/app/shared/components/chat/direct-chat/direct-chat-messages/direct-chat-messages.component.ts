@@ -45,7 +45,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     trackUsersMessagesChange() {
         this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             this.selectedUserMessages = dt;
-            if (dt) {
+            if (dt && dt.length > 0) {
                 this.isBlockedUser = !!dt.users_connections[0].is_blocked;
                 this.typingText = null;
             }
@@ -109,6 +109,9 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     backToUsers() {
         this.selectedUserMessages = null;
+        this.usersMessagesStore.changeUser([]);
+        console.log(this.usersMessagesStore.selectedUserMessages)
+        this.usersMessagesStore.showResponsiveChatBox = false;
     }
 
     identifyMessage(index, item) {

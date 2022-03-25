@@ -7,12 +7,15 @@ import {DatePipe} from '@angular/common';
 import {GroupByPipe} from '@shared/pipes/group-by.pipe';
 import {Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
+import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
+import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 
 
 @Component({
     selector: 'app-show-messages',
     templateUrl: './show-messages.component.html',
-    styleUrls: ['./show-messages.component.scss']
+    styleUrls: ['./show-messages.component.scss'],
+    providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
 })
 export class ShowMessagesComponent implements OnInit {
     activeTab = 'direct';
@@ -28,9 +31,11 @@ export class ShowMessagesComponent implements OnInit {
         private chatService: ChatService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        public usersMessagesStore: UsersMessagesSubjectService,
         private subject: SubjectService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
+        public mobileHelper: MobileResponsiveHelper,
     ) {
     }
 
@@ -56,6 +61,11 @@ export class ShowMessagesComponent implements OnInit {
             this.newMessagesCountInGroups = newMessagesSource.length;
             this.subject.setNewMessagesSourceData({source: newMessagesSource, type: 'group'});
         }));
+    }
+
+    isRightWrapHidden() {
+        return this.mobileHelper.isChatUsersListSize() &&
+            !this.usersMessagesStore.showResponsiveChatBox;
     }
 
 

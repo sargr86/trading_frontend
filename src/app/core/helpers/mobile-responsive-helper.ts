@@ -1,5 +1,5 @@
 export class MobileResponsiveHelper {
      isChatUsersListSize() {
-        return window.screen.availWidth <= 1111;
+        return window.screen.availWidth <= 558;
     }
 }

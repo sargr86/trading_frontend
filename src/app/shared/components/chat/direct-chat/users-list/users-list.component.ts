@@ -52,8 +52,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
                 return !!connection.is_blocked === this.showBlockedUsers && !!connection.confirmed;
             });
             // console.log(this.filteredUsersMessages)
-            this.selectedUserMessages = this.filteredUsersMessages[0];
-            this.usersMessagesStore.changeUser(this.selectedUserMessages);
+            if (!this.mobileHelper.isChatUsersListSize()) {
+                this.selectedUserMessages = this.filteredUsersMessages[0];
+                this.usersMessagesStore.changeUser(this.selectedUserMessages);
+            }
         });
     }
 
@@ -61,6 +63,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
         if (this.sidebarMode) {
             this.usersMessagesStore.showBottomChatBox = true;
             this.groupsMessagesStore.showBottomChatBox = false;
+        } else {
+            this.usersMessagesStore.showResponsiveChatBox = true;
         }
         this.selectedUserMessages = userMessages;
         this.usersMessagesStore.changeUser(userMessages);

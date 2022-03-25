@@ -13,6 +13,7 @@ export class UsersMessagesSubjectService {
     selectedUserMessages$ = this.selectedUserMessagesSource.asObservable();
 
     showBottomChatBox = false;
+    showResponsiveChatBox = false;
 
     constructor() {
     }

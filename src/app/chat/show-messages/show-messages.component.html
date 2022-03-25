@@ -2,7 +2,7 @@
     <app-user-tags></app-user-tags>
     <div class="page-wrap" [class.responsive-chat-wrap]="mobileHelper.isChatUsersListSize()">
         <div class="left-wrap"
-             [hidden]="usersMessagesStore.showResponsiveChatBox && this.mobileHelper.isChatUsersListSize()">
+             [hidden]="mobileHelper.isChatUsersListSize() && !isRightWrapHidden()">
             <div class="tab-wrap">
                 <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()"
                         matBadgePosition="before"

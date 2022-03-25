@@ -15,6 +15,7 @@ export class GroupsMessagesSubjectService {
 
     showMembersForm = false;
     showBottomChatBox = false;
+    showResponsiveChatBox = false;
 
     constructor() {
     }

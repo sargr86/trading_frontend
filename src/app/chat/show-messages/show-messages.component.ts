@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
+import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class ShowMessagesComponent implements OnInit {
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
         public usersMessagesStore: UsersMessagesSubjectService,
+        public groupsMessagesStore: GroupsMessagesSubjectService,
         private subject: SubjectService,
         private datePipe: DatePipe,
         private groupBy: GroupByPipe,
@@ -64,8 +66,11 @@ export class ShowMessagesComponent implements OnInit {
     }
 
     isRightWrapHidden() {
-        return this.mobileHelper.isChatUsersListSize() &&
-            !this.usersMessagesStore.showResponsiveChatBox;
+        if (this.mobileHelper.isChatUsersListSize()) {
+            return !this.usersMessagesStore.showResponsiveChatBox
+                && !this.groupsMessagesStore.showResponsiveChatBox;
+        }
+        return false;
     }
 
 

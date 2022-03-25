@@ -111,6 +111,8 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         if (this.sidebarMode) {
             this.usersMessagesStore.showBottomChatBox = false;
             this.groupsMessagesStore.showBottomChatBox = true;
+        } else {
+            this.groupsMessagesStore.showResponsiveChatBox = true;
         }
     }
 

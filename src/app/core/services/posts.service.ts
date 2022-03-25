@@ -23,13 +23,17 @@ export class PostsService {
 
     getAllPosts(params) {
         return this.http.get<Post[]>(`${API_URL}posts/get`, {params})
-        .pipe(shareReplay(1))
-        .subscribe((posts: Post[]) => {
-            this.postsStore.setAllPosts(posts);
-        });
+            .pipe(shareReplay(1))
+            .subscribe((posts: Post[]) => {
+                this.postsStore.setAllPosts(posts);
+            });
     }
 
     add(params) {
         return this.http.post<Post[]>(`${API_URL}posts/add`, params);
+    }
+
+    getById(params) {
+        return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params})
     }
 }

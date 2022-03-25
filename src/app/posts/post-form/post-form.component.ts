@@ -57,7 +57,6 @@ export class PostFormComponent implements OnInit {
     selectGroup(e) {
         console.log(e.target.value);
         this.selectedGroup = this.groupsStore.groups.find(g => g.id === +e.target.value);
-
     }
 
     async savePost() {
@@ -75,10 +74,7 @@ export class PostFormComponent implements OnInit {
                 this._location.back();
                 this.postForm.reset();
             });
-            // await this.router.navigateByUrl('/groups/test_1/posts');
         }
-
-
     }
 
     getPostNotificationText() {

@@ -45,6 +45,9 @@
         </div>
 
         <div id="selected-contacts">
+            <p id="selected-contacts-count" *ngIf="selectedContacts.length as length">
+                {{length + ' ' + (length === 1 ? 'contact' : 'contacts')}}  selected
+            </p>
             <ul formArrayName="contacts">
                 <li *ngFor="let control of checkedContactCtrls;let i = index" [formGroupName]="i">
                     <div class="details">

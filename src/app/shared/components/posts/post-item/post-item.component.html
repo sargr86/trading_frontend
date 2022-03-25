@@ -1,10 +1,11 @@
 <div class="post-item" *ngIf="post">
     <div class="posted">
         <p>
-            Posted by <span>{{post.post_author.username}}</span>
-            <ng-container *ngIf="post.post_group && !accessedFromGroup">
+            Posted by <span [routerLink]="'/users/'+post.post_author.username"
+                            class="author-username">{{post.post_author.username}}</span>
+            <ng-container *ngIf="!accessedFromGroup && post.post_group as group">
                 <i class="fas fa-arrow-right group-pointer"></i>
-                <span>{{post.post_group?.name}}</span>
+                <span class="post-group-name" [routerLink]="'/groups/'+group.custom_name+'/about'">{{group.name}}</span>
             </ng-container>
         </p>
         <p>{{post.created_at| dateFromNow}}</p>
@@ -25,7 +26,7 @@
         <div class="right-wrap">
             <p [innerHTML]="post.description"></p>
 
-            <img class="post-cover" [src]="post.cover_img|getImgPath: 'post_covers'">
+            <img class="post-cover" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'post_covers'">
 
             <div class="post-menu">
                 <div class="menu">

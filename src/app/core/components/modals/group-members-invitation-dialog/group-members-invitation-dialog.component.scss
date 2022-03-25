@@ -81,6 +81,13 @@ input[type="checkbox"] {
         background-color: #c8c8c873;
         flex: 40%;
 
+        #selected-contacts-count {
+            font-size: 14px;
+            font-family: "Muli-SemiBold", sans-serif;
+            color: $metl-green;
+            margin: 20px;
+        }
+
         li {
             padding-left: 20px;
             width: 95%;

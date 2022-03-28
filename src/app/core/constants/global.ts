@@ -126,7 +126,7 @@ export const MAIN_SECTIONS = [
         icon: '',
         link: '/posts/news-feed',
 
-        production: false,
+        production: true,
         auth: true
     },
     {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},

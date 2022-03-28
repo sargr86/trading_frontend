@@ -45,6 +45,10 @@ html, body, p, h1, h2, h3, h4, ul {
     }
 }
 
+.mat-drawer-inner-container {
+    padding: 0 10px !important;
+}
+
 input, button {
     outline: none;
     border: none;
@@ -798,6 +802,10 @@ mat-optgroup {
     }
 }
 
+.mat-form-field-label-wrapper{
+    overflow: unset !important;
+}
+
 .liked {
     color: #18B587 !important;
 }
@@ -1074,7 +1082,7 @@ mat-error {
     padding: 0px !important;
     display: block;
     justify-content: space-between;
-    max-width: 165px;
+    max-width: 200px;
     width: 100%;
 
     .redAvatarImg {
@@ -1196,6 +1204,21 @@ mat-sidenav-container {
         display: none;
     }
 }
+
+@media screen and (max-width: 374px) and  (min-width:320px) {
+    .cdk-overlay-connected-position-bounding-box {
+        width: 93px !important;
+    }
+}
+
+
+@media screen and (max-width: 992px) and (min-width: 320px) {
+  #sidebar-watchlist  {
+     padding: 0 25px !important;
+  }
+}
+
+
 
 
 @import "responsive";

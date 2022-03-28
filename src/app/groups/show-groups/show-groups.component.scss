@@ -1,6 +1,9 @@
 @import 'variables';
 @import 'mixins';
 
+
+
+
 .row:first-of-type {
     display: flex;
     justify-content: flex-end;
@@ -13,7 +16,7 @@
 }
 
 .groups-type-title {
-    border-bottom: 1px solid $light_gray;
+    //border-bottom: 1px solid $light_gray;
     margin: 20px;
 }
 
@@ -38,3 +41,16 @@ ul {
         }
     }
 }
+
+
+.bottomClass{
+    margin-bottom: 50px!important;
+    font-family: 'Muli-SemiBold';
+    font-size: 25px;
+    line-height: 36px;
+    letter-spacing: 0px;
+    color: #5B5B5B;
+    opacity: 1;
+}
+
+

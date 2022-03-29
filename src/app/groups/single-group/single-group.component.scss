@@ -95,3 +95,21 @@
     align-items: center;
     justify-content: space-around;
 }
+
+@media only screen and (max-width: 407px) {
+    #privacy-type {
+        font-size: 13px!important;
+    }
+
+    #members-count {
+        margin-left: 10px !important;
+
+
+        strong {
+            font-size: 13px !important
+        }
+    }
+    #invite-to-group-btn {
+        margin-left: 10px !important;
+    }
+}

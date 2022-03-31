@@ -37,6 +37,7 @@
             height: 40px;
             border: 1px solid #c3c3c3;
             width: 100%;
+            padding-left: 10px;
         }
 
         .button-wrap {
@@ -49,3 +50,12 @@
         }
     }
 }
+//
+//.backOption{
+//    background-color: #18B587 !important;
+//    color: white;
+//}
+.backOption:hover{
+    background-color: #18B587 !important
+}
+

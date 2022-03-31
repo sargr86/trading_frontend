@@ -91,6 +91,7 @@
             .post-menu {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 margin-top: 16px;
                 color: #545454;
 
@@ -98,8 +99,9 @@
                     display: flex;
 
                     a {
-                        margin-right: 40px;
+                        margin-right: 10px;
                         display: flex;
+                        align-items: center;
                         text-decoration: none;
                         color: #545454;
                         transition: all 0.1s ease;
@@ -121,4 +123,20 @@
             }
         }
     }
+}
+
+@media only screen and (max-width: 450px) {
+    .right-wrap {
+        padding: 0 24px 4px 0px !important;
+    }
+    .menu {
+        a {
+            font-size: 12px;
+            margin-right: 6px !important;
+            span {
+                margin-right: 6px;
+            }
+        }
+    }
+
 }

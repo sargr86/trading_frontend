@@ -9,9 +9,13 @@ form {
     }
 
     .btn.enter {
-        background-color: #777;
+        padding:10px 20px;
+        background-color: #18B587;
+        margin-left: 15px;
         color: white;
         text-transform: uppercase;
+        min-width: 120px;
+        cursor: pointer;
     }
 
     .btn.text-btn {
@@ -19,7 +23,11 @@ form {
         color: #777;
         text-transform: uppercase;
         font-weight: bold;
+        padding:10px 20px;
+        min-width: 120px;
+        cursor: pointer;
     }
+
 }
 
 

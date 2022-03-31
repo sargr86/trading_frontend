@@ -64,6 +64,11 @@
     width: 80%;
 }
 
+@media only screen and (max-width: 558px) {
+    .right-wrap {
+        width: 100%;
+    }
+}
 .responsive-chat-wrap {
     .left-wrap {
         max-width: 451px;

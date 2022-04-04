@@ -113,3 +113,31 @@
         margin-left: 10px !important;
     }
 }
+
+@media only screen and (min-width: 420px) and (max-width: 530px) {
+    #joined-group-btn{
+        width: 80px !important;
+        padding: 15px 8px !important;
+    }
+
+    #invite-to-group-btn{
+        padding: 15px 8px  !important;
+        width: 80px !important;
+        margin-left: 7px !important
+    }
+
+    #members-count{
+        margin-left: 5px !important;
+    }
+    #privacy-type span{
+        margin-left: 5px !important;
+    }
+}
+
+
+@media only screen  and (max-width: 420px) {
+ .row{
+     flex-direction: column;
+ }
+}
+

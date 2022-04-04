@@ -3,6 +3,18 @@
 //@import "../../../channels/show-subscriptions/show-subscriptions.component";
 
 #search-results-container {
+    .channel-item{
+        display: flex;
+    }
+
+   .subscribe-to-channel-btn{
+      //margin-left: 20px;
+       margin-top: 20px;
+    }
+
+    .video-container{
+        margin-top: 20px;
+    }
     .thumbnail {
         width: 100%;
         max-width: 432px;
@@ -11,17 +23,21 @@
         align-items: center;
         justify-content: center;
 
-
         img {
             width: 100%;
             max-width: 432px;
+
         }
     }
 
     .info {
         padding-left: 32px;
         max-width: 310px;
+        //display: flex;
+        //align-items: flex-start;
+
     }
+
 
     @media screen and (max-width: 1022px) {
         flex-direction: column;
@@ -33,5 +49,35 @@
             padding-left: 0;
             margin-top: 8px;
         }
+    }
+}
+.newAvatar{
+    width: 200px !important;
+    height: 200px !important;
+    border-radius: 50%;
+}
+
+.nameStyle{
+    margin: 0;
+    text-transform: capitalize;
+    font-family: "Muli-Bold", sans-serif !important;
+    color: #545454;
+    font-size: 16px;
+    overflow: hidden;
+    max-width: 400px;
+    height: 20px;
+}
+
+.video-countStyle{
+    font-family: "Muli-Bold";
+    color: #818181;
+    font-size: 14px;
+    margin-top:7px
+}
+
+
+ @media screen and (max-width: 1022px) {
+    .channel-item{
+        flex-direction: column;
     }
 }

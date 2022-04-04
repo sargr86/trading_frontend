@@ -2,15 +2,17 @@
     <ng-container *ngFor="let channel of channelsVideos">
         <div class="channel-item">
             <div class="thumbnail">
-                <img class="avatar" [src]="channel.avatar|getImgPath:'avatars'"
+                <img class="newAvatar" [src]="channel.avatar|getImgPath:'avatars'"
                      (click)="openChannelPage(channel,channel.user?.username)">
             </div>
             <div class="info">
-                <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
-                <div class="shortened-details">
-                    <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+                <div class="infoPart">
+                    <p class="name nameStyle" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                    <div class="shortened-details">
+                        <p class="video-count video-countStyle">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+                    </div>
+                    <p>{{getDesc(channel.description)}}</p>
                 </div>
-                <p>{{getDesc(channel.description)}}</p>
                 <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
                         [class.subscribed]="checkIfSubscribed(channel)"
                         (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}

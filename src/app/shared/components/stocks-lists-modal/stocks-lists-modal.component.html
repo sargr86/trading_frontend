@@ -1,8 +1,16 @@
 <section id="stocks-lists-modal">
     <div class="user-stocks">
         <div class="top-wrap">
-            <div class="left-group">
-                <h2>My Watchlist</h2>
+            <div class="leftAndRight">
+                <div class="left-group">
+                    <h2>My Watchlist</h2>
+                </div>
+
+                <div class="right-group">
+                    <div class="close-modal-btn">
+                        <i class="fas fa-times" (click)="closeModal()"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="center-group">
@@ -12,11 +20,7 @@
                 <!--                </div>-->
             </div>
 
-            <div class="right-group">
-                <div class="close-modal-btn">
-                    <i class="fas fa-times" (click)="closeModal()"></i>
-                </div>
-            </div>
+
         </div>
 
         <div class="user-stocks-list">
@@ -44,7 +48,7 @@
         <div class="top-wrap">
             <div class="center-group justify-content-between mr-3">
                 <h2 class="mr-3">Tilez</h2>
-                <app-search-stocks-form [hidden]="loader.stocksLoading.status==='loading' && !searched"
+                <app-search-stocks-form class="inputTopWrapPart" [hidden]="loader.stocksLoading.status==='loading' && !searched"
                                         [returnSearchText]="true"
                                         [transparentForm]="true"
                                         (search)="getSearchResults($event)"></app-search-stocks-form>
@@ -54,9 +58,9 @@
                 </div>
             </div>
 
-            <div class="right-group justify-content-center justify-content-xl-end">
+            <div class="right-group belowOne justify-content-center justify-content-xl-end">
                 <div class="stock-type-selector" *ngIf="loader.stocksLoading.status==='finished'">
-                    <select (change)="stockTypeChanged($event)">
+                    <select class="selectClass" (change)="stockTypeChanged($event)">
                         <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType?.value"
                                 [value]="type.value">{{type.name}}</option>
                     </select>

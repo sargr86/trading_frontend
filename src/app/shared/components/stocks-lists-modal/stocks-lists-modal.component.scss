@@ -17,11 +17,36 @@
         .left-group {
             min-width: 190px;
             flex: 1;
+            white-space: nowrap;
+            h2{
+                @media (max-width: 768px) and (min-width: 425px){
+                    font-size: 28px;
+                }
+                @media (max-width: 424px){
+                    font-size: 26px;
+                }
+            }
+
         }
         .center-group {
             flex: 1;
             margin: 0 10px;
             min-width: 200px;
+
+            i{
+                @media (max-width: 992px) {
+                    font-size: 18px !important;
+                }
+            }
+
+            .inputTopWrapPart{
+                max-width: 250px;
+                width: 100%;
+                @media (max-width:540px) {
+                    max-width: 100%
+                }
+
+            }
             .spinner-container {
                 min-width: max-content;
             }
@@ -39,6 +64,8 @@
             min-width: 190px;
             flex: 1;
             justify-content: flex-end;
+
+
             @media (max-width: 1200px) {
                 min-width: auto;
             }
@@ -53,12 +80,24 @@
         }
         h2 {
             margin: 0;
+
+            @media (max-width: 768px) and (min-width: 425px){
+                font-size: 28px;
+            }
+            @media (max-width: 424px){
+                font-size: 26px;
+            }
         }
         i {
             font-size: 20px;
             cursor: pointer;
             transition: 0.2s;
-
+            @media (max-width: 768px) and (min-width: 425px){
+                font-size: 18px;
+            }
+            @media (max-width: 424px){
+                font-size: 16px;
+            }
             &:hover {
                 color: #F53C6F;
             }
@@ -186,14 +225,43 @@ select {
         margin-right: auto;
         margin-left: 0;
     }
-}
-
-.close-modal-btn {
+    @media (max-width: 768px) {
+        margin-right: auto;
+        margin-left: 0;
+    }
     @media (max-width: 540px) {
-        position: absolute;
-        top: 20px;
-        right: 30px;
+        max-width: 100%;
+    }
+    .selectClass{
+        @media (max-width: 540px) {
+            width: 100%;
+        }
     }
 }
+
+.close-modal-btn{
+    display: flex;
+    align-self: flex-end;
+}
+
+.leftAndRight{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1550px;
+    width: 100%;
+}
+
+.belowOne{
+    @media (max-width: 992px) {
+        margin-top: 20px;
+    }
+}
+
+
+
+
+
+
 
 

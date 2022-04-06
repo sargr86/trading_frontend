@@ -29,6 +29,27 @@ form {
     }
 
 }
+@media  (max-width: 1054px) and (min-width: 992px){
+    .buttonsPart{
+        flex-direction: column !important;
+    }
+    .replyBtn{
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}
+@media (max-width: 530px){
+    .buttonsPart{
+        flex-direction: column !important;
+    }
+    .replyBtn{
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}
+.buttonsPart{
+
+}
 
 
 

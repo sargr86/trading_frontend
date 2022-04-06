@@ -11,6 +11,10 @@
         display: flex;
         align-items: center;
         width: 33%;
+        @media (max-width: 890px){
+            flex-direction:column;
+            align-items: unset;
+        }
 
         .image-container {
             position: relative;
@@ -24,12 +28,16 @@
             width: 100%;
 
             #change-thumbnail {
-                background-color: $metl-green;
+                background-color: #b3b3b3;
                 color: $white;
                 margin-left: 10px;
                 display: flex;
                 align-items: center;
                 padding: 8px 24px;
+                @media (max-width: 890px){
+                    margin-left:0;
+                    padding: 8px 21px;
+                }
             }
         }
 
@@ -59,9 +67,20 @@
             transition: 0.3s ease-in-out;
             margin-left: 30px;
             padding: 10px;
-            @media screen and (max-width: 767px) {
-                margin-left: 0;
-            }
+            //@media screen and (max-width: 767px) {
+            //    margin-left: 0;
+            //}
         }
+    }
+}
+@media (max-width: 500px) {
+    .video-tags-right-part {
+        display: flex;
+        flex-direction: column;
+    }
+}
+@media (max-width: 500px) {
+    .actions-video {
+        margin-top: 10px;
     }
 }

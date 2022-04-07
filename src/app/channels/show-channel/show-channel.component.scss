@@ -44,6 +44,12 @@
     //align-items: center;
     //max-width: 287px;
     width: 50%;
+    @media (max-width: 660px){
+        width: 80%;
+    }
+    @media (max-width: 424px){
+        width: 93%;
+    }
 
     .toggle-filters-btn {
         display: flex;
@@ -82,7 +88,6 @@
 #search-videos-form {
     display: flex;
 
-
     .filters-active {
         background-color: $metl-green !important;
         color: $white;
@@ -99,7 +104,6 @@
         margin-right: 5px !important;
     }
 
-
     button {
         background-color: unset;
         height: 23px
@@ -113,6 +117,8 @@
         width: 100%;
     }
 }
+
+
 
 
 

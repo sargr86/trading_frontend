@@ -8,9 +8,12 @@
         <div class="details">
             <h4 class="title">{{video.name}}</h4>
             <div class="shortened-details">
-                    <span class="channel-name" (click)="openChannelPage(video.user.channel, video.user.username)">
-                        {{video.user.channel.name}}
-                    </span>
+                <div class="user-avatar">
+                    <img class="avatar" [src]="video.channel.avatar|getImgPath: 'avatars'">
+                </div>
+                <span class="channel-name" (click)="openChannelPage(video.user.channel, video.user.username)">
+                    {{video.user.channel.name}}
+                </span>
                 <span class="dot">&middot;</span>
                 <span class="watchers-count">
                         {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}

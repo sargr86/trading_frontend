@@ -11,8 +11,8 @@ import * as moment from 'moment';
 })
 export class ShowRegularListComponent implements OnInit {
 
-    @Input('items') items;
-    @Input('authUser') authUser;
+    @Input() items;
+    @Input() authUser;
     trackByElement = trackByElement;
 
     constructor(

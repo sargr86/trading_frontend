@@ -6,7 +6,8 @@
                     <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
                 </div>
                 <div class="text">
-                    <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
+                    <div class="name"
+                         [routerLink]="'/users/'+user.username">{{user.first_name + ' ' + user.last_name}}</div>
                 </div>
             </div>
             <div class="right">
@@ -15,10 +16,8 @@
                 </button>
                 <mat-menu #menu="matMenu">
 
-                    <button mat-menu-item
-
-                            [disableRipple]="true">
-                        <img class="iconDis" src="../../../../assets/img/iconDis.png" alt="">
+                    <button mat-menu-item [disableRipple]="true">
+                        <img class="iconDis" src="assets/img/iconDis.png" alt="">
                         Disconnection
                     </button>
 

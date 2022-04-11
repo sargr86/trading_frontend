@@ -39,6 +39,7 @@
 
         .left {
             display: flex;
+
             .user-avatar {
                 position: relative;
                 margin: auto;
@@ -62,12 +63,16 @@
             .text {
                 display: flex;
                 align-items: center;
-                font-family: "Muli-Regular";
-                letter-spacing: 0px;
+                font-family: "Muli-Regular", sans-serif;
+                letter-spacing: 0;
                 color: #5B5B5B;
                 opacity: 1;
                 @media only screen and (max-width: 320px) {
                     font-size: 15px !important;
+                }
+
+                .name {
+                    cursor: pointer;
                 }
             }
         }
@@ -89,6 +94,7 @@
                     margin-left: 20px;
                     width: 80%;
                 }
+
                 button {
                     @include regularButton;
                     font-size: 14px;
@@ -97,7 +103,8 @@
         }
     }
 }
-        .iconDis {
-            width: 18px !important;
-            height: 18px !important;
-        }
+
+.iconDis {
+    width: 18px !important;
+    height: 18px !important;
+}

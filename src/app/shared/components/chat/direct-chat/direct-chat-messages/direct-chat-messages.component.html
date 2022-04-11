@@ -14,7 +14,7 @@
                 <div class="img">
                     <img alt="user-avatar" class="avatar" [src]="uMessages.avatar|getImgPath: 'user_avatars'">
                 </div>
-                <div class="name">{{uMessages.first_name + ' ' + uMessages.last_name}}</div>
+                <div class="name" *ngIf="uMessages.first_name">{{uMessages.first_name + ' ' + uMessages.last_name}}</div>
             </div>
         </div>
 

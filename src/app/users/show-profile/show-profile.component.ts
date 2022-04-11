@@ -229,7 +229,6 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     onOutletLoaded(component) {
         if (this.connections) {
-            console.log('STOCKS:', this.profileUserStocks)
             component.connections = this.connections;
             component.connectionRequests = this.connectionRequests;
             component.authUser = this.authUser;

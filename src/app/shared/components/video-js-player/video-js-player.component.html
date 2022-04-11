@@ -1,5 +1,5 @@
 <div class="container" *ngIf="videoUrl">
-    <div class="d-flex align-items-center" *ngIf="videoInit==='pending'">
+    <div class="loading-spinner" *ngIf="videoInit==='pending'">
         <mat-spinner [diameter]="15"></mat-spinner>
         <span style="margin-left:10px">Loading video</span>
     </div>

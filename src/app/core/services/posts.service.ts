@@ -34,6 +34,15 @@ export class PostsService {
     }
 
     getById(params) {
-        return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params})
+        return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params});
+    }
+
+    vote(params) {
+        return this.http.put(`${API_URL}posts/vote`, params)
+            .pipe(shareReplay(1))
+            .subscribe((posts: Post[]) => {
+                this.postsStore.setAllPosts(posts);
+
+            });
     }
 }

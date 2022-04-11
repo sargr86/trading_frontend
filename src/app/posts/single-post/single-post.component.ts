@@ -27,4 +27,8 @@ export class SinglePostComponent implements OnInit {
         this.post$ = this.postsService.getById({id: postId});
     }
 
+    vote(postData) {
+        this.postsService.vote(postData);
+    }
+
 }

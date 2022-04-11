@@ -28,4 +28,8 @@ export class ShowPostsComponent implements OnInit {
         this.postsService.getAllPosts({user_id: this.userStore.authUser.id});
     }
 
+    vote(postData) {
+        this.postsService.vote(postData);
+    }
+
 }

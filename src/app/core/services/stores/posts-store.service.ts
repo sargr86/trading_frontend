@@ -23,4 +23,8 @@ export class PostsStoreService {
     setAllPosts(posts: Post[]) {
         this.allPostsSource.next(posts);
     }
+
+    vote() {
+
+    }
 }

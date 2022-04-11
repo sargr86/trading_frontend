@@ -50,11 +50,12 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     getSelectedUserChanges() {
         this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
-            if (dt && dt.length > 0) {
+            if (dt) {
                 this.chatForm.patchValue({message: ''});
                 this.setTyping();
 
                 this.selectedUser = dt;
+
                 this.chatForm.patchValue({
                     connection_id: this.selectedUser?.users_connections[0]?.id,
                     to_id: this.selectedUser?.id,
@@ -141,6 +142,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
+        console.log(this.chatForm.value)
         if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
             this.sent.emit({
                 ...this.chatForm.value,

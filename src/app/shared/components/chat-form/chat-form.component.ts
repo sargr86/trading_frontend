@@ -142,11 +142,9 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        console.log(this.chatForm.value)
         if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
             this.sent.emit({
                 ...this.chatForm.value,
-
             });
             this.chatForm.patchValue({message: ''});
         }

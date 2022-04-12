@@ -67,17 +67,30 @@
                 ul {
                     display: flex;
                     justify-content: space-between;
+                    @media(max-width: 760px){
+                        flex-wrap:wrap;
+                    }
 
                     li {
+                        @media(max-width: 760px){
+                            width: 50%;
+                            margin-top: 10px;
+                        }
                         h2 {
                             font-weight: normal;
                             color: #18B587;
                             font-size: 24px;
+                            @media (max-width: 1260px){
+                                font-size: 16px;
+                            }
                         }
 
                         P {
                             font-size: 24px;
                             color: #6D6D6D;
+                            @media (max-width: 1260px){
+                                font-size: 16px;
+                            }
 
                             span {
                                 color: #F53C6F;
@@ -87,6 +100,9 @@
 
                             a {
                                 margin-right: 24px;
+                                @media (max-width: 1260px) {
+                                    margin-right: 5px
+                                }
 
                                 &:last-child {
                                     margin-right: 0;

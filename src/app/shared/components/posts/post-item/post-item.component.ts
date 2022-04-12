@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Post} from '@shared/models/post';
 import {PostsService} from '@core/services/posts.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
@@ -8,7 +8,7 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
     templateUrl: './post-item.component.html',
     styleUrls: ['./post-item.component.scss']
 })
-export class PostItemComponent implements OnInit, AfterViewInit {
+export class PostItemComponent implements OnInit {
     @Input() post: Post;
     @Input() group;
     @Input() accessedFromGroup = false;
@@ -45,10 +45,6 @@ export class PostItemComponent implements OnInit, AfterViewInit {
             return usersPosts.liked === vote &&
                 usersPosts.user_id === this.authUser.id;
         });
-    }
-
-    ngAfterViewInit() {
-        // console.log(this.post)
     }
 
 }

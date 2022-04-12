@@ -38,7 +38,7 @@ export class PostsStoreService {
 
     }
 
-    changePost(post: Post, vote = null) {
+    changePost(post: Post) {
         const allPosts = [...this.allPosts];
         // console.log(allPosts, this.allPosts, post)
         let selectedGroupIndex = allPosts.findIndex(gm => {
@@ -46,20 +46,7 @@ export class PostsStoreService {
         });
 
         if (selectedGroupIndex === -1) {
-            // console.log(allPosts.length)
             selectedGroupIndex = allPosts.length;
-        }
-
-        if (vote) {
-            const userPosts = post.user_posts.find(up => {
-                return up.users_posts.user_id === this.userStore.authUser.id;
-            });
-            if (userPosts) {
-                userPosts.liked = vote;
-                // post.user_posts = userPosts;
-            }
-            console.log(userPosts, this.userStore.authUser.id)
-            console.log(post, vote)
         }
 
         allPosts[selectedGroupIndex] = post;

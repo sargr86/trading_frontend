@@ -44,6 +44,7 @@ export class PostsService {
         return this.http.put(`${API_URL}posts/vote`, params)
             .pipe(shareReplay(1))
             .subscribe((posts: Post[]) => {
+                this.postsStore.selectPost(posts.find(p => p.id === params.post_id))
                 this.postsStore.setAllPosts(posts);
             });
     }

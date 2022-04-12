@@ -26,12 +26,9 @@ export class SinglePostComponent implements OnInit {
     getPostById() {
         const postId = this.route.snapshot.params.id;
         this.postsService.getById({id: postId});
-
     }
 
     vote(postData) {
-
-        this.postsStore.changePost(postData.post, postData.vote);
         this.postsService.vote(postData);
     }
 

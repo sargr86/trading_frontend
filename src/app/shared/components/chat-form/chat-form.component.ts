@@ -55,7 +55,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
                 this.setTyping();
 
                 this.selectedUser = dt;
-                console.log(dt)
 
                 this.chatForm.patchValue({
                     connection_id: this.selectedUser?.users_connections[0]?.id,
@@ -143,11 +142,9 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        console.log(this.chatForm.value)
         if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
             this.sent.emit({
                 ...this.chatForm.value,
-
             });
             this.chatForm.patchValue({message: ''});
         }

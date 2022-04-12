@@ -30,6 +30,7 @@ import {GroupsService} from '@core/services/groups.service';
 
 import {Observable, forkJoin} from 'rxjs';
 import {combineLatest} from 'rxjs/operators';
+import {PostsService} from '@core/services/posts.service';
 
 @Component({
     selector: 'app-navbar',
@@ -84,6 +85,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private groupsStore: GroupsStoreService,
         private groupsService: GroupsService,
+        private postsService: PostsService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService,
         private unreadMessagesHelper: UnreadMessagesCounter
@@ -101,7 +103,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();
             this.getUsersMessages();
-
+            this.getUserPosts();
             this.getAllGroupsLoaded();
         }
     }
@@ -141,6 +143,10 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.groupsMessagesStore.setGroupsMessages(pair.chatGroups);
             });
 
+    }
+
+    getUserPosts() {
+        this.postsService.getAllPosts({user_id: this.authUser.id});
     }
 
 

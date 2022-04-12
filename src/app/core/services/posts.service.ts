@@ -35,5 +35,17 @@ export class PostsService {
 
     getById(params) {
         return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params})
+            .subscribe((post: Post) => {
+                this.postsStore.selectPost(post);
+            });
+    }
+
+    vote(params) {
+        return this.http.put(`${API_URL}posts/vote`, params)
+            .pipe(shareReplay(1))
+            .subscribe((posts: Post[]) => {
+                this.postsStore.selectPost(posts.find(p => p.id === params.post_id))
+                this.postsStore.setAllPosts(posts);
+            });
     }
 }

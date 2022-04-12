@@ -14,7 +14,7 @@
             </div>
 
             <div class="chat-container">
-                <app-chat-box [openViduToken]="openViduToken" [session]="session" [videoId]="videoId" *ngIf="videoId"
+                <app-chat-box [openViduToken]="openViduToken" [messages]="messages" [session]="session" [videoId]="videoId" *ngIf="videoId"
                               (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
             </div>
         </div>

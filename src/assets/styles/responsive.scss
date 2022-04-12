@@ -1,11 +1,10 @@
-@media only screen and (min-width: 991px) {
+@media only screen and (min-width: 992px) {
     mat-sidenav:not(#right-sidenav), .close-left-menu {
         display: none !important;
     }
     .body-content-left {
         display: block;
     }
-
 }
 
 

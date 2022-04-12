@@ -34,6 +34,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     tags = [];
 
     mainStreamManager: StreamManager;
+    messages = [];
 
     @ViewChild(ChatBoxComponent) chatBox: ChatBoxComponent;
 
@@ -115,7 +116,11 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
 
             // console.log(token)
             // console.log({...this.sessionData, avatar: this.authUser.avatar})
-            this.session.connect(token, {clientData: this.sessionData, avatar: this.authUser.avatar})
+            this.session.connect(token, {
+                clientData: this.sessionData,
+                avatar: this.authUser.avatar,
+                from_user: this.authUser
+            })
                 .then(() => {
                     this.loader.dataLoading = false;
                 }).catch((err) => {
@@ -199,6 +204,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     }
 
     sendMessage(e) {
+        console.log(e)
         this.session.signal({
             data: e.message,  // Any string (optional)
             to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -206,6 +212,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         })
             .then(() => {
                 this.chatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                    this.messages = dt;
                 });
             })
             .catch(error => {

@@ -1,25 +1,50 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Post} from '@shared/models/post';
+import {PostsService} from '@core/services/posts.service';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Component({
     selector: 'app-post-item',
     templateUrl: './post-item.component.html',
     styleUrls: ['./post-item.component.scss']
 })
-export class PostItemComponent implements OnInit, AfterViewInit {
+export class PostItemComponent implements OnInit {
     @Input() post: Post;
     @Input() group;
     @Input() accessedFromGroup = false;
+    @Output() vote = new EventEmitter();
 
-    constructor() {
+    selectedPost: Post;
+    authUser;
+
+    constructor(
+        private postsService: PostsService,
+        private userStore: UserStoreService
+    ) {
     }
 
     ngOnInit(): void {
-        // console.log(this.post)
+        this.authUser = this.userStore.authUser;
     }
 
-    ngAfterViewInit() {
-        // console.log(this.post)
+    voteForPost(vote, post) {
+        if (!this.isPostVotedByAuthUser(vote)) {
+            this.selectedPost = post;
+            this.vote.emit({
+                post_id: this.post.id,
+                user_id: this.authUser.id,
+                post,
+                vote
+            });
+        }
+    }
+
+    isPostVotedByAuthUser(vote) {
+        return !!this.post?.user_posts?.find(up => {
+            const usersPosts = up.users_posts;
+            return usersPosts.liked === vote &&
+                usersPosts.user_id === this.authUser.id;
+        });
     }
 
 }

@@ -10,7 +10,7 @@
             </div>
         </div>
         <app-chat-box *ngIf="videoId" [openViduToken]="openViduToken" [session]="session"
-                      [videoRecordingState]="recordingState"
+                      [videoRecordingState]="recordingState" [messages]="messages"
                       [videoId]="videoId" (sendMessage)="sendMessage($event)"></app-chat-box>
     </ng-container>
 </div>

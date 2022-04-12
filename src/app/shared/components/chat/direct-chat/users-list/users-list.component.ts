@@ -32,6 +32,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
         public mobileHelper: MobileResponsiveHelper,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -45,16 +46,22 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
 
     getUsersMessages() {
+
         this.usersMessagesStore.usersMessages$.subscribe(dt => {
-            console.log('users list!!!', dt)
+            // console.log('users list!!!', dt)
+            this.cdr.markForCheck();
             this.filteredUsersMessages = dt.filter(d => {
                 const connection = d.users_connections[0];
                 return !!connection.is_blocked === this.showBlockedUsers && !!connection.confirmed;
             });
             // console.log(this.filteredUsersMessages)
-            if (!this.mobileHelper.isChatUsersListSize()) {
-                this.selectedUserMessages = this.filteredUsersMessages[0];
-                this.usersMessagesStore.changeUser(this.selectedUserMessages);
+            this.selectedUserMessages = this.filteredUsersMessages[0];
+            this.usersMessagesStore.changeUser(this.selectedUserMessages);
+
+            if (this.mobileHelper.isChatUsersListSize()) {
+
+                this.cdr.detectChanges();
+                this.usersMessagesStore.showResponsiveChatBox = true;
             }
         });
     }

@@ -33,7 +33,7 @@ export class ChatBoxComponent implements OnInit {
         }
     ];
 
-     messages = [];
+    @Input() messages = [];
     @Input() openViduToken;
     @Input() session;
     @Input() videoId;
@@ -88,18 +88,27 @@ export class ChatBoxComponent implements OnInit {
     // Getting messages from publisher or subscriber component
     getChatMessagesFromParentComponents() {
         this.subject.getMsgData().subscribe((data) => {
-            const msgData = {from: '', avatar: '', message: ''};
-            if (data.from.includes('clientData')) {
+            const msgData = {from_user: null, from: '', avatar: '', message: ''};
+            if (data?.from?.includes('clientData')) {
                 const from = JSON.parse(data.from.replace(/}%\/%{/g, ','));
+                console.log(data)
+                console.log(from)
                 msgData.from = from.clientData.myUserName;
+                msgData.from_user = from.from_user;
                 msgData.avatar = from.avatar;
+                msgData.message = data.message;
+            } else {
+                const from_user = JSON.parse(data.from_user.replace(/}%\/%{/g, ','));
+                msgData.from_user = from_user.from_user;
+                console.log('OK!!!', from_user)
+                msgData.avatar = from_user.avatar;
                 msgData.message = data.message;
             }
 
-            if (msgData.from !== this.authUser.username) {
+            // if (msgData.from_user.username !== this.authUser.username) {
 
-                this.messages.push(msgData);
-            }
+            this.messages.push(msgData);
+            // }
         });
     }
 
@@ -112,13 +121,13 @@ export class ChatBoxComponent implements OnInit {
 
     selectUserToReply(m) {
 
-        if (m.from !== this.authUser.username) {
+        if (m.from_user.username !== this.authUser.username) {
             this.userSelected = true;
-            if (!this.selectedUsersToReply.includes(m.from)) {
-                this.selectedUsersToReply.push(m.from);
-                this.chatForm.patchValue({message: '@' + m.from + ''});
+            if (!this.selectedUsersToReply.includes(m.from_user.username)) {
+                this.selectedUsersToReply.push(m.from_user.username);
+                this.chatForm.patchValue({message: '@' + m.from_user.username + ''});
             } else {
-                this.selectedUsersToReply = this.selectedUsersToReply.filter(f => f !== m.from);
+                this.selectedUsersToReply = this.selectedUsersToReply.filter(f => f !== m.from_user.username);
                 this.chatForm.patchValue({message: ''});
             }
 
@@ -132,8 +141,8 @@ export class ChatBoxComponent implements OnInit {
             const message = this.fixLineBreaks.transform(this.chatForm.value.message, null, e.target);
             this.chatForm.patchValue({message});
             const data = {video_id: this.videoId, ...this.chatForm.value};
-            // console.log(data)
-            this.messages.push(data);
+            console.log(data)
+            // this.messages.push(data);
             this.sendMsg.emit(data);
             this.chatForm.patchValue({message: ''});
         } else {

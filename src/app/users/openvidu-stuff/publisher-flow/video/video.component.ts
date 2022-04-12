@@ -171,7 +171,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // console.log(token)
             // console.log({clientData: this.joinSessionForm.value.myUserName})
-            this.session.connect(token, {clientData: this.sessionData, avatar: this.authUser.avatar})
+            this.session.connect(token, {
+                clientData: this.sessionData,
+                avatar: this.authUser.avatar,
+                from_user: this.authUser
+            })
                 .then(() => {
                     this.loader.dataLoading = false;
                     if (token.includes('PUBLISHER')) {
@@ -300,6 +304,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     sendMessage(e) {
+        console.log(e)
         this.session.signal({
             data: e.message,  // Any string (optional)
             to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)
@@ -308,6 +313,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             .then(() => {
                 this.videoChatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
                     // console.log('Message successfully sent');
+                    this.messages = dt;
                 });
             })
             .catch(error => {
@@ -342,7 +348,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     receiveMessage() {
         this.session.on('signal:my-chat', (event: any) => {
             // console.log(event.from)
-            this.subject.setMsgData({message: event.data, from: event.from.data});
+            this.subject.setMsgData({message: event.data, from_user: event.from.data});
             // console.log(event.data); // Message
             // console.log(event.from); // Connection object of the sender
             // console.log(event.type); // The type of message ("my-chat")

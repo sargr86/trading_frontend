@@ -34,16 +34,6 @@ export class UsersMessagesSubjectService {
         return this.selectedUserMessagesSource.getValue() as any;
     }
 
-    // changeUserMessages(id, messages) {
-    //     const userMessages = this.userMessages.find(um => um.id === id);
-    //     if (userMessages) {
-    //         userMessages.direct_messages = messages;
-    //     }
-    //
-    //
-    //
-    // }
-
     changeUserMessages(userMessages) {
         const allUsersMessages = [...this.usersMessages];
         const selectedUserIndex = allUsersMessages.findIndex(gm => gm.id === userMessages.id);

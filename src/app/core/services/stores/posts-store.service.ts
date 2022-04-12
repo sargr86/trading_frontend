@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Post} from '@shared/models/post';
+import {UserStoreService} from '@core/services/stores/user-store.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,12 +13,21 @@ export class PostsStoreService {
     private userPostsSource = new BehaviorSubject([]);
     userPosts$ = this.userPostsSource.asObservable();
 
+    private selectedPostSource = new BehaviorSubject(null);
+    selectedPost$ = this.selectedPostSource.asObservable();
+
     get allPosts() {
         return this.allPostsSource.getValue();
     }
 
+    get selectedPost() {
+        return this.selectedPostSource.getValue() as any;
+    }
 
-    constructor() {
+
+    constructor(
+        private userStore: UserStoreService
+    ) {
     }
 
     setAllPosts(posts: Post[]) {
@@ -26,5 +36,41 @@ export class PostsStoreService {
 
     vote() {
 
+    }
+
+    changePost(post: Post, vote = null) {
+        const allPosts = [...this.allPosts];
+        // console.log(allPosts, this.allPosts, post)
+        let selectedGroupIndex = allPosts.findIndex(gm => {
+            return gm.id === post?.id;
+        });
+
+        if (selectedGroupIndex === -1) {
+            // console.log(allPosts.length)
+            selectedGroupIndex = allPosts.length;
+        }
+
+        if (vote) {
+            const userPosts = post.user_posts.find(up => {
+                return up.users_posts.user_id === this.userStore.authUser.id;
+            });
+            if (userPosts) {
+                userPosts.liked = vote;
+                // post.user_posts = userPosts;
+            }
+            console.log(userPosts, this.userStore.authUser.id)
+            console.log(post, vote)
+        }
+
+        allPosts[selectedGroupIndex] = post;
+        console.log(allPosts, this.allPosts)
+        this.setAllPosts(allPosts);
+        if (post.id === this.selectedPost.id) {
+            this.selectPost(post);
+        }
+    }
+
+    selectPost(post: Post) {
+        this.selectedPostSource.next(post);
     }
 }

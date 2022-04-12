@@ -25,7 +25,7 @@ export class ShowPostsComponent implements OnInit {
     }
 
     getAllPosts() {
-        this.postsService.getAllPosts({user_id: this.userStore.authUser.id});
+
     }
 
     vote(postData) {

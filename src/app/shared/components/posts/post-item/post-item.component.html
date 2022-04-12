@@ -14,11 +14,11 @@
     <div class="info">
         <div class="left-wrap">
             <div class="voting-container">
-                <button class="vote-up-btn active" (click)="voteForPost(1)" [disabled]="">
+                <button class="vote-up-btn" [class.active]="isPostVotedByAuthUser(1)" (click)="voteForPost(1, post)" [disabled]="">
                     <span class="material-icons">forward</span>
                 </button>
                 <div class="vote-count">{{post.votes}}</div>
-                <button class="vote-down-btn" (click)="voteForPost(-1)">
+                <button class="vote-down-btn" [class.active]="isPostVotedByAuthUser(-1)" (click)="voteForPost(-1, post)">
                     <span class="material-icons">forward</span>
                 </button>
             </div>

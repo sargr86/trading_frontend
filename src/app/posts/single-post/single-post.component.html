@@ -1,2 +1,5 @@
-<app-post-item [post]="post$|async" (vote)="vote($event)">
+<div *ngIf="postsStore.selectedPost$|async as p">
+    <p>{{p|json}}</p>
+</div>
+<app-post-item [post]="postsStore.selectedPost$|async" (vote)="vote($event)">
 </app-post-item>

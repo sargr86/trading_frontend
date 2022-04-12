@@ -34,7 +34,10 @@ export class PostsService {
     }
 
     getById(params) {
-        return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params});
+        return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params})
+            .subscribe((post: Post) => {
+                this.postsStore.selectPost(post);
+            });
     }
 
     vote(params) {
@@ -42,7 +45,6 @@ export class PostsService {
             .pipe(shareReplay(1))
             .subscribe((posts: Post[]) => {
                 this.postsStore.setAllPosts(posts);
-
             });
     }
 }

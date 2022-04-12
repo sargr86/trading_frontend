@@ -9,6 +9,8 @@ export interface Post {
     votes: number;
     views: number;
     privacy: number;
+    liked?: number;
+    user_posts?: any;
     post_author: User;
     post_group: any;
     created_at: Date;

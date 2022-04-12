@@ -14,6 +14,9 @@ export class PostItemComponent implements OnInit, AfterViewInit {
     @Input() accessedFromGroup = false;
     @Output() vote = new EventEmitter();
 
+    selectedPost: Post;
+    authUser;
+
     constructor(
         private postsService: PostsService,
         private userStore: UserStoreService
@@ -21,14 +24,26 @@ export class PostItemComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        // console.log(this.post)
+        this.authUser = this.userStore.authUser;
     }
 
-    voteForPost(num) {
-        this.vote.emit({
-            post_id: this.post.id,
-            user_id: this.userStore.authUser.id,
-            vote: num
+    voteForPost(vote, post) {
+        if (!this.isPostVotedByAuthUser(vote)) {
+            this.selectedPost = post;
+            this.vote.emit({
+                post_id: this.post.id,
+                user_id: this.authUser.id,
+                post,
+                vote
+            });
+        }
+    }
+
+    isPostVotedByAuthUser(vote) {
+        return !!this.post?.user_posts?.find(up => {
+            const usersPosts = up.users_posts;
+            return usersPosts.liked === vote &&
+                usersPosts.user_id === this.authUser.id;
         });
     }
 

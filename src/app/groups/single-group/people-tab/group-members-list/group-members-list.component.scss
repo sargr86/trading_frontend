@@ -39,14 +39,17 @@ ul {
     }
 }
 
-.avatar{
+.avatar {
     width: 100% !important;
 }
 
-.avatarDiv{
+.avatarDiv {
     width: 42px !important;
     height: 42px;
     border-radius: 50%;
-    margin-right: 8px
+    margin-right: 8px;
 }
 
+.member-name {
+    cursor: pointer;
+}

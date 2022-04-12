@@ -55,10 +55,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
                 return !!connection.is_blocked === this.showBlockedUsers && !!connection.confirmed;
             });
             // console.log(this.filteredUsersMessages)
-            // if (!this.mobileHelper.isChatUsersListSize()) {
             this.selectedUserMessages = this.filteredUsersMessages[0];
             this.usersMessagesStore.changeUser(this.selectedUserMessages);
-            // }
 
             if (this.mobileHelper.isChatUsersListSize()) {
 

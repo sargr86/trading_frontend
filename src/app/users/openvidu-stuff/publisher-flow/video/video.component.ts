@@ -21,6 +21,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {LoaderService} from '@core/services/loader.service';
 import {ChatService} from '@core/services/chat.service';
 import {StocksService} from '@core/services/stocks.service';
+import {VideoChatService} from '@core/services/video-chat.service';
 
 @Component({
     selector: 'app-video',
@@ -78,6 +79,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     sessionName;
     userStocks = [];
+    messages = [];
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -88,6 +90,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private videoService: VideoService,
         private chatService: ChatService,
+        private videoChatService: VideoChatService,
         private stocksService: StocksService,
         public router: Router,
         private route: ActivatedRoute,
@@ -303,7 +306,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                this.chatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                this.videoChatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
                     // console.log('Message successfully sent');
                 });
             })

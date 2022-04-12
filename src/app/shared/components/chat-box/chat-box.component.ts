@@ -5,6 +5,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {API_URL} from '@core/constants/global';
 import {ChatService} from '@core/services/chat.service';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
+import {VideoChatService} from '@core/services/video-chat.service';
 
 @Component({
     selector: 'app-chat-box',
@@ -14,7 +15,7 @@ import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 export class ChatBoxComponent implements OnInit {
     chatForm: FormGroup;
     messageSent = false;
-    messages = [];
+
     authUser;
     selectedUsersToReply = [];
     userSelected = false;
@@ -32,18 +33,19 @@ export class ChatBoxComponent implements OnInit {
         }
     ];
 
-
-    @Input('openViduToken') openViduToken;
-    @Input('session') session;
-    @Input('videoId') videoId;
+     messages = [];
+    @Input() openViduToken;
+    @Input() session;
+    @Input() videoId;
     @Output('sendMessage') sendMsg = new EventEmitter();
-    @Input('videoRecordingState') videoRecordingState;
+    @Input() videoRecordingState;
 
     constructor(
         private fb: FormBuilder,
         private subject: SubjectService,
         private getAuthUser: GetAuthUserPipe,
         private chatService: ChatService,
+        private videoChatService: VideoChatService,
         private fixLineBreaks: FixTextLineBreaksPipe
     ) {
         this.authUser = this.getAuthUser.transform();
@@ -66,6 +68,7 @@ export class ChatBoxComponent implements OnInit {
             token: [this.openViduToken],
             from: [this.authUser.username],
             from_id: [this.authUser.id],
+            from_user: [this.authUser],
             to_id: [''],
             avatar: [this.authUser.avatar],
             message: ['', Validators.required]
@@ -75,7 +78,7 @@ export class ChatBoxComponent implements OnInit {
     loadVideoPreviousMessages() {
         if (this.videoId) {
             this.loadingMessages = true;
-            this.chatService.getChatMessages({video_id: this.videoId}).subscribe(dt => {
+            this.videoChatService.getChatMessages({video_id: this.videoId}).subscribe(dt => {
                 this.messages = dt;
                 this.loadingMessages = false;
             });
@@ -126,7 +129,7 @@ export class ChatBoxComponent implements OnInit {
     sendMessage(e) {
         // Getting video id for publisher and subscriber differently
         if (this.videoId && this.chatForm.valid) {
-            const message = this.fixLineBreaks.transform(this.chatForm.value.message, e.target);
+            const message = this.fixLineBreaks.transform(this.chatForm.value.message, null, e.target);
             this.chatForm.patchValue({message});
             const data = {video_id: this.videoId, ...this.chatForm.value};
             // console.log(data)

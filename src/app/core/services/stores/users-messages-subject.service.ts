@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 export class UsersMessagesSubjectService {
 
     protected usersMessagesSource = new BehaviorSubject([]);
-    protected selectedUserMessagesSource = new BehaviorSubject({});
+    protected selectedUserMessagesSource = new BehaviorSubject(null);
 
     usersMessages$ = this.usersMessagesSource.asObservable();
     selectedUserMessages$ = this.selectedUserMessagesSource.asObservable();

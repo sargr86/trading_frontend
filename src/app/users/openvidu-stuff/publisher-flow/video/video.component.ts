@@ -22,6 +22,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {ChatService} from '@core/services/chat.service';
 import {StocksService} from '@core/services/stocks.service';
 import {VideoChatService} from '@core/services/video-chat.service';
+import {UsersService} from '@core/services/users.service';
 
 @Component({
     selector: 'app-video',
@@ -81,6 +82,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     userStocks = [];
     messages = [];
 
+    channelUser;
+
     constructor(
         private ref: ChangeDetectorRef,
         private toastr: ToastrService,
@@ -95,13 +98,15 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         public router: Router,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private usersService: UsersService
     ) {
     }
 
     ngOnInit(): void {
 
         this.authUser = this.getAuthUser.transform();
+        this.getUserChannel();
 
         this.getVideoSessionData();
         if (this.sessionData && this.videoSettings) {
@@ -142,11 +147,20 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.toastr.error('Please stop recording first');
     }
 
+    getUserChannel() {
+        this.usersService.getUserInfo({
+            username: this.authUser.username,
+        }).subscribe(dt => {
+            this.channelUser = dt;
+        })
+    }
+
     getVideoSessionData() {
         const savedSession = localStorage.getItem('session');
         const videoSettings = localStorage.getItem('video_settings');
         this.sessionData = savedSession ? JSON.parse(savedSession) : null;
         this.videoSettings = videoSettings ? JSON.parse(videoSettings) : null;
+        console.log(this.videoSettings, this.sessionData)
     }
 
 
@@ -276,7 +290,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     leaveSession() {
-        console.log('leaving session!!!')
+        console.log('leaving session!!!');
         if (this.session) {
             this.session.disconnect();
         }

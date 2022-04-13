@@ -7,24 +7,61 @@
         <div id="video-chat-container">
 
             <!-- Publisher video recording interface -->
-            <div class="video-container">
-                <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                     [videoSettings]="videoSettings"
-                                     (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
+            <div class="left">
+                <div class="video-container">
+                    <!--                <div>-->
+
+
+                    <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                                         [videoSettings]="videoSettings"
+                                         (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
+                    <!--                </div>-->
+
+                </div>
+                <div id="video-info-row">
+                    <div id="video-info">
+                        <h3>{{videoSettings.name}}</h3>
+                        <!--                        <p>-->
+                        <!--                            <span>{{participants.length}} users</span>-->
+                        <!--                        </p>-->
+                    </div>
+                    <div id="video-info-actions">
+                        <div id="participants-count">
+                            <i class="fa fa-users"></i>
+                            <span>{{participants.length}}</span>
+                        </div>
+                        <!--                        <ul>-->
+                        <!--                            <li *ngFor="let participant of participants">{{participant}}</li>-->
+                        <!--                        </ul>-->
+
+                        <div id="share-wrap">
+                            <i class="fas fa-share-alt"></i>
+                            <p>Share</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="channel-info">
+                    <div>
+                        <img class="avatar" id="channel-avatar"
+                             [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                    </div>
+                    <div>
+                        <p id="channel-name">{{channelUser.channel.name}}</p>
+                        <p class="subscribers-count">{{channelUser.channel.subscribers_count + ' subscriber' + (channelUser.channel.subscribers_count === 1 ? '' : 's')}} </p>
+                    </div>
+                </div>
+
+                <app-stocks-marquee [stocks]="userStocks" [videoStreaming]="true"></app-stocks-marquee>
             </div>
 
+
             <div class="chat-container">
-                <app-chat-box [openViduToken]="openViduToken" [messages]="messages" [session]="session" [videoId]="videoId" *ngIf="videoId"
+                <app-chat-box [openViduToken]="openViduToken" [messages]="messages" [session]="session"
+                              [videoId]="videoId" *ngIf="videoId"
                               (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
             </div>
         </div>
-        <div id="participants-count">
-            <i class="fa fa-users"></i>{{participants.length}}
-            <ul>
-                <li *ngFor="let participant of participants">{{participant}}</li>
-            </ul>
-        </div>
-        <app-stocks-marquee [stocks]="userStocks" [videoStreaming]="true"></app-stocks-marquee>
     </ng-container>
     <div class="no-stored-session-data" *ngIf="!sessionData && !videoSettings">
         <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">

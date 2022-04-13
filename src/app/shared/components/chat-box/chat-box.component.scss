@@ -26,7 +26,7 @@
 
     .chat-information {
         max-height: 400px;
-        overflow-y: scroll;
+        overflow-y: auto;
 
         height: calc(100% - 115px);
         padding: 14px 12px 30px 12px;

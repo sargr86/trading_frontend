@@ -150,12 +150,16 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         });
 
         this.session.on('connectionCreated', (event: ConnectionEvent) => {
-            // console.log('connection created!!!');
+            console.log('connection created!!!');
             const connection = JSON.parse(event.connection.data.replace(/}%\/%{/g, ','));
             // console.log(event.connection.data);
             // console.log('RECORDING STATE' + this.recordingState)
             // this.toastr.success(from.clientData.myUserName + 'joined the session');
             this.participants.push(connection.clientData.myUserName);
+            this.videoService.updateParticipantsCount({
+                video_id: this.videoId, participants: this.participants.length
+            })
+                .subscribe();
         });
 
         this.session.on('connectionDestroyed', (event: ConnectionEvent) => {

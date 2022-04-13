@@ -20,6 +20,10 @@ export class VideoService {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-token`, params);
     }
 
+    updateParticipantsCount(params) {
+        return this.httpClient.put<any>(`${API_URL}videos/update-streaming-participants-count`, params);
+    }
+
     saveVideoThumbnail(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-thumbnail`, params);
     }
@@ -88,6 +92,8 @@ export class VideoService {
     updatePrivacy(params) {
         return this.httpClient.put<any>(`${API_URL}videos/update-privacy`, params);
     }
+
+
 
     indexUserTags(params) {
         return this.httpClient.put<any>(`${API_URL}videos/index-user-tags`, params);

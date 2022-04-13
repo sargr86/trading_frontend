@@ -10,7 +10,7 @@
             <div class="left">
                 <div class="video-container">
                     <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
-                                         [videoSettings]="videoSettings"
+                                         [videoSettings]="videoSettings" [participants]="participants"
                                          (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
                 </div>
                 <div id="video-info-row">
@@ -24,7 +24,7 @@
                         <div class="details-row" *ngIf="videoId">
                             <span class="watchers-count">{{participants.length}} watching now</span>
                             <span class="dot">&middot;</span>
-                            <span class="date">{{''|dateFromNow}}</span>
+                            <span class="date">{{savedVideoSettings.created_at|dateFromNow}}</span>
                         </div>
                         <span class="live-now" *ngIf="videoId">Live</span>
                         <!--                        <p>-->

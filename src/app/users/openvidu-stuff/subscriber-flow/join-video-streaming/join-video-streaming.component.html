@@ -25,7 +25,7 @@
                         <div class="details-row" *ngIf="videoId">
                             <span class="watchers-count">{{participants.length}} watching now</span>
                             <span class="dot">&middot;</span>
-                            <span class="date">{{''|dateFromNow}}</span>
+                            <span class="date">Started streaming {{videoSettings.created_at|dateFromNow}}</span>
                         </div>
                         <span class="live-now" *ngIf="videoId">Live</span>
                         <!--                        <p>-->
@@ -65,8 +65,6 @@
                       [videoRecordingState]="recordingState" [messages]="messages"
                       [videoId]="videoId" (sendMessage)="sendMessage($event)"></app-chat-box>
     </ng-container>
-
-
 
 
     <p *ngIf="!videoFound && !loader.dataLoading">Video streaming session is not found.</p>

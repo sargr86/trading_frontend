@@ -23,6 +23,7 @@ import {ChatService} from '@core/services/chat.service';
 import {StocksService} from '@core/services/stocks.service';
 import {VideoChatService} from '@core/services/video-chat.service';
 import {UsersService} from '@core/services/users.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-video',
@@ -40,6 +41,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     videoSettings;
+    savedVideoSettings;
 
     videoId;
 
@@ -84,6 +86,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     channelUser;
 
+    subscriptions: Subscription[] = [];
+
     constructor(
         private ref: ChangeDetectorRef,
         private toastr: ToastrService,
@@ -114,7 +118,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
 
-        this.subject.getVideoRecordingState().subscribe(data => {
+        this.subscriptions.push(this.subject.getVideoRecordingState().subscribe(data => {
 
             if (data.recordingState === 'finished') {
                 this.leaveSession();
@@ -123,11 +127,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             if (!data.viaSocket) {
                 this.sendRecordingState(data.recording);
             }
-        });
+        }));
 
-        this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
+        this.subscriptions.push(this.stocksService.getUserStocks({user_id: this.authUser.id}).subscribe(dt => {
             this.userStocks = dt?.user_stocks || [];
-        });
+        }));
 
 
     }
@@ -148,11 +152,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getUserChannel() {
-        this.usersService.getUserInfo({
+        this.subscriptions.push(this.usersService.getUserInfo({
             username: this.authUser.username,
         }).subscribe(dt => {
             this.channelUser = dt;
-        })
+        }));
     }
 
     getVideoSessionData() {
@@ -172,7 +176,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.loader.dataLoading = true;
 
-        this.openViduService.getToken({
+        this.subscriptions.push(this.openViduService.getToken({
             email: this.authUser.email,
             sessionName: this.sessionData.sessionName,
             role: 'PUBLISHER'
@@ -218,7 +222,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                 console.log(err)
             });
 
-        });
+        }));
 
     }
 
@@ -285,8 +289,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.subscribers)
     }
 
-    getRecordedVideoId(id) {
-        this.videoId = id;
+    getRecordedVideoId(video) {
+        this.savedVideoSettings = video;
+        this.videoId = video?.id;
     }
 
     leaveSession() {
@@ -307,13 +312,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.sessionData) {
 
-            this.openViduService.leaveSession({
+            this.subscriptions.push(this.openViduService.leaveSession({
                 token: this.openViduToken,
                 sessionName: this.sessionData.sessionName,
                 role: 'publisher'
             }).subscribe(() => {
 
-            });
+            }));
         }
     }
 
@@ -325,10 +330,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             type: 'my-chat'             // The type of message (optional)
         })
             .then(() => {
-                this.videoChatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
+                this.subscriptions.push(this.videoChatService.saveVideoMessage({video_id: this.videoId, ...e}).subscribe(dt => {
                     // console.log('Message successfully sent');
                     this.messages = dt;
-                });
+                }));
             })
             .catch(error => {
                 console.error(error);
@@ -386,6 +391,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // On component destroyed leave session
         this.leaveSession();
+
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 

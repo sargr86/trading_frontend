@@ -39,9 +39,10 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     private player: any;
     private plugin: any;
 
-    @Input('openViduToken') openViduToken;
-    @Input('videoSettings') videoSettings;
-    @Input('thumbnailFile') thumbnailFile;
+    @Input() openViduToken;
+    @Input() videoSettings;
+    @Input() thumbnailFile;
+    @Input() participants;
 
     @Output() shareScreen = new EventEmitter();
     @Output() recordingStarted = new EventEmitter();
@@ -210,10 +211,11 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 thumbnail: this.videoSettings.thumbnail,
                 name: this.videoSettings.name,
                 description: this.videoSettings.description,
-                tags: this.videoSettings.tags
+                tags: this.videoSettings.tags,
+                participants: this.participants.length
             }).subscribe((dt) => {
                 this.videoId = dt?.id;
-                this.recordingStarted.emit(this.videoId);
+                this.recordingStarted.emit(dt);
             });
 
 

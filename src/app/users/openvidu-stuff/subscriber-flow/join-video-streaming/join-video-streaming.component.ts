@@ -91,7 +91,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             this.videoService.getVideoById({id: this.videoId}).subscribe(dt => {
                 this.videoFound = dt?.status === 'live';
                 this.videoSettings = dt;
-                this.channelInfo = dt.channel;
+                this.channelInfo = dt?.channel;
                 console.log('video!!!', dt)
             });
         }

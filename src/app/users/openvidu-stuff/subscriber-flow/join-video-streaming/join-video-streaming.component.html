@@ -15,7 +15,6 @@
     </ng-container>
 </div>
 
-<p *ngIf="!videoFound && !loader.dataLoading">Video streaming session is not found.</p>
 <ng-container *ngIf="streamCreated && openViduToken && videoFound">
     <i class="fa fa-users"></i>{{participants.length}}
     <ul>
@@ -23,11 +22,12 @@
     </ul>
     <p *ngIf="streamDestroyed">Stream destroyed.</p>
 </ng-container>
+
+<p *ngIf="!videoFound && !loader.dataLoading">Video streaming session is not found.</p>
+
 <ng-container *ngIf="!openViduToken && !loader.dataLoading && videoFound">
     <p>The session does not exist.</p>
 </ng-container>
 <ng-container *ngIf="!streamCreated && !loader.dataLoading && videoFound">
     <p>There was a problem creating the video stream.</p>
 </ng-container>
-
-

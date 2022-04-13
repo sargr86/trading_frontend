@@ -4,15 +4,19 @@
 .chat-content {
     max-width: 500px;
     //margin-bottom: 40px;
-    box-shadow: 0 0 6px #0000001A;
+
     height: 100%;
     margin-left: 20px;
+
+    &.opened {
+        box-shadow: 0 0 6px #0000001A;
+    }
 
     .chat-title {
         width: 100%;
         height: 30px;
         background: #F8F8F8 0 0 no-repeat padding-box;
-        padding: 5px 12px;
+        //padding: 5px 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -25,10 +29,11 @@
     }
 
     .chat-information {
-        max-height: 400px;
+        //max-height: 400px;
+        height: 400px;
         overflow-y: auto;
 
-        height: calc(100% - 115px);
+        //height: calc(100% - 115px);
         padding: 14px 12px 30px 12px;
 
 
@@ -52,7 +57,6 @@
             .selected {
                 border: 1px solid $red;
             }
-
 
 
             .chat-block-1 {
@@ -81,7 +85,6 @@
             }
         }
     }
-
 
 
     .dropdown-toggle:hover {
@@ -149,4 +152,9 @@
         font-size: 12px;
         padding: 10px
     }
+}
+
+.toggle-chat-box {
+    background-color: unset;
+    cursor: pointer;
 }

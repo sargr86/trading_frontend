@@ -79,6 +79,7 @@
     #video-info {
         h3 {
             font-family: "Muli-Bold", sans-serif;
+            margin-top: 10px;
         }
     }
 
@@ -141,4 +142,28 @@
 
 .left {
     flex: 1;
+}
+
+#video-tags-list {
+    .tag {
+        color: #0035C6;
+        font-size: 16px;
+        font-family: "Muli-Bold", sans-serif;
+        margin-right: 16px
+    }
+}
+
+.live-now {
+    width: 52px;
+    height: 20px;
+    position: static;
+}
+
+.details-row {
+    display: flex;
+    align-items: center;
+
+    .dot {
+        margin: 0 10px;
+    }
 }

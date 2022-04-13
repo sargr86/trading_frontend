@@ -21,6 +21,7 @@ export class ChatBoxComponent implements OnInit {
     userSelected = false;
     apiUrl = API_URL;
     loadingMessages = false;
+    showChatBox = true;
 
     customEmojis = [
         {

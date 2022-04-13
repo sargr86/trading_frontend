@@ -9,18 +9,24 @@
             <!-- Publisher video recording interface -->
             <div class="left">
                 <div class="video-container">
-                    <!--                <div>-->
-
-
                     <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
                                          [videoSettings]="videoSettings"
                                          (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
-                    <!--                </div>-->
-
                 </div>
                 <div id="video-info-row">
                     <div id="video-info">
+                        <ul id="video-tags-list">
+                            <li *ngFor="let tag of videoSettings.tags" class="tag">
+                                #{{tag.name}}
+                            </li>
+                        </ul>
                         <h3>{{videoSettings.name}}</h3>
+                        <div class="details-row" *ngIf="videoId">
+                            <span class="watchers-count">{{participants.length}} watching now</span>
+                            <span class="dot">&middot;</span>
+                            <span class="date">{{''|dateFromNow}}</span>
+                        </div>
+                        <span class="live-now" *ngIf="videoId">Live</span>
                         <!--                        <p>-->
                         <!--                            <span>{{participants.length}} users</span>-->
                         <!--                        </p>-->

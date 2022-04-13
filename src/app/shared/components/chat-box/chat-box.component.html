@@ -1,56 +1,67 @@
-<div class="chat-content">
+<div class="chat-content" [class.opened]="showChatBox">
     <ng-container *ngIf="videoRecordingState === 'started'">
-        <div class="chat-title">
+        <button class="toggle-chat-box" matTooltip="Show chat box" *ngIf="!showChatBox"
+                (click)="showChatBox = !showChatBox">
+            <mat-icon>start</mat-icon>
+        </button>
+        <div class="chat-title" *ngIf="showChatBox">
             <div class="dropdown">
-                <div class="dropdown-toggle" id="dropdownChat" data-toggle="dropdown" aria-haspopup="true"
-                     aria-expanded="false">
-                    Chat
-                </div>
-<!--                <div class="dropdown-menu" aria-labelledby="dropdownChat">-->
-<!--                    <a class="dropdown-item" href="#">Action</a>-->
-<!--                    <a class="dropdown-item" href="#">Another action</a>-->
-<!--                    <a class="dropdown-item" href="#">Something else here</a>-->
-<!--                </div>-->
+                <button class="toggle-chat-box" matTooltip="Hide chat box" (click)="showChatBox = !showChatBox">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <!--                <div class="dropdown-toggle" id="dropdownChat" data-toggle="dropdown" aria-haspopup="true"-->
+                <!--                     aria-expanded="false">-->
+                <!--                    Chat-->
+                <!--                </div>-->
+                <!--                <div class="dropdown-menu" aria-labelledby="dropdownChat">-->
+                <!--                    <a class="dropdown-item" href="#">Action</a>-->
+                <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                    <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                </div>-->
             </div>
             <img src="assets/img/dotes.png">
         </div>
-        <div class="chat-information">
-            <div class="loader" *ngIf="loadingMessages">
-                <mat-spinner [diameter]="30"></mat-spinner>
-            </div>
-            <ng-container *ngIf="!loadingMessages">
-                <div class="chat-block" *ngFor="let message of messages">
-
-                    <ng-container *ngIf="message.from_user">
-
-                        <img class="avatar" [class.selectable]="message.from_user.username!==this.authUser.username"
-                             [class.selected]="selectedUsersToReply.includes(message.from_user.username) && userSelected"
-                             [src]="message.from_user.avatar|getImgPath:'user_avatars'"
-                             (click)="selectUserToReply(message)">
-                        <p class="chat-block-1">{{message.from_user.username + (message.from_user.username === authUser.username ? '(Me)' : '')}}</p>
-                    </ng-container>
-                    <p class="chat-block-2">{{message.message}}</p>
+        <div class="chat-toggle-content" [hidden]="!showChatBox">
+            <div class="chat-information">
+                <div class="loader" *ngIf="loadingMessages">
+                    <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
-            </ng-container>
-        </div>
+                <ng-container *ngIf="!loadingMessages">
+                    <div class="chat-block" *ngFor="let message of messages">
 
-        <div class="chat-footer">
-            <form [formGroup]="chatForm">
-                <input class="chat-input" formControlName="message" placeholder="Comment"
-                       (keyup.enter)="sendMessage($event)">
-                <emoji-mart [custom]="customEmojis" (emojiClick)="addEmoji($event)"></emoji-mart>
-            </form>
-            <div class="chat-footer-smile">
-                <div class="nav-item dropdown">
-                    <a class="chat-by-bits nav-lin" data-toggle="dropdown">Buy Coins</a>
-                    <div class="dropdown-menu">
-                        <!--              <app-purchase-bits></app-purchase-bits>-->
+                        <ng-container *ngIf="message.from_user">
+
+                            <img class="avatar" [class.selectable]="message.from_user.username!==this.authUser.username"
+                                 [class.selected]="selectedUsersToReply.includes(message.from_user.username) && userSelected"
+                                 [src]="message.from_user.avatar|getImgPath:'user_avatars'"
+                                 (click)="selectUserToReply(message)">
+                            <p class="chat-block-1 username">
+                                {{message.from_user.username + (message.from_user.username === authUser.username ? '(Me)' : '')}}
+                            </p>
+                        </ng-container>
+                        <p class="chat-block-2">{{message.message}}</p>
                     </div>
-                </div>
+                </ng-container>
+            </div>
 
-                <div class="smile-block">
-                    <p class="smile">0/200</p>
-                    <i class="send fas fa-paper-plane"></i>
+            <div class="chat-footer">
+                <form [formGroup]="chatForm">
+                    <input class="chat-input" formControlName="message" placeholder="Comment"
+                           (keyup.enter)="sendMessage($event)">
+                    <emoji-mart [custom]="customEmojis" (emojiClick)="addEmoji($event)"></emoji-mart>
+                </form>
+                <div class="chat-footer-smile">
+                    <div class="nav-item dropdown">
+                        <a class="chat-by-bits nav-lin" data-toggle="dropdown">Buy Coins</a>
+                        <div class="dropdown-menu">
+                            <!--              <app-purchase-bits></app-purchase-bits>-->
+                        </div>
+                    </div>
+
+                    <div class="smile-block">
+                        <p class="smile">0/200</p>
+                        <i class="send fas fa-paper-plane"></i>
+                    </div>
                 </div>
             </div>
         </div>

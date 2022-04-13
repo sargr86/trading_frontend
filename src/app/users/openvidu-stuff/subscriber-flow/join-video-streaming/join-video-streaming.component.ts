@@ -36,6 +36,8 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     mainStreamManager: StreamManager;
     messages = [];
 
+    videoSettings;
+    channelInfo;
     @ViewChild(ChatBoxComponent) chatBox: ChatBoxComponent;
 
     constructor(
@@ -88,7 +90,9 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
             this.videoId = params.id;
             this.videoService.getVideoById({id: this.videoId}).subscribe(dt => {
                 this.videoFound = dt?.status === 'live';
-                // console.log(this.videoFound)
+                this.videoSettings = dt;
+                this.channelInfo = dt.channel;
+                console.log('video!!!', dt)
             });
         }
     }

@@ -127,8 +127,6 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
                 this.toastr.error('There was a problem white loading streaming session')
                 // console.log(err)
             });
-            ;
-
         });
 
     }

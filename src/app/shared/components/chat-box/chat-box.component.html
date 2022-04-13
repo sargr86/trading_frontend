@@ -29,16 +29,6 @@
                              (click)="selectUserToReply(message)">
                         <p class="chat-block-1">{{message.from_user.username + (message.from_user.username === authUser.username ? '(Me)' : '')}}</p>
                     </ng-container>
-
-                    <!--                    <ng-container *ngIf="message.from_user">-->
-                    <!--&lt;!&ndash;                        {{message|json}}&ndash;&gt;-->
-                    <!--&lt;!&ndash;                        {{authUser|json}}&ndash;&gt;-->
-                    <!--                        <img class="avatar" [class.selectable]="message.from_user.username!==this.authUser.username"-->
-                    <!--                             [class.selected]="selectedUsersToReply.includes(message.from_user) && userSelected"-->
-                    <!--                             [src]="message.from_user.avatar|getImgPath:'user_avatars'"-->
-                    <!--                             (click)="selectUserToReply(message)">-->
-                    <!--                        <p class="chat-block-1">{{message.from_user.username + (message.from_user.username === authUser.username ? '(Me)' : '')}}</p>-->
-                    <!--                    </ng-container>-->
                     <p class="chat-block-2">{{message.message}}</p>
                 </div>
             </ng-container>

@@ -9,6 +9,8 @@ import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {Title} from '@angular/platform-browser';
+import {SocialShareDialogComponent} from '@core/components/modals/social-share-dialog/social-share-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-play-video',
@@ -40,7 +42,8 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
         public auth: AuthService,
         private toastr: ToastrService,
         private loader: LoaderService,
-        private titleService: Title
+        private titleService: Title,
+        private dialog: MatDialog
     ) {
         this.authUser = this.getAuthUser.transform();
     }
@@ -184,6 +187,16 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
     buildSubscribersCountText(videoData) {
         const count = videoData.channel.subscribers_count;
         return count + ' subscriber' + (count === 1 ? '' : 's');
+    }
+
+    openSocialShareModal() {
+        this.dialog.open(SocialShareDialogComponent, {
+            width: '500px',
+            height: '400px',
+            data: {shareUrl: window.location.href}
+        })
+            .afterClosed().subscribe(dt => {
+        });
     }
 
     ngAfterViewInit() {

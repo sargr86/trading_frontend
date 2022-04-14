@@ -28,7 +28,7 @@
                            [class.disliked]="userVideoConnection?.disliked"></i>
                         <p>{{videoData.dislikes}}</p>
                     </div>
-                    <div class="main-tags-share">
+                    <div class="main-tags-share" (click)="openSocialShareModal()">
                         <i class="fas fa-share-alt"></i>
                         <p>Share</p>
                     </div>

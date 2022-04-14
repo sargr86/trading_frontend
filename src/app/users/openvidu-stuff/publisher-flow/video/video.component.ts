@@ -25,6 +25,7 @@ import {VideoChatService} from '@core/services/video-chat.service';
 import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
 import {SocialShareDialogComponent} from '@core/components/modals/social-share-dialog/social-share-dialog.component';
+import {GetUriPartsPipe} from '@shared/pipes/get-uri-parts.pipe';
 
 @Component({
     selector: 'app-video',
@@ -105,7 +106,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private route: ActivatedRoute,
         private dialog: MatDialog,
         public loader: LoaderService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private getUrlParts: GetUriPartsPipe
     ) {
     }
 
@@ -295,8 +297,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.savedVideoSettings = video;
 
         this.videoId = video?.id;
-        console.log(this.sessionData)
-        this.shareUrl = `${API_URL}users/video/watch?session=${this.sessionData.sessionName}&publisher=${this.authUser.username}&id=${this.videoId}`;
+        const {hostName} = this.getUrlParts.transform(window.location.href);
+        this.shareUrl = `${hostName}users/video/watch?session=${this.sessionData.sessionName}&publisher=${this.authUser.username}&id=${this.videoId}`;
     }
 
     leaveSession() {

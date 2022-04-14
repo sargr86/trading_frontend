@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 
 .chat-content {
@@ -154,7 +155,14 @@
     }
 }
 
-.toggle-chat-box {
-    background-color: unset;
+#show-chat-box {
+    @include regularButton;
+    padding: 0;
+    width: 160px;
     cursor: pointer;
+    justify-content: space-around;
+
+    i {
+        font-size: 22px;
+    }
 }

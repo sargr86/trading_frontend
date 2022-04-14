@@ -1,12 +1,13 @@
 <div class="chat-content" [class.opened]="showChatBox">
     <ng-container *ngIf="videoRecordingState === 'started'">
-        <button class="toggle-chat-box" matTooltip="Show chat box" *ngIf="!showChatBox"
+        <button id="show-chat-box" *ngIf="!showChatBox"
                 (click)="showChatBox = !showChatBox">
+            <span>Show chat box</span>
             <mat-icon>start</mat-icon>
         </button>
         <div class="chat-title" *ngIf="showChatBox">
             <div class="dropdown">
-                <button class="toggle-chat-box" matTooltip="Hide chat box" (click)="showChatBox = !showChatBox">
+                <button id="hide-chat-box" matTooltip="Hide chat box" (click)="showChatBox = !showChatBox">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <!--                <div class="dropdown-toggle" id="dropdownChat" data-toggle="dropdown" aria-haspopup="true"-->

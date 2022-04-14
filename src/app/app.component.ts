@@ -142,10 +142,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
         // }
     }
 
-    toggleNotifications(e, rightSidenav) {
-        rightSidenav.toggle();
-        this.rightSidenavOpened = rightSidenav.opened;
-        this.rightSidenavFor = e;
+    toggleRightSidenav(rightSidenavFor, rightSidenav) {
+        // this.rightSidenavOpened = rightSidenav.opened;
+        // console.log(rightSidenavFor, this.rightSidenavOpened)
+        if (this.rightSidenavFor === rightSidenavFor) {
+            if (rightSidenav.opened) {
+                rightSidenav.close();
+            } else {
+                rightSidenav.open();
+            }
+            this.rightSidenavOpened = false;
+        } else {
+            rightSidenav.open();
+            this.rightSidenavOpened = true;
+            this.rightSidenavFor = rightSidenavFor;
+        }
+
+
     }
 
     isSmallScreen() {

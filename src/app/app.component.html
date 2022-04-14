@@ -6,8 +6,8 @@
 
     <mat-sidenav-content class="ml-0 ml-md-0">
         <app-navbar (search)="getSearch($event)" *ngIf="!router.url.includes('auth')"
-                    (closeSidenav)="sidenav.toggle()"
-                    (closeNotifications)="toggleNotifications($event,rightSidenav)"></app-navbar>
+                    (closeLeftSidenav)="sidenav.toggle()"
+                    (closeRightSidenav)="toggleRightSidenav($event,rightSidenav)"></app-navbar>
         <!--        <app-navbar (toggleSide)="sidenav.toggle()"></app-navbar>-->
 
         <!--        <mat-spinner [diameter]="30" *ngIf="loader.dataLoading"></mat-spinner>-->
@@ -37,6 +37,7 @@
 
     <mat-sidenav [mode]="'side'" #rightSidenav position="end" id="right-sidenav"
                  [opened]="isRightSidebarShown()">
-        <app-right-sidebar  [shownItems]="rightSidenavFor" (closeSidenav)="closeSidenav($event, rightSidenav)"></app-right-sidebar>
+        <app-right-sidebar [shownItems]="rightSidenavFor"
+                           (closeSidenav)="closeSidenav($event, rightSidenav)"></app-right-sidebar>
     </mat-sidenav>
 </mat-sidenav-container>

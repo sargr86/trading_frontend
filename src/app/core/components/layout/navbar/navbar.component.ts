@@ -46,8 +46,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     envName = environment.envName;
 
     @Output() search = new EventEmitter();
-    @Output() closeSidenav = new EventEmitter();
-    @Output('closeNotifications') closeRightSidenav = new EventEmitter();
+    @Output() closeLeftSidenav = new EventEmitter();
+    @Output() closeRightSidenav = new EventEmitter();
     additionalLinks = NAVBAR_ADDITIONAL_LINKS;
     notifications = [];
 

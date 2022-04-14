@@ -27,11 +27,12 @@
                             <span class="date">{{savedVideoSettings.created_at|dateFromNow}}</span>
                         </div>
                         <span class="live-now" *ngIf="videoId">Live</span>
+
                         <!--                        <p>-->
                         <!--                            <span>{{participants.length}} users</span>-->
                         <!--                        </p>-->
                     </div>
-                    <div id="video-info-actions">
+                    <div id="video-info-actions" *ngIf="videoId">
                         <div id="participants-count">
                             <i class="fa fa-users"></i>
                             <span>{{participants.length}}</span>
@@ -40,7 +41,7 @@
                         <!--                            <li *ngFor="let participant of participants">{{participant}}</li>-->
                         <!--                        </ul>-->
 
-                        <div id="share-wrap">
+                        <div id="share-wrap" (click)="openSocialShareModal()">
                             <i class="fas fa-share-alt"></i>
                             <p>Share</p>
                         </div>

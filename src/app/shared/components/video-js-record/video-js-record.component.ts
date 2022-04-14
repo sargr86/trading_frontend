@@ -215,7 +215,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 participants: this.participants.length
             }).subscribe((dt) => {
                 this.videoId = dt?.id;
-                this.recordingStarted.emit(dt);
+                 this.recordingStarted.emit(dt);
             });
 
 

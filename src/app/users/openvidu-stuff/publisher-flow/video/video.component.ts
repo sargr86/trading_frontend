@@ -24,6 +24,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {VideoChatService} from '@core/services/video-chat.service';
 import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
+import {SocialShareDialogComponent} from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 
 @Component({
     selector: 'app-video',
@@ -76,6 +77,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     thumbnailFile;
     thumbnailUploaded = false;
     apiUrl = API_URL;
+    shareUrl;
 
     publisherData;
     sessionData = {sessionName: '', myUserName: ''};
@@ -291,7 +293,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getRecordedVideoId(video) {
         this.savedVideoSettings = video;
+
         this.videoId = video?.id;
+        console.log(this.sessionData)
+        this.shareUrl = `${API_URL}users/video/watch?session=${this.sessionData.sessionName}&publisher=${this.authUser.username}&id=${this.videoId}`;
     }
 
     leaveSession() {
@@ -395,6 +400,11 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+    openSocialShareModal() {
+        this.dialog.open(SocialShareDialogComponent, {width: '500px', height: '400px', data: {shareUrl: this.shareUrl}})
+            .afterClosed().subscribe(dt => {
+        });
+    }
 
     ngAfterViewInit() {
     }

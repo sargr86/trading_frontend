@@ -38,6 +38,7 @@ import { RightSidebarComponent } from './components/layout/right-sidebar/right-s
 import {RouterModule} from '@angular/router';
 import { GroupMembersInvitationDialogComponent } from './components/modals/group-members-invitation-dialog/group-members-invitation-dialog.component';
 import { CreateNewGroupDialogComponent } from './components/modals/create-new-group-dialog/create-new-group-dialog.component';
+import { SocialShareDialogComponent } from './components/modals/social-share-dialog/social-share-dialog.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { CreateNewGroupDialogComponent } from './components/modals/create-new-gr
         RightSidebarComponent,
         GroupMembersInvitationDialogComponent,
         CreateNewGroupDialogComponent,
+        SocialShareDialogComponent,
         // ChatBottomBoxComponent
     ],
     imports: [

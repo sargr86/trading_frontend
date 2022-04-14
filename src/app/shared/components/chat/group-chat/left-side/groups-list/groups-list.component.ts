@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {Subscription} from 'rxjs';
 import {ChatService} from '@core/services/chat.service';
@@ -13,11 +13,13 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
     selector: 'app-groups-list',
     templateUrl: './groups-list.component.html',
     styleUrls: ['./groups-list.component.scss'],
+    providers: [{provide: MobileResponsiveHelper, useClass: MobileResponsiveHelper}]
 
 })
 export class GroupsListComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() sidebarMode = false;
+    @Output() closeRightSidenav = new EventEmitter();
 
 
     subscriptions: Subscription[] = [];
@@ -31,7 +33,8 @@ export class GroupsListComponent implements OnInit, OnDestroy {
         private groupsMessagesStore: GroupsMessagesSubjectService,
         private usersMessagesStore: UsersMessagesSubjectService,
         private dialog: MatDialog,
-        private isEmptyObj: CheckForEmptyObjectPipe
+        private isEmptyObj: CheckForEmptyObjectPipe,
+        public mobileHelper: MobileResponsiveHelper
     ) {
     }
 
@@ -113,6 +116,9 @@ export class GroupsListComponent implements OnInit, OnDestroy {
             this.groupsMessagesStore.showBottomChatBox = true;
         } else {
             this.groupsMessagesStore.showResponsiveChatBox = true;
+        }
+        if (this.mobileHelper.isChatUsersListSize()) {
+            this.closeRightSidenav.emit();
         }
     }
 

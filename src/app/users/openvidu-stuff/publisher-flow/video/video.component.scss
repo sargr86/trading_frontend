@@ -145,6 +145,8 @@
 }
 
 #video-tags-list {
+    display: flex;
+
     .tag {
         color: #0035C6;
         font-size: 16px;

@@ -16,6 +16,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 export class UsersListComponent implements OnInit, OnDestroy {
     @Input() authUser;
     @Input() sidebarMode = false;
+    @Output() closeRightSidenav = new EventEmitter();
 
     subscriptions: Subscription[] = [];
     filteredUsersMessages = [];
@@ -75,6 +76,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
         }
         this.selectedUserMessages = userMessages;
         this.usersMessagesStore.changeUser(userMessages);
+        if (this.mobileHelper.isChatUsersListSize()) {
+            this.closeRightSidenav.emit();
+        }
     }
 
     toggleBlockedUsers(show) {

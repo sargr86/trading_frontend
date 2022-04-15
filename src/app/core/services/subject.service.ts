@@ -16,7 +16,6 @@ export class SubjectService {
     defaultExtAccount = 'bank_account';
     paymentsData = {};
 
-    public messageData = new Subject<any>();
     public videoCommentsData = new Subject<any>();
     public videoRecordingState = new Subject<any>();
     public videoSearchData = new Subject<any>();
@@ -53,14 +52,6 @@ export class SubjectService {
 
 
     constructor() {
-    }
-
-    setMsgData(value) {
-        this.messageData.next(value);
-    }
-
-    getMsgData(): Observable<any> {
-        return this.messageData.asObservable();
     }
 
     setVideoRecordingState(value) {

@@ -74,7 +74,7 @@ export class StocksListComponent implements OnInit, OnDestroy {
     }
 
     getAutocompleteResults(e) {
-        this.updateFollowedStocksList(e);
+        // this.updateFollowedStocksList(e);
     }
 
     getColorScheme(stock) {

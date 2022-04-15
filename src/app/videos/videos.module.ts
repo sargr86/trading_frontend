@@ -17,6 +17,7 @@ import { VideoCommentsListComponent } from './play-video/video-comments-list/vid
 import { CommentActionsComponent } from './play-video/video-comments-list/comment-actions/comment-actions.component';
 import { SingleCommentComponent } from './play-video/video-comments-list/single-comment/single-comment.component';
 import { VideojsTestComponent } from './videojs-test/videojs-test.component';
+import { AddVideoComponent } from './add-video/add-video.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { VideojsTestComponent } from './videojs-test/videojs-test.component';
         VideoCommentsListComponent,
         CommentActionsComponent,
         SingleCommentComponent,
-        VideojsTestComponent
+        VideojsTestComponent,
+        AddVideoComponent
     ],
     imports: [
         CommonModule,

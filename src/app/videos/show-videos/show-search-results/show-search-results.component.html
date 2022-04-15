@@ -7,11 +7,12 @@
             </div>
             <div class="info">
                 <div class="infoPart">
-                    <p class="name nameStyle" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                    <p class="name nameStyle"
+                       (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
                     <div class="shortened-details">
                         <p class="video-count video-countStyle">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
                     </div>
-                    <p>{{getDesc(channel.description)}}</p>
+                    <p [innerHTML]="getDesc(channel.description)"></p>
                 </div>
                 <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
                         [class.subscribed]="checkIfSubscribed(channel)"
@@ -35,8 +36,7 @@
                     <span class="dot">&middot;</span>
                     <span class="upload-time">{{video.created_at | dateFromNow}}</span>
                 </div>
-                <p class="shortened-description">
-                    {{video.description}}
+                <p class="shortened-description" [innerHTML]="video.description">
                 </p>
                 <div class="tags">
                     <ul>

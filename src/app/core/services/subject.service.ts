@@ -17,7 +17,6 @@ export class SubjectService {
     paymentsData = {};
 
     public videoRecordingState = new Subject<any>();
-    public streamSessionData = new Subject<any>();
     public toggleFiltersData = new Subject<any>();
     private stocksData = new Subject<any>();
     private indicesData = new Subject<any>();
@@ -59,14 +58,6 @@ export class SubjectService {
         return this.videoRecordingState.asObservable();
     }
 
-    setSessionData(value) {
-        this.streamSessionData.next(value);
-    }
-
-    getSessionData(): Observable<any> {
-        return this.streamSessionData.asObservable();
-    }
-
     setToggleFiltersData(value) {
         this.toggleFiltersData.next(value);
     }
@@ -92,7 +83,6 @@ export class SubjectService {
     }
 
 
-
     setIndicesData(value) {
         this.indicesData.next(value);
     }
@@ -116,7 +106,6 @@ export class SubjectService {
     getNewMessagesSourceData(): Observable<any> {
         return this.newMessageSourcesData.asObservable();
     }
-
 
 
     setAllPaymentsData(value) {

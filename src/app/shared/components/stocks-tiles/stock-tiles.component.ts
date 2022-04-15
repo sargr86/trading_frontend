@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Stock} from '@shared/models/stock';
 import {SubjectService} from '@core/services/subject.service';
 import {STOCK_TILE_CHART_SETTINGS} from '@core/constants/charts';

@@ -19,7 +19,6 @@ export class SubjectService {
     public videoRecordingState = new Subject<any>();
     public toggleFiltersData = new Subject<any>();
     private stocksData = new Subject<any>();
-    private userStocksData = new Subject<any>();
     private allPaymentsData = new Subject<any>();
     private newMessageSourcesData = new Subject<any>();
     private selectedChatType = new Subject<string>();
@@ -80,10 +79,6 @@ export class SubjectService {
         return this.selectedChatType.asObservable();
     }
 
-    setUserStocksData(value) {
-        this.userStocksData.next(value);
-    }
-
     getAllPaymentsData(): Observable<any> {
         return this.allPaymentsData.asObservable();
     }
@@ -99,10 +94,6 @@ export class SubjectService {
 
     setAllPaymentsData(value) {
         this.allPaymentsData.next(value);
-    }
-
-    getUserStocksData(): Observable<any> {
-        return this.userStocksData.asObservable();
     }
 
     changeUserStocks(stocks) {

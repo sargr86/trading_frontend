@@ -61,7 +61,7 @@ export class ChatBoxComponent implements OnInit {
         this.getChatMessagesFromParentComponents();
         this.getVideoRecordingState();
         this.loadVideoPreviousMessages();
-
+        console.log(this.messages)
     }
 
     initForm() {

@@ -1,5 +1,5 @@
 <div class="chat-content" [class.opened]="showChatBox">
-    <ng-container *ngIf="videoRecordingState === 'started'">
+    <ng-container *ngIf="videoRecordingState === 'started' || !openViduToken">
         <button id="show-chat-box" *ngIf="!showChatBox"
                 (click)="showChatBox = !showChatBox">
             <span>Show chat box</span>
@@ -45,13 +45,13 @@
                 </ng-container>
             </div>
 
-            <div class="chat-footer">
-                <form [formGroup]="chatForm">
+            <div class="chat-footer" [class.shorter-footer]="!openViduToken">
+                <form [formGroup]="chatForm" [hidden]="!openViduToken">
                     <input class="chat-input" formControlName="message" placeholder="Comment"
                            (keyup.enter)="sendMessage($event)">
                     <emoji-mart [custom]="customEmojis" (emojiClick)="addEmoji($event)"></emoji-mart>
                 </form>
-                <div class="chat-footer-smile">
+                <div class="chat-footer-smile" [hidden]="!openViduToken">
                     <div class="nav-item dropdown">
                         <a class="chat-by-bits nav-lin" data-toggle="dropdown">Buy Coins</a>
                         <div class="dropdown-menu">
@@ -64,10 +64,11 @@
                         <i class="send fas fa-paper-plane"></i>
                     </div>
                 </div>
+                <button class="hide-chat-box" *ngIf="!openViduToken">Hide chat box</button>
             </div>
         </div>
     </ng-container>
-    <ng-container *ngIf="videoRecordingState === 'idle'">
+    <ng-container *ngIf="videoRecordingState === 'idle' && openViduToken ">
         <div id="chat-placeholder">
             <span>When recording is started, the chat box will appear here</span>
         </div>

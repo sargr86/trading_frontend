@@ -66,7 +66,7 @@
                     <p class="subscribers-count">{{buildSubscribersCountText(videoData)}}</p>
                 </div>
             </div>
-            <div>
+            <div class="right-side">
                 <app-video-suggestions *ngIf="isSmallScreen"></app-video-suggestions>
             </div>
             <div class="comments-block">
@@ -80,6 +80,7 @@
         </ng-container>
     </div>
     <div class="ads-block-right">
+        <app-chat-box *ngIf="videoData" [messages]="videoData.messages"></app-chat-box>
         <app-video-suggestions *ngIf="!isSmallScreen"></app-video-suggestions>
     </div>
 </div>

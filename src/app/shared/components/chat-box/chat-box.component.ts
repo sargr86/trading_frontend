@@ -35,11 +35,11 @@ export class ChatBoxComponent implements OnInit {
     ];
 
     @Input() messages = [];
-    @Input() openViduToken;
-    @Input() session;
+    @Input() openViduToken = null;
+    @Input() session = null;
     @Input() videoId;
+    @Input() videoRecordingState = null;
     @Output('sendMessage') sendMsg = new EventEmitter();
-    @Input() videoRecordingState;
 
     constructor(
         private fb: FormBuilder,

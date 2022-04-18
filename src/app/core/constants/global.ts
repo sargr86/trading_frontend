@@ -153,11 +153,11 @@ export const VIDEOJS_PLAYER_OPTIONS = {
         nativeVideoTracks: false,
         nativeAudioTracks: false,
         nativeTextTracks: false,
-        hls: {
-            withCredentials: false,
-            overrideNative: true,
-            debug: true
-        }
+        // hls: {
+        //     withCredentials: false,
+        //     overrideNative: true,
+        //     debug: true
+        // }
     }
 };
 

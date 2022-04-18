@@ -11,6 +11,7 @@ import watermark from 'videojs-watermark';
 export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
     @Input() videoData;
     @Input() videoUrl;
+    // videoUrl = 'http://localhost:3001/uploads/videos/Andrea_Corr_Shame_On_You_HD.mp4';
     videoInit = 'idle';
 
     options = VIDEOJS_PLAYER_OPTIONS;
@@ -22,13 +23,19 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-
+        console.log(this.videoUrl)
     }
 
     initPlayer() {
-        const video = document.getElementById('player');
+        const video = document.getElementsByTagName('video')[0];
         this.videoInit = 'pending';
         this.player = videojs(video, this.options, () => {
+
+            // this.player.src({
+            //     src: this.videoUrl,
+            //     type: 'video/mp4'
+            // });
+
             videojs.registerPlugin('watermark', watermark);
             this.player.watermark({
                 image: 'assets/img/logo.png',

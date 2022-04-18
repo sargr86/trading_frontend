@@ -116,7 +116,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     maxLength: 3600, //30
                     debug: true,
                     videoEngine: 'recordrtc',
-                    videoMimeType: 'video/webm;codecs=vp8,opus',
+                    videoMimeType: 'video/webm;codecs=h264',
+                    // videoMimeType: 'video/webm;codecs=vp8,opus',
                     frameWidth: 640,
                     frameHeight: 480
                     // convertEngine: 'ts-ebml'

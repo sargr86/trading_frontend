@@ -88,9 +88,10 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private chatService: ChatService
     ) {
         this.authUser = this.getAuthUser.transform();
-        this.passedUsername = this.route.snapshot.queryParams.username;
+        console.log(this.route.snapshot)
+        this.passedUsername = this.route.snapshot.params.username;
+        this.passedTab = this.route.snapshot.params.tab;
         // console.log(this.passedUsername)
-        this.passedTab = this.route.snapshot.queryParams.tab;
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
     }
 
@@ -211,6 +212,14 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
                 }));
         }
 
+    }
+
+    onOutletLoaded(component) {
+        this.activeTab = CHANNEL_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || CHANNEL_PAGE_TABS[0];
+        console.log('changed', this.router.url, this.route.firstChild.snapshot)
+        // this.activeTab = this.passedTab;
+        component.authUser = this.authUser;
+        component.channelUser = this.channelUser;
     }
 
     ngOnDestroy(): void {

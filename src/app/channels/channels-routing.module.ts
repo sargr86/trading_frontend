@@ -5,6 +5,7 @@ import {WatchlistTabComponent} from '@app/channels/show-channel/watchlist-tab/wa
 import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-tab.component';
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {PeopleTabComponent} from '@app/channels/show-channel/people-tab/people-tab.component';
+import {AboutTabComponent} from '@app/channels/show-channel/about-tab/about-tab.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
                     {path: 'videos', component: VideosTabComponent},
                     {path: 'playlists', component: PlaylistsTabComponent},
                     {path: 'contacts', component: PeopleTabComponent},
+                    {path: 'about', component: AboutTabComponent},
                 ]
             },
         ]

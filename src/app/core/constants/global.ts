@@ -22,11 +22,11 @@ export const PROFILE_PAGE_TABS = [
 
 
 export const CHANNEL_PAGE_TABS = [
-    {name: 'Watchlist', link: 'pWatch'},
-    {name: 'Videos', link: 'pVideos'},
-    {name: 'Playlists', link: 'pPlaylists'},
-    {name: 'Contacts', link: 'pWatch'},
-    {name: 'About', link: 'pAbout'},
+    {name: 'Watchlist', link: 'watchlist'},
+    {name: 'Videos', link: 'videos'},
+    {name: 'Playlists', link: 'playlists'},
+    {name: 'Contacts', link: 'contacts'},
+    {name: 'About', link: 'about'},
 ];
 
 export const GROUP_PAGE_TABS = [

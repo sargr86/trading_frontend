@@ -19,7 +19,7 @@ export class SubscribersTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.authUser)
+        // console.log(this.authUser)
         this.getUserChannelSubscriptions();
     }
 

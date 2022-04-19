@@ -41,7 +41,7 @@ export class SubscriptionsTabComponent implements OnInit, OnDestroy {
     getUserChannelSubscriptions() {
         this.subscriptions.push(this.channelsService.getSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
             this.userChannels = dt;
-            console.log(this.userChannels)
+            // console.log(this.userChannels)
         }));
     }
 

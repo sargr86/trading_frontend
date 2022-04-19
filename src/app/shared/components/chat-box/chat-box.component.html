@@ -28,7 +28,8 @@
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
                 <ng-container *ngIf="!loadingMessages">
-                    <div class="chat-block" [routerLink]="'/users/'+message.from_user.username"
+                    <div class="chat-block" [routerLink]="'/channels/show'"
+                         [queryParams]="{username: message.from_user.username}"
                          *ngFor="let message of messages">
 
                         <ng-container *ngIf="message.from_user">

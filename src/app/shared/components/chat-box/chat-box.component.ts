@@ -61,7 +61,7 @@ export class ChatBoxComponent implements OnInit {
         this.getChatMessagesFromParentComponents();
         this.getVideoRecordingState();
         this.loadVideoPreviousMessages();
-        console.log(this.messages)
+        console.log(this.messages, this.authUser)
     }
 
     initForm() {
@@ -70,6 +70,7 @@ export class ChatBoxComponent implements OnInit {
             from: [this.authUser.username],
             from_id: [this.authUser.id],
             from_user: [this.authUser],
+            from_channel: [this.authUser.channel],
             to_id: [''],
             avatar: [this.authUser.avatar],
             message: ['', Validators.required]

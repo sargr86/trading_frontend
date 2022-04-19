@@ -24,6 +24,7 @@ export class SubjectService {
     public streamSessionData = new Subject<any>();
     public toggleFiltersData = new Subject<any>();
     private stocksData = new Subject<any>();
+    public stocksSearchData = new Subject<any>();
     private indicesData = new Subject<any>();
     private userStocksData = new Subject<any>();
     private userCardsData = new Subject<any>();
@@ -79,6 +80,14 @@ export class SubjectService {
         return this.videoSearchData.asObservable();
     }
 
+    setStocksSearch(value) {
+        this.stocksSearchData.next(value);
+    }
+
+    getStocksSearch(): Observable<any> {
+        return this.stocksSearchData.asObservable();
+    }
+
     setUserSubscriptions(value) {
         this.subscriptionsData.next(value);
     }
@@ -120,7 +129,6 @@ export class SubjectService {
     }
 
 
-
     setIndicesData(value) {
         this.indicesData.next(value);
     }
@@ -144,7 +152,6 @@ export class SubjectService {
     getNewMessagesSourceData(): Observable<any> {
         return this.newMessageSourcesData.asObservable();
     }
-
 
 
     setAllPaymentsData(value) {

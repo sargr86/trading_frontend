@@ -38,7 +38,8 @@ export class PlaylistsTabComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.search = localStorage.getItem('search');
+        this.search = '';
+        // localStorage.getItem('search');
         this.getPlaylists({search: this.search, filters: this.filters});
         this.getFiltersToggleState();
     }

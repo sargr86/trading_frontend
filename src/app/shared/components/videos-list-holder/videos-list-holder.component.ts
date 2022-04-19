@@ -21,10 +21,10 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
     trackByElement = trackByElement;
     subscriptions: Subscription[] = [];
 
-    @Input('videos') videos = [];
-    @Input('title') title = '';
-    @Input('removable') removable = false;
-    @Input('detailsSource') detailsSource;
+    @Input() videos = [];
+    @Input() title = '';
+    @Input() removable = false;
+    @Input() detailsSource;
 
     constructor(
         private getAuthUser: GetAuthUserPipe,
@@ -41,6 +41,7 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
         if (this.videos?.length > 0) {
             this.videoLoading = 'finished';
         }
+        console.log(this.detailsSource, this.videos)
     }
 
     async openVideoPage(video, username) {
@@ -53,7 +54,7 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
             // await this.router.navigate(['channels/show'], {queryParams: {username}})
             await this.router.navigate([`users/${username}`]) // @todo temporary link change until posts available
         );
-        console.log('aaaaa '+ `users/${username}`)
+        console.log('aaaaa ' + `users/${username}`)
     }
 
     removeVideo(video) {

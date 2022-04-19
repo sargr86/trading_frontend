@@ -23,7 +23,7 @@ const routes: Routes = [
                 path: '',
                 component: ShowChannelComponent,
                 children: [
-                    {path: 'watchlist', component: WatchlistTabComponent},
+                    {path: '', component: WatchlistTabComponent},
                 ]
             },
             {

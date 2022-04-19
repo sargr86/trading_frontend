@@ -100,10 +100,31 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     coverChangeEvent(event: any) {
         this.coverChangedEvent = event;
+
+        const fd = new FormData();
+        const filename = `cover_${Date.now()}.jpg`;
+        this.channelForm.patchValue({cover: filename});
+        fd.append('cover_file', event.target.files[0], filename);
+        fd.append('cover', filename);
+        fd.append('id', this.authUser.id);
+        this.loader.dataLoading = true;
+        this.subscriptions.push(this.usersService.changeCoverImage(fd).subscribe((dt) => {
+            this.changeAuthUserInfo(dt);
+        }));
     }
 
     profileChangeEvent(event: any) {
         this.profileChangedEvent = event;
+        console.log(event)
+
+        const filename = `avatar_${Date.now()}.jpg`;
+        const fd = new FormData();
+        fd.append('avatar_file', event.target.files[0], filename);
+        fd.append('avatar', filename);
+        fd.append('id', this.authUser.id);
+        this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
+            this.changeAuthUserInfo(dt);
+        }));
     }
 
     detectImageChange() {
@@ -118,36 +139,37 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         // });
     }
 
-    profileCropped(event) {
-        // this.loader.dataLoading = true;
+    // profileCropped(event) {
+    //     // this.loader.dataLoading = true;
+    //
+    //     this.changingImage = true;
+    //     // this.profileBase64 = event.base64;
+    //     const filename = `avatar_${Date.now()}.jpg`;
+    //     const fd = new FormData();
+    //     this.channelForm.patchValue({avatar: filename});
+    //     // fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
+    //     fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
+    //     fd.append('avatar', filename);
+    //     fd.append('id', this.authUser.id);
+    //     this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
+    //         this.changeAuthUserInfo(dt);
+    //     }));
+    // }
 
-        this.changingImage = true;
-        this.profileBase64 = event.base64;
-        const filename = `avatar_${Date.now()}.jpg`;
-        const fd = new FormData();
-        this.channelForm.patchValue({avatar: filename});
-        fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
-        fd.append('avatar', filename);
-        fd.append('id', this.authUser.id);
-        this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
-            this.changeAuthUserInfo(dt);
-        }));
-    }
-
-    coverCropped(event) {
-        this.coverBase64 = event.base64;
-        this.changingImage = true;
-        const fd = new FormData();
-        const filename = `cover_${Date.now()}.jpg`;
-        this.channelForm.patchValue({cover: filename});
-        fd.append('cover_file', this.base64ToFile.transform(event.base64), filename);
-        fd.append('cover', filename);
-        fd.append('id', this.authUser.id);
-        this.loader.dataLoading = true;
-        this.subscriptions.push(this.usersService.changeCoverImage(fd).subscribe((dt) => {
-            this.changeAuthUserInfo(dt);
-        }));
-    }
+    // coverCropped(event) {
+    //     this.coverBase64 = event.base64;
+    //     this.changingImage = true;
+    //     const fd = new FormData();
+    //     const filename = `cover_${Date.now()}.jpg`;
+    //     this.channelForm.patchValue({cover: filename});
+    //     fd.append('cover_file', this.base64ToFile.transform(event.base64), filename);
+    //     fd.append('cover', filename);
+    //     fd.append('id', this.authUser.id);
+    //     this.loader.dataLoading = true;
+    //     this.subscriptions.push(this.usersService.changeCoverImage(fd).subscribe((dt) => {
+    //         this.changeAuthUserInfo(dt);
+    //     }));
+    // }
 
     removeCover() {
         this.channelUser.channel.cover = '';
@@ -190,7 +212,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
 
-
     changeAuthUserInfo(dt) {
         localStorage.setItem('token', dt.token);
         this.authUser = this.getAuthUser.transform();
@@ -207,7 +228,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         // this.loader.dataLoading = false;
         // console.log(this.channelUser)
     }
-
 
 
     ngOnDestroy(): void {

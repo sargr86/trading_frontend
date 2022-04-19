@@ -1,6 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ShowChannelComponent} from '@app/channels/show-channel/show-channel.component';
+import {WatchlistTabComponent} from '@app/channels/show-channel/watchlist-tab/watchlist-tab.component';
+import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-tab.component';
+import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
+import {PeopleTabComponent} from '@app/channels/show-channel/people-tab/people-tab.component';
 
 
 const routes: Routes = [
@@ -10,7 +14,29 @@ const routes: Routes = [
         data: {
             title: 'Channel page'
         }
-    }
+    },
+    {
+        path: ':username',
+        children: [
+            {
+                path: '',
+                component: ShowChannelComponent,
+                children: [
+                    {path: 'watchlist', component: WatchlistTabComponent},
+                ]
+            },
+            {
+                path: 'tab',
+                component: ShowChannelComponent,
+                children: [
+                    {path: 'watchlist', component: WatchlistTabComponent},
+                    {path: 'videos', component: VideosTabComponent},
+                    {path: 'playlists', component: PlaylistsTabComponent},
+                    {path: 'contacts', component: PeopleTabComponent},
+                ]
+            },
+        ]
+    },
 ];
 
 @NgModule({

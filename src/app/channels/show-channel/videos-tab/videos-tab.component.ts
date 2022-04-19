@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {Router} from '@angular/router';
 import {VideoService} from '@core/services/video.service';
 import {SubjectService} from '@core/services/subject.service';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-videos-tab',
     templateUrl: './videos-tab.component.html',
     styleUrls: ['./videos-tab.component.scss']
 })
-export class VideosTabComponent implements OnInit {
+export class VideosTabComponent implements OnInit, OnDestroy {
 
     apiUrl = API_URL;
     showFilters = false;
@@ -19,8 +20,10 @@ export class VideosTabComponent implements OnInit {
     userVideos = [];
     videosLoaded = false;
 
-    @Input('channelUser') channelUser;
-    @Input('authUser') authUser;
+    subscriptions: Subscription[] = [];
+
+    @Input() channelUser;
+    @Input() authUser;
 
     constructor(
         public router: Router,
@@ -32,9 +35,11 @@ export class VideosTabComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.subjectService.getToggleFiltersData().subscribe(dt => {
+        this.subscriptions.push(this.subjectService.getToggleFiltersData().subscribe(dt => {
             this.showFilters = dt;
-        });
+        }));
+
+        this.getSearchResults();
     }
 
     getUserVideos(params) {
@@ -47,14 +52,20 @@ export class VideosTabComponent implements OnInit {
         });
     }
 
-    getSearchResults(s) {
-        this.search = s;
-        this.getUserVideos({search: this.search, filters: this.filters});
+    getSearchResults() {
+        this.subscriptions.push(this.subjectService.getVideosSearch().subscribe(s => {
+            this.search = s;
+            this.getUserVideos({search: this.search, filters: this.filters});
+        }));
     }
 
     getFilteredVideos(e) {
         this.filters = e;
         this.getUserVideos({search: this.search, filters: this.filters});
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
 }

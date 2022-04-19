@@ -155,33 +155,8 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         localStorage.setItem('search', e.search);
         this.showFilters = false;
         this.subject.setToggleFiltersData(this.showFilters);
-        if (this.activeTab.name === 'Videos') {
-            this.searchInUserVideos(e.search);
-        } else if (this.activeTab.name === 'Playlists') {
-            this.searchInPlaylists(e.search);
-        }
-
+        this.subject.setVideosSearch(e.search);
     }
-
-    searchInVideosByAuthor(s) {
-        if (this.watchListTab) {
-            // this.watchListTab.getSearchResults(s);
-        }
-
-    }
-
-    searchInUserVideos(s) {
-        if (this.videosTab) {
-            this.videosTab.getSearchResults(s);
-        }
-    }
-
-    searchInPlaylists(s) {
-        if (this.playlistsTab) {
-            this.playlistsTab.getSearchResults(s);
-        }
-    }
-
 
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});

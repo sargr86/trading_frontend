@@ -33,7 +33,9 @@
 
         <div class="details-container">
             <p class="video-name">{{video.name}}</p>
-            <p class="channel-sub-name">{{video.channel.name}}</p>
+            <p class="channel-sub-name" [routerLink]="'/channels/show'"
+               [queryParams]="{username: video.user.username}"
+            >{{video.channel.name}}</p>
             <div class="details-row">
                 <span class="watchers-count">
                     {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}

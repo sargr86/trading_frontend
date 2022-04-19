@@ -13,7 +13,7 @@ export class PeopleTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.channelUser)
+        // console.log(this.channelUser)
     }
 
 }

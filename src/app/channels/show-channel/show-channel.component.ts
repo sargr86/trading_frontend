@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {API_URL, CHANNEL_PAGE_TABS} from '@core/constants/global';
 import {User} from '@shared/models/user';
 import {VideoService} from '@core/services/video.service';
@@ -85,10 +85,11 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private stocksService: StocksService,
         public usersMessagesStore: UsersMessagesSubjectService,
         private toastr: ToastrService,
-        private chatService: ChatService
+        private chatService: ChatService,
+        private cdr: ChangeDetectorRef
     ) {
         this.authUser = this.getAuthUser.transform();
-        console.log(this.route.snapshot)
+        // console.log(this.route.snapshot)
         this.passedUsername = this.route.snapshot.params.username;
         this.passedTab = this.route.snapshot.params.tab;
         // console.log(this.passedUsername)
@@ -214,12 +215,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     }
 
-    onOutletLoaded(component) {
+    onOutletLoaded(component, routerOutlet) {
+        this.passedTab = routerOutlet.activatedRoute.snapshot.routeConfig.path;
         this.activeTab = CHANNEL_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || CHANNEL_PAGE_TABS[0];
-        console.log('changed', this.router.url, this.route.firstChild.snapshot)
-        // this.activeTab = this.passedTab;
         component.authUser = this.authUser;
         component.channelUser = this.channelUser;
+        this.cdr.detectChanges();
     }
 
     ngOnDestroy(): void {

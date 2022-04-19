@@ -68,7 +68,11 @@
             <!--                               [authUser]="authUser"></app-playlists-tab>-->
             <!--            <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>-->
             <!--            <app-people-tab *ngIf="activeTab.name === 'Contacts'" [channelUser]="channelUser" [authUser]="authUser"></app-people-tab>-->
-            <router-outlet (activate)="onOutletLoaded($event)" #routerOutlet="outlet"></router-outlet>
+
+
+            <router-outlet (activate)="onOutletLoaded($event, routerOutlet)" #routerOutlet="outlet"></router-outlet>
+
+
         </div>
     </ng-container>
     <div class="channel-not-found" *ngIf="!channelUser && loader.channelLoading.status==='finished'">

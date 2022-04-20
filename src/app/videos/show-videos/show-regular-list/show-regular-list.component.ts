@@ -29,8 +29,7 @@ export class ShowRegularListComponent implements OnInit {
     }
 
     async openChannelPage(channel, username) {
-        await this.router.navigate([`users/${username}`]) // @todo temporary link change until posts available
-        // await this.router.navigate(['channels/show'], {queryParams: {username}});
+        await this.router.navigate(['channels/show'], {queryParams: {username}});
     }
 
     checkIfSavedByCurrentUser(video) {

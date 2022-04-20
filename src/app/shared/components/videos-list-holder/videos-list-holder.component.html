@@ -45,9 +45,7 @@
                         <img class="avatar" [src]="d?.channel?.avatar|getImgPath: 'avatars'">
                         <div>
                             <p class="video-name">{{video.name}}</p>
-                            <p class="channel-sub-name"
-
-                               [routerLink]="'/channels/'+d.username"
+                            <p class="channel-sub-name" [routerLink]="'/channels/'+d.username"
                             >{{d?.channel?.name}}</p>
                             <div class="shortened-details">
                                     <span class="watchers-count">

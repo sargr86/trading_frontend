@@ -11,7 +11,7 @@
                 <div class="user-avatar avatarClass">
                     <img class="avatar" [src]="video.channel.avatar|getImgPath: 'avatars'">
                 </div>
-                <span class="channel-name" (click)="openChannelPage(video.user.channel, video.user.username)">
+                <span class="channel-name" [routerLink]="'/channels/'+video.user.username">
                     {{video.user.channel.name}}
                 </span>
                 <span class="dot">&middot;</span>

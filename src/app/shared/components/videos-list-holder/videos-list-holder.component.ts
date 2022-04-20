@@ -41,7 +41,6 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
         if (this.videos?.length > 0) {
             this.videoLoading = 'finished';
         }
-        console.log(this.detailsSource, this.videos)
     }
 
     async openVideoPage(video, username) {

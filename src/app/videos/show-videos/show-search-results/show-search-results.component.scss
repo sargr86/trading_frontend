@@ -3,18 +3,19 @@
 //@import "../../../channels/show-subscriptions/show-subscriptions.component";
 
 #search-results-container {
-    .channel-item{
+    .channel-item {
         display: flex;
     }
 
-   .subscribe-to-channel-btn{
-      //margin-left: 20px;
-       margin-top: 20px;
-    }
-
-    .video-container{
+    .subscribe-to-channel-btn {
+        //margin-left: 20px;
         margin-top: 20px;
     }
+
+    .video-container {
+        margin-top: 20px;
+    }
+
     .thumbnail {
         width: 100%;
         max-width: 432px;
@@ -51,13 +52,15 @@
         }
     }
 }
-.newAvatar{
+
+.newAvatar {
     width: 200px !important;
     height: 200px !important;
     border-radius: 50%;
+    object-fit: cover;
 }
 
-.nameStyle{
+.channel-name {
     margin: 0;
     text-transform: capitalize;
     font-family: "Muli-Bold", sans-serif !important;
@@ -66,18 +69,19 @@
     overflow: hidden;
     max-width: 400px;
     height: 20px;
+    cursor: pointer;
 }
 
-.video-countStyle{
+.video-countStyle {
     font-family: "Muli-Bold";
     color: #818181;
     font-size: 14px;
-    margin-top:7px
+    margin-top: 7px
 }
 
 
- @media screen and (max-width: 1022px) {
-    .channel-item{
+@media screen and (max-width: 1022px) {
+    .channel-item {
         flex-direction: column;
     }
 }

@@ -35,10 +35,6 @@ export class SubscriptionsTabComponent implements OnInit, OnDestroy {
         this.getUserChannelSubscriptions();
     }
 
-    async openChannelPage(channel, username) {
-        await this.router.navigate(['channels/show'], {queryParams: {username}});
-    }
-
     getUserChannelSubscriptions() {
         this.subscriptions.push(this.channelsService.getSubscriptions({user_id: this.channelUser.id}).subscribe(dt => {
             this.userChannels = dt;

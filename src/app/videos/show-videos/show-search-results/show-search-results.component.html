@@ -3,14 +3,17 @@
         <div class="channel-item">
             <div class="thumbnail">
                 <img class="newAvatar" [src]="channel.avatar|getImgPath:'avatars'"
-                     (click)="openChannelPage(channel,channel.user?.username)">
+                     (click)="openChannelPage(channel.user?.username)">
             </div>
             <div class="info">
                 <div class="infoPart">
-                    <p class="name nameStyle"
-                       (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                    <p class="channel-name" (click)="openChannelPage(channel?.user?.username)">
+                        {{channel.name}}
+                    </p>
                     <div class="shortened-details">
-                        <p class="video-count video-countStyle">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+                        <p class="video-count video-countStyle">
+                            {{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}
+                        </p>
                     </div>
                     <p [innerHTML]="getDesc(channel.description)"></p>
                 </div>
@@ -28,7 +31,7 @@
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>
                 <div class="shortened-details">
-                    <span class="channel-name">{{channel.name}}</span>
+                    <span class="channel-name" [routerLink]="'/channels/'+channel.user.username">{{channel.name}}</span>
                     <span class="dot">&middot;</span>
                     <span class="watchers-count">
                     {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}

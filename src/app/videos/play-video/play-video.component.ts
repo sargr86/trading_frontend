@@ -138,11 +138,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
         }));
     }
 
-
-    openChannelPage(videoData) {
-        this.router.navigate(['channels/show'], {queryParams: {username: videoData.users_vids[0].username}});
-    }
-
     async openVideoByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }

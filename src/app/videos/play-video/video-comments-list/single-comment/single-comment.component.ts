@@ -75,7 +75,7 @@ export class SingleCommentComponent implements OnInit {
 
     async openChannelPage(username) {
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
-            await this.router.navigate(['channels/show'], {queryParams: {username}})
+            await this.router.navigate(['channels/' + username])
         );
     }
 }

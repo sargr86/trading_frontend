@@ -50,10 +50,8 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
 
     async openChannelPage(username) {
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(async () =>
-            // await this.router.navigate(['channels/show'], {queryParams: {username}})
-            await this.router.navigate([`users/${username}`]) // @todo temporary link change until posts available
+            await this.router.navigate(['channels/' + username])
         );
-        console.log('aaaaa ' + `users/${username}`)
     }
 
     removeVideo(video) {

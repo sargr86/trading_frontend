@@ -59,7 +59,8 @@
                 <span class="dot">&middot;</span>
                 <span class="date">{{videoData.created_at|dateFromNow}}</span>
             </div>
-            <div class="channel-block" (click)="openChannelPage(videoData)" *ngIf="videoData?.channel">
+            <div class="channel-block"
+                 [routerLink]="'/channels/'+videoData.users_vids[0].username"  *ngIf="videoData?.channel">
                 <img alt="avatar" class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
                 <div>
                     <p class="channel-name">{{videoData.channel.name}}</p>

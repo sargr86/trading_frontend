@@ -24,8 +24,8 @@ export class ShowSearchResultsComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    async openChannelPage(channel, username) {
-        await this.router.navigate(['channels/show'], {queryParams: {username}});
+    async openChannelPage(username) {
+        await this.router.navigate(['channels/' + username]);
     }
 
     async openVideoPage(video, username) {

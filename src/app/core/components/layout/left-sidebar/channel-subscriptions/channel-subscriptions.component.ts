@@ -74,7 +74,7 @@ export class ChannelSubscriptionsComponent implements OnInit {
     }
 
     async viewAllSubscriptions() {
-        await this.router.navigate(['channels/subscriptions']);
+        await this.router.navigate(['channels/' + this.authUser.username + '/tab/contacts']);
         this.closeSidenav.emit(true);
     }
 

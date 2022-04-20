@@ -1,7 +1,8 @@
 <ng-container *ngIf="auth.loggedIn() && channels?.length!==0">
     <p class="subscriptions-text">Subscriptions</p>
     <div class="left-list" cdkDropList (cdkDropListDropped)="drop($event)">
-        <div class="channel-block subscription" *ngFor="let channel of channels;let i = index;trackBy: trackByElement" cdkDrag
+        <div class="channel-block subscription" *ngFor="let channel of channels;let i = index;trackBy: trackByElement"
+             cdkDrag
              (cdkDragDropped)="dragDropped($event, channel)" (click)="openChannelPage(channel)">
             <ng-container *ngIf="i < 5">
                 <img class="list-img" [src]="channel.avatar | getImgPath:'avatars'">
@@ -11,6 +12,7 @@
             </ng-container>
         </div>
     </div>
-    <p (click)="viewAllSubscriptions()" *ngIf="routerUrl !== '/channels/subscriptions'" class="see-more">
+    <p (click)="viewAllSubscriptions()" *ngIf="routerUrl !== '/channels/' + this.authUser.username + '/tab/contacts'"
+       class="see-more">
         See more</p>
 </ng-container>

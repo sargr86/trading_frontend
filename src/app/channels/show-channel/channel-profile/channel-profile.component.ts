@@ -65,8 +65,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         if (this.channelUser) {
             this.initChannelForm();
             this.checkChannelSubscription();
-
-
         }
     }
 

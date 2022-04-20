@@ -12,6 +12,7 @@ export class SubscribersTabComponent implements OnInit {
     channelSubscribers;
 
     @Input() authUser;
+    @Input() channelUser;
 
     constructor(
         private channelsService: ChannelsService
@@ -19,12 +20,11 @@ export class SubscribersTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // console.log(this.authUser)
         this.getUserChannelSubscriptions();
     }
 
     getUserChannelSubscriptions() {
-        this.subscriptions.push(this.channelsService.getChannelSubscriptions({id: this.authUser?.channel.id}).subscribe(dt => {
+        this.subscriptions.push(this.channelsService.getChannelSubscriptions({id: this.channelUser.id}).subscribe(dt => {
             this.channelSubscribers = dt;
         }));
     }

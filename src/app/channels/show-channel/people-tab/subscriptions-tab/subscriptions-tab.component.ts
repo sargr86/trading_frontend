@@ -16,6 +16,7 @@ import trackByElement from '@core/helpers/track-by-element';
 export class SubscriptionsTabComponent implements OnInit, OnDestroy {
 
     @Input() authUser;
+    @Input() channelUser;
     userChannels;
     apiUrl = API_URL;
     trackByElement = trackByElement;
@@ -39,7 +40,7 @@ export class SubscriptionsTabComponent implements OnInit, OnDestroy {
     }
 
     getUserChannelSubscriptions() {
-        this.subscriptions.push(this.channelsService.getSubscriptions({user_id: this.authUser.id}).subscribe(dt => {
+        this.subscriptions.push(this.channelsService.getSubscriptions({user_id: this.channelUser.id}).subscribe(dt => {
             this.userChannels = dt;
             // console.log(this.userChannels)
         }));

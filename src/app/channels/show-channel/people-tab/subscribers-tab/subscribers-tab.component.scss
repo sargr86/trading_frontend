@@ -68,6 +68,11 @@
                 letter-spacing: 0px;
                 color: #5B5B5B;
                 opacity: 1;
+
+                .name {
+                    cursor: pointer;
+                }
+
                 @media only screen and (max-width: 320px) {
                     font-size: 15px !important;
                 }

@@ -99,7 +99,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // localStorage.setItem('search', '');
         this.activeTab = CHANNEL_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || CHANNEL_PAGE_TABS[0];
-        console.log(this.activeTab)
         this.getUserInfo();
 
         this.subject.currentUserStocks.subscribe((dt: any) => {

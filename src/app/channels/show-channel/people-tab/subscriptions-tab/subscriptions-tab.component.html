@@ -8,7 +8,7 @@
                     <img class="channel-avatar" [src]="channel.avatar|getImgPath:'avatars'">
                 </div>
                 <div class="info">
-                    <p class="name" (click)="openChannelPage(channel, channel?.user?.username)">{{channel.name}}</p>
+                    <p class="name" [routerLink]="'/channels/'+channel?.user?.username">{{channel.name}}</p>
                     <div class="shortened-details">
                         <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
                     </div>

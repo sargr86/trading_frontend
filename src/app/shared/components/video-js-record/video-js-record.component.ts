@@ -216,7 +216,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 participants: this.participants.length
             }).subscribe((dt) => {
                 this.videoId = dt?.id;
-                 this.recordingStarted.emit(dt);
+                this.recordingStarted.emit(dt);
             });
 
 
@@ -274,12 +274,6 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         this.player.on('deviceError', () => {
             console.error('device error:', this.player.deviceErrorCode);
         });
-    }
-
-    backToChannelVideos() {
-        const route = 'channels/show';
-        const params = {tab: 'videos', username: this.authUser.username};
-        this.router.navigate([route], {queryParams: params});
     }
 
 

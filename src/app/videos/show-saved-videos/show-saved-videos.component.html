@@ -8,8 +8,7 @@
             <div class="details">
                 <h4 class="title">{{video.name}}</h4>
                 <div class="shortened-details">
-                    <span class="channel-name"
-                          (click)="openChannelPage(video.user.channel, video.user.username)">{{video.channel.name}}</span>
+                    <span class="channel-name" [routerLink]="'/channels/'+video?.user?.username">{{video.channel.name}}</span>
                     <span class="dot">&middot;</span>
                     <span class="watchers-count">
                         {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}

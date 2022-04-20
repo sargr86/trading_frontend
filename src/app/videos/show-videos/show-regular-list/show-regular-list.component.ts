@@ -28,10 +28,6 @@ export class ShowRegularListComponent implements OnInit {
         await this.router.navigate([r.route], {queryParams: r.params});
     }
 
-    async openChannelPage(channel, username) {
-        await this.router.navigate(['channels/show'], {queryParams: {username}});
-    }
-
     checkIfSavedByCurrentUser(video) {
         return video.users_vids.find(v => v.username === this.authUser?.username && v.users_videos.saved);
     }

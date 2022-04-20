@@ -44,10 +44,6 @@ export class ShowSavedVideosComponent implements OnInit {
         await this.router.navigate([r.route], {queryParams: r.params});
     }
 
-    openChannelPage(channel, username) {
-        this.router.navigate(['channels/show'], {queryParams: {username}});
-    }
-
     async getVideosByTag(name) {
         await this.router.navigate(['videos'], {queryParams: {tag: name}});
     }

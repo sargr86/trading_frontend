@@ -517,10 +517,11 @@ select {
             margin-top: 4px;
 
             .channel-name {
-                font-family: "Muli-Bold";
+                font-family: "Muli-Bold", sans-serif;
                 color: #818181;
                 font-size: 14px;
                 white-space: nowrap;
+                cursor: pointer;
             }
 
             .dot {
@@ -832,6 +833,7 @@ mat-optgroup {
     filter: blur(5px);
     //opacity: 0.4;
 }
+
 video-tags-list
 .wallet-content {
     padding: 30px 24px;

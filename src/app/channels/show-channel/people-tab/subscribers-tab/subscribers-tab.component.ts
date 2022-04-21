@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
-import {ChannelsService} from "@core/services/channels.service";
+import {Subscription} from 'rxjs';
+import {ChannelsService} from '@core/services/channels.service';
 
 @Component({
     selector: 'app-subscribers-tab',

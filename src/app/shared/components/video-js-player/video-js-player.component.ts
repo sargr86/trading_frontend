@@ -39,14 +39,9 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
                     s += m * parseInt(parts.pop(), 10);
                     m *= 60;
                 }
-                // console.log(this.videoData.duration, s)
                 return s;
 
             };
-            // this.player.src({
-            //     src: this.videoUrl,
-            //     type: 'video/mp4'
-            // });
 
             videojs.registerPlugin('watermark', watermark);
             this.player.watermark({

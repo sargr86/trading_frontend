@@ -8,6 +8,7 @@ import {Location} from '@angular/common';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {CK_EDITOR_CONFIG} from '@core/constants/global';
 import {SocketIoService} from '@core/services/socket-io.service';
+import {PostsStoreService} from '@core/services/stores/posts-store.service';
 
 @Component({
     selector: 'app-post-form',
@@ -26,6 +27,7 @@ export class PostFormComponent implements OnInit {
         private fb: FormBuilder,
         public userStore: UserStoreService,
         public groupsStore: GroupsStoreService,
+        private postsStore: PostsStoreService,
         private socketService: SocketIoService,
         private route: ActivatedRoute,
         private router: Router,
@@ -64,7 +66,8 @@ export class PostFormComponent implements OnInit {
 
         if (this.postForm.valid) {
             console.log(this.postForm.value, this.selectedGroup)
-            this.postsService.add(this.postForm.value).subscribe(() => {
+            this.postsService.add(this.postForm.value).subscribe((dt) => {
+                this.postsStore.setAllPosts(dt);
                 this.socketService.postAdded({
                     from_user: this.authUser,
                     ...this.postForm.value,

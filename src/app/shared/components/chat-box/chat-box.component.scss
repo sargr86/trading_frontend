@@ -7,7 +7,7 @@
     //margin-bottom: 40px;
 
     //height: 100%;
-    margin-left: 20px;
+    //margin-left: 20px;
 
     &.opened {
         box-shadow: 0 0 6px #0000001A;
@@ -162,14 +162,11 @@
 
 #show-chat-box {
     @include regularButton;
+    width: 100%;
+    background-color: #b3b3b3;
     padding: 0;
-    width: 160px;
     cursor: pointer;
     justify-content: space-around;
-
-    i {
-        font-size: 22px;
-    }
 }
 
 .hide-chat-box {

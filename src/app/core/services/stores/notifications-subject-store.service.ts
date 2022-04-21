@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {sortTableData} from "@core/helpers/sort-table-data-by-column";
+import {sortTableData} from '@core/helpers/sort-table-data-by-column';
 
 @Injectable({
     providedIn: 'root'

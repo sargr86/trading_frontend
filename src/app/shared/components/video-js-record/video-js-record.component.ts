@@ -236,7 +236,6 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
             const recordingDuration = moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)).format('mm:ss');
 
-            // console.log(this.videoSettings)
             const fd: FormData = new FormData();
             fd.append('username', this.authUser.username);
             // fd.append('avatar', this.authUser.avatar);

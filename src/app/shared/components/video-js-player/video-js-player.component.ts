@@ -30,7 +30,19 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
         const video = document.getElementsByTagName('video')[0];
         this.videoInit = 'pending';
         this.player = videojs(video, this.options, () => {
+            this.player.duration = () => {
+                const parts = this.videoData.duration.split(':');
+                let s = 0;
+                let m = 1;
 
+                while (parts.length > 0) {
+                    s += m * parseInt(parts.pop(), 10);
+                    m *= 60;
+                }
+                // console.log(this.videoData.duration, s)
+                return s;
+
+            };
             // this.player.src({
             //     src: this.videoUrl,
             //     type: 'video/mp4'

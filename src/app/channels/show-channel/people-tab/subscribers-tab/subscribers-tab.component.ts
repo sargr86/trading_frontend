@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {ChannelsService} from '@core/services/channels.service';
 
 @Component({
@@ -9,7 +9,7 @@ import {ChannelsService} from '@core/services/channels.service';
 })
 export class SubscribersTabComponent implements OnInit {
     subscriptions: Subscription[] = [];
-    channelSubscribers;
+    channelSubscribers$: Observable<any>;
 
     @Input() authUser;
     @Input() channelUser;
@@ -24,9 +24,7 @@ export class SubscribersTabComponent implements OnInit {
     }
 
     getUserChannelSubscriptions() {
-        this.subscriptions.push(this.channelsService.getChannelSubscriptions({id: this.channelUser.id}).subscribe(dt => {
-            this.channelSubscribers = dt;
-        }));
+        this.channelSubscribers$ = this.channelsService.getChannelSubscriptions({id: this.channelUser.id});
     }
 
 }

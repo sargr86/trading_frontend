@@ -158,6 +158,9 @@ export const VIDEOJS_PLAYER_OPTIONS = {
         //     overrideNative: true,
         //     debug: true
         // }
+    },
+    controlBar: {
+        pictureInPictureToggle: false
     }
 };
 

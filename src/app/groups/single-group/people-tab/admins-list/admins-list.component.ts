@@ -15,7 +15,7 @@ export class AdminsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.authUserGroupConnection)
+        // console.log(this.authUserGroupConnection)
     }
 
     isGroupCreator(admin) {

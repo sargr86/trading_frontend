@@ -9,7 +9,7 @@
                                 (search)="searchVideos($event)"></app-search-videos-form>
     </div>
     <div class="right-side-actions">
-        <button class="navbar-toggler" type="button" [class.disabled]="router.url.includes('publish')"
+        <button class="navbar-toggler" type="button" [class.disabled]="router.url === '/users/video/publish'"
                 (click)="closeLeftSidenav.emit(false)">
             <!--            <i class="fas fa-bars"></i>-->
             <mat-icon>menu</mat-icon>
